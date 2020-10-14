@@ -23,7 +23,7 @@ public class CursorController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(mouseRay.origin, mouseRay.origin + distanceFromBoard * mouseRay.direction);
+        Gizmos.DrawLine(mouseRay.origin, mouseRay.origin + rayLength * mouseRay.direction);
 
         Gizmos.DrawCube(cursorPos.position, new Vector3(radiusCollide, radiusCollide, 0));
     }
