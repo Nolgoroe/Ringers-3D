@@ -59,6 +59,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFull: 0
   cellIndex: 2
+  pieceHeld: {fileID: 0}
+  isLimited: 0
 --- !u!1 &153735969
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,6 +120,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFull: 0
   cellIndex: 4
+  pieceHeld: {fileID: 0}
+  isLimited: 0
 --- !u!1 &566847775
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,6 +181,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFull: 0
   cellIndex: 7
+  pieceHeld: {fileID: 0}
+  isLimited: 0
 --- !u!1 &856548267
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,6 +242,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFull: 0
   cellIndex: 5
+  pieceHeld: {fileID: 0}
+  isLimited: 0
 --- !u!1 &955080193
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,6 +303,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFull: 0
   cellIndex: 1
+  pieceHeld: {fileID: 0}
+  isLimited: 0
 --- !u!1 &992830417
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,6 +364,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFull: 0
   cellIndex: 3
+  pieceHeld: {fileID: 0}
+  isLimited: 0
 --- !u!1 &1157581572
 GameObject:
   m_ObjectHideFlags: 0
@@ -413,6 +425,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFull: 0
   cellIndex: 0
+  pieceHeld: {fileID: 0}
+  isLimited: 0
 --- !u!1 &1596380326
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,6 +486,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFull: 0
   cellIndex: 6
+  pieceHeld: {fileID: 0}
+  isLimited: 0
 --- !u!1 &97109625940631375
 GameObject:
   m_ObjectHideFlags: 0
@@ -1925,7 +1941,6 @@ GameObject:
   - component: {fileID: 6382559071292991179}
   - component: {fileID: 6382559071292991178}
   - component: {fileID: 8467901069590196258}
-  - component: {fileID: 2086270855005635517}
   m_Layer: 0
   m_Name: Circle Board
   m_TagString: Board
@@ -1941,7 +1956,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6382559071292991177}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.3, z: 0}
+  m_LocalPosition: {x: 0, y: -2.87, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7399738602564596006}
@@ -2035,27 +2050,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6ade32c68c068354ab25d0c18e3980fc, type: 3}
   - {fileID: 21300000, guid: 970ba172584fa5d4b978c894192e5cff, type: 3}
   - {fileID: 21300000, guid: 17f75e4370c4ab841bff0ac2fad0320f, type: 3}
---- !u!114 &2086270855005635517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6382559071292991177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72d93dfe7d93dc74ca4be3249b614d10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cells:
-  - {fileID: 6427479927384046950}
-  - {fileID: 182248902383778349}
-  - {fileID: 8196980451566945241}
-  - {fileID: 4005235319176739776}
-  - {fileID: 2661228739882794239}
-  - {fileID: 8533506515662733632}
-  - {fileID: 8834448886763404828}
-  - {fileID: 4595002565549308357}
 --- !u!1 &7093896268567770744
 GameObject:
   m_ObjectHideFlags: 0

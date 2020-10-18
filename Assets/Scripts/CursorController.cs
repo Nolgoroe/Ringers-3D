@@ -129,6 +129,12 @@ public class CursorController : MonoBehaviour
     public void GrabPiece(Transform FT)
     {
         followerTarget = FT;
+        Cell c = FT.transform.parent.GetComponent<Cell>();
+
+        if (c)
+        {
+            c.RemovePiece();
+        }
     }
 
     public void MoveFollower()
@@ -139,14 +145,14 @@ public class CursorController : MonoBehaviour
         followerTarget.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
     }
 
-    public void SnapFollower(Transform parent)
+    public void SnapFollower(Transform cellHit)
     {
-        if (parent != null)
+        if (cellHit != null)
         {
             if (followerTarget)
             {
-                Cell cell = parent.GetComponent<Cell>();
-                Cell previousCell = followerTarget.parent.GetComponent<Cell>();
+                Cell cell = cellHit.GetComponent<Cell>();
+                Cell previousCell = followerTarget.parent.GetComponent<Cell>(); //// Only relevant if piece is moved from cell to cell
 
                 bool newPiece = followerTarget.transform.parent.CompareTag("Clip");
 
@@ -187,6 +193,13 @@ public class CursorController : MonoBehaviour
     {
         followerTarget.transform.position = new Vector3(followerTarget.transform.parent.position.x, followerTarget.transform.parent.position.y, followerTarget.transform.parent.position.z + 0.1f);
         followerTarget.rotation = followerTarget.transform.parent.rotation;
+
+        if (followerTarget.transform.parent.GetComponent<Cell>())
+        {
+            followerTarget.transform.parent.GetComponent<Cell>().AddPiece(followerTarget, false);
+            //GameManager.Instance.connectionManager.CheckConnections(followerTarget.transform.parent.GetComponent<Cell>().cellIndex);
+        }
+
         followerTarget = null;
     }
 }

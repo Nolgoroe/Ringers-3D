@@ -28,6 +28,6 @@ public class ClipManager : MonoBehaviour
         GameObject go = Instantiate(piece, s);
         Piece p = go.GetComponent<Piece>();
 
-        p.SetPiece();
+        p.SetPieces();
     }
 }

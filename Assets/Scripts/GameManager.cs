@@ -17,11 +17,12 @@ public class GameManager : MonoBehaviour
     public CursorController cursorControl;
     public ClipManager clipManager;
     public SliceManager sliceManager;
-    public CellManager cellManager;
+    public ConnectionManager connectionManager;
 
     public LevelScriptableObject currentLevel;
 
     public int currentFilledCellCount;
+    public int unsuccessfullConnectionCount;
 
     private void Awake()
     {
@@ -30,22 +31,19 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        gameBoard = Instantiate(circleBoardPrefab, destroyOutOfLevel);
-        gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
-
-
-        clipManager.Init();
-        cursorControl.Init();
-
-
-
-        StartLevel();//// Needs to be called by a button later
-
+        StartLevel();
     }
 
     public void StartLevel()
     {
+        gameBoard = Instantiate(circleBoardPrefab, destroyOutOfLevel);
+        gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
+
+        clipManager.Init();
+        cursorControl.Init();
+
         sliceManager.SpawnSlices(currentLevel.slicesToSpawn.Length);
+        connectionManager.GrabCellList(gameBoard.transform);
     }
 
     public void CheckCanEndLevel()
@@ -54,5 +52,13 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Can Finish Level");
         }
+    }
+
+    public void ChooseLevel(int levelNum)
+    {
+        currentLevel = (LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/Level " + levelNum);
+
+
+        StartLevel();
     }
 }
