@@ -29,10 +29,10 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-    void Start()
-    {
-        StartLevel();
-    }
+    //void Start()
+    //{
+    //    StartLevel();
+    //}
 
     public void StartLevel()
     {
@@ -60,5 +60,13 @@ public class GameManager : MonoBehaviour
 
 
         StartLevel();
+    }
+
+    public void DestroyAllLevelChildern()
+    {
+        foreach (Transform child in destroyOutOfLevel)
+        {
+            Destroy(child.gameObject);
+        }
     }
 }

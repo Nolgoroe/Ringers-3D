@@ -14,6 +14,7 @@ public class Slice : MonoBehaviour
 
     public bool isLock;
     public bool isLoot;
+    public bool fulfilledCondition;
 
     public void SetData(SliceCatagory sc, bool islocking, bool isLooting)
     {

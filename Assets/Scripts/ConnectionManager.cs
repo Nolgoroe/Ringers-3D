@@ -30,34 +30,53 @@ public class ConnectionManager : MonoBehaviour
         int currentRight = cellIndex * 2;
         int currentLeft = cellIndex * 2 + 1;
 
+        Slice mySlice;
 
         if (subPiecesOnBoard[rightContested])
         {
-            if (!CheckSubPieceConnection(subPiecesOnBoard[currentRight], subPiecesOnBoard[rightContested]))
+            if (!CheckSubPieceConnection(subPiecesOnBoard[currentRight], subPiecesOnBoard[rightContested], out mySlice))
             {
                 Debug.Log("Bad Connection Right Conetsted");
                 GameManager.Instance.unsuccessfullConnectionCount++;
                 subPiecesOnBoard[currentRight].isBadConnection = true;
                 subPiecesOnBoard[rightContested].isBadConnection = true;
+                mySlice.fulfilledCondition = false;
             }
+            else
+            {
+                mySlice.fulfilledCondition = true;
+            }
+        }
+        else
+        {
+            slicesOnBoard[currentRight / 2].fulfilledCondition = false;
         }
 
         if (subPiecesOnBoard[leftContested])
         {
-            if (!CheckSubPieceConnection(subPiecesOnBoard[currentLeft], subPiecesOnBoard[leftContested]))
+            if (!CheckSubPieceConnection(subPiecesOnBoard[currentLeft], subPiecesOnBoard[leftContested], out mySlice))
             {
                 Debug.Log("Bad Connection Left Conetsted");
                 GameManager.Instance.unsuccessfullConnectionCount++;
                 subPiecesOnBoard[currentLeft].isBadConnection = true;
                 subPiecesOnBoard[leftContested].isBadConnection = true;
+                mySlice.fulfilledCondition = false;
             }
+            else
+            {
+                mySlice.fulfilledCondition = true;
+            }
+        }
+        else
+        {
+            slicesOnBoard[Mathf.CeilToInt(currentLeft / 2)].fulfilledCondition = false;
         }
 
         /// Get slice
         /// Check list of conditions for correct connections, 2 connection.
         /// 
     }
-    public bool CheckSubPieceConnection(SubPiece currentSide, SubPiece contestedSide)
+    public bool CheckSubPieceConnection(SubPiece currentSide, SubPiece contestedSide, out Slice relavent)
     {
         int relaventSlice;
 
@@ -69,8 +88,12 @@ public class ConnectionManager : MonoBehaviour
         {
             relaventSlice = Mathf.CeilToInt((float)currentSide.subPieceIndex / 2);
         }
+        relavent = slicesOnBoard[relaventSlice];
 
-        bool doColorCheck = true, doShapeCheck = true;
+        bool doColorCheck = true, doShapeCheck = true, doSpecificColor = false, doSpecificShape = false;
+
+        PieceColor col = PieceColor.None;
+        PieceSymbol sym = PieceSymbol.None;
 
         if (slicesOnBoard[relaventSlice].sliceCatagory != SliceCatagory.None)
         {
@@ -85,67 +108,129 @@ public class ConnectionManager : MonoBehaviour
                 case SliceCatagory.SpecificShape:
                     doShapeCheck = false;
                     doColorCheck = false;
-                    return SliceComparerSymbol(currentSide, contestedSide, slicesOnBoard[relaventSlice].sliceSymbol);
+                    doSpecificColor = false;
+                    doSpecificShape = true;
+                    sym = slicesOnBoard[relaventSlice].sliceSymbol;
+                    break;
                 case SliceCatagory.SpecificColor:
                     doShapeCheck = false;
                     doColorCheck = false;
-                    return SliceComparerColor(currentSide, contestedSide, slicesOnBoard[relaventSlice].sliceColor);
+                    doSpecificShape = false;
+                    doSpecificColor = true;
+                    col = slicesOnBoard[relaventSlice].sliceColor;
+                    break;
                 default:
                     break;
             }
         }
 
-        if (JokerCheck(currentSide, doColorCheck, doShapeCheck) || JokerCheck(contestedSide, doColorCheck, doShapeCheck))
+        CompareResault result = TotalCheck(currentSide, contestedSide);
+
+        if (doColorCheck && result.gColorMatch)
         {
-            Debug.Log("Joker Connect");
             return true;
         }
 
-        if (doColorCheck && ColorCheck(currentSide, contestedSide))
+        if (doShapeCheck && result.gSymbolMatch)
         {
-            Debug.Log("Color Connect");
             return true;
         }
 
-        if (doShapeCheck && SymbolCheck(currentSide, contestedSide))
+        if (doSpecificColor && result.gColorMatch)
         {
-            Debug.Log("Shape Connect");
-            return true;
+            PieceColor sCol = slicesOnBoard[relaventSlice].sliceColor;
+
+            return EqualColorOrJoker(currentSide.colorOfPiece, sCol) && EqualColorOrJoker(contestedSide.colorOfPiece, sCol);
+            
+
+            //if (currentSide.colorOfPiece == sCol && contestedSide.colorOfPiece == sCol)
+            //{
+            //    return true;
+            //}
+        }
+
+        if (doSpecificShape && result.gSymbolMatch)
+        {
+            PieceSymbol sSym = slicesOnBoard[relaventSlice].sliceSymbol;
+
+            return EqualSymbolOrJoker(currentSide.symbolOfPiece, sSym) && EqualSymbolOrJoker(contestedSide.symbolOfPiece, sSym);
+
         }
 
         return false;
+        //if (JokerCheck(currentSide, doColorCheck, doShapeCheck) || JokerCheck(contestedSide, doColorCheck, doShapeCheck))
+        //{
+        //    Debug.Log("Joker Connect");
+        //    return true;
+        //}
+
+        //if (doColorCheck && ColorCheck(currentSide, contestedSide, col))
+        //{
+        //    Debug.Log("Color Connect");
+        //    return true;
+        //}
+
+        //if (doShapeCheck && ShapeCheck(currentSide, contestedSide, sym))
+        //{
+        //    Debug.Log("Shape Connect");
+        //    return true;
+        //}
+
     }
-    public bool ColorCheck(SubPiece rp, SubPiece lp)
+
+    //public bool ColorCheck(SubPiece rp, SubPiece lp, PieceColor col)
+    //{
+    //    if (rp.colorOfPiece == lp.colorOfPiece)
+    //    {
+    //        return true;
+    //    }
+
+    //    return false;
+    //}
+    //public bool ShapeCheck(SubPiece rp, SubPiece lp, PieceSymbol sym)
+    //{
+    //    if (rp.symbolOfPiece == lp.symbolOfPiece)
+    //    {
+    //        return true;
+    //    }
+
+    //    return false;
+    //}
+    //public bool JokerCheck(SubPiece sp, bool doColor, bool doSymbol)
+    //{
+    //    if (doColor && sp.colorOfPiece == PieceColor.Joker)
+    //    {
+    //        return true;
+    //    }
+
+    //    if (doSymbol && sp.symbolOfPiece == PieceSymbol.Joker)
+    //    {
+    //        return true;
+    //    }
+
+    //    return false;
+    //}
+
+    public CompareResault TotalCheck(SubPiece current, SubPiece contested/*, PieceColor sCol, PieceSymbol sSym*/)
     {
-        if (rp.colorOfPiece == lp.colorOfPiece)
-        {
-            return true;
-        }
+        CompareResault result = new CompareResault();
 
-        return false;
-    }
-    public bool SymbolCheck(SubPiece rp, SubPiece lp)
-    {
-        if (rp.symbolOfPiece == lp.symbolOfPiece)
-        {
-            return true;
-        }
+        result.gColorMatch = EqualColorOrJoker(current.colorOfPiece, contested.colorOfPiece);
+        result.gSymbolMatch = EqualSymbolOrJoker(current.symbolOfPiece, contested.symbolOfPiece);
 
-        return false;
-    }
-    public bool JokerCheck(SubPiece sp, bool doColor, bool doSymbol)
-    {
-        if (doColor && sp.colorOfPiece == PieceColor.Joker)
-        {
-            return true;
-        }
+        //if (sCol != PieceColor.None)
+        //{
+        //    result.sColorMatch = current.colorOfPiece == contested.colorOfPiece && (current.colorOfPiece == sCol && contested.colorOfPiece == sCol);
+        //}
 
-        if (doSymbol && sp.symbolOfPiece == PieceSymbol.Joker)
-        {
-            return true;
-        }
+        //if(sSym != PieceSymbol.None)
+        //{
+        //    result.sSymbolMatch = current.symbolOfPiece == contested.symbolOfPiece && (current.symbolOfPiece == sSym &&  contested.symbolOfPiece == sSym);
+        //}
 
-        return false;
+        Debug.Log(result.gColorMatch);
+        Debug.Log(result.gSymbolMatch);
+        return result;
     }
     public int CheckIntRange(int num)
     {
@@ -175,28 +260,22 @@ public class ConnectionManager : MonoBehaviour
     {
         subPiecesOnBoard[i] = null;
     }
-    public bool SliceComparerColor(SubPiece current, SubPiece contested, PieceColor colorOfSlice)
+    public bool EqualColorOrJoker(PieceColor colA, PieceColor colB)/// Colorcheck is to see if we need to check color or symbol
     {
-        bool jokerSlice = JokerCheck(current , true, false);
-
-        if ((current.colorOfPiece == contested.colorOfPiece && current.colorOfPiece == colorOfSlice) || jokerSlice)
+        if(colA == colB || (colA == PieceColor.Joker || colB == PieceColor.Joker))
         {
-            Debug.Log("Good by slice color");
             return true;
         }
 
         return false;
     }
-    public bool SliceComparerSymbol(SubPiece current, SubPiece contested, PieceSymbol symbolOfSlice)
+    public bool EqualSymbolOrJoker(PieceSymbol symA, PieceSymbol symB)/// Colorcheck is to see if we need to check color or symbol
     {
-        bool jokerSlice = JokerCheck(current, false, true);
-
-        if ((current.symbolOfPiece == contested.symbolOfPiece && current.symbolOfPiece == symbolOfSlice)|| jokerSlice)
+        if (symA == symB || (symA == PieceSymbol.Joker || symB == PieceSymbol.Joker))
         {
-            Debug.Log("Good by slice symbol");
-
             return true;
         }
         return false;
+
     }
 }

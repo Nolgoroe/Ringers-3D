@@ -197,7 +197,6 @@ public class CursorController : MonoBehaviour
         if (followerTarget.transform.parent.GetComponent<Cell>())
         {
             followerTarget.transform.parent.GetComponent<Cell>().AddPiece(followerTarget, false);
-            //GameManager.Instance.connectionManager.CheckConnections(followerTarget.transform.parent.GetComponent<Cell>().cellIndex);
         }
 
         followerTarget = null;

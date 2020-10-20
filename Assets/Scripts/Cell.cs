@@ -51,5 +51,7 @@ public class Cell : MonoBehaviour
 
         GameManager.Instance.connectionManager.RemoveSubPieceIndex(pieceHeld.rightChild.subPieceIndex);
         GameManager.Instance.connectionManager.RemoveSubPieceIndex(pieceHeld.leftChild.subPieceIndex);
+        GameManager.Instance.connectionManager.CheckConnections(cellIndex + 1);
+        GameManager.Instance.connectionManager.CheckConnections(cellIndex - 1);
     }
 }
