@@ -113,6 +113,8 @@ MonoBehaviour:
   rend: {fileID: 5877667030162584005}
   symbolHolder: {fileID: 3212061127976318910}
   isBadConnection: 0
+  subPieceIndex: 0
+  relevantSlice: {fileID: 0}
 --- !u!1 &3861725788879492414
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,6 +322,8 @@ MonoBehaviour:
   rend: {fileID: 5928835588564410144}
   symbolHolder: {fileID: 3291145422131670544}
   isBadConnection: 0
+  subPieceIndex: 0
+  relevantSlice: {fileID: 0}
 --- !u!1 &5217241309702987620
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,7 +522,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4940333732497947143}
   - component: {fileID: 4348005172680269402}
-  m_Layer: 0
+  - component: {fileID: 1060844769825966814}
+  m_Layer: 10
   m_Name: WideTileSet2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -556,3 +561,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftChild: {fileID: 4723317102951634998}
   rightChild: {fileID: 6954775672535708427}
+  isLocked: 0
+--- !u!65 &1060844769825966814
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8274465473714554900}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.9401274, y: 2.3575003, z: 1}
+  m_Center: {x: 0.38413095, y: 0.017276209, z: 0}

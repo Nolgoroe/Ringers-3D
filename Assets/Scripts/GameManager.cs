@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,12 +19,15 @@ public class GameManager : MonoBehaviour
     public ClipManager clipManager;
     public SliceManager sliceManager;
     public ConnectionManager connectionManager;
+    public PowerUpManager powerupManager;
+    public PlayerManager playerManager;
 
     public LevelScriptableObject currentLevel;
 
     public int currentFilledCellCount;
     public int unsuccessfullConnectionCount;
 
+    public bool gameStarted;
     private void Awake()
     {
         Instance = this;
@@ -36,6 +40,7 @@ public class GameManager : MonoBehaviour
 
     public void StartLevel()
     {
+        gameStarted = true;
         gameBoard = Instantiate(circleBoardPrefab, destroyOutOfLevel);
         gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
 
@@ -44,6 +49,7 @@ public class GameManager : MonoBehaviour
 
         sliceManager.SpawnSlices(currentLevel.slicesToSpawn.Length);
         connectionManager.GrabCellList(gameBoard.transform);
+        powerupManager.InstantiatePowerUps();
     }
 
     public void CheckCanEndLevel()
@@ -64,9 +70,20 @@ public class GameManager : MonoBehaviour
 
     public void DestroyAllLevelChildern()
     {
+        gameStarted = false;
+
         foreach (Transform child in destroyOutOfLevel)
         {
             Destroy(child.gameObject);
         }
+
+        foreach (Button butt in powerupManager.powerupButtons)
+        {
+            Destroy(butt.gameObject);
+        }
+        powerupManager.powerupButtons.Clear();
+
+        currentFilledCellCount = 0;
+        unsuccessfullConnectionCount = 0;
     }
 }

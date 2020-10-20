@@ -8,8 +8,8 @@ public enum PieceColor
     Blue,
     Yellow,
     Magenta,
-    None,
-    Joker
+    Joker,
+    None
 }
 
 public enum PieceSymbol
@@ -18,24 +18,19 @@ public enum PieceSymbol
     Badger,
     Goat,
     Turtle,
-    None,
-    Joker
-
+    Joker,
+    None
 }
 
 public class Piece : MonoBehaviour
 {
     public SubPiece leftChild, rightChild;
 
+    public bool isLocked;
+    public bool partOfBoard;
     public void SetPieces()
     {
         leftChild.SetPiece();
         rightChild.SetPiece();
     }
-    //public PieceColor rColor;
-    //public PieceSymbol rSymbol;
-
-    //public PieceColor lColor;
-    //public PieceSymbol lSymbol;
-
 }

@@ -16,6 +16,7 @@ public class Slice : MonoBehaviour
     public bool isLoot;
     public bool fulfilledCondition;
 
+    public int sliceIndex;
     public void SetData(SliceCatagory sc, bool islocking, bool isLooting)
     {
         SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
@@ -31,11 +32,11 @@ public class Slice : MonoBehaviour
         switch (sliceCatagory)
         {
             case SliceCatagory.Shape:
-                sliceSymbol = (PieceSymbol)sliceSymbolcount - 2;
+                sliceSymbol = PieceSymbol.None;
                 sr.sprite = GameManager.Instance.sliceManager.sliceSymbolDict[sliceSymbol];
                 break;
             case SliceCatagory.Color:
-                sliceColor = (PieceColor)sliceColorcount - 2;
+                sliceColor = PieceColor.None;
                 sr.sprite = GameManager.Instance.sliceManager.sliceColorDict[sliceColor];
 
                 break;
@@ -53,5 +54,15 @@ public class Slice : MonoBehaviour
 
         diamondPrefab.SetActive(isLoot);
         lockPrefab.SetActive(isLock);
+    }
+
+    public void ResetDate()
+    {
+        sliceColor = PieceColor.None;
+        sliceSymbol = PieceSymbol.None;
+        sliceCatagory = SliceCatagory.None;
+        isLock = false;
+        isLoot = false;
+        fulfilledCondition = false;
     }
 }
