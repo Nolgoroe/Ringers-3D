@@ -321,6 +321,7 @@ public class PowerUpManager : MonoBehaviour
     public void UsingPowerup(Button butt)
     {
         currentlyInUse = butt.gameObject.GetComponent<PowerupProperties>();
+        UIManager.instance.ActivateUsingPowerupMessage(true);
 
         foreach (Button but in powerupButtons)
         {
@@ -341,6 +342,9 @@ public class PowerUpManager : MonoBehaviour
 
     public void FinishedUsingPowerup(bool successfull, PowerupProperties prop)
     {
+        UIManager.instance.ActivateUsingPowerupMessage(false);
+
+        IsUsingPowerUp = false;
         currentlyInUse = null;
         HasUsedPowerUp = false;
         layerToHit = new LayerMask();

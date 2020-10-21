@@ -40,6 +40,11 @@ public class Cell : MonoBehaviour
         if (isNew)
         {
             GameManager.Instance.currentFilledCellCount++;
+
+            if(GameManager.Instance.currentFilledCellCount == GameManager.Instance.currentLevel.cellsCountInLevel)
+            {
+                UIManager.instance.ActivateCommitButton();
+            }
         }
 
         //GameManager.Instance.cellManager.NeighborTest(cellIndex);
@@ -65,10 +70,13 @@ public class Cell : MonoBehaviour
             GameManager.Instance.connectionManager.subPiecesOnBoard[i].isBadConnection = false;
         }
 
-        pieceHeld.leftChild.relevantSlice.fulfilledCondition = false;
-        pieceHeld.rightChild.relevantSlice.fulfilledCondition = false;
-        pieceHeld.leftChild.relevantSlice = null;
-        pieceHeld.rightChild.relevantSlice = null;
+        if (pieceHeld.leftChild.relevantSlice)
+        {
+            pieceHeld.leftChild.relevantSlice.fulfilledCondition = false;
+            pieceHeld.rightChild.relevantSlice.fulfilledCondition = false;
+            pieceHeld.leftChild.relevantSlice = null;
+            pieceHeld.rightChild.relevantSlice = null;
+        }
         GameManager.Instance.connectionManager.RemoveSubPieceIndex(pieceHeld.rightChild.subPieceIndex);
         GameManager.Instance.connectionManager.RemoveSubPieceIndex(pieceHeld.leftChild.subPieceIndex);
     }

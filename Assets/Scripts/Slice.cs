@@ -14,10 +14,11 @@ public class Slice : MonoBehaviour
 
     public bool isLock;
     public bool isLoot;
+    public bool isLimiter;
     public bool fulfilledCondition;
 
     public int sliceIndex;
-    public void SetData(SliceCatagory sc, bool islocking, bool isLooting)
+    public void SetData(SliceCatagory sc, bool islocking, bool isLooting, bool isLimiting)
     {
         SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
 
@@ -27,6 +28,7 @@ public class Slice : MonoBehaviour
 
         isLoot = isLooting;
         isLock = islocking;
+        isLimiter = isLimiting;
         sliceCatagory = sc;
 
         switch (sliceCatagory)
@@ -54,6 +56,12 @@ public class Slice : MonoBehaviour
 
         diamondPrefab.SetActive(isLoot);
         lockPrefab.SetActive(isLock);
+
+        if (isLimiter)
+        {
+            diamondPrefab.GetComponent<SpriteRenderer>().color = Color.red;
+            lockPrefab.GetComponent<SpriteRenderer>().color = Color.red;
+        }
     }
 
     public void ResetDate()
@@ -63,6 +71,7 @@ public class Slice : MonoBehaviour
         sliceCatagory = SliceCatagory.None;
         isLock = false;
         isLoot = false;
+        isLimiter = false;
         fulfilledCondition = false;
     }
 }

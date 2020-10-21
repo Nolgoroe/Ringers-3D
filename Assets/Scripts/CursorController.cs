@@ -216,7 +216,6 @@ public class CursorController : MonoBehaviour
                 if (!cell.isFull)
                 {
                     cell.AddPiece(followerTarget, newPiece);
-                    GameManager.Instance.CheckCanEndLevel();
 
                     if (!newPiece)
                     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -9,9 +10,13 @@ public class UIManager : MonoBehaviour
     public GameObject forge, itemBag;
     public GameObject OptionsScreen;
     public GameObject wardrobe;
+    public GameObject usingPowerupText;
+    public GameObject youWinText, youLoseText;
 
     public static UIManager instance;
 
+    public Button commitButton;
+    public Button[] levelButtons;
     private void Start()
     {
         instance = this;
@@ -24,6 +29,12 @@ public class UIManager : MonoBehaviour
         OptionsScreen.SetActive(false);
         ringersHut.SetActive(false);
         wardrobe.SetActive(false);
+        usingPowerupText.SetActive(false);
+        youWinText.SetActive(false);
+        youLoseText.SetActive(false);
+
+
+        UnlockLevels();
     }
 
     public void PlayButton()
@@ -31,7 +42,6 @@ public class UIManager : MonoBehaviour
         mainMenu.SetActive(false);
         hudCanvas.SetActive(true);
     }
-
     public void ActivateGmaeplayCanvas()
     {
         gameplayCanvas.SetActive(true);
@@ -42,14 +52,17 @@ public class UIManager : MonoBehaviour
         hudCanvas.SetActive(false);
         mainMenu.SetActive(true);
     }
-
     public void ToHud(GameObject currentCanvas)
     {
         if(currentCanvas == gameplayCanvas)
         {
             gameplayCanvas.SetActive(false);
             OptionsScreen.SetActive(false);
+            youWinText.SetActive(false);
+            youLoseText.SetActive(false);
+
             GameManager.Instance.DestroyAllLevelChildern();
+            UnlockLevels();
         }
 
         if(currentCanvas == ringersHut)
@@ -59,12 +72,10 @@ public class UIManager : MonoBehaviour
 
         hudCanvas.SetActive(true);
     }
-
     public void OpenItemsAndForgeZone()
     {
         itemForgeCanvas.SetActive(true);
     }
-
     public void closeWindow(GameObject ToClose)
     {
         if(ToClose == itemForgeCanvas)
@@ -84,19 +95,16 @@ public class UIManager : MonoBehaviour
             wardrobe.SetActive(false);
         }
     }
-
     public void ToForge()
     {
         itemBag.SetActive(false);
         forge.SetActive(true);
     }
-
     public void ToItemsBag()
     {
         itemBag.SetActive(true);
         forge.SetActive(false);
     }
-
     public void ToRingersHut()
     {
         ringersHut.SetActive(true);
@@ -106,14 +114,50 @@ public class UIManager : MonoBehaviour
     {
         OptionsScreen.SetActive(true);
     }
-
     public void CloseGame()
     {
         Application.Quit();
     }
-
     public void OpenWardrobe()
     {
         wardrobe.SetActive(true);
+    }
+    public void ActivateUsingPowerupMessage(bool on)
+    {
+        if (on)
+        {
+            usingPowerupText.SetActive(true);
+        }
+        else
+        {
+            usingPowerupText.SetActive(false);
+        }
+    }
+    public void WinLevel()
+    {
+        youWinText.SetActive(true);
+    }
+    public void LoseLevel()
+    {
+        youLoseText.SetActive(true);
+    }
+    public void GetCommitButton(GameObject board)
+    {
+        commitButton = board.GetComponentInChildren<Button>();
+        commitButton.onClick.AddListener(GameManager.Instance.CheckEndLevel);
+        Debug.Log(commitButton.onClick);
+        commitButton.interactable = false;
+    }
+    public void ActivateCommitButton()
+    {
+        commitButton.interactable = true;
+        commitButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
+    }
+    public void UnlockLevels()
+    {
+        for (int i = 0; i < GameManager.Instance.maxLevel; i++)
+        {
+            levelButtons[i].interactable = true;
+        }
     }
 }

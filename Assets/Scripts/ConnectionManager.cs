@@ -35,7 +35,7 @@ public class ConnectionManager : MonoBehaviour
         {
             if (subPiecesOnBoard[currentRight])
             {
-                if (!CheckSubPieceConnection(subPiecesOnBoard[currentRight], subPiecesOnBoard[rightContested]))
+                if (!CheckSubPieceConnection(subPiecesOnBoard[currentRight], subPiecesOnBoard[rightContested], out bool conditionmet))
                 {
                     Debug.Log("Bad Connection Right Conetsted");
                     GameManager.Instance.unsuccessfullConnectionCount++;
@@ -45,16 +45,19 @@ public class ConnectionManager : MonoBehaviour
                 }
                 else
                 {
-                    subPiecesOnBoard[currentRight].relevantSlice.fulfilledCondition = true;
-
-                    if (subPiecesOnBoard[currentRight].relevantSlice.isLoot)
+                    if (conditionmet)
                     {
-                        GiveLoot(subPiecesOnBoard[currentRight].relevantSlice);
-                    }
+                        subPiecesOnBoard[currentRight].relevantSlice.fulfilledCondition = true;
 
-                    if (subPiecesOnBoard[currentRight].relevantSlice.isLock)
-                    {
-                        LockCell(subPiecesOnBoard[currentRight].relevantSlice);
+                        if (subPiecesOnBoard[currentRight].relevantSlice.isLoot)
+                        {
+                            GiveLoot(subPiecesOnBoard[currentRight].relevantSlice, subPiecesOnBoard[currentRight].relevantSlice.isLimiter);
+                        }
+
+                        if (subPiecesOnBoard[currentRight].relevantSlice.isLock)
+                        {
+                            LockCell(subPiecesOnBoard[currentRight].relevantSlice, subPiecesOnBoard[currentRight].relevantSlice.isLimiter);
+                        }
                     }
                 }
             }
@@ -74,7 +77,7 @@ public class ConnectionManager : MonoBehaviour
         {
             if (subPiecesOnBoard[currentLeft])
             {
-                if (!CheckSubPieceConnection(subPiecesOnBoard[currentLeft], subPiecesOnBoard[leftContested]))
+                if (!CheckSubPieceConnection(subPiecesOnBoard[currentLeft], subPiecesOnBoard[leftContested], out bool conditionmet))
                 {
                     Debug.Log("Bad Connection Left Conetsted");
                     GameManager.Instance.unsuccessfullConnectionCount++;
@@ -84,15 +87,18 @@ public class ConnectionManager : MonoBehaviour
                 }
                 else
                 {
-                    subPiecesOnBoard[currentLeft].relevantSlice.fulfilledCondition = true;
-                    if (subPiecesOnBoard[currentLeft].relevantSlice.isLoot)
+                    if (conditionmet)
                     {
-                        GiveLoot(subPiecesOnBoard[currentLeft].relevantSlice);
-                    }
+                        subPiecesOnBoard[currentLeft].relevantSlice.fulfilledCondition = true;
+                        if (subPiecesOnBoard[currentLeft].relevantSlice.isLoot)
+                        {
+                            GiveLoot(subPiecesOnBoard[currentLeft].relevantSlice, subPiecesOnBoard[currentLeft].relevantSlice.isLimiter);
+                        }
 
-                    if (subPiecesOnBoard[currentLeft].relevantSlice.isLock)
-                    {
-                        LockCell(subPiecesOnBoard[currentLeft].relevantSlice);
+                        if (subPiecesOnBoard[currentLeft].relevantSlice.isLock)
+                        {
+                            LockCell(subPiecesOnBoard[currentLeft].relevantSlice, subPiecesOnBoard[currentLeft].relevantSlice.isLimiter);
+                        }
                     }
                 }
             }
@@ -112,142 +118,71 @@ public class ConnectionManager : MonoBehaviour
         /// Check list of conditions for correct connections, 2 connection.
         /// 
     }
-    public bool CheckSubPieceConnection(SubPiece currentSide, SubPiece contestedSide)
+    public bool CheckSubPieceConnection(SubPiece currentSide, SubPiece contestedSide, out bool conditionMet)
     {
-        //int relaventSlice;
-
-        //if (currentSide.subPieceIndex >= lengthOfSubPieces - 1)
-        //{
-        //    relaventSlice = 0;
-        //}
-        //else
-        //{
-        //    relaventSlice = Mathf.CeilToInt((float)currentSide.subPieceIndex / 2);
-        //}
-
-        //relavent = slicesOnBoard[relaventSlice];
-
-        bool doColorCheck = true, doShapeCheck = true, doSpecificColor = false, doSpecificShape = false;
-
-        PieceColor col = PieceColor.None;
-        PieceSymbol sym = PieceSymbol.None;
+        bool isGoodConnect = false;
+        bool conditionCheck = false;
 
         if (currentSide.relevantSlice.sliceCatagory != SliceCatagory.None)
         {
-            switch (currentSide.relevantSlice.sliceCatagory)
+            CompareResault result = TotalCheck(currentSide, contestedSide);
+
+            if (!currentSide.relevantSlice.isLimiter)
             {
-                case SliceCatagory.Shape:
-                    doColorCheck = false;
-                    break;
-                case SliceCatagory.Color:
-                    doShapeCheck = false;
-                    break;
-                case SliceCatagory.SpecificShape:
-                    doShapeCheck = false;
-                    doColorCheck = false;
-                    doSpecificColor = false;
-                    doSpecificShape = true;
-                    sym = currentSide.relevantSlice.sliceSymbol;
-                    break;
-                case SliceCatagory.SpecificColor:
-                    doShapeCheck = false;
-                    doColorCheck = false;
-                    doSpecificShape = false;
-                    doSpecificColor = true;
-                    col = currentSide.relevantSlice.sliceColor;
-                    break;
-                default:
-                    break;
+
+                conditionCheck = CheckFulfilledSliceCondition(currentSide.relevantSlice, result, currentSide, contestedSide);
+
+                if (conditionCheck)
+                {
+                    conditionMet = conditionCheck;
+                    return true;
+                }
+
+                if (result.gColorMatch)
+                {
+                    isGoodConnect = true;
+                }
+
+                if (result.gSymbolMatch)
+                {
+                    isGoodConnect = true;
+                }
+            }
+            else
+            {
+                conditionCheck = CheckFulfilledSliceCondition(currentSide.relevantSlice, result, currentSide, contestedSide);
+
+                if (conditionCheck)
+                {
+                    conditionMet = conditionCheck;
+                    return true;
+                }
+                else
+                {
+                    conditionMet = false;
+                    return false;
+                }
+
+            }
+        }
+        else
+        {
+            CompareResault result = TotalCheck(currentSide, contestedSide);
+
+            if (result.gColorMatch)
+            {
+                isGoodConnect = true;
+            }
+
+            if (result.gSymbolMatch)
+            {
+                isGoodConnect = true;
             }
         }
 
-        CompareResault result = TotalCheck(currentSide, contestedSide);
-
-        if (doColorCheck && result.gColorMatch)
-        {
-            return true;
-        }
-
-        if (doShapeCheck && result.gSymbolMatch)
-        {
-            return true;
-        }
-
-        if (doSpecificColor && result.gColorMatch)
-        {
-            PieceColor sCol = currentSide.relevantSlice.sliceColor;
-
-            return EqualColorOrJoker(currentSide.colorOfPiece, sCol) && EqualColorOrJoker(contestedSide.colorOfPiece, sCol);
-            
-
-            //if (currentSide.colorOfPiece == sCol && contestedSide.colorOfPiece == sCol)
-            //{
-            //    return true;
-            //}
-        }
-
-        if (doSpecificShape && result.gSymbolMatch)
-        {
-            PieceSymbol sSym = currentSide.relevantSlice.sliceSymbol;
-
-            return EqualSymbolOrJoker(currentSide.symbolOfPiece, sSym) && EqualSymbolOrJoker(contestedSide.symbolOfPiece, sSym);
-
-        }
-
-        return false;
-        //if (JokerCheck(currentSide, doColorCheck, doShapeCheck) || JokerCheck(contestedSide, doColorCheck, doShapeCheck))
-        //{
-        //    Debug.Log("Joker Connect");
-        //    return true;
-        //}
-
-        //if (doColorCheck && ColorCheck(currentSide, contestedSide, col))
-        //{
-        //    Debug.Log("Color Connect");
-        //    return true;
-        //}
-
-        //if (doShapeCheck && ShapeCheck(currentSide, contestedSide, sym))
-        //{
-        //    Debug.Log("Shape Connect");
-        //    return true;
-        //}
-
+        conditionMet = conditionCheck;
+        return isGoodConnect;
     }
-
-    //public bool ColorCheck(SubPiece rp, SubPiece lp, PieceColor col)
-    //{
-    //    if (rp.colorOfPiece == lp.colorOfPiece)
-    //    {
-    //        return true;
-    //    }
-
-    //    return false;
-    //}
-    //public bool ShapeCheck(SubPiece rp, SubPiece lp, PieceSymbol sym)
-    //{
-    //    if (rp.symbolOfPiece == lp.symbolOfPiece)
-    //    {
-    //        return true;
-    //    }
-
-    //    return false;
-    //}
-    //public bool JokerCheck(SubPiece sp, bool doColor, bool doSymbol)
-    //{
-    //    if (doColor && sp.colorOfPiece == PieceColor.Joker)
-    //    {
-    //        return true;
-    //    }
-
-    //    if (doSymbol && sp.symbolOfPiece == PieceSymbol.Joker)
-    //    {
-    //        return true;
-    //    }
-
-    //    return false;
-    //}
-
     public CompareResault TotalCheck(SubPiece current, SubPiece contested/*, PieceColor sCol, PieceSymbol sSym*/)
     {
         CompareResault result = new CompareResault();
@@ -316,16 +251,26 @@ public class ConnectionManager : MonoBehaviour
 
     }
 
-    public void GiveLoot(Slice relevent)
+    public void GiveLoot(Slice relevent, bool isLimiter)
     {
-        relevent.child.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.7f);
-        relevent.diamondPrefab.GetComponent<Rigidbody2D>().simulated = true;
-        relevent.diamondPrefab.GetComponent<Rigidbody2D>().AddForce(Vector3.up * 5, ForceMode2D.Impulse);
-        relevent.isLoot = false;
-        Destroy(relevent.diamondPrefab, 2f);
+        Debug.Log("Loot");
+        if (!isLimiter)
+        {
+            relevent.child.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.7f);
+            relevent.diamondPrefab.GetComponent<Rigidbody2D>().simulated = true;
+            relevent.diamondPrefab.GetComponent<Rigidbody2D>().AddForce(Vector3.up * 5, ForceMode2D.Impulse);
+            relevent.isLoot = false;
+            Destroy(relevent.diamondPrefab, 2f);
+        }
+        else
+        {
+            relevent.isLoot = false;
+        }
     }
-    public void LockCell(Slice relevent)
+    public void LockCell(Slice relevent, bool isLimiter)
     {
+        Debug.Log("Lock");
+
         cells[relevent.sliceIndex].lockSprite.SetActive(true);
         cells[relevent.sliceIndex].pieceHeld.isLocked = true;
 
@@ -340,10 +285,58 @@ public class ConnectionManager : MonoBehaviour
             cells[relevent.sliceIndex - 1].pieceHeld.isLocked = true;
         }
 
-        relevent.child.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.7f);
-        relevent.lockPrefab.GetComponent<Rigidbody2D>().simulated = true;
-        relevent.lockPrefab.GetComponent<Rigidbody2D>().AddForce(Vector3.up * 5, ForceMode2D.Impulse);
-        relevent.isLock = false;
-        Destroy(relevent.lockPrefab, 2f);
+        if (!isLimiter)
+        {
+            relevent.child.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.7f);
+            relevent.lockPrefab.GetComponent<Rigidbody2D>().simulated = true;
+            relevent.lockPrefab.GetComponent<Rigidbody2D>().AddForce(Vector3.up * 5, ForceMode2D.Impulse);
+            relevent.isLock = false;
+            Destroy(relevent.lockPrefab, 2f);
+
+        }
+        else
+        {
+            relevent.isLock = false;
+        }
+    }
+
+    public bool CheckFulfilledSliceCondition(Slice relevent, CompareResault result, SubPiece a, SubPiece b)
+    {
+        bool isConditionMet = false;
+
+        switch (relevent.sliceCatagory)
+        {
+            case SliceCatagory.Shape:
+                if (result.gSymbolMatch)
+                {
+                    isConditionMet = true;
+                }
+                break;
+            case SliceCatagory.Color:
+                if (result.gColorMatch)
+                {
+                    isConditionMet = true;
+                }
+                break;
+            case SliceCatagory.SpecificShape:
+
+                if (result.gSymbolMatch)
+                {
+                    isConditionMet = EqualSymbolOrJoker(a.symbolOfPiece, relevent.sliceSymbol) && EqualSymbolOrJoker(b.symbolOfPiece, relevent.sliceSymbol);
+                }
+
+                break;
+            case SliceCatagory.SpecificColor:
+                if (result.gColorMatch)
+                {
+                    isConditionMet = EqualColorOrJoker(a.colorOfPiece, relevent.sliceColor) && EqualColorOrJoker(b.colorOfPiece, relevent.sliceColor);
+                }
+                break;
+            default:
+                isConditionMet = false;
+                break;
+        }
+
+        return isConditionMet;
     }
 }

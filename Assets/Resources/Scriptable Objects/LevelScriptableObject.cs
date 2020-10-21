@@ -13,4 +13,5 @@ public class LevelScriptableObject : ScriptableObject
     public SliceCatagory[] slicesToSpawn;
     public bool[] lockSlices;
     public bool[] lootSlices;
+    public bool[] limiterSlices;
 }

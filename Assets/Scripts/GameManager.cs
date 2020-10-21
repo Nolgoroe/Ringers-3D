@@ -28,6 +28,10 @@ public class GameManager : MonoBehaviour
     public int unsuccessfullConnectionCount;
 
     public bool gameStarted;
+
+    public int maxLevel = 1;
+
+    public LevelScriptableObject[] levelArray;
     private void Awake()
     {
         Instance = this;
@@ -44,20 +48,13 @@ public class GameManager : MonoBehaviour
         gameBoard = Instantiate(circleBoardPrefab, destroyOutOfLevel);
         gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
 
+        UIManager.instance.GetCommitButton(gameBoard); 
         clipManager.Init();
         cursorControl.Init();
 
         sliceManager.SpawnSlices(currentLevel.slicesToSpawn.Length);
         connectionManager.GrabCellList(gameBoard.transform);
         powerupManager.InstantiatePowerUps();
-    }
-
-    public void CheckCanEndLevel()
-    {
-        if (currentFilledCellCount == currentLevel.cellsCountInLevel)
-        {
-            Debug.Log("Can Finish Level");
-        }
     }
 
     public void ChooseLevel(int levelNum)
@@ -85,5 +82,20 @@ public class GameManager : MonoBehaviour
 
         currentFilledCellCount = 0;
         unsuccessfullConnectionCount = 0;
+    }
+
+    public void CheckEndLevel()
+    {
+        if(currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0)
+        {
+            Debug.Log("YOU WIN");
+            UIManager.instance.WinLevel();
+            maxLevel++;
+        }
+        else
+        {
+            UIManager.instance.LoseLevel();
+            Debug.Log("You Lose");
+        }
     }
 }
