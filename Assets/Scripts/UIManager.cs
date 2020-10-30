@@ -13,13 +13,13 @@ public class UIManager : MonoBehaviour
     public GameObject usingPowerupText;
     public GameObject youWinText, youLoseText;
 
-    public static UIManager instance;
+    public static UIManager Instance;
 
     public Button commitButton;
     public Button[] levelButtons;
     private void Start()
     {
-        instance = this;
+        Instance = this;
         mainMenu.SetActive(true);
         hudCanvas.SetActive(false);
         itemForgeCanvas.SetActive(false);

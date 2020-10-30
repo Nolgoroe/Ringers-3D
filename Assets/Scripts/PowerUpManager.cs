@@ -83,13 +83,13 @@ public class PowerUpManager : MonoBehaviour
     }
     public void InstantiatePowerUps()
     {
-        for (int i = 0; i < GameManager.Instance.playerManager.activePowerups.Count; i++)
+        for (int i = 0; i < PlayerManager.Instance.activePowerups.Count; i++)
         {
             GameObject go = Instantiate(powerupButtonPreab, instnatiateZones[i]);
 
             PowerupProperties prop = go.GetComponent<PowerupProperties>();
 
-            PowerUp current = GameManager.Instance.playerManager.activePowerups[i];
+            PowerUp current = PlayerManager.Instance.activePowerups[i];
 
             go.name = current.ToString();
 
@@ -321,7 +321,7 @@ public class PowerUpManager : MonoBehaviour
     public void UsingPowerup(Button butt)
     {
         currentlyInUse = butt.gameObject.GetComponent<PowerupProperties>();
-        UIManager.instance.ActivateUsingPowerupMessage(true);
+        UIManager.Instance.ActivateUsingPowerupMessage(true);
 
         foreach (Button but in powerupButtons)
         {
@@ -342,7 +342,7 @@ public class PowerUpManager : MonoBehaviour
 
     public void FinishedUsingPowerup(bool successfull, PowerupProperties prop)
     {
-        UIManager.instance.ActivateUsingPowerupMessage(false);
+        UIManager.Instance.ActivateUsingPowerupMessage(false);
 
         IsUsingPowerUp = false;
         currentlyInUse = null;

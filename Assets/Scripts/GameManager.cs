@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour
     public SliceManager sliceManager;
     public ConnectionManager connectionManager;
     public PowerUpManager powerupManager;
-    public PlayerManager playerManager;
 
     public LevelScriptableObject currentLevel;
 
@@ -48,7 +47,7 @@ public class GameManager : MonoBehaviour
         gameBoard = Instantiate(circleBoardPrefab, destroyOutOfLevel);
         gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
 
-        UIManager.instance.GetCommitButton(gameBoard); 
+        UIManager.Instance.GetCommitButton(gameBoard); 
         clipManager.Init();
         cursorControl.Init();
 
@@ -89,12 +88,12 @@ public class GameManager : MonoBehaviour
         if(currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0)
         {
             Debug.Log("YOU WIN");
-            UIManager.instance.WinLevel();
+            UIManager.Instance.WinLevel();
             maxLevel++;
         }
         else
         {
-            UIManager.instance.LoseLevel();
+            UIManager.Instance.LoseLevel();
             Debug.Log("You Lose");
         }
     }

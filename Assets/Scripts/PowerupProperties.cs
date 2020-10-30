@@ -15,6 +15,31 @@ public class PowerupProperties : MonoBehaviour
     public PieceSymbol transformSymbol;
     public void SetProperties(PowerUp type)
     {
+        transformColor = PieceColor.None;
+        transformSymbol = PieceSymbol.None;
+        switch (type)
+        {
+            //case PowerUp.Joker:
+            //    break;
+            //case PowerUp.Switch:
+            //    break;
+            //case PowerUp.PieceBomb:
+            //    break;
+            //case PowerUp.SliceBomb:
+            //    break;
+            //case PowerUp.ExtraDeal:
+            //    break;
+            case PowerUp.FourColorTransform:
+                ////READ FROM ITEM
+                break;
+            case PowerUp.FourShapeTransform:
+                ////READ FROM ITEM
+                break;
+            //case PowerUp.None:
+            //    break;
+            default:
+                break;
+        }
         string path = GameManager.Instance.powerupManager.spriteByType[type];
 
         icon = Resources.Load(path) as Texture2D;

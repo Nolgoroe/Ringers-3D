@@ -43,7 +43,7 @@ public class Cell : MonoBehaviour
 
             if(GameManager.Instance.currentFilledCellCount == GameManager.Instance.currentLevel.cellsCountInLevel)
             {
-                UIManager.instance.ActivateCommitButton();
+                UIManager.Instance.ActivateCommitButton();
             }
         }
 
