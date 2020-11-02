@@ -35,6 +35,7 @@ public class PowerUpManager : MonoBehaviour
 
     public PowerupProperties currentlyInUse;
 
+    public int instnatiatedZonesCounter = 0;
     private void Start()
     {
         GameManager.Instance.powerupManager = this;
@@ -81,26 +82,33 @@ public class PowerUpManager : MonoBehaviour
                 break;
         }
     }
-    public void InstantiatePowerUps()
+    public void InstantiatePowerUps(EquipmentData data)
     {
-        for (int i = 0; i < PlayerManager.Instance.activePowerups.Count; i++)
+        GameObject go = Instantiate(powerupButtonPreab, instnatiateZones[instnatiatedZonesCounter]);
+
+        instnatiatedZonesCounter++;
+
+        PowerupProperties prop = go.GetComponent<PowerupProperties>();
+
+        PowerUp current = data.power;
+
+        go.name = current.ToString();
+
+        prop.SetProperties(current);
+
+        if (current == PowerUp.FourColorTransform)
         {
-            GameObject go = Instantiate(powerupButtonPreab, instnatiateZones[i]);
-
-            PowerupProperties prop = go.GetComponent<PowerupProperties>();
-
-            PowerUp current = PlayerManager.Instance.activePowerups[i];
-
-            go.name = current.ToString();
-
-            prop.SetProperties(current);
-
-            AssignPowerUp(current, go.GetComponent<Button>());
-
-            powerupButtons.Add(go.GetComponent<Button>());
+            prop.transformColor = data.specificColor;
         }
-    }
+        else if(current == PowerUp.FourShapeTransform)
+        {
+            prop.transformSymbol = data.specificSymbol;
+        }
 
+        AssignPowerUp(current, go.GetComponent<Button>());
+
+        powerupButtons.Add(go.GetComponent<Button>());
+    }
     public void Deal()
     {
         GameManager.Instance.clipManager.clipCount--;
@@ -120,7 +128,6 @@ public class PowerUpManager : MonoBehaviour
         Debug.Log("Extra Deal");
 
     }
-
 
     public void CallJokerCoroutine(PowerupProperties prop)
     {

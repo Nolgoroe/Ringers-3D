@@ -136,7 +136,7 @@ public class SliceManager : MonoBehaviour
 
             for (int i = 0; i < fullSlices.Count; i++)
             {
-                fullSlices[i].SetData(GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
+                fullSlices[i].SetData(GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i], GameManager.Instance.currentLevel.lootPacks[i]);
             }
         }
     }

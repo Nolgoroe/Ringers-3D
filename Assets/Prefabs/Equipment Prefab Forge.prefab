@@ -196,7 +196,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1930694634892588985}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6402305418112137225}
+        m_MethodName: ForgeItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1930694635132414256
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,8 +325,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1930694636139701048}
   m_HandleRect: {fileID: 1930694636139701051}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.395686
+  m_Value: 0.00011481721
+  m_Size: 0.8211985
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -701,6 +712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33ac0fcc95d69d143890cbe95bbeb006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forgeButton: {fileID: 1930694634892588984}
   itemName: {fileID: 1930694635227915491}
   usageCount: {fileID: 1930694636359968545}
   powerUp: {fileID: 741539871394557108}
@@ -708,6 +720,18 @@ MonoBehaviour:
   ingrediantContentParent: {fileID: 1930694636548318023}
   ingrediantDisplayerPrefab: {fileID: 9034230963978331936, guid: 221f93ae6df30cb4bb5011c961339dd3,
     type: 3}
+  materialCountPairs: []
+  data:
+    name: 
+    slot: 0
+    power: 7
+    specificSymbol: 5
+    specificColor: 5
+    numOfUses: 0
+    scopeOfUses: 0
+    mats: 
+    spritePath: 
+  craftingMatsForEquipment: []
 --- !u!1 &1930694635276725123
 GameObject:
   m_ObjectHideFlags: 0
@@ -1333,8 +1357,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 450.565, y: 0}
-  m_SizeDelta: {x: 933.4, y: 0}
+  m_AnchoredPosition: {x: 57.3, y: 0}
+  m_SizeDelta: {x: 146.9, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1930694636548318020
 MonoBehaviour:
@@ -1358,8 +1382,8 @@ MonoBehaviour:
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 42.53, y: 0}
-  m_Constraint: 0
-  m_ConstraintCount: 2
+  m_Constraint: 2
+  m_ConstraintCount: 1
 --- !u!1 &1930694636809932491
 GameObject:
   m_ObjectHideFlags: 0

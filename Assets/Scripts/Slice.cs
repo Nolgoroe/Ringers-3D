@@ -7,7 +7,7 @@ public class Slice : MonoBehaviour
     public PieceColor sliceColor;
     public PieceSymbol sliceSymbol;
     public SliceCatagory sliceCatagory;
-
+    public LootPacks lootPack;
     public GameObject lockPrefab, diamondPrefab;
 
     public GameObject child;
@@ -18,7 +18,7 @@ public class Slice : MonoBehaviour
     public bool fulfilledCondition;
 
     public int sliceIndex;
-    public void SetData(SliceCatagory sc, bool islocking, bool isLooting, bool isLimiting)
+    public void SetData(SliceCatagory sc, bool islocking, bool isLooting, bool isLimiting, LootPacks lp)
     {
         SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
 
@@ -30,6 +30,7 @@ public class Slice : MonoBehaviour
         isLock = islocking;
         isLimiter = isLimiting;
         sliceCatagory = sc;
+        lootPack = lp;
 
         switch (sliceCatagory)
         {

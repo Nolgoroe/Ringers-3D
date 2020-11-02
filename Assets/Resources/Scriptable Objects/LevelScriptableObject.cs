@@ -6,7 +6,6 @@ using UnityEngine;
 public class LevelScriptableObject : ScriptableObject
 {
     public int levelNum;
-    //public int numOfSlices;
     public int cellsCountInLevel;
 
 
@@ -14,4 +13,5 @@ public class LevelScriptableObject : ScriptableObject
     public bool[] lockSlices;
     public bool[] lootSlices;
     public bool[] limiterSlices;
+    public LootPacks[] lootPacks;
 }

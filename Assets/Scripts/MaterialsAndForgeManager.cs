@@ -16,7 +16,6 @@ public class MaterialsAndForgeManager : MonoBehaviour
     public List<EquipmentDisplayer> equipmentInForge; /// Equipment that the player does not have / has not created yet
 
     public string[] materialPaths;
-    public string[] materialNames;
 
     public Transform[] matTypeCatagorieParents;
     private void Start()
@@ -35,6 +34,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
             matTypeToParent.Add((CraftingMatType)i, matTypeCatagorieParents[i - 1]); //// i - 1 becuase there is no "NONE" to transform, see the above comment
         }
     }
+
     public void FillForge(List<EquipmentData> equipment)
     {
 
@@ -76,12 +76,42 @@ public class MaterialsAndForgeManager : MonoBehaviour
     {
         foreach (CraftingMatEntry CM in PlayerManager.Instance.craftingMatsInInventory)
         {
-           GameObject go = Instantiate(crafingMatPrefab, matTypeToParent[CM.craftingMatType]);
+            if(CM.craftingMatType != CraftingMatType.None)
+            {
+                GameObject go = Instantiate(crafingMatPrefab, matTypeToParent[CM.craftingMatType]);
 
-            CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
+                CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
 
-            CMD.materialImage.texture = Resources.Load(materialSpriteByName[CM.mat]) as Texture2D;
-            CMD.materialCount.text = CM.amount.ToString();
+                CMD.materialImage.texture = Resources.Load(materialSpriteByName[CM.mat]) as Texture2D;
+                CMD.materialCount.text = CM.amount.ToString();
+            }
         }
+    }
+
+    [ContextMenu("Refresh Material Bag")]
+    public void RefreshMaterialBag()
+    {
+        foreach (Transform Mat in matTypeCatagorieParents)
+        {
+            for (int i = 0; i < Mat.childCount; i++)
+            {
+                Destroy(Mat.GetChild(i).gameObject);
+            }
+        }
+
+        PopulateMaterialBag();///// Ask Alon to explain Logic here
+    }
+
+    [ContextMenu("Refresh Forge")]
+    public void RefreshForge()
+    {
+        equipmentInForge.Clear();
+
+        foreach (Transform EQ in equipmentContent)
+        {
+            Destroy(EQ.gameObject);
+        }
+
+        FillForge(GameManager.Instance.csvParser.allEquipmentInGame);
     }
 }

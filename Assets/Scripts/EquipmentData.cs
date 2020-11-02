@@ -33,7 +33,7 @@ public class EquipmentData
         mats = equipmatList;
         spritePath = path;
     }
-    public EquipmentData()
+    public EquipmentData() //// Override for an empty constructor
     {
 
     }

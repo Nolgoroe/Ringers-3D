@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     public LevelScriptableObject currentLevel;
 
+    public CSVParser csvParser;
+
     public int currentFilledCellCount;
     public int unsuccessfullConnectionCount;
 
@@ -53,7 +55,11 @@ public class GameManager : MonoBehaviour
 
         sliceManager.SpawnSlices(currentLevel.slicesToSpawn.Length);
         connectionManager.GrabCellList(gameBoard.transform);
-        powerupManager.InstantiatePowerUps();
+
+        PlayerManager.Instance.PopulatePowerUps();
+
+        powerupManager.instnatiatedZonesCounter = 0;
+
     }
 
     public void ChooseLevel(int levelNum)

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance;
+
     public GameObject mainMenu, hudCanvas, itemForgeCanvas, gameplayCanvas, ringersHut;
     public GameObject forge, itemBag;
     public GameObject OptionsScreen;
@@ -13,10 +15,11 @@ public class UIManager : MonoBehaviour
     public GameObject usingPowerupText;
     public GameObject youWinText, youLoseText;
 
-    public static UIManager Instance;
+    public Text goldText, rubyText;
 
     public Button commitButton;
     public Button[] levelButtons;
+
     private void Start()
     {
         Instance = this;
@@ -159,5 +162,11 @@ public class UIManager : MonoBehaviour
         {
             levelButtons[i].interactable = true;
         }
+    }
+
+    public void RefreshGoldAndRubyDisplay()
+    {
+        goldText.text = PlayerManager.Instance.goldCount.ToString();
+        rubyText.text = PlayerManager.Instance.rubyCount.ToString();
     }
 }

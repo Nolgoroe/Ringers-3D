@@ -253,6 +253,8 @@ public class ConnectionManager : MonoBehaviour
 
     public void GiveLoot(Slice relevent, bool isLimiter)
     {
+        LootPackEnums.Instance.RollOnTable(relevent.lootPack);
+
         Debug.Log("Loot");
         if (!isLimiter)
         {
