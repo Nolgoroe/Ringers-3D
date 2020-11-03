@@ -14,7 +14,7 @@ public class WardrobeManager : MonoBehaviour
 
     public EquipmentSlot[] equipmentSlots;
 
-    public Dictionary<slotType,EquipmentSlot> slotToSpot; ///// get slot for equipment enum and return the parent transform
+    public Dictionary<slotType, EquipmentSlot> slotToSpot; ///// get slot for equipment enum and return the parent transform
 
     public static WardrobeManager Instance;
 
@@ -68,26 +68,53 @@ public class WardrobeManager : MonoBehaviour
 
     public void EquipMe(EquipmentData data, WardrobeEquipmentDisplayer displayer)
     {
+        if (!slotToSpot[data.slot].isFull)
+        {
+            slotToSpot[data.slot].isFull = true;
+
+            slotToSpot[data.slot].equipmentInSlot = data;
+
+            equipmentInWardrobe.Remove(displayer);
+            PlayerManager.Instance.wardrobeEquipment.Remove(data);
+
+            Destroy(displayer.gameObject);
+
+            GameObject go = Instantiate(equippedPrefab, slotToSpot[data.slot].transform);
+
+            go.GetComponentInChildren<RawImage>().texture = Resources.Load(data.spritePath) as Texture2D;
+
+            PlayerManager.Instance.equippedItems.Add(data);
+
+            PlayerManager.Instance.SavePlayerData();
+        }
+    }
+
+    public void EquipMe(EquipmentData data) //// Called only when loading the game
+    {
         slotToSpot[data.slot].equipmentInSlot = data;
+        slotToSpot[data.slot].isFull = true;
 
-        equipmentInWardrobe.Remove(displayer);
-
-        Destroy(displayer.gameObject);
-
-        GameObject go =  Instantiate(equippedPrefab, slotToSpot[data.slot].transform);
+        GameObject go = Instantiate(equippedPrefab, slotToSpot[data.slot].transform);
 
         go.GetComponentInChildren<RawImage>().texture = Resources.Load(data.spritePath) as Texture2D;
-
-        PlayerManager.Instance.equippedItems.Add(data);
     }
+
     public void UnEquipMe(EquipmentData data)
     {
-        PlayerManager.Instance.equippedItems.Remove(data);
+        if (slotToSpot[data.slot].isFull)
+        {
+            slotToSpot[data.slot].isFull = false;
 
-        SpawnWardrobeEquipment(data);
+            PlayerManager.Instance.equippedItems.Remove(data);
+            PlayerManager.Instance.wardrobeEquipment.Add(data);
 
-        Destroy(slotToSpot[data.slot].transform.GetChild(0).gameObject);
+            SpawnWardrobeEquipment(data);
 
-        SortMaster.Instance.FilterWardrobe();
+            Destroy(slotToSpot[data.slot].transform.GetChild(0).gameObject);
+
+            SortMaster.Instance.FilterWardrobe();
+
+            PlayerManager.Instance.SavePlayerData();
+        }
     }
 }

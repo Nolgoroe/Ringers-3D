@@ -30,9 +30,8 @@ public class GameManager : MonoBehaviour
 
     public bool gameStarted;
 
-    public int maxLevel = 1;
-
     public LevelScriptableObject[] levelArray;
+
     private void Awake()
     {
         Instance = this;
@@ -91,16 +90,20 @@ public class GameManager : MonoBehaviour
 
     public void CheckEndLevel()
     {
+        LootManager.Instance.GiveLoot();
+
         if(currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0)
         {
             Debug.Log("YOU WIN");
             UIManager.Instance.WinLevel();
-            maxLevel++;
+            PlayerManager.Instance.maxLevel++;
         }
         else
         {
             UIManager.Instance.LoseLevel();
             Debug.Log("You Lose");
         }
+
+        PlayerManager.Instance.SavePlayerData();
     }
 }

@@ -36,14 +36,13 @@ public class UIManager : MonoBehaviour
         youWinText.SetActive(false);
         youLoseText.SetActive(false);
 
-
-        UnlockLevels();
+        //UnlockLevels();
     }
-
     public void PlayButton()
     {
         mainMenu.SetActive(false);
         hudCanvas.SetActive(true);
+        UnlockLevels();
     }
     public void ActivateGmaeplayCanvas()
     {
@@ -57,7 +56,9 @@ public class UIManager : MonoBehaviour
     }
     public void ToHud(GameObject currentCanvas)
     {
-        if(currentCanvas == gameplayCanvas)
+        PlayerManager.Instance.SavePlayerData();
+
+        if (currentCanvas == gameplayCanvas)
         {
             gameplayCanvas.SetActive(false);
             OptionsScreen.SetActive(false);
@@ -65,6 +66,9 @@ public class UIManager : MonoBehaviour
             youLoseText.SetActive(false);
 
             GameManager.Instance.DestroyAllLevelChildern();
+
+            LootManager.Instance.ResetLevelLootData();
+
             UnlockLevels();
         }
 
@@ -158,12 +162,11 @@ public class UIManager : MonoBehaviour
     }
     public void UnlockLevels()
     {
-        for (int i = 0; i < GameManager.Instance.maxLevel; i++)
+        for (int i = 0; i < PlayerManager.Instance.maxLevel; i++)
         {
             levelButtons[i].interactable = true;
         }
     }
-
     public void RefreshGoldAndRubyDisplay()
     {
         goldText.text = PlayerManager.Instance.goldCount.ToString();

@@ -1288,6 +1288,7 @@ MonoBehaviour:
     mats: 
     spritePath: 
   typeOfSlot: 2
+  isFull: 0
 --- !u!1 &116500284
 GameObject:
   m_ObjectHideFlags: 0
@@ -4123,51 +4124,56 @@ MonoBehaviour:
   - tableToMat: 010000000200000003000000
   - tableToMat: 10000000
   - tableToMat: 010000000200000003000000
-  listOfListItemTables1:
-  - Pack: 
-    IsMoneyOrRubies: 1
-    minMaxValues: 0a0000000f000000
-  - Pack: 
-    IsMoneyOrRubies: 1
-    minMaxValues: 1400000019000000
-  - Pack: 
-    IsMoneyOrRubies: 1
-    minMaxValues: 1e00000023000000
-  - Pack: 
-    IsMoneyOrRubies: 1
+  listOfRewardBags:
+  - IsMoneyOrRubies: 1
+    Pack: 
+    minMaxValues: 050000000c000000
+    chancesPerItemTable: 
+  - IsMoneyOrRubies: 1
+    Pack: 
+    minMaxValues: 1900000026000000
+    chancesPerItemTable: 
+  - IsMoneyOrRubies: 1
+    Pack: 
+    minMaxValues: 3200000046000000
+    chancesPerItemTable: 
+  - IsMoneyOrRubies: 1
+    Pack: 
     minMaxValues: 0100000002000000
-  - Pack: 
-    IsMoneyOrRubies: 1
+    chancesPerItemTable: 
+  - IsMoneyOrRubies: 1
+    Pack: 
     minMaxValues: 0300000004000000
-  - Pack: 0100000002000000
-    IsMoneyOrRubies: 0
+    chancesPerItemTable: 
+  - IsMoneyOrRubies: 0
+    Pack: 0100000002000000
     minMaxValues: 
-  - Pack: 0100000002000000
-    IsMoneyOrRubies: 0
+    chancesPerItemTable: 6400000014000000
+  - IsMoneyOrRubies: 0
+    Pack: 0100000002000000
     minMaxValues: 
-  - Pack: 010000000100000003000000
-    IsMoneyOrRubies: 0
+    chancesPerItemTable: 6400000028000000
+  - IsMoneyOrRubies: 0
+    Pack: 010000000100000003000000
     minMaxValues: 
-  - Pack: 010000000200000002000000
-    IsMoneyOrRubies: 0
+    chancesPerItemTable: 640000001e00000028000000
+  - IsMoneyOrRubies: 0
+    Pack: 010000000200000002000000
     minMaxValues: 
-  - Pack: 020000000300000004000000
-    IsMoneyOrRubies: 0
+    chancesPerItemTable: 500000006400000028000000
+  - IsMoneyOrRubies: 0
+    Pack: 020000000300000004000000
     minMaxValues: 
-  - Pack: 030000000400000005000000
-    IsMoneyOrRubies: 0
+    chancesPerItemTable: 640000004600000014000000
+  - IsMoneyOrRubies: 0
+    Pack: 030000000400000005000000
     minMaxValues: 
-  - Pack: 040000000500000006000000
-    IsMoneyOrRubies: 0
+    chancesPerItemTable: 46000000640000001e000000
+  - IsMoneyOrRubies: 0
+    Pack: 040000000500000006000000
     minMaxValues: 
-  listOfChances:
-  - minMaxValues: 6400000014000000
-  - minMaxValues: 6400000028000000
-  - minMaxValues: 640000001e00000028000000
-  - minMaxValues: 500000006400000028000000
-  - minMaxValues: 640000004600000014000000
-  - minMaxValues: 46000000640000001e000000
-  - minMaxValues: 32000000640000003c000000
+    chancesPerItemTable: 32000000640000003c000000
+  currentLevelLootToGive: 
 --- !u!1 &363876821
 GameObject:
   m_ObjectHideFlags: 0
@@ -8893,6 +8899,7 @@ MonoBehaviour:
     mats: 
     spritePath: 
   typeOfSlot: 3
+  isFull: 0
 --- !u!1 &867026350
 GameObject:
   m_ObjectHideFlags: 0
@@ -9588,27 +9595,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b5f4b6bfbebfe43bf86eba9149841d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goldCount: 10
-  rubyCount: 1
+  maxLevel: 1
+  goldCount: 0
+  rubyCount: 0
   activePowerups: 
-  specificSymbol: 
-  specificColor: 
   craftingMatsInInventory:
   - mat: 1
     craftingMatType: 1
-    amount: 0
+    amount: 10
   - mat: 2
     craftingMatType: 1
-    amount: 0
+    amount: 300
   - mat: 3
     craftingMatType: 3
-    amount: 0
+    amount: 10
   - mat: 4
     craftingMatType: 2
-    amount: 0
+    amount: 10
   - mat: 5
     craftingMatType: 1
-    amount: 0
+    amount: 20
   - mat: 6
     craftingMatType: 3
     amount: 0
@@ -9741,6 +9747,7 @@ MonoBehaviour:
     mats: 
     spritePath: 
   typeOfSlot: 1
+  isFull: 0
 --- !u!1 &972174667
 GameObject:
   m_ObjectHideFlags: 0
@@ -17991,7 +17998,6 @@ MonoBehaviour:
   currentFilledCellCount: 0
   unsuccessfullConnectionCount: 0
   gameStarted: 0
-  maxLevel: 1
   levelArray:
   - {fileID: 0}
   - {fileID: 11400000, guid: dcda13ed4c8ea244fb95b0dda40dc8db, type: 2}

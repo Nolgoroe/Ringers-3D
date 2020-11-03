@@ -13,5 +13,5 @@ public class LevelScriptableObject : ScriptableObject
     public bool[] lockSlices;
     public bool[] lootSlices;
     public bool[] limiterSlices;
-    public LootPacks[] lootPacks;
+    public LootPacks[] RewardBags;
 }

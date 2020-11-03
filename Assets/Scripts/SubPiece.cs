@@ -9,7 +9,7 @@ public class SubPiece : MonoBehaviour
 
     int random;
     public Renderer rend;
-    public Renderer symbolHolder;
+    //public Renderer symbolHolder;
 
     public bool isBadConnection;
     public int subPieceIndex;
@@ -25,7 +25,8 @@ public class SubPiece : MonoBehaviour
 
 
         random = Random.Range(0, GameManager.Instance.clipManager.gameSymbols.Length - 1);
-        symbolHolder.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[random].texture);
+        rend.material.SetTexture("_BumpMap", GameManager.Instance.clipManager.gameSymbols[random]);
+        rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[random]);
         symbolOfPiece = (PieceSymbol)random;
     }
 
@@ -35,6 +36,7 @@ public class SubPiece : MonoBehaviour
         rend.material.SetColor("_BaseColor", GameManager.Instance.clipManager.gameColors[(int)colorOfPiece]);
 
 
-        symbolHolder.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[(int)symbolOfPiece].texture);
+        rend.material.SetTexture("_BumpMap", GameManager.Instance.clipManager.gameSymbols[(int)symbolOfPiece]);
+        rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[(int)symbolOfPiece]);
     }
 }

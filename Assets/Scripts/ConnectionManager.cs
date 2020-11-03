@@ -253,9 +253,12 @@ public class ConnectionManager : MonoBehaviour
 
     public void GiveLoot(Slice relevent, bool isLimiter)
     {
-        LootPackEnums.Instance.RollOnTable(relevent.lootPack);
-
         Debug.Log("Loot");
+        Debug.Log(relevent.lootPack);
+
+        LootManager.Instance.currentLevelLootToGive.Add(relevent.lootPack);
+        //LootManager.Instance.RollOnTable(relevent.lootPack);
+
         if (!isLimiter)
         {
             relevent.child.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.7f);

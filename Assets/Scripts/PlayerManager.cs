@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.IO;
 using System.Linq;
 
 [Serializable]
@@ -41,11 +42,11 @@ public class CraftingMatEntry
 }
 public class PlayerManager : MonoBehaviour
 {
+    public int maxLevel = 1;
+
     public int goldCount, rubyCount;
 
     public List<PowerUp> activePowerups;
-    public List<PieceSymbol> specificSymbol;
-    public List<PieceColor> specificColor; ///// ask alon if he has any idea for a better way
 
     public List<CraftingMatEntry> craftingMatsInInventory;
 
@@ -53,6 +54,9 @@ public class PlayerManager : MonoBehaviour
     public List<EquipmentData> equippedItems;
 
     public static PlayerManager Instance;
+
+    string path;
+
     private void Start()
     {
         Instance = this;
@@ -60,6 +64,32 @@ public class PlayerManager : MonoBehaviour
         MaterialsAndForgeManager.Instance.PopulateMaterialBag();
 
         UIManager.Instance.RefreshGoldAndRubyDisplay();
+
+        path = Application.dataPath + "/PlayerSaveData.txt";
+
+        if (File.Exists(path))
+        {
+            LoadPlayerData();
+
+            MaterialsAndForgeManager.Instance.RefreshForge();
+            MaterialsAndForgeManager.Instance.RefreshMaterialBag();
+        }
+
+        if (wardrobeEquipment.Count > 0)
+        {
+            foreach (EquipmentData ED in wardrobeEquipment)
+            {
+                WardrobeManager.Instance.SpawnWardrobeEquipment(ED);
+            }
+        }
+
+        if(equippedItems.Count > 0)
+        {
+            foreach (EquipmentData ED in equippedItems)
+            {
+                WardrobeManager.Instance.EquipMe(ED);
+            }
+        }
     }
 
     public bool CheckIfHasMaterialts(CraftingMatsNeeded CMN)
@@ -88,11 +118,13 @@ public class PlayerManager : MonoBehaviour
     public void AddGold(int amount)
     {
         goldCount += amount;
+        Debug.Log(amount);
         UIManager.Instance.RefreshGoldAndRubyDisplay();
     }
     public void AddRubies(int amount)
     {
         rubyCount += amount;
+        Debug.Log(amount);
         UIManager.Instance.RefreshGoldAndRubyDisplay();
     }
     public void PopulatePowerUps()
@@ -103,5 +135,25 @@ public class PlayerManager : MonoBehaviour
 
             GameManager.Instance.powerupManager.InstantiatePowerUps(ED);
         }
+    }
+
+    [ContextMenu("Save")]
+    public void SavePlayerData()
+    {
+       string savedData = JsonUtility.ToJson(this);
+
+        string path = Application.dataPath + "/PlayerSaveData.txt";
+
+        File.WriteAllText(path, savedData);
+    }
+
+    [ContextMenu("Load")]
+    public void LoadPlayerData()
+    {
+        string path = Application.dataPath + "/PlayerSaveData.txt";
+
+        JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
+
+        Instance = this;
     }
 }

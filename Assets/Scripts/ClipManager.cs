@@ -8,7 +8,7 @@ public class ClipManager : MonoBehaviour
     public GameObject piece;
 
     public Color[] gameColors;
-    public Sprite[] gameSymbols;
+    public Texture2D[] gameSymbols;
 
     public int clipCount;
     private void Awake()
