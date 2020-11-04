@@ -63,6 +63,8 @@ MonoBehaviour:
   pieceHeld: {fileID: 0}
   isLimited: 0
   lockSprite: {fileID: 6481315729166118644}
+  rightParticleZone: {fileID: 7731711588630417992}
+  leftParticleZone: {fileID: 5778231230796311929}
 --- !u!1 &153735969
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,6 +128,8 @@ MonoBehaviour:
   pieceHeld: {fileID: 0}
   isLimited: 0
   lockSprite: {fileID: 4683362947934931893}
+  rightParticleZone: {fileID: 538842224559554249}
+  leftParticleZone: {fileID: 4679270184902242318}
 --- !u!1 &566847775
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,6 +193,8 @@ MonoBehaviour:
   pieceHeld: {fileID: 0}
   isLimited: 0
   lockSprite: {fileID: 2252100302873529608}
+  rightParticleZone: {fileID: 3695877806278028994}
+  leftParticleZone: {fileID: 1902684197609485379}
 --- !u!1 &856548267
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +258,8 @@ MonoBehaviour:
   pieceHeld: {fileID: 0}
   isLimited: 0
   lockSprite: {fileID: 4257122012369873463}
+  rightParticleZone: {fileID: 4679270184902242318}
+  leftParticleZone: {fileID: 6692842737193151116}
 --- !u!1 &955080193
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,6 +323,8 @@ MonoBehaviour:
   pieceHeld: {fileID: 0}
   isLimited: 0
   lockSprite: {fileID: 4165404869278522090}
+  rightParticleZone: {fileID: 3868599810952633166}
+  leftParticleZone: {fileID: 7731711588630417992}
 --- !u!1 &992830417
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,6 +388,8 @@ MonoBehaviour:
   pieceHeld: {fileID: 0}
   isLimited: 0
   lockSprite: {fileID: 735363294944159468}
+  rightParticleZone: {fileID: 5778231230796311929}
+  leftParticleZone: {fileID: 538842224559554249}
 --- !u!1 &1157581572
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,6 +453,8 @@ MonoBehaviour:
   pieceHeld: {fileID: 0}
   isLimited: 0
   lockSprite: {fileID: 4820653481458455929}
+  rightParticleZone: {fileID: 1902684197609485379}
+  leftParticleZone: {fileID: 3868599810952633166}
 --- !u!1 &1596380326
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,6 +518,8 @@ MonoBehaviour:
   pieceHeld: {fileID: 0}
   isLimited: 0
   lockSprite: {fileID: 9121639209920815113}
+  rightParticleZone: {fileID: 6692842737193151116}
+  leftParticleZone: {fileID: 3695877806278028994}
 --- !u!1 &97109625940631375
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,6 +958,7 @@ MonoBehaviour:
   sliceColor: 5
   sliceSymbol: 5
   sliceCatagory: 4
+  lootPack: 0
   lockPrefab: {fileID: 9157242701156010349}
   diamondPrefab: {fileID: 7093896268567770744}
   child: {fileID: 0}
@@ -1081,6 +1098,66 @@ Transform:
   m_LocalScale: {x: 0.79, y: 0.79, z: 0.79}
   m_Children: []
   m_Father: {fileID: 6327436674034221419}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1631040260762616161
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6692842737193151116}
+  m_Layer: 0
+  m_Name: Particle Zone (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6692842737193151116
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631040260762616161}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.57, y: -4.16, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3154038639032348729}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1994965113528175820
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7731711588630417992}
+  m_Layer: 0
+  m_Name: Particle Zone (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7731711588630417992
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994965113528175820}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.71, y: 4.05, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3154038639032348729}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2027583761338630337
@@ -1310,6 +1387,7 @@ MonoBehaviour:
   sliceColor: 5
   sliceSymbol: 5
   sliceCatagory: 4
+  lootPack: 0
   lockPrefab: {fileID: 4913558745752176633}
   diamondPrefab: {fileID: 828684040546155539}
   child: {fileID: 0}
@@ -1484,6 +1562,7 @@ MonoBehaviour:
   sliceColor: 5
   sliceSymbol: 5
   sliceCatagory: 4
+  lootPack: 0
   lockPrefab: {fileID: 5900044386038621612}
   diamondPrefab: {fileID: 7435834375467190207}
   child: {fileID: 0}
@@ -1888,6 +1967,36 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &3091130653676753697
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4679270184902242318}
+  m_Layer: 0
+  m_Name: Particle Zone (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4679270184902242318
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3091130653676753697}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.8, y: -4.18, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3154038639032348729}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3268210979948661559
 GameObject:
   m_ObjectHideFlags: 0
@@ -2039,6 +2148,7 @@ MonoBehaviour:
   sliceColor: 5
   sliceSymbol: 5
   sliceCatagory: 4
+  lootPack: 0
   lockPrefab: {fileID: 932485278955239052}
   diamondPrefab: {fileID: 8429457140941810901}
   child: {fileID: 0}
@@ -2431,6 +2541,66 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &4716511553575380779
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 538842224559554249}
+  m_Layer: 0
+  m_Name: Particle Zone (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &538842224559554249
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4716511553575380779}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.22, y: -1.78, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3154038639032348729}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4813557845787488618
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3868599810952633166}
+  m_Layer: 0
+  m_Name: Particle Zone (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3868599810952633166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4813557845787488618}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.71, y: 4.16, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3154038639032348729}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4820653481458455929
 GameObject:
   m_ObjectHideFlags: 0
@@ -2693,6 +2863,7 @@ MonoBehaviour:
   sliceColor: 5
   sliceSymbol: 5
   sliceCatagory: 4
+  lootPack: 0
   lockPrefab: {fileID: 3268210979948661559}
   diamondPrefab: {fileID: 8834651074039906336}
   child: {fileID: 0}
@@ -2804,6 +2975,36 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &6094270989986038114
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5778231230796311929}
+  m_Layer: 0
+  m_Name: Particle Zone (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5778231230796311929
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6094270989986038114}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4, y: 1.57, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3154038639032348729}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6275344338228818351
 GameObject:
   m_ObjectHideFlags: 0
@@ -2933,13 +3134,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6382559071292991177}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.87, z: 0}
+  m_LocalPosition: {x: -2.25, y: -2.87, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8654870071412049279}
   - {fileID: 7399738602564596006}
   - {fileID: 6327436674034221419}
   - {fileID: 7019243190069314661}
+  - {fileID: 3154038639032348729}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3030,6 +3232,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 970ba172584fa5d4b978c894192e5cff, type: 3}
   - {fileID: 21300000, guid: 17f75e4370c4ab841bff0ac2fad0320f, type: 3}
   - {fileID: 21300000, guid: 17f75e4370c4ab841bff0ac2fad0320f, type: 3}
+  fullSlices: []
 --- !u!1 &6481315729166118644
 GameObject:
   m_ObjectHideFlags: 0
@@ -3111,6 +3314,74 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &6719651912495343778
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3154038639032348729}
+  m_Layer: 0
+  m_Name: Particle Zones
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3154038639032348729
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6719651912495343778}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1902684197609485379}
+  - {fileID: 3868599810952633166}
+  - {fileID: 7731711588630417992}
+  - {fileID: 5778231230796311929}
+  - {fileID: 538842224559554249}
+  - {fileID: 4679270184902242318}
+  - {fileID: 6692842737193151116}
+  - {fileID: 3695877806278028994}
+  m_Father: {fileID: 6382559071292991179}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6914756529291509392
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3695877806278028994}
+  m_Layer: 0
+  m_Name: Particle Zone (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3695877806278028994
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6914756529291509392}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.93, y: -1.78, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3154038639032348729}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7093896268567770744
 GameObject:
   m_ObjectHideFlags: 0
@@ -3365,6 +3636,7 @@ MonoBehaviour:
   sliceColor: 5
   sliceSymbol: 5
   sliceCatagory: 4
+  lootPack: 0
   lockPrefab: {fileID: 2830466450718260886}
   diamondPrefab: {fileID: 6275344338228818351}
   child: {fileID: 0}
@@ -3373,6 +3645,36 @@ MonoBehaviour:
   isLimiter: 0
   fulfilledCondition: 0
   sliceIndex: 6
+--- !u!1 &7971030251414341336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1902684197609485379}
+  m_Layer: 0
+  m_Name: Particle Zone (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1902684197609485379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7971030251414341336}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.018, y: 1.73, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3154038639032348729}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8336569411295050559
 GameObject:
   m_ObjectHideFlags: 0
@@ -3916,6 +4218,7 @@ MonoBehaviour:
   sliceColor: 5
   sliceSymbol: 5
   sliceCatagory: 4
+  lootPack: 0
   lockPrefab: {fileID: 203784631945537602}
   diamondPrefab: {fileID: 2777783503260389164}
   child: {fileID: 0}
@@ -3972,6 +4275,7 @@ MonoBehaviour:
   sliceColor: 5
   sliceSymbol: 5
   sliceCatagory: 4
+  lootPack: 0
   lockPrefab: {fileID: 97109625940631375}
   diamondPrefab: {fileID: 4477138974531091684}
   child: {fileID: 0}

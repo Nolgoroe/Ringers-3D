@@ -40,8 +40,7 @@ public class UIManager : MonoBehaviour
     }
     public void PlayButton()
     {
-        mainMenu.SetActive(false);
-        hudCanvas.SetActive(true);
+        ToHud(mainMenu);
         UnlockLevels();
     }
     public void ActivateGmaeplayCanvas()
@@ -56,6 +55,7 @@ public class UIManager : MonoBehaviour
     }
     public void ToHud(GameObject currentCanvas)
     {
+        PlayerManager.Instance.activePowerups.Clear();
         PlayerManager.Instance.SavePlayerData();
 
         if (currentCanvas == gameplayCanvas)
@@ -75,6 +75,12 @@ public class UIManager : MonoBehaviour
         if(currentCanvas == ringersHut)
         {
             ringersHut.SetActive(false);
+            Camera.main.orthographic = false;
+        }
+
+        if (currentCanvas == mainMenu)
+        {
+            mainMenu.SetActive(false);
         }
 
         hudCanvas.SetActive(true);

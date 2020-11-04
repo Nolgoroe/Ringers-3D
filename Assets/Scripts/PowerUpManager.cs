@@ -284,21 +284,27 @@ public class PowerUpManager : MonoBehaviour
 
         Piece par = toWorkOn.transform.parent.GetComponent<Piece>();
 
-        if (par.partOfBoard && !par.isLocked)
+        if(toWorkOn.colorOfPiece != prop.transformColor)
         {
-            par.transform.parent.GetComponent<Cell>().RemovePiece();
+            if (par.partOfBoard && !par.isLocked)
+            {
+                par.transform.parent.GetComponent<Cell>().RemovePiece();
 
-            toWorkOn.colorOfPiece = prop.transformColor;
+                toWorkOn.colorOfPiece = prop.transformColor;
 
-            toWorkOn.RefreshPiece();
+                toWorkOn.RefreshPiece();
 
-            par.transform.parent.GetComponent<Cell>().AddPiece(par.transform, false);
+                par.transform.parent.GetComponent<Cell>().AddPiece(par.transform, false);
 
+            }
+            FinishedUsingPowerup(par.partOfBoard, prop);
+
+            Debug.Log("Four Color");
         }
-        FinishedUsingPowerup(par.partOfBoard, prop);
-
-        Debug.Log("Four Color");
-
+        else
+        {
+            FinishedUsingPowerup(false, prop);
+        }
     }
     public IEnumerator FourSymbolPower(PowerupProperties prop)
     {
@@ -308,21 +314,27 @@ public class PowerUpManager : MonoBehaviour
 
         Piece par = toWorkOn.transform.parent.GetComponent<Piece>();
 
-        if (par.partOfBoard && !par.isLocked)
+        if(toWorkOn.symbolOfPiece != prop.transformSymbol)
         {
-            par.transform.parent.GetComponent<Cell>().RemovePiece();
+            if (par.partOfBoard && !par.isLocked)
+            {
+                par.transform.parent.GetComponent<Cell>().RemovePiece();
 
-            toWorkOn.symbolOfPiece = prop.transformSymbol;
+                toWorkOn.symbolOfPiece = prop.transformSymbol;
 
-            toWorkOn.RefreshPiece();
+                toWorkOn.RefreshPiece();
 
-            par.transform.parent.GetComponent<Cell>().AddPiece(par.transform, false);
+                par.transform.parent.GetComponent<Cell>().AddPiece(par.transform, false);
 
+            }
+            FinishedUsingPowerup(par.partOfBoard, prop);
+
+            Debug.Log("Four Symbol");
         }
-        FinishedUsingPowerup(par.partOfBoard, prop);
-
-        Debug.Log("Four Symbol");
-
+        else
+        {
+            FinishedUsingPowerup(false, prop);
+        }
     }
 
     public void UsingPowerup(Button butt)

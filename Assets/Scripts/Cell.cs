@@ -9,6 +9,8 @@ public class Cell : MonoBehaviour
     public Piece pieceHeld;
     public bool isLimited;
     public GameObject lockSprite;
+    public Transform rightParticleZone, leftParticleZone;
+
     public void AddPiece(Transform followerTarget, bool isNew)
     {
         isFull = true;
@@ -53,13 +55,24 @@ public class Cell : MonoBehaviour
     public void RemovePiece()
     {
         isFull = false;
-        
+
+        if (rightParticleZone.childCount > 0)
+        {
+            Destroy(rightParticleZone.GetChild(0).gameObject);
+        }
+
+        if (leftParticleZone.childCount > 0)
+        {
+            Destroy(leftParticleZone.GetChild(0).gameObject);
+        }
+
         if (pieceHeld.rightChild.isBadConnection)
         {
             GameManager.Instance.unsuccessfullConnectionCount--;
             pieceHeld.rightChild.isBadConnection = false;
             int i = GameManager.Instance.connectionManager.CheckIntRange(pieceHeld.rightChild.subPieceIndex - 1);
             GameManager.Instance.connectionManager.subPiecesOnBoard[i].isBadConnection = false;
+
         }
 
         if (pieceHeld.leftChild.isBadConnection)

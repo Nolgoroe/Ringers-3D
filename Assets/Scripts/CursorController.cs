@@ -22,7 +22,7 @@ public class CursorController : MonoBehaviour
     Touch touch;
     Ray mouseRay;
 
-    bool hasclicked;
+    bool hasclickedPowerUp;
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(mouseRay.origin, mouseRay.origin + rayLength * mouseRay.direction);
@@ -46,12 +46,12 @@ public class CursorController : MonoBehaviour
                 {
                     touch = Input.GetTouch(0);
 
-                    if (!hasclicked)
+                    if (!hasclickedPowerUp)
                     {
                         if (touch.phase == TouchPhase.Began)
                         {
                             Debug.Log("here");
-                            hasclicked = true;
+                            hasclickedPowerUp = true;
                             mouseRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 0));
 
                             transform.position = mouseRay.origin;
@@ -76,7 +76,7 @@ public class CursorController : MonoBehaviour
 
                     if (touch.phase == TouchPhase.Ended)
                     {
-                        hasclicked = false;
+                        hasclickedPowerUp = false;
                     }
 
                 }
@@ -89,6 +89,8 @@ public class CursorController : MonoBehaviour
 
                     if (touch.phase == TouchPhase.Began)
                     {
+                        hasclickedPowerUp = false;
+
                         mouseRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 0));
 
                         transform.position = mouseRay.origin;
@@ -241,7 +243,8 @@ public class CursorController : MonoBehaviour
 
     public void ReturnHome()
     {
-        followerTarget.transform.position = new Vector3(followerTarget.transform.parent.position.x, followerTarget.transform.parent.position.y, followerTarget.transform.parent.position.z + 0.1f);
+        Vector3 home = GameManager.Instance.clipManager.piece.transform.position;
+        followerTarget.localPosition = home;
         followerTarget.rotation = followerTarget.transform.parent.rotation;
 
         if (followerTarget.transform.parent.GetComponent<Cell>())

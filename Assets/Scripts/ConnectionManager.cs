@@ -13,6 +13,7 @@ public class ConnectionManager : MonoBehaviour
 
     public int lengthOfSubPieces;
 
+    public ParticleSystem goodConnectionParticle, badConnectionParticle;
     private void Start()
     {
         GameManager.Instance.connectionManager = this;
@@ -42,9 +43,12 @@ public class ConnectionManager : MonoBehaviour
                     subPiecesOnBoard[currentRight].isBadConnection = true;
                     subPiecesOnBoard[rightContested].isBadConnection = true;
                     subPiecesOnBoard[currentRight].relevantSlice.fulfilledCondition = false;
+                    Instantiate(badConnectionParticle, cells[cellIndex].rightParticleZone);
                 }
                 else
                 {
+                    Instantiate(goodConnectionParticle, cells[cellIndex].rightParticleZone);
+
                     if (conditionmet)
                     {
                         subPiecesOnBoard[currentRight].relevantSlice.fulfilledCondition = true;
@@ -63,7 +67,7 @@ public class ConnectionManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Bad Connection Right Conetsted");
+                Debug.Log("Bad Connection Right Conetsted FUCKKKKAKAAAAAA");
                 GameManager.Instance.unsuccessfullConnectionCount++;
                 subPiecesOnBoard[rightContested].isBadConnection = true;
             }
@@ -84,9 +88,13 @@ public class ConnectionManager : MonoBehaviour
                     subPiecesOnBoard[currentLeft].isBadConnection = true;
                     subPiecesOnBoard[leftContested].isBadConnection = true;
                     subPiecesOnBoard[currentLeft].relevantSlice.fulfilledCondition = false;
+
+                    Instantiate(badConnectionParticle, cells[cellIndex].leftParticleZone);
                 }
                 else
                 {
+                    Instantiate(goodConnectionParticle, cells[cellIndex].leftParticleZone);
+
                     if (conditionmet)
                     {
                         subPiecesOnBoard[currentLeft].relevantSlice.fulfilledCondition = true;
