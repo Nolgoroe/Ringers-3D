@@ -52,6 +52,7 @@ public class PlayerManager : MonoBehaviour
 
     public List<EquipmentData> wardrobeEquipment;
     public List<EquipmentData> equippedItems;
+    public List<EquipmentData> equipmentInCooldown;
 
     public static PlayerManager Instance;
 
@@ -90,8 +91,9 @@ public class PlayerManager : MonoBehaviour
                 WardrobeManager.Instance.EquipMe(ED);
             }
         }
-    }
 
+        HandleItemCooldowns();
+    }
     public bool CheckIfHasMaterialts(CraftingMatsNeeded CMN)
     {
         CraftingMatEntry CME = craftingMatsInInventory.Where(p => p.mat == CMN.mat).Single();
@@ -104,7 +106,6 @@ public class PlayerManager : MonoBehaviour
 
         CME.amount -= CMN.amount;
     }
-
     public void AddMaterials(CraftingMats matToAdd, int amountToAdd)
     {
         CraftingMatEntry CME = craftingMatsInInventory.Where(p => p.mat == matToAdd).Single();
@@ -114,7 +115,6 @@ public class PlayerManager : MonoBehaviour
         MaterialsAndForgeManager.Instance.RefreshMaterialBag();
         MaterialsAndForgeManager.Instance.RefreshForge();
     }
-
     public void AddGold(int amount)
     {
         goldCount += amount;
@@ -136,7 +136,6 @@ public class PlayerManager : MonoBehaviour
             GameManager.Instance.powerupManager.InstantiatePowerUps(ED);
         }
     }
-
     [ContextMenu("Save")]
     public void SavePlayerData()
     {
@@ -146,7 +145,6 @@ public class PlayerManager : MonoBehaviour
 
         File.WriteAllText(path, savedData);
     }
-
     [ContextMenu("Load")]
     public void LoadPlayerData()
     {
@@ -155,5 +153,67 @@ public class PlayerManager : MonoBehaviour
         JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
 
         Instance = this;
+    }
+
+    public void HandleItemCooldowns()
+    {
+        List<EquipmentData> toRemove = new List<EquipmentData>();
+
+        foreach (EquipmentData ED in equipmentInCooldown)
+        {
+            DateTime currentTime = DateTime.Now.ToLocalTime();
+
+            TimeSpan deltaDateTime = DateTime.Parse(ED.nextTimeAvailable) - currentTime;
+
+
+            if (deltaDateTime <= TimeSpan.Zero)
+            {
+                toRemove.Add(ED);
+
+                bool foundEquipped = SearchEquippedItemsForMatch(ED);
+
+
+                if (!foundEquipped)
+                {
+                    SearchWardrobeForMatch(ED);
+                }
+
+                Debug.Log("Cooldown Done! " + ED.name);
+
+            }
+        }
+
+        foreach (EquipmentData ED in toRemove)
+        {
+            equipmentInCooldown.Remove(ED);
+        }
+
+        SavePlayerData();
+    }
+
+
+    public bool SearchEquippedItemsForMatch(EquipmentData ED)
+    {
+        foreach (EquipmentData edEquipped in equippedItems)
+        {
+            if (ED.name == edEquipped.name)
+            {
+                edEquipped.nextTimeAvailable = "";
+                return true;
+            }
+        }
+
+        return false;
+    }
+    public void SearchWardrobeForMatch(EquipmentData ED)
+    {
+        foreach (EquipmentData edWardrobe in wardrobeEquipment)
+        {
+            if (ED.name == edWardrobe.name)
+            {
+                edWardrobe.nextTimeAvailable = "";
+                return;
+            }
+        }
     }
 }

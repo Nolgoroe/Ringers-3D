@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public enum PowerUp
 {
@@ -90,11 +91,15 @@ public class PowerUpManager : MonoBehaviour
 
         PowerupProperties prop = go.GetComponent<PowerupProperties>();
 
+        prop.connectedEquipment = data;
+
         PowerUp current = data.power;
 
         go.name = current.ToString();
 
         prop.SetProperties(current);
+
+        prop.numOfUses = data.numOfUses;
 
         if (current == PowerUp.FourColorTransform)
         {
@@ -105,6 +110,14 @@ public class PowerUpManager : MonoBehaviour
             prop.transformSymbol = data.specificSymbol;
         }
 
+        if(prop.connectedEquipment.scopeOfUses != 1)
+        {
+            go.GetComponent<Button>().interactable = prop.connectedEquipment.nextTimeAvailable == "";
+        }
+        else
+        {
+            go.GetComponent<Button>().interactable = true;
+        }
         AssignPowerUp(current, go.GetComponent<Button>());
 
         powerupButtons.Add(go.GetComponent<Button>());
@@ -128,7 +141,6 @@ public class PowerUpManager : MonoBehaviour
         Debug.Log("Extra Deal");
 
     }
-
     public void CallJokerCoroutine(PowerupProperties prop)
     {
         StartCoroutine(JokerPower(prop));
@@ -162,25 +174,32 @@ public class PowerUpManager : MonoBehaviour
 
         Piece toWorkOn = ObjectToUsePowerUpOn.GetComponent<Piece>();
 
-        if (toWorkOn.partOfBoard && !toWorkOn.isLocked)
+        if(toWorkOn.rightChild.symbolOfPiece != PieceSymbol.Joker) ///// If 1 of the sub pieces is a joker - so is the other. If the symbol is a joker then the color is awell
         {
-            toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece();
+            if (toWorkOn.partOfBoard && !toWorkOn.isLocked)
+            {
+                toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece();
 
-            toWorkOn.rightChild.symbolOfPiece = PieceSymbol.Joker;
-            toWorkOn.rightChild.colorOfPiece = PieceColor.Joker;
+                toWorkOn.rightChild.symbolOfPiece = PieceSymbol.Joker;
+                toWorkOn.rightChild.colorOfPiece = PieceColor.Joker;
 
-            toWorkOn.leftChild.symbolOfPiece = PieceSymbol.Joker;
-            toWorkOn.leftChild.colorOfPiece = PieceColor.Joker;
+                toWorkOn.leftChild.symbolOfPiece = PieceSymbol.Joker;
+                toWorkOn.leftChild.colorOfPiece = PieceColor.Joker;
 
-            toWorkOn.rightChild.RefreshPiece();
-            toWorkOn.leftChild.RefreshPiece();
+                toWorkOn.rightChild.RefreshPiece();
+                toWorkOn.leftChild.RefreshPiece();
 
-            toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
+                toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
+            }
+
+            FinishedUsingPowerup(toWorkOn.partOfBoard && !toWorkOn.isLocked, prop);
+
+            Debug.Log("Joker");
         }
-
-        FinishedUsingPowerup(toWorkOn.partOfBoard && !toWorkOn.isLocked, prop);
-
-        Debug.Log("Joker");
+        else
+        {
+            FinishedUsingPowerup(false, prop);
+        }
     }
     public IEnumerator SwitchPower(PowerupProperties prop)
     {
@@ -188,28 +207,34 @@ public class PowerUpManager : MonoBehaviour
         yield return new WaitUntil(() => HasUsedPowerUp == true);
         Piece toWorkOn = ObjectToUsePowerUpOn.GetComponent<Piece>();
 
-        if (toWorkOn.partOfBoard && !toWorkOn.isLocked)
+        if(toWorkOn.rightChild.symbolOfPiece != toWorkOn.leftChild.symbolOfPiece || toWorkOn.rightChild.colorOfPiece != toWorkOn.leftChild.colorOfPiece)
         {
-            toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece();
+            if (toWorkOn.partOfBoard && !toWorkOn.isLocked)
+            {
+                toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece();
 
-            PieceColor tempColor = toWorkOn.rightChild.colorOfPiece;
-            PieceSymbol tempSymbol = toWorkOn.rightChild.symbolOfPiece;
+                PieceColor tempColor = toWorkOn.rightChild.colorOfPiece;
+                PieceSymbol tempSymbol = toWorkOn.rightChild.symbolOfPiece;
 
-            toWorkOn.rightChild.colorOfPiece = toWorkOn.leftChild.colorOfPiece;
-            toWorkOn.rightChild.symbolOfPiece = toWorkOn.leftChild.symbolOfPiece;
+                toWorkOn.rightChild.colorOfPiece = toWorkOn.leftChild.colorOfPiece;
+                toWorkOn.rightChild.symbolOfPiece = toWorkOn.leftChild.symbolOfPiece;
 
-            toWorkOn.leftChild.colorOfPiece = tempColor;
-            toWorkOn.leftChild.symbolOfPiece = tempSymbol;
+                toWorkOn.leftChild.colorOfPiece = tempColor;
+                toWorkOn.leftChild.symbolOfPiece = tempSymbol;
 
-            toWorkOn.rightChild.RefreshPiece();
-            toWorkOn.leftChild.RefreshPiece();
+                toWorkOn.rightChild.RefreshPiece();
+                toWorkOn.leftChild.RefreshPiece();
 
-            toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
+                toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
+            }
+
+            FinishedUsingPowerup(toWorkOn.partOfBoard && !toWorkOn.isLocked, prop);
+            Debug.Log("Switch");
         }
-
-        FinishedUsingPowerup(toWorkOn.partOfBoard && !toWorkOn.isLocked, prop);
-        Debug.Log("Switch");
-
+        else
+        {
+            FinishedUsingPowerup(false, prop);
+        }
     }
     public IEnumerator PieceBombPower(PowerupProperties prop)
     {
@@ -372,7 +397,7 @@ public class PowerUpManager : MonoBehaviour
         {
             prop.numOfUses--;
         }
-
+       
         foreach (Button but in powerupButtons)
         {
             if (but.gameObject.GetComponent<PowerupProperties>().numOfUses > 0)
@@ -383,6 +408,16 @@ public class PowerUpManager : MonoBehaviour
             {
                 but.interactable = false;
             }
+        }
+
+        if(prop.numOfUses == 0 && prop.connectedEquipment.scopeOfUses == 0) //// if the num of uses is 0 and the scope is cooldown and not per match
+        {
+            EquipmentData ED = PlayerManager.Instance.equippedItems.Where(p => p.name == prop.connectedEquipment.name).Single();
+
+            ED.nextTimeAvailable = System.DateTime.Now.AddMinutes(ED.timeForCooldown).ToString(); ///// change the datetime for equipment on player
+
+            PlayerManager.Instance.equipmentInCooldown.Add(ED);
+            PlayerManager.Instance.SavePlayerData();
         }
     }
 }

@@ -12,7 +12,7 @@ public enum slotType
 }
 
 [Serializable]
-public class EquipmentData
+public class EquipmentData 
 {
     public string name;
     public slotType slot;
@@ -21,8 +21,10 @@ public class EquipmentData
     public PieceColor specificColor;
     public int numOfUses;
     public int scopeOfUses;
+    public int timeForCooldown;
     public string mats;
     public string spritePath;
+    public string nextTimeAvailable /*= DateTime.Now.AddMinutes(15).ToString()*/;
 
     public EquipmentData(string equipName, int equiptype, int equippower, int equipnumUses, string equipmatList, string path)
     {

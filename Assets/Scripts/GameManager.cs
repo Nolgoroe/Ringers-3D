@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour
         sliceManager.SpawnSlices(currentLevel.slicesToSpawn.Length);
         connectionManager.GrabCellList(gameBoard.transform);
 
+        PlayerManager.Instance.HandleItemCooldowns();
+
         PlayerManager.Instance.PopulatePowerUps();
 
         powerupManager.instnatiatedZonesCounter = 0;

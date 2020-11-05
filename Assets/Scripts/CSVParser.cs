@@ -94,6 +94,11 @@ public class CSVParser : MonoBehaviour
                 }
                 EQ.scopeOfUses = Convert.ToInt16(temp[0]);
                 EQ.numOfUses = Convert.ToInt16(temp[1]);
+
+                if (temp.Length == 3)
+                {
+                    EQ.timeForCooldown = Convert.ToInt16(temp[2]);
+                }
             }
             else ///// Probably never going to enter here because every item has cooldown/charges (will contain '-')
             {

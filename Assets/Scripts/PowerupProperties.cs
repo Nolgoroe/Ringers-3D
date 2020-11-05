@@ -13,6 +13,8 @@ public class PowerupProperties : MonoBehaviour
     public TMP_Text nameOfPowerup;
     public PieceColor transformColor;
     public PieceSymbol transformSymbol;
+    public EquipmentData connectedEquipment;
+
     public void SetProperties(PowerUp type)
     {
         string path = GameManager.Instance.powerupManager.spriteByType[type];
@@ -20,7 +22,6 @@ public class PowerupProperties : MonoBehaviour
         icon = Resources.Load(path) as Texture2D;
         powerupText = GameManager.Instance.powerupManager.nameTextByType[type];
         powerupType = type;
-        numOfUses = 2;
 
         GetComponent<RawImage>().texture = icon;
         nameOfPowerup.text = powerupText;
