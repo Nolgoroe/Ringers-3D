@@ -60,6 +60,10 @@ public class LootManager : MonoBehaviour
 {
     public static LootManager Instance;
 
+    public GameObject keyPrefab;
+
+    public bool giveGey;
+
     [Header("List for Loot by Level")]
     /////// LIST FOR LOOT BY LEVEL
     public List<ItemTablesToCraftingMats> listOfTablesToMats;
@@ -74,7 +78,6 @@ public class LootManager : MonoBehaviour
     public Dictionary<LootPacks, RewardBag> lootpackEnumToRewardBag;
 
     public Dictionary<ItemTables, List<CraftingMats>> itemTableToListOfMats;
-
 
     private void Start()
     {
@@ -93,42 +96,6 @@ public class LootManager : MonoBehaviour
         {
             itemTableToListOfMats.Add((ItemTables)i, listOfTablesToMats[i - 1].tableToMat);
         }
-
-        //for (int i = 0; i < listOfRewardBags.Count; i++) //// Debug to check if dict's work
-        //{
-        //    //if (!listOfListItemTables1[i].IsMoneyOrRubies)
-        //    //{
-        //    //    Debug.Log(listOfTablesToChances[listOfListItemTables1[i].Pack]);
-
-        //    //    foreach (int num in listOfTablesToChances[listOfListItemTables1[i].Pack])
-        //    //    {
-        //    //        Debug.Log(num);
-        //    //    }
-        //    //}
-        //} //// Debug to check if dict's work
-
-        //for (int i = 0; i < listOfRewardBags.Count; i++) //// Debug to check if dict's work
-        //{
-        //    if (!listOfRewardBags[i].IsMoneyOrRubies)
-        //    {
-        //        //Debug.Log(lootpackEnumToList[(LootPacks)i + 1]);
-
-        //        //foreach (ItemTables IT in lootpackEnumToList[(LootPacks)i + 1])
-        //        //{
-        //        //    Debug.Log(IT);
-        //        //}
-
-        //    }
-        //    else
-        //    {
-        //        //Debug.Log(lootPackToValues[(LootPacks)i + 1]);
-
-        //        //foreach (int num in lootPackToValues[(LootPacks)i + 1])
-        //        //{
-        //        //    Debug.Log(num);
-        //        //}
-        //    }
-        //} //// Debug to check if dict's work
     }
     
     public void GiveLoot()
@@ -139,6 +106,13 @@ public class LootManager : MonoBehaviour
         }
 
         currentLevelLootToGive.Clear();
+
+        if (giveGey)
+        {
+            Instantiate(keyPrefab, GameManager.Instance.destroyOutOfLevel);
+        }
+
+        giveGey = false;
     }
     public void RollOnTable(LootPacks lootPack)
     {

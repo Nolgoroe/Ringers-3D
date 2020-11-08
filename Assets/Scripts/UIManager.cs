@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    public GameObject mainMenu, hudCanvas, itemForgeCanvas, gameplayCanvas, ringersHut;
+    public GameObject mainMenu, hudCanvas, itemForgeCanvas, gameplayCanvas, ringersHutDisplay, ringersHutUICanvas;
     public GameObject forge, itemBag;
     public GameObject OptionsScreen;
     public GameObject wardrobe;
@@ -30,7 +30,8 @@ public class UIManager : MonoBehaviour
         forge.SetActive(false);
         itemBag.SetActive(true);
         OptionsScreen.SetActive(false);
-        ringersHut.SetActive(false);
+        ringersHutDisplay.SetActive(false);
+        ringersHutUICanvas.SetActive(false);
         wardrobe.SetActive(false);
         usingPowerupText.SetActive(false);
         youWinText.SetActive(false);
@@ -68,19 +69,26 @@ public class UIManager : MonoBehaviour
             GameManager.Instance.DestroyAllLevelChildern();
 
             LootManager.Instance.ResetLevelLootData();
+            LootManager.Instance.giveGey = false;
 
             UnlockLevels();
         }
 
-        if(currentCanvas == ringersHut)
+        if(currentCanvas == ringersHutDisplay)
         {
-            ringersHut.SetActive(false);
+            ringersHutDisplay.SetActive(false);
+            ringersHutUICanvas.SetActive(false);
             Camera.main.orthographic = false;
         }
 
         if (currentCanvas == mainMenu)
         {
             mainMenu.SetActive(false);
+        }
+
+        if (GameObject.FindWithTag("Key"))
+        {
+            Destroy(GameObject.FindWithTag("Key").gameObject);
         }
 
         hudCanvas.SetActive(true);
@@ -120,7 +128,8 @@ public class UIManager : MonoBehaviour
     }
     public void ToRingersHut()
     {
-        ringersHut.SetActive(true);
+        ringersHutDisplay.SetActive(true);
+        ringersHutUICanvas.SetActive(true);
         hudCanvas.SetActive(false);
     }
     public void OpenOptions()

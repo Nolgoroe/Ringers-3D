@@ -19,19 +19,20 @@ public class Cell : MonoBehaviour
         followerTarget.rotation = followerTarget.parent.rotation;
         pieceHeld = followerTarget.GetComponent<Piece>();
         pieceHeld.partOfBoard = true;
-        GameManager.Instance.connectionManager.subPiecesOnBoard[cellIndex * 2] = pieceHeld.rightChild;
-        GameManager.Instance.connectionManager.subPiecesOnBoard[cellIndex * 2 + 1] = pieceHeld.leftChild;
+
+        GameManager.Instance.connectionManager.subPiecesOnBoard[cellIndex * 2] = pieceHeld.leftChild;
+        GameManager.Instance.connectionManager.subPiecesOnBoard[cellIndex * 2 + 1] = pieceHeld.rightChild;
         GameManager.Instance.connectionManager.FillSubPieceIndex();
 
-        pieceHeld.rightChild.relevantSlice = GameManager.Instance.connectionManager.slicesOnBoard[Mathf.CeilToInt((float)pieceHeld.rightChild.subPieceIndex / 2)];
+        pieceHeld.leftChild.relevantSlice = GameManager.Instance.connectionManager.slicesOnBoard[Mathf.CeilToInt((float)pieceHeld.leftChild.subPieceIndex / 2)];
 
-        if (pieceHeld.leftChild.subPieceIndex >= GameManager.Instance.connectionManager.lengthOfSubPieces - 1)
+        if (pieceHeld.rightChild.subPieceIndex >= GameManager.Instance.connectionManager.lengthOfSubPieces - 1)
         {
-            pieceHeld.leftChild.relevantSlice = GameManager.Instance.connectionManager.slicesOnBoard[0];
+            pieceHeld.rightChild.relevantSlice = GameManager.Instance.connectionManager.slicesOnBoard[0];
         }
         else
         {
-            pieceHeld.leftChild.relevantSlice = GameManager.Instance.connectionManager.slicesOnBoard[Mathf.CeilToInt((float)pieceHeld.leftChild.subPieceIndex / 2)];
+            pieceHeld.rightChild.relevantSlice = GameManager.Instance.connectionManager.slicesOnBoard[Mathf.CeilToInt((float)pieceHeld.rightChild.subPieceIndex / 2)];
         }
 
         GameManager.Instance.connectionManager.CheckConnections(cellIndex);
@@ -66,31 +67,31 @@ public class Cell : MonoBehaviour
             Destroy(leftParticleZone.GetChild(0).gameObject);
         }
 
-        if (pieceHeld.rightChild.isBadConnection)
-        {
-            GameManager.Instance.unsuccessfullConnectionCount--;
-            pieceHeld.rightChild.isBadConnection = false;
-            int i = GameManager.Instance.connectionManager.CheckIntRange(pieceHeld.rightChild.subPieceIndex - 1);
-            GameManager.Instance.connectionManager.subPiecesOnBoard[i].isBadConnection = false;
-
-        }
-
         if (pieceHeld.leftChild.isBadConnection)
         {
             GameManager.Instance.unsuccessfullConnectionCount--;
             pieceHeld.leftChild.isBadConnection = false;
-            int i = GameManager.Instance.connectionManager.CheckIntRange(pieceHeld.leftChild.subPieceIndex + 1);
+            int i = GameManager.Instance.connectionManager.CheckIntRange(pieceHeld.leftChild.subPieceIndex - 1);
+            GameManager.Instance.connectionManager.subPiecesOnBoard[i].isBadConnection = false;
+
+        }
+
+        if (pieceHeld.rightChild.isBadConnection)
+        {
+            GameManager.Instance.unsuccessfullConnectionCount--;
+            pieceHeld.rightChild.isBadConnection = false;
+            int i = GameManager.Instance.connectionManager.CheckIntRange(pieceHeld.rightChild.subPieceIndex + 1);
             GameManager.Instance.connectionManager.subPiecesOnBoard[i].isBadConnection = false;
         }
 
-        if (pieceHeld.leftChild.relevantSlice)
+        if (pieceHeld.rightChild.relevantSlice)
         {
-            pieceHeld.leftChild.relevantSlice.fulfilledCondition = false;
             pieceHeld.rightChild.relevantSlice.fulfilledCondition = false;
-            pieceHeld.leftChild.relevantSlice = null;
+            pieceHeld.leftChild.relevantSlice.fulfilledCondition = false;
             pieceHeld.rightChild.relevantSlice = null;
+            pieceHeld.leftChild.relevantSlice = null;
         }
-        GameManager.Instance.connectionManager.RemoveSubPieceIndex(pieceHeld.rightChild.subPieceIndex);
         GameManager.Instance.connectionManager.RemoveSubPieceIndex(pieceHeld.leftChild.subPieceIndex);
+        GameManager.Instance.connectionManager.RemoveSubPieceIndex(pieceHeld.rightChild.subPieceIndex);
     }
 }

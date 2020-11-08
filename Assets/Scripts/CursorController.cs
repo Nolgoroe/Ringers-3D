@@ -245,7 +245,7 @@ public class CursorController : MonoBehaviour
     {
         Vector3 home = GameManager.Instance.clipManager.piece.transform.position;
         followerTarget.localPosition = home;
-        followerTarget.rotation = followerTarget.transform.parent.rotation;
+        followerTarget.localRotation = Quaternion.Euler(0,180,0);
 
         if (followerTarget.transform.parent.GetComponent<Cell>())
         {

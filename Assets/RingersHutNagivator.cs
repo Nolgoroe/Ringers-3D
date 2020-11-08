@@ -23,11 +23,6 @@ public class RingersHutNagivator : MonoBehaviour
 
     Vector2 bgCenter;
 
-    public void OnDrawGizmos()
-    {
-        Gizmos.DrawCube(viewportTransform.position, new Vector3(scaler * BG.rect.width, scaler * BG.rect.height, 0));
-            
-    }
     private void Start()
     {
         originalWidthHeight = new Vector2(BG.rect.width, BG.rect.height);
@@ -59,7 +54,6 @@ public class RingersHutNagivator : MonoBehaviour
                 ZoomIn((previousPinchDelta - pinchDelta));
 
             }
-
         }
         else
         {

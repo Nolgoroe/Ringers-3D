@@ -174,20 +174,20 @@ public class PowerUpManager : MonoBehaviour
 
         Piece toWorkOn = ObjectToUsePowerUpOn.GetComponent<Piece>();
 
-        if(toWorkOn.rightChild.symbolOfPiece != PieceSymbol.Joker) ///// If 1 of the sub pieces is a joker - so is the other. If the symbol is a joker then the color is awell
+        if(toWorkOn.leftChild.symbolOfPiece != PieceSymbol.Joker) ///// If 1 of the sub pieces is a joker - so is the other. If the symbol is a joker then the color is awell
         {
             if (toWorkOn.partOfBoard && !toWorkOn.isLocked)
             {
                 toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece();
 
-                toWorkOn.rightChild.symbolOfPiece = PieceSymbol.Joker;
-                toWorkOn.rightChild.colorOfPiece = PieceColor.Joker;
-
                 toWorkOn.leftChild.symbolOfPiece = PieceSymbol.Joker;
                 toWorkOn.leftChild.colorOfPiece = PieceColor.Joker;
 
-                toWorkOn.rightChild.RefreshPiece();
+                toWorkOn.rightChild.symbolOfPiece = PieceSymbol.Joker;
+                toWorkOn.rightChild.colorOfPiece = PieceColor.Joker;
+
                 toWorkOn.leftChild.RefreshPiece();
+                toWorkOn.rightChild.RefreshPiece();
 
                 toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
             }
@@ -207,23 +207,23 @@ public class PowerUpManager : MonoBehaviour
         yield return new WaitUntil(() => HasUsedPowerUp == true);
         Piece toWorkOn = ObjectToUsePowerUpOn.GetComponent<Piece>();
 
-        if(toWorkOn.rightChild.symbolOfPiece != toWorkOn.leftChild.symbolOfPiece || toWorkOn.rightChild.colorOfPiece != toWorkOn.leftChild.colorOfPiece)
+        if(toWorkOn.leftChild.symbolOfPiece != toWorkOn.rightChild.symbolOfPiece || toWorkOn.leftChild.colorOfPiece != toWorkOn.rightChild.colorOfPiece)
         {
             if (toWorkOn.partOfBoard && !toWorkOn.isLocked)
             {
                 toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece();
 
-                PieceColor tempColor = toWorkOn.rightChild.colorOfPiece;
-                PieceSymbol tempSymbol = toWorkOn.rightChild.symbolOfPiece;
+                PieceColor tempColor = toWorkOn.leftChild.colorOfPiece;
+                PieceSymbol tempSymbol = toWorkOn.leftChild.symbolOfPiece;
 
-                toWorkOn.rightChild.colorOfPiece = toWorkOn.leftChild.colorOfPiece;
-                toWorkOn.rightChild.symbolOfPiece = toWorkOn.leftChild.symbolOfPiece;
+                toWorkOn.leftChild.colorOfPiece = toWorkOn.rightChild.colorOfPiece;
+                toWorkOn.leftChild.symbolOfPiece = toWorkOn.rightChild.symbolOfPiece;
 
-                toWorkOn.leftChild.colorOfPiece = tempColor;
-                toWorkOn.leftChild.symbolOfPiece = tempSymbol;
+                toWorkOn.rightChild.colorOfPiece = tempColor;
+                toWorkOn.rightChild.symbolOfPiece = tempSymbol;
 
-                toWorkOn.rightChild.RefreshPiece();
                 toWorkOn.leftChild.RefreshPiece();
+                toWorkOn.rightChild.RefreshPiece();
 
                 toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
             }

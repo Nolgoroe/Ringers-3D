@@ -60,7 +60,6 @@ public class GameManager : MonoBehaviour
         PlayerManager.Instance.PopulatePowerUps();
 
         powerupManager.instnatiatedZonesCounter = 0;
-
     }
 
     public void ChooseLevel(int levelNum)
@@ -92,20 +91,38 @@ public class GameManager : MonoBehaviour
 
     public void CheckEndLevel()
     {
-        LootManager.Instance.GiveLoot();
 
         if(currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0)
         {
             Debug.Log("YOU WIN");
+            LootManager.Instance.GiveLoot();
             UIManager.Instance.WinLevel();
-            PlayerManager.Instance.maxLevel++;
+
+            if (currentLevel.levelNum >= PlayerManager.Instance.maxLevel)
+            {
+                PlayerManager.Instance.maxLevel++;
+            }
+
         }
         else
         {
+            LootManager.Instance.currentLevelLootToGive.Clear();
             UIManager.Instance.LoseLevel();
             Debug.Log("You Lose");
         }
 
         PlayerManager.Instance.SavePlayerData();
+    }
+
+    [ContextMenu ("Save Game Data")]
+    public void GameSaveData()
+    {
+        
+    }
+
+    [ContextMenu("Game Load Data")]
+    public void GameLoadData()
+    {
+
     }
 }

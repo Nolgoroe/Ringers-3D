@@ -138,6 +138,14 @@ public class SliceManager : MonoBehaviour
             {
                 fullSlices[i].SetData(GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i], GameManager.Instance.currentLevel.RewardBags[i]);
             }
+
+            /// Give Key
+            //if (GameManager.Instance.isKeyLevel)
+            //{
+            //    int randomSlice = Random.Range(0, fullSlices.Count);
+            //    Debug.Log(randomSlice);
+            //    fullSlices[randomSlice].isKey = true;
+            //}
         }
     }
 

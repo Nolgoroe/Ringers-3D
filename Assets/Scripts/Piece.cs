@@ -24,13 +24,13 @@ public enum PieceSymbol
 
 public class Piece : MonoBehaviour
 {
-    public SubPiece leftChild, rightChild;
+    public SubPiece rightChild, leftChild;
 
     public bool isLocked;
     public bool partOfBoard;
     public void SetPieces()
     {
-        leftChild.SetPiece();
         rightChild.SetPiece();
+        leftChild.SetPiece();
     }
 }

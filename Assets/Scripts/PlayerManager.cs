@@ -136,6 +136,7 @@ public class PlayerManager : MonoBehaviour
             GameManager.Instance.powerupManager.InstantiatePowerUps(ED);
         }
     }
+
     [ContextMenu("Save")]
     public void SavePlayerData()
     {
@@ -145,6 +146,7 @@ public class PlayerManager : MonoBehaviour
 
         File.WriteAllText(path, savedData);
     }
+
     [ContextMenu("Load")]
     public void LoadPlayerData()
     {
@@ -191,6 +193,16 @@ public class PlayerManager : MonoBehaviour
         SavePlayerData();
     }
 
+    [ContextMenu("Reset Player Mats")]
+    public void ResetPlayerMats()
+    {
+        foreach (CraftingMatEntry CME in craftingMatsInInventory)
+        {
+            CME.amount = 0;
+        }
+
+        SavePlayerData();
+    }
 
     public bool SearchEquippedItemsForMatch(EquipmentData ED)
     {

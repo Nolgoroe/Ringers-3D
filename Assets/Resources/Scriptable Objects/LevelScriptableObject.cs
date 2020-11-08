@@ -8,7 +8,6 @@ public class LevelScriptableObject : ScriptableObject
     public int levelNum;
     public int cellsCountInLevel;
 
-
     public SliceCatagory[] slicesToSpawn;
     public bool[] lockSlices;
     public bool[] lootSlices;

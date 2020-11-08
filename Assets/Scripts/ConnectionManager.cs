@@ -26,23 +26,29 @@ public class ConnectionManager : MonoBehaviour
     }
     public void CheckConnections(int cellIndex)
     {
-        int rightContested = CheckIntRange((cellIndex * 2) - 1);
-        int leftContested = CheckIntRange((cellIndex * 2) + 2);
+        int leftContested = CheckIntRange((cellIndex * 2) - 1);
+        int rightContested = CheckIntRange((cellIndex * 2) + 2);
 
-        int currentRight = cellIndex * 2;
-        int currentLeft = cellIndex * 2 + 1;
+        int currentLeft = cellIndex * 2;
+        int currentRight = cellIndex * 2 + 1;
 
-        if (subPiecesOnBoard[rightContested])
+        //int rightContested = CheckIntRange((cellIndex * 2) + 2);
+        //int leftContested = CheckIntRange((cellIndex * 2) -1);
+
+        //int currentRight = cellIndex * 2 + 1;
+        //int currentLeft = cellIndex * 2;
+
+        if (subPiecesOnBoard[leftContested])
         {
-            if (subPiecesOnBoard[currentRight])
+            if (subPiecesOnBoard[currentLeft])
             {
-                if (!CheckSubPieceConnection(subPiecesOnBoard[currentRight], subPiecesOnBoard[rightContested], out bool conditionmet))
+                if (!CheckSubPieceConnection(subPiecesOnBoard[currentLeft], subPiecesOnBoard[leftContested], out bool conditionmet))
                 {
                     Debug.Log("Bad Connection Right Conetsted");
                     GameManager.Instance.unsuccessfullConnectionCount++;
-                    subPiecesOnBoard[currentRight].isBadConnection = true;
-                    subPiecesOnBoard[rightContested].isBadConnection = true;
-                    subPiecesOnBoard[currentRight].relevantSlice.fulfilledCondition = false;
+                    subPiecesOnBoard[currentLeft].isBadConnection = true;
+                    subPiecesOnBoard[leftContested].isBadConnection = true;
+                    subPiecesOnBoard[currentLeft].relevantSlice.fulfilledCondition = false;
                     Instantiate(badConnectionParticle, cells[cellIndex].rightParticleZone);
                 }
                 else
@@ -51,53 +57,8 @@ public class ConnectionManager : MonoBehaviour
 
                     if (conditionmet)
                     {
-                        subPiecesOnBoard[currentRight].relevantSlice.fulfilledCondition = true;
-
-                        if (subPiecesOnBoard[currentRight].relevantSlice.isLoot)
-                        {
-                            GiveLoot(subPiecesOnBoard[currentRight].relevantSlice, subPiecesOnBoard[currentRight].relevantSlice.isLimiter);
-                        }
-
-                        if (subPiecesOnBoard[currentRight].relevantSlice.isLock)
-                        {
-                            LockCell(subPiecesOnBoard[currentRight].relevantSlice, subPiecesOnBoard[currentRight].relevantSlice.isLimiter);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                Debug.Log("Bad Connection Right Conetsted FUCKKKKAKAAAAAA");
-                GameManager.Instance.unsuccessfullConnectionCount++;
-                subPiecesOnBoard[rightContested].isBadConnection = true;
-            }
-        }
-        else
-        {
-            subPiecesOnBoard[currentRight].relevantSlice.fulfilledCondition = false;
-        }
-
-        if (subPiecesOnBoard[leftContested])
-        {
-            if (subPiecesOnBoard[currentLeft])
-            {
-                if (!CheckSubPieceConnection(subPiecesOnBoard[currentLeft], subPiecesOnBoard[leftContested], out bool conditionmet))
-                {
-                    Debug.Log("Bad Connection Left Conetsted");
-                    GameManager.Instance.unsuccessfullConnectionCount++;
-                    subPiecesOnBoard[currentLeft].isBadConnection = true;
-                    subPiecesOnBoard[leftContested].isBadConnection = true;
-                    subPiecesOnBoard[currentLeft].relevantSlice.fulfilledCondition = false;
-
-                    Instantiate(badConnectionParticle, cells[cellIndex].leftParticleZone);
-                }
-                else
-                {
-                    Instantiate(goodConnectionParticle, cells[cellIndex].leftParticleZone);
-
-                    if (conditionmet)
-                    {
                         subPiecesOnBoard[currentLeft].relevantSlice.fulfilledCondition = true;
+
                         if (subPiecesOnBoard[currentLeft].relevantSlice.isLoot)
                         {
                             GiveLoot(subPiecesOnBoard[currentLeft].relevantSlice, subPiecesOnBoard[currentLeft].relevantSlice.isLimiter);
@@ -107,12 +68,17 @@ public class ConnectionManager : MonoBehaviour
                         {
                             LockCell(subPiecesOnBoard[currentLeft].relevantSlice, subPiecesOnBoard[currentLeft].relevantSlice.isLimiter);
                         }
+
+                        if (subPiecesOnBoard[currentLeft].relevantSlice.isKey)
+                        {
+                            LootManager.Instance.giveGey = true;
+                        }
                     }
                 }
             }
             else
             {
-                Debug.Log("Bad Connection Right Conetsted");
+                Debug.Log("Bad Connection Right Conetsted FUCKKKKAKAAAAAA");
                 GameManager.Instance.unsuccessfullConnectionCount++;
                 subPiecesOnBoard[leftContested].isBadConnection = true;
             }
@@ -120,6 +86,56 @@ public class ConnectionManager : MonoBehaviour
         else
         {
             subPiecesOnBoard[currentLeft].relevantSlice.fulfilledCondition = false;
+        }
+
+        if (subPiecesOnBoard[rightContested])
+        {
+            if (subPiecesOnBoard[currentRight])
+            {
+                if (!CheckSubPieceConnection(subPiecesOnBoard[currentRight], subPiecesOnBoard[rightContested], out bool conditionmet))
+                {
+                    Debug.Log("Bad Connection Left Conetsted");
+                    GameManager.Instance.unsuccessfullConnectionCount++;
+                    subPiecesOnBoard[currentRight].isBadConnection = true;
+                    subPiecesOnBoard[rightContested].isBadConnection = true;
+                    subPiecesOnBoard[currentRight].relevantSlice.fulfilledCondition = false;
+
+                    Instantiate(badConnectionParticle, cells[cellIndex].leftParticleZone);
+                }
+                else
+                {
+                    Instantiate(goodConnectionParticle, cells[cellIndex].leftParticleZone);
+
+                    if (conditionmet)
+                    {
+                        subPiecesOnBoard[currentRight].relevantSlice.fulfilledCondition = true;
+                        if (subPiecesOnBoard[currentRight].relevantSlice.isLoot)
+                        {
+                            GiveLoot(subPiecesOnBoard[currentRight].relevantSlice, subPiecesOnBoard[currentRight].relevantSlice.isLimiter);
+                        }
+
+                        if (subPiecesOnBoard[currentRight].relevantSlice.isLock)
+                        {
+                            LockCell(subPiecesOnBoard[currentRight].relevantSlice, subPiecesOnBoard[currentRight].relevantSlice.isLimiter);
+                        }
+
+                        if (subPiecesOnBoard[currentRight].relevantSlice.isKey)
+                        {
+                            LootManager.Instance.giveGey = true;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("Bad Connection Right Conetsted");
+                GameManager.Instance.unsuccessfullConnectionCount++;
+                subPiecesOnBoard[rightContested].isBadConnection = true;
+            }
+        }
+        else
+        {
+            subPiecesOnBoard[currentRight].relevantSlice.fulfilledCondition = false;
         }
 
         /// Get slice
