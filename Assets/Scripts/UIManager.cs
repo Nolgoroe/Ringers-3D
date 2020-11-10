@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Linq;
 
+[System.Serializable]
+public class ButtonsPerZone
+{
+    public Zone theZone;
+
+    public Button[] zoneButtons;
+}
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    public GameObject mainMenu, hudCanvas, itemForgeCanvas, gameplayCanvas, ringersHutDisplay, ringersHutUICanvas;
+    public GameObject mainMenu, hudCanvasDisplay,hudCanvasUI, itemForgeCanvas, gameplayCanvas, ringersHutDisplay, ringersHutUICanvas;
     public GameObject forge, itemBag;
     public GameObject OptionsScreen;
     public GameObject wardrobe;
@@ -18,17 +26,23 @@ public class UIManager : MonoBehaviour
     public Text goldText, rubyText;
 
     public Button commitButton;
-    public Button[] levelButtons;
+    //public Button[] levelButtons;
 
+    public ButtonsPerZone[] buttonsPerZone;
     private void Start()
     {
         Instance = this;
-        mainMenu.SetActive(true);
-        hudCanvas.SetActive(false);
+        mainMenu.SetActive(true); /// ony screen we should see at the start
+
+        hudCanvasDisplay.SetActive(true);
+        hudCanvasUI.SetActive(false);
+
         itemForgeCanvas.SetActive(false);
         gameplayCanvas.SetActive(false);
         forge.SetActive(false);
-        itemBag.SetActive(true);
+
+        itemBag.SetActive(true); //// so this will be the first bag displayed, or else everyone will be turned off
+
         OptionsScreen.SetActive(false);
         ringersHutDisplay.SetActive(false);
         ringersHutUICanvas.SetActive(false);
@@ -36,8 +50,6 @@ public class UIManager : MonoBehaviour
         usingPowerupText.SetActive(false);
         youWinText.SetActive(false);
         youLoseText.SetActive(false);
-
-        //UnlockLevels();
     }
     public void PlayButton()
     {
@@ -47,11 +59,13 @@ public class UIManager : MonoBehaviour
     public void ActivateGmaeplayCanvas()
     {
         gameplayCanvas.SetActive(true);
-        hudCanvas.SetActive(false);
+        hudCanvasDisplay.SetActive(false);
+        hudCanvasUI.SetActive(false);
     }
     public void ToMainMenu()
     {
-        hudCanvas.SetActive(false);
+        hudCanvasDisplay.SetActive(false);
+        hudCanvasUI.SetActive(false);
         mainMenu.SetActive(true);
     }
     public void ToHud(GameObject currentCanvas)
@@ -61,6 +75,8 @@ public class UIManager : MonoBehaviour
 
         if (currentCanvas == gameplayCanvas)
         {
+            //Camera.main.orthographic = true;
+
             gameplayCanvas.SetActive(false);
             OptionsScreen.SetActive(false);
             youWinText.SetActive(false);
@@ -70,15 +86,23 @@ public class UIManager : MonoBehaviour
 
             LootManager.Instance.ResetLevelLootData();
             LootManager.Instance.giveGey = false;
+            ZoneManager.Instance.ResetZoneManagerData();
 
             UnlockLevels();
+
+            foreach (Zone z in ZoneManager.Instance.listOfUnlockedZones)
+            {
+                z.SaveZone();
+            }
+
+            ZoneManager.Instance.SaveZoneManager();
         }
 
         if(currentCanvas == ringersHutDisplay)
         {
             ringersHutDisplay.SetActive(false);
             ringersHutUICanvas.SetActive(false);
-            Camera.main.orthographic = false;
+            //Camera.main.orthographic = false;
         }
 
         if (currentCanvas == mainMenu)
@@ -91,7 +115,8 @@ public class UIManager : MonoBehaviour
             Destroy(GameObject.FindWithTag("Key").gameObject);
         }
 
-        hudCanvas.SetActive(true);
+        hudCanvasDisplay.SetActive(true);
+        hudCanvasUI.SetActive(true);
     }
     public void OpenItemsAndForgeZone()
     {
@@ -130,7 +155,8 @@ public class UIManager : MonoBehaviour
     {
         ringersHutDisplay.SetActive(true);
         ringersHutUICanvas.SetActive(true);
-        hudCanvas.SetActive(false);
+        hudCanvasDisplay.SetActive(false);
+        hudCanvasUI.SetActive(false);
     }
     public void OpenOptions()
     {
@@ -177,9 +203,15 @@ public class UIManager : MonoBehaviour
     }
     public void UnlockLevels()
     {
-        for (int i = 0; i < PlayerManager.Instance.maxLevel; i++)
+        foreach (Zone z in ZoneManager.Instance.listOfUnlockedZones)
         {
-            levelButtons[i].interactable = true;
+            ButtonsPerZone BPZ = buttonsPerZone.Where(p => p.theZone == z).Single();
+
+            for (int i = 0; i < BPZ.theZone.maxLevelReachedInZone; i++)
+            {
+                BPZ.zoneButtons[i].interactable = true;
+                //levelButtons[i].interactable = true;
+            }
         }
     }
     public void RefreshGoldAndRubyDisplay()

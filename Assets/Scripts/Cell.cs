@@ -5,6 +5,7 @@ using UnityEngine;
 public class Cell : MonoBehaviour
 {
     public bool isFull;
+    public bool isOuter;
     public int cellIndex;
     public Piece pieceHeld;
     public bool isLimited;
@@ -19,26 +20,48 @@ public class Cell : MonoBehaviour
         followerTarget.rotation = followerTarget.parent.rotation;
         pieceHeld = followerTarget.GetComponent<Piece>();
         pieceHeld.partOfBoard = true;
+        pieceHeld.transform.localScale = Vector3.one;
 
-        GameManager.Instance.connectionManager.subPiecesOnBoard[cellIndex * 2] = pieceHeld.leftChild;
-        GameManager.Instance.connectionManager.subPiecesOnBoard[cellIndex * 2 + 1] = pieceHeld.rightChild;
-        GameManager.Instance.connectionManager.FillSubPieceIndex();
-
-        pieceHeld.leftChild.relevantSlice = GameManager.Instance.connectionManager.slicesOnBoard[Mathf.CeilToInt((float)pieceHeld.leftChild.subPieceIndex / 2)];
-
-        if (pieceHeld.rightChild.subPieceIndex >= GameManager.Instance.connectionManager.lengthOfSubPieces - 1)
+        if (!isOuter)
         {
-            pieceHeld.rightChild.relevantSlice = GameManager.Instance.connectionManager.slicesOnBoard[0];
+            ConnectionManager.Instance.subPiecesOnBoard[cellIndex * 2] = pieceHeld.leftChild;
+            ConnectionManager.Instance.subPiecesOnBoard[cellIndex * 2 + 1] = pieceHeld.rightChild;
+            ConnectionManager.Instance.FillSubPieceIndex();
         }
         else
         {
-            pieceHeld.rightChild.relevantSlice = GameManager.Instance.connectionManager.slicesOnBoard[Mathf.CeilToInt((float)pieceHeld.rightChild.subPieceIndex / 2)];
+            ConnectionManager.Instance.subPiecesDoubleRing[cellIndex * 2] = pieceHeld.leftChild;
+            ConnectionManager.Instance.subPiecesDoubleRing[cellIndex * 2 + 1] = pieceHeld.rightChild;
+            ConnectionManager.Instance.FillSubPieceIndex();
         }
 
-        GameManager.Instance.connectionManager.CheckConnections(cellIndex);
+        if (!isOuter)
+        {
+            pieceHeld.leftChild.relevantSlice = ConnectionManager.Instance.slicesOnBoard[Mathf.CeilToInt((float)pieceHeld.leftChild.subPieceIndex / 2)];
 
 
+            if (pieceHeld.rightChild.subPieceIndex >= ConnectionManager.Instance.lengthOfSubPiecesOuter - 1)
+            {
+                pieceHeld.rightChild.relevantSlice = ConnectionManager.Instance.slicesOnBoard[0];
+            }
+            else
+            {
+                pieceHeld.rightChild.relevantSlice = ConnectionManager.Instance.slicesOnBoard[Mathf.CeilToInt((float)pieceHeld.rightChild.subPieceIndex / 2)];
+            }
 
+        }
+
+        ConnectionManager.Instance.CallConnection(cellIndex, isOuter);
+
+        if (GameManager.Instance.currentLevel.isDoubleRing)
+        {
+            int badInterConnections = 0;
+
+            badInterConnections = InterconnectionManager.Instance.CheckInterConnection(cellIndex, isOuter);
+
+            GameManager.Instance.unsuccessfullConnectionCount += badInterConnections;
+
+        }
 
         if (isNew)
         {
@@ -49,8 +72,6 @@ public class Cell : MonoBehaviour
                 UIManager.Instance.ActivateCommitButton();
             }
         }
-
-        //GameManager.Instance.cellManager.NeighborTest(cellIndex);
     }
 
     public void RemovePiece()
@@ -67,12 +88,30 @@ public class Cell : MonoBehaviour
             Destroy(leftParticleZone.GetChild(0).gameObject);
         }
 
+        if (GameManager.Instance.currentLevel.isDoubleRing)
+        {
+            int badInterConnections = 0;
+
+            badInterConnections = InterconnectionManager.Instance.CheckInterConnection(cellIndex, isOuter);
+
+            GameManager.Instance.unsuccessfullConnectionCount -= badInterConnections;
+
+        }
+
         if (pieceHeld.leftChild.isBadConnection)
         {
             GameManager.Instance.unsuccessfullConnectionCount--;
             pieceHeld.leftChild.isBadConnection = false;
-            int i = GameManager.Instance.connectionManager.CheckIntRange(pieceHeld.leftChild.subPieceIndex - 1);
-            GameManager.Instance.connectionManager.subPiecesOnBoard[i].isBadConnection = false;
+            int i = ConnectionManager.Instance.CheckIntRange(pieceHeld.leftChild.subPieceIndex - 1);
+
+            if (isOuter)
+            {
+                ConnectionManager.Instance.subPiecesDoubleRing[i].isBadConnection = false;
+            }
+            else
+            {
+                ConnectionManager.Instance.subPiecesOnBoard[i].isBadConnection = false;
+            }
 
         }
 
@@ -80,8 +119,16 @@ public class Cell : MonoBehaviour
         {
             GameManager.Instance.unsuccessfullConnectionCount--;
             pieceHeld.rightChild.isBadConnection = false;
-            int i = GameManager.Instance.connectionManager.CheckIntRange(pieceHeld.rightChild.subPieceIndex + 1);
-            GameManager.Instance.connectionManager.subPiecesOnBoard[i].isBadConnection = false;
+            int i = ConnectionManager.Instance.CheckIntRange(pieceHeld.rightChild.subPieceIndex + 1);
+
+            if (isOuter)
+            {
+                ConnectionManager.Instance.subPiecesDoubleRing[i].isBadConnection = false;
+            }
+            else
+            {
+                ConnectionManager.Instance.subPiecesOnBoard[i].isBadConnection = false;
+            }
         }
 
         if (pieceHeld.rightChild.relevantSlice)
@@ -91,7 +138,7 @@ public class Cell : MonoBehaviour
             pieceHeld.rightChild.relevantSlice = null;
             pieceHeld.leftChild.relevantSlice = null;
         }
-        GameManager.Instance.connectionManager.RemoveSubPieceIndex(pieceHeld.leftChild.subPieceIndex);
-        GameManager.Instance.connectionManager.RemoveSubPieceIndex(pieceHeld.rightChild.subPieceIndex);
+        ConnectionManager.Instance.RemoveSubPieceIndex(pieceHeld.leftChild.subPieceIndex, isOuter);
+        ConnectionManager.Instance.RemoveSubPieceIndex(pieceHeld.rightChild.subPieceIndex, isOuter);
     }
 }

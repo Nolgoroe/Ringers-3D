@@ -134,18 +134,33 @@ public class SliceManager : MonoBehaviour
                 }
             }
 
-            for (int i = 0; i < fullSlices.Count; i++)
+            if (GameManager.Instance.currentLevel.isRandomDistributionToSlices)
             {
-                fullSlices[i].SetData(GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i], GameManager.Instance.currentLevel.RewardBags[i]);
+                List<LootPacks> tempList = new List<LootPacks>();
+                tempList.AddRange(GameManager.Instance.currentLevel.RewardBags);
+
+                for (int i = 0; i < fullSlices.Count; i++)
+                {
+                    int randomSlice = Random.Range(0, tempList.Count);
+                    fullSlices[i].SetData(GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i], tempList[randomSlice]);
+                    tempList.RemoveAt(randomSlice);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < fullSlices.Count; i++)
+                {
+                    fullSlices[i].SetData(GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i], GameManager.Instance.currentLevel.RewardBags[i]);
+                }
             }
 
-            /// Give Key
-            //if (GameManager.Instance.isKeyLevel)
-            //{
-            //    int randomSlice = Random.Range(0, fullSlices.Count);
-            //    Debug.Log(randomSlice);
-            //    fullSlices[randomSlice].isKey = true;
-            //}
+            /// Distribute Key to a random slice
+            if (ZoneManager.Instance.isKeyLevel)
+            {
+                int randomSlice = Random.Range(0, fullSlices.Count);
+                Debug.Log(randomSlice);
+                fullSlices[randomSlice].isKey = true;
+            }
         }
     }
 

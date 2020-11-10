@@ -5,26 +5,55 @@ using UnityEngine;
 
 public class ConnectionManager : MonoBehaviour
 {
-    public Cell[] cells;
+    public static ConnectionManager Instance;
+
+    public List<Cell> cells;
+    public List<Cell> outerCells;
 
     public SubPiece[] subPiecesOnBoard;
+    public SubPiece[] subPiecesDoubleRing;
 
     public Slice[] slicesOnBoard;
 
-    public int lengthOfSubPieces;
+    public int lengthOfSubPiecesRegular;
+    public int lengthOfSubPiecesOuter;
 
     public ParticleSystem goodConnectionParticle, badConnectionParticle;
     private void Start()
     {
-        GameManager.Instance.connectionManager = this;
-        subPiecesOnBoard = new SubPiece[lengthOfSubPieces];
+        Instance = this;
+        subPiecesOnBoard = new SubPiece[lengthOfSubPiecesRegular];
+        subPiecesDoubleRing = new SubPiece[lengthOfSubPiecesOuter];
     }
     public void GrabCellList(Transform gb)
     {
-        cells = gb.GetComponentsInChildren<Cell>();
+        foreach (Cell c in gb.GetComponentsInChildren<Cell>())
+        {
+            if (!c.isOuter)
+            {
+                cells.Add(c);
+            }
+            else
+            {
+                outerCells.Add(c);
+            }
+        }
         slicesOnBoard = gb.GetComponentsInChildren<Slice>();
     }
-    public void CheckConnections(int cellIndex)
+
+    public void CallConnection(int cellIndex, bool isOuterCell)
+    {
+        if (!isOuterCell)
+        {
+            CheckConnections(subPiecesOnBoard, cells, cellIndex, isOuterCell);
+        }
+        else
+        {
+            CheckConnections(subPiecesDoubleRing, outerCells,cellIndex, isOuterCell);
+        }
+    }
+
+    public void CheckConnections(SubPiece[] supPieceArray, List<Cell> cellList, int cellIndex, bool isOuterCell)
     {
         int leftContested = CheckIntRange((cellIndex * 2) - 1);
         int rightContested = CheckIntRange((cellIndex * 2) + 2);
@@ -38,38 +67,42 @@ public class ConnectionManager : MonoBehaviour
         //int currentRight = cellIndex * 2 + 1;
         //int currentLeft = cellIndex * 2;
 
-        if (subPiecesOnBoard[leftContested])
+        if (supPieceArray[leftContested])
         {
-            if (subPiecesOnBoard[currentLeft])
+            if (supPieceArray[currentLeft])
             {
-                if (!CheckSubPieceConnection(subPiecesOnBoard[currentLeft], subPiecesOnBoard[leftContested], out bool conditionmet))
+                if (!CheckSubPieceConnection(supPieceArray[currentLeft], supPieceArray[leftContested], out bool conditionmet))
                 {
                     Debug.Log("Bad Connection Right Conetsted");
                     GameManager.Instance.unsuccessfullConnectionCount++;
-                    subPiecesOnBoard[currentLeft].isBadConnection = true;
-                    subPiecesOnBoard[leftContested].isBadConnection = true;
-                    subPiecesOnBoard[currentLeft].relevantSlice.fulfilledCondition = false;
-                    Instantiate(badConnectionParticle, cells[cellIndex].rightParticleZone);
+                    supPieceArray[currentLeft].isBadConnection = true;
+                    supPieceArray[leftContested].isBadConnection = true;
+
+                    if (supPieceArray[currentLeft].relevantSlice)
+                    {
+                        supPieceArray[currentLeft].relevantSlice.fulfilledCondition = false;
+                    }
+                    Instantiate(badConnectionParticle, cellList[cellIndex].rightParticleZone);
                 }
                 else
                 {
-                    Instantiate(goodConnectionParticle, cells[cellIndex].rightParticleZone);
+                    Instantiate(goodConnectionParticle, cellList[cellIndex].rightParticleZone);
 
                     if (conditionmet)
                     {
-                        subPiecesOnBoard[currentLeft].relevantSlice.fulfilledCondition = true;
+                        supPieceArray[currentLeft].relevantSlice.fulfilledCondition = true;
 
-                        if (subPiecesOnBoard[currentLeft].relevantSlice.isLoot)
+                        if (supPieceArray[currentLeft].relevantSlice.isLoot)
                         {
-                            GiveLoot(subPiecesOnBoard[currentLeft].relevantSlice, subPiecesOnBoard[currentLeft].relevantSlice.isLimiter);
+                            GiveLoot(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
                         }
 
-                        if (subPiecesOnBoard[currentLeft].relevantSlice.isLock)
+                        if (supPieceArray[currentLeft].relevantSlice.isLock)
                         {
-                            LockCell(subPiecesOnBoard[currentLeft].relevantSlice, subPiecesOnBoard[currentLeft].relevantSlice.isLimiter);
+                            LockCell(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
                         }
 
-                        if (subPiecesOnBoard[currentLeft].relevantSlice.isKey)
+                        if (supPieceArray[currentLeft].relevantSlice.isKey)
                         {
                             LootManager.Instance.giveGey = true;
                         }
@@ -80,46 +113,53 @@ public class ConnectionManager : MonoBehaviour
             {
                 Debug.Log("Bad Connection Right Conetsted FUCKKKKAKAAAAAA");
                 GameManager.Instance.unsuccessfullConnectionCount++;
-                subPiecesOnBoard[leftContested].isBadConnection = true;
+                supPieceArray[leftContested].isBadConnection = true;
             }
         }
         else
         {
-            subPiecesOnBoard[currentLeft].relevantSlice.fulfilledCondition = false;
+            if (!isOuterCell)
+            {
+                supPieceArray[currentLeft].relevantSlice.fulfilledCondition = false;
+            }
         }
 
-        if (subPiecesOnBoard[rightContested])
+        if (supPieceArray[rightContested])
         {
-            if (subPiecesOnBoard[currentRight])
+            if (supPieceArray[currentRight])
             {
-                if (!CheckSubPieceConnection(subPiecesOnBoard[currentRight], subPiecesOnBoard[rightContested], out bool conditionmet))
+                if (!CheckSubPieceConnection(supPieceArray[currentRight], supPieceArray[rightContested], out bool conditionmet))
                 {
                     Debug.Log("Bad Connection Left Conetsted");
                     GameManager.Instance.unsuccessfullConnectionCount++;
-                    subPiecesOnBoard[currentRight].isBadConnection = true;
-                    subPiecesOnBoard[rightContested].isBadConnection = true;
-                    subPiecesOnBoard[currentRight].relevantSlice.fulfilledCondition = false;
+                    supPieceArray[currentRight].isBadConnection = true;
+                    supPieceArray[rightContested].isBadConnection = true;
 
-                    Instantiate(badConnectionParticle, cells[cellIndex].leftParticleZone);
+                    if (supPieceArray[currentRight].relevantSlice)
+                    {
+                        supPieceArray[currentRight].relevantSlice.fulfilledCondition = false;
+                    }
+
+                    Instantiate(badConnectionParticle, cellList[cellIndex].leftParticleZone);
                 }
                 else
                 {
-                    Instantiate(goodConnectionParticle, cells[cellIndex].leftParticleZone);
+                    Instantiate(goodConnectionParticle, cellList[cellIndex].leftParticleZone);
 
                     if (conditionmet)
                     {
-                        subPiecesOnBoard[currentRight].relevantSlice.fulfilledCondition = true;
-                        if (subPiecesOnBoard[currentRight].relevantSlice.isLoot)
+                        supPieceArray[currentRight].relevantSlice.fulfilledCondition = true;
+                        if (supPieceArray[currentRight].relevantSlice.isLoot)
                         {
-                            GiveLoot(subPiecesOnBoard[currentRight].relevantSlice, subPiecesOnBoard[currentRight].relevantSlice.isLimiter);
+                            GiveLoot(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
                         }
 
-                        if (subPiecesOnBoard[currentRight].relevantSlice.isLock)
+                        if (supPieceArray[currentRight].relevantSlice.isLock)
                         {
-                            LockCell(subPiecesOnBoard[currentRight].relevantSlice, subPiecesOnBoard[currentRight].relevantSlice.isLimiter);
+                            LockCell(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
                         }
 
-                        if (subPiecesOnBoard[currentRight].relevantSlice.isKey)
+                        if (supPieceArray[currentRight].relevantSlice.isKey)
                         {
                             LootManager.Instance.giveGey = true;
                         }
@@ -130,12 +170,15 @@ public class ConnectionManager : MonoBehaviour
             {
                 Debug.Log("Bad Connection Right Conetsted");
                 GameManager.Instance.unsuccessfullConnectionCount++;
-                subPiecesOnBoard[rightContested].isBadConnection = true;
+                supPieceArray[rightContested].isBadConnection = true;
             }
         }
         else
         {
-            subPiecesOnBoard[currentRight].relevantSlice.fulfilledCondition = false;
+            if (!isOuterCell)
+            {
+                supPieceArray[currentRight].relevantSlice.fulfilledCondition = false;
+            }
         }
 
         /// Get slice
@@ -147,20 +190,53 @@ public class ConnectionManager : MonoBehaviour
         bool isGoodConnect = false;
         bool conditionCheck = false;
 
-        if (currentSide.relevantSlice.sliceCatagory != SliceCatagory.None)
+        if (currentSide.relevantSlice)
         {
-            CompareResault result = TotalCheck(currentSide, contestedSide);
-
-            if (!currentSide.relevantSlice.isLimiter)
+            if (currentSide.relevantSlice.sliceCatagory != SliceCatagory.None)
             {
+                CompareResault result = TotalCheck(currentSide, contestedSide);
 
-                conditionCheck = CheckFulfilledSliceCondition(currentSide.relevantSlice, result, currentSide, contestedSide);
-
-                if (conditionCheck)
+                if (!currentSide.relevantSlice.isLimiter)
                 {
-                    conditionMet = conditionCheck;
-                    return true;
+
+                    conditionCheck = CheckFulfilledSliceCondition(currentSide.relevantSlice, result, currentSide, contestedSide);
+
+                    if (conditionCheck)
+                    {
+                        conditionMet = conditionCheck;
+                        return true;
+                    }
+
+                    if (result.gColorMatch)
+                    {
+                        isGoodConnect = true;
+                    }
+
+                    if (result.gSymbolMatch)
+                    {
+                        isGoodConnect = true;
+                    }
                 }
+                else
+                {
+                    conditionCheck = CheckFulfilledSliceCondition(currentSide.relevantSlice, result, currentSide, contestedSide);
+
+                    if (conditionCheck)
+                    {
+                        conditionMet = conditionCheck;
+                        return true;
+                    }
+                    else
+                    {
+                        conditionMet = false;
+                        return false;
+                    }
+
+                }
+            }
+            else
+            {
+                CompareResault result = TotalCheck(currentSide, contestedSide);
 
                 if (result.gColorMatch)
                 {
@@ -171,22 +247,6 @@ public class ConnectionManager : MonoBehaviour
                 {
                     isGoodConnect = true;
                 }
-            }
-            else
-            {
-                conditionCheck = CheckFulfilledSliceCondition(currentSide.relevantSlice, result, currentSide, contestedSide);
-
-                if (conditionCheck)
-                {
-                    conditionMet = conditionCheck;
-                    return true;
-                }
-                else
-                {
-                    conditionMet = false;
-                    return false;
-                }
-
             }
         }
         else
@@ -202,6 +262,7 @@ public class ConnectionManager : MonoBehaviour
             {
                 isGoodConnect = true;
             }
+
         }
 
         conditionMet = conditionCheck;
@@ -214,28 +275,16 @@ public class ConnectionManager : MonoBehaviour
         result.gColorMatch = EqualColorOrJoker(current.colorOfPiece, contested.colorOfPiece);
         result.gSymbolMatch = EqualSymbolOrJoker(current.symbolOfPiece, contested.symbolOfPiece);
 
-        //if (sCol != PieceColor.None)
-        //{
-        //    result.sColorMatch = current.colorOfPiece == contested.colorOfPiece && (current.colorOfPiece == sCol && contested.colorOfPiece == sCol);
-        //}
-
-        //if(sSym != PieceSymbol.None)
-        //{
-        //    result.sSymbolMatch = current.symbolOfPiece == contested.symbolOfPiece && (current.symbolOfPiece == sSym &&  contested.symbolOfPiece == sSym);
-        //}
-
-        //Debug.Log(result.gColorMatch);
-        //Debug.Log(result.gSymbolMatch);
         return result;
     }
     public int CheckIntRange(int num)
     {
         if (num <= 0)
         {
-            return lengthOfSubPieces - 1;
+            return lengthOfSubPiecesRegular - 1;
         }
 
-        if (num >= lengthOfSubPieces)
+        if (num >= lengthOfSubPiecesRegular)
         {
             return 0;
         }
@@ -251,10 +300,24 @@ public class ConnectionManager : MonoBehaviour
                 subPiecesOnBoard[i].subPieceIndex = i;
             }
         }
+        for (int i = 0; i < subPiecesDoubleRing.Length; i++)
+        {
+            if (subPiecesDoubleRing[i])
+            {
+                subPiecesDoubleRing[i].subPieceIndex = i;
+            }
+        }
     }
-    public void RemoveSubPieceIndex(int i)
+    public void RemoveSubPieceIndex(int i, bool isOuterCell)
     {
-        subPiecesOnBoard[i] = null;
+        if (isOuterCell)
+        {
+            subPiecesDoubleRing[i] = null;
+        }
+        else
+        {
+            subPiecesOnBoard[i] = null;
+        }
     }
     public bool EqualColorOrJoker(PieceColor colA, PieceColor colB)/// Colorcheck is to see if we need to check color or symbol
     {
@@ -305,8 +368,8 @@ public class ConnectionManager : MonoBehaviour
 
         if (relevent.sliceIndex == 0)
         {
-            cells[cells.Length - 1].lockSprite.SetActive(true);
-            cells[cells.Length - 1].pieceHeld.isLocked = true;
+            cells[cells.Count - 1].lockSprite.SetActive(true);
+            cells[cells.Count - 1].pieceHeld.isLocked = true;
         }
         else
         {

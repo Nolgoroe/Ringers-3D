@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public GameObject circleBoardPrefab;
+    public GameObject doubleCircleBoardPrefab;
     public GameObject clipPrefab;
 
     public GameObject gameBoard;
@@ -18,7 +19,6 @@ public class GameManager : MonoBehaviour
     public CursorController cursorControl;
     public ClipManager clipManager;
     public SliceManager sliceManager;
-    public ConnectionManager connectionManager;
     public PowerUpManager powerupManager;
 
     public LevelScriptableObject currentLevel;
@@ -37,15 +37,13 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-    //void Start()
-    //{
-    //    StartLevel();
-    //}
-
     public void StartLevel()
     {
+        //Camera.main.orthographic = false;
         gameStarted = true;
-        gameBoard = Instantiate(circleBoardPrefab, destroyOutOfLevel);
+
+        gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
+
         gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
 
         UIManager.Instance.GetCommitButton(gameBoard); 
@@ -53,7 +51,7 @@ public class GameManager : MonoBehaviour
         cursorControl.Init();
 
         sliceManager.SpawnSlices(currentLevel.slicesToSpawn.Length);
-        connectionManager.GrabCellList(gameBoard.transform);
+        ConnectionManager.Instance.GrabCellList(gameBoard.transform);
 
         PlayerManager.Instance.HandleItemCooldowns();
 
@@ -98,9 +96,9 @@ public class GameManager : MonoBehaviour
             LootManager.Instance.GiveLoot();
             UIManager.Instance.WinLevel();
 
-            if (currentLevel.levelNum >= PlayerManager.Instance.maxLevel)
+            if (currentLevel.levelNum >= ZoneManager.Instance.currentZoneCheck.maxLevelReachedInZone)
             {
-                PlayerManager.Instance.maxLevel++;
+                ZoneManager.Instance.currentZoneCheck.maxLevelReachedInZone++;
             }
 
         }
@@ -114,15 +112,4 @@ public class GameManager : MonoBehaviour
         PlayerManager.Instance.SavePlayerData();
     }
 
-    [ContextMenu ("Save Game Data")]
-    public void GameSaveData()
-    {
-        
-    }
-
-    [ContextMenu("Game Load Data")]
-    public void GameLoadData()
-    {
-
-    }
 }

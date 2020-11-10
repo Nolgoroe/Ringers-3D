@@ -42,7 +42,7 @@ public class CraftingMatEntry
 }
 public class PlayerManager : MonoBehaviour
 {
-    public int maxLevel = 1;
+    //public int maxLevel = 1;
 
     public int goldCount, rubyCount;
 
@@ -64,8 +64,6 @@ public class PlayerManager : MonoBehaviour
 
         MaterialsAndForgeManager.Instance.PopulateMaterialBag();
 
-        UIManager.Instance.RefreshGoldAndRubyDisplay();
-
         path = Application.dataPath + "/PlayerSaveData.txt";
 
         if (File.Exists(path))
@@ -84,13 +82,14 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
-        if(equippedItems.Count > 0)
+        if (equippedItems.Count > 0)
         {
             foreach (EquipmentData ED in equippedItems)
             {
                 WardrobeManager.Instance.EquipMe(ED);
             }
         }
+        UIManager.Instance.RefreshGoldAndRubyDisplay();
 
         HandleItemCooldowns();
     }
@@ -140,7 +139,7 @@ public class PlayerManager : MonoBehaviour
     [ContextMenu("Save")]
     public void SavePlayerData()
     {
-       string savedData = JsonUtility.ToJson(this);
+        string savedData = JsonUtility.ToJson(this);
 
         string path = Application.dataPath + "/PlayerSaveData.txt";
 

@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f245e6ade46975b42912a0bdcd673818, type: 3}
   m_Name: Level 3
   m_EditorClassIdentifier: 
+  isDoubleRing: 0
+  boardPrefab: {fileID: 6382559071292991177, guid: 0379f269da8f3aa46bc62a2f1709c2be,
+    type: 3}
   levelNum: 3
   cellsCountInLevel: 8
   slicesToSpawn: 01000000000000000200000002000000
@@ -19,4 +22,4 @@ MonoBehaviour:
   lootSlices: 01010101
   limiterSlices: 00000000
   RewardBags: 01000000060000000800000007000000
-  isKey: 0
+  isRandomDistributionToSlices: 0

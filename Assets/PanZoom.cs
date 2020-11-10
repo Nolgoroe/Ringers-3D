@@ -14,7 +14,7 @@ public class PanZoom : MonoBehaviour
 
     public Image SpriteBounds;
 
-    public Camera MainCam;
+    public Camera mainCam;
 
     Transform Target;
 
@@ -26,43 +26,43 @@ public class PanZoom : MonoBehaviour
     float vertExtent;
     float horzExtent;
 
-    float OriginalOrthofraphicsize;
+    float originalOrthofraphicsize;
 
     Vector3 OriginalCamPos;
 
     bool isZoom;
     private void OnDisable()
     {
-        MainCam.orthographicSize = OriginalOrthofraphicsize;
-        MainCam.transform.position = OriginalCamPos;
+        mainCam.orthographicSize = 10;
+        mainCam.transform.position = new Vector3(0,0,-18);
     }
 
     private void Start()
     {
-        MainCam = Camera.main;
+        mainCam = Camera.main;
 
-        MainCam.orthographic = true;
+        mainCam.orthographic = true;
 
-        OriginalCamPos = MainCam.transform.position;
-        MainCam.orthographicSize = MaxZoom;
+        OriginalCamPos = mainCam.transform.position;
+        mainCam.orthographicSize = MaxZoom;
 
-        OriginalOrthofraphicsize = MainCam.orthographicSize;
+        originalOrthofraphicsize = mainCam.orthographicSize;
 
-        MainCam.orthographicSize = OriginalOrthofraphicsize;
-        MainCam.transform.position = OriginalCamPos;
+        mainCam.orthographicSize = originalOrthofraphicsize;
+        mainCam.transform.position = OriginalCamPos;
 
-        vertExtent = MainCam.orthographicSize;
+        vertExtent = mainCam.orthographicSize;
         horzExtent = vertExtent * Screen.width / Screen.height;
 
-        Target = MainCam.transform;
+        Target = mainCam.transform;
     }
 
     void Update()
     {
-        leftBound = (horzExtent - SpriteBounds.sprite.bounds.size.x / 2.0f);
-        rightBound = (SpriteBounds.sprite.bounds.size.x / 2.0f - horzExtent);
-        bottomBound = (vertExtent - SpriteBounds.sprite.bounds.size.y / 2.0f);
-        topBound = (SpriteBounds.sprite.bounds.size.y / 2.0f - vertExtent);
+        leftBound = (horzExtent - (SpriteBounds.sprite.bounds.size.x / 2.0f));
+        rightBound = ((SpriteBounds.sprite.bounds.size.x / 2.0f - horzExtent));
+        bottomBound = ((vertExtent - SpriteBounds.sprite.rect.size.y / 2.0f)) / SpriteBounds.sprite.pixelsPerUnit;
+        topBound = ((SpriteBounds.sprite.rect.size.y / 2.0f - vertExtent)) / SpriteBounds.sprite.pixelsPerUnit;
 
         if (Input.touchCount > 0)
         {
@@ -74,19 +74,19 @@ public class PanZoom : MonoBehaviour
                 {
                     if (touch.phase == TouchPhase.Began)
                     {
-                        TouchStart = MainCam.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 18));
+                        TouchStart = mainCam.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, -18));
                     }
 
                     if (touch.phase == TouchPhase.Moved)
                     {
-                        Vector3 Direction = TouchStart - MainCam.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, 18));
-                        MainCam.transform.position += Direction;
+                        Vector3 Direction = TouchStart - mainCam.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, -18));
+                        mainCam.transform.position += Direction;
 
 
-                        Vector3 pos = new Vector3(Target.position.x, Target.position.y, 18);
+                        Vector3 pos = new Vector3(Target.position.x, Target.position.y, -18);
                         pos.x = Mathf.Clamp(pos.x, leftBound, rightBound);
                         pos.y = Mathf.Clamp(pos.y, bottomBound, topBound);
-                        MainCam.transform.position = pos;
+                        mainCam.transform.position = pos;
                     }
                 }
             }
@@ -121,17 +121,17 @@ public class PanZoom : MonoBehaviour
     public void Zoom(float Increment)
     {
         isZoom = true;
-        MainCam.orthographicSize = Mathf.Clamp(MainCam.orthographicSize - Increment, MinZoom, MaxZoom);
+        mainCam.orthographicSize = Mathf.Clamp(mainCam.orthographicSize - Increment, MinZoom, MaxZoom);
 
 
 
-        vertExtent = MainCam.orthographicSize;
+        vertExtent = mainCam.orthographicSize;
         horzExtent = vertExtent * Screen.width / Screen.height;
 
 
-        Vector3 pos = new Vector3(Target.position.x, Target.position.y, 18);
+        Vector3 pos = new Vector3(Target.position.x, Target.position.y, -18);
         pos.x = Mathf.Clamp(pos.x, leftBound, rightBound);
         pos.y = Mathf.Clamp(pos.y, bottomBound, topBound);
-        MainCam.transform.position = pos;
+        mainCam.transform.position = pos;
     }
 }

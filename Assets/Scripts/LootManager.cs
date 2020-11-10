@@ -110,6 +110,10 @@ public class LootManager : MonoBehaviour
         if (giveGey)
         {
             Instantiate(keyPrefab, GameManager.Instance.destroyOutOfLevel);
+            ZoneManager.Instance.currentZoneCheck.hasAwardedKey = true;
+            ZoneManager.Instance.nextZoneCheck.isUnlocked = true;
+            ZoneManager.Instance.nextZoneCheck.maxLevelReachedInZone = 1;
+            ZoneManager.Instance.listOfUnlockedZones.Add(ZoneManager.Instance.nextZoneCheck);
         }
 
         giveGey = false;

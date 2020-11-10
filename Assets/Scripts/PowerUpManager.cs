@@ -273,22 +273,22 @@ public class PowerUpManager : MonoBehaviour
         b = toWorkOn.sliceIndex - 1;
         if (a == 0)
         {
-            b = GameManager.Instance.connectionManager.cells.Length - 1;
+            b = ConnectionManager.Instance.cells.Count - 1;
         }
 
-        if (GameManager.Instance.connectionManager.cells[a].isFull)
+        if (ConnectionManager.Instance.cells[a].isFull)
         {
-            GameManager.Instance.connectionManager.cells[a].pieceHeld.isLocked = false;
+            ConnectionManager.Instance.cells[a].pieceHeld.isLocked = false;
 
-            GameManager.Instance.connectionManager.cells[a].lockSprite.SetActive(false);
+            ConnectionManager.Instance.cells[a].lockSprite.SetActive(false);
 
         }
 
-        if(GameManager.Instance.connectionManager.cells[b].isFull)
+        if(ConnectionManager.Instance.cells[b].isFull)
         {
-            GameManager.Instance.connectionManager.cells[b].pieceHeld.isLocked = false;
+            ConnectionManager.Instance.cells[b].pieceHeld.isLocked = false;
 
-            GameManager.Instance.connectionManager.cells[b].lockSprite.SetActive(false);
+            ConnectionManager.Instance.cells[b].lockSprite.SetActive(false);
         }
 
         toWorkOn.ResetDate();

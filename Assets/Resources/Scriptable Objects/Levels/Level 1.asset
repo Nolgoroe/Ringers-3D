@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f245e6ade46975b42912a0bdcd673818, type: 3}
   m_Name: Level 1
   m_EditorClassIdentifier: 
+  isDoubleRing: 1
+  boardPrefab: {fileID: 4013128393894945366, guid: b052c57c9f6705f4788793d7612391c8,
+    type: 3}
   levelNum: 1
-  cellsCountInLevel: 8
+  cellsCountInLevel: 16
   slicesToSpawn: 01000000000000000300000002000000
   lockSlices: 01000000
   lootSlices: 01010101
   limiterSlices: 00000000
   RewardBags: 06000000010000000400000008000000
-  isKey: 00000000
+  isRandomDistributionToSlices: 0
