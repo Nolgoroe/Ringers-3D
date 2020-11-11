@@ -9,6 +9,7 @@ public class PanZoom : MonoBehaviour
 
     public float MinZoom = 1;
     public float MaxZoom = 8;
+    public float currentZoom = 0;
 
     Touch touch;
 
@@ -33,7 +34,7 @@ public class PanZoom : MonoBehaviour
     bool isZoom;
     private void OnDisable()
     {
-        mainCam.orthographicSize = 10;
+        //mainCam.orthographicSize = 9f;
         mainCam.transform.position = new Vector3(0,0,-18);
     }
 
@@ -61,6 +62,7 @@ public class PanZoom : MonoBehaviour
     {
         leftBound = (horzExtent - (SpriteBounds.sprite.bounds.size.x / 2.0f));
         rightBound = ((SpriteBounds.sprite.bounds.size.x / 2.0f - horzExtent));
+
         bottomBound = ((vertExtent - SpriteBounds.sprite.rect.size.y / 2.0f)) / SpriteBounds.sprite.pixelsPerUnit;
         topBound = ((SpriteBounds.sprite.rect.size.y / 2.0f - vertExtent)) / SpriteBounds.sprite.pixelsPerUnit;
 
@@ -123,8 +125,16 @@ public class PanZoom : MonoBehaviour
         isZoom = true;
         mainCam.orthographicSize = Mathf.Clamp(mainCam.orthographicSize - Increment, MinZoom, MaxZoom);
 
+        currentZoom = mainCam.orthographicSize;
 
-
+        if(currentZoom >= MinZoom + 1)
+        {
+            ZoneManager.Instance.DiactiavteLevelDisplay();
+        }
+        else
+        {
+            ZoneManager.Instance.ActivateLevelDisplay();
+        }
         vertExtent = mainCam.orthographicSize;
         horzExtent = vertExtent * Screen.width / Screen.height;
 

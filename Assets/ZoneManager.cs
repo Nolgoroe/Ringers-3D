@@ -7,6 +7,8 @@ using System.Linq;
 
 public class ZoneManager : MonoBehaviour
 {
+    public GameObject[] zoneLevelDisplays;
+
     public Zone[] listOfAllZones;
     public List<Zone> listOfUnlockedZones;
 
@@ -76,5 +78,20 @@ public class ZoneManager : MonoBehaviour
         JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
 
         Instance = this;
+    }
+
+    public void DiactiavteLevelDisplay()
+    {
+        for (int i = 0; i < zoneLevelDisplays.Length; i++)
+        {
+            zoneLevelDisplays[i].SetActive(false);
+        }
+    }
+    public void ActivateLevelDisplay()
+    {
+        for (int i = 0; i < zoneLevelDisplays.Length; i++)
+        {
+            zoneLevelDisplays[i].SetActive(true);
+        }
     }
 }

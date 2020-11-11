@@ -59,12 +59,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFull: 0
+  isOuter: 0
   cellIndex: 2
   pieceHeld: {fileID: 0}
   isLimited: 0
   lockSprite: {fileID: 6481315729166118644}
   rightParticleZone: {fileID: 7731711588630417992}
   leftParticleZone: {fileID: 5778231230796311929}
+  interconnectedRightParticleZone: {fileID: 0}
+  interconnectedLeftParticleZone: {fileID: 0}
 --- !u!1 &153735969
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,12 +127,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFull: 0
+  isOuter: 0
   cellIndex: 4
   pieceHeld: {fileID: 0}
   isLimited: 0
   lockSprite: {fileID: 4683362947934931893}
   rightParticleZone: {fileID: 538842224559554249}
   leftParticleZone: {fileID: 4679270184902242318}
+  interconnectedRightParticleZone: {fileID: 0}
+  interconnectedLeftParticleZone: {fileID: 0}
 --- !u!1 &566847775
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,12 +195,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFull: 0
+  isOuter: 0
   cellIndex: 7
   pieceHeld: {fileID: 0}
   isLimited: 0
   lockSprite: {fileID: 2252100302873529608}
   rightParticleZone: {fileID: 3695877806278028994}
   leftParticleZone: {fileID: 1902684197609485379}
+  interconnectedRightParticleZone: {fileID: 0}
+  interconnectedLeftParticleZone: {fileID: 0}
 --- !u!1 &856548267
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,12 +263,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFull: 0
+  isOuter: 0
   cellIndex: 5
   pieceHeld: {fileID: 0}
   isLimited: 0
   lockSprite: {fileID: 4257122012369873463}
   rightParticleZone: {fileID: 4679270184902242318}
   leftParticleZone: {fileID: 6692842737193151116}
+  interconnectedRightParticleZone: {fileID: 0}
+  interconnectedLeftParticleZone: {fileID: 0}
 --- !u!1 &955080193
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,12 +331,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFull: 0
+  isOuter: 0
   cellIndex: 1
   pieceHeld: {fileID: 0}
   isLimited: 0
   lockSprite: {fileID: 4165404869278522090}
   rightParticleZone: {fileID: 3868599810952633166}
   leftParticleZone: {fileID: 7731711588630417992}
+  interconnectedRightParticleZone: {fileID: 0}
+  interconnectedLeftParticleZone: {fileID: 0}
 --- !u!1 &992830417
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,12 +399,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFull: 0
+  isOuter: 0
   cellIndex: 3
   pieceHeld: {fileID: 0}
   isLimited: 0
   lockSprite: {fileID: 735363294944159468}
   rightParticleZone: {fileID: 5778231230796311929}
   leftParticleZone: {fileID: 538842224559554249}
+  interconnectedRightParticleZone: {fileID: 0}
+  interconnectedLeftParticleZone: {fileID: 0}
 --- !u!1 &1157581572
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,12 +467,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFull: 0
+  isOuter: 0
   cellIndex: 0
   pieceHeld: {fileID: 0}
   isLimited: 0
   lockSprite: {fileID: 4820653481458455929}
   rightParticleZone: {fileID: 1902684197609485379}
   leftParticleZone: {fileID: 3868599810952633166}
+  interconnectedRightParticleZone: {fileID: 0}
+  interconnectedLeftParticleZone: {fileID: 0}
 --- !u!1 &1596380326
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,12 +535,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFull: 0
+  isOuter: 0
   cellIndex: 6
   pieceHeld: {fileID: 0}
   isLimited: 0
   lockSprite: {fileID: 9121639209920815113}
   rightParticleZone: {fileID: 6692842737193151116}
   leftParticleZone: {fileID: 3695877806278028994}
+  interconnectedRightParticleZone: {fileID: 0}
+  interconnectedLeftParticleZone: {fileID: 0}
 --- !u!1 &97109625940631375
 GameObject:
   m_ObjectHideFlags: 0
@@ -2891,7 +2915,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6382559071292991177}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.87, z: 0}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8654870071412049279}
@@ -2940,7 +2964,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 40c21e8ce46599847a4b3a0f7fb11f21, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4924a05ba80586749b97e6acfb416859, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

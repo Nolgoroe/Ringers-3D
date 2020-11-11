@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 using System.Linq;
 
@@ -16,6 +17,8 @@ public class Zone : MonoBehaviour
 
     string path;
 
+    public Sprite levelDone, levelFirstTimeIcon, unlockedZone, lockedZone;
+    public Image zoneHeader;
     private void Start()
     {
         path = Application.dataPath + "/Zone" + id + ".txt";

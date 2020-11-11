@@ -11,6 +11,7 @@ public class Cell : MonoBehaviour
     public bool isLimited;
     public GameObject lockSprite;
     public Transform rightParticleZone, leftParticleZone;
+    public Transform interconnectedRightParticleZone, interconnectedLeftParticleZone;
 
     public void AddPiece(Transform followerTarget, bool isNew)
     {
@@ -90,6 +91,19 @@ public class Cell : MonoBehaviour
 
         if (GameManager.Instance.currentLevel.isDoubleRing)
         {
+            if (interconnectedRightParticleZone.childCount > 0)
+            {
+                Destroy(interconnectedRightParticleZone.GetChild(0).gameObject);
+            }
+
+            if (interconnectedLeftParticleZone.childCount > 0)
+            {
+                Destroy(interconnectedLeftParticleZone.GetChild(0).gameObject);
+            }
+        }
+
+        if (GameManager.Instance.currentLevel.isDoubleRing)
+        {
             int badInterConnections = 0;
 
             badInterConnections = InterconnectionManager.Instance.CheckInterConnection(cellIndex, isOuter);
@@ -104,15 +118,6 @@ public class Cell : MonoBehaviour
             pieceHeld.leftChild.isBadConnection = false;
             int i = ConnectionManager.Instance.CheckIntRange(pieceHeld.leftChild.subPieceIndex - 1);
 
-            if (isOuter)
-            {
-                ConnectionManager.Instance.subPiecesDoubleRing[i].isBadConnection = false;
-            }
-            else
-            {
-                ConnectionManager.Instance.subPiecesOnBoard[i].isBadConnection = false;
-            }
-
         }
 
         if (pieceHeld.rightChild.isBadConnection)
@@ -121,14 +126,6 @@ public class Cell : MonoBehaviour
             pieceHeld.rightChild.isBadConnection = false;
             int i = ConnectionManager.Instance.CheckIntRange(pieceHeld.rightChild.subPieceIndex + 1);
 
-            if (isOuter)
-            {
-                ConnectionManager.Instance.subPiecesDoubleRing[i].isBadConnection = false;
-            }
-            else
-            {
-                ConnectionManager.Instance.subPiecesOnBoard[i].isBadConnection = false;
-            }
         }
 
         if (pieceHeld.rightChild.relevantSlice)

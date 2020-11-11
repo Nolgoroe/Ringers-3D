@@ -62,7 +62,7 @@ public class LootManager : MonoBehaviour
 
     public GameObject keyPrefab;
 
-    public bool giveGey;
+    public bool giveKey;
 
     [Header("List for Loot by Level")]
     /////// LIST FOR LOOT BY LEVEL
@@ -107,16 +107,18 @@ public class LootManager : MonoBehaviour
 
         currentLevelLootToGive.Clear();
 
-        if (giveGey)
+        if (giveKey)
         {
             Instantiate(keyPrefab, GameManager.Instance.destroyOutOfLevel);
             ZoneManager.Instance.currentZoneCheck.hasAwardedKey = true;
             ZoneManager.Instance.nextZoneCheck.isUnlocked = true;
             ZoneManager.Instance.nextZoneCheck.maxLevelReachedInZone = 1;
+            ZoneManager.Instance.nextZoneCheck.zoneHeader.sprite = ZoneManager.Instance.nextZoneCheck.unlockedZone;
+
             ZoneManager.Instance.listOfUnlockedZones.Add(ZoneManager.Instance.nextZoneCheck);
         }
 
-        giveGey = false;
+        giveKey = false;
     }
     public void RollOnTable(LootPacks lootPack)
     {

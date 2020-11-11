@@ -29,6 +29,10 @@ public class UIManager : MonoBehaviour
     //public Button[] levelButtons;
 
     public ButtonsPerZone[] buttonsPerZone;
+
+
+    public Vector3 hubCameraPos;
+
     private void Start()
     {
         Instance = this;
@@ -50,6 +54,8 @@ public class UIManager : MonoBehaviour
         usingPowerupText.SetActive(false);
         youWinText.SetActive(false);
         youLoseText.SetActive(false);
+
+        ZoneManager.Instance.DiactiavteLevelDisplay();
     }
     public void PlayButton()
     {
@@ -75,7 +81,10 @@ public class UIManager : MonoBehaviour
 
         if (currentCanvas == gameplayCanvas)
         {
-            //Camera.main.orthographic = true;
+            Camera.main.orthographicSize = 9.5f;
+            ZoneManager.Instance.DiactiavteLevelDisplay();
+
+            Camera.main.transform.position = hubCameraPos;
 
             gameplayCanvas.SetActive(false);
             OptionsScreen.SetActive(false);
@@ -85,9 +94,9 @@ public class UIManager : MonoBehaviour
             GameManager.Instance.DestroyAllLevelChildern();
 
             LootManager.Instance.ResetLevelLootData();
-            LootManager.Instance.giveGey = false;
+            LootManager.Instance.giveKey = false;
             ZoneManager.Instance.ResetZoneManagerData();
-
+            ConnectionManager.Instance.ResetConnectionData();
             UnlockLevels();
 
             foreach (Zone z in ZoneManager.Instance.listOfUnlockedZones)
@@ -100,6 +109,8 @@ public class UIManager : MonoBehaviour
 
         if(currentCanvas == ringersHutDisplay)
         {
+            Camera.main.orthographicSize = 9.5f;
+
             ringersHutDisplay.SetActive(false);
             ringersHutUICanvas.SetActive(false);
             //Camera.main.orthographic = false;
@@ -210,8 +221,17 @@ public class UIManager : MonoBehaviour
             for (int i = 0; i < BPZ.theZone.maxLevelReachedInZone; i++)
             {
                 BPZ.zoneButtons[i].interactable = true;
-                //levelButtons[i].interactable = true;
+
+                if(i + 1 != BPZ.theZone.maxLevelReachedInZone)
+                {
+                    BPZ.zoneButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelDone;
+                }
+                else
+                {
+                    BPZ.zoneButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIcon;
+                }
             }
+
         }
     }
     public void RefreshGoldAndRubyDisplay()

@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     public void StartLevel()
     {
-        //Camera.main.orthographic = false;
+        Camera.main.orthographicSize = 12;
         gameStarted = true;
 
         gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
 
         sliceManager.SpawnSlices(currentLevel.slicesToSpawn.Length);
         ConnectionManager.Instance.GrabCellList(gameBoard.transform);
+        ConnectionManager.Instance.SetLevelConnectionData();
 
         PlayerManager.Instance.HandleItemCooldowns();
 
@@ -96,7 +97,7 @@ public class GameManager : MonoBehaviour
             LootManager.Instance.GiveLoot();
             UIManager.Instance.WinLevel();
 
-            if (currentLevel.levelNum >= ZoneManager.Instance.currentZoneCheck.maxLevelReachedInZone)
+            if (currentLevel.levelNum >= ZoneManager.Instance.currentZoneCheck.maxLevelReachedInZone && currentLevel.levelNum != ZoneManager.Instance.currentZoneCheck.lastLevelNum)
             {
                 ZoneManager.Instance.currentZoneCheck.maxLevelReachedInZone++;
             }

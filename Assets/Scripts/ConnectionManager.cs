@@ -22,9 +22,14 @@ public class ConnectionManager : MonoBehaviour
     private void Start()
     {
         Instance = this;
+    }
+
+    public void SetLevelConnectionData()
+    {
         subPiecesOnBoard = new SubPiece[lengthOfSubPiecesRegular];
         subPiecesDoubleRing = new SubPiece[lengthOfSubPiecesOuter];
     }
+
     public void GrabCellList(Transform gb)
     {
         foreach (Cell c in gb.GetComponentsInChildren<Cell>())
@@ -104,7 +109,7 @@ public class ConnectionManager : MonoBehaviour
 
                         if (supPieceArray[currentLeft].relevantSlice.isKey)
                         {
-                            LootManager.Instance.giveGey = true;
+                            LootManager.Instance.giveKey = true;
                         }
                     }
                 }
@@ -161,7 +166,7 @@ public class ConnectionManager : MonoBehaviour
 
                         if (supPieceArray[currentRight].relevantSlice.isKey)
                         {
-                            LootManager.Instance.giveGey = true;
+                            LootManager.Instance.giveKey = true;
                         }
                     }
                 }
@@ -272,8 +277,11 @@ public class ConnectionManager : MonoBehaviour
     {
         CompareResault result = new CompareResault();
 
-        result.gColorMatch = EqualColorOrJoker(current.colorOfPiece, contested.colorOfPiece);
-        result.gSymbolMatch = EqualSymbolOrJoker(current.symbolOfPiece, contested.symbolOfPiece);
+        if(current && contested)
+        {
+            result.gColorMatch = EqualColorOrJoker(current.colorOfPiece, contested.colorOfPiece);
+            result.gSymbolMatch = EqualSymbolOrJoker(current.symbolOfPiece, contested.symbolOfPiece);
+        }
 
         return result;
     }
@@ -430,5 +438,14 @@ public class ConnectionManager : MonoBehaviour
         }
 
         return isConditionMet;
+    }
+
+    public void ResetConnectionData()
+    {
+        cells.Clear();
+        outerCells.Clear();
+        subPiecesOnBoard = new SubPiece[0];
+        subPiecesDoubleRing = new SubPiece[0];
+        slicesOnBoard = new Slice[0];
     }
 }
