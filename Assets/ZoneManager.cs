@@ -7,19 +7,14 @@ using System.Linq;
 
 public class ZoneManager : MonoBehaviour
 {
-    public GameObject[] zoneLevelDisplays;
-
-    public Zone[] listOfAllZones;
-    public List<Zone> listOfUnlockedZones;
-
-    public Zone currentZoneCheck, nextZoneCheck;
 
     public bool isKeyLevel;
 
-    public static ZoneManager Instance;
-
     string path;
 
+    public static ZoneManager Instance;
+
+    public List<int> unlockedZoneID;
     private void Start()
     {
         path = Application.dataPath + "/ZoneManager.txt";
@@ -28,35 +23,35 @@ public class ZoneManager : MonoBehaviour
         {
             LoadZoneManager();
         }
-
         Instance = this;
+
     }
 
     public void CheckZoneAwardedKey(int current) ////// if zone did not award key yet - they button that has this function connected to it IS the key level
     {
-        if (listOfAllZones[current].hasAwardedKey)
+        if (ZoneManagerHelpData.Instance.listOfAllZones[current].hasAwardedKey)
         {
             ResetZoneManagerData(); ///// In case of a problem - reset all data to default.
             return;
         }
 
-        currentZoneCheck = listOfAllZones[current];
+        ZoneManagerHelpData.Instance.currentZoneCheck = ZoneManagerHelpData.Instance.listOfAllZones[current];
 
         isKeyLevel = true;
     }
     public void SetUnlockZone(int zoneToUnlock)
     {
-        nextZoneCheck = listOfAllZones[zoneToUnlock];
+        ZoneManagerHelpData.Instance.nextZoneCheck = ZoneManagerHelpData.Instance.listOfAllZones[zoneToUnlock];
     }
     public void SetCurrentZone(int current)
     {
-        currentZoneCheck = listOfAllZones[current];
+        ZoneManagerHelpData.Instance.currentZoneCheck = ZoneManagerHelpData.Instance.listOfAllZones[current];
     }
 
     public void ResetZoneManagerData()
     {
-        currentZoneCheck = null;
-        nextZoneCheck = null;
+        ZoneManagerHelpData.Instance.currentZoneCheck = null;
+        ZoneManagerHelpData.Instance.nextZoneCheck = null;
         isKeyLevel = false;
     }
 
@@ -82,16 +77,16 @@ public class ZoneManager : MonoBehaviour
 
     public void DiactiavteLevelDisplay()
     {
-        for (int i = 0; i < zoneLevelDisplays.Length; i++)
+        for (int i = 0; i < ZoneManagerHelpData.Instance.zoneLevelDisplays.Length; i++)
         {
-            zoneLevelDisplays[i].SetActive(false);
+            ZoneManagerHelpData.Instance.zoneLevelDisplays[i].SetActive(false);
         }
     }
     public void ActivateLevelDisplay()
     {
-        for (int i = 0; i < zoneLevelDisplays.Length; i++)
+        for (int i = 0; i < ZoneManagerHelpData.Instance.zoneLevelDisplays.Length; i++)
         {
-            zoneLevelDisplays[i].SetActive(true);
+            ZoneManagerHelpData.Instance.zoneLevelDisplays[i].SetActive(true);
         }
     }
 }

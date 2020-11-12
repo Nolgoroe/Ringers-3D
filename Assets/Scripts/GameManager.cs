@@ -97,9 +97,9 @@ public class GameManager : MonoBehaviour
             LootManager.Instance.GiveLoot();
             UIManager.Instance.WinLevel();
 
-            if (currentLevel.levelNum >= ZoneManager.Instance.currentZoneCheck.maxLevelReachedInZone && currentLevel.levelNum != ZoneManager.Instance.currentZoneCheck.lastLevelNum)
+            if (currentLevel.levelNum >= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && currentLevel.levelNum != ZoneManagerHelpData.Instance.currentZoneCheck.lastLevelNum)
             {
-                ZoneManager.Instance.currentZoneCheck.maxLevelReachedInZone++;
+                ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone++;
             }
 
         }
@@ -111,6 +111,14 @@ public class GameManager : MonoBehaviour
         }
 
         PlayerManager.Instance.SavePlayerData();
+    }
+
+
+    public void RestartCurrentLevel()
+    {
+        DestroyAllLevelChildern();
+        LootManager.Instance.ResetLevelLootData();
+        StartLevel();
     }
 
 }

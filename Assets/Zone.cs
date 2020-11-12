@@ -27,6 +27,15 @@ public class Zone : MonoBehaviour
         {
             LoadZone();
         }
+
+        if (isUnlocked)
+        {
+            zoneHeader.sprite = unlockedZone;
+        }
+        else
+        {
+            zoneHeader.sprite = lockedZone;
+        }
     }
     [ContextMenu("Save Game Data")]
     public void SaveZone()

@@ -55,7 +55,6 @@ public class UIManager : MonoBehaviour
         youWinText.SetActive(false);
         youLoseText.SetActive(false);
 
-        ZoneManager.Instance.DiactiavteLevelDisplay();
     }
     public void PlayButton()
     {
@@ -99,9 +98,9 @@ public class UIManager : MonoBehaviour
             ConnectionManager.Instance.ResetConnectionData();
             UnlockLevels();
 
-            foreach (Zone z in ZoneManager.Instance.listOfUnlockedZones)
+            foreach (int ID in ZoneManager.Instance.unlockedZoneID)
             {
-                z.SaveZone();
+                ZoneManagerHelpData.Instance.listOfAllZones[ID].SaveZone();
             }
 
             ZoneManager.Instance.SaveZoneManager();
@@ -214,9 +213,9 @@ public class UIManager : MonoBehaviour
     }
     public void UnlockLevels()
     {
-        foreach (Zone z in ZoneManager.Instance.listOfUnlockedZones)
+        foreach (int ID in ZoneManager.Instance.unlockedZoneID)
         {
-            ButtonsPerZone BPZ = buttonsPerZone.Where(p => p.theZone == z).Single();
+            ButtonsPerZone BPZ = buttonsPerZone.Where(p => p.theZone == ZoneManagerHelpData.Instance.listOfAllZones[ID]).Single();
 
             for (int i = 0; i < BPZ.theZone.maxLevelReachedInZone; i++)
             {

@@ -110,12 +110,12 @@ public class LootManager : MonoBehaviour
         if (giveKey)
         {
             Instantiate(keyPrefab, GameManager.Instance.destroyOutOfLevel);
-            ZoneManager.Instance.currentZoneCheck.hasAwardedKey = true;
-            ZoneManager.Instance.nextZoneCheck.isUnlocked = true;
-            ZoneManager.Instance.nextZoneCheck.maxLevelReachedInZone = 1;
-            ZoneManager.Instance.nextZoneCheck.zoneHeader.sprite = ZoneManager.Instance.nextZoneCheck.unlockedZone;
+            ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey = true;
+            ZoneManagerHelpData.Instance.nextZoneCheck.isUnlocked = true;
+            ZoneManagerHelpData.Instance.nextZoneCheck.maxLevelReachedInZone = 1;
+            ZoneManagerHelpData.Instance.nextZoneCheck.zoneHeader.sprite = ZoneManagerHelpData.Instance.nextZoneCheck.unlockedZone;
 
-            ZoneManager.Instance.listOfUnlockedZones.Add(ZoneManager.Instance.nextZoneCheck);
+            ZoneManager.Instance.unlockedZoneID.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
         }
 
         giveKey = false;

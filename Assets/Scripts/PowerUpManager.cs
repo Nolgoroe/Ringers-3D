@@ -134,9 +134,15 @@ public class PowerUpManager : MonoBehaviour
     }
     public void ExtraDealPower(PowerupProperties prop)
     {
-        GameManager.Instance.clipManager.ExtraDealSlots();
-
-        FinishedUsingPowerup(true, prop);
+        if(GameManager.Instance.clipManager.clipCount != 4)
+        {
+            GameManager.Instance.clipManager.ExtraDealSlots();
+            FinishedUsingPowerup(true, prop);
+        }
+        else
+        {
+            FinishedUsingPowerup(false, prop);
+        }
 
         Debug.Log("Extra Deal");
 
