@@ -25,6 +25,8 @@ public class UIManager : MonoBehaviour
 
     public Text goldText, rubyText;
 
+    public TMP_Text currentLevelName;
+
     public Button commitButton;
     //public Button[] levelButtons;
 
@@ -73,6 +75,12 @@ public class UIManager : MonoBehaviour
         hudCanvasUI.SetActive(false);
         mainMenu.SetActive(true);
     }
+
+    public void ChangeZoneName(string name)
+    {
+        currentLevelName.text = name;
+    }
+
     public void ToHud(GameObject currentCanvas)
     {
         PlayerManager.Instance.activePowerups.Clear();

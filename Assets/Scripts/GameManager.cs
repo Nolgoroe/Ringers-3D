@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public GameObject circleBoardPrefab;
-    public GameObject doubleCircleBoardPrefab;
+    //public GameObject doubleCircleBoardPrefab;
+    public GameObject backGroundPrefab;
     public GameObject clipPrefab;
 
     public GameObject gameBoard;
@@ -40,6 +41,8 @@ public class GameManager : MonoBehaviour
     public void StartLevel()
     {
         Camera.main.orthographicSize = 12;
+        //Camera.main.orthographic = false;
+        //Camera.main.fieldOfView = 50f;
         gameStarted = true;
 
         gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);

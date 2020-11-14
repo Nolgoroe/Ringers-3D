@@ -46,6 +46,8 @@ public class ZoneManager : MonoBehaviour
     public void SetCurrentZone(int current)
     {
         ZoneManagerHelpData.Instance.currentZoneCheck = ZoneManagerHelpData.Instance.listOfAllZones[current];
+
+        UIManager.Instance.ChangeZoneName(ZoneManagerHelpData.Instance.currentZoneCheck.zoneName);
     }
 
     public void ResetZoneManagerData()

@@ -10,7 +10,7 @@ public class PowerupProperties : MonoBehaviour
     public string powerupText;
     public PowerUp powerupType;
     public int numOfUses;
-    public TMP_Text nameOfPowerup;
+    ///public TMP_Text nameOfPowerup;
     public PieceColor transformColor;
     public PieceSymbol transformSymbol;
     public EquipmentData connectedEquipment;
@@ -28,15 +28,15 @@ public class PowerupProperties : MonoBehaviour
 
         if(type == PowerUp.FourColorTransform)
         {
-            nameOfPowerup.text = powerupText + "\n" + connectedEquipment.specificColor;
+            //nameOfPowerup.text = powerupText + "\n" + connectedEquipment.specificColor;
         }
         else if(type == PowerUp.FourShapeTransform)
         {
-            nameOfPowerup.text = powerupText + "\n" + connectedEquipment.specificSymbol;
+            //nameOfPowerup.text = powerupText + "\n" + connectedEquipment.specificSymbol;
         }
         else
         {
-            nameOfPowerup.text = powerupText;
+            //nameOfPowerup.text = powerupText;
         }
     }
 }
