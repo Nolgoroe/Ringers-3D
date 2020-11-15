@@ -35,6 +35,8 @@ public class UIManager : MonoBehaviour
 
     public Vector3 hubCameraPos;
 
+    public static bool isUsingUI;
+
     private void Start()
     {
         Instance = this;
@@ -56,6 +58,9 @@ public class UIManager : MonoBehaviour
         usingPowerupText.SetActive(false);
         youWinText.SetActive(false);
         youLoseText.SetActive(false);
+
+
+        RefreshGoldAndRubyDisplay();
 
     }
     public void PlayButton()
@@ -85,7 +90,7 @@ public class UIManager : MonoBehaviour
     {
         PlayerManager.Instance.activePowerups.Clear();
         PlayerManager.Instance.SavePlayerData();
-
+        isUsingUI = false;
         if (currentCanvas == gameplayCanvas)
         {
             Camera.main.orthographicSize = 9.5f;
@@ -120,7 +125,8 @@ public class UIManager : MonoBehaviour
 
             ringersHutDisplay.SetActive(false);
             ringersHutUICanvas.SetActive(false);
-            //Camera.main.orthographic = false;
+
+            ZoneManager.Instance.DiactiavteLevelDisplay();
         }
 
         if (currentCanvas == mainMenu)
@@ -139,6 +145,8 @@ public class UIManager : MonoBehaviour
     public void OpenItemsAndForgeZone()
     {
         itemForgeCanvas.SetActive(true);
+
+        isUsingUI = true;
     }
     public void closeWindow(GameObject ToClose)
     {
@@ -147,16 +155,19 @@ public class UIManager : MonoBehaviour
             itemForgeCanvas.SetActive(false);
             forge.SetActive(false);
             itemBag.SetActive(true);
+            isUsingUI = false;
         }
 
-        if(ToClose == OptionsScreen)
+        if (ToClose == OptionsScreen)
         {
             OptionsScreen.SetActive(false);
+            isUsingUI = false;
         }
 
-        if(ToClose == wardrobe)
+        if (ToClose == wardrobe)
         {
             wardrobe.SetActive(false);
+            isUsingUI = false;
         }
     }
     public void ToForge()
@@ -179,6 +190,7 @@ public class UIManager : MonoBehaviour
     public void OpenOptions()
     {
         OptionsScreen.SetActive(true);
+        isUsingUI = true;
     }
     public void CloseGame()
     {
@@ -187,6 +199,8 @@ public class UIManager : MonoBehaviour
     public void OpenWardrobe()
     {
         wardrobe.SetActive(true);
+
+        isUsingUI = true;
     }
     public void ActivateUsingPowerupMessage(bool on)
     {

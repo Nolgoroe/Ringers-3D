@@ -60,63 +60,66 @@ public class PanZoom : MonoBehaviour
 
     void Update()
     {
-        leftBound = (horzExtent - (SpriteBounds.sprite.bounds.size.x / 2.0f));
-        rightBound = ((SpriteBounds.sprite.bounds.size.x / 2.0f - horzExtent));
-
-        bottomBound = ((vertExtent - SpriteBounds.sprite.rect.size.y / 2.0f)) / SpriteBounds.sprite.pixelsPerUnit;
-        topBound = ((SpriteBounds.sprite.rect.size.y / 2.0f - vertExtent)) / SpriteBounds.sprite.pixelsPerUnit;
-
-        if (Input.touchCount > 0)
+        if (!UIManager.isUsingUI)
         {
-            touch = Input.GetTouch(0);
+            leftBound = (horzExtent - (SpriteBounds.sprite.bounds.size.x / 2.0f));
+            rightBound = ((SpriteBounds.sprite.bounds.size.x / 2.0f - horzExtent));
 
-            if (Input.touchCount < 2)
+            bottomBound = ((vertExtent - SpriteBounds.sprite.rect.size.y / 2.0f)) / SpriteBounds.sprite.pixelsPerUnit;
+            topBound = ((SpriteBounds.sprite.rect.size.y / 2.0f - vertExtent)) / SpriteBounds.sprite.pixelsPerUnit;
+
+            if (Input.touchCount > 0)
             {
-                if (!isZoom)
+                touch = Input.GetTouch(0);
+
+                if (Input.touchCount < 2)
                 {
-                    if (touch.phase == TouchPhase.Began)
+                    if (!isZoom)
                     {
-                        TouchStart = mainCam.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, -18));
-                    }
+                        if (touch.phase == TouchPhase.Began)
+                        {
+                            TouchStart = mainCam.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, -18));
+                        }
 
-                    if (touch.phase == TouchPhase.Moved)
-                    {
-                        Vector3 Direction = TouchStart - mainCam.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, -18));
-                        mainCam.transform.position += Direction;
+                        if (touch.phase == TouchPhase.Moved)
+                        {
+                            Vector3 Direction = TouchStart - mainCam.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, -18));
+                            mainCam.transform.position += Direction;
 
 
-                        Vector3 pos = new Vector3(Target.position.x, Target.position.y, -18);
-                        pos.x = Mathf.Clamp(pos.x, leftBound, rightBound);
-                        pos.y = Mathf.Clamp(pos.y, bottomBound, topBound);
-                        mainCam.transform.position = pos;
+                            Vector3 pos = new Vector3(Target.position.x, Target.position.y, -18);
+                            pos.x = Mathf.Clamp(pos.x, leftBound, rightBound);
+                            pos.y = Mathf.Clamp(pos.y, bottomBound, topBound);
+                            mainCam.transform.position = pos;
+                        }
                     }
                 }
-            }
 
-            if (touch.phase == TouchPhase.Ended)
+                if (touch.phase == TouchPhase.Ended)
+                {
+                    isZoom = false;
+                }
+
+                if (Input.touchCount == 2)
+                {
+                    Touch FirstFinger = Input.GetTouch(0);
+                    Touch SecondFinger = Input.GetTouch(1);
+
+                    Vector2 FirstFingerPrevPos = FirstFinger.position - FirstFinger.deltaPosition;
+                    Vector2 SecondFingerPrevPos = SecondFinger.position - SecondFinger.deltaPosition;
+
+                    float PrevMagnitude = (FirstFingerPrevPos - SecondFingerPrevPos).magnitude;
+                    float CurrentMagnitude = (FirstFinger.position - SecondFinger.position).magnitude;
+
+                    float Difference = CurrentMagnitude - PrevMagnitude;
+
+                    Zoom(Difference * 0.01f);
+                }
+            }
+            else
             {
                 isZoom = false;
             }
-
-            if (Input.touchCount == 2)
-            {
-                Touch FirstFinger = Input.GetTouch(0);
-                Touch SecondFinger = Input.GetTouch(1);
-
-                Vector2 FirstFingerPrevPos = FirstFinger.position - FirstFinger.deltaPosition;
-                Vector2 SecondFingerPrevPos = SecondFinger.position - SecondFinger.deltaPosition;
-
-                float PrevMagnitude = (FirstFingerPrevPos - SecondFingerPrevPos).magnitude;
-                float CurrentMagnitude = (FirstFinger.position - SecondFinger.position).magnitude;
-
-                float Difference = CurrentMagnitude - PrevMagnitude;
-
-                Zoom(Difference * 0.01f);
-            }
-        }
-        else
-        {
-            isZoom = false;
         }
     }
 

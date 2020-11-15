@@ -22,7 +22,14 @@ public class Zone : MonoBehaviour
     public Image zoneHeader;
     private void Start()
     {
-        path = Application.dataPath + "/Zone" + id + ".txt";
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            path = Application.persistentDataPath + "/Zone" + id + ".txt";
+        }
+        else
+        {
+            path = Application.dataPath + "/Zone" + id + ".txt";
+        }
 
         if (File.Exists(path))
         {
@@ -43,16 +50,28 @@ public class Zone : MonoBehaviour
     {
         string savedData = JsonUtility.ToJson(this);
 
-        string path = Application.dataPath + "/Zone" + id + ".txt";
-
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            string path = Application.persistentDataPath + "/Zone" + id + ".txt";
+        }
+        else
+        {
+            string path = Application.dataPath + "/Zone" + id + ".txt";
+        }
         File.WriteAllText(path, savedData);
     }
 
     [ContextMenu("Game Load Data")]
     public void LoadZone()
     {
-        string path = Application.dataPath + "/Zone" + id + ".txt";
-
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            string path = Application.persistentDataPath + "/Zone" + id + ".txt";
+        }
+        else
+        {
+            string path = Application.dataPath + "/Zone" + id + ".txt";
+        }
         JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
     }
 }

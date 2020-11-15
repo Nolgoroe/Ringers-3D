@@ -121,6 +121,8 @@ public class GameManager : MonoBehaviour
     {
         DestroyAllLevelChildern();
         LootManager.Instance.ResetLevelLootData();
+        ConnectionManager.Instance.cells.Clear();
+
         StartLevel();
     }
 

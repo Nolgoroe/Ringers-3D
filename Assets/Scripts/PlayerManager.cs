@@ -64,7 +64,14 @@ public class PlayerManager : MonoBehaviour
 
         MaterialsAndForgeManager.Instance.PopulateMaterialBag();
 
-        path = Application.dataPath + "/PlayerSaveData.txt";
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            path = Application.persistentDataPath + "/PlayerSaveData.txt";
+        }
+        else
+        {
+            path = Application.dataPath + "/PlayerSaveData.txt";
+        }
 
         if (File.Exists(path))
         {
@@ -89,7 +96,6 @@ public class PlayerManager : MonoBehaviour
                 WardrobeManager.Instance.EquipMe(ED);
             }
         }
-        UIManager.Instance.RefreshGoldAndRubyDisplay();
 
         HandleItemCooldowns();
     }
@@ -141,16 +147,28 @@ public class PlayerManager : MonoBehaviour
     {
         string savedData = JsonUtility.ToJson(this);
 
-        string path = Application.dataPath + "/PlayerSaveData.txt";
-
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            string path = Application.persistentDataPath + "/PlayerSaveData.txt";
+        }
+        else
+        {
+            string path = Application.dataPath + "/PlayerSaveData.txt";
+        }
         File.WriteAllText(path, savedData);
     }
 
     [ContextMenu("Load")]
     public void LoadPlayerData()
     {
-        string path = Application.dataPath + "/PlayerSaveData.txt";
-
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            string path = Application.persistentDataPath + "/PlayerSaveData.txt";
+        }
+        else
+        {
+            string path = Application.dataPath + "/PlayerSaveData.txt";
+        }
         JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
 
         Instance = this;

@@ -17,7 +17,14 @@ public class ZoneManager : MonoBehaviour
     public List<int> unlockedZoneID;
     private void Start()
     {
-        path = Application.dataPath + "/ZoneManager.txt";
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            path = Application.persistentDataPath + "/ZoneManager.txt";
+        }
+        else
+        {
+            path = Application.dataPath + "/ZoneManager.txt";
+        }
 
         if (File.Exists(path))
         {
@@ -62,16 +69,28 @@ public class ZoneManager : MonoBehaviour
     {
         string savedData = JsonUtility.ToJson(this);
 
-        string path = Application.dataPath + "/ZoneManager.txt";
-
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            string path = Application.persistentDataPath + "/ZoneManager.txt";
+        }
+        else
+        {
+            string path = Application.dataPath + "/ZoneManager.txt";
+        }
         File.WriteAllText(path, savedData);
     }
 
     [ContextMenu("Game Load Data")]
     public void LoadZoneManager()
     {
-        string path = Application.dataPath + "/ZoneManager.txt";
-
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            string path = Application.persistentDataPath + "/ZoneManager.txt";
+        }
+        else
+        {
+            string path = Application.dataPath + "/ZoneManager.txt";
+        }
         JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
 
         Instance = this;

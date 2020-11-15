@@ -53,7 +53,10 @@ public class PowerUpManager : MonoBehaviour
     }
     public void AssignPowerUp(PowerUp ThePower, Button theButton)
     {
-        theButton.onClick.AddListener(() => UsingPowerup(theButton));
+        if(ThePower != PowerUp.ExtraDeal)
+        {
+            theButton.onClick.AddListener(() => UsingPowerup(theButton));
+        }
 
         PowerupProperties prop = theButton.gameObject.GetComponent<PowerupProperties>();
         switch (ThePower)
@@ -127,7 +130,8 @@ public class PowerUpManager : MonoBehaviour
         GameManager.Instance.clipManager.clipCount--;
         if(GameManager.Instance.clipManager.clipCount == 0)
         {
-            Debug.Log("Lose game");
+            LootManager.Instance.currentLevelLootToGive.Clear();
+            UIManager.Instance.LoseLevel();
         }
 
         GameManager.Instance.clipManager.RefreshSlots();
