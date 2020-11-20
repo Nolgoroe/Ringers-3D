@@ -544,13 +544,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.8797622, b: 1, a: 1}
+  m_Color: {r: 0.8941177, g: 0.6627451, b: 0.09019608, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c18735d28acaefd46b7c7e6306b5e083, type: 3}
+    m_Font: {fileID: 12800000, guid: 5dd49b3eacc540408c98eee0de38e0f1, type: 3}
     m_FontSize: 125
     m_FontStyle: 0
     m_BestFit: 0
@@ -11423,7 +11423,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 635.3, y: 201.8}
+  m_SizeDelta: {x: 635.3, y: 512}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1133152065
 MonoBehaviour:
@@ -11497,7 +11497,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3810a4d97886aa140bb5905ce1e05df9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6de1bbe9ab62a924ca9d29675e16884d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12468,13 +12468,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: d1c3b2c72f47c504c862fe222f9f5eab, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -15428,7 +15428,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -450.2}
+  m_AnchoredPosition: {x: 0, y: -600}
   m_SizeDelta: {x: 1047.8, y: 333.6}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1549955211
@@ -15451,16 +15451,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Ringers '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7e6879f8a7f45ea4a9441a5cdfdba6e1, type: 2}
-  m_sharedMaterial: {fileID: 8918768998555555561, guid: 7e6879f8a7f45ea4a9441a5cdfdba6e1,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4290429712
-  m_fontColor: {r: 0.06127627, g: 0.764151, b: 0.7311141, a: 1}
+    rgba: 4278336608
+  m_fontColor: {r: 0.37647063, g: 0.23529413, b: 0.007843138, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -15478,13 +15477,13 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 263.6
-  m_fontSizeBase: 263.6
+  m_fontSize: 300
+  m_fontSizeBase: 300
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -15495,7 +15494,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 0
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
