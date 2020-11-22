@@ -17,6 +17,6 @@ public class ZoneManagerHelpData : MonoBehaviour
         Instance = this;
 
 
-        ZoneManager.Instance.DiactiavteLevelDisplay();
+        ZoneManager.Instance.ActivateLevelDisplay();
     }
 }

@@ -34,7 +34,6 @@ public class PanZoom : MonoBehaviour
     bool isZoom;
     private void OnDisable()
     {
-        //mainCam.orthographicSize = 9f;
         mainCam.transform.position = new Vector3(0,0,-18);
     }
 
@@ -52,7 +51,7 @@ public class PanZoom : MonoBehaviour
         mainCam.orthographicSize = originalOrthofraphicsize;
         mainCam.transform.position = OriginalCamPos;
 
-        vertExtent = mainCam.orthographicSize;
+        vertExtent = MinZoom;
         horzExtent = vertExtent * Screen.width / Screen.height;
 
         Target = mainCam.transform;
@@ -138,6 +137,7 @@ public class PanZoom : MonoBehaviour
         {
             ZoneManager.Instance.ActivateLevelDisplay();
         }
+
         vertExtent = mainCam.orthographicSize;
         horzExtent = vertExtent * Screen.width / Screen.height;
 

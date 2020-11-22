@@ -219,6 +219,23 @@ public class PlayerManager : MonoBehaviour
         }
 
         SavePlayerData();
+
+        MaterialsAndForgeManager.Instance.RefreshMaterialBag();
+        MaterialsAndForgeManager.Instance.RefreshForge();
+    }
+
+    [ContextMenu("Add 100 Player Mats")]
+    public void AddPlayerMats()
+    {
+        foreach (CraftingMatEntry CME in craftingMatsInInventory)
+        {
+            CME.amount += 100;
+        }
+
+        SavePlayerData();
+
+        MaterialsAndForgeManager.Instance.RefreshMaterialBag();
+        MaterialsAndForgeManager.Instance.RefreshForge();
     }
 
     public bool SearchEquippedItemsForMatch(EquipmentData ED)
