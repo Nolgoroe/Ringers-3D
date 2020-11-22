@@ -23,8 +23,9 @@ public class UIManager : MonoBehaviour
     public GameObject usingPowerupText;
     public GameObject youWinText, youLoseText;
 
-    public Text goldText, rubyText;
+    public Text hubGoldText, hubRubyText;
 
+    public TMP_Text gameplayGoldText, gameplayRubyText;
     public TMP_Text currentLevelName;
 
     public Button commitButton;
@@ -91,10 +92,12 @@ public class UIManager : MonoBehaviour
         PlayerManager.Instance.activePowerups.Clear();
         PlayerManager.Instance.SavePlayerData();
         isUsingUI = false;
+
+        Camera.main.orthographicSize = 5f;
+
         if (currentCanvas == gameplayCanvas)
         {
-            Camera.main.orthographicSize = 9.5f;
-            ZoneManager.Instance.DiactiavteLevelDisplay();
+            ZoneManager.Instance.ActivateLevelDisplay();
 
             Camera.main.transform.position = hubCameraPos;
 
@@ -121,12 +124,10 @@ public class UIManager : MonoBehaviour
 
         if(currentCanvas == ringersHutDisplay)
         {
-            Camera.main.orthographicSize = 9.5f;
-
             ringersHutDisplay.SetActive(false);
             ringersHutUICanvas.SetActive(false);
 
-            ZoneManager.Instance.DiactiavteLevelDisplay();
+            ZoneManager.Instance.ActivateLevelDisplay();
         }
 
         if (currentCanvas == mainMenu)
@@ -257,7 +258,9 @@ public class UIManager : MonoBehaviour
     }
     public void RefreshGoldAndRubyDisplay()
     {
-        goldText.text = PlayerManager.Instance.goldCount.ToString();
-        rubyText.text = PlayerManager.Instance.rubyCount.ToString();
+        hubGoldText.text = PlayerManager.Instance.goldCount.ToString();
+        hubRubyText.text = PlayerManager.Instance.rubyCount.ToString();
+        gameplayGoldText.text = PlayerManager.Instance.goldCount.ToString();
+        gameplayRubyText.text = PlayerManager.Instance.rubyCount.ToString();
     }
 }
