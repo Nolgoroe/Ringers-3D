@@ -18,8 +18,10 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
 
     public ObjectHollowType hollowTypeToFill;
 
-    public OwnedHollowObjectData[] hollowZones;
+    public HollowZone[] hollowZones;
     public Dictionary<ObjectHollowType, OwnedHollowObjectData> hollowTypeToGameobject;
+
+    public bool isPlaceThroughHollow; /// Either place through hollow or thorugh normal open bag
 
     private void Start()
     {
@@ -29,7 +31,7 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
 
         for (int i = 1; i < System.Enum.GetValues(typeof(ObjectHollowType)).Length; i++)
         {
-            hollowTypeToGameobject.Add((ObjectHollowType)i, hollowZones[i - 1]);
+            hollowTypeToGameobject.Add((ObjectHollowType)i, hollowZones[i - 1].gameObject.GetComponent<OwnedHollowObjectData>());
         }
 
     }
@@ -106,13 +108,14 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
     {
         OwnedHollowObjectData OHODToRemove = ToRemove.GetComponent<OwnedHollowObjectData>();
 
-        objectsInOwned.Add(OHODToRemove);
         PlayerManager.Instance.ownedHollowObjects.Add(OHODToRemove.objectData);
+        RefreshOwnedScreen();
 
         OHODToRemove.GetComponent<RawImage>().texture = null;
 
         OHODToRemove.transform.GetChild(0).gameObject.SetActive(false);
         OHODToRemove.objectData = new HollowCraftObjectData();
+        OHODToRemove.gameObject.GetComponent<HollowZone>().isEmpty = true;
 
     }
 }

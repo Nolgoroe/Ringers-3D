@@ -152,19 +152,23 @@ public class UIManager : MonoBehaviour
 
         isUsingUI = true;
     }
+
     public void OpenHollowCraftAndOwnedZone()
     {
         hollowCraftAndOwned.SetActive(true);
         owned.SetActive(false);
         craft.SetActive(true);
 
+        HollowCraftAndOwnedManager.Instance.isPlaceThroughHollow = false;
         isUsingUI = true;
     }
+
     public void OpenHollowOwnedObjectsToPlace()
     {
         hollowCraftAndOwned.SetActive(true);
         owned.SetActive(true);
         craft.SetActive(false);
+        HollowCraftAndOwnedManager.Instance.isPlaceThroughHollow = true;
 
         isUsingUI = true;
     }

@@ -2305,6 +2305,7 @@ GameObject:
   - component: {fileID: 206924744}
   - component: {fileID: 206924747}
   - component: {fileID: 206924745}
+  - component: {fileID: 206924748}
   m_Layer: 5
   m_Name: H5
   m_TagString: Untagged
@@ -2449,6 +2450,19 @@ MonoBehaviour:
     mats: 
     spritePath: 
   requiredHollowType: 05000000
+--- !u!114 &206924748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206924742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c55e56163213fc142a565551914ae514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEmpty: 1
 --- !u!1 &218771772
 GameObject:
   m_ObjectHideFlags: 0
@@ -3592,6 +3606,7 @@ GameObject:
   - component: {fileID: 285441900}
   - component: {fileID: 285441903}
   - component: {fileID: 285441901}
+  - component: {fileID: 285441904}
   m_Layer: 5
   m_Name: H3
   m_TagString: Untagged
@@ -3736,6 +3751,19 @@ MonoBehaviour:
     mats: 
     spritePath: 
   requiredHollowType: 03000000
+--- !u!114 &285441904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285441898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c55e56163213fc142a565551914ae514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEmpty: 1
 --- !u!1 &291249435
 GameObject:
   m_ObjectHideFlags: 0
@@ -4311,6 +4339,7 @@ GameObject:
   - component: {fileID: 339504843}
   - component: {fileID: 339504846}
   - component: {fileID: 339504844}
+  - component: {fileID: 339504847}
   m_Layer: 5
   m_Name: H1
   m_TagString: Untagged
@@ -4455,6 +4484,19 @@ MonoBehaviour:
     mats: 
     spritePath: 
   requiredHollowType: 01000000
+--- !u!114 &339504847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339504841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c55e56163213fc142a565551914ae514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEmpty: 1
 --- !u!1 &339954605
 GameObject:
   m_ObjectHideFlags: 0
@@ -16535,6 +16577,7 @@ GameObject:
   - component: {fileID: 1232605541}
   - component: {fileID: 1232605544}
   - component: {fileID: 1232605542}
+  - component: {fileID: 1232605545}
   m_Layer: 5
   m_Name: H6
   m_TagString: Untagged
@@ -16679,6 +16722,19 @@ MonoBehaviour:
     mats: 
     spritePath: 
   requiredHollowType: 06000000
+--- !u!114 &1232605545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1232605539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c55e56163213fc142a565551914ae514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEmpty: 1
 --- !u!1 &1272872548
 GameObject:
   m_ObjectHideFlags: 0
@@ -19213,12 +19269,13 @@ MonoBehaviour:
   objectsInOwned: []
   hollowTypeToFill: 0
   hollowZones:
-  - {fileID: 339504846}
-  - {fileID: 1839494417}
-  - {fileID: 285441903}
-  - {fileID: 2034759682}
-  - {fileID: 206924747}
-  - {fileID: 1232605544}
+  - {fileID: 339504847}
+  - {fileID: 1839494418}
+  - {fileID: 285441904}
+  - {fileID: 2034759683}
+  - {fileID: 206924748}
+  - {fileID: 1232605545}
+  isPlaceThroughHollow: 0
 --- !u!1 &1425610755
 GameObject:
   m_ObjectHideFlags: 0
@@ -25510,6 +25567,7 @@ GameObject:
   - component: {fileID: 1839494414}
   - component: {fileID: 1839494415}
   - component: {fileID: 1839494417}
+  - component: {fileID: 1839494418}
   m_Layer: 5
   m_Name: H2
   m_TagString: Untagged
@@ -25654,6 +25712,19 @@ MonoBehaviour:
     mats: 
     spritePath: 
   requiredHollowType: 02000000
+--- !u!114 &1839494418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839494412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c55e56163213fc142a565551914ae514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEmpty: 1
 --- !u!1 &1840506583
 GameObject:
   m_ObjectHideFlags: 0
@@ -27905,6 +27976,7 @@ GameObject:
   - component: {fileID: 2034759679}
   - component: {fileID: 2034759682}
   - component: {fileID: 2034759680}
+  - component: {fileID: 2034759683}
   m_Layer: 5
   m_Name: H4
   m_TagString: Untagged
@@ -28049,6 +28121,19 @@ MonoBehaviour:
     mats: 
     spritePath: 
   requiredHollowType: 04000000
+--- !u!114 &2034759683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034759677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c55e56163213fc142a565551914ae514, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEmpty: 1
 --- !u!1 &2038871284
 GameObject:
   m_ObjectHideFlags: 0
