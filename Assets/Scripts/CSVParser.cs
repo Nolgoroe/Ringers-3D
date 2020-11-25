@@ -4,17 +4,43 @@ using UnityEngine;
 using System.IO;
 using System;
 
+public enum DocumentType
+{
+    Equipment,
+    HollowObject
+}
+
 public class CSVParser : MonoBehaviour
 {
     public List<EquipmentData> allEquipmentInGame;
+    public List<HollowCraftObjectData> allHollowCraftObjectsInGame;
+
+    public DocumentType[] typeOfCsvDoc;
+
+    StreamReader inputStream;
+
     void Start()
     {
-        readTextFile();
+        foreach (DocumentType DT in typeOfCsvDoc)
+        {
+            readTextFile(DT);
+        }
     }
 
-    void readTextFile()
+    void readTextFile(DocumentType DT)
     {
-        StreamReader inputStream = new StreamReader("Assets/Resources/Equipment/Equipment.csv");
+        switch (DT)
+        {
+            case DocumentType.Equipment:
+                inputStream = new StreamReader("Assets/Resources/Equipment/Equipment.csv");
+                break;
+            case DocumentType.HollowObject:
+                inputStream = new StreamReader("Assets/Resources/HollowObjects/Hollow Crafts.csv");
+                break;
+            default:
+                break;
+        }
+
         List<string> lineList = new List<string>();
 
         while (!inputStream.EndOfStream)
@@ -26,10 +52,10 @@ public class CSVParser : MonoBehaviour
 
         inputStream.Close();
 
-        parseList(lineList);
+        parseList(lineList, DT);
     }
 
-    void parseList(List<string> stringList)
+    void parseList(List<string> stringList, DocumentType DT)
     {
         List<string[]> parsedList = new List<string[]>();
         for (int i = 0; i < stringList.Count; i++)
@@ -42,7 +68,17 @@ public class CSVParser : MonoBehaviour
             parsedList.Add(temp);
         }
 
-        TranslateToEquipment(parsedList);
+        switch (DT)
+        {
+            case DocumentType.Equipment:
+                TranslateToEquipment(parsedList);
+                break;
+            case DocumentType.HollowObject:
+                TranslateToHollowObjects(parsedList);
+                break;
+            default:
+                break;
+        }
     }
 
     public void TranslateToEquipment(List<string[]> parsedList)
@@ -114,5 +150,42 @@ public class CSVParser : MonoBehaviour
 
 
         MaterialsAndForgeManager.Instance.FillForge(allEquipmentInGame);
+    }
+    public void TranslateToHollowObjects(List<string[]> parsedList)
+    {
+
+        for (int i = 1; i < parsedList.Count; i++) //// i = 1 becuase we are skipping the first row in the CSV file (they are the titles)
+        {
+            HollowCraftObjectData HCOD = new HollowCraftObjectData();
+
+            HCOD.objectHollowType = new List<ObjectHollowType>();
+
+            HCOD.objectname = parsedList[i][0].ToString();
+
+            if (parsedList[i][1].ToString().Contains("-"))
+            {
+                string[] temp = parsedList[i][1].ToString().Split('-');
+
+                for (int j = 0; j < temp.Length; j++)
+                {
+                    temp[j] = temp[j].Trim();
+                }
+
+                foreach (string hollowType in temp)
+                {
+                    HCOD.objectHollowType.Add((ObjectHollowType)Convert.ToInt16(hollowType));
+                }
+            }
+            
+
+            HCOD.mats = parsedList[i][2].ToString();
+
+            HCOD.spritePath = parsedList[i][3].ToString();
+
+            allHollowCraftObjectsInGame.Add(HCOD);
+        }
+
+
+        HollowCraftAndOwnedManager.Instance.FillCraftScreen(allHollowCraftObjectsInGame); /// Fill The Craft screen
     }
 }

@@ -54,6 +54,8 @@ public class PlayerManager : MonoBehaviour
     public List<EquipmentData> equippedItems;
     public List<EquipmentData> equipmentInCooldown;
 
+    public List<HollowCraftObjectData> ownedHollowObjects;
+
     public static PlayerManager Instance;
 
     string path;
@@ -79,6 +81,9 @@ public class PlayerManager : MonoBehaviour
 
             MaterialsAndForgeManager.Instance.RefreshForge();
             MaterialsAndForgeManager.Instance.RefreshMaterialBag();
+
+            HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
+            HollowCraftAndOwnedManager.Instance.RefreshOwnedScreen();
         }
 
         if (wardrobeEquipment.Count > 0)
@@ -222,6 +227,8 @@ public class PlayerManager : MonoBehaviour
 
         MaterialsAndForgeManager.Instance.RefreshMaterialBag();
         MaterialsAndForgeManager.Instance.RefreshForge();
+
+        HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
     }
 
     [ContextMenu("Add 100 Player Mats")]
@@ -236,6 +243,8 @@ public class PlayerManager : MonoBehaviour
 
         MaterialsAndForgeManager.Instance.RefreshMaterialBag();
         MaterialsAndForgeManager.Instance.RefreshForge();
+
+        HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
     }
 
     public bool SearchEquippedItemsForMatch(EquipmentData ED)

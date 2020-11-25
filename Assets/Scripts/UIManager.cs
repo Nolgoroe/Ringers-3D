@@ -16,8 +16,9 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    public GameObject mainMenu, hudCanvasDisplay,hudCanvasUI, itemForgeCanvas, gameplayCanvas, ringersHutDisplay, ringersHutUICanvas;
+    public GameObject mainMenu, hudCanvasDisplay,hudCanvasUI, itemForgeCanvas, gameplayCanvas, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
     public GameObject forge, itemBag;
+    public GameObject craft, owned;
     public GameObject OptionsScreen;
     public GameObject wardrobe;
     public GameObject usingPowerupText;
@@ -50,7 +51,7 @@ public class UIManager : MonoBehaviour
         gameplayCanvas.SetActive(false);
         forge.SetActive(false);
 
-        itemBag.SetActive(true); //// so this will be the first bag displayed, or else everyone will be turned off
+        itemBag.SetActive(true); //// so this will be the first screen displayed, or else everyone will be turned off
 
         OptionsScreen.SetActive(false);
         ringersHutDisplay.SetActive(false);
@@ -59,7 +60,9 @@ public class UIManager : MonoBehaviour
         usingPowerupText.SetActive(false);
         youWinText.SetActive(false);
         youLoseText.SetActive(false);
-
+        craft.SetActive(true); //// so this will be the first screen displayed, or else everyone will be turned off
+        owned.SetActive(false);
+        hollowCraftAndOwned.SetActive(false);
 
         RefreshGoldAndRubyDisplay();
 
@@ -149,26 +152,49 @@ public class UIManager : MonoBehaviour
 
         isUsingUI = true;
     }
+    public void OpenHollowCraftAndOwnedZone()
+    {
+        hollowCraftAndOwned.SetActive(true);
+        owned.SetActive(false);
+        craft.SetActive(true);
+
+        isUsingUI = true;
+    }
+    public void OpenHollowOwnedObjectsToPlace()
+    {
+        hollowCraftAndOwned.SetActive(true);
+        owned.SetActive(true);
+        craft.SetActive(false);
+
+        isUsingUI = true;
+    }
     public void closeWindow(GameObject ToClose)
     {
-        if(ToClose == itemForgeCanvas)
+        isUsingUI = false;
+
+        if (ToClose == itemForgeCanvas)
         {
             itemForgeCanvas.SetActive(false);
             forge.SetActive(false);
             itemBag.SetActive(true);
-            isUsingUI = false;
         }
 
         if (ToClose == OptionsScreen)
         {
             OptionsScreen.SetActive(false);
-            isUsingUI = false;
         }
 
         if (ToClose == wardrobe)
         {
             wardrobe.SetActive(false);
-            isUsingUI = false;
+        }
+
+        if (ToClose == hollowCraftAndOwned)
+        {
+            hollowCraftAndOwned.SetActive(false);
+            craft.SetActive(true);
+            owned.SetActive(false);
+            HollowCraftAndOwnedManager.Instance.hollowTypeToFill = ObjectHollowType.All;
         }
     }
     public void ToForge()
@@ -180,6 +206,18 @@ public class UIManager : MonoBehaviour
     {
         itemBag.SetActive(true);
         forge.SetActive(false);
+    }
+    public void ToCraft()
+    {
+        owned.SetActive(false);
+        craft.SetActive(true);
+    }
+    public void ToOwned()
+    {
+        owned.SetActive(true);
+        craft.SetActive(false);
+
+        SortMaster.Instance.FilterHollowOwnedScreenByEnum(ObjectHollowType.All);
     }
     public void ToRingersHut()
     {
