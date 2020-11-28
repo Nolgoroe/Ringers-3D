@@ -14,36 +14,120 @@ public enum SliceCatagory
 
 public class SliceManager : MonoBehaviour
 {
-    public GameObject slicePrefab;
+    public GameObject lootSlicePrefab;
+    public GameObject lootLockSlicePrefab;
+    public GameObject lootLockLimiterSlicePrefab;
 
     public Transform[] sliceSlots;
 
-    public Sprite[] sliceSymbolSprites;
-    public Sprite[] sliceColorSprites;
+    //public Sprite[] lootSliceSymbolSprites;
+    //public Sprite[] lootSliceColorSprites;
 
-    public Dictionary<PieceSymbol, Sprite> sliceSymbolDict;
-    public Dictionary<PieceColor, Sprite> sliceColorDict;
+    //public Sprite[] lootLockSliceSymbolSprites;
+    //public Sprite[] lootLockSliceColorSprites;
+
+    //public Sprite[] lootLockLimiterSliceSymbolSprites;
+    //public Sprite[] lootLockLimiterSliceColorSprites;
+
+    public Sprite sliceColorSprite;
+
+    public Sprite[] slicelootIcons;
+
+    public Sprite[] sliceSymbolsSprites;
+
+    //public Dictionary<PieceSymbol, Sprite> lootSliceSymbolDict;
+    //public Dictionary<PieceColor, Sprite> lootSliceColorDict;
+
+    //public Dictionary<PieceSymbol, Sprite> lootLockSliceSymbolSpritesDict;
+    //public Dictionary<PieceColor, Sprite> lootLockSliceColorDict;
+
+    //public Dictionary<PieceSymbol, Sprite> lootLockLimiterSliceSymbolSpritesDict;
+    //public Dictionary<PieceColor, Sprite> lootLockSLimiterliceColorDict;
+
+    public Dictionary<PieceSymbol, Sprite> pieceSymbolToSprite;
+    public Dictionary<PieceColor, Color> pieceColorToColor;
+
+    public Dictionary<LootPacks, Sprite> lootToIcon;
 
     List<int> possibleSlots;
 
     public List<Slice> fullSlices;
-    GameObject go;
+    //GameObject go;
 
     private void Awake()
     {
         GameManager.Instance.sliceManager = this;
-        sliceSymbolDict = new Dictionary<PieceSymbol, Sprite>();
-        sliceColorDict = new Dictionary<PieceColor, Sprite>();
+    }
 
-        for (int i = 0; i < sliceSymbolSprites.Length; i++)
+    public void Init()
+    {
+        pieceSymbolToSprite = new Dictionary<PieceSymbol, Sprite>();
+        pieceColorToColor = new Dictionary<PieceColor, Color>();
+
+        //lootSliceSymbolDict = new Dictionary<PieceSymbol, Sprite>();
+        //lootSliceColorDict = new Dictionary<PieceColor, Sprite>();
+
+        //lootLockSliceSymbolSpritesDict = new Dictionary<PieceSymbol, Sprite>();
+        //lootLockSliceColorDict = new Dictionary<PieceColor, Sprite>();
+
+        //lootLockLimiterSliceSymbolSpritesDict = new Dictionary<PieceSymbol, Sprite>();
+        //lootLockSLimiterliceColorDict = new Dictionary<PieceColor, Sprite>();
+
+        lootToIcon = new Dictionary<LootPacks, Sprite>();
+
+        for (int i = 1; i < System.Enum.GetValues(typeof(LootPacks)).Length; i++)
         {
-            sliceSymbolDict.Add((PieceSymbol)i, sliceSymbolSprites[i]);
+            string lootPackName = System.Enum.GetName(typeof(LootPacks), i);
+
+            if (lootPackName.Contains("I"))
+            {
+                lootToIcon.Add((LootPacks)i, slicelootIcons[slicelootIcons.Length - 1]); ////// The last sprite in the list is the same sprite for all Loot packes with 'I' in them
+            }
+            else
+            {
+                lootToIcon.Add((LootPacks)i, slicelootIcons[i - 1]);
+            }
         }
 
-        for (int i = 0; i < sliceColorSprites.Length; i++)
+        for (int i = 0; i < sliceSymbolsSprites.Length; i++)
         {
-            sliceColorDict.Add((PieceColor)i, sliceColorSprites[i]);
+            pieceSymbolToSprite.Add((PieceSymbol)i, sliceSymbolsSprites[i]);
         }
+
+        for (int i = 0; i < System.Enum.GetValues(typeof(PieceColor)).Length; i++)
+        {
+            pieceColorToColor.Add((PieceColor)i, GameManager.Instance.clipManager.gameColors[i]);
+        }
+
+        //for (int i = 0; i < lootSliceSymbolSprites.Length; i++)
+        //{
+        //    lootSliceSymbolDict.Add((PieceSymbol)i, lootSliceSymbolSprites[i]);
+        //}
+
+        //for (int i = 0; i < lootSliceColorSprites.Length; i++)
+        //{
+        //    lootSliceColorDict.Add((PieceColor)i, lootSliceColorSprites[i]);
+        //}
+
+        //for (int i = 0; i < lootLockSliceSymbolSprites.Length; i++)
+        //{
+        //    lootLockSliceSymbolSpritesDict.Add((PieceSymbol)i, lootSliceSymbolSprites[i]);
+        //}
+
+        //for (int i = 0; i < lootLockSliceColorSprites.Length; i++)
+        //{
+        //    lootLockSliceColorDict.Add((PieceColor)i, lootSliceColorSprites[i]);
+        //}
+
+        //for (int i = 0; i < lootLockLimiterSliceSymbolSprites.Length; i++)
+        //{
+        //    lootLockLimiterSliceSymbolSpritesDict.Add((PieceSymbol)i, lootSliceSymbolSprites[i]);
+        //}
+
+        //for (int i = 0; i < lootLockLimiterSliceColorSprites.Length; i++)
+        //{
+        //    lootLockSLimiterliceColorDict.Add((PieceColor)i, lootSliceColorSprites[i]);
+        //}
     }
 
     public void SpawnSlices(int numOfSlices)
@@ -61,10 +145,11 @@ public class SliceManager : MonoBehaviour
 
             int randomPos = Random.Range(0, sliceSlots.Length);
 
-            go = Instantiate(slicePrefab, sliceSlots[randomPos]);
+            //go = Instantiate(slicePrefabs, sliceSlots[randomPos]);
 
-            fullSlices.Add(go.transform.parent.GetComponent<Slice>());
-            go.transform.parent.GetComponent<Slice>().child = go;
+            //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
+            fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
+            //o.transform.parent.GetComponent<Slice>().child = go;
 
             if (numOfSlices < 4)
             {
@@ -76,9 +161,10 @@ public class SliceManager : MonoBehaviour
                     randomPos = Random.Range(0, possibleSlots.Count);
                     //randomPrefab = Random.Range(0, slicePrefabs.Length);
 
-                    go = Instantiate(slicePrefab, sliceSlots[possibleSlots[randomPos]]);
-                    fullSlices.Add(go.transform.parent.GetComponent<Slice>());
-                    go.transform.parent.GetComponent<Slice>().child = go;
+                    //go = Instantiate(slicePrefabs, sliceSlots[possibleSlots[randomPos]]);
+                    //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
+                    fullSlices.Add(sliceSlots[possibleSlots[randomPos]].transform.GetComponent<Slice>());
+                    //go.transform.parent.GetComponent<Slice>().child = go;
 
                     RemovePositions(possibleSlots[randomPos]);
                 }
@@ -95,9 +181,10 @@ public class SliceManager : MonoBehaviour
                     }
                     //randomPrefab = Random.Range(0, slicePrefabs.Length);
 
-                    go = Instantiate(slicePrefab, sliceSlots[randomPos]);
-                    fullSlices.Add(go.transform.parent.GetComponent<Slice>());
-                    go.transform.parent.GetComponent<Slice>().child = go;
+                    //go = Instantiate(slicePrefabs, sliceSlots[randomPos]);
+                    //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
+                    fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
+                    //go.transform.parent.GetComponent<Slice>().child = go;
 
                 }
             }
@@ -116,9 +203,10 @@ public class SliceManager : MonoBehaviour
 
                     //randomPrefab = Random.Range(0, slicePrefabs.Length);
 
-                    go = Instantiate(slicePrefab, sliceSlots[randomPos]);
-                    fullSlices.Add(go.transform.parent.GetComponent<Slice>());
-                    go.transform.parent.GetComponent<Slice>().child = go;
+                    //go = Instantiate(slicePrefabs, sliceSlots[randomPos]);
+                    //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
+                    fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
+                    //go.transform.parent.GetComponent<Slice>().child = go;
                     possibleSlots.Remove(randomPos);
                 }
 
@@ -127,9 +215,10 @@ public class SliceManager : MonoBehaviour
                     randomPos = Random.Range(0, possibleSlots.Count);
                     //randomPrefab = Random.Range(0, slicePrefabs.Length);
 
-                    go = Instantiate(slicePrefab, sliceSlots[possibleSlots[randomPos]]);
-                    fullSlices.Add(go.transform.parent.GetComponent<Slice>());
-                    go.transform.parent.GetComponent<Slice>().child = go;
+                    //go = Instantiate(slicePrefabs, sliceSlots[possibleSlots[randomPos]]);
+                    //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
+                    fullSlices.Add(sliceSlots[possibleSlots[randomPos]].transform.GetComponent<Slice>());
+                    //go.transform.parent.GetComponent<Slice>().child = go;
                     possibleSlots.Remove(possibleSlots[randomPos]);
                 }
             }
@@ -142,7 +231,7 @@ public class SliceManager : MonoBehaviour
                 for (int i = 0; i < fullSlices.Count; i++)
                 {
                     int randomSlice = Random.Range(0, tempList.Count);
-                    fullSlices[i].SetData(GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i], tempList[randomSlice]);
+                    fullSlices[i].SetData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i], tempList[randomSlice]);
                     tempList.RemoveAt(randomSlice);
                 }
             }
@@ -150,7 +239,7 @@ public class SliceManager : MonoBehaviour
             {
                 for (int i = 0; i < fullSlices.Count; i++)
                 {
-                    fullSlices[i].SetData(GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i], GameManager.Instance.currentLevel.RewardBags[i]);
+                    fullSlices[i].SetData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i], GameManager.Instance.currentLevel.RewardBags[i]);
                 }
             }
 
@@ -185,5 +274,10 @@ public class SliceManager : MonoBehaviour
         {
             possibleSlots.Remove(rPos - 1);
         }
+    }
+
+    public void GetPrefabSliceToInstantiate()
+    {
+
     }
 }

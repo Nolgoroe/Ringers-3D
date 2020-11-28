@@ -40,17 +40,19 @@ public class GameManager : MonoBehaviour
 
     public void StartLevel()
     {
-        Camera.main.orthographicSize = 12;
-        //Camera.main.orthographic = false;
-        //Camera.main.fieldOfView = 50f;
-        gameStarted = true;
+        //Camera.main.orthographicSize = 12;
+        Camera.main.orthographic = false;
+        Camera.main.fieldOfView = 60f;
 
-        gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
+        gameStarted = true;
 
         gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
 
+        gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
+
         UIManager.Instance.GetCommitButton(gameBoard); 
         clipManager.Init();
+        sliceManager.Init();
         cursorControl.Init();
 
         sliceManager.SpawnSlices(currentLevel.slicesToSpawn.Length);
@@ -60,6 +62,9 @@ public class GameManager : MonoBehaviour
         PlayerManager.Instance.HandleItemCooldowns();
 
         PlayerManager.Instance.PopulatePowerUps();
+
+
+        Instantiate(backGroundPrefab, destroyOutOfLevel);
 
         powerupManager.instnatiatedZonesCounter = 0;
     }

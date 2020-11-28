@@ -356,11 +356,16 @@ public class ConnectionManager : MonoBehaviour
 
         if (!isLimiter)
         {
-            relevent.child.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.7f);
-            relevent.diamondPrefab.GetComponent<Rigidbody2D>().simulated = true;
-            relevent.diamondPrefab.GetComponent<Rigidbody2D>().AddForce(Vector3.up * 5, ForceMode2D.Impulse);
+            SpriteRenderer relevantSliceSR = relevent.child.GetComponent<SpriteRenderer>();
+            relevantSliceSR.color = new Color(relevantSliceSR.color.r, relevantSliceSR.color.g, relevantSliceSR.color.b, 0.4f);
+
+            SpriteRenderer ciconSR = relevent.child.transform.GetChild(0).GetComponent<SpriteRenderer>();
+
+            ciconSR.color = new Color(ciconSR.color.r, ciconSR.color.g, ciconSR.color.b, 0.4f);
+            relevent.lootIcon.GetComponent<Rigidbody2D>().simulated = true;
+            relevent.lootIcon.GetComponent<Rigidbody2D>().AddForce(Vector3.up * 5, ForceMode2D.Impulse);
             relevent.isLoot = false;
-            Destroy(relevent.diamondPrefab, 2f);
+            Destroy(relevent.lootIcon, 2f);
         }
         else
         {
@@ -387,11 +392,17 @@ public class ConnectionManager : MonoBehaviour
 
         if (!isLimiter)
         {
-            relevent.child.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.7f);
-            relevent.lockPrefab.GetComponent<Rigidbody2D>().simulated = true;
-            relevent.lockPrefab.GetComponent<Rigidbody2D>().AddForce(Vector3.up * 5, ForceMode2D.Impulse);
+            SpriteRenderer relevantSliceSR = relevent.child.GetComponent<SpriteRenderer>();
+            relevantSliceSR.color = new Color(relevantSliceSR.color.r, relevantSliceSR.color.g, relevantSliceSR.color.b, 0.4f);
+
+            SpriteRenderer ciconSR = relevent.child.transform.GetChild(0).GetComponent<SpriteRenderer>();
+
+            ciconSR.color = new Color(ciconSR.color.r, ciconSR.color.g, ciconSR.color.b, 0.4f);
+
+            //relevent.lockPrefab.GetComponent<Rigidbody2D>().simulated = true;
+            //relevent.lockPrefab.GetComponent<Rigidbody2D>().AddForce(Vector3.up * 5, ForceMode2D.Impulse);
             relevent.isLock = false;
-            Destroy(relevent.lockPrefab, 2f);
+            //Destroy(relevent.lockPrefab, 2f);
 
         }
         else

@@ -8,7 +8,7 @@ public class Slice : MonoBehaviour
     public PieceSymbol sliceSymbol;
     public SliceCatagory sliceCatagory;
     public LootPacks lootPack;
-    public GameObject lockPrefab, diamondPrefab;
+    public GameObject lootIcon;
 
     public GameObject child;
 
@@ -19,9 +19,10 @@ public class Slice : MonoBehaviour
     public bool isKey;
 
     public int sliceIndex;
-    public void SetData(SliceCatagory sc, bool islocking, bool isLooting, bool isLimiting, LootPacks lp)
+
+    public void SetData(Transform parent, SliceCatagory sc, bool islocking, bool isLooting, bool isLimiting, LootPacks lp)
     {
-        SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
+        //SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
 
         int sliceCatagorycount = System.Enum.GetValues(typeof(SliceCatagory)).Length;
         int sliceSymbolcount = System.Enum.GetValues(typeof(PieceSymbol)).Length;
@@ -33,36 +34,139 @@ public class Slice : MonoBehaviour
         sliceCatagory = sc;
         lootPack = lp;
 
+        if (!isLock && !isLimiter)
+        {
+            InstantiateLootSlice(sliceSymbolcount, sliceColorcount);
+        }
+
+        if (isLock && !isLimiter)
+        {
+            InstantiateLootLockSlice(sliceSymbolcount, sliceColorcount);
+        }
+
+        if (isLimiter)
+        {
+            InstantiateLootLockLimiterSlice(sliceSymbolcount, sliceColorcount);
+        }
+
+        lootIcon.SetActive(isLoot);
+
+        lootIcon.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.sliceManager.lootToIcon[lp];
+
+        if (isLimiter)
+        {
+            lootIcon.GetComponent<SpriteRenderer>().color = Color.red;
+        }
+    }
+
+    public void InstantiateLootSlice(int pieceSymbolEnumCount, int pieceColorEnumCount)
+    {
+        GameObject go = Instantiate(GameManager.Instance.sliceManager.lootSlicePrefab, transform);
+
+        SpriteRenderer sr = go.transform.GetChild(0).GetComponent<SpriteRenderer>();
+
+        child = go;
         switch (sliceCatagory)
         {
             case SliceCatagory.Shape:
                 sliceSymbol = PieceSymbol.None;
-                sr.sprite = GameManager.Instance.sliceManager.sliceSymbolDict[sliceSymbol];
+                sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[PieceSymbol.None];
+                //sr.sprite = GameManager.Instance.sliceManager.lootSliceSymbolDict[sliceSymbol];
                 break;
             case SliceCatagory.Color:
                 sliceColor = PieceColor.None;
-                sr.sprite = GameManager.Instance.sliceManager.sliceColorDict[sliceColor];
+                sr.sprite = GameManager.Instance.sliceManager.sliceColorSprite;
+                sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
+                //sr.sprite = GameManager.Instance.sliceManager.lootSliceColorDict[sliceColor];
 
                 break;
             case SliceCatagory.SpecificShape:
-                sliceSymbol = (PieceSymbol)Random.Range(0, sliceSymbolcount - 2);
-                sr.sprite = GameManager.Instance.sliceManager.sliceSymbolDict[sliceSymbol];
+                sliceSymbol = (PieceSymbol)Random.Range(0, pieceSymbolEnumCount - 2);
+                sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol];
+                //sr.sprite = GameManager.Instance.sliceManager.lootSliceSymbolDict[sliceSymbol];
                 break;
             case SliceCatagory.SpecificColor:
-                sliceColor = (PieceColor)Random.Range(0, sliceColorcount - 2);
-                sr.sprite = GameManager.Instance.sliceManager.sliceColorDict[sliceColor];
+                sliceColor = (PieceColor)Random.Range(0, pieceColorEnumCount - 2);
+                sr.sprite = GameManager.Instance.sliceManager.sliceColorSprite;
+                sr.color = GameManager.Instance.sliceManager.pieceColorToColor[sliceColor];
+                //sr.sprite = GameManager.Instance.sliceManager.lootSliceColorDict[sliceColor];
                 break;
             default:
                 break;
         }
+    }
 
-        diamondPrefab.SetActive(isLoot);
-        lockPrefab.SetActive(isLock);
+    public void InstantiateLootLockSlice(int pieceSymbolEnumCount, int pieceColorEnumCount)
+    {
+        GameObject go = Instantiate(GameManager.Instance.sliceManager.lootLockSlicePrefab, transform);
 
-        if (isLimiter)
+        SpriteRenderer sr = go.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        child = go;
+
+        switch (sliceCatagory)
         {
-            diamondPrefab.GetComponent<SpriteRenderer>().color = Color.red;
-            lockPrefab.GetComponent<SpriteRenderer>().color = Color.red;
+            case SliceCatagory.Shape:
+                sliceSymbol = PieceSymbol.None;
+                sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[PieceSymbol.None];
+                //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceSymbolSpritesDict[sliceSymbol];
+                break;
+            case SliceCatagory.Color:
+                sliceColor = PieceColor.None;
+                sr.sprite = GameManager.Instance.sliceManager.sliceColorSprite;
+                sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
+                //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceColorDict[sliceColor];
+
+                break;
+            case SliceCatagory.SpecificShape:
+                sliceSymbol = (PieceSymbol)Random.Range(0, pieceSymbolEnumCount - 2);
+                sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol];
+                //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceSymbolSpritesDict[sliceSymbol];
+                break;
+            case SliceCatagory.SpecificColor:
+                sliceColor = (PieceColor)Random.Range(0, pieceColorEnumCount - 2);
+                sr.sprite = GameManager.Instance.sliceManager.sliceColorSprite;
+                sr.color = GameManager.Instance.sliceManager.pieceColorToColor[sliceColor];
+                //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceColorDict[sliceColor];
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void InstantiateLootLockLimiterSlice(int pieceSymbolEnumCount, int pieceColorEnumCount)
+    {
+        GameObject go = Instantiate(GameManager.Instance.sliceManager.lootLockLimiterSlicePrefab, transform);
+
+        SpriteRenderer sr = go.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        child = go;
+
+        switch (sliceCatagory)
+        {
+            case SliceCatagory.Shape:
+                sliceSymbol = PieceSymbol.None;
+                sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[PieceSymbol.None];
+                //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceSymbolSpritesDict[sliceSymbol];
+                break;
+            case SliceCatagory.Color:
+                sliceColor = PieceColor.None;
+                sr.sprite = GameManager.Instance.sliceManager.sliceColorSprite;
+                sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
+                //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceColorDict[sliceColor];
+
+                break;
+            case SliceCatagory.SpecificShape:
+                sliceSymbol = (PieceSymbol)Random.Range(0, pieceSymbolEnumCount - 2);
+                sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol];
+                //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceSymbolSpritesDict[sliceSymbol];
+                break;
+            case SliceCatagory.SpecificColor:
+                sliceColor = (PieceColor)Random.Range(0, pieceColorEnumCount - 2);
+                sr.sprite = GameManager.Instance.sliceManager.sliceColorSprite;
+                sr.color = GameManager.Instance.sliceManager.pieceColorToColor[sliceColor];
+                //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceColorDict[sliceColor];
+                break;
+            default:
+                break;
         }
     }
 

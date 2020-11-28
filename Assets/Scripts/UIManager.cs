@@ -96,8 +96,8 @@ public class UIManager : MonoBehaviour
         PlayerManager.Instance.SavePlayerData();
         isUsingUI = false;
 
+        Camera.main.orthographic = true;
         Camera.main.orthographicSize = 5f;
-
         if (currentCanvas == gameplayCanvas)
         {
             ZoneManager.Instance.ActivateLevelDisplay();

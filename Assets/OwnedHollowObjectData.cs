@@ -23,6 +23,7 @@ public class OwnedHollowObjectData : MonoBehaviour
                     OHOD.gameObject.GetComponent<HollowZone>().isEmpty = false;
                     OHOD.objectData = objectData;
                     OHOD.GetComponent<RawImage>().texture = Resources.Load(OHODToPlace.objectData.spritePath) as Texture2D;
+                    OHOD.GetComponent<RawImage>().color = new Color(1, 1, 1, 1);
                     OHOD.transform.GetChild(0).gameObject.SetActive(true);
 
                     HollowCraftAndOwnedManager.Instance.objectsInOwned.Remove(this);

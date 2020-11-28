@@ -4,10 +4,10 @@ using UnityEngine;
 
 public enum PieceColor
 {
-    Red,
+    Orange,
     Blue,
     Yellow,
-    Magenta,
+    Green,
     Joker,
     None
 }
