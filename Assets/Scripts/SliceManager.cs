@@ -30,6 +30,7 @@ public class SliceManager : MonoBehaviour
     //public Sprite[] lootLockLimiterSliceColorSprites;
 
     public Sprite sliceColorSprite;
+    public Sprite sliceColorSpriteAllColors;
 
     public Sprite[] slicelootIcons;
 

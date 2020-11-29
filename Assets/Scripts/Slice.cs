@@ -75,8 +75,8 @@ public class Slice : MonoBehaviour
                 break;
             case SliceCatagory.Color:
                 sliceColor = PieceColor.None;
-                sr.sprite = GameManager.Instance.sliceManager.sliceColorSprite;
-                sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
+                sr.sprite = GameManager.Instance.sliceManager.sliceColorSpriteAllColors;
+                //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
                 //sr.sprite = GameManager.Instance.sliceManager.lootSliceColorDict[sliceColor];
 
                 break;
@@ -112,8 +112,8 @@ public class Slice : MonoBehaviour
                 break;
             case SliceCatagory.Color:
                 sliceColor = PieceColor.None;
-                sr.sprite = GameManager.Instance.sliceManager.sliceColorSprite;
-                sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
+                sr.sprite = GameManager.Instance.sliceManager.sliceColorSpriteAllColors;
+                //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
                 //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceColorDict[sliceColor];
 
                 break;
@@ -149,8 +149,8 @@ public class Slice : MonoBehaviour
                 break;
             case SliceCatagory.Color:
                 sliceColor = PieceColor.None;
-                sr.sprite = GameManager.Instance.sliceManager.sliceColorSprite;
-                sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
+                sr.sprite = GameManager.Instance.sliceManager.sliceColorSpriteAllColors;
+                //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
                 //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceColorDict[sliceColor];
 
                 break;
