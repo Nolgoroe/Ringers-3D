@@ -112,7 +112,7 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
         RefreshOwnedScreen();
 
         OHODToRemove.GetComponent<RawImage>().texture = null;
-
+        OHODToRemove.GetComponent<RawImage>().color = new Color(1, 1, 1, 0);
         OHODToRemove.transform.GetChild(0).gameObject.SetActive(false);
         OHODToRemove.objectData = new HollowCraftObjectData();
         OHODToRemove.gameObject.GetComponent<HollowZone>().isEmpty = true;

@@ -26,17 +26,17 @@ public class PowerupProperties : MonoBehaviour
         GetComponent<RawImage>().texture = icon;
 
 
-        if(type == PowerUp.FourColorTransform)
-        {
-            //nameOfPowerup.text = powerupText + "\n" + connectedEquipment.specificColor;
-        }
-        else if(type == PowerUp.FourShapeTransform)
-        {
-            //nameOfPowerup.text = powerupText + "\n" + connectedEquipment.specificSymbol;
-        }
-        else
-        {
-            //nameOfPowerup.text = powerupText;
-        }
+        //if(type == PowerUp.FourColorTransform)
+        //{
+        //    //nameOfPowerup.text = powerupText + "\n" + connectedEquipment.specificColor;
+        //}
+        //else if(type == PowerUp.FourShapeTransform)
+        //{
+        //    //nameOfPowerup.text = powerupText + "\n" + connectedEquipment.specificSymbol;
+        //}
+        //else
+        //{
+        //    //nameOfPowerup.text = powerupText;
+        //}
     }
 }

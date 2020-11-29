@@ -113,9 +113,9 @@ public class PowerUpManager : MonoBehaviour
             prop.transformSymbol = data.specificSymbol;
         }
 
-        if(prop.connectedEquipment.scopeOfUses != 1)
+        if(prop.connectedEquipment.scopeOfUses == 0) /// 0 = daily 1 = per patch
         {
-            go.GetComponent<Button>().interactable = prop.connectedEquipment.nextTimeAvailable == "";
+            go.GetComponent<Button>().interactable = prop.connectedEquipment.nextTimeAvailable == null || prop.connectedEquipment.nextTimeAvailable == "";
         }
         else
         {

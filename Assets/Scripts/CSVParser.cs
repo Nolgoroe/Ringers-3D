@@ -10,35 +10,81 @@ public enum DocumentType
     HollowObject
 }
 
+[System.Serializable]
+public class csvFileInfo
+{
+    public TextAsset csvFiles;
+    public DocumentType typeOfCsvDoc;
+}
 public class CSVParser : MonoBehaviour
 {
     public List<EquipmentData> allEquipmentInGame;
     public List<HollowCraftObjectData> allHollowCraftObjectsInGame;
 
-    public DocumentType[] typeOfCsvDoc;
+    public csvFileInfo[] csvFiles;
 
     StreamReader inputStream;
 
+    string targetPath;
+
     void Start()
     {
-        foreach (DocumentType DT in typeOfCsvDoc)
+        Debug.Log("Reading CSV");
+
+        if (Application.platform == RuntimePlatform.Android)
         {
-            readTextFile(DT);
+            targetPath = Application.persistentDataPath;
+
+            foreach (csvFileInfo FI in csvFiles)
+            {
+                SaveToPersistentDataPath(FI);
+            }
         }
+        else
+        {
+            foreach (csvFileInfo FI in csvFiles)
+            {
+                readTextFile(FI);
+            }
+        }
+
     }
 
-    void readTextFile(DocumentType DT)
+    public void SaveToPersistentDataPath(csvFileInfo FI)
     {
-        switch (DT)
+        File.WriteAllText(Application.persistentDataPath +"/" + FI.csvFiles.name + ".csv", FI.csvFiles.text);
+
+        readTextFile(FI);
+    }
+    void readTextFile(csvFileInfo FI)
+    {
+        if (Application.platform == RuntimePlatform.Android)
         {
-            case DocumentType.Equipment:
-                inputStream = new StreamReader("Assets/Resources/Equipment/Equipment.csv");
-                break;
-            case DocumentType.HollowObject:
-                inputStream = new StreamReader("Assets/Resources/HollowObjects/Hollow Crafts.csv");
-                break;
-            default:
-                break;
+            switch (FI.typeOfCsvDoc)
+            {
+                case DocumentType.Equipment:
+                    inputStream = new StreamReader(Application.persistentDataPath + "/Equipment.csv");
+                    break;
+                case DocumentType.HollowObject:
+                    inputStream = new StreamReader(Application.persistentDataPath + "/Hollow Crafts.csv");
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            switch (FI.typeOfCsvDoc)
+            {
+                case DocumentType.Equipment:
+                    inputStream = new StreamReader("Assets/Resources/Equipment/Equipment.csv");
+                    break;
+                case DocumentType.HollowObject:
+                    inputStream = new StreamReader("Assets/Resources/HollowObjects/Hollow Crafts.csv");
+                    break;
+                default:
+                    break;
+            }
         }
 
         List<string> lineList = new List<string>();
@@ -52,7 +98,7 @@ public class CSVParser : MonoBehaviour
 
         inputStream.Close();
 
-        parseList(lineList, DT);
+        parseList(lineList, FI.typeOfCsvDoc);
     }
 
     void parseList(List<string> stringList, DocumentType DT)

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2138677392}
-  m_IndirectSpecularColor: {r: 0.1750021, g: 0.21892752, b: 0.30122048, a: 1}
+  m_IndirectSpecularColor: {r: 0.17500165, g: 0.21892697, b: 0.30121955, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -26927,7 +26927,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allEquipmentInGame: []
   allHollowCraftObjectsInGame: []
-  typeOfCsvDoc: 0000000001000000
+  csvFiles:
+  - csvFiles: {fileID: 4900000, guid: 232f85297ee589f4397a2b63a211c2bd, type: 3}
+    typeOfCsvDoc: 0
+  - csvFiles: {fileID: 4900000, guid: f2fa198858445ad458d0e7a6e4c170b7, type: 3}
+    typeOfCsvDoc: 1
 --- !u!1 &1887632749
 GameObject:
   m_ObjectHideFlags: 0
