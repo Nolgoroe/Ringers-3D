@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
     public GameObject OptionsScreen;
     public GameObject wardrobe;
     public GameObject usingPowerupText;
-    public GameObject youWinText, youLoseText;
+    public GameObject youWinScreen, youLoseText;
 
     public Text hubGoldText, hubRubyText;
 
@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text currentLevelName;
 
     public Button commitButton;
+    public Button nextLevelFromWinScreen;
     //public Button[] levelButtons;
 
     public ButtonsPerZone[] buttonsPerZone;
@@ -58,7 +59,7 @@ public class UIManager : MonoBehaviour
         ringersHutUICanvas.SetActive(false);
         wardrobe.SetActive(false);
         usingPowerupText.SetActive(false);
-        youWinText.SetActive(false);
+        youWinScreen.SetActive(false);
         youLoseText.SetActive(false);
         craft.SetActive(true); //// so this will be the first screen displayed, or else everyone will be turned off
         owned.SetActive(false);
@@ -98,15 +99,17 @@ public class UIManager : MonoBehaviour
 
         Camera.main.orthographic = true;
         Camera.main.orthographicSize = 5f;
+
         if (currentCanvas == gameplayCanvas)
         {
             ZoneManager.Instance.ActivateLevelDisplay();
+            LootManager.Instance.DestoryWinScreenDisplyedLoot();
 
             Camera.main.transform.position = hubCameraPos;
 
             gameplayCanvas.SetActive(false);
             OptionsScreen.SetActive(false);
-            youWinText.SetActive(false);
+            youWinScreen.SetActive(false);
             youLoseText.SetActive(false);
 
             GameManager.Instance.DestroyAllLevelChildern();
@@ -258,7 +261,7 @@ public class UIManager : MonoBehaviour
     }
     public void WinLevel()
     {
-        youWinText.SetActive(true);
+        youWinScreen.SetActive(true);
     }
     public void LoseLevel()
     {

@@ -106,11 +106,6 @@ public class ConnectionManager : MonoBehaviour
                         {
                             LockCell(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
                         }
-
-                        if (supPieceArray[currentLeft].relevantSlice.isKey)
-                        {
-                            LootManager.Instance.giveKey = true;
-                        }
                     }
                 }
             }
@@ -162,11 +157,6 @@ public class ConnectionManager : MonoBehaviour
                         if (supPieceArray[currentRight].relevantSlice.isLock)
                         {
                             LockCell(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
-                        }
-
-                        if (supPieceArray[currentRight].relevantSlice.isKey)
-                        {
-                            LootManager.Instance.giveKey = true;
                         }
                     }
                 }

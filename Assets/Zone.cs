@@ -10,6 +10,7 @@ using System.Linq;
 public class Zone : MonoBehaviour
 {
     public int id;
+    public int keyLevelIndex;
     public string zoneName;
     public bool hasAwardedKey, isUnlocked;
 

@@ -79,6 +79,8 @@ public class GameManager : MonoBehaviour
 
     public void DestroyAllLevelChildern()
     {
+        Debug.Log("Destroying Level");
+
         gameStarted = false;
 
         foreach (Transform child in destroyOutOfLevel)
@@ -101,13 +103,24 @@ public class GameManager : MonoBehaviour
 
         if(currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0)
         {
+            if (currentLevel.levelNum == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex)
+            {
+                LootManager.Instance.giveKey = true;
+            }
+
             Debug.Log("YOU WIN");
             LootManager.Instance.GiveLoot();
             UIManager.Instance.WinLevel();
 
+
             if (currentLevel.levelNum >= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && currentLevel.levelNum != ZoneManagerHelpData.Instance.currentZoneCheck.lastLevelNum)
             {
                 ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone++;
+                UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
+            }
+            else
+            {
+                UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
             }
 
         }
@@ -129,6 +142,29 @@ public class GameManager : MonoBehaviour
         ConnectionManager.Instance.cells.Clear();
 
         StartLevel();
+    }
+
+
+    public void NextLevelFromWinScreen()
+    {
+        DestroyAllLevelChildern();
+        LootManager.Instance.DestoryWinScreenDisplyedLoot();
+
+        LootManager.Instance.ResetLevelLootData();
+        ConnectionManager.Instance.cells.Clear();
+
+        if (currentLevel.levelNum + 1 == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex)
+        {
+            ZoneManager.Instance.CheckZoneAwardedKey(ZoneManagerHelpData.Instance.currentZoneCheck.id);
+            ZoneManager.Instance.SetUnlockZone(ZoneManagerHelpData.Instance.currentZoneCheck.id + 1);
+        }
+
+
+        UIManager.Instance.youWinScreen.SetActive(false);
+
+        ZoneManagerHelpData.Instance.listOfAllZones[ZoneManagerHelpData.Instance.currentZoneCheck.id].SaveZone();
+
+        ChooseLevel(currentLevel.levelNum + 1); ///// THIS ALSO STARTS THE LEVEL
     }
 
 }

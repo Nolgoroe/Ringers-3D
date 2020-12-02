@@ -62,6 +62,11 @@ public class LootManager : MonoBehaviour
 
     public GameObject keyPrefab;
 
+    public GameObject lootDisplayPrefab;
+    public Transform winScreenLootDisplayContent;
+
+    public Texture goldSprite, rubySprite;
+
     public bool giveKey;
 
     [Header("List for Loot by Level")]
@@ -152,6 +157,9 @@ public class LootManager : MonoBehaviour
                     int randomMat = Random.Range(0, craftingMatsFromTables.Count);
 
                     Debug.Log(craftingMatsFromTables[randomMat]);
+
+                    DisplayLootMaterialsToPlayer(5, craftingMatsFromTables[randomMat]);
+
                     PlayerManager.Instance.AddMaterials(craftingMatsFromTables[randomMat], 5); //////// Figure out how to get amount from outside dynamically
 
                     craftingMatsFromTables.Clear();
@@ -163,21 +171,52 @@ public class LootManager : MonoBehaviour
             int[] valuesToRecieve;
             valuesToRecieve = rewardBagByLootPack.minMaxValues;
 
+
+            int randomNum = (Random.Range(valuesToRecieve[0], valuesToRecieve[1] + 1));
+
             if (lootPack.ToString().Contains("M"))
             {
-                PlayerManager.Instance.AddGold(Random.Range(valuesToRecieve[0], valuesToRecieve[1] + 1));
+                DisplayLootGoldRubyToPlayer(randomNum, goldSprite);
+                PlayerManager.Instance.AddGold(randomNum);
             }
             else
             {
-                PlayerManager.Instance.AddRubies(Random.Range(valuesToRecieve[0], valuesToRecieve[1] + 1));
+                DisplayLootGoldRubyToPlayer(randomNum, rubySprite);
+                PlayerManager.Instance.AddRubies(randomNum);
             }
 
         }
     }
 
-
     public void ResetLevelLootData()
     {
         currentLevelLootToGive.Clear();
+    }
+
+    public void DisplayLootMaterialsToPlayer(int count, CraftingMats CM)
+    {
+        GameObject go = Instantiate(lootDisplayPrefab, winScreenLootDisplayContent);
+
+        CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
+
+        CMD.materialImage.texture = Resources.Load(MaterialsAndForgeManager.Instance.materialSpriteByName[CM]) as Texture2D;
+        CMD.materialCount.text = count.ToString();
+    }
+    public void DisplayLootGoldRubyToPlayer(int count, Texture s)
+    {
+        GameObject go = Instantiate(lootDisplayPrefab, winScreenLootDisplayContent);
+
+        CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
+
+        CMD.materialImage.texture = s as Texture2D;
+        CMD.materialCount.text = count.ToString();
+    }
+
+    public void DestoryWinScreenDisplyedLoot()
+    {
+        foreach (Transform t in winScreenLootDisplayContent)
+        {
+            Destroy(t.gameObject);
+        }
     }
 }
