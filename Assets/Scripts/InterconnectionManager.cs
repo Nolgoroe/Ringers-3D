@@ -14,6 +14,7 @@ public class InterconnectionManager : MonoBehaviour
 
     Cell interconnectedCellOne;
     Cell interconnectedCellTwo;
+
     private void Start()
     {
         Instance = this;
