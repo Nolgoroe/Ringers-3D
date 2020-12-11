@@ -82,6 +82,8 @@ public class ConnectionManager : MonoBehaviour
                     GameManager.Instance.unsuccessfullConnectionCount++;
                     supPieceArray[currentLeft].isBadConnection = true;
                     supPieceArray[leftContested].isBadConnection = true;
+                    supPieceArray[currentLeft].gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+                    supPieceArray[leftContested].gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
 
                     if (supPieceArray[currentLeft].relevantSlice)
                     {
@@ -92,6 +94,9 @@ public class ConnectionManager : MonoBehaviour
                 else
                 {
                     Instantiate(goodConnectionParticle, cellList[cellIndex].rightParticleZone);
+
+                    supPieceArray[currentLeft].gameObject.GetComponent<Renderer>().material.EnableKeyword ("_EMISSION");
+                    supPieceArray[leftContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
 
                     if (conditionmet)
                     {
@@ -134,6 +139,8 @@ public class ConnectionManager : MonoBehaviour
                     GameManager.Instance.unsuccessfullConnectionCount++;
                     supPieceArray[currentRight].isBadConnection = true;
                     supPieceArray[rightContested].isBadConnection = true;
+                    supPieceArray[currentRight].gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+                    supPieceArray[rightContested].gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
 
                     if (supPieceArray[currentRight].relevantSlice)
                     {
@@ -145,6 +152,8 @@ public class ConnectionManager : MonoBehaviour
                 else
                 {
                     Instantiate(goodConnectionParticle, cellList[cellIndex].leftParticleZone);
+                    supPieceArray[currentRight].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    supPieceArray[rightContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
 
                     if (conditionmet)
                     {
@@ -283,6 +292,21 @@ public class ConnectionManager : MonoBehaviour
         }
 
         if (num >= lengthOfSubPiecesRegular)
+        {
+            return 0;
+        }
+
+        return num;
+    }
+
+    public int CheckIntRangeCells(int num)
+    {
+        if (num < 0)
+        {
+            return cells.Count - 1;
+        }
+
+        if (num > cells.Count)
         {
             return 0;
         }
