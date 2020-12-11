@@ -29,8 +29,7 @@ public class SliceManager : MonoBehaviour
     //public Sprite[] lootLockLimiterSliceSymbolSprites;
     //public Sprite[] lootLockLimiterSliceColorSprites;
 
-    public Sprite sliceColorSprite;
-    public Sprite sliceColorSpriteAllColors;
+    public Sprite[] sliceColors;
 
     public Sprite[] slicelootIcons;
 
@@ -46,6 +45,7 @@ public class SliceManager : MonoBehaviour
     //public Dictionary<PieceColor, Sprite> lootLockSLimiterliceColorDict;
 
     public Dictionary<PieceSymbol, Sprite> pieceSymbolToSprite;
+    public Dictionary<PieceColor, Sprite> piececolorToSprite;
     public Dictionary<PieceColor, Color> pieceColorToColor;
 
     public Dictionary<LootPacks, Sprite> lootToIcon;
@@ -63,6 +63,7 @@ public class SliceManager : MonoBehaviour
     public void Init()
     {
         pieceSymbolToSprite = new Dictionary<PieceSymbol, Sprite>();
+        piececolorToSprite = new Dictionary<PieceColor, Sprite>();
         pieceColorToColor = new Dictionary<PieceColor, Color>();
 
         //lootSliceSymbolDict = new Dictionary<PieceSymbol, Sprite>();
@@ -93,6 +94,11 @@ public class SliceManager : MonoBehaviour
         for (int i = 0; i < sliceSymbolsSprites.Length; i++)
         {
             pieceSymbolToSprite.Add((PieceSymbol)i, sliceSymbolsSprites[i]);
+        }
+
+        for (int i = 0; i < sliceColors.Length; i++)
+        {
+            piececolorToSprite.Add((PieceColor)i, sliceColors[i]);
         }
 
         for (int i = 0; i < System.Enum.GetValues(typeof(PieceColor)).Length; i++)
