@@ -52,8 +52,6 @@ public class Cell : MonoBehaviour
 
         }
 
-        ConnectionManager.Instance.CallConnection(cellIndex, isOuter);
-
         if (GameManager.Instance.currentLevel.isDoubleRing)
         {
             int badInterConnections = 0;
@@ -73,6 +71,8 @@ public class Cell : MonoBehaviour
                 UIManager.Instance.ActivateCommitButton();
             }
         }
+
+        ConnectionManager.Instance.CallConnection(cellIndex, isOuter);
     }
 
     public void RemovePiece()
@@ -100,17 +100,26 @@ public class Cell : MonoBehaviour
             {
                 Destroy(interconnectedLeftParticleZone.GetChild(0).gameObject);
             }
-        }
 
-        if (GameManager.Instance.currentLevel.isDoubleRing)
-        {
+
             int badInterConnections = 0;
 
             badInterConnections = InterconnectionManager.Instance.CheckInterConnection(cellIndex, isOuter);
 
             GameManager.Instance.unsuccessfullConnectionCount -= badInterConnections;
-
         }
+
+        //if (GameManager.Instance.currentLevel.isDoubleRing)
+        //{
+        //    int badInterConnections = 0;
+
+        //    badInterConnections = InterconnectionManager.Instance.CheckInterConnection(cellIndex, isOuter);
+
+        //    GameManager.Instance.unsuccessfullConnectionCount -= badInterConnections;
+
+        //}
+        Cell leftCell = ConnectionManager.Instance.cells[ConnectionManager.Instance.CheckIntRangeCells(cellIndex - 1)];
+        Cell rightCell = ConnectionManager.Instance.cells[ConnectionManager.Instance.CheckIntRangeCells(cellIndex + 1)];
 
         if (pieceHeld.leftChild.isBadConnection)
         {
@@ -119,6 +128,18 @@ public class Cell : MonoBehaviour
             int i = ConnectionManager.Instance.CheckIntRange(pieceHeld.leftChild.subPieceIndex - 1);
 
         }
+        else
+        {
+            pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+
+            if (leftCell.isFull)
+            {
+                if (!leftCell.pieceHeld.rightChild.isBadConnection)
+                {
+                    leftCell.pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+                }
+            }
+        }
 
         if (pieceHeld.rightChild.isBadConnection)
         {
@@ -126,6 +147,18 @@ public class Cell : MonoBehaviour
             pieceHeld.rightChild.isBadConnection = false;
             int i = ConnectionManager.Instance.CheckIntRange(pieceHeld.rightChild.subPieceIndex + 1);
 
+        }
+        else
+        {
+            pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+
+            if (rightCell.isFull)
+            {
+                if (!rightCell.pieceHeld.leftChild.isBadConnection)
+                {
+                    rightCell.pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+                }
+            }
         }
 
         if (pieceHeld.rightChild.relevantSlice)
