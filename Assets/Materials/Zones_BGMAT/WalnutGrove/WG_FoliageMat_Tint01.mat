@@ -8,7 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: WG_FoliageMat_Tint01
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: e2695e4c563e3a04091eadc426a5fbdf,
+    type: 3}
   m_ShaderKeywords: _ALPHATEST_ON
   m_LightmapFlags: 6
   m_EnableInstancingVariants: 0
@@ -19,6 +20,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_476BD3CF:
+        m_Texture: {fileID: 2800000, guid: 623f9187404cdf84fb309aa826932dfb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: 623f9187404cdf84fb309aa826932dfb, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -43,11 +48,20 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_1D90ABC4_Texture_1:
+        m_Texture: {fileID: 2800000, guid: eabba395643bb4e388d633c8d9a4f1e8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_A271C8DB_Texture_1:
+        m_Texture: {fileID: 2800000, guid: eabba395643bb4e388d633c8d9a4f1e8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_B74EB9BE: 1
     - _AlphaClip: 1
     - _Blend: 0
     - _BumpScale: 1
