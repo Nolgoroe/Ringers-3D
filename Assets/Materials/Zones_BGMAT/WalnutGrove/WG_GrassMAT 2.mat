@@ -7,11 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WG_FoliageMat_Tint01
-  m_Shader: {fileID: -6465566751694194690, guid: e2695e4c563e3a04091eadc426a5fbdf,
+  m_Name: WG_GrassMAT 2
+  m_Shader: {fileID: -6465566751694194690, guid: 8a090671341350b499247cb0c7dde255,
     type: 3}
   m_ShaderKeywords: _ALPHATEST_ON
-  m_LightmapFlags: 6
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
   m_CustomRenderQueue: -1
@@ -20,20 +20,12 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_385708B4:
-        m_Texture: {fileID: 2800000, guid: 864f48c602252e24184608ad07f89ecf, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Texture2D_476BD3CF:
-        m_Texture: {fileID: 2800000, guid: 123270232b18ad542b66d711457fca5f, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Texture2D_DDA8B2CE:
-        m_Texture: {fileID: 2800000, guid: d4aec07b3163d5a41bf1725d985eedd5, type: 3}
+    - Texture2D_F28564C9:
+        m_Texture: {fileID: 2800000, guid: bfe1b8b1c0ddc3c49ad091aae1abcd32, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 623f9187404cdf84fb309aa826932dfb, type: 3}
+        m_Texture: {fileID: 2800000, guid: 16df266a859ccbb4da9f3ce6e5f18811, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -45,7 +37,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 623f9187404cdf84fb309aa826932dfb, type: 3}
+        m_Texture: {fileID: 2800000, guid: 16df266a859ccbb4da9f3ce6e5f18811, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -56,21 +48,15 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_1D90ABC4_Texture_1:
-        m_Texture: {fileID: 2800000, guid: eabba395643bb4e388d633c8d9a4f1e8, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_A271C8DB_Texture_1:
-        m_Texture: {fileID: 2800000, guid: eabba395643bb4e388d633c8d9a4f1e8, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_4969062E: 1
-    - Vector1_B74EB9BE: 5
+    - Vector1_5A525C2A: 1
+    - Vector1_629B10EC: 0.3
+    - Vector1_888D12C0: 0.01
+    - Vector1_E2021B68: 0.1
     - _AlphaClip: 1
     - _Blend: 0
     - _BumpScale: 1
@@ -80,27 +66,30 @@ Material:
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
+    - _GlossinessSource: 0
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _Shininess: 0
     - _Smoothness: 0
+    - _SmoothnessSource: 0
     - _SmoothnessTextureChannel: 0
+    - _SpecSource: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_1568803F: {r: 0.8573227, g: 0.9528302, b: 0.21124065, a: 0}
-    - Color_73E2B7F8: {r: 0.66783404, g: 1, b: 0.08018869, a: 0}
-    - Color_9028F052: {r: 0.72910553, g: 0.9245283, b: 0.31835172, a: 0}
-    - _BaseColor: {r: 0.88328975, g: 1, b: 0.6313726, a: 1}
-    - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - Vector2_305BD0A6: {r: 1, g: 0, b: 0, a: 0}
+    - Vector2_87AA3DD6: {r: 1, g: 0, b: 0, a: 0}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.24228115, g: 0.29613832, b: 0.02624122, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
---- !u!114 &8183878970639985061
+--- !u!114 &3301761861182621036
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
