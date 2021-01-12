@@ -5572,9 +5572,6 @@ MonoBehaviour:
     minMaxValues: 
     chancesPerItemTable: 32000000640000003c000000
   currentLevelLootToGive: 
-  goldTargetLoot: {fileID: 151454292}
-  rubyTargetLoot: {fileID: 1256775747}
-  materialsTargetLoot: {fileID: 1022968440}
 --- !u!1 &363876821
 GameObject:
   m_ObjectHideFlags: 0
@@ -15505,6 +15502,8 @@ MonoBehaviour:
   goodConnectionParticle: {fileID: 7475159308211779684, guid: 1106028b21faa4b43b39439beaee7bd9,
     type: 3}
   badConnectionParticle: {fileID: 4854255903230474168, guid: 9f8949da6808efa4f95544bbbd7b811b,
+    type: 3}
+  lootEffectPrefab: {fileID: 3657806499365896026, guid: 9a117e8348ba5f8428d1c099bba27b63,
     type: 3}
 --- !u!4 &1036107953
 Transform:

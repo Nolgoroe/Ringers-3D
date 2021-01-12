@@ -20,6 +20,7 @@ public class ConnectionManager : MonoBehaviour
 
     public ParticleSystem goodConnectionParticle, badConnectionParticle;
 
+    public GameObject lootEffectPrefab;
     private void Start()
     {
         Instance = this;
@@ -307,10 +308,11 @@ public class ConnectionManager : MonoBehaviour
             return cells.Count - 1;
         }
 
-        if (num > cells.Count)
+        if (num >= cells.Count)
         {
             return 0;
         }
+
 
         return num;
     }
@@ -365,10 +367,8 @@ public class ConnectionManager : MonoBehaviour
     {
         Debug.Log("Loot");
         Debug.Log(relevent.lootPack);
-
         LootManager.Instance.currentLevelLootToGive.Add(relevent.lootPack);
         //LootManager.Instance.RollOnTable(relevent.lootPack);
-
         if (!isLimiter)
         {
             SpriteRenderer relevantSliceSR = relevent.child.GetComponent<SpriteRenderer>();
@@ -377,24 +377,29 @@ public class ConnectionManager : MonoBehaviour
             SpriteRenderer ciconSR = relevent.child.transform.GetChild(0).GetComponent<SpriteRenderer>();
 
             ciconSR.color = new Color(ciconSR.color.r, ciconSR.color.g, ciconSR.color.b, 0.4f);
-            relevent.lootIcon.GetComponent<Rigidbody2D>().simulated = true;
+            //relevent.lootIcon.GetComponent<Rigidbody2D>().simulated = true;
             //relevent.lootIcon.GetComponent<Rigidbody2D>().AddForce(Vector3.up * 5, ForceMode2D.Impulse);
 
-            if (relevent.lootPack.ToString().Contains("M"))
+
+            switch (relevent.lootPack.ToString()[0])
             {
-                LeanTween.move(relevent.lootIcon, LootTargetsData.instance.goldTargetLoot, 2).setDestroyOnComplete(true);
-            }
-            else if (relevent.lootPack.ToString().Contains("R"))
-            {
-                LeanTween.move(relevent.lootIcon, LootTargetsData.instance.rubyTargetLoot, 2).setDestroyOnComplete(true);
-            }
-            else
-            {
-                LeanTween.move(relevent.lootIcon, LootTargetsData.instance.materialsTargetLoot, 2).setDestroyOnComplete(true);
+                case 'M':
+                    StartCoroutine(InstantiateLootEffect(relevent,relevent.lootIcon.transform, relevent.lootIcon.GetComponent<SpriteRenderer>().sprite, LootTargetsData.instance.goldTargetLoot));
+                    break;
+
+                case 'R':
+                    StartCoroutine(InstantiateLootEffect(relevent,relevent.lootIcon.transform, relevent.lootIcon.GetComponent<SpriteRenderer>().sprite, LootTargetsData.instance.rubyTargetLoot));
+                    break;
+
+                case 'I':
+                    StartCoroutine(InstantiateLootEffect(relevent,relevent.lootIcon.transform, relevent.lootIcon.GetComponent<SpriteRenderer>().sprite, LootTargetsData.instance.materialsTargetLoot));
+                    break;
+
+                default:
+                    break;
             }
 
             relevent.isLoot = false;
-            Destroy(relevent.lootIcon, 2f);
         }
         else
         {
@@ -487,5 +492,24 @@ public class ConnectionManager : MonoBehaviour
         subPiecesOnBoard = new SubPiece[0];
         subPiecesDoubleRing = new SubPiece[0];
         slicesOnBoard = new Slice[0];
+    }
+
+
+    public IEnumerator InstantiateLootEffect(Slice relevent, Transform instantiateposition, Sprite look, Transform target)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+
+            GameObject go = Instantiate(lootEffectPrefab, instantiateposition.position, Quaternion.identity);
+
+            MoveToLootTarget MTLT = go.GetComponent<MoveToLootTarget>();
+            MTLT.look = look;
+            MTLT.target = target;
+
+            MTLT.LeanMove();
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        Destroy(relevent.lootIcon.gameObject);
     }
 }
