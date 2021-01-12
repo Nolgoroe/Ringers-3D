@@ -19,6 +19,7 @@ public class ConnectionManager : MonoBehaviour
     public int lengthOfSubPiecesOuter;
 
     public ParticleSystem goodConnectionParticle, badConnectionParticle;
+
     private void Start()
     {
         Instance = this;
@@ -82,8 +83,8 @@ public class ConnectionManager : MonoBehaviour
                     GameManager.Instance.unsuccessfullConnectionCount++;
                     supPieceArray[currentLeft].isBadConnection = true;
                     supPieceArray[leftContested].isBadConnection = true;
-                    supPieceArray[currentLeft].gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
-                    supPieceArray[leftContested].gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+                    //supPieceArray[currentLeft].gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+                    //supPieceArray[leftContested].gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
 
                     if (supPieceArray[currentLeft].relevantSlice)
                     {
@@ -95,8 +96,8 @@ public class ConnectionManager : MonoBehaviour
                 {
                     Instantiate(goodConnectionParticle, cellList[cellIndex].rightParticleZone);
 
-                    supPieceArray[currentLeft].gameObject.GetComponent<Renderer>().material.EnableKeyword ("_EMISSION");
-                    supPieceArray[leftContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    //supPieceArray[currentLeft].gameObject.GetComponent<Renderer>().material.EnableKeyword ("_EMISSION");
+                    //supPieceArray[leftContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
 
                     if (conditionmet)
                     {
@@ -139,8 +140,8 @@ public class ConnectionManager : MonoBehaviour
                     GameManager.Instance.unsuccessfullConnectionCount++;
                     supPieceArray[currentRight].isBadConnection = true;
                     supPieceArray[rightContested].isBadConnection = true;
-                    supPieceArray[currentRight].gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
-                    supPieceArray[rightContested].gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+                    //supPieceArray[currentRight].gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+                    //supPieceArray[rightContested].gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
 
                     if (supPieceArray[currentRight].relevantSlice)
                     {
@@ -152,8 +153,8 @@ public class ConnectionManager : MonoBehaviour
                 else
                 {
                     Instantiate(goodConnectionParticle, cellList[cellIndex].leftParticleZone);
-                    supPieceArray[currentRight].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
-                    supPieceArray[rightContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    //supPieceArray[currentRight].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
+                    //supPieceArray[rightContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
 
                     if (conditionmet)
                     {
@@ -377,7 +378,21 @@ public class ConnectionManager : MonoBehaviour
 
             ciconSR.color = new Color(ciconSR.color.r, ciconSR.color.g, ciconSR.color.b, 0.4f);
             relevent.lootIcon.GetComponent<Rigidbody2D>().simulated = true;
-            relevent.lootIcon.GetComponent<Rigidbody2D>().AddForce(Vector3.up * 5, ForceMode2D.Impulse);
+            //relevent.lootIcon.GetComponent<Rigidbody2D>().AddForce(Vector3.up * 5, ForceMode2D.Impulse);
+
+            if (relevent.lootPack.ToString().Contains("M"))
+            {
+                LeanTween.move(relevent.lootIcon, LootTargetsData.instance.goldTargetLoot, 2).setDestroyOnComplete(true);
+            }
+            else if (relevent.lootPack.ToString().Contains("R"))
+            {
+                LeanTween.move(relevent.lootIcon, LootTargetsData.instance.rubyTargetLoot, 2).setDestroyOnComplete(true);
+            }
+            else
+            {
+                LeanTween.move(relevent.lootIcon, LootTargetsData.instance.materialsTargetLoot, 2).setDestroyOnComplete(true);
+            }
+
             relevent.isLoot = false;
             Destroy(relevent.lootIcon, 2f);
         }

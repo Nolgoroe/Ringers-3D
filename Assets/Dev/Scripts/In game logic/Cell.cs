@@ -17,11 +17,11 @@ public class Cell : MonoBehaviour
     {
         isFull = true;
         followerTarget.SetParent(transform);
-        followerTarget.position = new Vector3(followerTarget.parent.position.x, followerTarget.parent.position.y, followerTarget.parent.position.z + 0.1f);
+        followerTarget.position = new Vector3(followerTarget.parent.position.x, followerTarget.parent.position.y, followerTarget.parent.position.z);
         followerTarget.rotation = followerTarget.parent.rotation;
         pieceHeld = followerTarget.GetComponent<Piece>();
         pieceHeld.partOfBoard = true;
-        pieceHeld.transform.localScale = Vector3.one;
+        pieceHeld.transform.localScale = new Vector3(1.15f,1.15f,1f);
 
         if (!isOuter)
         {
@@ -130,15 +130,15 @@ public class Cell : MonoBehaviour
         }
         else
         {
-            pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+            //pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
 
-            if (leftCell.isFull)
-            {
-                if (!leftCell.pieceHeld.rightChild.isBadConnection)
-                {
-                    leftCell.pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
-                }
-            }
+            //if (leftCell.isFull)
+            //{
+            //    if (!leftCell.pieceHeld.rightChild.isBadConnection)
+            //    {
+            //        leftCell.pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+            //    }
+            //}
         }
 
         if (pieceHeld.rightChild.isBadConnection)
@@ -150,15 +150,15 @@ public class Cell : MonoBehaviour
         }
         else
         {
-            pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+            //pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
 
-            if (rightCell.isFull)
-            {
-                if (!rightCell.pieceHeld.leftChild.isBadConnection)
-                {
-                    rightCell.pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
-                }
-            }
+            //if (rightCell.isFull)
+            //{
+            //    if (!rightCell.pieceHeld.leftChild.isBadConnection)
+            //    {
+            //        rightCell.pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+            //    }
+            //}
         }
 
         if (pieceHeld.rightChild.relevantSlice)

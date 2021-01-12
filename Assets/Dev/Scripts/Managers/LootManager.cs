@@ -45,12 +45,6 @@ public class RewardBag /// Class containing the values for lootpakcs (The loot l
 }
 
 [System.Serializable]
-public class LootPackChancesList
-{
-    public int[] minMaxValues; ///// Change this naming to Percentage Num
-}
-
-[System.Serializable]
 public class ItemTablesToCraftingMats
 {
     public List<CraftingMats> tableToMat;
