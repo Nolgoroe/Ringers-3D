@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum PieceColor
 {
-    Orange,
+    Purple,
     Blue,
     Yellow,
     Green,

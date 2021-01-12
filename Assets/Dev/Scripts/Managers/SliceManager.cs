@@ -46,7 +46,7 @@ public class SliceManager : MonoBehaviour
 
     public Dictionary<PieceSymbol, Sprite> pieceSymbolToSprite;
     public Dictionary<PieceColor, Sprite> piececolorToSprite;
-    public Dictionary<PieceColor, Color> pieceColorToColor;
+    public Dictionary<PieceColor, Material> pieceColorToColor;
 
     public Dictionary<LootPacks, Sprite> lootToIcon;
 
@@ -64,7 +64,7 @@ public class SliceManager : MonoBehaviour
     {
         pieceSymbolToSprite = new Dictionary<PieceSymbol, Sprite>();
         piececolorToSprite = new Dictionary<PieceColor, Sprite>();
-        pieceColorToColor = new Dictionary<PieceColor, Color>();
+        pieceColorToColor = new Dictionary<PieceColor, Material>();
 
         //lootSliceSymbolDict = new Dictionary<PieceSymbol, Sprite>();
         //lootSliceColorDict = new Dictionary<PieceColor, Sprite>();

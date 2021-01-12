@@ -31,7 +31,7 @@ public class SubPiece : MonoBehaviour
 
         /// Shorten but keep logic
         random = Random.Range(0, GameManager.Instance.clipManager.gameColors.Length - 2);
-        rend.material.SetColor("_BaseColor", GameManager.Instance.clipManager.gameColors[random]);
+        rend.material = GameManager.Instance.clipManager.gameColors[random];
         colorOfPiece = (PieceColor)random;
 
 
@@ -45,7 +45,7 @@ public class SubPiece : MonoBehaviour
     public void RefreshPiece()
     {
         /// Shorten but keep logic
-        rend.material.SetColor("_BaseColor", GameManager.Instance.clipManager.gameColors[(int)colorOfPiece]);
+        rend.material = GameManager.Instance.clipManager.gameColors[(int)colorOfPiece];
 
 
         //rend.material.SetTexture("_BumpMap", GameManager.Instance.clipManager.gameSymbols[(int)symbolOfPiece]);

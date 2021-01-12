@@ -63,8 +63,10 @@ public class GameManager : MonoBehaviour
 
         PlayerManager.Instance.PopulatePowerUps();
 
-
-        Instantiate(backGroundPrefab, destroyOutOfLevel);
+        if (backGroundPrefab)
+        {
+            Instantiate(backGroundPrefab, destroyOutOfLevel);
+        }
 
         powerupManager.instnatiatedZonesCounter = 0;
     }

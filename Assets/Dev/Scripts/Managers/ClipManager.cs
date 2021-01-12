@@ -7,7 +7,7 @@ public class ClipManager : MonoBehaviour
     public Transform[] slots;
     public GameObject piece;
 
-    public Color[] gameColors;
+    public Material[] gameColors;
     public Texture2D[] gameSymbols;
 
     public int clipCount;
