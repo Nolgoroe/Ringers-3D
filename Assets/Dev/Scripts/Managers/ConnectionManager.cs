@@ -392,7 +392,10 @@ public class ConnectionManager : MonoBehaviour
                     break;
 
                 case 'I':
-                    StartCoroutine(InstantiateLootEffect(relevent,relevent.lootIcon.transform, relevent.lootIcon.GetComponent<SpriteRenderer>().sprite, LootTargetsData.instance.materialsTargetLoot));
+                    if (relevent.lootPack != LootPacks.None)
+                    {
+                        StartCoroutine(InstantiateLootEffectMaterials(relevent, relevent.lootIcon.transform, LootTargetsData.instance.materialsTargetLoot));
+                    }
                     break;
 
                 default:
@@ -508,6 +511,60 @@ public class ConnectionManager : MonoBehaviour
 
             MTLT.LeanMove();
             yield return new WaitForSeconds(0.2f);
+        }
+
+        Destroy(relevent.lootIcon.gameObject);
+    }
+
+    public IEnumerator InstantiateLootEffectMaterials(Slice relevent, Transform instantiateposition, Transform target)
+    {
+        RewardBag rewardBagByLootPack = new RewardBag();
+
+        rewardBagByLootPack = LootManager.Instance.lootpackEnumToRewardBag[relevent.lootPack];
+
+        if (!rewardBagByLootPack.IsMoneyOrRubies)
+        {
+            List<CraftingMats> craftingMatsFromTables = new List<CraftingMats>();
+
+
+            for (int i = 0; i < rewardBagByLootPack.Pack.Count; i++)
+            {
+                craftingMatsFromTables.AddRange(LootManager.Instance.itemTableToListOfMats[rewardBagByLootPack.Pack[i]]);
+
+                int chance = Random.Range(1, 101);
+
+                if (chance > rewardBagByLootPack.chancesPerItemTable[i])
+                {
+                    Debug.Log("Youa sucka Fuckkkkaeaeaeaeaeae");
+                    craftingMatsFromTables.Clear();
+                }
+                else
+                {
+                    int randomMat = Random.Range(0, craftingMatsFromTables.Count);
+
+                    Debug.Log(craftingMatsFromTables[randomMat]);
+
+                    LootManager.Instance.craftingMatsLootForLevel.Add(craftingMatsFromTables[randomMat]);
+
+                    GameObject go = Instantiate(lootEffectPrefab, instantiateposition.position, Quaternion.identity);
+
+                    MoveToLootTarget MTLT = go.GetComponent<MoveToLootTarget>();
+                    MTLT.look = Resources.Load <Sprite>(MaterialsAndForgeManager.Instance.materialSpriteByName[craftingMatsFromTables[randomMat]]);
+                    MTLT.target = target;
+
+                    MTLT.LeanMove();
+                    yield return new WaitForSeconds(0.2f);
+
+                    craftingMatsFromTables.Clear();
+                }
+            }
+        }
+
+
+
+
+        for (int i = 0; i < 3; i++)
+        {
         }
 
         Destroy(relevent.lootIcon.gameObject);

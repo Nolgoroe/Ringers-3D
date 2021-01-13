@@ -291,11 +291,11 @@ public class UIManager : MonoBehaviour
 
                 if(i + 1 != BPZ.theZone.maxLevelReachedInZone)
                 {
-                    BPZ.zoneButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelDone;
+                    BPZ.zoneButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelDonePath);
                 }
                 else
                 {
-                    BPZ.zoneButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIcon;
+                    BPZ.zoneButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconPath);
                 }
             }
 

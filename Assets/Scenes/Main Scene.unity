@@ -3522,10 +3522,10 @@ MonoBehaviour:
   isUnlocked: 0
   maxLevelReachedInZone: 0
   lastLevelNum: 36
-  levelDone: {fileID: 0}
-  levelFirstTimeIcon: {fileID: 0}
-  unlockedZone: {fileID: 0}
-  lockedZone: {fileID: 0}
+  levelDonePath: 
+  levelFirstTimeIconPath: 
+  unlockedZonePath: 
+  lockedZonePath: 
   zoneHeader: {fileID: 0}
 --- !u!224 &271657136
 RectTransform:
@@ -5572,6 +5572,7 @@ MonoBehaviour:
     minMaxValues: 
     chancesPerItemTable: 32000000640000003c000000
   currentLevelLootToGive: 
+  craftingMatsLootForLevel: 
 --- !u!1 &363876821
 GameObject:
   m_ObjectHideFlags: 0
@@ -8002,10 +8003,10 @@ MonoBehaviour:
   isUnlocked: 0
   maxLevelReachedInZone: 1
   lastLevelNum: 12
-  levelDone: {fileID: 21300000, guid: 16062e749a1ac15419bf89034b5945fd, type: 3}
-  levelFirstTimeIcon: {fileID: 21300000, guid: 19f1e21659102c142a4b939217457d3e, type: 3}
-  unlockedZone: {fileID: 21300000, guid: 8c989333f9c8f844986b4fc050f59161, type: 3}
-  lockedZone: {fileID: 21300000, guid: 52ad606dd7b788b4098dfec3ec45eecc, type: 3}
+  levelDonePath: Level Sprites/GreyMoss Bog/MPScreen_GMB_LevelIcon_Off
+  levelFirstTimeIconPath: Level Sprites/GreyMoss Bog/MPScreen_GMB_LevelIcon_ON
+  unlockedZonePath: Level Sprites/GreyMoss Bog/MPScreen_GMB_Zone_NameTag
+  lockedZonePath: Level Sprites/GreyMoss Bog/MPScreen_GMB_Zone_NameTag_Locked
   zoneHeader: {fileID: 1623975632}
 --- !u!1 &503364141
 GameObject:
@@ -15094,7 +15095,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 240, y: -851.69995}
+  m_AnchoredPosition: {x: 400, y: -851.69995}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1011302487
@@ -20055,7 +20056,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 400, y: -850.6}
+  m_AnchoredPosition: {x: 240, y: -850.6}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1410856378
@@ -21148,13 +21149,13 @@ MonoBehaviour:
   powerupButtonPreab: {fileID: 232999335631620011, guid: ae204f456e0d8be4b84b3decb59a7719,
     type: 3}
   powerupSpritesPath:
-  - powerup Icons/PowerUpIcon_Joker
-  - powerup Icons/PowerUp_Switch
-  - powerup Icons/PowerUpIcon_TileBomb
-  - powerup Icons/PowerUpIcon_SliceBomb
-  - powerup Icons/PowerUpIcon_ExtraDeal
-  - powerup Icons/PowerUpIcon_FourColorTransform
-  - powerup Icons/PowerUpIcon_FourShapeTransform
+  - powerup Icons/GMScreen_powerup_button
+  - powerup Icons/GMScreen_powerup_button
+  - powerup Icons/GMScreen_powerup_button
+  - powerup Icons/GMScreen_powerup_button
+  - powerup Icons/GMScreen_powerup_button
+  - powerup Icons/GMScreen_powerup_button
+  - powerup Icons/GMScreen_powerup_button
   powerupNames:
   - Joker
   - Switch
@@ -26238,10 +26239,10 @@ MonoBehaviour:
   isUnlocked: 1
   maxLevelReachedInZone: 1
   lastLevelNum: 12
-  levelDone: {fileID: 21300000, guid: f496cb370f379c945b6199e10e035a07, type: 3}
-  levelFirstTimeIcon: {fileID: 21300000, guid: 96137adf69d46ce459fc5655d5d7ce68, type: 3}
-  unlockedZone: {fileID: 21300000, guid: 6c353c9c77d7c0644a76687a902b6143, type: 3}
-  lockedZone: {fileID: 21300000, guid: 6c353c9c77d7c0644a76687a902b6143, type: 3}
+  levelDonePath: Level Sprites/Walnut Grove/MPScreen_WG_LevelIcon_Off
+  levelFirstTimeIconPath: Level Sprites/Walnut Grove/MPScreen_WG_LevelIcon_ON
+  unlockedZonePath: Level Sprites/Walnut Grove/MPScreen_WG_Zone_NameTag
+  lockedZonePath: Level Sprites/Walnut Grove/MPScreen_WG_Zone_NameTag
   zoneHeader: {fileID: 1467461597}
 --- !u!222 &1785048657
 CanvasRenderer:

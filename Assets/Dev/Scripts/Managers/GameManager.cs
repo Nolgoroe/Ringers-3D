@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
     public void CheckEndLevel()
     {
 
-        if(currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0)
+        if (currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0)
         {
             if (currentLevel.levelNum == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex)
             {
@@ -115,9 +115,12 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.WinLevel();
 
 
-            if (currentLevel.levelNum >= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && currentLevel.levelNum != ZoneManagerHelpData.Instance.currentZoneCheck.lastLevelNum)
+            if (currentLevel.levelNum != ZoneManagerHelpData.Instance.currentZoneCheck.lastLevelNum)
             {
-                ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone++;
+                if(currentLevel.levelNum == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+                {
+                    ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone++;
+                }
                 UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
             }
             else
@@ -149,6 +152,13 @@ public class GameManager : MonoBehaviour
 
     public void NextLevelFromWinScreen()
     {
+        GameObject[] lootEffects = GameObject.FindGameObjectsWithTag("End Level Loot Effect");
+
+        foreach (GameObject GO in lootEffects)
+        {
+            Destroy(GO.gameObject);
+        }
+
         DestroyAllLevelChildern();
         LootManager.Instance.DestoryWinScreenDisplyedLoot();
 

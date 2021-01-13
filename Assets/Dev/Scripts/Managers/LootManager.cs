@@ -78,10 +78,13 @@ public class LootManager : MonoBehaviour
 
     public Dictionary<ItemTables, List<CraftingMats>> itemTableToListOfMats;
 
+    public List<CraftingMats> craftingMatsLootForLevel;
+
     private void Start()
     {
         Instance = this;
 
+        craftingMatsLootForLevel = new List<CraftingMats>();
         currentLevelLootToGive = new List<LootPacks>();
         itemTableToListOfMats = new Dictionary<ItemTables, List<CraftingMats>>();
         lootpackEnumToRewardBag = new Dictionary<LootPacks, RewardBag>();
@@ -112,7 +115,7 @@ public class LootManager : MonoBehaviour
             ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey = true;
             ZoneManagerHelpData.Instance.nextZoneCheck.isUnlocked = true;
             ZoneManagerHelpData.Instance.nextZoneCheck.maxLevelReachedInZone = 1;
-            ZoneManagerHelpData.Instance.nextZoneCheck.zoneHeader.sprite = ZoneManagerHelpData.Instance.nextZoneCheck.unlockedZone;
+            ZoneManagerHelpData.Instance.nextZoneCheck.zoneHeader.sprite = Resources.Load<Sprite>(ZoneManagerHelpData.Instance.nextZoneCheck.unlockedZonePath);
 
             ZoneManager.Instance.unlockedZoneID.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
         }
@@ -121,10 +124,10 @@ public class LootManager : MonoBehaviour
     }
     public void RollOnTable(LootPacks lootPack)
     {
-        if (lootPack == LootPacks.None)
-        {
-            return;
-        }
+        //if (lootPack == LootPacks.None)
+        //{
+        //    return;
+        //}
 
         RewardBag rewardBagByLootPack = new RewardBag();
 
@@ -132,33 +135,42 @@ public class LootManager : MonoBehaviour
 
         if (!rewardBagByLootPack.IsMoneyOrRubies)
         {
-            List<CraftingMats> craftingMatsFromTables = new List<CraftingMats>();
-
-
-            for (int i = 0; i < rewardBagByLootPack.Pack.Count; i++)
+            foreach (CraftingMats CM in craftingMatsLootForLevel)
             {
-                craftingMatsFromTables.AddRange(itemTableToListOfMats[rewardBagByLootPack.Pack[i]]);
+                DisplayLootMaterialsToPlayer(5, CM);
 
-                int chance = Random.Range(1, 101);
+                PlayerManager.Instance.AddMaterials(CM, 5); //////// Figure out how to get amount from outside dynamically
 
-                if (chance > rewardBagByLootPack.chancesPerItemTable[i])
-                {
-                    Debug.Log("Youa sucka Fuckkkkaeaeaeaeaeae");
-                    craftingMatsFromTables.Clear();
-                }
-                else
-                {
-                    int randomMat = Random.Range(0, craftingMatsFromTables.Count);
-
-                    Debug.Log(craftingMatsFromTables[randomMat]);
-
-                    DisplayLootMaterialsToPlayer(5, craftingMatsFromTables[randomMat]);
-
-                    PlayerManager.Instance.AddMaterials(craftingMatsFromTables[randomMat], 5); //////// Figure out how to get amount from outside dynamically
-
-                    craftingMatsFromTables.Clear();
-                }
             }
+
+            craftingMatsLootForLevel.Clear();
+            //List<CraftingMats> craftingMatsFromTables = new List<CraftingMats>();
+
+
+            //for (int i = 0; i < rewardBagByLootPack.Pack.Count; i++)
+            //{
+            //    craftingMatsFromTables.AddRange(itemTableToListOfMats[rewardBagByLootPack.Pack[i]]);
+
+            //    int chance = Random.Range(1, 101);
+
+            //    if (chance > rewardBagByLootPack.chancesPerItemTable[i])
+            //    {
+            //        Debug.Log("Youa sucka Fuckkkkaeaeaeaeaeae");
+            //        craftingMatsFromTables.Clear();
+            //    }
+            //    else
+            //    {
+            //        int randomMat = Random.Range(0, craftingMatsFromTables.Count);
+
+            //        Debug.Log(craftingMatsFromTables[randomMat]);
+
+            //        DisplayLootMaterialsToPlayer(5, craftingMatsFromTables[randomMat]);
+
+            //        PlayerManager.Instance.AddMaterials(craftingMatsFromTables[randomMat], 5); //////// Figure out how to get amount from outside dynamically
+
+            //        craftingMatsFromTables.Clear();
+            //    }
+            //}
         }
         else
         {
@@ -185,6 +197,7 @@ public class LootManager : MonoBehaviour
     public void ResetLevelLootData()
     {
         currentLevelLootToGive.Clear();
+        craftingMatsLootForLevel.Clear();
     }
 
     public void DisplayLootMaterialsToPlayer(int count, CraftingMats CM)

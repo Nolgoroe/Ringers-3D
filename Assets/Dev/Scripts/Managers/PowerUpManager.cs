@@ -319,19 +319,16 @@ public class PowerUpManager : MonoBehaviour
 
         Piece par = toWorkOn.transform.parent.GetComponent<Piece>();
 
-        if(toWorkOn.colorOfPiece != prop.transformColor)
+        if(toWorkOn.colorOfPiece != prop.transformColor && !par.isLocked && par.partOfBoard)
         {
-            if (par.partOfBoard && !par.isLocked)
-            {
-                par.transform.parent.GetComponent<Cell>().RemovePiece();
+            par.transform.parent.GetComponent<Cell>().RemovePiece();
 
-                toWorkOn.colorOfPiece = prop.transformColor;
+            toWorkOn.colorOfPiece = prop.transformColor;
 
-                toWorkOn.RefreshPiece();
+            toWorkOn.RefreshPiece();
 
-                par.transform.parent.GetComponent<Cell>().AddPiece(par.transform, false);
+            par.transform.parent.GetComponent<Cell>().AddPiece(par.transform, false);
 
-            }
             FinishedUsingPowerup(par.partOfBoard, prop);
 
             Debug.Log("Four Color");
@@ -349,19 +346,16 @@ public class PowerUpManager : MonoBehaviour
 
         Piece par = toWorkOn.transform.parent.GetComponent<Piece>();
 
-        if(toWorkOn.symbolOfPiece != prop.transformSymbol)
+        if(toWorkOn.symbolOfPiece != prop.transformSymbol && par.partOfBoard && !par.isLocked)
         {
-            if (par.partOfBoard && !par.isLocked)
-            {
-                par.transform.parent.GetComponent<Cell>().RemovePiece();
+            par.transform.parent.GetComponent<Cell>().RemovePiece();
 
-                toWorkOn.symbolOfPiece = prop.transformSymbol;
+            toWorkOn.symbolOfPiece = prop.transformSymbol;
 
-                toWorkOn.RefreshPiece();
+            toWorkOn.RefreshPiece();
 
-                par.transform.parent.GetComponent<Cell>().AddPiece(par.transform, false);
+            par.transform.parent.GetComponent<Cell>().AddPiece(par.transform, false);
 
-            }
             FinishedUsingPowerup(par.partOfBoard, prop);
 
             Debug.Log("Four Symbol");
@@ -424,7 +418,7 @@ public class PowerUpManager : MonoBehaviour
         {
             EquipmentData ED = PlayerManager.Instance.equippedItems.Where(p => p.name == prop.connectedEquipment.name).Single();
 
-            ED.nextTimeAvailable = System.DateTime.Now.AddMinutes(ED.timeForCooldown).ToString(); ///// change the datetime for equipment on player
+            ED.nextTimeAvailable = System.DateTime.Now.AddSeconds(ED.timeForCooldown).ToString(); ///// change the datetime for equipment on player
 
             PlayerManager.Instance.equipmentInCooldown.Add(ED);
             PlayerManager.Instance.SavePlayerData();
