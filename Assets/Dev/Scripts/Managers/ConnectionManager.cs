@@ -500,7 +500,29 @@ public class ConnectionManager : MonoBehaviour
 
     public IEnumerator InstantiateLootEffect(Slice relevent, Transform instantiateposition, Sprite look, Transform target)
     {
-        for (int i = 0; i < 3; i++)
+        int amount = 0;
+        switch (relevent.lootPack)
+        {
+            case LootPacks.M1:
+                amount = 2;
+                break;
+            case LootPacks.M2:
+                amount = 4;
+                break;
+            case LootPacks.M3:
+                amount = 6;
+                break;
+            case LootPacks.R1:
+                amount = 2;
+                break;
+            case LootPacks.R2:
+                amount = 4;
+                break;
+            default:
+                break;
+        }
+
+        for (int i = 0; i < amount; i++)
         {
 
             GameObject go = Instantiate(lootEffectPrefab, instantiateposition.position, Quaternion.identity);
@@ -510,7 +532,7 @@ public class ConnectionManager : MonoBehaviour
             MTLT.target = target;
 
             MTLT.LeanMove();
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
         }
 
         Destroy(relevent.lootIcon.gameObject);
