@@ -59,7 +59,7 @@ public class LootManager : MonoBehaviour
     public GameObject lootDisplayPrefab;
     public Transform winScreenLootDisplayContent;
 
-    public Texture goldSprite, rubySprite;
+    public Sprite goldSprite, rubySprite;
 
     public bool giveKey;
 
@@ -182,12 +182,12 @@ public class LootManager : MonoBehaviour
 
             if (lootPack.ToString().Contains("M"))
             {
-                DisplayLootGoldRubyToPlayer(randomNum, goldSprite);
+                DisplayLootGoldRubyToPlayer(randomNum, goldSprite.texture);
                 PlayerManager.Instance.AddGold(randomNum);
             }
             else
             {
-                DisplayLootGoldRubyToPlayer(randomNum, rubySprite);
+                DisplayLootGoldRubyToPlayer(randomNum, rubySprite.texture);
                 PlayerManager.Instance.AddRubies(randomNum);
             }
 

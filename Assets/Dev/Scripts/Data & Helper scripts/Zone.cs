@@ -20,6 +20,8 @@ public class Zone : MonoBehaviour
     string path;
 
     public string levelDonePath, levelFirstTimeIconPath, unlockedZonePath, lockedZonePath;
+
+    [HideInInspector]
     public Image zoneHeader;
     private void Start()
     {
@@ -37,6 +39,13 @@ public class Zone : MonoBehaviour
             LoadZone();
         }
 
+        foreach (Transform child in transform)
+        {
+            if(child.CompareTag("Zone Header"))
+            {
+                zoneHeader = child.GetComponent<Image>();
+            }
+        }
         if (isUnlocked)
         {
             zoneHeader.sprite = Resources.Load<Sprite>(unlockedZonePath);

@@ -384,11 +384,11 @@ public class ConnectionManager : MonoBehaviour
             switch (relevent.lootPack.ToString()[0])
             {
                 case 'M':
-                    StartCoroutine(InstantiateLootEffect(relevent,relevent.lootIcon.transform, relevent.lootIcon.GetComponent<SpriteRenderer>().sprite, LootTargetsData.instance.goldTargetLoot));
+                    StartCoroutine(InstantiateLootEffect(relevent,relevent.lootIcon.transform, LootManager.Instance.goldSprite, LootTargetsData.instance.goldTargetLoot));
                     break;
 
                 case 'R':
-                    StartCoroutine(InstantiateLootEffect(relevent,relevent.lootIcon.transform, relevent.lootIcon.GetComponent<SpriteRenderer>().sprite, LootTargetsData.instance.rubyTargetLoot));
+                    StartCoroutine(InstantiateLootEffect(relevent,relevent.lootIcon.transform, LootManager.Instance.rubySprite, LootTargetsData.instance.rubyTargetLoot));
                     break;
 
                 case 'I':
@@ -406,6 +406,27 @@ public class ConnectionManager : MonoBehaviour
         }
         else
         {
+            switch (relevent.lootPack.ToString()[0])
+            {
+                case 'M':
+                    StartCoroutine(InstantiateLootEffect(relevent, relevent.lootIcon.transform, relevent.lootIcon.GetComponent<SpriteRenderer>().sprite, LootTargetsData.instance.goldTargetLoot));
+                    break;
+
+                case 'R':
+                    StartCoroutine(InstantiateLootEffect(relevent, relevent.lootIcon.transform, relevent.lootIcon.GetComponent<SpriteRenderer>().sprite, LootTargetsData.instance.rubyTargetLoot));
+                    break;
+
+                case 'I':
+                    if (relevent.lootPack != LootPacks.None)
+                    {
+                        StartCoroutine(InstantiateLootEffectMaterials(relevent, relevent.lootIcon.transform, LootTargetsData.instance.materialsTargetLoot));
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+
             relevent.isLoot = false;
         }
     }
@@ -532,7 +553,7 @@ public class ConnectionManager : MonoBehaviour
             MTLT.target = target;
 
             MTLT.LeanMove();
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
         }
 
         Destroy(relevent.lootIcon.gameObject);
@@ -581,14 +602,6 @@ public class ConnectionManager : MonoBehaviour
                 }
             }
         }
-
-
-
-
-        for (int i = 0; i < 3; i++)
-        {
-        }
-
         Destroy(relevent.lootIcon.gameObject);
     }
 }
