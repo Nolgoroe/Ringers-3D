@@ -20,10 +20,8 @@ public class Slice : MonoBehaviour
 
     public int sliceIndex;
 
-    public void SetData(Transform parent, SliceCatagory sc, bool islocking, bool isLooting, bool isLimiting, LootPacks lp)
+    public void SetSliceData(Transform parent, SliceCatagory sc, bool islocking, bool isLooting, bool isLimiting)
     {
-        //SpriteRenderer sr = child.GetComponent<SpriteRenderer>();
-
         int sliceCatagorycount = System.Enum.GetValues(typeof(SliceCatagory)).Length;
         int sliceSymbolcount = System.Enum.GetValues(typeof(PieceSymbol)).Length;
         int sliceColorcount = System.Enum.GetValues(typeof(PieceColor)).Length;
@@ -32,7 +30,6 @@ public class Slice : MonoBehaviour
         isLock = islocking;
         isLimiter = isLimiting;
         sliceCatagory = sc;
-        lootPack = lp;
 
         if (!isLock && !isLimiter)
         {
@@ -49,15 +46,21 @@ public class Slice : MonoBehaviour
             InstantiateLootLockLimiterSlice(sliceSymbolcount, sliceColorcount);
         }
 
-        lootIcon.SetActive(isLoot);
-
-        lootIcon.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.sliceManager.lootToIcon[lp];
 
         if (isLimiter)
         {
             lootIcon.GetComponent<SpriteRenderer>().color = Color.red;
         }
     }
+    public void SetSliceLootData(LootPacks lp)
+    {
+        lootPack = lp;
+
+        lootIcon.SetActive(isLoot);
+
+        lootIcon.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.sliceManager.lootToIcon[lp];
+    }
+
 
     public void InstantiateLootSlice(int pieceSymbolEnumCount, int pieceColorEnumCount)
     {

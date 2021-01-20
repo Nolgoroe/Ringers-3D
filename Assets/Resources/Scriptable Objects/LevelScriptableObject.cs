@@ -9,6 +9,7 @@ public class LevelScriptableObject : ScriptableObject
     public GameObject boardPrefab;
 
     public int levelNum;
+    public int levelIndexInZone;
     public int cellsCountInLevel;
 
     public SliceCatagory[] slicesToSpawn;

@@ -34,7 +34,7 @@ public class ZoneManager : MonoBehaviour
 
     }
 
-    public void CheckZoneAwardedKey(int current) ////// if zone did not award key yet - they button that has this function connected to it IS the key level
+    public void CheckZoneAwardedKey(int current) ////// if zone did not award key yet - the button that has this function connected to it IS the key level
     {
         if (ZoneManagerHelpData.Instance.listOfAllZones[current].hasAwardedKey)
         {

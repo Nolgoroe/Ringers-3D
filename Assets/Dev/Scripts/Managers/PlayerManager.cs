@@ -25,6 +25,16 @@ public enum CraftingMats
     MoonwellWater,
     ScarletPimpernel,
     Saphire,
+    Hay,
+    CloverBunch,
+    SunPetals,
+    BirchBark,
+    JadeShard,
+    NettleTears,
+    FlameBlossom,
+    SilkThread,
+    MoonDust,
+    DustCrystal
 }
 public enum CraftingMatType
 {

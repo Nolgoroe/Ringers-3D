@@ -31,8 +31,6 @@ public class GameManager : MonoBehaviour
 
     public bool gameStarted;
 
-    public LevelScriptableObject[] levelArray;
-
     private void Awake()
     {
         Instance = this;
@@ -94,6 +92,15 @@ public class GameManager : MonoBehaviour
         {
             Destroy(butt.gameObject);
         }
+
+        GameObject[] lootEffects = GameObject.FindGameObjectsWithTag("End Level Loot Effect");
+
+        foreach (GameObject GO in lootEffects)
+        {
+            Destroy(GO.gameObject);
+        }
+
+
         powerupManager.powerupButtons.Clear();
 
         currentFilledCellCount = 0;
@@ -105,7 +112,7 @@ public class GameManager : MonoBehaviour
 
         if (currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0)
         {
-            if (currentLevel.levelNum == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex)
+            if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex && !ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey)
             {
                 LootManager.Instance.giveKey = true;
             }
@@ -117,10 +124,11 @@ public class GameManager : MonoBehaviour
 
             if (currentLevel.levelNum != ZoneManagerHelpData.Instance.currentZoneCheck.lastLevelNum)
             {
-                if(currentLevel.levelNum == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+                if(currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
                 {
                     ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone++;
                 }
+
                 UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
             }
             else
@@ -165,7 +173,7 @@ public class GameManager : MonoBehaviour
         LootManager.Instance.ResetLevelLootData();
         ConnectionManager.Instance.cells.Clear();
 
-        if (currentLevel.levelNum + 1 == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex)
+        if (currentLevel.levelIndexInZone + 1 == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex)
         {
             ZoneManager.Instance.CheckZoneAwardedKey(ZoneManagerHelpData.Instance.currentZoneCheck.id);
             ZoneManager.Instance.SetUnlockZone(ZoneManagerHelpData.Instance.currentZoneCheck.id + 1);

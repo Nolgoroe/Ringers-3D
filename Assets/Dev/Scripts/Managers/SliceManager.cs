@@ -31,7 +31,7 @@ public class SliceManager : MonoBehaviour
 
     public Sprite[] sliceColors;
 
-    public Sprite[] slicelootIcons;
+    public Sprite[] sliceLootIcons;
 
     public Sprite[] sliceSymbolsSprites;
 
@@ -83,11 +83,11 @@ public class SliceManager : MonoBehaviour
 
             if (lootPackName.Contains("I"))
             {
-                lootToIcon.Add((LootPacks)i, slicelootIcons[slicelootIcons.Length - 1]); ////// The last sprite in the list is the same sprite for all Loot packes with 'I' in them
+                lootToIcon.Add((LootPacks)i, sliceLootIcons[sliceLootIcons.Length - 1]); ////// The last sprite in the list is the same sprite for all Loot packes with 'I' in them
             }
             else
             {
-                lootToIcon.Add((LootPacks)i, slicelootIcons[i - 1]);
+                lootToIcon.Add((LootPacks)i, sliceLootIcons[i - 1]);
             }
         }
 
@@ -237,8 +237,13 @@ public class SliceManager : MonoBehaviour
 
                 for (int i = 0; i < fullSlices.Count; i++)
                 {
+                    fullSlices[i].SetSliceData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
+                }
+
+                for (int i = 0; i < GameManager.Instance.currentLevel.RewardBags.Length; i++)
+                {
                     int randomSlice = Random.Range(0, tempList.Count);
-                    fullSlices[i].SetData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i], tempList[randomSlice]);
+                    fullSlices[i].SetSliceLootData(tempList[randomSlice]);
                     tempList.RemoveAt(randomSlice);
                 }
             }
@@ -246,7 +251,12 @@ public class SliceManager : MonoBehaviour
             {
                 for (int i = 0; i < fullSlices.Count; i++)
                 {
-                    fullSlices[i].SetData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i], GameManager.Instance.currentLevel.RewardBags[i]);
+                    fullSlices[i].SetSliceData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
+                }
+
+                for (int i = 0; i < GameManager.Instance.currentLevel.RewardBags.Length; i++)
+                {
+                    fullSlices[i].SetSliceLootData(GameManager.Instance.currentLevel.RewardBags[i]);
                 }
             }
 

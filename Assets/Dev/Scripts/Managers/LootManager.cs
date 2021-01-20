@@ -15,7 +15,15 @@ public enum LootPacks ////// Names of loot packs containing loot packs
     I4,
     I5,
     I6,
-    I7
+    I7,
+    I8,
+    I9,
+    I10,
+    I11,
+    I12,
+    I13,
+    I14,
+    I15
 }
 
 [System.Serializable]
@@ -28,7 +36,10 @@ public enum ItemTables
     L4,
     L5,
     L6,
-    L7
+    L7,
+    L8,
+    L9,
+    L10,
 }
 
 [System.Serializable]
@@ -118,9 +129,9 @@ public class LootManager : MonoBehaviour
             ZoneManagerHelpData.Instance.nextZoneCheck.zoneHeader.sprite = Resources.Load<Sprite>(ZoneManagerHelpData.Instance.nextZoneCheck.unlockedZonePath);
 
             ZoneManager.Instance.unlockedZoneID.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
-        }
 
-        giveKey = false;
+            giveKey = false;
+        }
     }
     public void RollOnTable(LootPacks lootPack)
     {

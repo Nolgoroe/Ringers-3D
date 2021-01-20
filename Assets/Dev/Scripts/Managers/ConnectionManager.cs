@@ -367,7 +367,12 @@ public class ConnectionManager : MonoBehaviour
     {
         Debug.Log("Loot");
         Debug.Log(relevent.lootPack);
-        LootManager.Instance.currentLevelLootToGive.Add(relevent.lootPack);
+
+        if(relevent.lootPack != LootPacks.None)
+        {
+            LootManager.Instance.currentLevelLootToGive.Add(relevent.lootPack);
+        }
+
         //LootManager.Instance.RollOnTable(relevent.lootPack);
         if (!isLimiter)
         {
