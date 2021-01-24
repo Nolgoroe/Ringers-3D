@@ -49,7 +49,7 @@ public class Slice : MonoBehaviour
 
         if (isLimiter)
         {
-            lootIcon.GetComponent<SpriteRenderer>().color = Color.red;
+            //lootIcon.GetComponent<SpriteRenderer>().color = Color.red;
         }
     }
     public void SetSliceLootData(LootPacks lp)

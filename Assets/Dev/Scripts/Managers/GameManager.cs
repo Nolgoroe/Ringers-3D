@@ -109,33 +109,14 @@ public class GameManager : MonoBehaviour
 
     public void CheckEndLevel()
     {
-
         if (currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0)
         {
             if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex && !ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey)
             {
                 LootManager.Instance.giveKey = true;
             }
-
+            StartCoroutine(AnimationManager.instance.StartEndLevelAnim());
             Debug.Log("YOU WIN");
-            LootManager.Instance.GiveLoot();
-            UIManager.Instance.WinLevel();
-
-
-            if (currentLevel.levelNum != ZoneManagerHelpData.Instance.currentZoneCheck.lastLevelNum)
-            {
-                if(currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
-                {
-                    ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone++;
-                }
-
-                UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
-            }
-            else
-            {
-                UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
-            }
-
         }
         else
         {
@@ -147,6 +128,27 @@ public class GameManager : MonoBehaviour
         PlayerManager.Instance.SavePlayerData();
     }
 
+    public void WinAfterAnimation()
+    {
+        LootManager.Instance.GiveLoot();
+        UIManager.Instance.WinLevel();
+
+
+        if (currentLevel.levelNum != ZoneManagerHelpData.Instance.currentZoneCheck.lastLevelNum)
+        {
+            if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+            {
+                ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone++;
+            }
+
+            UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
+        }
+        else
+        {
+            UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+        }
+
+    }
 
     public void RestartCurrentLevel()
     {

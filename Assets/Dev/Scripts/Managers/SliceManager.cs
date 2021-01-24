@@ -230,35 +230,32 @@ public class SliceManager : MonoBehaviour
                 }
             }
 
-            if (GameManager.Instance.currentLevel.isRandomDistributionToSlices)
+            //if (GameManager.Instance.currentLevel.isRandomDistributionToSlices)
+            //{
+            //    List<LootPacks> tempList = new List<LootPacks>();
+            //    tempList.AddRange(GameManager.Instance.currentLevel.RewardBags);
+
+            //    for (int i = 0; i < fullSlices.Count; i++)
+            //    {
+            //        fullSlices[i].SetSliceData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
+            //    }
+
+            //    for (int i = 0; i < GameManager.Instance.currentLevel.RewardBags.Length; i++)
+            //    {
+            //        int randomSlice = Random.Range(0, tempList.Count);
+            //        fullSlices[i].SetSliceLootData(tempList[randomSlice]);
+            //        tempList.RemoveAt(randomSlice);
+            //    }
+            //}
+            //else
+            //{
+            for (int i = 0; i < fullSlices.Count; i++)
             {
-                List<LootPacks> tempList = new List<LootPacks>();
-                tempList.AddRange(GameManager.Instance.currentLevel.RewardBags);
-
-                for (int i = 0; i < fullSlices.Count; i++)
-                {
-                    fullSlices[i].SetSliceData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
-                }
-
-                for (int i = 0; i < GameManager.Instance.currentLevel.RewardBags.Length; i++)
-                {
-                    int randomSlice = Random.Range(0, tempList.Count);
-                    fullSlices[i].SetSliceLootData(tempList[randomSlice]);
-                    tempList.RemoveAt(randomSlice);
-                }
+                fullSlices[i].SetSliceData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
+                fullSlices[i].SetSliceLootData(GameManager.Instance.currentLevel.RewardBags[Random.Range(0, GameManager.Instance.currentLevel.RewardBags.Length)]);
             }
-            else
-            {
-                for (int i = 0; i < fullSlices.Count; i++)
-                {
-                    fullSlices[i].SetSliceData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
-                }
 
-                for (int i = 0; i < GameManager.Instance.currentLevel.RewardBags.Length; i++)
-                {
-                    fullSlices[i].SetSliceLootData(GameManager.Instance.currentLevel.RewardBags[i]);
-                }
-            }
+            //}
 
             /// Distribute Key to a random slice
             if (ZoneManager.Instance.isKeyLevel)
