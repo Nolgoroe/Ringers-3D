@@ -98,6 +98,7 @@ public class CursorController : MonoBehaviour
 
                         transform.position = mouseRay.origin;
                         cursorPos.position = mouseRay.origin + mouseRay.direction * distanceFromBoard;
+
                         cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y, gameBoard.transform.position.z);
 
                         RaycastHit hit;
@@ -221,7 +222,7 @@ public class CursorController : MonoBehaviour
                 {
                     cell.AddPiece(followerTarget, newPiece);
 
-                    if (!newPiece)
+                    if (!newPiece && cell != previousCell)
                     {
                         previousCell.isFull = false;
                     }

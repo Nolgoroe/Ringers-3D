@@ -122,6 +122,9 @@ public class AnimationManager : MonoBehaviour
             sr.color = newColor;
         });
 
+        yield return new WaitForSeconds(waitTimeFadeOut);
+        yield return new WaitUntil((() => fadeImage.color.a == 0));
+        fadeImage.gameObject.SetActive(false);
 
         yield return null;
     }

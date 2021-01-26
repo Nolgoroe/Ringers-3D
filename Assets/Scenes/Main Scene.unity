@@ -8284,7 +8284,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &471699814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9911,20 +9911,20 @@ MonoBehaviour:
   waitTimeParticlesStart: 0.6
   waitTimeMidParticleAppear: 0.2
   waitTimePullIn: 1
-  waitTimeFadeIn: 0.2
+  waitTimeFadeIn: 0.3
   waitTimeFadeOut: 0.3
   waitTimeWinScreen: 0.35
   fadingSpeed: 0.4
   fadeImage: {fileID: 1400797655}
-  noWaitPieces: 0
-  noWaitParticles: 0
+  noWaitPieces: 1
+  noWaitParticles: 1
   noWaitPullIn: 0
   midPieceParticle: {fileID: 7475159308211779684, guid: 1106028b21faa4b43b39439beaee7bd9,
     type: 3}
   temp: []
   minMaxWait:
-    a: 0.1
-    b: 0.5
+    a: 0.05
+    b: 0.1
 --- !u!1 &543641612
 GameObject:
   m_ObjectHideFlags: 0
@@ -18206,6 +18206,7 @@ GameObject:
   - component: {fileID: 1133152067}
   - component: {fileID: 1133152066}
   - component: {fileID: 1133152065}
+  - component: {fileID: 1133152068}
   m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
@@ -18230,8 +18231,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 635.3, y: 512}
+  m_AnchoredPosition: {x: 0, y: -3.2}
+  m_SizeDelta: {x: 635.3, y: 505.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1133152065
 MonoBehaviour:
@@ -18254,7 +18255,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -18323,6 +18324,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1133152063}
   m_CullTransparentMesh: 0
+--- !u!114 &1133152068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133152063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de2ee08548dac8047893182203225629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1155585740
 GameObject:
   m_ObjectHideFlags: 0
@@ -19989,7 +20002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -24404,7 +24417,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1536781373
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24893,7 +24906,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1547406648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30973,7 +30986,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleBoardPrefab: {fileID: 6382559071292991177, guid: 0379f269da8f3aa46bc62a2f1709c2be,
     type: 3}
-  backGroundPrefab: {fileID: 0}
+  backGroundPrefab: {fileID: 5841300652604173667, guid: 24947f80e8e14594b909933083f86169,
+    type: 3}
   clipPrefab: {fileID: 4176704889398601467, guid: ff432a4cdfd3d8c4ab183be2d82d571e,
     type: 3}
   gameBoard: {fileID: 0}
