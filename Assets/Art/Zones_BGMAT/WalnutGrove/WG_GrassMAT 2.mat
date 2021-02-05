@@ -8,18 +8,30 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: WG_GrassMAT 2
-  m_Shader: {fileID: 4800000, guid: 0ca6dca7396eb48e5849247ffd444914, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 8a090671341350b499247cb0c7dde255,
+    type: 3}
   m_ShaderKeywords: _ALPHATEST_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 2500
-  stringTagMap:
-    RenderType: TransparentCutout
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_385708B4:
+        m_Texture: {fileID: 2800000, guid: ef399412ea828314da609fef4bb038fb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_476BD3CF:
+        m_Texture: {fileID: 2800000, guid: 1456566d01032264f86c94fc037ae913, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_DDA8B2CE:
+        m_Texture: {fileID: 2800000, guid: d4aec07b3163d5a41bf1725d985eedd5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_F28564C9:
         m_Texture: {fileID: 2800000, guid: bfe1b8b1c0ddc3c49ad091aae1abcd32, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -53,9 +65,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_4969062E: 1
     - Vector1_5A525C2A: 1
     - Vector1_629B10EC: 0.3
     - Vector1_888D12C0: 0.01
+    - Vector1_B74EB9BE: 0.5
     - Vector1_E2021B68: 0.1
     - _AlphaClip: 1
     - _Blend: 0
@@ -83,6 +97,9 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_1568803F: {r: 0.9336129, g: 1, b: 0, a: 0}
+    - Color_73E2B7F8: {r: 1, g: 0.9822472, b: 0, a: 0}
+    - Color_9028F052: {r: 0.6208462, g: 1, b: 0.37735847, a: 0}
     - Vector2_305BD0A6: {r: 1, g: 0, b: 0, a: 0}
     - Vector2_87AA3DD6: {r: 1, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
