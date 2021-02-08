@@ -21,6 +21,9 @@ public class ConnectionManager : MonoBehaviour
     public ParticleSystem goodConnectionParticle, badConnectionParticle;
 
     public GameObject lootEffectPrefab;
+
+    public Material rockLIT,rockUnLIT;
+
     private void Start()
     {
         Instance = this;
@@ -91,12 +94,14 @@ public class ConnectionManager : MonoBehaviour
                     {
                         supPieceArray[currentLeft].relevantSlice.fulfilledCondition = false;
                     }
+
                     Instantiate(badConnectionParticle, cellList[cellIndex].rightParticleZone);
                 }
                 else
                 {
-                    Instantiate(goodConnectionParticle, cellList[cellIndex].rightParticleZone);
-
+                    //Instantiate(goodConnectionParticle, cellList[cellIndex].rightParticleZone);
+                    supPieceArray[currentLeft].SetConnectedMaterial();
+                    supPieceArray[leftContested].SetConnectedMaterial();
                     //supPieceArray[currentLeft].gameObject.GetComponent<Renderer>().material.EnableKeyword ("_EMISSION");
                     //supPieceArray[leftContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
 
@@ -153,7 +158,11 @@ public class ConnectionManager : MonoBehaviour
                 }
                 else
                 {
-                    Instantiate(goodConnectionParticle, cellList[cellIndex].leftParticleZone);
+                    //Instantiate(goodConnectionParticle, cellList[cellIndex].leftParticleZone);
+
+                    supPieceArray[currentRight].SetConnectedMaterial();
+                    supPieceArray[rightContested].SetConnectedMaterial();
+
                     //supPieceArray[currentRight].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     //supPieceArray[rightContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
 

@@ -252,11 +252,14 @@ public class UIManager : MonoBehaviour
     {
         if (on)
         {
-            usingPowerupText.SetActive(true);
+            Debug.Log("usingPowerupText = true");
+            //usingPowerupText.SetActive(true);
         }
         else
         {
-            usingPowerupText.SetActive(false);
+            Debug.Log("usingPowerupText = false");
+
+            //usingPowerupText.SetActive(false);
         }
     }
     public void WinLevel()

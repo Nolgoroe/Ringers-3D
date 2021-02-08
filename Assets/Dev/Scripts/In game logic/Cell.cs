@@ -131,14 +131,16 @@ public class Cell : MonoBehaviour
         else
         {
             //pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+            pieceHeld.leftChild.SetDisconnectedMaterial();
 
-            //if (leftCell.isFull)
-            //{
-            //    if (!leftCell.pieceHeld.rightChild.isBadConnection)
-            //    {
-            //        leftCell.pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
-            //    }
-            //}
+            if (leftCell.isFull)
+            {
+                if (!leftCell.pieceHeld.rightChild.isBadConnection)
+                {
+                    //leftCell.pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+                    leftCell.pieceHeld.rightChild.SetDisconnectedMaterial();
+                }
+            }
         }
 
         if (pieceHeld.rightChild.isBadConnection)
@@ -151,14 +153,16 @@ public class Cell : MonoBehaviour
         else
         {
             //pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+            pieceHeld.rightChild.SetDisconnectedMaterial();
 
-            //if (rightCell.isFull)
-            //{
-            //    if (!rightCell.pieceHeld.leftChild.isBadConnection)
-            //    {
-            //        rightCell.pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
-            //    }
-            //}
+            if (rightCell.isFull)
+            {
+                if (!rightCell.pieceHeld.leftChild.isBadConnection)
+                {
+                    //rightCell.pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+                    rightCell.pieceHeld.leftChild.SetDisconnectedMaterial();
+                }
+            }
         }
 
         if (pieceHeld.rightChild.relevantSlice)

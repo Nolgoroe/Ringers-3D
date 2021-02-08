@@ -53,4 +53,18 @@ public class SubPiece : MonoBehaviour
         rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[(int)symbolOfPiece]);
     }
 
+    public void SetConnectedMaterial()
+    {
+        Material[] matArray = rend.materials;
+        matArray[1] = ConnectionManager.Instance.rockLIT;
+        rend.materials = matArray;
+    }
+
+    public void SetDisconnectedMaterial()
+    {
+        Material[] matArray = rend.materials;
+        matArray[1] = ConnectionManager.Instance.rockUnLIT;
+        rend.materials = matArray;
+
+    }
 }
