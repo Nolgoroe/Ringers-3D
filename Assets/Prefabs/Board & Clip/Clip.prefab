@@ -52,20 +52,32 @@ MonoBehaviour:
   - {fileID: 3310681654630194688}
   - {fileID: 3310681655764361077}
   - {fileID: 3310681656289460695}
-  piece: {fileID: 4512197760697866667, guid: d1efbb46e280c834f9bc38f7782c7b6d, type: 3}
-  gameColors:
-  - {fileID: 2100000, guid: c71929f1eb3c35a4fa2c8c3b13006bf0, type: 2}
-  - {fileID: 2100000, guid: f2198feade7972942aa0ff18e92d54cb, type: 2}
-  - {fileID: 2100000, guid: ed92a5689246d9c458ce07b33b4080ad, type: 2}
-  - {fileID: 2100000, guid: 3140ac12b8af6d14bb12bc9564f6638b, type: 2}
-  - {fileID: 8918768998555555561, guid: 7e6879f8a7f45ea4a9441a5cdfdba6e1, type: 2}
-  - {fileID: 2100000, guid: 2a8e1cde02bb7db4d8934c88fa559306, type: 2}
-  gameSymbols:
-  - {fileID: 2800000, guid: 0e76ab5cb5f151646a8be3176bff8b40, type: 3}
-  - {fileID: 2800000, guid: 29afe2d12e649ef4bbacb5a3ca131469, type: 3}
-  - {fileID: 2800000, guid: e37c69e7e5fa17d44bafeba530ca2b9e, type: 3}
-  - {fileID: 2800000, guid: 10ed496919ebc85459281945113b9d33, type: 3}
-  - {fileID: 2800000, guid: 085adf10e0c356440ac57e555ec34e78, type: 3}
+  piece: {fileID: 1645121695642233041, guid: 6b184118881871341aae387bbfbdd34c, type: 3}
+  colorsToMats:
+  - mat: 0
+    colorMats:
+    - {fileID: 2100000, guid: eb0b3514505c8464eaf0f9753feaf93c, type: 2}
+    - {fileID: 2100000, guid: 7abd485a41edd0f43868307161aa8029, type: 2}
+    - {fileID: 2100000, guid: 5236756c8c2785d4ea4470b07d5be566, type: 2}
+    - {fileID: 2100000, guid: 4cd12441ca1e49c4eb80423997a94d02, type: 2}
+  - mat: 1
+    colorMats:
+    - {fileID: 2100000, guid: ae716316d853c3c40b4f47532f22d8de, type: 2}
+    - {fileID: 2100000, guid: 7f91ac6586242844680cd9b97c242352, type: 2}
+    - {fileID: 2100000, guid: 33bcc858d88ad184098009ac6c228a5f, type: 2}
+    - {fileID: 2100000, guid: c6f1e59875750de4cb326008f75cacf4, type: 2}
+  - mat: 2
+    colorMats:
+    - {fileID: 2100000, guid: 189213725f356d24eac7dcd7ff8b1094, type: 2}
+    - {fileID: 2100000, guid: 6c1f0f4a3ed59984e99ef28d105301fb, type: 2}
+    - {fileID: 2100000, guid: 6cfdea26e4a92b34db985e1cf9000395, type: 2}
+    - {fileID: 2100000, guid: a9a087d025961e24bb9f7c797715b107, type: 2}
+  - mat: 3
+    colorMats:
+    - {fileID: 2100000, guid: 22b00dd9242e782459e3777d1a3cf212, type: 2}
+    - {fileID: 2100000, guid: f30322e5170d21f4b82f250e89d9f782, type: 2}
+    - {fileID: 2100000, guid: 7a8c8a8cc757f3644836d034657b35e9, type: 2}
+    - {fileID: 2100000, guid: 0ef0f80a18d09cc45b0db7e7635e7f0d, type: 2}
   clipCount: 0
 --- !u!1 &8800353954120255586
 GameObject:

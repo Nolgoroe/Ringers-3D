@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.002
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 1, g: 0.8611765, b: 0.5372549, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.9098039, g: 1, b: 0.6784314, a: 1}
   m_AmbientGroundColor: {r: 0.7019608, g: 0.6117647, b: 0.043137256, a: 1}
   m_AmbientIntensity: 1
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 7650503294379893454}
-  m_IndirectSpecularColor: {r: 0.31778905, g: 0.3379083, b: 0.2539116, a: 1}
+  m_IndirectSpecularColor: {r: 0.17500165, g: 0.21892697, b: 0.30121955, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,8 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 900d5da3ed3dd69419eb8e16ffe3b69d,
-    type: 2}
+  m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
@@ -29929,7 +29928,7 @@ SpriteRenderer:
   m_Size: {x: 6.04, y: 12.21}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1839494412
@@ -30939,7 +30938,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleBoardPrefab: {fileID: 6382559071292991177, guid: 0379f269da8f3aa46bc62a2f1709c2be,
     type: 3}
-  backGroundPrefab: {fileID: 339284838954750607, guid: 0c79fd41c374b7047b38ee9ef368ba53,
+  backGroundPrefab: {fileID: 5034024666852498689, guid: 499043b853c6fc34384c829e74d8b251,
     type: 3}
   clipPrefab: {fileID: 4176704889398601467, guid: ff432a4cdfd3d8c4ab183be2d82d571e,
     type: 3}

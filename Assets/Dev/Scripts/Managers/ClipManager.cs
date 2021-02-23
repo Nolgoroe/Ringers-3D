@@ -1,16 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ClipManager : MonoBehaviour
 {
     public Transform[] slots;
     public GameObject piece;
 
-    public Material[] gameColors;
-    public Texture2D[] gameSymbols;
+    //public Material[] gameColors;
+    //public Texture2D[] gameSymbols;
+
+    public ColorsAndMats[] colorsToMats;
 
     public int clipCount;
+
+    [Serializable]
+    public class ColorsAndMats
+    {
+        public PieceColor mat;
+        public Material[] colorMats;
+    }
+
     private void Awake()
     {
         GameManager.Instance.clipManager = this;
