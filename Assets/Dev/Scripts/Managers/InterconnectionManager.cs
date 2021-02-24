@@ -71,11 +71,11 @@ public class InterconnectionManager : MonoBehaviour
                 newBadConnections++;
                 if (isOuter)
                 {
-                    Instantiate(ConnectionManager.Instance.badConnectionParticle, interconnectedCellOne.interconnectedRightParticleZone);
+                    //Instantiate(ConnectionManager.Instance.badConnectionParticle, interconnectedCellOne.interconnectedRightParticleZone);
                 }
                 else
                 {
-                    Instantiate(ConnectionManager.Instance.badConnectionParticle, interconnectedCellTwo.interconnectedRightParticleZone);
+                    //Instantiate(ConnectionManager.Instance.badConnectionParticle, interconnectedCellTwo.interconnectedRightParticleZone);
                 }
             }
             else
@@ -102,11 +102,11 @@ public class InterconnectionManager : MonoBehaviour
                 newBadConnections++;
                 if (isOuter)
                 {
-                    Instantiate(ConnectionManager.Instance.badConnectionParticle, interconnectedCellTwo.interconnectedLeftParticleZone);
+                    //Instantiate(ConnectionManager.Instance.badConnectionParticle, interconnectedCellTwo.interconnectedLeftParticleZone);
                 }
                 else
                 {
-                    Instantiate(ConnectionManager.Instance.badConnectionParticle, interconnectedCellOne.interconnectedLeftParticleZone);
+                    //Instantiate(ConnectionManager.Instance.badConnectionParticle, interconnectedCellOne.interconnectedLeftParticleZone);
 
                 }
             }

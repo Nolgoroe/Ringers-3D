@@ -133,11 +133,11 @@ public class AnimationManager : MonoBehaviour
     {
         if(toMove.subPieceIndex % 2 != 0)
         {
-            LeanTween.move(toMove.gameObject, new Vector3(0.5f, 0, 0), speedPieceMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
+            LeanTween.move(toMove.gameObject, new Vector3(toMove.transform.localPosition.x + 0.4f, toMove.transform.localPosition.y + 0.8f, toMove.transform.localPosition.z), speedPieceMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
         }
         else
         {
-            LeanTween.move(toMove.gameObject, new Vector3(toMove.transform.localPosition.x, 0, 0), speedPieceMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
+            LeanTween.move(toMove.gameObject, new Vector3(toMove.transform.localPosition.x, toMove.transform.localPosition.y + 0.85f, toMove.transform.localPosition.z), speedPieceMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
         }
     }
 

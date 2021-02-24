@@ -95,7 +95,7 @@ public class ConnectionManager : MonoBehaviour
                         supPieceArray[currentLeft].relevantSlice.fulfilledCondition = false;
                     }
 
-                    Instantiate(badConnectionParticle, cellList[cellIndex].rightParticleZone);
+                    //Instantiate(badConnectionParticle, cellList[cellIndex].rightParticleZone);
                 }
                 else
                 {
@@ -154,7 +154,7 @@ public class ConnectionManager : MonoBehaviour
                         supPieceArray[currentRight].relevantSlice.fulfilledCondition = false;
                     }
 
-                    Instantiate(badConnectionParticle, cellList[cellIndex].leftParticleZone);
+                    //Instantiate(badConnectionParticle, cellList[cellIndex].leftParticleZone);
                 }
                 else
                 {
