@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
     public GameObject mainMenu, hudCanvasDisplay,hudCanvasUI, itemForgeCanvas, gameplayCanvas, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
     public GameObject forge, itemBag;
     public GameObject craft, owned;
+    public GameObject animalAlbum;
     public GameObject OptionsScreen;
     public GameObject wardrobe;
     public GameObject usingPowerupText;
@@ -39,6 +40,7 @@ public class UIManager : MonoBehaviour
     public Vector3 hubCameraPos;
 
     public static bool isUsingUI;
+
 
     private void Start()
     {
@@ -64,6 +66,7 @@ public class UIManager : MonoBehaviour
         craft.SetActive(true); //// so this will be the first screen displayed, or else everyone will be turned off
         owned.SetActive(false);
         hollowCraftAndOwned.SetActive(false);
+        animalAlbum.SetActive(false);
 
         RefreshGoldAndRubyDisplay();
 
@@ -85,12 +88,10 @@ public class UIManager : MonoBehaviour
         hudCanvasUI.SetActive(false);
         mainMenu.SetActive(true);
     }
-
     public void ChangeZoneName(string name)
     {
         currentLevelName.text = name;
     }
-
     public void ToHud(GameObject currentCanvas)
     {
         PlayerManager.Instance.activePowerups.Clear();
@@ -155,7 +156,6 @@ public class UIManager : MonoBehaviour
 
         isUsingUI = true;
     }
-
     public void OpenHollowCraftAndOwnedZone()
     {
         hollowCraftAndOwned.SetActive(true);
@@ -165,7 +165,6 @@ public class UIManager : MonoBehaviour
         HollowCraftAndOwnedManager.Instance.isPlaceThroughHollow = false;
         isUsingUI = true;
     }
-
     public void OpenHollowOwnedObjectsToPlace()
     {
         hollowCraftAndOwned.SetActive(true);
@@ -310,5 +309,19 @@ public class UIManager : MonoBehaviour
         hubRubyText.text = PlayerManager.Instance.rubyCount.ToString();
         gameplayGoldText.text = PlayerManager.Instance.goldCount.ToString();
         gameplayRubyText.text = PlayerManager.Instance.rubyCount.ToString();
+    }
+
+    public void ToggleAnimalAlbum(bool Open)
+    {
+        if (Open)
+        {            
+            animalAlbum.SetActive(true);
+            AnimalAlbumManager.Instance.pageNumInspector =0;
+            AnimalAlbumManager.Instance.ChangePageLogic(0);
+        }
+        else
+        {
+            animalAlbum.SetActive(false);
+        }
     }
 }
