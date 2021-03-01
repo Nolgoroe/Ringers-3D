@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using GameAnalyticsSDK;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -35,7 +35,10 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
     }
-
+    private void Start()
+    {
+        GameAnalytics.Initialize();
+    }
     public void StartLevel()
     {
         //Camera.main.orthographicSize = 12;
@@ -67,6 +70,8 @@ public class GameManager : MonoBehaviour
         }
 
         powerupManager.instnatiatedZonesCounter = 0;
+
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelNum);
     }
 
     public void ChooseLevel(int levelNum)
@@ -115,14 +120,17 @@ public class GameManager : MonoBehaviour
             {
                 LootManager.Instance.giveKey = true;
             }
+
             StartCoroutine(AnimationManager.instance.StartEndLevelAnim());
             Debug.Log("YOU WIN");
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevel.worldName, currentLevel.levelNum);
         }
         else
         {
             LootManager.Instance.currentLevelLootToGive.Clear();
             UIManager.Instance.LoseLevel();
             Debug.Log("You Lose");
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail, currentLevel.worldName, currentLevel.levelNum);
         }
 
         PlayerManager.Instance.SavePlayerData();
