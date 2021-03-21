@@ -289,6 +289,11 @@ public class UIManager : MonoBehaviour
 
             for (int i = 0; i < BPZ.theZone.maxLevelReachedInZone; i++)
             {
+                if(i == BPZ.zoneButtons.Length)
+                {
+                    break;
+                }
+
                 BPZ.zoneButtons[i].interactable = true;
 
                 if(i + 1 != BPZ.theZone.maxLevelReachedInZone)

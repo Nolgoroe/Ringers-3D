@@ -116,9 +116,12 @@ public class GameManager : MonoBehaviour
     {
         if (currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0)
         {
-            if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex && !ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey)
+            if (ZoneManagerHelpData.Instance.currentZoneCheck)
             {
-                LootManager.Instance.giveKey = true;
+                if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex && !ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey)
+                {
+                    LootManager.Instance.giveKey = true;
+                }
             }
 
             StartCoroutine(AnimationManager.instance.StartEndLevelAnim());
@@ -138,16 +141,16 @@ public class GameManager : MonoBehaviour
 
     public void WinAfterAnimation()
     {
-        LootManager.Instance.GiveLoot();
-        UIManager.Instance.WinLevel();
+        if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+        {
+            ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone++;
+            LootManager.Instance.GiveLoot();
+        }
 
+        UIManager.Instance.WinLevel();
 
         if (currentLevel.levelNum != ZoneManagerHelpData.Instance.currentZoneCheck.lastLevelNum)
         {
-            if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
-            {
-                ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone++;
-            }
 
             UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
         }

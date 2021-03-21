@@ -36,11 +36,11 @@ public class ZoneManager : MonoBehaviour
 
     public void CheckZoneAwardedKey(int current) ////// if zone did not award key yet - the button that has this function connected to it IS the key level
     {
-        if (ZoneManagerHelpData.Instance.listOfAllZones[current].hasAwardedKey)
-        {
-            ResetZoneManagerData(); ///// In case of a problem - reset all data to default.
-            return;
-        }
+        //if (ZoneManagerHelpData.Instance.listOfAllZones[current].hasAwardedKey)
+        //{
+        //    ResetZoneManagerData(); ///// In case of a problem - reset all data to default.
+        //    return;
+        //}
 
         ZoneManagerHelpData.Instance.currentZoneCheck = ZoneManagerHelpData.Instance.listOfAllZones[current];
 

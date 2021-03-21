@@ -123,7 +123,7 @@ public class AnimationManager : MonoBehaviour
         });
 
         yield return new WaitForSeconds(waitTimeFadeOut);
-        yield return new WaitUntil((() => fadeImage.color.a == 0));
+        yield return new WaitUntil((() => fadeImage.color.a <= 0.1f));
         fadeImage.gameObject.SetActive(false);
 
         yield return null;

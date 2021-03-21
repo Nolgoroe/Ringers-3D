@@ -13,7 +13,7 @@ public class PanZoom : MonoBehaviour
 
     Touch touch;
 
-    public Image SpriteBounds;
+    public Sprite SpriteBounds;
 
     public Camera mainCam;
 
@@ -64,11 +64,11 @@ public class PanZoom : MonoBehaviour
     {
         if (!UIManager.isUsingUI)
         {
-            leftBound = (horzExtent - (SpriteBounds.sprite.bounds.size.x / 2.0f));
-            rightBound = ((SpriteBounds.sprite.bounds.size.x / 2.0f - horzExtent));
+            leftBound = (horzExtent - (SpriteBounds.bounds.size.x / 2.0f));
+            rightBound = ((SpriteBounds.bounds.size.x / 2.0f - horzExtent));
 
-            bottomBound = ((vertExtent - SpriteBounds.sprite.rect.size.y / 2.0f)) / SpriteBounds.sprite.pixelsPerUnit;
-            topBound = ((SpriteBounds.sprite.rect.size.y / 2.0f - vertExtent)) / SpriteBounds.sprite.pixelsPerUnit;
+            bottomBound = ((vertExtent - SpriteBounds.rect.size.y / 2.0f)) / SpriteBounds.pixelsPerUnit;
+            topBound = ((SpriteBounds.rect.size.y / 2.0f - vertExtent)) / SpriteBounds.pixelsPerUnit;
 
             if (Input.touchCount > 0)
             {

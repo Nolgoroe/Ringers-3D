@@ -464,7 +464,7 @@ public class ConnectionManager : MonoBehaviour
 
         if (!isLimiter)
         {
-            SpriteRenderer relevantSliceSR = relevent.child.GetComponent<SpriteRenderer>();
+            //SpriteRenderer relevantSliceSR = relevent.child.GetComponent<SpriteRenderer>();
             //relevantSliceSR.color = new Color(relevantSliceSR.color.r, relevantSliceSR.color.g, relevantSliceSR.color.b, 0.4f);
 
            //SpriteRenderer ciconSR = relevent.child.transform.GetChild(0).GetComponent<SpriteRenderer>();
