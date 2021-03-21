@@ -56,6 +56,7 @@ public class CSVParser : MonoBehaviour
 
         readTextFile(FI);
     }
+
     void readTextFile(csvFileInfo FI)
     {
         if (Application.platform == RuntimePlatform.Android)
