@@ -10,8 +10,8 @@ public class AlbumImageAnimalData : MonoBehaviour
 
     public Image animalImage;
 
-    private void Start()
-    {
-        animalImage = GetComponent<Image>();
-    }
+    //private void Start()
+    //{
+    //    animalImage = GetComponent<Image>();
+    //}
 }

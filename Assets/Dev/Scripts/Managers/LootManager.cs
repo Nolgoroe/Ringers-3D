@@ -4,11 +4,14 @@ using UnityEngine;
 public enum LootPacks ////// Names of loot packs containing loot packs
 {
     None,
-    M1,
-    M2,
-    M3,
+    //M1,
+    //M2,
+    //M3,
     R1,
     R2,
+    R3,
+    R4,
+    R5,
     I1,
     I2,
     I3,
@@ -19,11 +22,11 @@ public enum LootPacks ////// Names of loot packs containing loot packs
     I8,
     I9,
     I10,
-    I11,
-    I12,
-    I13,
-    I14,
-    I15
+    //I11,
+    //I12,
+    //I13,
+    //I14,
+    //I15
 }
 
 [System.Serializable]
@@ -34,12 +37,12 @@ public enum ItemTables
     L2,
     L3,
     L4,
-    L5,
-    L6,
-    L7,
-    L8,
-    L9,
-    L10,
+    //L5,
+    //L6,
+    //L7,
+    //L8,
+    //L9,
+    //L10,
 }
 
 [System.Serializable]
@@ -70,7 +73,7 @@ public class LootManager : MonoBehaviour
     public GameObject lootDisplayPrefab;
     public Transform winScreenLootDisplayContent;
 
-    public Sprite goldSprite, rubySprite;
+    public Sprite /*goldSprite,*/ rubySprite;
 
     public bool giveKey;
 
@@ -191,16 +194,16 @@ public class LootManager : MonoBehaviour
 
             int randomNum = (Random.Range(valuesToRecieve[0], valuesToRecieve[1] + 1));
 
-            if (lootPack.ToString().Contains("M"))
-            {
-                DisplayLootGoldRubyToPlayer(randomNum, goldSprite.texture);
-                PlayerManager.Instance.AddGold(randomNum);
-            }
-            else
-            {
+            //if (lootPack.ToString().Contains("M"))
+            //{
+            //    DisplayLootGoldRubyToPlayer(randomNum, goldSprite.texture);
+            //    PlayerManager.Instance.AddGold(randomNum);
+            //}
+            //else
+            //{
                 DisplayLootGoldRubyToPlayer(randomNum, rubySprite.texture);
                 PlayerManager.Instance.AddRubies(randomNum);
-            }
+            //}
 
         }
     }

@@ -25,9 +25,9 @@ public class UIManager : MonoBehaviour
     public GameObject usingPowerupText;
     public GameObject youWinScreen, youLoseText;
 
-    public Text hubGoldText, hubRubyText;
+    public Text /*hubGoldText,*/ hubRubyText;
 
-    public TMP_Text gameplayGoldText, gameplayRubyText;
+    public TMP_Text /*gameplayGoldText,*/ gameplayRubyText;
     public TMP_Text currentLevelName;
 
     public Button commitButton;
@@ -310,9 +310,9 @@ public class UIManager : MonoBehaviour
     }
     public void RefreshGoldAndRubyDisplay()
     {
-        hubGoldText.text = PlayerManager.Instance.goldCount.ToString();
+        //hubGoldText.text = PlayerManager.Instance.goldCount.ToString();
         hubRubyText.text = PlayerManager.Instance.rubyCount.ToString();
-        gameplayGoldText.text = PlayerManager.Instance.goldCount.ToString();
+        //gameplayGoldText.text = PlayerManager.Instance.goldCount.ToString();
         gameplayRubyText.text = PlayerManager.Instance.rubyCount.ToString();
     }
 

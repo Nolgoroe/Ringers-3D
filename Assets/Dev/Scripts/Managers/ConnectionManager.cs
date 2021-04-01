@@ -397,9 +397,9 @@ public class ConnectionManager : MonoBehaviour
 
             switch (relevent.lootPack.ToString()[0])
             {
-                case 'M':
-                    StartCoroutine(InstantiateLootEffect(relevent,relevent.lootIcon.transform, LootManager.Instance.goldSprite, LootTargetsData.instance.goldTargetLoot));
-                    break;
+                //case 'M':
+                //    StartCoroutine(InstantiateLootEffect(relevent,relevent.lootIcon.transform, LootManager.Instance.goldSprite, LootTargetsData.instance.goldTargetLoot));
+                //    break;
 
                 case 'R':
                     StartCoroutine(InstantiateLootEffect(relevent,relevent.lootIcon.transform, LootManager.Instance.rubySprite, LootTargetsData.instance.rubyTargetLoot));
@@ -422,9 +422,9 @@ public class ConnectionManager : MonoBehaviour
         {
             switch (relevent.lootPack.ToString()[0])
             {
-                case 'M':
-                    StartCoroutine(InstantiateLootEffect(relevent, relevent.lootIcon.transform, relevent.lootIcon.GetComponent<SpriteRenderer>().sprite, LootTargetsData.instance.goldTargetLoot));
-                    break;
+                //case 'M':
+                //    StartCoroutine(InstantiateLootEffect(relevent, relevent.lootIcon.transform, relevent.lootIcon.GetComponent<SpriteRenderer>().sprite, LootTargetsData.instance.goldTargetLoot));
+                //    break;
 
                 case 'R':
                     StartCoroutine(InstantiateLootEffect(relevent, relevent.lootIcon.transform, relevent.lootIcon.GetComponent<SpriteRenderer>().sprite, LootTargetsData.instance.rubyTargetLoot));
@@ -538,15 +538,15 @@ public class ConnectionManager : MonoBehaviour
         int amount = 0;
         switch (relevent.lootPack)
         {
-            case LootPacks.M1:
-                amount = 2;
-                break;
-            case LootPacks.M2:
-                amount = 4;
-                break;
-            case LootPacks.M3:
-                amount = 6;
-                break;
+            //case LootPacks.M1:
+            //    amount = 2;
+            //    break;
+            //case LootPacks.M2:
+            //    amount = 4;
+            //    break;
+            //case LootPacks.M3:
+            //    amount = 6;
+            //    break;
             case LootPacks.R1:
                 amount = 2;
                 break;

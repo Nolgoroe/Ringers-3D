@@ -48,21 +48,23 @@ public class HollowObjectDisplayer : MonoBehaviour
             {
                 matAndCount[i] = matAndCount[i].Trim();  //remove the blank spaces
             }
-            CMD.SetImageAndMaterialCount("Crafting Mat Icons/" + matAndCount[0], matAndCount[1]);
 
-            SetDataMatsNeeded(matAndCount[0], Convert.ToInt16(matAndCount[1]), CMD);
+            string nameOfMat = matAndCount[0].Replace(" ", string.Empty);
+
+            CraftingMats parsed_enum = (CraftingMats)System.Enum.Parse(typeof(CraftingMats), nameOfMat);
+
+            CMD.SetImageAndMaterialCount(MaterialsAndForgeManager.Instance.materialSpriteByName[parsed_enum], matAndCount[1]);
+
+            SetDataMatsNeeded(nameOfMat, Convert.ToInt16(matAndCount[1]), CMD, parsed_enum);
         }
 
 
         CheckIfCanCraftHollowObject(craftingMatsForEquipment);
     }
 
-    public void SetDataMatsNeeded(string nameOfMat, int amountOfMat, CraftingMatDisplayer CMD)
+    public void SetDataMatsNeeded(string nameOfMat, int amountOfMat, CraftingMatDisplayer CMD, CraftingMats parsed_enum)
     {
         CraftingMatsNeeded CMN = new CraftingMatsNeeded();
-
-        nameOfMat = nameOfMat.Replace(" ", string.Empty);
-        CraftingMats parsed_enum = (CraftingMats)System.Enum.Parse(typeof(CraftingMats), nameOfMat);
 
         CMN.mat = parsed_enum;
         CMN.amount = amountOfMat;

@@ -209,8 +209,8 @@ public class CSVParser : MonoBehaviour
 
             HCOD.objectname = parsedList[i][0].ToString();
 
-            if (parsedList[i][1].ToString().Contains("-"))
-            {
+            //if (parsedList[i][1].ToString().Contains("-"))
+            //{
                 string[] temp = parsedList[i][1].ToString().Split('-');
 
                 for (int j = 0; j < temp.Length; j++)
@@ -222,8 +222,11 @@ public class CSVParser : MonoBehaviour
                 {
                     HCOD.objectHollowType.Add((ObjectHollowType)Convert.ToInt16(hollowType));
                 }
-            }
-            
+            //}
+            //else
+            //{
+
+            //}
 
             HCOD.mats = parsedList[i][2].ToString();
 

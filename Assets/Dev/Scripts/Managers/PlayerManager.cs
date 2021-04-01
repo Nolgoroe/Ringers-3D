@@ -11,37 +11,39 @@ public enum CraftingMats
     None,
     Wood,
     Stone,
-    PurpleFlower,
-    FireShard,
-    Feather,
+    //PurpleFlower,
+    //FireShard,
+    //Feather,
     Wax,
-    LeatherBand,
+    //LeatherBand,
     RedRibbon,
     SilverNugget,
-    Amber,
-    BlueFelt,
+    //Amber,
+    //BlueFelt,
     MoonStone,
-    VenerableOakBranch,
-    MoonwellWater,
+    //VenerableOakBranch,
+    //MoonwellWater,
     ScarletPimpernel,
-    Saphire,
-    Hay,
-    CloverBunch,
+    //Saphire,
+    //Hay,
+    //CloverBunch,
     SunPetals,
-    BirchBark,
-    JadeShard,
+    //BirchBark,
+    //JadeShard,
     NettleTears,
     FlameBlossom,
-    SilkThread,
-    MoonDust,
-    DustCrystal
+    DewDrops,
+    //SilkThread,
+    //MoonDust,
+    //DustCrystal
 }
 public enum CraftingMatType
 {
     None,
-    Basic,
-    Magical,
-    Textile,
+    Build,
+    Witchcraft,
+    Herb,
+    Gem,
 }
 [Serializable]
 public class CraftingMatEntry
@@ -49,12 +51,14 @@ public class CraftingMatEntry
     public CraftingMats mat;
     public CraftingMatType craftingMatType;
     public int amount;
+    public int priceInGems;
+    public int amountPerPurchaseGems;
 }
 public class PlayerManager : MonoBehaviour
 {
     //public int maxLevel = 1;
 
-    public int goldCount, rubyCount;
+    public int /*goldCount,*/ rubyCount;
 
     public List<PowerUp> activePowerups;
 
@@ -135,12 +139,12 @@ public class PlayerManager : MonoBehaviour
         MaterialsAndForgeManager.Instance.RefreshMaterialBag();
         MaterialsAndForgeManager.Instance.RefreshForge();
     }
-    public void AddGold(int amount)
-    {
-        goldCount += amount;
-        Debug.Log(amount);
-        UIManager.Instance.RefreshGoldAndRubyDisplay();
-    }
+    //public void AddGold(int amount)
+    //{
+    //    goldCount += amount;
+    //    Debug.Log(amount);
+    //    UIManager.Instance.RefreshGoldAndRubyDisplay();
+    //}
     public void AddRubies(int amount)
     {
         rubyCount += amount;

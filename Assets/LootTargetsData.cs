@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LootTargetsData : MonoBehaviour
 {
-    public Transform goldTargetLoot, rubyTargetLoot, materialsTargetLoot;
+    public Transform /*goldTargetLoot,*/ rubyTargetLoot, materialsTargetLoot;
 
     public static LootTargetsData instance;
 
