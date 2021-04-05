@@ -7500,7 +7500,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 323caf8bfc5d68e4f893c0280e681dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeTillGiveDrewDrop: 0
+  timeTillGiveDrewDrop: 120
+  maxDrops: 30
+  savedDateTime: 
+  path: 
 --- !u!1 &377456756
 GameObject:
   m_ObjectHideFlags: 0
@@ -18568,6 +18571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rubyCount: 0
+  collectedDewDrops: 0
   activePowerups: 
   craftingMatsInInventory:
   - mat: 2

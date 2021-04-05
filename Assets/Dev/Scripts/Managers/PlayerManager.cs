@@ -58,6 +58,7 @@ public class PlayerManager : MonoBehaviour
     //public int maxLevel = 1;
 
     public int /*goldCount,*/ rubyCount;
+    public int collectedDewDrops;
 
     public List<PowerUp> activePowerups;
 
