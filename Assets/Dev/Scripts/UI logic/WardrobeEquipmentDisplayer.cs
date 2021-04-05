@@ -18,6 +18,6 @@ public class WardrobeEquipmentDisplayer : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("Equip");
-        WardrobeManager.Instance.EquipMe(theEquipmentData, this);
+        //WardrobeManager.Instance.EquipMe(theEquipmentData, this);
     }
 }

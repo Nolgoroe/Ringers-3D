@@ -32,13 +32,13 @@ public class PanZoom : MonoBehaviour
     Vector3 OriginalCamPos;
 
     bool isZoom;
-    private void OnDisable()
-    {
-        if (mainCam)
-        {
-            mainCam.transform.position = new Vector3(0, 0, -20);
-        }
-    }
+    //private void OnDisable()
+    //{
+    //    if (mainCam)
+    //    {
+    //        mainCam.transform.position = new Vector3(0, 0, -20);
+    //    }
+    //}
 
     private void Start()
     {

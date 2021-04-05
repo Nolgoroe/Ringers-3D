@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
 
     public bool gameStarted;
 
+    public Vector3 inGameCamPos;
     private void Awake()
     {
         Instance = this;
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
         //Camera.main.orthographicSize = 12;
         Camera.main.orthographic = false;
         Camera.main.fieldOfView = 60f;
+        Camera.main.transform.position = inGameCamPos;
 
         gameStarted = true;
 
@@ -77,9 +79,6 @@ public class GameManager : MonoBehaviour
     public void ChooseLevel(int levelNum)
     {
         currentLevel = (LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/Level " + levelNum);
-
-
-        StartLevel();
     }
 
     public void DestroyAllLevelChildern()

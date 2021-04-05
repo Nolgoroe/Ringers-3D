@@ -63,7 +63,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
                     break;
             }
             string tmp = GameManager.Instance.powerupManager.spriteByType[EQ.power];
-            ED.powerUp.texture = Resources.Load(tmp) as Texture2D;
+            //ED.powerUp.texture = Resources.Load(tmp) as Texture2D;
             ED.itemImage.texture = Resources.Load(EQ.spritePath)as Texture2D;
 
             ED.name = ED.itemName.text;

@@ -25,9 +25,9 @@ public class UIManager : MonoBehaviour
     public GameObject usingPowerupText;
     public GameObject youWinScreen, youLoseText;
 
-    public Text /*hubGoldText,*/ hubRubyText;
+    public Text /*hubGoldText,*/ hubRubyText, dewDropsText, dewDropsTextTime;
 
-    public TMP_Text /*gameplayGoldText,*/ gameplayRubyText;
+    public TMP_Text /*gameplayGoldText,*/ gameplayRubyText, gameplayDewDropsText;
     public TMP_Text currentLevelName;
 
     public Button commitButton;
@@ -100,6 +100,7 @@ public class UIManager : MonoBehaviour
 
         Camera.main.orthographic = true;
         Camera.main.orthographicSize = 5f;
+        Camera.main.transform.position = hubCameraPos;
 
         if (currentCanvas == gameplayCanvas)
         {

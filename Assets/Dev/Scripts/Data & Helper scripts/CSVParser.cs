@@ -64,7 +64,7 @@ public class CSVParser : MonoBehaviour
             switch (FI.typeOfCsvDoc)
             {
                 case DocumentType.Equipment:
-                    inputStream = new StreamReader(Application.persistentDataPath + "/Equipment.csv");
+                    inputStream = new StreamReader(Application.persistentDataPath + "/Powerups.csv");
                     break;
                 case DocumentType.HollowObject:
                     inputStream = new StreamReader(Application.persistentDataPath + "/Hollow Crafts.csv");
@@ -78,10 +78,10 @@ public class CSVParser : MonoBehaviour
             switch (FI.typeOfCsvDoc)
             {
                 case DocumentType.Equipment:
-                    inputStream = new StreamReader("Assets/Resources/Equipment/Equipment.csv");
+                    inputStream = new StreamReader("Assets/Resources/powerup csv data/Powerups.csv");
                     break;
                 case DocumentType.HollowObject:
-                    inputStream = new StreamReader("Assets/Resources/HollowObjects/Hollow Crafts.csv");
+                    inputStream = new StreamReader("Assets/Resources/HollowObjects csv data/Hollow Crafts.csv");
                     break;
                 default:
                     break;
@@ -136,11 +136,11 @@ public class CSVParser : MonoBehaviour
             EquipmentData EQ = new EquipmentData();
 
             EQ.name = parsedList[i][0].ToString();
-            EQ.slot = (slotType)Convert.ToInt16(parsedList[i][1]);
+            //EQ.slot = (slotType)Convert.ToInt16(parsedList[i][1]);
 
-            if (parsedList[i][2].ToString().Contains("-"))
+            if (parsedList[i][1].ToString().Contains("-"))
             {
-                string[] temp = parsedList[i][2].ToString().Split('-');
+                string[] temp = parsedList[i][1].ToString().Split('-');
 
                 for (int j = 0; j < temp.Length; j++)
                 {
@@ -162,14 +162,14 @@ public class CSVParser : MonoBehaviour
             }
             else
             {
-                EQ.power = (PowerUp)Convert.ToInt16(parsedList[i][2]);
+                EQ.power = (PowerUp)Convert.ToInt16(parsedList[i][1]);
                 EQ.specificColor = PieceColor.None;
                 EQ.specificSymbol = PieceSymbol.None;
             }
 
-            if (parsedList[i][3].ToString().Contains("-"))
+            if (parsedList[i][2].ToString().Contains("-"))
             {
-                string[] temp = parsedList[i][3].ToString().Split('-');
+                string[] temp = parsedList[i][2].ToString().Split('-');
 
                 for (int j = 0; j < temp.Length; j++)
                 {
@@ -185,12 +185,12 @@ public class CSVParser : MonoBehaviour
             }
             else ///// Probably never going to enter here because every item has cooldown/charges (will contain '-')
             {
-                EQ.numOfUses = Convert.ToInt16(parsedList[i][3]);
+                EQ.numOfUses = Convert.ToInt16(parsedList[i][2]);
                 EQ.scopeOfUses = -1;
             }
-            EQ.mats = parsedList[i][4].ToString();
+            EQ.mats = parsedList[i][3].ToString();
 
-            EQ.spritePath = parsedList[i][5].ToString();
+            EQ.spritePath = parsedList[i][4].ToString();
 
             allEquipmentInGame.Add(EQ);
         }

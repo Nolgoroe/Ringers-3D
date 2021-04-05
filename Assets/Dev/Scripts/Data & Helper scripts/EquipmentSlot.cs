@@ -7,7 +7,7 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
 {
     public EquipmentData equipmentInSlot;
 
-    public slotType typeOfSlot;
+    //public slotType typeOfSlot;
 
     public bool isFull;
     public void OnPointerClick(PointerEventData eventData)

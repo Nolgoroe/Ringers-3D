@@ -21,7 +21,7 @@ public class EquipmentDisplayer : MonoBehaviour
 
     public TMP_Text itemName;
     public TMP_Text usageCount;
-    public RawImage powerUp;
+    //public RawImage powerUp;
     public RawImage itemImage;
 
     public Transform ingrediantContentParent;
@@ -57,21 +57,28 @@ public class EquipmentDisplayer : MonoBehaviour
             {
                 matAndCount[i] = matAndCount[i].Trim();  //remove the blank spaces
             }
-            CMD.SetImageAndMaterialCount("Crafting Mat Icons/" + matAndCount[0], matAndCount[1]);
 
-            SetDataMatsNeeded(matAndCount[0], Convert.ToInt16(matAndCount[1]), CMD);
+            string nameOfMat = matAndCount[0].Replace(" ", string.Empty);
+
+            CraftingMats parsed_enum = (CraftingMats)System.Enum.Parse(typeof(CraftingMats), nameOfMat);
+
+            CMD.SetImageAndMaterialCount(MaterialsAndForgeManager.Instance.materialSpriteByName[parsed_enum], matAndCount[1]);
+
+            SetDataMatsNeeded(nameOfMat, Convert.ToInt16(matAndCount[1]), CMD, parsed_enum);
+
+            //CMD.SetImageAndMaterialCount("Crafting Mat Icons/" + matAndCount[0], matAndCount[1]);
+            //CMD.SetImageAndMaterialCount(MaterialsAndForgeManager.Instance.materialSpriteByName[parsed_enum], matAndCount[1]);
+
+            //SetDataMatsNeeded(matAndCount[0], Convert.ToInt16(matAndCount[1]), CMD);
         }
 
 
         CheckIfCanForgeEquipment(craftingMatsForEquipment);
     }
 
-    public void SetDataMatsNeeded(string nameOfMat, int amountOfMat, CraftingMatDisplayer CMD)
+    public void SetDataMatsNeeded(string nameOfMat, int amountOfMat, CraftingMatDisplayer CMD, CraftingMats parsed_enum)
     {
         CraftingMatsNeeded CMN = new CraftingMatsNeeded();
-
-        nameOfMat = nameOfMat.Replace(" ", string.Empty);
-        CraftingMats parsed_enum = (CraftingMats)System.Enum.Parse(typeof(CraftingMats), nameOfMat);
 
         CMN.mat = parsed_enum;
         CMN.amount = amountOfMat;
@@ -94,8 +101,10 @@ public class EquipmentDisplayer : MonoBehaviour
         MaterialsAndForgeManager.Instance.RefreshMaterialBag();
         MaterialsAndForgeManager.Instance.RefreshForge();
 
-        PlayerManager.Instance.wardrobeEquipment.Add(data);
+        //PlayerManager.Instance.wardrobeEquipment.Add(data);
         WardrobeManager.Instance.SpawnWardrobeEquipment(data);
+
+        WardrobeManager.Instance.EquipMe(data);
     }
 
     public void CheckIfCanForgeEquipment(List<CraftingMatsNeeded> CMN)

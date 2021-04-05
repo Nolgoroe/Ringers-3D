@@ -6,13 +6,13 @@ using System.Linq;
 
 public enum PowerUp
 {
-    Joker,
-    Switch,
-    PieceBomb,
-    SliceBomb,
-    ExtraDeal,
+    //Joker,
     FourColorTransform,
-    FourShapeTransform,
+    Switch,
+    //PieceBomb,
+    //SliceBomb,
+    //ExtraDeal,
+    //FourShapeTransform,
     None
 }
 public class PowerUpManager : MonoBehaviour
@@ -53,35 +53,35 @@ public class PowerUpManager : MonoBehaviour
     }
     public void AssignPowerUp(PowerUp ThePower, Button theButton)
     {
-        if(ThePower != PowerUp.ExtraDeal)
-        {
+        //if (ThePower != PowerUp.ExtraDeal)
+        //{
             theButton.onClick.AddListener(() => UsingPowerup(theButton));
-        }
+        //}
 
         PowerupProperties prop = theButton.gameObject.GetComponent<PowerupProperties>();
         switch (ThePower)
         {
-            case PowerUp.Joker:
-                theButton.onClick.AddListener(() => CallJokerCoroutine(prop));
-                break;
+            //case PowerUp.Joker:
+            //    theButton.onClick.AddListener(() => CallJokerCoroutine(prop));
+            //    break;
             case PowerUp.Switch:
                 theButton.onClick.AddListener(() => CallSwitchPowerCoroutine(prop));
                 break;
-            case PowerUp.PieceBomb:
-                theButton.onClick.AddListener(() => CallPieceBombPowerCoroutine(prop));
-                break;
-            case PowerUp.SliceBomb:
-                theButton.onClick.AddListener(() => CallSliceBombPowerCoroutine(prop));
-                break;
-            case PowerUp.ExtraDeal:
-                theButton.onClick.AddListener(() => ExtraDealPower(prop));
-                break;
+            //case PowerUp.PieceBomb:
+            //    theButton.onClick.AddListener(() => CallPieceBombPowerCoroutine(prop));
+            //    break;
+            //case PowerUp.SliceBomb:
+            //    theButton.onClick.AddListener(() => CallSliceBombPowerCoroutine(prop));
+            //    break;
+            //case PowerUp.ExtraDeal:
+            //    theButton.onClick.AddListener(() => ExtraDealPower(prop));
+            //    break;
             case PowerUp.FourColorTransform:
                 theButton.onClick.AddListener(() => CallFourColorPowerCoroutine(prop));
                 break;
-            case PowerUp.FourShapeTransform:
-                theButton.onClick.AddListener(() => CallFourSymbolPowerCoroutine(prop));
-                break;
+            //case PowerUp.FourShapeTransform:
+            //    theButton.onClick.AddListener(() => CallFourSymbolPowerCoroutine(prop));
+            //    break;
             default:
                 break;
         }
@@ -108,10 +108,10 @@ public class PowerUpManager : MonoBehaviour
         {
             prop.transformColor = data.specificColor;
         }
-        else if(current == PowerUp.FourShapeTransform)
-        {
-            prop.transformSymbol = data.specificSymbol;
-        }
+        //else if(current == PowerUp.FourShapeTransform)
+        //{
+        //    prop.transformSymbol = data.specificSymbol;
+        //}
 
         if(prop.connectedEquipment.scopeOfUses == 0) /// 0 = daily 1 = per patch
         {
@@ -416,7 +416,7 @@ public class PowerUpManager : MonoBehaviour
 
         if(prop.numOfUses == 0 && prop.connectedEquipment.scopeOfUses == 0) //// if the num of uses is 0 and the scope is cooldown and not per match
         {
-            EquipmentData ED = PlayerManager.Instance.equippedItems.Where(p => p.name == prop.connectedEquipment.name).Single();
+            EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).Single();
 
             ED.nextTimeAvailable = System.DateTime.Now.AddSeconds(ED.timeForCooldown).ToString(); ///// change the datetime for equipment on player
 

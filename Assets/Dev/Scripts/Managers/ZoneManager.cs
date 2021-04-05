@@ -55,6 +55,8 @@ public class ZoneManager : MonoBehaviour
         ZoneManagerHelpData.Instance.currentZoneCheck = ZoneManagerHelpData.Instance.listOfAllZones[current];
 
         UIManager.Instance.ChangeZoneName(ZoneManagerHelpData.Instance.currentZoneCheck.zoneName);
+
+        GameManager.Instance.StartLevel();
     }
 
     public void ResetZoneManagerData()

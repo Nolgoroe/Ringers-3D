@@ -19,11 +19,10 @@ public enum CraftingMats
     RedRibbon,
     SilverNugget,
     //Amber,
-    //BlueFelt,
     MoonStone,
     //VenerableOakBranch,
     //MoonwellWater,
-    ScarletPimpernel,
+    Scarletpimpernel,
     //Saphire,
     //Hay,
     //CloverBunch,
@@ -32,10 +31,10 @@ public enum CraftingMats
     //JadeShard,
     NettleTears,
     FlameBlossom,
-    DewDrops,
     //SilkThread,
     //MoonDust,
     //DustCrystal
+    BlueFelt,
 }
 public enum CraftingMatType
 {
@@ -64,8 +63,8 @@ public class PlayerManager : MonoBehaviour
 
     public List<CraftingMatEntry> craftingMatsInInventory;
 
-    public List<EquipmentData> wardrobeEquipment;
-    public List<EquipmentData> equippedItems;
+    //public List<EquipmentData> wardrobeEquipment;
+    public List<EquipmentData> ownedPowerups;
     public List<EquipmentData> equipmentInCooldown;
 
     public List<HollowCraftObjectData> ownedHollowObjects;
@@ -100,21 +99,21 @@ public class PlayerManager : MonoBehaviour
             HollowCraftAndOwnedManager.Instance.RefreshOwnedScreen();
         }
 
-        if (wardrobeEquipment.Count > 0)
-        {
-            foreach (EquipmentData ED in wardrobeEquipment)
-            {
-                WardrobeManager.Instance.SpawnWardrobeEquipment(ED);
-            }
-        }
+        //if (wardrobeEquipment.Count > 0)
+        //{
+        //    foreach (EquipmentData ED in wardrobeEquipment)
+        //    {
+        //        WardrobeManager.Instance.SpawnWardrobeEquipment(ED);
+        //    }
+        //}
 
-        if (equippedItems.Count > 0)
-        {
-            foreach (EquipmentData ED in equippedItems)
-            {
-                WardrobeManager.Instance.EquipMe(ED);
-            }
-        }
+        //if (ownedPowerups.Count > 0)
+        //{
+        //    foreach (EquipmentData ED in ownedPowerups)
+        //    {
+        //        WardrobeManager.Instance.EquipMe(ED);
+        //    }
+        //}
 
         HandleItemCooldowns();
     }
@@ -153,7 +152,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void PopulatePowerUps()
     {
-        foreach (EquipmentData ED in equippedItems)
+        foreach (EquipmentData ED in ownedPowerups)
         {
             activePowerups.Add(ED.power);
 
@@ -263,7 +262,7 @@ public class PlayerManager : MonoBehaviour
 
     public bool SearchEquippedItemsForMatch(EquipmentData ED)
     {
-        foreach (EquipmentData edEquipped in equippedItems)
+        foreach (EquipmentData edEquipped in ownedPowerups)
         {
             if (ED.name == edEquipped.name)
             {
@@ -276,13 +275,13 @@ public class PlayerManager : MonoBehaviour
     }
     public void SearchWardrobeForMatch(EquipmentData ED)
     {
-        foreach (EquipmentData edWardrobe in wardrobeEquipment)
-        {
-            if (ED.name == edWardrobe.name)
-            {
-                edWardrobe.nextTimeAvailable = "";
-                return;
-            }
-        }
+        //foreach (EquipmentData edWardrobe in wardrobeEquipment)
+        //{
+        //    if (ED.name == edWardrobe.name)
+        //    {
+        //        edWardrobe.nextTimeAvailable = "";
+        //        return;
+        //    }
+        //}
     }
 }
