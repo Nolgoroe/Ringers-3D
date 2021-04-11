@@ -18,5 +18,7 @@ public class LevelScriptableObject : ScriptableObject
     public bool[] lootSlices;
     public bool[] limiterSlices;
     public LootPacks[] RewardBags;
+
+    public SummonedAnimalData[] possibleAnimalsInLevel;
     //public bool isRandomDistributionToSlices;
 }

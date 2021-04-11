@@ -7500,7 +7500,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 323caf8bfc5d68e4f893c0280e681dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeTillGiveDrewDrop: 120
+  timeTillGiveDrewDropStatic: 0
+  timeLeftToGiveDrop: 0
   maxDrops: 30
   savedDateTime: 
   path: 
@@ -7924,7 +7925,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1323445853}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &410746903
 MonoBehaviour:
@@ -24268,9 +24269,9 @@ Transform:
   - {fileID: 1036107953}
   - {fileID: 1327377648}
   - {fileID: 957099884}
+  - {fileID: 1519852636}
   - {fileID: 410746902}
   - {fileID: 1420606481}
-  - {fileID: 1519852636}
   - {fileID: 1584428789}
   - {fileID: 905888097}
   - {fileID: 361145274}
@@ -27181,7 +27182,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1323445853}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1420606482
 MonoBehaviour:
@@ -28855,8 +28856,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1519852636}
   - component: {fileID: 1519852637}
+  - component: {fileID: 1519852638}
   m_Layer: 0
-  m_Name: Hollow Animal Manager
+  m_Name: Animal Data Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28874,7 +28876,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1323445853}
-  m_RootOrder: 11
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1519852637
 MonoBehaviour:
@@ -28890,7 +28892,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pageNumInspector: 0
   maxPageNum: 4
-  unlockedAnimals: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000
   pageImages:
   - {fileID: 3011804433652769530}
   - {fileID: 1569877136}
@@ -28930,6 +28931,20 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f71cc1ca3b06b2a4e895c6fa2ca0cee2, type: 3}
   - {fileID: 21300000, guid: 2798ff07d9e9287459379a9b70e2bab3, type: 3}
   - {fileID: 21300000, guid: 4c85a511ed3508f479edef05f427db52, type: 3}
+--- !u!114 &1519852638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519852635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f149bdf7d9f6754699475e80ff8aecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unlockedAnimals: 
+  currentLevelAnimal: 16
 --- !u!1 &1521003335
 GameObject:
   m_ObjectHideFlags: 0
@@ -37068,7 +37083,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleBoardPrefab: {fileID: 6382559071292991177, guid: 0379f269da8f3aa46bc62a2f1709c2be,
     type: 3}
-  backGroundPrefab: {fileID: 7787483982027392345, guid: c72b187ea8763b749ba817eb16a87c90,
+  backGroundPrefab: {fileID: 2604704759779227561, guid: c72b187ea8763b749ba817eb16a87c90,
     type: 3}
   clipPrefab: {fileID: 4176704889398601467, guid: ff432a4cdfd3d8c4ab183be2d82d571e,
     type: 3}
@@ -37079,7 +37094,7 @@ MonoBehaviour:
   clipManager: {fileID: 0}
   sliceManager: {fileID: 0}
   powerupManager: {fileID: 0}
-  currentLevel: {fileID: 11400000, guid: dcda13ed4c8ea244fb95b0dda40dc8db, type: 2}
+  currentLevel: {fileID: 0}
   csvParser: {fileID: 1887064406}
   currentFilledCellCount: 0
   unsuccessfullConnectionCount: 0

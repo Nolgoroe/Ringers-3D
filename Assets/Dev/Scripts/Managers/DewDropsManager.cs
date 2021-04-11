@@ -91,11 +91,11 @@ public class DewDropsManager : MonoBehaviour
 
         if (Application.platform == RuntimePlatform.Android)
         {
-            string path = Application.persistentDataPath + "/DewDropInfo.txt";
+            path = Application.persistentDataPath + "/DewDropInfo.txt";
         }
         else
         {
-            string path = Application.dataPath + "/DewDropInfo.txt";
+            path = Application.dataPath + "/DewDropInfo.txt";
         }
         File.WriteAllText(path, savedData);
     }
@@ -104,11 +104,11 @@ public class DewDropsManager : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.Android)
         {
-            string path = Application.persistentDataPath + "/DewDropInfo.txt";
+            path = Application.persistentDataPath + "/DewDropInfo.txt";
         }
         else
         {
-            string path = Application.dataPath + "/DewDropInfo.txt";
+            path = Application.dataPath + "/DewDropInfo.txt";
         }
         JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
     }

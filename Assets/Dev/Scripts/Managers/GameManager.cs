@@ -68,14 +68,46 @@ public class GameManager : MonoBehaviour
 
         if (backGroundPrefab)
         {
-            Instantiate(backGroundPrefab, destroyOutOfLevel);
+            GameObject go = Instantiate(backGroundPrefab, destroyOutOfLevel);
+
+            AnimalPrefabData data = InstantiateAnimals(go);
+
+            if (data != null)
+            {
+                AnimalsManager.Instance.currentLevelAnimal = data.animalType;
+            }
+            else
+            {
+                Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
+            }
         }
+
 
         powerupManager.instnatiatedZonesCounter = 0;
 
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelNum);
     }
 
+    AnimalPrefabData InstantiateAnimals(GameObject parent)
+    {
+        if (currentLevel.possibleAnimalsInLevel.Length != 0)
+        {
+            if (currentLevel.possibleAnimalsInLevel.Length == 1)
+            {
+                GameObject summoned = Instantiate(currentLevel.possibleAnimalsInLevel[0].animalPrefab, parent.transform);
+                return summoned.GetComponent<AnimalPrefabData>();
+            }
+            else
+            {
+                GameObject summoned = Instantiate(currentLevel.possibleAnimalsInLevel[Random.Range(0, currentLevel.possibleAnimalsInLevel.Length)].animalPrefab, parent.transform);
+                return summoned.GetComponent<AnimalPrefabData>();
+            }
+        }
+        else
+        {
+            return null;
+        }
+    }
     public void ChooseLevel(int levelNum)
     {
         currentLevel = (LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/Level " + levelNum);
@@ -113,6 +145,7 @@ public class GameManager : MonoBehaviour
 
     public void CheckEndLevel()
     {
+        UIManager.Instance.DisableCommitButton();
         if (currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0)
         {
             if (ZoneManagerHelpData.Instance.currentZoneCheck)
@@ -125,6 +158,8 @@ public class GameManager : MonoBehaviour
 
             StartCoroutine(AnimationManager.instance.StartEndLevelAnim());
             Debug.Log("YOU WIN");
+
+            AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevel.worldName, currentLevel.levelNum);
         }
         else
@@ -198,5 +233,4 @@ public class GameManager : MonoBehaviour
 
         ChooseLevel(currentLevel.levelNum + 1); ///// THIS ALSO STARTS THE LEVEL
     }
-
 }

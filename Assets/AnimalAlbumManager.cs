@@ -4,26 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-[Serializable]
-public enum AnimalsInGame
-{
-    Fox,
-    Bear,
-    Ram,
-    Turtle,
-    Elephant,
-    Deer,
-    Firefly,
-    Dog,
-    Cat,
-    Sheep,
-    Bull,
-    Worm,
-    Zebra,
-    Lion,
-    Giraffe,
-    Panda
-}
 
 
 [Serializable]
@@ -38,8 +18,6 @@ public class AnimalAlbumManager : MonoBehaviour
     public static AnimalAlbumManager Instance;
     public int pageNumInspector = 0;
     public int maxPageNum = 4;
-
-    public List<AnimalsInGame> unlockedAnimals;
 
     public AlbumImageAnimalData[] pageImages;
 
@@ -58,7 +36,10 @@ public class AnimalAlbumManager : MonoBehaviour
 
         for (int i = 0; i < System.Enum.GetValues(typeof(AnimalsInGame)).Length; i++)
         {
-            animalEnumToSprite.Add((AnimalsInGame)i, animalSprites[i]);
+            if((AnimalsInGame)i != AnimalsInGame.None)
+            {
+                animalEnumToSprite.Add((AnimalsInGame)i, animalSprites[i]);
+            }
         }
     }
 
@@ -73,7 +54,7 @@ public class AnimalAlbumManager : MonoBehaviour
 
     public void CheckHasAnimal(AlbumImageAnimalData data)
     {
-        if(data.isUnlocked = unlockedAnimals.Contains(data.imageAnimalEnum))
+        if(data.isUnlocked = AnimalsManager.Instance.unlockedAnimals.Contains(data.imageAnimalEnum))
         {
             data.animalImage.sprite = animalEnumToSprite[data.imageAnimalEnum];
         }

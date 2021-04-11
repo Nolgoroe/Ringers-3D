@@ -282,6 +282,12 @@ public class UIManager : MonoBehaviour
         commitButton.interactable = true;
         commitButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
     }
+
+    public void DisableCommitButton()
+    {
+        commitButton.gameObject.SetActive(false);
+    }
+
     public void UnlockLevels()
     {
         foreach (int ID in ZoneManager.Instance.unlockedZoneID)
