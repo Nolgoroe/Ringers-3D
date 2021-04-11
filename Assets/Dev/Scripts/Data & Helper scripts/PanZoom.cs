@@ -115,7 +115,7 @@ public class PanZoom : MonoBehaviour
 
                     float Difference = CurrentMagnitude - PrevMagnitude;
 
-                    Zoom(Difference * 0.01f);
+                    //Zoom(Difference * 0.01f);
                 }
             }
             else
@@ -125,29 +125,29 @@ public class PanZoom : MonoBehaviour
         }
     }
 
-    public void Zoom(float Increment)
-    {
-        isZoom = true;
-        mainCam.orthographicSize = Mathf.Clamp(mainCam.orthographicSize - Increment, MinZoom, MaxZoom);
+    //public void Zoom(float Increment)
+    //{
+    //    isZoom = true;
+    //    mainCam.orthographicSize = Mathf.Clamp(mainCam.orthographicSize - Increment, MinZoom, MaxZoom);
 
-        currentZoom = mainCam.orthographicSize;
+    //    currentZoom = mainCam.orthographicSize;
 
-        if(currentZoom >= MinZoom + 1)
-        {
-            ZoneManager.Instance.DiactiavteLevelDisplay();
-        }
-        else
-        {
-            ZoneManager.Instance.ActivateLevelDisplay();
-        }
+    //    if(currentZoom >= MinZoom + 1)
+    //    {
+    //        ZoneManager.Instance.DiactiavteLevelDisplay();
+    //    }
+    //    else
+    //    {
+    //        ZoneManager.Instance.ActivateLevelDisplay();
+    //    }
 
-        vertExtent = mainCam.orthographicSize;
-        horzExtent = vertExtent * Screen.width / Screen.height;
+    //    vertExtent = mainCam.orthographicSize;
+    //    horzExtent = vertExtent * Screen.width / Screen.height;
 
 
-        Vector3 pos = new Vector3(Target.position.x, Target.position.y, -18);
-        pos.x = Mathf.Clamp(pos.x, leftBound, rightBound);
-        pos.y = Mathf.Clamp(pos.y, bottomBound, topBound);
-        mainCam.transform.position = pos;
-    }
+    //    Vector3 pos = new Vector3(Target.position.x, Target.position.y, -18);
+    //    pos.x = Mathf.Clamp(pos.x, leftBound, rightBound);
+    //    pos.y = Mathf.Clamp(pos.y, bottomBound, topBound);
+    //    mainCam.transform.position = pos;
+    //}
 }

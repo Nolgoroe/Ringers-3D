@@ -131,5 +131,11 @@ public class SortMaster : MonoBehaviour
         //        WED.gameObject.SetActive(true);
         //    }
         //}
-    } 
+    }
+
+    public void SortMatInventory(CraftingMatType matToSort)
+    {
+        Debug.Log(matToSort);
+        MaterialsAndForgeManager.Instance.RefreshMaterialBagSort(matToSort);
+    }
 }

@@ -25,7 +25,7 @@ public class UIManager : MonoBehaviour
     public GameObject usingPowerupText;
     public GameObject youWinScreen, youLoseText;
 
-    public Text /*hubGoldText,*/ hubRubyText, dewDropsText, dewDropsTextTime;
+    public Text /*hubGoldText,*/ hubRubyText/*, dewDropsText*/, dewDropsTextTime;
 
     public TMP_Text /*gameplayGoldText,*/ gameplayRubyText, gameplayDewDropsText;
     public TMP_Text currentLevelName;
@@ -35,13 +35,11 @@ public class UIManager : MonoBehaviour
     //public Button[] levelButtons;
 
     public ButtonsPerZone[] buttonsPerZone;
-
+    public InventorySortButtonData[] inventorySortButtons;
 
     public Vector3 hubCameraPos;
 
     public static bool isUsingUI;
-
-
     private void Start()
     {
         Instance = this;
@@ -99,7 +97,7 @@ public class UIManager : MonoBehaviour
         isUsingUI = false;
 
         Camera.main.orthographic = true;
-        Camera.main.orthographicSize = 5f;
+        Camera.main.orthographicSize = 9f;
         Camera.main.transform.position = hubCameraPos;
 
         if (currentCanvas == gameplayCanvas)
@@ -156,6 +154,8 @@ public class UIManager : MonoBehaviour
         itemForgeCanvas.SetActive(true);
 
         isUsingUI = true;
+
+        SortMaster.Instance.SortMatInventory(CraftingMatType.Gem); //// For now we always open the inventory sorted on gems
     }
     public void OpenHollowCraftAndOwnedZone()
     {
@@ -282,12 +282,10 @@ public class UIManager : MonoBehaviour
         commitButton.interactable = true;
         commitButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
     }
-
     public void DisableCommitButton()
     {
         commitButton.gameObject.SetActive(false);
     }
-
     public void UnlockLevels()
     {
         foreach (int ID in ZoneManager.Instance.unlockedZoneID)
@@ -322,7 +320,6 @@ public class UIManager : MonoBehaviour
         //gameplayGoldText.text = PlayerManager.Instance.goldCount.ToString();
         gameplayRubyText.text = PlayerManager.Instance.rubyCount.ToString();
     }
-
     public void ToggleAnimalAlbum(bool Open)
     {
         if (Open)
@@ -335,5 +332,21 @@ public class UIManager : MonoBehaviour
         {
             animalAlbum.SetActive(false);
         }
+    }
+    public void ChangeInventorySortButtonSprites(int buttonID)
+    {
+        foreach (InventorySortButtonData ISBD in inventorySortButtons)
+        {
+            if (ISBD.id != buttonID)
+            {
+                ISBD.transformImage.sprite = ISBD.notSelectedSprite;
+            }
+            else
+            {
+                ISBD.transformImage.sprite = ISBD.selectedSprite;
+            }
+        }
+
+        SortMaster.Instance.SortMatInventory((CraftingMatType)buttonID);
     }
 }

@@ -10,7 +10,7 @@ public enum CraftingMats
 {
     None,
     Wood,
-    Stone,
+    SunDew,
     //PurpleFlower,
     //FireShard,
     //Feather,
@@ -30,11 +30,11 @@ public enum CraftingMats
     //BirchBark,
     //JadeShard,
     NettleTears,
-    FlameBlossom,
+    MossFleck,
     //SilkThread,
     //MoonDust,
     //DustCrystal
-    BlueFelt,
+    RedClay,
 }
 public enum CraftingMatType
 {
@@ -78,7 +78,7 @@ public class PlayerManager : MonoBehaviour
     {
         Instance = this;
 
-        MaterialsAndForgeManager.Instance.PopulateMaterialBag();
+        MaterialsAndForgeManager.Instance.PopulateMaterialBagAll();
 
         if (Application.platform == RuntimePlatform.Android)
         {
