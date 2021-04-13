@@ -10,6 +10,7 @@ public class PanZoom : MonoBehaviour
     public float MinZoom = 1;
     public float MaxZoom = 8;
     public float currentZoom = 0;
+    public float addedOffsetTop = 2, addedOffsetBottom = 2;
 
     Touch touch;
 
@@ -67,8 +68,8 @@ public class PanZoom : MonoBehaviour
             leftBound = (horzExtent - (SpriteBounds.bounds.size.x / 2.0f));
             rightBound = ((SpriteBounds.bounds.size.x / 2.0f - horzExtent));
 
-            bottomBound = ((vertExtent - SpriteBounds.rect.size.y / 2.0f)) / SpriteBounds.pixelsPerUnit;
-            topBound = ((SpriteBounds.rect.size.y / 2.0f - vertExtent)) / SpriteBounds.pixelsPerUnit;
+            bottomBound = ((vertExtent - SpriteBounds.rect.size.y / 2.0f)) / SpriteBounds.pixelsPerUnit + 2;
+            topBound = ((SpriteBounds.rect.size.y / 2.0f - vertExtent)) / SpriteBounds.pixelsPerUnit + 2;
 
             if (Input.touchCount > 0)
             {

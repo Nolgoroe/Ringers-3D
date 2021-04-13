@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
     public Text /*hubGoldText,*/ hubRubyText/*, dewDropsText*/, dewDropsTextTime;
 
     public TMP_Text /*gameplayGoldText,*/ gameplayRubyText, gameplayDewDropsText;
-    public TMP_Text currentLevelName;
+    //public TMP_Text currentLevelName;
 
     public Button commitButton;
     public Button nextLevelFromWinScreen;
@@ -86,10 +86,10 @@ public class UIManager : MonoBehaviour
         hudCanvasUI.SetActive(false);
         mainMenu.SetActive(true);
     }
-    public void ChangeZoneName(string name)
-    {
-        currentLevelName.text = name;
-    }
+    //public void ChangeZoneName(string name)
+    //{
+    //    currentLevelName.text = name;
+    //}
     public void ToHud(GameObject currentCanvas)
     {
         PlayerManager.Instance.activePowerups.Clear();

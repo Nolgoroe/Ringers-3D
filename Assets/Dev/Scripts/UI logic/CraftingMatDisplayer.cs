@@ -8,7 +8,7 @@ using System.Linq;
 public class CraftingMatDisplayer : MonoBehaviour
 {
     public RawImage materialImage;
-    public Image textBG;
+    //public Image textBG;
     public TMP_Text materialCount;
 
 
@@ -24,13 +24,15 @@ public class CraftingMatDisplayer : MonoBehaviour
 
         //CMN.indexMatInPlayerInventory = i; //// Nice trick - ask Alon what he thinks
 
-        if (CME.amount >= amountRequired)
-        {
-            textBG.color = Color.white;
-        }
-        else
-        {
-            textBG.color = Color.red;
-        }
+        //if (CME.amount >= amountRequired)
+        //{
+        //    textBG.color = Color.white;
+        //}
+        //else
+        //{
+        //    textBG.color = Color.red;
+        //}
+
+        //textBG.color = new Color(textBG.color.r, textBG.color.g, textBG.color.b,1);
     }
 }
