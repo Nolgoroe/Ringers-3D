@@ -21737,6 +21737,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fox_AnimationReleaseTailUp
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: b90411e273e997e4d8d89bbef2a7657f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 882147293395272169, guid: b90411e273e997e4d8d89bbef2a7657f,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -21762,6 +21767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14d4cc7bcb0fe224f96b20ea5c39f993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
 --- !u!1 &1190300274
 GameObject:
   m_ObjectHideFlags: 0
