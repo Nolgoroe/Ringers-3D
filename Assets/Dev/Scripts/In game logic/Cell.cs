@@ -68,7 +68,8 @@ public class Cell : MonoBehaviour
 
             if(GameManager.Instance.currentFilledCellCount == GameManager.Instance.currentLevel.cellsCountInLevel)
             {
-                UIManager.Instance.ActivateCommitButton();
+                UIManager.Instance.DisplayEndLevelMessage();
+                //UIManager.Instance.ActivateCommitButton();
             }
         }
 

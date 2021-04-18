@@ -30,13 +30,13 @@ public class AnimationManager : MonoBehaviour
     public bool noWaitParticles;
     public bool noWaitPullIn;
     public ParticleSystem midPieceParticle;
-    public List<SubPiece> temp;
+    public List<SubPiece> tempSubPieceArray;
 
     public timeWaitPull minMaxWait;
     void Start()
     {
         instance = this;
-        temp = new List<SubPiece>();
+        tempSubPieceArray = new List<SubPiece>();
         fadeImage.gameObject.SetActive(false);
     }
 
@@ -47,7 +47,7 @@ public class AnimationManager : MonoBehaviour
     }
     public IEnumerator StartEndLevelAnim()
     {
-        temp.AddRange(ConnectionManager.Instance.subPiecesOnBoard);
+        tempSubPieceArray.AddRange(ConnectionManager.Instance.subPiecesOnBoard);
 
         GameObject[] turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
 
@@ -83,11 +83,11 @@ public class AnimationManager : MonoBehaviour
         for (int i = 0; i < ConnectionManager.Instance.subPiecesOnBoard.Length; i++)
         {
 
-            int rand = Random.Range(0, temp.Count);
+            int rand = Random.Range(0, tempSubPieceArray.Count);
 
-            PullIn(temp[rand]);
+            PullIn(tempSubPieceArray[rand]);
 
-            temp.RemoveAt(rand);
+            tempSubPieceArray.RemoveAt(rand);
 
             if (!noWaitPullIn)
             {

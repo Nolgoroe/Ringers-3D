@@ -14,7 +14,7 @@ public class AnimalAnimationControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown("x"))
         {
             anim.SetTrigger("Play End Level");
         }   

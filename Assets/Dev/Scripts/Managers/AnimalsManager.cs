@@ -40,10 +40,11 @@ public class AnimalsManager : MonoBehaviour
 {
     public static AnimalsManager Instance;
 
-    
     public List<AnimalsInGame> unlockedAnimals;
 
     public AnimalsInGame currentLevelAnimal;
+
+    public GameObject statueToSwap;
 
     string path;
 
@@ -117,5 +118,16 @@ public class AnimalsManager : MonoBehaviour
     public void GiveAnimal()
     {
         CheckUnlockAnimal(currentLevelAnimal);
+    }
+
+    public void RescueAnimalSequance()
+    {
+        AnimalPrefabData APD = statueToSwap.GetComponent<AnimalPrefabData>();
+        Instantiate(APD.animatedPrefab, statueToSwap.transform.parent);
+
+
+        Destroy(statueToSwap.gameObject);
+        statueToSwap = null;
+
     }
 }

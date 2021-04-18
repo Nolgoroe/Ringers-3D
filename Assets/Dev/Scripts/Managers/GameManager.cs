@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
 
         gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
 
-        UIManager.Instance.GetCommitButton(gameBoard); 
+        //UIManager.Instance.GetCommitButton(gameBoard); 
         clipManager.Init();
         sliceManager.Init();
         cursorControl.Init();
@@ -94,13 +94,13 @@ public class GameManager : MonoBehaviour
         {
             if (currentLevel.possibleAnimalsInLevel.Length == 1)
             {
-                GameObject summoned = Instantiate(currentLevel.possibleAnimalsInLevel[0].animalPrefab, parent.transform);
-                return summoned.GetComponent<AnimalPrefabData>();
+                AnimalsManager.Instance.statueToSwap = Instantiate(currentLevel.possibleAnimalsInLevel[0].animalPrefab, parent.transform);
+                return AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
             }
             else
             {
-                GameObject summoned = Instantiate(currentLevel.possibleAnimalsInLevel[Random.Range(0, currentLevel.possibleAnimalsInLevel.Length)].animalPrefab, parent.transform);
-                return summoned.GetComponent<AnimalPrefabData>();
+                AnimalsManager.Instance.statueToSwap = Instantiate(currentLevel.possibleAnimalsInLevel[Random.Range(0, currentLevel.possibleAnimalsInLevel.Length)].animalPrefab, parent.transform);
+                return AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
             }
         }
         else
@@ -145,7 +145,7 @@ public class GameManager : MonoBehaviour
 
     public void CheckEndLevel()
     {
-        UIManager.Instance.DisableCommitButton();
+        //UIManager.Instance.DisableCommitButton();
         if (currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0)
         {
             if (ZoneManagerHelpData.Instance.currentZoneCheck)
@@ -160,6 +160,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("YOU WIN");
 
             AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
+            AnimalsManager.Instance.RescueAnimalSequance();
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevel.worldName, currentLevel.levelNum);
         }
         else

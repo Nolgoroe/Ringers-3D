@@ -5,4 +5,6 @@ using UnityEngine;
 public class AnimalPrefabData : MonoBehaviour
 {
     public AnimalsInGame animalType;
+
+    public GameObject animatedPrefab;
 }

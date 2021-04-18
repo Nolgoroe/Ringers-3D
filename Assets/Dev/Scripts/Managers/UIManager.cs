@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.Linq;
+using System;
 
 [System.Serializable]
 public class ButtonsPerZone
@@ -30,7 +31,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text /*gameplayGoldText,*/ gameplayRubyText, gameplayDewDropsText;
     //public TMP_Text currentLevelName;
 
-    public Button commitButton;
+    //public Button commitButton;
     public Button nextLevelFromWinScreen;
     //public Button[] levelButtons;
 
@@ -86,6 +87,12 @@ public class UIManager : MonoBehaviour
         hudCanvasUI.SetActive(false);
         mainMenu.SetActive(true);
     }
+
+    public void DisplayEndLevelMessage()
+    {
+
+    }
+
     //public void ChangeZoneName(string name)
     //{
     //    currentLevelName.text = name;
@@ -270,22 +277,24 @@ public class UIManager : MonoBehaviour
     {
         youLoseText.SetActive(true);
     }
-    public void GetCommitButton(GameObject board)
-    {
-        commitButton = board.GetComponentInChildren<Button>();
-        commitButton.onClick.AddListener(GameManager.Instance.CheckEndLevel);
-        Debug.Log(commitButton.onClick);
-        commitButton.interactable = false;
-    }
-    public void ActivateCommitButton()
-    {
-        commitButton.interactable = true;
-        commitButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
-    }
-    public void DisableCommitButton()
-    {
-        commitButton.gameObject.SetActive(false);
-    }
+    //public void GetCommitButton(GameObject board)
+    //{
+    //    commitButton = board.GetComponentInChildren<Button>();
+    //    commitButton.onClick.AddListener(GameManager.Instance.CheckEndLevel);
+    //    Debug.Log(commitButton.onClick);
+    //    commitButton.interactable = false;
+    //}
+
+    //public void ActivateCommitButton()
+    //{
+    //    commitButton.interactable = true;
+    //    commitButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
+    //}
+
+    //public void DisableCommitButton()
+    //{
+    //    commitButton.gameObject.SetActive(false);
+    //}
     public void UnlockLevels()
     {
         foreach (int ID in ZoneManager.Instance.unlockedZoneID)
