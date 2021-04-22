@@ -1714,7 +1714,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Pfft.. Whatever
+  m_text: YEAAA
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -1743,7 +1743,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 67.7
+  m_fontSize: 100
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1784,10 +1784,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 96515101}
-    characterCount: 15
+    characterCount: 5
     spriteCount: 0
-    spaceCount: 1
-    wordCount: 2
+    spaceCount: 0
+    wordCount: 1
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -1982,7 +1982,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 102883391}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1327377649}
+        m_MethodName: EndLevelMessageNo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &102883391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7181,7 +7192,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 182.4}
+  m_AnchoredPosition: {x: 0, y: 791}
   m_SizeDelta: {x: 1440, y: 689.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &354544730
@@ -11255,8 +11266,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 239}
-  m_SizeDelta: {x: 512, y: 256}
+  m_AnchoredPosition: {x: 0, y: 131.8003}
+  m_SizeDelta: {x: 426.4, y: 213.2}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &484550858
 MonoBehaviour:
@@ -18423,8 +18434,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 82}
-  m_SizeDelta: {x: 418.6, y: 209.3}
+  m_AnchoredPosition: {x: 0, y: 1}
+  m_SizeDelta: {x: 348.6, y: 174.3}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &931588539
 MonoBehaviour:
@@ -21411,7 +21422,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1120907003}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1327377649}
+        m_MethodName: EndLevelMessageYes
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1120907003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24903,6 +24925,7 @@ MonoBehaviour:
   hudCanvasUI: {fileID: 1536781372}
   itemForgeCanvas: {fileID: 162410061}
   gameplayCanvas: {fileID: 656761284}
+  gameplayCanvasBotom: {fileID: 2137641457}
   ringersHutDisplay: {fileID: 242193359}
   ringersHutUICanvas: {fileID: 1686607921}
   hollowCraftAndOwned: {fileID: 73511793}
@@ -24916,6 +24939,7 @@ MonoBehaviour:
   usingPowerupText: {fileID: 328277894}
   youWinScreen: {fileID: 2082944395}
   youLoseText: {fileID: 1980807752}
+  endLevelSureMessage: {fileID: 368536774}
   hubRubyText: {fileID: 567888831}
   dewDropsTextTime: {fileID: 282663968}
   gameplayRubyText: {fileID: 1959880729}
@@ -28556,7 +28580,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Are you sure you want to place this tile? You will lose the level!
+  m_text: Are you sure you want to place this tile? You will end the level!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -28585,7 +28609,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 90.95
+  m_fontSize: 91.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -28626,7 +28650,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1434593623}
-    characterCount: 66
+    characterCount: 65
     spriteCount: 0
     spaceCount: 13
     wordCount: 14
@@ -32625,8 +32649,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279253859
-  m_fontColor: {r: 0.38823533, g: 0.23137257, b: 0.0627451, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

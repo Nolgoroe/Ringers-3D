@@ -66,16 +66,16 @@ public class AnimationManager : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(waitTimeParticlesStart);
+        //yield return new WaitForSeconds(waitTimeParticlesStart);
 
-        foreach (Cell C in ConnectionManager.Instance.cells)
-        {
-            ActivateParticleEffectsMiddle(C.pieceHeld.midPiece);
-            if (!noWaitParticles)
-            {
-                yield return new WaitForSeconds(waitBetweenPieceMove);
-            }
-        }
+        //foreach (Cell C in ConnectionManager.Instance.cells)
+        //{
+        //    ActivateParticleEffectsMiddle(C.pieceHeld.midPiece);
+        //    if (!noWaitParticles)
+        //    {
+        //        yield return new WaitForSeconds(waitBetweenPieceMove);
+        //    }
+        //}
 
         yield return new WaitForSeconds(waitTimePullIn);
 
@@ -122,9 +122,12 @@ public class AnimationManager : MonoBehaviour
             sr.color = newColor;
         });
 
+        AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
+
         yield return new WaitForSeconds(waitTimeFadeOut);
         yield return new WaitUntil((() => fadeImage.color.a <= 0.1f));
         fadeImage.gameObject.SetActive(false);
+
 
         yield return null;
     }

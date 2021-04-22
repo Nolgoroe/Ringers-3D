@@ -25,7 +25,7 @@ public enum PieceSymbol
 public class Piece : MonoBehaviour
 {
     public SubPiece rightChild, leftChild;
-    public GameObject midPiece;
+    //public GameObject midPiece;
 
     public bool isLocked;
     public bool partOfBoard;

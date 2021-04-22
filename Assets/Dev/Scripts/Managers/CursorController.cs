@@ -215,9 +215,20 @@ public class CursorController : MonoBehaviour
 
                 bool newPiece = followerTarget.transform.parent.CompareTag("Clip");
 
-                if (newPiece && !cell.isFull)
+                if (GameManager.Instance.currentFilledCellCount + 1 != GameManager.Instance.currentLevel.cellsCountInLevel)
                 {
-                    GameManager.Instance.clipManager.PopulateSlot(followerTarget.transform.parent);
+                    if (newPiece && !cell.isFull)
+                    {
+                        GameManager.Instance.clipManager.PopulateSlot(followerTarget.transform.parent);
+                        Debug.Log("!!!!!!!!!!!!!!!!!");
+                    }
+                }
+                else
+                {
+                    GameManager.Instance.clipManager.emptyClip = followerTarget.transform.parent;
+                    GameManager.Instance.clipManager.latestPiece = followerTarget;
+                    Debug.Log("**************");
+
                 }
 
 

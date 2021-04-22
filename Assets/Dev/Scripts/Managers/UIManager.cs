@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    public GameObject mainMenu, hudCanvasDisplay,hudCanvasUI, itemForgeCanvas, gameplayCanvas, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
+    public GameObject mainMenu, hudCanvasDisplay,hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasBotom, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
     public GameObject forge, itemBag;
     public GameObject craft, owned;
     public GameObject animalAlbum;
@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
     public GameObject wardrobe;
     public GameObject usingPowerupText;
     public GameObject youWinScreen, youLoseText;
+    public GameObject endLevelSureMessage;
 
     public Text /*hubGoldText,*/ hubRubyText/*, dewDropsText*/, dewDropsTextTime;
 
@@ -66,6 +67,7 @@ public class UIManager : MonoBehaviour
         owned.SetActive(false);
         hollowCraftAndOwned.SetActive(false);
         animalAlbum.SetActive(false);
+        endLevelSureMessage.SetActive(false);
 
         RefreshGoldAndRubyDisplay();
 
@@ -90,6 +92,21 @@ public class UIManager : MonoBehaviour
 
     public void DisplayEndLevelMessage()
     {
+        endLevelSureMessage.SetActive(true);
+    }
+    public void EndLevelMessageNo()
+    {
+        endLevelSureMessage.SetActive(false);
+
+        GameManager.Instance.clipManager.RepopulateLatestClip();
+    }
+    public void EndLevelMessageYes()
+    {
+        endLevelSureMessage.SetActive(false);
+
+        gameplayCanvasBotom.SetActive(false);
+        
+        GameManager.Instance.CheckEndLevel();
 
     }
 

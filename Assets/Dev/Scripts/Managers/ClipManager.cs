@@ -7,6 +7,11 @@ public class ClipManager : MonoBehaviour
 {
     public Transform[] slots;
     public GameObject piece;
+    public Transform emptyClip;
+    public Transform latestPiece;
+
+    public Vector3 originalPiecePos;
+    public Quaternion originalPieceRot;
 
     //public Material[] gameColors;
     //public Texture2D[] gameSymbols;
@@ -34,6 +39,9 @@ public class ClipManager : MonoBehaviour
         {
             PopulateSlot(s);
         }
+
+        originalPiecePos = piece.transform.position;
+        originalPieceRot = piece.transform.rotation;
     }
 
     public void PopulateSlot(Transform s)
@@ -72,5 +80,16 @@ public class ClipManager : MonoBehaviour
         {
             PopulateSlot(slots[i]);
         }
+    }
+
+    public void RepopulateLatestClip() //// In case player clicked the hell no option after placing last piece
+    {
+        latestPiece.transform.parent.GetComponent<Cell>().RemovePiece();
+
+        latestPiece.transform.SetParent(emptyClip);
+        latestPiece.localPosition = originalPiecePos;
+        latestPiece.localRotation = originalPieceRot;
+
+        GameManager.Instance.currentFilledCellCount--;
     }
 }

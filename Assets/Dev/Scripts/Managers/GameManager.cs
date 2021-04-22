@@ -159,8 +159,6 @@ public class GameManager : MonoBehaviour
             StartCoroutine(AnimationManager.instance.StartEndLevelAnim());
             Debug.Log("YOU WIN");
 
-            AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
-            AnimalsManager.Instance.RescueAnimalSequance();
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevel.worldName, currentLevel.levelNum);
         }
         else

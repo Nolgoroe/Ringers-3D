@@ -22,7 +22,7 @@ public class ConnectionManager : MonoBehaviour
 
     public GameObject lootEffectPrefab;
 
-    public Material rockLIT,rockUnLIT;
+    //public Material rockLIT,rockUnLIT;
 
     private void Start()
     {

@@ -70,6 +70,8 @@ public class AnimalsManager : MonoBehaviour
 
     public void CheckUnlockAnimal(AnimalsInGame toUnclock)
     {
+        StartCoroutine(RescueAnimalSequance());
+
         if (!unlockedAnimals.Contains(currentLevelAnimal))
         {
             unlockedAnimals.Add(toUnclock);
@@ -120,7 +122,7 @@ public class AnimalsManager : MonoBehaviour
         CheckUnlockAnimal(currentLevelAnimal);
     }
 
-    public void RescueAnimalSequance()
+    public IEnumerator RescueAnimalSequance()
     {
         AnimalPrefabData APD = statueToSwap.GetComponent<AnimalPrefabData>();
         Instantiate(APD.animatedPrefab, statueToSwap.transform.parent);
@@ -129,5 +131,6 @@ public class AnimalsManager : MonoBehaviour
         Destroy(statueToSwap.gameObject);
         statueToSwap = null;
 
+        yield return null;
     }
 }

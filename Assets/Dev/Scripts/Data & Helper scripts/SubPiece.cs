@@ -63,6 +63,7 @@ public class SubPiece : MonoBehaviour
         Material[] matArray = rend.materials;
         //matArray[1] = ConnectionManager.Instance.rockLIT;
         matArray[0].EnableKeyword("_EMISSION");
+        StartCoroutine(LerpColors(matArray, matArray[0].GetColor("_EmissionColor")));
         //matArray[0].SetColor("_EmissionMap", Color.white);
         //matArray[0].SetColor("_EmissionColor", Color.red);
         rend.materials = matArray;
@@ -77,5 +78,16 @@ public class SubPiece : MonoBehaviour
         //matArray[0].SetColor("_EmissionColor", Color.white);
         rend.materials = matArray;
 
+    }
+
+    IEnumerator LerpColors(Material[] matArray, Color targetColor)
+    {
+        matArray[0].SetColor("_EmissionColor", Color.black);
+
+        while (matArray[0].GetColor("_EmissionColor") != targetColor)
+        {
+            matArray[0].SetColor("_EmissionColor", Color.Lerp(Color.black, targetColor, Mathf.Lerp(0, 1)));
+            yield return null;
+        }
     }
 }
