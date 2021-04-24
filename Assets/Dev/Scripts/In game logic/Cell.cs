@@ -8,11 +8,11 @@ public class Cell : MonoBehaviour
     public bool isOuter;
     public int cellIndex;
     public Piece pieceHeld;
-    public bool isLimited;
+    //public bool isLimited;
     public GameObject lockSprite;
+    public GameObject lockSpriteCellRight, lockSpriteCellLeft;
     public Transform rightParticleZone, leftParticleZone;
     public Transform interconnectedRightParticleZone, interconnectedLeftParticleZone;
-
     public void AddPiece(Transform followerTarget, bool isNew)
     {
         isFull = true;
@@ -68,7 +68,10 @@ public class Cell : MonoBehaviour
 
             if(GameManager.Instance.currentFilledCellCount == GameManager.Instance.currentLevel.cellsCountInLevel)
             {
-                UIManager.Instance.DisplayEndLevelMessage();
+                ConnectionManager.Instance.CallConnection(cellIndex, isOuter);
+                GameManager.Instance.CheckEndLevel();
+
+                return;
                 //UIManager.Instance.ActivateCommitButton();
             }
         }
@@ -122,46 +125,52 @@ public class Cell : MonoBehaviour
         Cell leftCell = ConnectionManager.Instance.cells[ConnectionManager.Instance.CheckIntRangeCells(cellIndex - 1)];
         Cell rightCell = ConnectionManager.Instance.cells[ConnectionManager.Instance.CheckIntRangeCells(cellIndex + 1)];
 
-        if (pieceHeld.leftChild.isBadConnection)
+        if (leftCell.isFull)
         {
-            GameManager.Instance.unsuccessfullConnectionCount--;
-            pieceHeld.leftChild.isBadConnection = false;
-            int i = ConnectionManager.Instance.CheckIntRange(pieceHeld.leftChild.subPieceIndex - 1);
-
-        }
-        else
-        {
-            //pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
-            pieceHeld.leftChild.SetDisconnectedMaterial();
-
-            if (leftCell.isFull)
+            if (pieceHeld.leftChild.isBadConnection)
             {
-                if (!leftCell.pieceHeld.rightChild.isBadConnection)
+                GameManager.Instance.unsuccessfullConnectionCount--;
+                pieceHeld.leftChild.isBadConnection = false;
+                int i = ConnectionManager.Instance.CheckIntRange(pieceHeld.leftChild.subPieceIndex - 1);
+
+            }
+            else
+            {
+                //pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+                pieceHeld.leftChild.SetDisconnectedMaterial();
+
+                if (leftCell.isFull)
                 {
-                    //leftCell.pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
-                    leftCell.pieceHeld.rightChild.SetDisconnectedMaterial();
+                    if (!leftCell.pieceHeld.rightChild.isBadConnection)
+                    {
+                        //leftCell.pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+                        leftCell.pieceHeld.rightChild.SetDisconnectedMaterial();
+                    }
                 }
             }
         }
 
-        if (pieceHeld.rightChild.isBadConnection)
+        if (rightCell.isFull)
         {
-            GameManager.Instance.unsuccessfullConnectionCount--;
-            pieceHeld.rightChild.isBadConnection = false;
-            int i = ConnectionManager.Instance.CheckIntRange(pieceHeld.rightChild.subPieceIndex + 1);
-
-        }
-        else
-        {
-            //pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
-            pieceHeld.rightChild.SetDisconnectedMaterial();
-
-            if (rightCell.isFull)
+            if (pieceHeld.rightChild.isBadConnection)
             {
-                if (!rightCell.pieceHeld.leftChild.isBadConnection)
+                GameManager.Instance.unsuccessfullConnectionCount--;
+                pieceHeld.rightChild.isBadConnection = false;
+                int i = ConnectionManager.Instance.CheckIntRange(pieceHeld.rightChild.subPieceIndex + 1);
+
+            }
+            else
+            {
+                //pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+                pieceHeld.rightChild.SetDisconnectedMaterial();
+
+                if (rightCell.isFull)
                 {
-                    //rightCell.pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
-                    rightCell.pieceHeld.leftChild.SetDisconnectedMaterial();
+                    if (!rightCell.pieceHeld.leftChild.isBadConnection)
+                    {
+                        //rightCell.pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+                        rightCell.pieceHeld.leftChild.SetDisconnectedMaterial();
+                    }
                 }
             }
         }

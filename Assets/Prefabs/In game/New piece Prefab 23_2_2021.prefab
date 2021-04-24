@@ -109,6 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   symbolOfPiece: 5
   colorOfPiece: 5
+  connectedColor: {r: 1, g: 0.972549, b: 0.7411765, a: 1}
   rend: {fileID: 3608196929416577028}
   isBadConnection: 0
   subPieceIndex: 0
@@ -256,7 +257,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rightChild: {fileID: 2761754088569961456}
   leftChild: {fileID: 4087056887105063248}
-  midPiece: {fileID: 1405538297330814600}
   isLocked: 0
   partOfBoard: 0
 --- !u!65 &4801052585063378316
@@ -381,6 +381,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   symbolOfPiece: 5
   colorOfPiece: 5
+  connectedColor: {r: 1, g: 0.972549, b: 0.7411765, a: 1}
   rend: {fileID: 3120019251313842015}
   isBadConnection: 0
   subPieceIndex: 0

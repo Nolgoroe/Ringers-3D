@@ -85,8 +85,8 @@ public class LootManager : MonoBehaviour
     /////// LIST FOR REWARDBAGS
     public List<RewardBag> listOfRewardBags;
 
-    [Header("During Gameplay")]
-    public List<LootPacks> currentLevelLootToGive;
+    //[Header("During Gameplay")]
+    //public List<LootPacks> currentLevelLootToGive;
 
     public Dictionary<LootPacks, RewardBag> lootpackEnumToRewardBag;
 
@@ -94,12 +94,14 @@ public class LootManager : MonoBehaviour
 
     public List<CraftingMats> craftingMatsLootForLevel;
 
+
+    public int rubiesToRecieveInLevel;
     private void Start()
     {
         Instance = this;
 
         craftingMatsLootForLevel = new List<CraftingMats>();
-        currentLevelLootToGive = new List<LootPacks>();
+        //currentLevelLootToGive = new List<LootPacks>();
         itemTableToListOfMats = new Dictionary<ItemTables, List<CraftingMats>>();
         lootpackEnumToRewardBag = new Dictionary<LootPacks, RewardBag>();
 
@@ -116,38 +118,13 @@ public class LootManager : MonoBehaviour
     
     public void GiveLoot()
     {
-        foreach (LootPacks LP in currentLevelLootToGive)
+        if(rubiesToRecieveInLevel > 0)
         {
-            RollOnTable(LP);
+            DisplayLootGoldRubyToPlayer(rubiesToRecieveInLevel, rubySprite.texture);
+            PlayerManager.Instance.AddRubies(rubiesToRecieveInLevel);
         }
-
-        currentLevelLootToGive.Clear();
-
-        if (giveKey)
-        {
-            Instantiate(keyPrefab, GameManager.Instance.destroyOutOfLevel);
-            ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey = true;
-            ZoneManagerHelpData.Instance.nextZoneCheck.isUnlocked = true;
-            ZoneManagerHelpData.Instance.nextZoneCheck.maxLevelReachedInZone = 1;
-            ZoneManagerHelpData.Instance.nextZoneCheck.zoneHeader.sprite = Resources.Load<Sprite>(ZoneManagerHelpData.Instance.nextZoneCheck.unlockedZonePath);
-
-            ZoneManager.Instance.unlockedZoneID.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
-
-            giveKey = false;
-        }
-    }
-    public void RollOnTable(LootPacks lootPack)
-    {
-        //if (lootPack == LootPacks.None)
-        //{
-        //    return;
-        //}
-
-        RewardBag rewardBagByLootPack = new RewardBag();
-
-        rewardBagByLootPack = lootpackEnumToRewardBag[lootPack];
-
-        if (!rewardBagByLootPack.IsMoneyOrRubies)
+        
+        if(craftingMatsLootForLevel.Count > 0)
         {
             foreach (CraftingMats CM in craftingMatsLootForLevel)
             {
@@ -156,8 +133,54 @@ public class LootManager : MonoBehaviour
                 PlayerManager.Instance.AddMaterials(CM, 5); //////// Figure out how to get amount from outside dynamically
 
             }
+        }
 
-            craftingMatsLootForLevel.Clear();
+        craftingMatsLootForLevel.Clear();
+
+        //foreach (LootPacks LP in currentLevelLootToGive)
+        //{
+        //    RollOnTable(LP);
+        //}
+
+        //currentLevelLootToGive.Clear();
+
+        if (giveKey)
+        {
+            Instantiate(keyPrefab, GameManager.Instance.destroyOutOfLevel);
+            ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey = true;
+            ZoneManagerHelpData.Instance.nextZoneCheck.isUnlocked = true;
+            ZoneManagerHelpData.Instance.nextZoneCheck.maxLevelReachedInZone = 1;
+            //ZoneManagerHelpData.Instance.nextZoneCheck.zoneHeader.sprite = Resources.Load<Sprite>(ZoneManagerHelpData.Instance.nextZoneCheck.unlockedZonePath);
+
+            ZoneManager.Instance.unlockedZoneID.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
+
+            giveKey = false;
+        }
+
+        PlayerManager.Instance.SavePlayerData();
+    }
+    public void RollOnTable(LootPacks lootPack)
+    {
+        //if (lootPack == LootPacks.None)
+        //{
+        //    return;
+        //}
+
+        //RewardBag rewardBagByLootPack = new RewardBag();
+
+        //rewardBagByLootPack = lootpackEnumToRewardBag[lootPack];
+
+        //if (!rewardBagByLootPack.IsMoneyOrRubies)
+        //{
+            //foreach (CraftingMats CM in craftingMatsLootForLevel)
+            //{
+            //    DisplayLootMaterialsToPlayer(5, CM);
+
+            //    PlayerManager.Instance.AddMaterials(CM, 5); //////// Figure out how to get amount from outside dynamically
+
+            //}
+
+            //craftingMatsLootForLevel.Clear();
             //List<CraftingMats> craftingMatsFromTables = new List<CraftingMats>();
 
 
@@ -185,14 +208,14 @@ public class LootManager : MonoBehaviour
             //        craftingMatsFromTables.Clear();
             //    }
             //}
-        }
-        else
-        {
-            int[] valuesToRecieve;
-            valuesToRecieve = rewardBagByLootPack.minMaxValues;
+        //}
+        //else
+        //{
+            //int[] valuesToRecieve;
+            //valuesToRecieve = rewardBagByLootPack.minMaxValues;
 
 
-            int randomNum = (Random.Range(valuesToRecieve[0], valuesToRecieve[1] + 1));
+            //int randomNum = (Random.Range(valuesToRecieve[0], valuesToRecieve[1] + 1));
 
             //if (lootPack.ToString().Contains("M"))
             //{
@@ -201,16 +224,17 @@ public class LootManager : MonoBehaviour
             //}
             //else
             //{
-                DisplayLootGoldRubyToPlayer(randomNum, rubySprite.texture);
-                PlayerManager.Instance.AddRubies(randomNum);
+                //DisplayLootGoldRubyToPlayer(randomNum, rubySprite.texture);
+                //PlayerManager.Instance.AddRubies(randomNum);
             //}
 
-        }
+        //}
     }
 
     public void ResetLevelLootData()
     {
-        currentLevelLootToGive.Clear();
+        //currentLevelLootToGive.Clear();
+        rubiesToRecieveInLevel = 0;
         craftingMatsLootForLevel.Clear();
     }
 

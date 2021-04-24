@@ -6,6 +6,7 @@ public class SubPiece : MonoBehaviour
 {
     public PieceSymbol symbolOfPiece;
     public PieceColor colorOfPiece;
+    public Color connectedColor;
 
     int randomColor;
     int randomSymbol;
@@ -44,6 +45,7 @@ public class SubPiece : MonoBehaviour
         //rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[random]);
         rend.material = GameManager.Instance.clipManager.colorsToMats[randomColor].colorMats[randomSymbol];
         symbolOfPiece = (PieceSymbol)randomSymbol;
+
     }
 
     public void RefreshPiece()
@@ -60,10 +62,18 @@ public class SubPiece : MonoBehaviour
 
     public void SetConnectedMaterial()
     {
+        Debug.Log("what?");
         Material[] matArray = rend.materials;
         //matArray[1] = ConnectionManager.Instance.rockLIT;
-        matArray[0].EnableKeyword("_EMISSION");
-        StartCoroutine(LerpColors(matArray, matArray[0].GetColor("_EmissionColor")));
+        if (!matArray[0].IsKeywordEnabled("_EMISSION"))
+        {
+            matArray[0].EnableKeyword("_EMISSION");
+        }
+
+        matArray[0].SetColor("_EmissionColor", Color.black);
+
+
+        StartCoroutine(LerpColors(matArray, connectedColor));
         //matArray[0].SetColor("_EmissionMap", Color.white);
         //matArray[0].SetColor("_EmissionColor", Color.red);
         rend.materials = matArray;
@@ -71,9 +81,13 @@ public class SubPiece : MonoBehaviour
 
     public void SetDisconnectedMaterial()
     {
+        Debug.Log("what????");
+
         Material[] matArray = rend.materials;
         //matArray[1] = ConnectionManager.Instance.rockUnLIT;
-        matArray[0].DisableKeyword("_EMISSION");
+        StartCoroutine(LerpColors(matArray, Color.black));
+
+        //matArray[0].DisableKeyword("_EMISSION");
         //matArray[0].SetColor("_EmissionMap", Color.white);
         //matArray[0].SetColor("_EmissionColor", Color.white);
         rend.materials = matArray;
@@ -82,11 +96,24 @@ public class SubPiece : MonoBehaviour
 
     IEnumerator LerpColors(Material[] matArray, Color targetColor)
     {
-        matArray[0].SetColor("_EmissionColor", Color.black);
+
+        float timeToLerp = ConnectionManager.Instance.timeToLerpConnectionEmission;
+        float timePassed = 0;
 
         while (matArray[0].GetColor("_EmissionColor") != targetColor)
         {
-            matArray[0].SetColor("_EmissionColor", Color.Lerp(Color.black, targetColor, Mathf.Lerp(0, 1)));
+            Debug.Log("???");
+            timePassed += Time.deltaTime;
+
+            if (timePassed > timeToLerp)
+            {
+                break;
+            }
+
+            matArray[0].SetColor("_EmissionColor", Color.Lerp(matArray[0].GetColor("_EmissionColor"), targetColor, timePassed/timeToLerp));
+
+            Debug.Log(matArray[0].GetColor("_EmissionColor"));
+
             yield return null;
         }
     }

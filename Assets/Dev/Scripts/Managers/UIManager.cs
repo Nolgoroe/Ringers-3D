@@ -17,15 +17,20 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    public GameObject mainMenu, hudCanvasDisplay,hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasBotom, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
+    public GameObject mainMenu, hudCanvasDisplay,hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasBotom, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
     public GameObject forge, itemBag;
     public GameObject craft, owned;
     public GameObject animalAlbum;
     public GameObject OptionsScreen;
     public GameObject wardrobe;
     public GameObject usingPowerupText;
-    public GameObject youWinScreen, youLoseText;
+    public GameObject youWinScreen, loseScreen/*, youLoseText*/;
     public GameObject endLevelSureMessage;
+    public GameObject clipsAboutToEndMessage;
+    public GameObject sureWantToRestartWithLoot;
+    public GameObject sureWantToRestartNoLoot;
+
+    public Transform sureLevelRestartLootDislpay;
 
     public Text /*hubGoldText,*/ hubRubyText/*, dewDropsText*/, dewDropsTextTime;
 
@@ -62,12 +67,16 @@ public class UIManager : MonoBehaviour
         wardrobe.SetActive(false);
         usingPowerupText.SetActive(false);
         youWinScreen.SetActive(false);
-        youLoseText.SetActive(false);
+        //youLoseText.SetActive(false);
         craft.SetActive(true); //// so this will be the first screen displayed, or else everyone will be turned off
         owned.SetActive(false);
         hollowCraftAndOwned.SetActive(false);
         animalAlbum.SetActive(false);
         endLevelSureMessage.SetActive(false);
+        clipsAboutToEndMessage.SetActive(false);
+        sureWantToRestartWithLoot.SetActive(false);
+        sureWantToRestartNoLoot.SetActive(false);
+        loseScreen.SetActive(false);
 
         RefreshGoldAndRubyDisplay();
 
@@ -89,25 +98,116 @@ public class UIManager : MonoBehaviour
         hudCanvasUI.SetActive(false);
         mainMenu.SetActive(true);
     }
-
     public void DisplayEndLevelMessage()
     {
         endLevelSureMessage.SetActive(true);
+        isUsingUI = true;
     }
     public void EndLevelMessageNo()
     {
         endLevelSureMessage.SetActive(false);
 
         GameManager.Instance.clipManager.RepopulateLatestClip();
+        isUsingUI = false;
+
     }
     public void EndLevelMessageYes()
     {
+        isUsingUI = false;
+
         endLevelSureMessage.SetActive(false);
 
-        gameplayCanvasBotom.SetActive(false);
-        
-        GameManager.Instance.CheckEndLevel();
 
+        DisplayLoseScreen();
+    }
+    public void DisplayClipsAboutToEndMessage()
+    {
+        clipsAboutToEndMessage.SetActive(true);
+        isUsingUI = true;
+    }
+    public void ClipsAboutToEndMessageNo()
+    {
+        isUsingUI = false;
+
+        clipsAboutToEndMessage.SetActive(false);
+
+    }
+    public void ClipsAboutToEndMessageYes()
+    {
+        isUsingUI = false;
+
+        clipsAboutToEndMessage.SetActive(false);
+        //LootManager.Instance.currentLevelLootToGive.Clear();
+        LootManager.Instance.craftingMatsLootForLevel.Clear();
+        DisplayLoseScreen();
+
+    }
+    public void SureWantToRestartMessage()
+    {
+        isUsingUI = true;
+
+        if (LootManager.Instance.rubiesToRecieveInLevel > 0 || LootManager.Instance.craftingMatsLootForLevel.Count > 0)
+        {
+            sureWantToRestartWithLoot.SetActive(true);
+            DisplayRestartLoot();
+        }
+        else
+        {
+            sureWantToRestartNoLoot.SetActive(true); 
+        }
+    }
+    private void DisplayRestartLoot()
+    {
+        if(LootManager.Instance.rubiesToRecieveInLevel > 0)
+        {
+            GameObject go = Instantiate(LootManager.Instance.lootDisplayPrefab, sureLevelRestartLootDislpay);
+
+            CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
+
+            CMD.materialImage.texture = LootManager.Instance.rubySprite.texture;
+            CMD.materialCount.gameObject.SetActive(false);
+        }
+
+        foreach (CraftingMats CM in LootManager.Instance.craftingMatsLootForLevel)
+        {
+            GameObject go = Instantiate(LootManager.Instance.lootDisplayPrefab, sureLevelRestartLootDislpay);
+
+            CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
+
+            CMD.materialImage.texture = Resources.Load(MaterialsAndForgeManager.Instance.materialSpriteByName[CM]) as Texture2D;
+            CMD.materialCount.gameObject.SetActive(false);
+        }
+    }
+    public void SureWantToRestartMessageNo(bool withLoot)
+    {
+        isUsingUI = false;
+
+        if (withLoot)
+        {
+            sureWantToRestartWithLoot.SetActive(false);
+            ClearLootDisplays();
+        }
+        else
+        {
+            sureWantToRestartNoLoot.SetActive(false);
+        }
+    }
+    public void SureWantToRestartMessageYes(bool withLoot)
+    {
+        isUsingUI = false;
+
+
+        if (withLoot)
+        {
+            sureWantToRestartWithLoot.SetActive(false);
+            ClearLootDisplays();
+        }
+        else
+        {
+            sureWantToRestartNoLoot.SetActive(false);
+        }
+
+        GameManager.Instance.RestartCurrentLevel();
     }
 
     //public void ChangeZoneName(string name)
@@ -116,6 +216,8 @@ public class UIManager : MonoBehaviour
     //}
     public void ToHud(GameObject currentCanvas)
     {
+        isUsingUI = false;
+
         PlayerManager.Instance.activePowerups.Clear();
         PlayerManager.Instance.SavePlayerData();
         isUsingUI = false;
@@ -134,7 +236,8 @@ public class UIManager : MonoBehaviour
             gameplayCanvas.SetActive(false);
             OptionsScreen.SetActive(false);
             youWinScreen.SetActive(false);
-            youLoseText.SetActive(false);
+            //youLoseText.SetActive(false);
+            loseScreen.SetActive(false);
 
             GameManager.Instance.DestroyAllLevelChildern();
 
@@ -288,11 +391,37 @@ public class UIManager : MonoBehaviour
     }
     public void WinLevel()
     {
+        ClearLootDisplays();
+        isUsingUI = true;
+
         youWinScreen.SetActive(true);
     }
-    public void LoseLevel()
+
+    public void DisplayLoseScreen()
     {
-        youLoseText.SetActive(true);
+        //gameplayCanvasBotom.SetActive(false);
+
+        ClearLootDisplays();
+        isUsingUI = true;
+
+        loseScreen.SetActive(true);
+    }
+
+    private void ClearLootDisplays()
+    {
+        foreach (Transform child in sureLevelRestartLootDislpay)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+    public void RestartLevelFromLoseScreenUI()
+    {
+        isUsingUI = false;
+        //gameplayCanvasBotom.SetActive(true);
+
+        loseScreen.SetActive(false);
+
+        TurnOnGameplayUI();
     }
     //public void GetCommitButton(GameObject board)
     //{
@@ -374,5 +503,15 @@ public class UIManager : MonoBehaviour
         }
 
         SortMaster.Instance.SortMatInventory((CraftingMatType)buttonID);
+    }
+    public void TurnOffGameplayUI()
+    {
+        gameplayCanvasBotom.SetActive(false);
+        gameplayCanvasTop.SetActive(false);
+    }
+    public void TurnOnGameplayUI()
+    {
+        gameplayCanvasBotom.SetActive(true);
+        gameplayCanvasTop.SetActive(true);
     }
 }

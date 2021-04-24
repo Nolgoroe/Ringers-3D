@@ -19,7 +19,7 @@ public class Zone : MonoBehaviour
 
     string path;
 
-    public string levelDonePath, levelFirstTimeIconPath, unlockedZonePath, lockedZonePath;
+    public string levelDonePath, levelFirstTimeIconPath/*, unlockedZonePath*//*, lockedZonePath*/;
 
     [HideInInspector]
     public Image zoneHeader;
@@ -46,14 +46,14 @@ public class Zone : MonoBehaviour
                 zoneHeader = child.GetComponent<Image>();
             }
         }
-        if (isUnlocked)
-        {
-            zoneHeader.sprite = Resources.Load<Sprite>(unlockedZonePath);
-        }
-        else
-        {
-            zoneHeader.sprite = Resources.Load<Sprite>(lockedZonePath);
-        }
+        //if (isUnlocked)
+        //{
+        //    zoneHeader.sprite = Resources.Load<Sprite>(unlockedZonePath);
+        //}
+        //else
+        //{
+        //    zoneHeader.sprite = Resources.Load<Sprite>(lockedZonePath);
+        //}
     }
     [ContextMenu("Save Game Data")]
     public void SaveZone()

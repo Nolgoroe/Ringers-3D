@@ -127,14 +127,15 @@ public class PowerUpManager : MonoBehaviour
     }
     public void Deal()
     {
-        GameManager.Instance.clipManager.clipCount--;
-        if(GameManager.Instance.clipManager.clipCount == 0)
+        if(GameManager.Instance.clipManager.clipCount-1 == 0)
         {
-            LootManager.Instance.currentLevelLootToGive.Clear();
-            UIManager.Instance.LoseLevel();
+            UIManager.Instance.DisplayClipsAboutToEndMessage();
         }
-
-        GameManager.Instance.clipManager.RefreshSlots();
+        else
+        {
+            GameManager.Instance.clipManager.clipCount--;
+            GameManager.Instance.clipManager.RefreshSlots();
+        }
     }
     public void ExtraDealPower(PowerupProperties prop)
     {

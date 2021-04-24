@@ -38,7 +38,7 @@ public class CursorController : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.gameStarted)
+        if (GameManager.Instance.gameStarted && !UIManager.isUsingUI)
         {
             if (PowerUpManager.IsUsingPowerUp)
             {

@@ -20,6 +20,7 @@ public class Slice : MonoBehaviour
 
     public int sliceIndex;
 
+    public List<Cell> connectedCells;
     public void SetSliceData(Transform parent, SliceCatagory sc, bool islocking, bool isLooting, bool isLimiting)
     {
         int sliceCatagorycount = System.Enum.GetValues(typeof(SliceCatagory)).Length;
@@ -33,6 +34,23 @@ public class Slice : MonoBehaviour
 
         InstantiateSlice(sliceSymbolcount, sliceColorcount);
 
+        connectedCells.Add(CheckIntRangeSliceCells(sliceIndex)); ///// CHECK TO SEE IF CAN DO BETTER
+        connectedCells.Add(CheckIntRangeSliceCells(sliceIndex-1));  ///// CHECK TO SEE IF CAN DO BETTER
+
+        if (isLock)
+        {
+            foreach (Cell c in connectedCells)
+            {
+                if (c.cellIndex == sliceIndex)
+                {
+                    c.lockSpriteCellLeft.gameObject.SetActive(true);
+                }
+                else
+                {
+                    c.lockSpriteCellRight.gameObject.SetActive(true);
+                }
+            }
+        }
         //if (!isLock && !isLimiter)
         //{
         //    InstantiateLootSlice(sliceSymbolcount, sliceColorcount);
@@ -67,6 +85,46 @@ public class Slice : MonoBehaviour
     public void InstantiateSlice(int pieceSymbolEnumCount, int pieceColorEnumCount)
     {
         //GameObject go = Instantiate(GameManager.Instance.sliceManager.lootSlicePrefab, transform);
+        if (!isLimiter)
+        {
+            InstantiateNonLimiterSlice(pieceSymbolEnumCount, pieceColorEnumCount);
+        }
+        else
+        {
+            InstantiateLimiterSlice(pieceSymbolEnumCount, pieceColorEnumCount);
+        }
+    }
+
+    private void InstantiateLimiterSlice(int pieceSymbolEnumCount, int pieceColorEnumCount)
+    {
+        GameObject go = Instantiate(GameManager.Instance.sliceManager.slicePrefabLimiter, transform);
+        SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
+
+        switch (sliceCatagory)
+        {
+            case SliceCatagory.Shape:
+                sliceSymbol = PieceSymbol.None;
+                sr.sprite = GameManager.Instance.sliceManager.limiterSliceSymbolToSprite[sliceSymbol];
+                break;
+            case SliceCatagory.Color:
+                sliceColor = PieceColor.None;
+                sr.sprite = GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor];
+                break;
+            case SliceCatagory.SpecificShape:
+                sliceSymbol = (PieceSymbol)Random.Range(0, pieceSymbolEnumCount - 2);
+                sr.sprite = GameManager.Instance.sliceManager.limiterSliceSymbolToSprite[sliceSymbol];
+                break;
+            case SliceCatagory.SpecificColor:
+                sliceColor = (PieceColor)Random.Range(0, pieceColorEnumCount - 2);
+                sr.sprite = GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor];
+                break;
+            default:
+                break;
+        }
+    }
+
+    void InstantiateNonLimiterSlice(int pieceSymbolEnumCount, int pieceColorEnumCount)
+    {
         GameObject go = Instantiate(GameManager.Instance.sliceManager.slicePrefab, transform);
         Renderer rend = go.GetComponent<Renderer>();
         Material[] matArray = rend.materials;
@@ -80,13 +138,13 @@ public class Slice : MonoBehaviour
             case SliceCatagory.Shape:
                 sliceSymbol = PieceSymbol.None;
                 //sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol];
-                matArray[1].SetTexture("_BaseMap", GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol]);
+                matArray[0].SetTexture("_BaseMap", GameManager.Instance.sliceManager.sliceSymbolToSprite[sliceSymbol]);
                 //sr.sprite = GameManager.Instance.sliceManager.lootSliceSymbolDict[sliceSymbol];
                 break;
             case SliceCatagory.Color:
                 sliceColor = PieceColor.None;
                 //sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
-                matArray[1].SetTexture("_BaseMap", GameManager.Instance.sliceManager.piececolorToSprite[sliceColor]);
+                matArray[0].SetTexture("_BaseMap", GameManager.Instance.sliceManager.slicecolorToSprite[sliceColor]);
                 //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
                 //sr.sprite = GameManager.Instance.sliceManager.lootSliceColorDict[sliceColor];
 
@@ -94,13 +152,13 @@ public class Slice : MonoBehaviour
             case SliceCatagory.SpecificShape:
                 sliceSymbol = (PieceSymbol)Random.Range(0, pieceSymbolEnumCount - 2);
                 //sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol];
-                matArray[1].SetTexture("_BaseMap", GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol]);
+                matArray[0].SetTexture("_BaseMap", GameManager.Instance.sliceManager.sliceSymbolToSprite[sliceSymbol]);
                 //sr.sprite = GameManager.Instance.sliceManager.lootSliceSymbolDict[sliceSymbol];
                 break;
             case SliceCatagory.SpecificColor:
                 sliceColor = (PieceColor)Random.Range(0, pieceColorEnumCount - 2);
                 //sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
-                matArray[1].SetTexture("_BaseMap", GameManager.Instance.sliceManager.piececolorToSprite[sliceColor]);
+                matArray[0].SetTexture("_BaseMap", GameManager.Instance.sliceManager.slicecolorToSprite[sliceColor]);
                 //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[sliceColor];
                 //sr.sprite = GameManager.Instance.sliceManager.lootSliceColorDict[sliceColor];
                 break;
@@ -108,7 +166,6 @@ public class Slice : MonoBehaviour
                 break;
         }
     }
-
     //public void InstantiateLootSlice(int pieceSymbolEnumCount, int pieceColorEnumCount)
     //{
     //    //GameObject go = Instantiate(GameManager.Instance.sliceManager.lootSlicePrefab, transform);
@@ -245,5 +302,21 @@ public class Slice : MonoBehaviour
         isLoot = false;
         isLimiter = false;
         fulfilledCondition = false;
+    }
+
+    public Cell CheckIntRangeSliceCells(int num)
+    {
+        if (num < 0)
+        {
+            return ConnectionManager.Instance.cells[ConnectionManager.Instance.cells.Count - 1];
+        }
+        else if (num > ConnectionManager.Instance.cells.Count)
+        {
+            return ConnectionManager.Instance.cells[0];
+        }
+        else
+        {
+            return ConnectionManager.Instance.cells[num];
+        }
     }
 }

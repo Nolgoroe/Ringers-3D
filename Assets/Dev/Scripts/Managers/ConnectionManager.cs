@@ -17,6 +17,7 @@ public class ConnectionManager : MonoBehaviour
 
     public int lengthOfSubPiecesRegular;
     public int lengthOfSubPiecesOuter;
+    public float timeToLerpConnectionEmission;
 
     public ParticleSystem goodConnectionParticle, badConnectionParticle;
 
@@ -111,7 +112,7 @@ public class ConnectionManager : MonoBehaviour
 
                         if (supPieceArray[currentLeft].relevantSlice.isLoot)
                         {
-                            GiveLoot(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
+                            GiveLootFromConnections(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
                         }
 
                         if (supPieceArray[currentLeft].relevantSlice.isLock)
@@ -171,7 +172,7 @@ public class ConnectionManager : MonoBehaviour
                         supPieceArray[currentRight].relevantSlice.fulfilledCondition = true;
                         if (supPieceArray[currentRight].relevantSlice.isLoot)
                         {
-                            GiveLoot(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
+                            GiveLootFromConnections(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
                         }
 
                         if (supPieceArray[currentRight].relevantSlice.isLock)
@@ -309,7 +310,6 @@ public class ConnectionManager : MonoBehaviour
 
         return num;
     }
-
     public int CheckIntRangeCells(int num)
     {
         if (num < 0)
@@ -372,15 +372,15 @@ public class ConnectionManager : MonoBehaviour
 
     }
 
-    public void GiveLoot(Slice relevent, bool isLimiter)
+    public void GiveLootFromConnections(Slice relevent, bool isLimiter)
     {
         Debug.Log("Loot");
         Debug.Log(relevent.lootPack);
 
-        if(relevent.lootPack != LootPacks.None)
-        {
-            LootManager.Instance.currentLevelLootToGive.Add(relevent.lootPack);
-        }
+        //if(relevent.lootPack != LootPacks.None)
+        //{
+        //    LootManager.Instance.currentLevelLootToGive.Add(relevent.lootPack);
+        //}
 
         //LootManager.Instance.RollOnTable(relevent.lootPack);
         if (!isLimiter)
@@ -402,13 +402,15 @@ public class ConnectionManager : MonoBehaviour
                 //    break;
 
                 case 'R':
-                    StartCoroutine(InstantiateLootEffect(relevent,relevent.lootIcon.transform, LootManager.Instance.rubySprite, LootTargetsData.instance.rubyTargetLoot));
+                    //StartCoroutine(InstantiateLootEffect(relevent,relevent.lootIcon.transform, LootManager.Instance.rubySprite, LootTargetsData.instance.rubyTargetLoot));
+                    AddRubiesToLoot(relevent);
                     break;
 
                 case 'I':
                     if (relevent.lootPack != LootPacks.None)
                     {
-                        StartCoroutine(InstantiateLootEffectMaterials(relevent, relevent.lootIcon.transform, LootTargetsData.instance.materialsTargetLoot));
+                        AddMaterialsToLootList(relevent);
+                        //StartCoroutine(InstantiateLootEffectMaterials(relevent, relevent.lootIcon.transform, LootTargetsData.instance.materialsTargetLoot));
                     }
                     break;
 
@@ -427,13 +429,15 @@ public class ConnectionManager : MonoBehaviour
                 //    break;
 
                 case 'R':
-                    StartCoroutine(InstantiateLootEffect(relevent, relevent.lootIcon.transform, relevent.lootIcon.GetComponent<SpriteRenderer>().sprite, LootTargetsData.instance.rubyTargetLoot));
+                    //StartCoroutine(InstantiateLootEffect(relevent, relevent.lootIcon.transform, relevent.lootIcon.GetComponent<SpriteRenderer>().sprite, LootTargetsData.instance.rubyTargetLoot));
+                    AddRubiesToLoot(relevent);
                     break;
 
                 case 'I':
                     if (relevent.lootPack != LootPacks.None)
                     {
-                        StartCoroutine(InstantiateLootEffectMaterials(relevent, relevent.lootIcon.transform, LootTargetsData.instance.materialsTargetLoot));
+                        AddMaterialsToLootList(relevent);
+                        //StartCoroutine(InstantiateLootEffectMaterials(relevent, relevent.lootIcon.transform, LootTargetsData.instance.materialsTargetLoot));
                     }
                     break;
 
@@ -533,89 +537,137 @@ public class ConnectionManager : MonoBehaviour
     }
 
 
-    public IEnumerator InstantiateLootEffect(Slice relevent, Transform instantiateposition, Sprite look, Transform target)
+    //public IEnumerator InstantiateLootEffect(Slice relevent, Transform instantiateposition, Sprite look, Transform target)
+    //{
+    //    int amount = 0;
+    //    switch (relevent.lootPack)
+    //    {
+    //        //case LootPacks.M1:
+    //        //    amount = 2;
+    //        //    break;
+    //        //case LootPacks.M2:
+    //        //    amount = 4;
+    //        //    break;
+    //        //case LootPacks.M3:
+    //        //    amount = 6;
+    //        //    break;
+    //        case LootPacks.R1:
+    //            amount = 2;
+    //            break;
+    //        case LootPacks.R2:
+    //            amount = 4;
+    //            break;
+    //        default:
+    //            break;
+    //    }
+
+    //    for (int i = 0; i < amount; i++)
+    //    {
+
+    //        GameObject go = Instantiate(lootEffectPrefab, instantiateposition.position, Quaternion.identity);
+
+    //        MoveToLootTarget MTLT = go.GetComponent<MoveToLootTarget>();
+    //        MTLT.look = look;
+    //        MTLT.target = target;
+
+    //        MTLT.LeanMove();
+    //        yield return new WaitForSeconds(0.05f);
+    //    }
+
+    //    Destroy(relevent.lootIcon.gameObject);
+    //}
+
+    public void AddRubiesToLoot(Slice relevent)
     {
-        int amount = 0;
-        switch (relevent.lootPack)
-        {
-            //case LootPacks.M1:
-            //    amount = 2;
-            //    break;
-            //case LootPacks.M2:
-            //    amount = 4;
-            //    break;
-            //case LootPacks.M3:
-            //    amount = 6;
-            //    break;
-            case LootPacks.R1:
-                amount = 2;
-                break;
-            case LootPacks.R2:
-                amount = 4;
-                break;
-            default:
-                break;
-        }
+        int[] valuesToRecieve;
 
-        for (int i = 0; i < amount; i++)
-        {
+        RewardBag rewardBagByLootPack = new RewardBag();
 
-            GameObject go = Instantiate(lootEffectPrefab, instantiateposition.position, Quaternion.identity);
+        rewardBagByLootPack = LootManager.Instance.lootpackEnumToRewardBag[relevent.lootPack];
 
-            MoveToLootTarget MTLT = go.GetComponent<MoveToLootTarget>();
-            MTLT.look = look;
-            MTLT.target = target;
+        valuesToRecieve = rewardBagByLootPack.minMaxValues;
 
-            MTLT.LeanMove();
-            yield return new WaitForSeconds(0.05f);
-        }
+        int randomNum = (Random.Range(valuesToRecieve[0], valuesToRecieve[1] + 1));
+
+        LootManager.Instance.rubiesToRecieveInLevel += randomNum;
 
         Destroy(relevent.lootIcon.gameObject);
     }
-
-    public IEnumerator InstantiateLootEffectMaterials(Slice relevent, Transform instantiateposition, Transform target)
+    public void AddMaterialsToLootList(Slice relevent)
     {
         RewardBag rewardBagByLootPack = new RewardBag();
 
         rewardBagByLootPack = LootManager.Instance.lootpackEnumToRewardBag[relevent.lootPack];
 
-        if (!rewardBagByLootPack.IsMoneyOrRubies)
+        List<CraftingMats> craftingMatsFromTables = new List<CraftingMats>();
+
+        for (int i = 0; i < rewardBagByLootPack.Pack.Count; i++)
         {
-            List<CraftingMats> craftingMatsFromTables = new List<CraftingMats>();
+            craftingMatsFromTables.AddRange(LootManager.Instance.itemTableToListOfMats[rewardBagByLootPack.Pack[i]]);
 
+            int chance = Random.Range(1, 101);
 
-            for (int i = 0; i < rewardBagByLootPack.Pack.Count; i++)
+            if (chance > rewardBagByLootPack.chancesPerItemTable[i])
             {
-                craftingMatsFromTables.AddRange(LootManager.Instance.itemTableToListOfMats[rewardBagByLootPack.Pack[i]]);
+                Debug.Log("Youa sucka Fuckkkkaeaeaeaeaeae");
+                craftingMatsFromTables.Clear();
+            }
+            else
+            {
+                int randomMat = Random.Range(0, craftingMatsFromTables.Count);
 
-                int chance = Random.Range(1, 101);
+                Debug.Log(craftingMatsFromTables[randomMat]);
 
-                if (chance > rewardBagByLootPack.chancesPerItemTable[i])
-                {
-                    Debug.Log("Youa sucka Fuckkkkaeaeaeaeaeae");
-                    craftingMatsFromTables.Clear();
-                }
-                else
-                {
-                    int randomMat = Random.Range(0, craftingMatsFromTables.Count);
+                LootManager.Instance.craftingMatsLootForLevel.Add(craftingMatsFromTables[randomMat]);
 
-                    Debug.Log(craftingMatsFromTables[randomMat]);
-
-                    LootManager.Instance.craftingMatsLootForLevel.Add(craftingMatsFromTables[randomMat]);
-
-                    GameObject go = Instantiate(lootEffectPrefab, instantiateposition.position, Quaternion.identity);
-
-                    MoveToLootTarget MTLT = go.GetComponent<MoveToLootTarget>();
-                    MTLT.look = Resources.Load <Sprite>(MaterialsAndForgeManager.Instance.materialSpriteByName[craftingMatsFromTables[randomMat]]);
-                    MTLT.target = target;
-
-                    MTLT.LeanMove();
-                    yield return new WaitForSeconds(0.2f);
-
-                    craftingMatsFromTables.Clear();
-                }
+                craftingMatsFromTables.Clear();
             }
         }
         Destroy(relevent.lootIcon.gameObject);
     }
+    //public IEnumerator InstantiateLootEffectMaterials(Slice relevent, Transform instantiateposition, Transform target)
+    //{
+    //    RewardBag rewardBagByLootPack = new RewardBag();
+
+    //    rewardBagByLootPack = LootManager.Instance.lootpackEnumToRewardBag[relevent.lootPack];
+
+    //    if (!rewardBagByLootPack.IsMoneyOrRubies)
+    //    {
+    //        List<CraftingMats> craftingMatsFromTables = new List<CraftingMats>();
+
+
+    //        for (int i = 0; i < rewardBagByLootPack.Pack.Count; i++)
+    //        {
+    //            craftingMatsFromTables.AddRange(LootManager.Instance.itemTableToListOfMats[rewardBagByLootPack.Pack[i]]);
+
+    //            int chance = Random.Range(1, 101);
+
+    //            if (chance > rewardBagByLootPack.chancesPerItemTable[i])
+    //            {
+    //                Debug.Log("Youa sucka Fuckkkkaeaeaeaeaeae");
+    //                craftingMatsFromTables.Clear();
+    //            }
+    //            else
+    //            {
+    //                int randomMat = Random.Range(0, craftingMatsFromTables.Count);
+
+    //                Debug.Log(craftingMatsFromTables[randomMat]);
+
+    //                LootManager.Instance.craftingMatsLootForLevel.Add(craftingMatsFromTables[randomMat]);
+
+    //                GameObject go = Instantiate(lootEffectPrefab, instantiateposition.position, Quaternion.identity);
+
+    //                MoveToLootTarget MTLT = go.GetComponent<MoveToLootTarget>();
+    //                MTLT.look = Resources.Load <Sprite>(MaterialsAndForgeManager.Instance.materialSpriteByName[craftingMatsFromTables[randomMat]]);
+    //                MTLT.target = target;
+
+    //                MTLT.LeanMove();
+    //                yield return new WaitForSeconds(0.2f);
+
+    //                craftingMatsFromTables.Clear();
+    //            }
+    //        }
+    //    }
+    //    Destroy(relevent.lootIcon.gameObject);
+    //}
 }

@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour
     }
     public void StartLevel()
     {
+        UIManager.Instance.TurnOnGameplayUI();
+
         //Camera.main.orthographicSize = 12;
         Camera.main.orthographic = false;
         Camera.main.fieldOfView = 60f;
@@ -58,9 +60,11 @@ public class GameManager : MonoBehaviour
         sliceManager.Init();
         cursorControl.Init();
 
-        sliceManager.SpawnSlices(currentLevel.slicesToSpawn.Length);
+
         ConnectionManager.Instance.GrabCellList(gameBoard.transform);
         ConnectionManager.Instance.SetLevelConnectionData();
+
+        sliceManager.SpawnSlices(currentLevel.slicesToSpawn.Length);
 
         PlayerManager.Instance.HandleItemCooldowns();
 
@@ -111,6 +115,7 @@ public class GameManager : MonoBehaviour
     public void ChooseLevel(int levelNum)
     {
         currentLevel = (LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/Level " + levelNum);
+
     }
 
     public void DestroyAllLevelChildern()
@@ -163,8 +168,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            LootManager.Instance.currentLevelLootToGive.Clear();
-            UIManager.Instance.LoseLevel();
+            UIManager.Instance.DisplayEndLevelMessage();
+
+            //UIManager.Instance.LoseLevel();
             Debug.Log("You Lose");
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail, currentLevel.worldName, currentLevel.levelNum);
         }
@@ -172,6 +178,11 @@ public class GameManager : MonoBehaviour
         PlayerManager.Instance.SavePlayerData();
     }
 
+    public void LoseLevelAction()
+    {
+        //LootManager.Instance.currentLevelLootToGive.Clear();
+        LootManager.Instance.craftingMatsLootForLevel.Clear();
+    }
     public void WinAfterAnimation()
     {
         if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
@@ -206,6 +217,8 @@ public class GameManager : MonoBehaviour
 
     public void NextLevelFromWinScreen()
     {
+        LootManager.Instance.rubiesToRecieveInLevel = 0;
+
         GameObject[] lootEffects = GameObject.FindGameObjectsWithTag("End Level Loot Effect");
 
         foreach (GameObject GO in lootEffects)
@@ -227,9 +240,11 @@ public class GameManager : MonoBehaviour
 
 
         UIManager.Instance.youWinScreen.SetActive(false);
+        UIManager.Instance.TurnOnGameplayUI();
+        UIManager.isUsingUI = false;
 
         ZoneManagerHelpData.Instance.listOfAllZones[ZoneManagerHelpData.Instance.currentZoneCheck.id].SaveZone();
 
-        ChooseLevel(currentLevel.levelNum + 1); ///// THIS ALSO STARTS THE LEVEL
+        ChooseLevel(currentLevel.levelNum + 1);
     }
 }

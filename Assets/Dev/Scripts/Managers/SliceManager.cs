@@ -18,6 +18,7 @@ public class SliceManager : MonoBehaviour
     //public GameObject lootLockSlicePrefab;
     //public GameObject lootLockLimiterSlicePrefab;
     public GameObject slicePrefab;
+    public GameObject slicePrefabLimiter;
 
     public Transform[] sliceSlots;
 
@@ -36,10 +37,13 @@ public class SliceManager : MonoBehaviour
 
     //public Sprite[] sliceSymbolsSprites;
     public Texture[] sliceColors;
+    public Texture[] sliceSymbolsSprites;
+
+    public Sprite[] limiterSliceColors;
+    public Sprite[] limiterSliceSymbolsSprites;
 
     public Sprite[] sliceLootIcons;
 
-    public Texture[] sliceSymbolsSprites;
 
     //public Dictionary<PieceSymbol, Sprite> lootSliceSymbolDict;
     //public Dictionary<PieceColor, Sprite> lootSliceColorDict;
@@ -52,9 +56,12 @@ public class SliceManager : MonoBehaviour
 
     //public Dictionary<PieceSymbol, Sprite> pieceSymbolToSprite;
     //public Dictionary<PieceColor, Sprite> piececolorToSprite;
-    public Dictionary<PieceSymbol, Texture> pieceSymbolToSprite;
-    public Dictionary<PieceColor, Texture> piececolorToSprite;
-    public Dictionary<PieceColor, Material> pieceColorToColor;
+    public Dictionary<PieceSymbol, Texture> sliceSymbolToSprite;
+    public Dictionary<PieceColor, Texture> slicecolorToSprite;
+
+    public Dictionary<PieceSymbol, Sprite> limiterSliceSymbolToSprite;
+    public Dictionary<PieceColor, Sprite> limiterSlicecolorToSprite;
+    //public Dictionary<PieceColor, Material> pieceColorToColor;
 
     public Dictionary<LootPacks, Sprite> lootToIcon;
 
@@ -70,8 +77,12 @@ public class SliceManager : MonoBehaviour
 
     public void Init()
     {
-        pieceSymbolToSprite = new Dictionary<PieceSymbol, Texture>();
-        piececolorToSprite = new Dictionary<PieceColor, Texture>();
+        sliceSymbolToSprite = new Dictionary<PieceSymbol, Texture>();
+        slicecolorToSprite = new Dictionary<PieceColor, Texture>();
+
+        limiterSliceSymbolToSprite = new Dictionary<PieceSymbol, Sprite>();
+        limiterSlicecolorToSprite = new Dictionary<PieceColor, Sprite>();
+
         //pieceColorToColor = new Dictionary<PieceColor, Material>();
 
         //lootSliceSymbolDict = new Dictionary<PieceSymbol, Sprite>();
@@ -91,22 +102,32 @@ public class SliceManager : MonoBehaviour
 
             if (lootPackName.Contains("I"))
             {
-                lootToIcon.Add((LootPacks)i, sliceLootIcons[sliceLootIcons.Length - 1]); ////// The last sprite in the list is the same sprite for all Loot packes with 'I' in them
+                lootToIcon.Add((LootPacks)i, sliceLootIcons[1]); ////// The last sprite in the list is the same sprite for all Loot packes with 'I' in them
             }
             else
             {
-                lootToIcon.Add((LootPacks)i, sliceLootIcons[i - 1]);
+                lootToIcon.Add((LootPacks)i, sliceLootIcons[0]);
             }
         }
 
         for (int i = 0; i < sliceSymbolsSprites.Length; i++)
         {
-            pieceSymbolToSprite.Add((PieceSymbol)i, sliceSymbolsSprites[i]);
+            sliceSymbolToSprite.Add((PieceSymbol)i, sliceSymbolsSprites[i]);
         }
 
         for (int i = 0; i < sliceColors.Length; i++)
         {
-            piececolorToSprite.Add((PieceColor)i, sliceColors[i]);
+            slicecolorToSprite.Add((PieceColor)i, sliceColors[i]);
+        }
+
+        for (int i = 0; i < limiterSliceSymbolsSprites.Length; i++)
+        {
+            limiterSliceSymbolToSprite.Add((PieceSymbol)i, limiterSliceSymbolsSprites[i]);
+        }
+
+        for (int i = 0; i < limiterSliceColors.Length; i++)
+        {
+            limiterSlicecolorToSprite.Add((PieceColor)i, limiterSliceColors[i]);
         }
 
         //for (int i = 0; i < System.Enum.GetValues(typeof(PieceColor)).Length; i++)
