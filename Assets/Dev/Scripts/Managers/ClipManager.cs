@@ -44,6 +44,7 @@ public class ClipManager : MonoBehaviour
         originalPieceRot = piece.transform.rotation;
     }
 
+
     public void PopulateSlot(Transform s)
     {
         GameObject go = Instantiate(piece, s);

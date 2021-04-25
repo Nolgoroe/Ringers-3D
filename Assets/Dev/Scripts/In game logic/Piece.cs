@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public enum PieceColor
 {
     Purple,
@@ -11,7 +12,7 @@ public enum PieceColor
     Joker,
     None
 }
-
+[System.Serializable]
 public enum PieceSymbol
 {
     FireFly,
@@ -31,7 +32,17 @@ public class Piece : MonoBehaviour
     public bool partOfBoard;
     public void SetPieces()
     {
-        rightChild.SetPiece();
-        leftChild.SetPiece();
+        if (GameManager.Instance.currentLevel.isTutorial)
+        {
+            rightChild.SetPieceTutorial(true);
+            leftChild.SetPieceTutorial(false);
+        }
+        else
+        {
+            rightChild.SetPiece();
+            leftChild.SetPiece();
+        }
+
+        GameManager.Instance.copyOfArrayOfPiecesTutorial.RemoveAt(0);
     }
 }

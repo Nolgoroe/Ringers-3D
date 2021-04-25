@@ -20,5 +20,9 @@ public class LevelScriptableObject : ScriptableObject
     public LootPacks[] RewardBags;
 
     public SummonedAnimalData[] possibleAnimalsInLevel;
+
+    public bool isTutorial;
+    public List<pieceDataStruct> arrayOfPieces;
+
     //public bool isRandomDistributionToSlices;
 }

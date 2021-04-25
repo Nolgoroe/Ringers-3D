@@ -8,8 +8,6 @@ public class SubPiece : MonoBehaviour
     public PieceColor colorOfPiece;
     public Color connectedColor;
 
-    int randomColor;
-    int randomSymbol;
     public Renderer rend;
     //public Renderer symbolHolder;
 
@@ -17,9 +15,12 @@ public class SubPiece : MonoBehaviour
     public int subPieceIndex;
 
     public Slice relevantSlice;
+    int randomColor;
+    int randomSymbol;
 
     public void SetPiece()
     {
+
         ///// Shorten but keep logic
         //random = Random.Range(0, GameManager.Instance.clipManager.gameColors.Length - 1);
         //rend.material.SetColor("_BaseColor", GameManager.Instance.clipManager.gameColors[random]);
@@ -45,6 +46,26 @@ public class SubPiece : MonoBehaviour
         //rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[random]);
         rend.material = GameManager.Instance.clipManager.colorsToMats[randomColor].colorMats[randomSymbol];
         symbolOfPiece = (PieceSymbol)randomSymbol;
+
+    }
+    public void SetPieceTutorial(bool isRight)
+    {
+        if (isRight)
+        {
+            colorOfPiece = GameManager.Instance.copyOfArrayOfPiecesTutorial[0].colorOfPieceRight;
+
+            symbolOfPiece = GameManager.Instance.copyOfArrayOfPiecesTutorial[0].symbolOfPieceRight;
+
+            rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
+        }
+        else
+        {
+            colorOfPiece = GameManager.Instance.copyOfArrayOfPiecesTutorial[0].colorOfPieceLeft;
+
+            symbolOfPiece = GameManager.Instance.copyOfArrayOfPiecesTutorial[0].symbolOfPieceLeft;
+
+            rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
+        }
 
     }
 
