@@ -24,11 +24,14 @@ public class AnimationManager : MonoBehaviour
 
     public float fadingSpeed;
 
+    public float animalWaitTime;
+
     public Image fadeImage;
 
     public bool noWaitPieces;
     public bool noWaitParticles;
     public bool noWaitPullIn;
+    public bool noWaitAnimal;
     public ParticleSystem midPieceParticle;
     public List<SubPiece> tempSubPieceArray;
 
@@ -121,6 +124,11 @@ public class AnimationManager : MonoBehaviour
             newColor.a = val;
             sr.color = newColor;
         });
+
+        if (!noWaitAnimal)
+        {
+            yield return new WaitForSeconds(animalWaitTime);
+        }
 
         AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
 

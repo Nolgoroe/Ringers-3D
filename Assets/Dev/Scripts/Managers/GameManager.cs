@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     public bool gameStarted;
 
     public Vector3 inGameCamPos;
+
+    public List<pieceDataStruct> copyOfArrayOfPiecesTutorial;
     private void Awake()
     {
         Instance = this;
@@ -92,6 +94,60 @@ public class GameManager : MonoBehaviour
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelNum);
     }
 
+    public void StartTutorialLevel()
+    {
+        copyOfArrayOfPiecesTutorial = new List<pieceDataStruct>();
+        copyOfArrayOfPiecesTutorial.AddRange(currentLevel.arrayOfPieces);
+
+        UIManager.Instance.TurnOnGameplayUI();
+
+        //Camera.main.orthographicSize = 12;
+        Camera.main.orthographic = false;
+        Camera.main.fieldOfView = 60f;
+        Camera.main.transform.position = inGameCamPos;
+
+        gameStarted = true;
+
+        gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
+
+        gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
+
+        //UIManager.Instance.GetCommitButton(gameBoard); 
+        clipManager.Init();
+        sliceManager.InitTutorial();
+        cursorControl.Init();
+
+
+        ConnectionManager.Instance.GrabCellList(gameBoard.transform);
+        ConnectionManager.Instance.SetLevelConnectionData();
+
+        sliceManager.SpawnSlicesTutorial(currentLevel.slicesToSpawn.Length);
+
+        PlayerManager.Instance.HandleItemCooldowns();
+
+        PlayerManager.Instance.PopulatePowerUps();
+
+        if (backGroundPrefab)
+        {
+            GameObject go = Instantiate(backGroundPrefab, destroyOutOfLevel);
+
+            AnimalPrefabData data = InstantiateAnimals(go);
+
+            if (data != null)
+            {
+                AnimalsManager.Instance.currentLevelAnimal = data.animalType;
+            }
+            else
+            {
+                Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
+            }
+        }
+
+        powerupManager.instnatiatedZonesCounter = 0;
+
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelNum);
+    }
+
     AnimalPrefabData InstantiateAnimals(GameObject parent)
     {
         if (currentLevel.possibleAnimalsInLevel.Length != 0)
@@ -115,7 +171,6 @@ public class GameManager : MonoBehaviour
     public void ChooseLevel(int levelNum)
     {
         currentLevel = (LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/Level " + levelNum);
-
     }
 
     public void DestroyAllLevelChildern()

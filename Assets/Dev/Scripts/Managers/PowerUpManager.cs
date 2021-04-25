@@ -260,7 +260,8 @@ public class PowerUpManager : MonoBehaviour
 
             if (toWorkOn.isLocked)
             {
-                toWorkOn.transform.parent.GetComponent<Cell>().lockSprite.SetActive(false);
+                //toWorkOn.transform.parent.GetComponent<Cell>().lockSprite.SetActive(false);
+                Destroy(toWorkOn.transform.GetChild(0).gameObject); ///WIP
             }
             yield return new WaitForEndOfFrame();
             GameManager.Instance.currentFilledCellCount--;
@@ -291,15 +292,15 @@ public class PowerUpManager : MonoBehaviour
         {
             ConnectionManager.Instance.cells[a].pieceHeld.isLocked = false;
 
-            ConnectionManager.Instance.cells[a].lockSprite.SetActive(false);
-
+            //ConnectionManager.Instance.cells[a].lockSprite.SetActive(false);
+            Destroy(ConnectionManager.Instance.cells[a].pieceHeld.leftChild.transform.GetChild(0).gameObject);
         }
 
         if(ConnectionManager.Instance.cells[b].isFull)
         {
-            ConnectionManager.Instance.cells[b].pieceHeld.isLocked = false;
+            //ConnectionManager.Instance.cells[b].pieceHeld.isLocked = false;
 
-            ConnectionManager.Instance.cells[b].lockSprite.SetActive(false);
+            Destroy(ConnectionManager.Instance.cells[b].pieceHeld.leftChild.transform.GetChild(0).gameObject);
         }
 
         toWorkOn.ResetDate();
@@ -366,7 +367,6 @@ public class PowerUpManager : MonoBehaviour
             FinishedUsingPowerup(false, prop);
         }
     }
-
     public void UsingPowerup(Button butt)
     {
         currentlyInUse = butt.gameObject.GetComponent<PowerupProperties>();
@@ -382,7 +382,6 @@ public class PowerUpManager : MonoBehaviour
 
         StartCoroutine(WaitForEndFrame());
     }
-
     public IEnumerator WaitForEndFrame()
     {
         yield return new WaitForEndOfFrame();

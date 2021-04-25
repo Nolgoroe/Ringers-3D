@@ -76,9 +76,9 @@ public class Slice : MonoBehaviour
     {
         lootPack = lp;
 
-        lootIcon.SetActive(isLoot);
+        //lootIcon.SetActive(isLoot);
 
-        lootIcon.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.sliceManager.lootToIcon[lp];
+        //lootIcon.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.sliceManager.lootToIcon[lp];
     }
 
 

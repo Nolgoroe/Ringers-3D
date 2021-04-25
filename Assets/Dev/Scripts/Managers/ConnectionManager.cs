@@ -22,6 +22,7 @@ public class ConnectionManager : MonoBehaviour
     public ParticleSystem goodConnectionParticle, badConnectionParticle;
 
     public GameObject lootEffectPrefab;
+    public GameObject rightPieceLockBrown, leftPieceLockBrown;
 
     //public Material rockLIT,rockUnLIT;
 
@@ -452,26 +453,41 @@ public class ConnectionManager : MonoBehaviour
     {
         Debug.Log("Lock");
 
-        cells[relevent.sliceIndex].lockSprite.SetActive(true);
+
+        //cells[relevent.sliceIndex].lockSprite.SetActive(true);
         cells[relevent.sliceIndex].pieceHeld.isLocked = true;
 
         if (relevent.sliceIndex == 0)
         {
-            cells[cells.Count - 1].lockSprite.SetActive(true);
+            //cells[cells.Count - 1].lockSprite.SetActive(true);
             cells[cells.Count - 1].pieceHeld.isLocked = true;
         }
         else
         {
-            cells[relevent.sliceIndex - 1].lockSprite.SetActive(true);
+            //cells[relevent.sliceIndex - 1].lockSprite.SetActive(true);
             cells[relevent.sliceIndex - 1].pieceHeld.isLocked = true;
         }
 
         if (!isLimiter)
         {
+            foreach (Cell c in relevent.connectedCells)
+            {
+                if (c.cellIndex == relevent.sliceIndex)
+                {
+                    //c.lockSpriteCellLeft.gameObject.SetActive(true);
+                    Instantiate(leftPieceLockBrown, c.pieceHeld.leftChild.transform);
+                }
+                else
+                {
+                    //c.lockSpriteCellRight.gameObject.SetActive(true);
+                    Instantiate(rightPieceLockBrown, c.pieceHeld.rightChild.transform);
+                }
+            }
+
             //SpriteRenderer relevantSliceSR = relevent.child.GetComponent<SpriteRenderer>();
             //relevantSliceSR.color = new Color(relevantSliceSR.color.r, relevantSliceSR.color.g, relevantSliceSR.color.b, 0.4f);
 
-           //SpriteRenderer ciconSR = relevent.child.transform.GetChild(0).GetComponent<SpriteRenderer>();
+            //SpriteRenderer ciconSR = relevent.child.transform.GetChild(0).GetComponent<SpriteRenderer>();
 
             //ciconSR.color = new Color(ciconSR.color.r, ciconSR.color.g, ciconSR.color.b, 0.4f);
 
@@ -483,6 +499,19 @@ public class ConnectionManager : MonoBehaviour
         }
         else
         {
+            foreach (Cell c in relevent.connectedCells)
+            {
+                if (c.cellIndex == relevent.sliceIndex)
+                {
+                    //c.lockSpriteCellLeft.gameObject.SetActive(true);
+                    Instantiate(leftPieceLockBrown, c.pieceHeld.leftChild.transform);
+                }
+                else
+                {
+                    //c.lockSpriteCellRight.gameObject.SetActive(true);
+                    Instantiate(rightPieceLockBrown, c.pieceHeld.rightChild.transform);
+                }
+            }
             relevent.isLock = false;
         }
     }
@@ -591,7 +620,7 @@ public class ConnectionManager : MonoBehaviour
 
         LootManager.Instance.rubiesToRecieveInLevel += randomNum;
 
-        Destroy(relevent.lootIcon.gameObject);
+        //Destroy(relevent.lootIcon.gameObject);
     }
     public void AddMaterialsToLootList(Slice relevent)
     {
@@ -623,7 +652,7 @@ public class ConnectionManager : MonoBehaviour
                 craftingMatsFromTables.Clear();
             }
         }
-        Destroy(relevent.lootIcon.gameObject);
+        //Destroy(relevent.lootIcon.gameObject);
     }
     //public IEnumerator InstantiateLootEffectMaterials(Slice relevent, Transform instantiateposition, Transform target)
     //{
