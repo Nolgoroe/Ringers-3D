@@ -10363,9 +10363,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 323caf8bfc5d68e4f893c0280e681dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeTillGiveDrewDropStatic: 0
+  timeTillGiveDrewDropStatic: 5
   timeLeftToGiveDrop: 0
-  maxDrops: 30
+  maxDrops: 5
   savedDateTime: 
   path: 
 --- !u!1 &377456756
@@ -23564,7 +23564,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &965599396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30545,6 +30545,7 @@ MonoBehaviour:
   clipsAboutToEndMessage: {fileID: 721828802}
   sureWantToRestartWithLoot: {fileID: 877473040}
   sureWantToRestartNoLoot: {fileID: 1944337256}
+  dewDropsImage: {fileID: 1801717205}
   sureLevelRestartLootDislpay: {fileID: 1665998844}
   hubRubyText: {fileID: 567888831}
   dewDropsTextTime: {fileID: 282663968}
@@ -30624,6 +30625,13 @@ MonoBehaviour:
   - {fileID: 1890713266}
   - {fileID: 1376208567}
   - {fileID: 1348711234}
+  dewDropsSprites:
+  - {fileID: 21300000, guid: 3e5a5f2a7a94b104b9631ceeeae0849f, type: 3}
+  - {fileID: 21300000, guid: f22f6756ada7e3b49bb7be37b7dc177e, type: 3}
+  - {fileID: 21300000, guid: e069c578afa7a4c45a522e561f555e3d, type: 3}
+  - {fileID: 21300000, guid: d9ec3fe36b2362241b92c47c38e55b72, type: 3}
+  - {fileID: 21300000, guid: 1200ad01f5e976447980e9beb32861f7, type: 3}
+  - {fileID: 21300000, guid: da63bc6b16f7ea14dbfed952acee6903, type: 3}
   hubCameraPos: {x: 0, y: -9, z: -20}
 --- !u!1 &1330809193
 GameObject:

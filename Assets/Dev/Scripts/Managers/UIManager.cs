@@ -29,6 +29,7 @@ public class UIManager : MonoBehaviour
     public GameObject clipsAboutToEndMessage;
     public GameObject sureWantToRestartWithLoot;
     public GameObject sureWantToRestartNoLoot;
+    public Image dewDropsImage;
 
 
     public Transform sureLevelRestartLootDislpay;
@@ -46,6 +47,7 @@ public class UIManager : MonoBehaviour
     public ButtonsPerZone[] buttonsPerZone;
     public InventorySortButtonData[] inventorySortButtons;
     public GameObject[] allTutorialScreens;
+    public Sprite[] dewDropsSprites;
 
     public Vector3 hubCameraPos;
 
@@ -414,7 +416,6 @@ public class UIManager : MonoBehaviour
 
         youWinScreen.SetActive(true);
     }
-
     public void DisplayLoseScreen()
     {
         //gameplayCanvasBotom.SetActive(false);
@@ -424,7 +425,6 @@ public class UIManager : MonoBehaviour
 
         loseScreen.SetActive(true);
     }
-
     private void ClearLootDisplays()
     {
         foreach (Transform child in sureLevelRestartLootDislpay)
@@ -486,7 +486,6 @@ public class UIManager : MonoBehaviour
 
         }
     }
-
     public void UnlockZoneFirstTime(int ID)
     {
         ButtonsPerZone BPZ = buttonsPerZone.Where(p => p.theZone == ZoneManagerHelpData.Instance.listOfAllZones[ID]).Single();
@@ -501,7 +500,6 @@ public class UIManager : MonoBehaviour
             BPZ.zoneButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconPath);
         }
     }
-
     public void RefreshGoldAndRubyDisplay()
     {
         //hubGoldText.text = PlayerManager.Instance.goldCount.ToString();
@@ -547,5 +545,10 @@ public class UIManager : MonoBehaviour
     {
         gameplayCanvasBotom.SetActive(true);
         gameplayCanvasTop.SetActive(true);
+    }
+
+    public void RefreshDewDropsDisplay(int spriteIndex)
+    {
+        dewDropsImage.sprite = dewDropsSprites[spriteIndex];
     }
 }

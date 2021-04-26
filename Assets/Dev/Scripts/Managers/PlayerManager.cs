@@ -98,6 +98,8 @@ public class PlayerManager : MonoBehaviour
 
             HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
             HollowCraftAndOwnedManager.Instance.RefreshOwnedScreen();
+
+            UIManager.Instance.RefreshDewDropsDisplay(collectedDewDrops);
         }
 
         //if (wardrobeEquipment.Count > 0)

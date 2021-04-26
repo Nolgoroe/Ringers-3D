@@ -45,7 +45,10 @@ public class DewDropsManager : MonoBehaviour
 
             GiveElapsedTimeDewDrops(deltaDateTime);
         }
-
+        else
+        {
+            StartCoroutine(DisplayTime());
+        }
         savedDateTime = "";
     }
 
@@ -56,11 +59,13 @@ public class DewDropsManager : MonoBehaviour
         if(timeLeftToGiveDrop < 0)
         {
             timeLeftToGiveDrop = (timeTillGiveDrewDropStatic * 60) + timeLeftToGiveDrop; /// its plus because if timeLeftToGiveDrop is below zero then if you use - it'll add to the time
+            GiveDrop();
         }
 
         float numDropToGive = (float)elapsedTime.TotalMinutes / timeTillGiveDrewDropStatic;
 
         int absDrops = (int)Mathf.Abs(numDropToGive);
+
         if (absDrops > 0)
         {
             PlayerManager.Instance.collectedDewDrops += absDrops;
@@ -69,6 +74,8 @@ public class DewDropsManager : MonoBehaviour
             {
                 PlayerManager.Instance.collectedDewDrops = maxDrops;
             }
+
+            UIManager.Instance.RefreshDewDropsDisplay(PlayerManager.Instance.collectedDewDrops);
 
             PlayerManager.Instance.SavePlayerData();
         }
@@ -126,8 +133,7 @@ public class DewDropsManager : MonoBehaviour
 
                 if (PlayerManager.Instance.collectedDewDrops < maxDrops)
                 {
-                    PlayerManager.Instance.collectedDewDrops++;
-                    PlayerManager.Instance.SavePlayerData();
+                    GiveDrop();
                 }
             }
 
@@ -137,5 +143,19 @@ public class DewDropsManager : MonoBehaviour
             UIManager.Instance.dewDropsTextTime.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
         }
+    }
+
+    public void GiveDrop()
+    {
+        PlayerManager.Instance.collectedDewDrops ++;
+
+        if (PlayerManager.Instance.collectedDewDrops > maxDrops)
+        {
+            PlayerManager.Instance.collectedDewDrops = maxDrops;
+        }
+
+        UIManager.Instance.RefreshDewDropsDisplay(PlayerManager.Instance.collectedDewDrops);
+
+        PlayerManager.Instance.SavePlayerData();
     }
 }
