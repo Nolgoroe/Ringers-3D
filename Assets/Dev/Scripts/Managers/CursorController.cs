@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -185,7 +186,7 @@ public class CursorController : MonoBehaviour
 
     public void GrabPiece(Transform FT)
     {
-        if (!FT.GetComponent<Piece>().isLocked)
+        if (!FT.GetComponent<Piece>().isLocked && !FT.GetComponent<Piece>().isTutorialLocked)
         {
             followerTarget = FT;
             Cell c = FT.transform.parent.GetComponent<Cell>();
@@ -206,47 +207,118 @@ public class CursorController : MonoBehaviour
 
     public void SnapFollower(Transform cellHit)
     {
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            //if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].isBoardPhase || TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].isClipPhase)
+            //{
+                SnapFollowerTutorial(cellHit);
+            //}
+        }
+        else
+        {
+            if (cellHit != null)
+            {
+                if (followerTarget)
+                {
+                    Cell cell = cellHit.GetComponent<Cell>();
+                    Cell previousCell = followerTarget.parent.GetComponent<Cell>(); //// Only relevant if piece is moved from cell to cell
+
+                    bool newPiece = followerTarget.transform.parent.CompareTag("Clip");
+
+                    if (GameManager.Instance.currentFilledCellCount + 1 != GameManager.Instance.currentLevel.cellsCountInLevel)
+                    {
+                        if (newPiece && !cell.isFull)
+                        {
+                            GameManager.Instance.clipManager.PopulateSlot(followerTarget.transform.parent);
+                            Debug.Log("!!!!!!!!!!!!!!!!!");
+                        }
+                    }
+                    else
+                    {
+                        GameManager.Instance.clipManager.emptyClip = followerTarget.transform.parent;
+                        GameManager.Instance.clipManager.latestPiece = followerTarget;
+                        Debug.Log("**************");
+
+                    }
+
+
+                    if (!cell.isFull)
+                    {
+                        cell.AddPiece(followerTarget, newPiece);
+
+                        if (!newPiece && cell != previousCell)
+                        {
+                            previousCell.isFull = false;
+                        }
+                    }
+                    else
+                    {
+                        ReturnHome();
+                    }
+
+                    followerTarget = null;
+                }
+            }
+            else
+            {
+                if (followerTarget)
+                {
+                    ReturnHome();
+                }
+            }
+
+        }
+    }
+
+    private void SnapFollowerTutorial(Transform cellHit)
+    {
         if (cellHit != null)
         {
             if (followerTarget)
             {
-                Cell cell = cellHit.GetComponent<Cell>();
-                Cell previousCell = followerTarget.parent.GetComponent<Cell>(); //// Only relevant if piece is moved from cell to cell
-
-                bool newPiece = followerTarget.transform.parent.CompareTag("Clip");
-
-                if (GameManager.Instance.currentFilledCellCount + 1 != GameManager.Instance.currentLevel.cellsCountInLevel)
+                if (cellHit.GetComponent<Cell>().cellIndex == TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].targetCell)
                 {
-                    if (newPiece && !cell.isFull)
+                    Cell cell = cellHit.GetComponent<Cell>();
+                    Cell previousCell = followerTarget.parent.GetComponent<Cell>(); //// Only relevant if piece is moved from cell to cell
+
+                    bool newPiece = followerTarget.transform.parent.CompareTag("Clip");
+
+                    if (GameManager.Instance.currentFilledCellCount + 1 != GameManager.Instance.currentLevel.cellsCountInLevel)
                     {
-                        GameManager.Instance.clipManager.PopulateSlot(followerTarget.transform.parent);
-                        Debug.Log("!!!!!!!!!!!!!!!!!");
+                        if (newPiece && !cell.isFull)
+                        {
+                            GameManager.Instance.clipManager.PopulateSlot(followerTarget.transform.parent);
+                        }
                     }
-                }
-                else
-                {
-                    GameManager.Instance.clipManager.emptyClip = followerTarget.transform.parent;
-                    GameManager.Instance.clipManager.latestPiece = followerTarget;
-                    Debug.Log("**************");
-
-                }
-
-
-                if (!cell.isFull)
-                {
-                    cell.AddPiece(followerTarget, newPiece);
-
-                    if (!newPiece && cell != previousCell)
+                    else
                     {
-                        previousCell.isFull = false;
+                        GameManager.Instance.clipManager.emptyClip = followerTarget.transform.parent;
+                        GameManager.Instance.clipManager.latestPiece = followerTarget;
+
                     }
+
+
+                    if (!cell.isFull)
+                    {
+                        cell.AddPiece(followerTarget, newPiece);
+
+                        if (!newPiece && cell != previousCell)
+                        {
+                            previousCell.isFull = false;
+                        }
+                    }
+                    else
+                    {
+                        ReturnHome();
+                    }
+
+                    followerTarget = null;
+                    TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
                 }
                 else
                 {
                     ReturnHome();
                 }
-
-                followerTarget = null;
             }
         }
         else

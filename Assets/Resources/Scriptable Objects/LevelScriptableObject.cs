@@ -23,6 +23,7 @@ public class LevelScriptableObject : ScriptableObject
 
     public bool isTutorial;
     public List<pieceDataStruct> arrayOfPieces;
+    public int[] specificSliceSpots;
 
     //public bool isRandomDistributionToSlices;
 }

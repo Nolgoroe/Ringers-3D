@@ -29,6 +29,7 @@ public class Piece : MonoBehaviour
     //public GameObject midPiece;
 
     public bool isLocked;
+    public bool isTutorialLocked;
     public bool partOfBoard;
     public void SetPieces()
     {
@@ -36,6 +37,7 @@ public class Piece : MonoBehaviour
         {
             rightChild.SetPieceTutorial(true);
             leftChild.SetPieceTutorial(false);
+            GameManager.Instance.copyOfArrayOfPiecesTutorial.RemoveAt(0);
         }
         else
         {
@@ -43,6 +45,5 @@ public class Piece : MonoBehaviour
             leftChild.SetPiece();
         }
 
-        GameManager.Instance.copyOfArrayOfPiecesTutorial.RemoveAt(0);
     }
 }

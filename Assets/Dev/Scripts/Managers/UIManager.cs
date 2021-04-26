@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
     public GameObject sureWantToRestartWithLoot;
     public GameObject sureWantToRestartNoLoot;
 
+
     public Transform sureLevelRestartLootDislpay;
 
     public Text /*hubGoldText,*/ hubRubyText/*, dewDropsText*/, dewDropsTextTime;
@@ -39,10 +40,12 @@ public class UIManager : MonoBehaviour
 
     //public Button commitButton;
     public Button nextLevelFromWinScreen;
+    public Button dealButton;
     //public Button[] levelButtons;
 
     public ButtonsPerZone[] buttonsPerZone;
     public InventorySortButtonData[] inventorySortButtons;
+    public GameObject[] allTutorialScreens;
 
     public Vector3 hubCameraPos;
 
@@ -77,6 +80,11 @@ public class UIManager : MonoBehaviour
         sureWantToRestartWithLoot.SetActive(false);
         sureWantToRestartNoLoot.SetActive(false);
         loseScreen.SetActive(false);
+
+        foreach (GameObject go in allTutorialScreens)
+        {
+            go.SetActive(false);
+        }
 
         RefreshGoldAndRubyDisplay();
 

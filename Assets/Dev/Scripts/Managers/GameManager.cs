@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     public Vector3 inGameCamPos;
 
     public List<pieceDataStruct> copyOfArrayOfPiecesTutorial;
+    public List<int> copyOfSpecificSliceSpotsTutorial;
     private void Awake()
     {
         Instance = this;
@@ -99,6 +100,9 @@ public class GameManager : MonoBehaviour
         copyOfArrayOfPiecesTutorial = new List<pieceDataStruct>();
         copyOfArrayOfPiecesTutorial.AddRange(currentLevel.arrayOfPieces);
 
+        copyOfSpecificSliceSpotsTutorial = new List<int>();
+        copyOfSpecificSliceSpotsTutorial.AddRange(currentLevel.specificSliceSpots);
+
         UIManager.Instance.TurnOnGameplayUI();
 
         //Camera.main.orthographicSize = 12;
@@ -114,7 +118,7 @@ public class GameManager : MonoBehaviour
 
         //UIManager.Instance.GetCommitButton(gameBoard); 
         clipManager.Init();
-        sliceManager.InitTutorial();
+        sliceManager.Init();
         cursorControl.Init();
 
 

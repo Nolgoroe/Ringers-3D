@@ -127,7 +127,12 @@ public class PowerUpManager : MonoBehaviour
     }
     public void Deal()
     {
-        if(GameManager.Instance.clipManager.clipCount-1 == 0)
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
+        }
+
+        if (GameManager.Instance.clipManager.clipCount - 1 == 0)
         {
             UIManager.Instance.DisplayClipsAboutToEndMessage();
         }
