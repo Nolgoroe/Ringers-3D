@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     public GameObject mainMenu, hudCanvasDisplay,hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasBotom, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
+    public GameObject tutorialCanvas;
     public GameObject forge, itemBag;
     public GameObject craft, owned;
     public GameObject animalAlbum;
@@ -82,14 +83,11 @@ public class UIManager : MonoBehaviour
         sureWantToRestartWithLoot.SetActive(false);
         sureWantToRestartNoLoot.SetActive(false);
         loseScreen.SetActive(false);
-
+        tutorialCanvas.SetActive(false);
         foreach (GameObject go in allTutorialScreens)
         {
             go.SetActive(false);
         }
-
-        RefreshGoldAndRubyDisplay();
-
     }
     public void PlayButton()
     {
@@ -234,7 +232,7 @@ public class UIManager : MonoBehaviour
     public void ToHud(GameObject currentCanvas)
     {
         isUsingUI = false;
-
+        RefreshGoldAndRubyDisplay();
         PlayerManager.Instance.activePowerups.Clear();
         PlayerManager.Instance.SavePlayerData();
         isUsingUI = false;
@@ -245,6 +243,7 @@ public class UIManager : MonoBehaviour
 
         if (currentCanvas == gameplayCanvas)
         {
+
             TutorialSequence.Instacne.currentPhaseInSequence = 0;
             TutorialSequence.Instacne.duringSequence = false;
             GameManager.Instance.copyOfArrayOfPiecesTutorial.Clear();
@@ -258,6 +257,12 @@ public class UIManager : MonoBehaviour
             youWinScreen.SetActive(false);
             //youLoseText.SetActive(false);
             loseScreen.SetActive(false);
+            tutorialCanvas.SetActive(false);
+            
+            foreach (GameObject go in allTutorialScreens)
+            {
+                go.SetActive(false);
+            }
 
             GameManager.Instance.DestroyAllLevelChildern();
 

@@ -59,7 +59,7 @@ public class DewDropsManager : MonoBehaviour
         if(timeLeftToGiveDrop < 0)
         {
             timeLeftToGiveDrop = (timeTillGiveDrewDropStatic * 60) + timeLeftToGiveDrop; /// its plus because if timeLeftToGiveDrop is below zero then if you use - it'll add to the time
-            GiveDrop();
+            GiveDrop(1);
         }
 
         float numDropToGive = (float)elapsedTime.TotalMinutes / timeTillGiveDrewDropStatic;
@@ -68,12 +68,7 @@ public class DewDropsManager : MonoBehaviour
 
         if (absDrops > 0)
         {
-            PlayerManager.Instance.collectedDewDrops += absDrops;
-
-            if (PlayerManager.Instance.collectedDewDrops > maxDrops)
-            {
-                PlayerManager.Instance.collectedDewDrops = maxDrops;
-            }
+            GiveDrop(absDrops);
 
             UIManager.Instance.RefreshDewDropsDisplay(PlayerManager.Instance.collectedDewDrops);
 
@@ -122,8 +117,10 @@ public class DewDropsManager : MonoBehaviour
 
     IEnumerator DisplayTime()
     {
-        while (true)
+        while (PlayerManager.Instance.collectedDewDrops < maxDrops)
         {
+            UIManager.Instance.dewDropsTextTime.gameObject.SetActive(true);
+
             yield return new WaitForSecondsRealtime(1);
             timeLeftToGiveDrop--;
 
@@ -133,7 +130,7 @@ public class DewDropsManager : MonoBehaviour
 
                 if (PlayerManager.Instance.collectedDewDrops < maxDrops)
                 {
-                    GiveDrop();
+                    GiveDrop(1);
                 }
             }
 
@@ -143,11 +140,13 @@ public class DewDropsManager : MonoBehaviour
             UIManager.Instance.dewDropsTextTime.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
         }
+
+        UIManager.Instance.dewDropsTextTime.gameObject.SetActive(false);
     }
 
-    public void GiveDrop()
+    public void GiveDrop(int amount)
     {
-        PlayerManager.Instance.collectedDewDrops ++;
+        PlayerManager.Instance.collectedDewDrops += amount;
 
         if (PlayerManager.Instance.collectedDewDrops > maxDrops)
         {

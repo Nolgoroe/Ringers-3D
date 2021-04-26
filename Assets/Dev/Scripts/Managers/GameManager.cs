@@ -158,6 +158,7 @@ public class GameManager : MonoBehaviour
 
         powerupManager.instnatiatedZonesCounter = 0;
 
+        TutorialSequence.Instacne.StartSequence(currentLevel.tutorialIndexForList);
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelNum);
     }
 

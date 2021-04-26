@@ -1705,7 +1705,7 @@ RectTransform:
   m_Children:
   - {fileID: 1840768762}
   m_Father: {fileID: 138833115}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3819,13 +3819,14 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 2082944396}
+  - {fileID: 1400797657}
   - {fileID: 58533682}
   - {fileID: 368536775}
   - {fileID: 721828803}
   - {fileID: 877473041}
   - {fileID: 1944337257}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -10126,7 +10127,7 @@ RectTransform:
   m_Children:
   - {fileID: 354544729}
   m_Father: {fileID: 138833115}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -15235,7 +15236,7 @@ MonoBehaviour:
   waitTimePullIn: 1
   waitTimeFadeIn: 0.3
   waitTimeFadeOut: 0.3
-  waitTimeWinScreen: 0.35
+  waitTimeWinScreen: 0.5
   fadingSpeed: 0.4
   animalWaitTime: 0.15
   fadeImage: {fileID: 1400797655}
@@ -17535,9 +17536,8 @@ RectTransform:
   - {fileID: 2137641458}
   - {fileID: 1582820838}
   - {fileID: 328277895}
-  - {fileID: 1400797657}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -18806,7 +18806,7 @@ RectTransform:
   m_Children:
   - {fileID: 589923736}
   m_Father: {fileID: 138833115}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -21843,7 +21843,7 @@ RectTransform:
   - {fileID: 657640663}
   - {fileID: 1665998844}
   m_Father: {fileID: 138833115}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -30531,6 +30531,7 @@ MonoBehaviour:
   ringersHutDisplay: {fileID: 242193359}
   ringersHutUICanvas: {fileID: 1686607921}
   hollowCraftAndOwned: {fileID: 73511793}
+  tutorialCanvas: {fileID: 965599395}
   forge: {fileID: 692552549}
   itemBag: {fileID: 935612590}
   craft: {fileID: 1873241745}
@@ -30613,12 +30614,12 @@ MonoBehaviour:
   - {fileID: 702775383}
   - {fileID: 1265889137}
   - {fileID: 1176987051}
+  - {fileID: 417216827}
   - {fileID: 1043428618}
   - {fileID: 2063133148}
+  - {fileID: 126121281}
   - {fileID: 2123312440}
   - {fileID: 591865594}
-  - {fileID: 417216827}
-  - {fileID: 126121281}
   - {fileID: 1757760607}
   - {fileID: 432097514}
   - {fileID: 2127877951}
@@ -33048,12 +33049,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400797654}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 656761288}
-  m_RootOrder: 3
+  m_Father: {fileID: 138833115}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -46359,7 +46360,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleBoardPrefab: {fileID: 6382559071292991177, guid: 0379f269da8f3aa46bc62a2f1709c2be,
     type: 3}
-  backGroundPrefab: {fileID: 2604704759779227561, guid: c72b187ea8763b749ba817eb16a87c90,
+  backGroundPrefab: {fileID: 6993745706372274325, guid: 646753e4fa2280740904cd5c33f778e8,
     type: 3}
   clipPrefab: {fileID: 4176704889398601467, guid: ff432a4cdfd3d8c4ab183be2d82d571e,
     type: 3}
@@ -47639,7 +47640,7 @@ RectTransform:
   m_Children:
   - {fileID: 565378720}
   m_Father: {fileID: 138833115}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -49891,7 +49892,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 102
   m_TargetDisplay: 0
 --- !u!224 &2052491853
 RectTransform:

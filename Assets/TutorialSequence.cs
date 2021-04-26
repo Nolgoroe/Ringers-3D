@@ -62,12 +62,15 @@ public class TutorialSequence : MonoBehaviour
 
     public void StartSequence(int levelNum)
     {
+        UIManager.Instance.tutorialCanvas.SetActive(true);
+
         DisplayTutorialScreens();
         OutlineInstantiate();
         UIManager.Instance.dealButton.interactable = false;
 
         currentPhaseInSequence = 0;
         duringSequence = true;
+
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
         {
             Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
