@@ -294,6 +294,11 @@ public class GameManager : MonoBehaviour
 
     public void NextLevelFromWinScreen()
     {
+        if (GameManager.Instance.currentLevel.isTutorial)
+        {
+            TutorialSequence.Instacne.currentPhaseInSequence = 0;
+        }
+
         LootManager.Instance.rubiesToRecieveInLevel = 0;
 
         GameObject[] lootEffects = GameObject.FindGameObjectsWithTag("End Level Loot Effect");
