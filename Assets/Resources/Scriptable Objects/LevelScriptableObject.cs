@@ -11,6 +11,7 @@ public class LevelScriptableObject : ScriptableObject
 
     public int levelNum;
     public int levelIndexInZone;
+    public int tutorialIndexForList;
     public int cellsCountInLevel;
 
     public SliceCatagory[] slicesToSpawn;

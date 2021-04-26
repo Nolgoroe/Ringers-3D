@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class pieceDataStruct
@@ -15,11 +16,12 @@ public class pieceDataStruct
 [System.Serializable]
 public class Sequence
 {
-    public int levelID;
+    public int levelTutorialIndex;
     public int EndPhaseID;
     public OutLineData[] cellOutlines;
     public Phase[] phase;
     public GameObject[] screens;
+    public Sprite[] sprites;
 }
 
 [System.Serializable]
@@ -50,9 +52,12 @@ public class TutorialSequence : MonoBehaviour
     public Sequence[] levelSequences;
 
     public bool duringSequence;
+
+    public Image maskImage;
     private void Start()
     {
         Instacne = this;
+        maskImage.gameObject.SetActive(false);
     }
 
     public void StartSequence(int levelNum)
@@ -83,49 +88,55 @@ public class TutorialSequence : MonoBehaviour
 
     private void DisplayTutorialScreens()
     {
-        foreach (GameObject go in levelSequences[GameManager.Instance.currentLevel.levelNum - 1].screens)
+        foreach (GameObject go in levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens)
         {
             go.SetActive(false);
         }
 
-        levelSequences[GameManager.Instance.currentLevel.levelNum - 1].screens[0].SetActive(true);
+        levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens[0].SetActive(true);
+
+        maskImage.gameObject.SetActive(true);
+        maskImage.sprite = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].sprites[0];
     }
 
     public void IncrementCurrentPhaseInSequence()
     {
         currentPhaseInSequence++;
 
-        if(levelSequences[GameManager.Instance.currentLevel.levelNum - 1].screens[currentPhaseInSequence])
+        if(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens[currentPhaseInSequence])
         {
-            levelSequences[GameManager.Instance.currentLevel.levelNum - 1].screens[currentPhaseInSequence - 1].SetActive(false);
-            levelSequences[GameManager.Instance.currentLevel.levelNum - 1].screens[currentPhaseInSequence].SetActive(true);
+            levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens[currentPhaseInSequence - 1].SetActive(false);
+            levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens[currentPhaseInSequence].SetActive(true);
         }
 
-        if (currentPhaseInSequence >= levelSequences[GameManager.Instance.currentLevel.levelNum - 1].EndPhaseID)
+
+        if (currentPhaseInSequence >= levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].EndPhaseID)
         {
+            maskImage.gameObject.SetActive(false);
             duringSequence = false;
             Debug.Log("Phases are done!");
             Invoke("UnlockAll", 2);
             return;
         }
 
+        maskImage.sprite = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].sprites[currentPhaseInSequence];
 
         ChangePhase();
     }
 
     public void ChangePhase()
     {
-        if (levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[currentPhaseInSequence].isClipPhase)
+        if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[currentPhaseInSequence].isClipPhase)
         {
             ClipPhaseLogic();
         }
 
-        if (levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[currentPhaseInSequence].isBoardPhase)
+        if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[currentPhaseInSequence].isBoardPhase)
         {
             BoardPhaseLogic();
         }
 
-        if (levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[currentPhaseInSequence].dealPhase)
+        if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[currentPhaseInSequence].dealPhase)
         {
             DealPhaseLogic();
         }
@@ -149,7 +160,7 @@ public class TutorialSequence : MonoBehaviour
 
                 //for (int k = 0; k < levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[currentPhaseInSequence].unlockedClips.Length; k++)
                 //{
-                if (i == levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[currentPhaseInSequence].unlockedClips/*[k]*/)
+                if (i == levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[currentPhaseInSequence].unlockedClips/*[k]*/)
                 {
                     p.isTutorialLocked = false;
                 }
@@ -179,7 +190,7 @@ public class TutorialSequence : MonoBehaviour
                 //int length = levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[currentPhaseInSequence].unlockedBoardCells.Length;
                 //for (int i = 0; i < length; i++)
                 //{
-                if (c.cellIndex == levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[currentPhaseInSequence].unlockedBoardCells/*[i]*/)
+                if (c.cellIndex == levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[currentPhaseInSequence].unlockedBoardCells/*[i]*/)
                 {
                     c.pieceHeld.isTutorialLocked = false;
                 }
@@ -208,7 +219,7 @@ public class TutorialSequence : MonoBehaviour
     }
     public void OutlineInstantiate()
     {
-        foreach (OutLineData old in levelSequences[GameManager.Instance.currentLevel.levelNum - 1].cellOutlines)
+        foreach (OutLineData old in levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].cellOutlines)
         {
             if (old.right)
             {
@@ -223,7 +234,7 @@ public class TutorialSequence : MonoBehaviour
 
     public void UnlockAll()
     {
-        foreach (GameObject go in levelSequences[GameManager.Instance.currentLevel.levelNum - 1].screens)
+        foreach (GameObject go in levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens)
         {
             go.SetActive(false);
         }
@@ -248,10 +259,13 @@ public class TutorialSequence : MonoBehaviour
 
     public void TurnOnTutorialScreensAfterOptions()
     {
-        if(currentPhaseInSequence > 0 && currentPhaseInSequence < levelSequences[GameManager.Instance.currentLevel.levelNum - 1].EndPhaseID)
+        if(currentPhaseInSequence < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].EndPhaseID)
         {
-            levelSequences[GameManager.Instance.currentLevel.levelNum - 1].screens[currentPhaseInSequence - 1].SetActive(false);
-            levelSequences[GameManager.Instance.currentLevel.levelNum - 1].screens[currentPhaseInSequence].SetActive(true);
+            if(currentPhaseInSequence > 0)
+            {
+                levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens[currentPhaseInSequence - 1].SetActive(false);
+            }
+            levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens[currentPhaseInSequence].SetActive(true);
         }
     }
 }

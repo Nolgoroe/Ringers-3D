@@ -276,7 +276,7 @@ public class CursorController : MonoBehaviour
         {
             if (followerTarget)
             {
-                if (cellHit.GetComponent<Cell>().cellIndex == TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].targetCell)
+                if (cellHit.GetComponent<Cell>().cellIndex == TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].targetCell)
                 {
                     Cell cell = cellHit.GetComponent<Cell>();
                     Cell previousCell = followerTarget.parent.GetComponent<Cell>(); //// Only relevant if piece is moved from cell to cell
