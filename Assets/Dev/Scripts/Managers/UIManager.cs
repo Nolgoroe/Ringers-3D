@@ -152,9 +152,12 @@ public class UIManager : MonoBehaviour
     }
     public void SureWantToRestartMessage()
     {
-        foreach (GameObject go in TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.levelNum - 1].screens)
+        if (GameManager.Instance.currentLevel.isTutorial)
         {
-            go.SetActive(false);
+            foreach (GameObject go in TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.levelNum - 1].screens)
+            {
+                go.SetActive(false);
+            }
         }
 
         isUsingUI = true;
