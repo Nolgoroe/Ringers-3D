@@ -245,5 +245,14 @@ public class TutorialSequence : MonoBehaviour
             p.isTutorialLocked = false;
         }
     }
+
+    public void TurnOnTutorialScreensAfterOptions()
+    {
+        if(currentPhaseInSequence > 0 && currentPhaseInSequence < levelSequences[GameManager.Instance.currentLevel.levelNum - 1].EndPhaseID)
+        {
+            levelSequences[GameManager.Instance.currentLevel.levelNum - 1].screens[currentPhaseInSequence - 1].SetActive(false);
+            levelSequences[GameManager.Instance.currentLevel.levelNum - 1].screens[currentPhaseInSequence].SetActive(true);
+        }
+    }
 }
 

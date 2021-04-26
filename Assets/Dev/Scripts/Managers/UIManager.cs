@@ -152,6 +152,11 @@ public class UIManager : MonoBehaviour
     }
     public void SureWantToRestartMessage()
     {
+        foreach (GameObject go in TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.levelNum - 1].screens)
+        {
+            go.SetActive(false);
+        }
+
         isUsingUI = true;
 
         if (LootManager.Instance.rubiesToRecieveInLevel > 0 || LootManager.Instance.craftingMatsLootForLevel.Count > 0)
@@ -199,6 +204,8 @@ public class UIManager : MonoBehaviour
         {
             sureWantToRestartNoLoot.SetActive(false);
         }
+
+        TutorialSequence.Instacne.TurnOnTutorialScreensAfterOptions();
     }
     public void SureWantToRestartMessageYes(bool withLoot)
     {
@@ -236,6 +243,9 @@ public class UIManager : MonoBehaviour
 
         if (currentCanvas == gameplayCanvas)
         {
+            TutorialSequence.Instacne.currentPhaseInSequence = 0;
+            TutorialSequence.Instacne.duringSequence = false;
+            GameManager.Instance.copyOfArrayOfPiecesTutorial.Clear();
             ZoneManager.Instance.ActivateLevelDisplay();
             LootManager.Instance.DestoryWinScreenDisplyedLoot();
 

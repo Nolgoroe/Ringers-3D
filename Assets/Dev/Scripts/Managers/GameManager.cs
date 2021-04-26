@@ -97,7 +97,16 @@ public class GameManager : MonoBehaviour
 
     public void StartTutorialLevel()
     {
-        copyOfArrayOfPiecesTutorial = new List<pieceDataStruct>();
+
+        if (copyOfArrayOfPiecesTutorial == null)
+        {
+            copyOfArrayOfPiecesTutorial = new List<pieceDataStruct>();
+        }
+        else
+        {
+            copyOfArrayOfPiecesTutorial.Clear();
+        }
+
         copyOfArrayOfPiecesTutorial.AddRange(currentLevel.arrayOfPieces);
 
         copyOfSpecificSliceSpotsTutorial = new List<int>();
@@ -269,8 +278,17 @@ public class GameManager : MonoBehaviour
         DestroyAllLevelChildern();
         LootManager.Instance.ResetLevelLootData();
         ConnectionManager.Instance.cells.Clear();
+        TutorialSequence.Instacne.currentPhaseInSequence = 0;
+        TutorialSequence.Instacne.duringSequence = false;
 
-        StartLevel();
+        if (currentLevel.isTutorial)
+        {
+            StartTutorialLevel();
+        }
+        else
+        {
+            StartLevel();
+        }
     }
 
 
