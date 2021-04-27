@@ -29,7 +29,7 @@ public class CSVParser : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Reading CSV");
+        //Debug.Log("Reading CSV");
 
         if (Application.platform == RuntimePlatform.Android)
         {

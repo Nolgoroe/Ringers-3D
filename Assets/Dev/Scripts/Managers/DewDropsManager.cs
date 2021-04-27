@@ -34,14 +34,14 @@ public class DewDropsManager : MonoBehaviour
         }
 
         DateTime currentTime = DateTime.Now.ToLocalTime();
-        Debug.Log(currentTime);
+        //Debug.Log(currentTime);
 
         if (savedDateTime != "")
         {
-            //Debug.Log("has previos save time");
+            Debug.Log("has previos save time: " + savedDateTime);
             TimeSpan deltaDateTime = DateTime.Parse(savedDateTime) - currentTime;
 
-            Debug.Log(deltaDateTime);
+            Debug.Log("THIS IS THE DELTA TIME: " + deltaDateTime);
 
             GiveElapsedTimeDewDrops(deltaDateTime);
         }
@@ -59,15 +59,21 @@ public class DewDropsManager : MonoBehaviour
         if(timeLeftToGiveDrop < 0)
         {
             timeLeftToGiveDrop = (timeTillGiveDrewDropStatic * 60) + timeLeftToGiveDrop; /// its plus because if timeLeftToGiveDrop is below zero then if you use - it'll add to the time
+            Debug.Log("GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
             GiveDrop(1);
         }
-
+        else
+        {
+            Debug.Log("NO GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
+        }
         float numDropToGive = (float)elapsedTime.TotalMinutes / timeTillGiveDrewDropStatic;
 
         int absDrops = (int)Mathf.Abs(numDropToGive);
 
         if (absDrops > 0)
         {
+            Debug.Log("GIVE!!! AMOUNT: " + absDrops);
+
             GiveDrop(absDrops);
 
             UIManager.Instance.RefreshDewDropsDisplay(PlayerManager.Instance.collectedDewDrops);
@@ -83,7 +89,20 @@ public class DewDropsManager : MonoBehaviour
         savedDateTime = System.DateTime.Now.ToString();
 
         Debug.Log(savedDateTime);
+        Debug.Log("Application is Quitting");
         SaveDewDropsInfo();
+    }
+
+    public void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            savedDateTime = System.DateTime.Now.ToString();
+
+            Debug.Log(savedDateTime);
+            Debug.Log("PAUSED " + pause);
+            SaveDewDropsInfo();
+        }
     }
 
     [ContextMenu("Save")]
