@@ -99,7 +99,6 @@ public class GameManager : MonoBehaviour
 
     public void StartTutorialLevel()
     {
-
         if (copyOfArrayOfPiecesTutorial == null)
         {
             copyOfArrayOfPiecesTutorial = new List<pieceDataStruct>();

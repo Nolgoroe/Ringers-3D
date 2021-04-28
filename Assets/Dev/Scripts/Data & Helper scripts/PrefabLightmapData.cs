@@ -252,7 +252,11 @@ public class PrefabLightmapData : MonoBehaviour
                         info.lightmapIndex = lightmaps.Count;
                         lightmaps.Add(lightmap);
                         lightmapsDir.Add(lightmapDir);
-                        shadowMasks.Add(shadowMask);
+
+                        if (shadowMask)
+                        {
+                            shadowMasks.Add(shadowMask);
+                        }
                     }
 
                     rendererInfos.Add(info);

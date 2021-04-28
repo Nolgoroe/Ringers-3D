@@ -86,6 +86,7 @@ public class UIManager : MonoBehaviour
         sureWantToRestartNoLoot.SetActive(false);
         loseScreen.SetActive(false);
         tutorialCanvas.SetActive(false);
+
         foreach (GameObject go in allTutorialScreens)
         {
             go.SetActive(false);
@@ -154,24 +155,29 @@ public class UIManager : MonoBehaviour
     }
     public void SureWantToRestartMessage()
     {
-        if (GameManager.Instance.currentLevel.isTutorial)
+        if (!isUsingUI)
         {
-            foreach (GameObject go in TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens)
+            isUsingUI = true;
+
+            if (GameManager.Instance.currentLevel.isTutorial)
             {
-                go.SetActive(false);
+                foreach (GameObject go in TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens)
+                {
+                    go.SetActive(false);
+                }
             }
-        }
 
-        isUsingUI = true;
+            isUsingUI = true;
 
-        if (LootManager.Instance.rubiesToRecieveInLevel > 0 || LootManager.Instance.craftingMatsLootForLevel.Count > 0)
-        {
-            sureWantToRestartWithLoot.SetActive(true);
-            DisplayRestartLoot();
-        }
-        else
-        {
-            sureWantToRestartNoLoot.SetActive(true); 
+            if (LootManager.Instance.rubiesToRecieveInLevel > 0 || LootManager.Instance.craftingMatsLootForLevel.Count > 0)
+            {
+                sureWantToRestartWithLoot.SetActive(true);
+                DisplayRestartLoot();
+            }
+            else
+            {
+                sureWantToRestartNoLoot.SetActive(true);
+            }
         }
     }
     private void DisplayRestartLoot()
@@ -392,8 +398,11 @@ public class UIManager : MonoBehaviour
     }
     public void OpenOptions()
     {
-        OptionsScreen.SetActive(true);
-        isUsingUI = true;
+        if (!isUsingUI)
+        {
+            OptionsScreen.SetActive(true);
+            isUsingUI = true;
+        }
     }
     public void CloseGame()
     {
@@ -550,9 +559,6 @@ public class UIManager : MonoBehaviour
     {
         gameplayCanvasBotom.SetActive(false);
         gameplayCanvasTop.SetActive(false);
-
-        GameObject go = GameObject.FindGameObjectWithTag("OffOnEndAnimation"); //////// finds the black BG panel at end level to disable it ----- look for better ways to do this
-        go.SetActive(false);
     }
     public void TurnOnGameplayUI()
     {
