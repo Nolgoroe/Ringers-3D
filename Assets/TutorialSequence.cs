@@ -112,6 +112,7 @@ public class TutorialSequence : MonoBehaviour
         {
             levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens[currentPhaseInSequence - 1].SetActive(false);
             levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens[currentPhaseInSequence].SetActive(true);
+            levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens[currentPhaseInSequence].transform.GetChild(0).gameObject.SetActive(true);
         }
 
 
@@ -280,10 +281,6 @@ public class TutorialSequence : MonoBehaviour
                     FadeImage(child.gameObject, 2f, true);
                 }
             }
-            else
-            {
-                go.SetActive(false);
-            }
         }
     }
 
@@ -298,6 +295,7 @@ public class TutorialSequence : MonoBehaviour
                 newColor.a = val;
                 sr.color = newColor;
             });
+
         }
         else
         {
@@ -309,8 +307,29 @@ public class TutorialSequence : MonoBehaviour
                 sr.color = newColor;
             });
         }
+
+        StartCoroutine(DisableFadeImage(toFade, speed, isText));
     }
 
+    IEnumerator DisableFadeImage(GameObject go, float time, bool isText)
+    {
+        if (isText)
+        {
+            yield return new WaitForSeconds(time);
+            go.SetActive(false);
+            TMP_Text sr = go.GetComponent<TMP_Text>();
+            sr.color = new Color(0.2f, 0.2f, 0.2f, 1); ////////////VERY TEMPORARY
+        }
+        else
+        {
+            yield return new WaitForSeconds(time);
+            go.SetActive(false);
+            Image sr = go.GetComponent<Image>();
+
+            sr.color = Color.white;
+        }
+
+    }
     public void TurnOnTutorialScreensAfterOptions()
     {
         if(currentPhaseInSequence < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].EndPhaseID)

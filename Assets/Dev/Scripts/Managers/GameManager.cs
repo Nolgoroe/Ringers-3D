@@ -285,6 +285,7 @@ public class GameManager : MonoBehaviour
         DestroyAllLevelChildern();
         LootManager.Instance.ResetLevelLootData();
         ConnectionManager.Instance.cells.Clear();
+        CursorController.Instance.tutorialBadConnection = false;
         TutorialSequence.Instacne.currentPhaseInSequence = 0;
         TutorialSequence.Instacne.duringSequence = false;
 
