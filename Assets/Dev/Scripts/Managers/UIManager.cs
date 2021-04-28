@@ -42,6 +42,8 @@ public class UIManager : MonoBehaviour
 
     //public Button commitButton;
     public Button nextLevelFromWinScreen;
+    public Button restartButton;
+
     public Button dealButton;
     //public Button[] levelButtons;
 
@@ -548,6 +550,9 @@ public class UIManager : MonoBehaviour
     {
         gameplayCanvasBotom.SetActive(false);
         gameplayCanvasTop.SetActive(false);
+
+        GameObject go = GameObject.FindGameObjectWithTag("OffOnEndAnimation"); //////// finds the black BG panel at end level to disable it ----- look for better ways to do this
+        go.SetActive(false);
     }
     public void TurnOnGameplayUI()
     {

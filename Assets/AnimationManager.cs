@@ -50,6 +50,8 @@ public class AnimationManager : MonoBehaviour
     }
     public IEnumerator StartEndLevelAnim()
     {
+        UIManager.Instance.restartButton.interactable = false;
+
         tempSubPieceArray.AddRange(ConnectionManager.Instance.subPiecesOnBoard);
 
         GameObject[] turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
@@ -125,6 +127,8 @@ public class AnimationManager : MonoBehaviour
             sr.color = newColor;
         });
 
+        UIManager.Instance.TurnOffGameplayUI();
+
         if (!noWaitAnimal)
         {
             yield return new WaitForSeconds(animalWaitTime);
@@ -132,12 +136,12 @@ public class AnimationManager : MonoBehaviour
 
         AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
 
-        UIManager.Instance.TurnOffGameplayUI();
 
         yield return new WaitForSeconds(waitTimeFadeOut);
         yield return new WaitUntil((() => fadeImage.color.a <= 0.1f));
         fadeImage.gameObject.SetActive(false);
 
+        UIManager.Instance.restartButton.interactable = true;
 
         yield return null;
     }

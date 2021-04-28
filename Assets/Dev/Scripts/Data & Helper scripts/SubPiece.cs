@@ -47,6 +47,12 @@ public class SubPiece : MonoBehaviour
         rend.material = GameManager.Instance.clipManager.colorsToMats[randomColor].colorMats[randomSymbol];
         symbolOfPiece = (PieceSymbol)randomSymbol;
 
+        if (rend.materials[0].IsKeywordEnabled("_EMISSION"))
+        {
+            rend.materials[0].DisableKeyword("_EMISSION");
+        }
+
+
     }
     public void SetPieceTutorial(bool isRight)
     {
@@ -65,6 +71,11 @@ public class SubPiece : MonoBehaviour
             symbolOfPiece = GameManager.Instance.copyOfArrayOfPiecesTutorial[0].symbolOfPieceLeft;
 
             rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
+        }
+
+        if (rend.materials[0].IsKeywordEnabled("_EMISSION"))
+        {
+            rend.materials[0].DisableKeyword("_EMISSION");
         }
 
     }

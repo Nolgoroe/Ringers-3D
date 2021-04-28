@@ -127,11 +127,15 @@ public class PowerUpManager : MonoBehaviour
     }
     public void Deal()
     {
+
         if (GameManager.Instance.currentLevel.isTutorial)
         {
-            if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].dealPhase)
+            if (TutorialSequence.Instacne.currentPhaseInSequence < TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase.Length)
             {
-                TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
+                if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].dealPhase)
+                {
+                    TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
+                }
             }
         }
 

@@ -111,6 +111,8 @@ public class ConnectionManager : MonoBehaviour
                     //Instantiate(goodConnectionParticle, cellList[cellIndex].rightParticleZone);
                     supPieceArray[currentLeft].SetConnectedMaterial();
                     supPieceArray[leftContested].SetConnectedMaterial();
+
+                    Debug.Log("Emission is happening");
                     //supPieceArray[currentLeft].gameObject.GetComponent<Renderer>().material.EnableKeyword ("_EMISSION");
                     //supPieceArray[leftContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
 
@@ -177,6 +179,7 @@ public class ConnectionManager : MonoBehaviour
 
                     supPieceArray[currentRight].SetConnectedMaterial();
                     supPieceArray[rightContested].SetConnectedMaterial();
+                    Debug.Log("Emission is happening");
 
                     //supPieceArray[currentRight].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     //supPieceArray[rightContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");

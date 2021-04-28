@@ -136,6 +136,7 @@ public class DewDropsManager : MonoBehaviour
 
     IEnumerator DisplayTime()
     {
+        DisplayTimeNoDelay();
         while (PlayerManager.Instance.collectedDewDrops < maxDrops)
         {
             UIManager.Instance.dewDropsTextTime.gameObject.SetActive(true);
@@ -162,7 +163,13 @@ public class DewDropsManager : MonoBehaviour
 
         UIManager.Instance.dewDropsTextTime.gameObject.SetActive(false);
     }
+    void DisplayTimeNoDelay() ///// This function is only for the star of the game no that players wont see the defult time while the real time is updating
+    {
+        float minutes = Mathf.FloorToInt(timeLeftToGiveDrop / 60);
+        float seconds = Mathf.FloorToInt(timeLeftToGiveDrop % 60);
 
+        UIManager.Instance.dewDropsTextTime.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
     public void GiveDrop(int amount)
     {
         PlayerManager.Instance.collectedDewDrops += amount;

@@ -21873,7 +21873,7 @@ Transform:
   m_GameObject: {fileID: 6382559071292991177}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -3, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalScale: {x: 0.590304, y: 0.590304, z: 0.590304}
   m_Children:
   - {fileID: 8654870071412049279}
   - {fileID: 7399738602564596006}
@@ -42665,6 +42665,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RingFloofs - newest 26_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 813891122680460093, guid: 2c4234b8a2fa1034086f6e1435c44b00,
+        type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 5.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 813891122680460093, guid: 2c4234b8a2fa1034086f6e1435c44b00,
+        type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 813891122680460093, guid: 2c4234b8a2fa1034086f6e1435c44b00,
+        type: 3}
+      propertyPath: InitialModule.size3D
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 813891122680460093, guid: 2c4234b8a2fa1034086f6e1435c44b00,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 813891122680460094, guid: 2c4234b8a2fa1034086f6e1435c44b00,
         type: 3}
