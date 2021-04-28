@@ -127,9 +127,12 @@ public class PowerUpManager : MonoBehaviour
     }
     public void Deal()
     {
-        if (TutorialSequence.Instacne.duringSequence)
+        if (GameManager.Instance.currentLevel.isTutorial)
         {
-            TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
+            if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].dealPhase)
+            {
+                TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
+            }
         }
 
         if (GameManager.Instance.clipManager.clipCount - 1 == 0)

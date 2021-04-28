@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
 
     public List<pieceDataStruct> copyOfArrayOfPiecesTutorial;
     public List<int> copyOfSpecificSliceSpotsTutorial;
+    public List<PieceColor> copyOfSpecificSliceColorsTutorial;
+    public List<PieceSymbol> copyOfSpecificSliceSymbolsTutorial;
     private void Awake()
     {
         Instance = this;
@@ -110,7 +112,12 @@ public class GameManager : MonoBehaviour
         copyOfArrayOfPiecesTutorial.AddRange(currentLevel.arrayOfPieces);
 
         copyOfSpecificSliceSpotsTutorial = new List<int>();
+        copyOfSpecificSliceColorsTutorial = new List<PieceColor>();
+        copyOfSpecificSliceSymbolsTutorial = new List<PieceSymbol>();
+
         copyOfSpecificSliceSpotsTutorial.AddRange(currentLevel.specificSliceSpots);
+        copyOfSpecificSliceColorsTutorial.AddRange(currentLevel.specificSlicesColors);
+        copyOfSpecificSliceSymbolsTutorial.AddRange(currentLevel.specificSlicesShapes);
 
         UIManager.Instance.TurnOnGameplayUI();
 
@@ -295,10 +302,6 @@ public class GameManager : MonoBehaviour
 
     public void NextLevelFromWinScreen()
     {
-        if (GameManager.Instance.currentLevel.isTutorial)
-        {
-            TutorialSequence.Instacne.currentPhaseInSequence = 0;
-        }
 
         LootManager.Instance.rubiesToRecieveInLevel = 0;
 
@@ -328,6 +331,33 @@ public class GameManager : MonoBehaviour
 
         ZoneManagerHelpData.Instance.listOfAllZones[ZoneManagerHelpData.Instance.currentZoneCheck.id].SaveZone();
 
+
+        bool nextIsTutorial = CheckNextLevelIsTutorial(currentLevel.levelNum + 1);
+
         ChooseLevel(currentLevel.levelNum + 1);
+        if (currentLevel.isTutorial || nextIsTutorial)
+        {
+            TutorialSequence.Instacne.currentPhaseInSequence = 0;
+
+            StartTutorialLevel();
+        }
+        else
+        {
+            StartLevel();
+        }
+    }
+
+    private bool CheckNextLevelIsTutorial(int levelNum)
+    {
+        LevelScriptableObject next = (LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/Level " + levelNum);
+
+        if (next.isTutorial)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

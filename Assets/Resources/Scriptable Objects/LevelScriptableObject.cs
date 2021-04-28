@@ -25,6 +25,8 @@ public class LevelScriptableObject : ScriptableObject
     public bool isTutorial;
     public List<pieceDataStruct> arrayOfPieces;
     public int[] specificSliceSpots;
+    public PieceSymbol[] specificSlicesShapes;
+    public PieceColor[] specificSlicesColors;
 
     //public bool isRandomDistributionToSlices;
 }

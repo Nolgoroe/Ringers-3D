@@ -154,7 +154,7 @@ public class UIManager : MonoBehaviour
     {
         if (GameManager.Instance.currentLevel.isTutorial)
         {
-            foreach (GameObject go in TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.levelNum - 1].screens)
+            foreach (GameObject go in TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens)
             {
                 go.SetActive(false);
             }

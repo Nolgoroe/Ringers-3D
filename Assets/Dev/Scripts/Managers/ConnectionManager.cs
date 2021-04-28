@@ -85,6 +85,11 @@ public class ConnectionManager : MonoBehaviour
             {
                 if (!CheckSubPieceConnection(supPieceArray[currentLeft], supPieceArray[leftContested], out bool conditionmet))
                 {
+                    if (GameManager.Instance.currentLevel.isTutorial)
+                    {
+                        CursorController.Instance.tutorialBadConnection = true;
+                    }
+
                     Debug.Log("Bad Connection Right Conetsted");
                     GameManager.Instance.unsuccessfullConnectionCount++;
                     supPieceArray[currentLeft].isBadConnection = true;
@@ -101,6 +106,8 @@ public class ConnectionManager : MonoBehaviour
                 }
                 else
                 {
+                    CursorController.Instance.tutorialBadConnection = false;
+
                     //Instantiate(goodConnectionParticle, cellList[cellIndex].rightParticleZone);
                     supPieceArray[currentLeft].SetConnectedMaterial();
                     supPieceArray[leftContested].SetConnectedMaterial();
@@ -144,6 +151,10 @@ public class ConnectionManager : MonoBehaviour
             {
                 if (!CheckSubPieceConnection(supPieceArray[currentRight], supPieceArray[rightContested], out bool conditionmet))
                 {
+                    if (GameManager.Instance.currentLevel.isTutorial)
+                    {
+                        CursorController.Instance.tutorialBadConnection = true;
+                    }
                     Debug.Log("Bad Connection Left Conetsted");
                     GameManager.Instance.unsuccessfullConnectionCount++;
                     supPieceArray[currentRight].isBadConnection = true;
@@ -160,6 +171,8 @@ public class ConnectionManager : MonoBehaviour
                 }
                 else
                 {
+                    CursorController.Instance.tutorialBadConnection = false;
+
                     //Instantiate(goodConnectionParticle, cellList[cellIndex].leftParticleZone);
 
                     supPieceArray[currentRight].SetConnectedMaterial();

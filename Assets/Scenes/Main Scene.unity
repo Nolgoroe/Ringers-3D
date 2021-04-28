@@ -2651,7 +2651,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &101702986
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3401,7 +3401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3801,7 +3801,7 @@ GameObject:
   - component: {fileID: 138833117}
   - component: {fileID: 138833116}
   m_Layer: 5
-  m_Name: gameplay Canvas Screens UI
+  m_Name: gameplay Canvas Screens UI (THOGUH CODE WTF)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11242,7 +11242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -11825,7 +11825,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -200}
+  m_AnchoredPosition: {x: -169, y: -265}
   m_SizeDelta: {x: 709.9, y: 354.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &432097516
@@ -11842,7 +11842,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -16238,7 +16238,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -200}
+  m_AnchoredPosition: {x: -133, y: -389}
   m_SizeDelta: {x: 709.9, y: 354.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &591865596
@@ -16255,7 +16255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -17461,7 +17461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &656761285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18555,7 +18555,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -21485,7 +21485,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &866528263
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23074,7 +23074,7 @@ GameObject:
   m_Component:
   - component: {fileID: 952127875}
   m_Layer: 5
-  m_Name: Tutorial UI screens
+  m_Name: Tutorial UI screens (THOGUH CODE WTF)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23599,7 +23599,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 2560, y: 1440}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 1
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -24497,6 +24497,7 @@ MonoBehaviour:
   rayLength: 25
   radiusCollide: 0.5
   piecePickupHeight: -2
+  tutorialBadConnection: 0
 --- !u!4 &1011302489
 Transform:
   m_ObjectHideFlags: 0
@@ -24793,7 +24794,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -200}
+  m_AnchoredPosition: {x: 0, y: -265}
   m_SizeDelta: {x: 709.9, y: 354.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1043428620
@@ -24810,7 +24811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -26993,7 +26994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -28850,30 +28851,30 @@ MonoBehaviour:
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 1
+      unlockedClips: 01000000
       unlockedBoardCells: 0
-      targetCell: 1
+      targetCells: 01000000
     - phaseID: 2
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 2
+      unlockedClips: 02000000
       unlockedBoardCells: 0
-      targetCell: 0
+      targetCells: 00000000
     - phaseID: 3
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 0
+      unlockedClips: 00000000
       unlockedBoardCells: 0
-      targetCell: 2
+      targetCells: 02000000
     - phaseID: 4
       isClipPhase: 0
       isBoardPhase: 1
       dealPhase: 0
-      unlockedClips: 0
+      unlockedClips: 
       unlockedBoardCells: 2
-      targetCell: 7
+      targetCells: 07000000
     screens:
     - {fileID: 1854048183}
     - {fileID: 702775383}
@@ -28897,23 +28898,23 @@ MonoBehaviour:
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 2
+      unlockedClips: 02000000
       unlockedBoardCells: 0
-      targetCell: 1
+      targetCells: 0000000001000000
     - phaseID: 2
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 3
+      unlockedClips: 03000000
       unlockedBoardCells: 0
-      targetCell: 0
+      targetCells: 0000000001000000
     - phaseID: 3
       isClipPhase: 0
       isBoardPhase: 0
       dealPhase: 1
-      unlockedClips: 0
+      unlockedClips: 
       unlockedBoardCells: 0
-      targetCell: 0
+      targetCells: 
     screens:
     - {fileID: 1043428618}
     - {fileID: 1043428618}
@@ -28921,7 +28922,7 @@ MonoBehaviour:
     - {fileID: 126121281}
     sprites:
     - {fileID: 21300000, guid: f0335a452e980704a81df4d639157000, type: 3}
-    - {fileID: 21300000, guid: f0335a452e980704a81df4d639157000, type: 3}
+    - {fileID: 21300000, guid: ecadaadb7c2a5a14f927dcb990d02829, type: 3}
     - {fileID: 21300000, guid: 4bb5cf2c374b84f44813e5531d1f326d, type: 3}
   - levelTutorialIndex: 3
     EndPhaseID: 2
@@ -28935,16 +28936,16 @@ MonoBehaviour:
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 0
+      unlockedClips: 00000000
       unlockedBoardCells: 0
-      targetCell: 2
+      targetCells: 02000000
     - phaseID: 2
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 2
+      unlockedClips: 02000000
       unlockedBoardCells: 0
-      targetCell: 3
+      targetCells: 03000000
     screens:
     - {fileID: 2123312440}
     - {fileID: 591865594}
@@ -28964,16 +28965,16 @@ MonoBehaviour:
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 1
+      unlockedClips: 010000000200000003000000
       unlockedBoardCells: 0
-      targetCell: 1
+      targetCells: 0100000002000000
     - phaseID: 2
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 2
+      unlockedClips: 010000000200000003000000
       unlockedBoardCells: 0
-      targetCell: 2
+      targetCells: 0100000002000000
     screens:
     - {fileID: 432097514}
     - {fileID: 432097514}
@@ -28997,30 +28998,30 @@ MonoBehaviour:
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 1
+      unlockedClips: 01000000
       unlockedBoardCells: 0
-      targetCell: 1
+      targetCells: 0100000002000000
     - phaseID: 2
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 2
+      unlockedClips: 02000000
       unlockedBoardCells: 0
-      targetCell: 2
+      targetCells: 0100000002000000
     - phaseID: 3
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 0
+      unlockedClips: 00000000
       unlockedBoardCells: 0
-      targetCell: 4
+      targetCells: 0400000005000000
     - phaseID: 4
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 3
+      unlockedClips: 03000000
       unlockedBoardCells: 0
-      targetCell: 5
+      targetCells: 0400000005000000
     screens:
     - {fileID: 1890713266}
     - {fileID: 1890713266}
@@ -29028,10 +29029,10 @@ MonoBehaviour:
     - {fileID: 1376208567}
     - {fileID: 1348711234}
     sprites:
-    - {fileID: 21300000, guid: 8564bb0a3cc2dfe428f4014a8c195095, type: 3}
-    - {fileID: 21300000, guid: 8564bb0a3cc2dfe428f4014a8c195095, type: 3}
-    - {fileID: 21300000, guid: fea82b220e8fd3f42af34feccb942e80, type: 3}
-    - {fileID: 21300000, guid: fea82b220e8fd3f42af34feccb942e80, type: 3}
+    - {fileID: 21300000, guid: a8f0c09f93eaae842be4f39243458cac, type: 3}
+    - {fileID: 21300000, guid: 6b958507797fc6a4783880c24def97b9, type: 3}
+    - {fileID: 21300000, guid: cc186001b8eb9624b8b869e149dbf5b0, type: 3}
+    - {fileID: 21300000, guid: d31d60b981d123f4bbbc891d16a3ada6, type: 3}
   duringSequence: 0
   maskImage: {fileID: 1338993689}
 --- !u!1 &1259284961
@@ -29341,7 +29342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -30862,7 +30863,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 810, y: 1440}
+  m_SizeDelta: {x: 1440, y: 2560}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1338993688
 MonoBehaviour:
@@ -31382,7 +31383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -32349,7 +32350,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -200}
+  m_AnchoredPosition: {x: 0, y: -265}
   m_SizeDelta: {x: 709.9, y: 354.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1376208569
@@ -32366,7 +32367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -35406,7 +35407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1480540859
 RectTransform:
   m_ObjectHideFlags: 0
@@ -41956,7 +41957,7 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 9.5
-  m_Depth: -1
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -43311,7 +43312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -45609,7 +45610,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -46383,6 +46384,8 @@ MonoBehaviour:
     colorOfPieceLeft: 0
     symbolOfPieceLeft: 0
   copyOfSpecificSliceSpotsTutorial: 
+  copyOfSpecificSliceColorsTutorial: 
+  copyOfSpecificSliceSymbolsTutorial: 
 --- !u!4 &1887064405
 Transform:
   m_ObjectHideFlags: 0
@@ -46487,7 +46490,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -200}
+  m_AnchoredPosition: {x: 0, y: -265}
   m_SizeDelta: {x: 709.9, y: 354.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1890713268
@@ -46504,7 +46507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -47197,7 +47200,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1926656343
 RectTransform:
   m_ObjectHideFlags: 0
@@ -47734,7 +47737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1954536103
 RectTransform:
   m_ObjectHideFlags: 0
@@ -50176,7 +50179,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -200}
+  m_AnchoredPosition: {x: 0, y: -797}
   m_SizeDelta: {x: 709.9, y: 354.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2063133150
@@ -50193,7 +50196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -51157,7 +51160,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -200}
+  m_AnchoredPosition: {x: -133, y: -389}
   m_SizeDelta: {x: 709.9, y: 354.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2123312442
@@ -51174,7 +51177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -51325,7 +51328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

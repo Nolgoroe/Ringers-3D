@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class CursorController : MonoBehaviour
 {
+    public static CursorController Instance;
     public LayerMask pieceLayer;
     public LayerMask boardCellLayer;
 
@@ -24,13 +26,19 @@ public class CursorController : MonoBehaviour
     Ray mouseRay;
 
     bool hasclickedPowerUp;
+
+    [HideInInspector]
+    public bool tutorialBadConnection = false;
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(mouseRay.origin, mouseRay.origin + rayLength * mouseRay.direction);
 
         Gizmos.DrawSphere(cursorPos.position, radiusCollide);
     }
-
+    private void Start()
+    {
+        Instance = this;
+    }
     public void Init()
     {
         gameBoard = GameManager.Instance.gameBoard;
@@ -211,7 +219,7 @@ public class CursorController : MonoBehaviour
         {
             //if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].isBoardPhase || TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].isClipPhase)
             //{
-                SnapFollowerTutorial(cellHit);
+            SnapFollowerTutorial(cellHit);
             //}
         }
         else
@@ -276,31 +284,48 @@ public class CursorController : MonoBehaviour
         {
             if (followerTarget)
             {
-                if (cellHit.GetComponent<Cell>().cellIndex == TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].targetCell)
+                bool isAccording = false;
+
+                if (GameManager.Instance.currentLevel.tutorialIndexForList == 4)
                 {
                     Cell cell = cellHit.GetComponent<Cell>();
+                    Piece p = followerTarget.GetComponent<Piece>();
+                    isAccording = SpecialTutorialConnectionLogic(cell.cellIndex, p);
+
+                    if (!isAccording)
+                    {
+                        return;
+                    }
+                }
+
+                if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].targetCells.Contains(cellHit.GetComponent<Cell>().cellIndex))
+                {
+                    Cell cell = cellHit.GetComponent<Cell>();
+
+                    Transform currentParent = followerTarget.parent; //// ONLY IF WERE COMING FROM A CLIP THIS IS RELEVANT
                     Cell previousCell = followerTarget.parent.GetComponent<Cell>(); //// Only relevant if piece is moved from cell to cell
 
                     bool newPiece = followerTarget.transform.parent.CompareTag("Clip");
-
-                    if (GameManager.Instance.currentFilledCellCount + 1 != GameManager.Instance.currentLevel.cellsCountInLevel)
-                    {
-                        if (newPiece && !cell.isFull)
-                        {
-                            GameManager.Instance.clipManager.PopulateSlot(followerTarget.transform.parent);
-                        }
-                    }
-                    else
-                    {
-                        GameManager.Instance.clipManager.emptyClip = followerTarget.transform.parent;
-                        GameManager.Instance.clipManager.latestPiece = followerTarget;
-
-                    }
-
-
                     if (!cell.isFull)
                     {
                         cell.AddPiece(followerTarget, newPiece);
+
+                        if (GameManager.Instance.currentFilledCellCount + 1 != GameManager.Instance.currentLevel.cellsCountInLevel && !tutorialBadConnection)
+                        {
+                            if (newPiece/* && !cell.isFull*/)
+                            {
+                                GameManager.Instance.clipManager.PopulateSlot(currentParent);
+                            }
+
+                            TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
+                        }
+                        else
+                        {
+                            ReturnHome();
+
+                            GameManager.Instance.clipManager.emptyClip = followerTarget.transform.parent;
+                            GameManager.Instance.clipManager.latestPiece = followerTarget;
+                        }
 
                         if (!newPiece && cell != previousCell)
                         {
@@ -312,8 +337,9 @@ public class CursorController : MonoBehaviour
                         ReturnHome();
                     }
 
+
                     followerTarget = null;
-                    TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
+
                 }
                 else
                 {
@@ -334,7 +360,7 @@ public class CursorController : MonoBehaviour
     {
         Vector3 home = GameManager.Instance.clipManager.piece.transform.position;
         followerTarget.localPosition = home;
-        followerTarget.localRotation = Quaternion.Euler(0,180,67); ///// reset piece rotation to it's original local rotation
+        followerTarget.localRotation = Quaternion.Euler(0, 180, 67); ///// reset piece rotation to it's original local rotation
 
         if (followerTarget.transform.parent.GetComponent<Cell>())
         {
@@ -343,4 +369,30 @@ public class CursorController : MonoBehaviour
 
         followerTarget = null;
     }
+
+    private bool SpecialTutorialConnectionLogic(int cellindex, Piece pieceHeld)
+    {
+        Slice relavent = GameManager.Instance.sliceManager.sliceSlots[cellindex].GetComponent<Slice>();
+
+        if (relavent.sliceCatagory == SliceCatagory.None)
+        {
+            if (pieceHeld.rightChild.colorOfPiece != PieceColor.Blue)
+            {
+                ReturnHome();
+                return false;
+            }
+        }
+        else
+        {
+            if (pieceHeld.leftChild.colorOfPiece != PieceColor.Blue)
+            {
+                ReturnHome();
+                return false;
+            }
+        }
+
+
+        return true;
+    }
+
 }

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
+using TMPro;
 
 [System.Serializable]
 public class pieceDataStruct
@@ -31,10 +33,10 @@ public class Phase
     public bool isClipPhase, isBoardPhase;
     public bool dealPhase;
 
-    public int unlockedClips;
+    public int[] unlockedClips;
     public int unlockedBoardCells;
 
-    public int targetCell;
+    public int[] targetCells;
 
 }
 [System.Serializable]
@@ -77,7 +79,7 @@ public class TutorialSequence : MonoBehaviour
 
             //for (int k = 0; k < levelSequences[levelNum - 1].phase[currentPhaseInSequence].unlockedClips.Length; k++)
             //{
-                if (i == levelSequences[levelNum - 1].phase[currentPhaseInSequence].unlockedClips/*[k]*/)
+                if (levelSequences[levelNum - 1].phase[currentPhaseInSequence].unlockedClips.Contains (i)/*[k]*/)
                 {
                     p.isTutorialLocked = false;
                 }
@@ -118,7 +120,11 @@ public class TutorialSequence : MonoBehaviour
             maskImage.gameObject.SetActive(false);
             duringSequence = false;
             Debug.Log("Phases are done!");
-            Invoke("UnlockAll", 2);
+            //Invoke("UnlockAll", 2);
+
+            UnlockAll();
+            Invoke("DeactivateTutorialScreens", 2);
+
             return;
         }
 
@@ -163,7 +169,7 @@ public class TutorialSequence : MonoBehaviour
 
                 //for (int k = 0; k < levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[currentPhaseInSequence].unlockedClips.Length; k++)
                 //{
-                if (i == levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[currentPhaseInSequence].unlockedClips/*[k]*/)
+                if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[currentPhaseInSequence].unlockedClips.Contains(i)/*[k]*/)
                 {
                     p.isTutorialLocked = false;
                 }
@@ -237,10 +243,10 @@ public class TutorialSequence : MonoBehaviour
 
     public void UnlockAll()
     {
-        foreach (GameObject go in levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens)
-        {
-            go.SetActive(false);
-        }
+        //foreach (GameObject go in levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens)
+        //{
+        //    go.SetActive(false);
+        //}
 
         UIManager.Instance.dealButton.interactable = true;
 
@@ -257,6 +263,51 @@ public class TutorialSequence : MonoBehaviour
             Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
 
             p.isTutorialLocked = false;
+        }
+    }
+
+    public void DeactivateTutorialScreens()
+    {
+        foreach (GameObject go in levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens)
+        {
+            if (go.activeInHierarchy)
+            {
+                //StartCoroutine(FadeImage(go, 2f));
+                FadeImage(go, 2f,false);
+
+                foreach (TMP_Text child in go.GetComponentsInChildren<TMP_Text>())
+                {
+                    FadeImage(child.gameObject, 2f, true);
+                }
+            }
+            else
+            {
+                go.SetActive(false);
+            }
+        }
+    }
+
+    private void FadeImage(GameObject toFade, float speed, bool isText)
+    {
+        if (!isText)
+        {
+            LeanTween.value(toFade, 1, 0, speed).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+            {
+                Image sr = toFade.GetComponent<Image>();
+                Color newColor = sr.color;
+                newColor.a = val;
+                sr.color = newColor;
+            });
+        }
+        else
+        {
+            LeanTween.value(toFade, 1, 0, speed).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+            {
+                TMP_Text sr = toFade.GetComponent<TMP_Text>();
+                Color newColor = sr.color;
+                newColor.a = val;
+                sr.color = newColor;
+            });
         }
     }
 
