@@ -21,37 +21,37 @@ public class SubPiece : MonoBehaviour
     public void SetPiece()
     {
 
-        ///// Shorten but keep logic
-        //random = Random.Range(0, GameManager.Instance.clipManager.gameColors.Length - 1);
-        //rend.material.SetColor("_BaseColor", GameManager.Instance.clipManager.gameColors[random]);
-        //colorOfPiece = (PieceColor)random;
+            ///// Shorten but keep logic
+            //random = Random.Range(0, GameManager.Instance.clipManager.gameColors.Length - 1);
+            //rend.material.SetColor("_BaseColor", GameManager.Instance.clipManager.gameColors[random]);
+            //colorOfPiece = (PieceColor)random;
 
 
-        //random = Random.Range(0, GameManager.Instance.clipManager.gameSymbols.Length - 1);
-        //rend.material.SetTexture("_BumpMap", GameManager.Instance.clipManager.gameSymbols[random]);
-        //rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[random]);
-        //symbolOfPiece = (PieceSymbol)random;
+            //random = Random.Range(0, GameManager.Instance.clipManager.gameSymbols.Length - 1);
+            //rend.material.SetTexture("_BumpMap", GameManager.Instance.clipManager.gameSymbols[random]);
+            //rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[random]);
+            //symbolOfPiece = (PieceSymbol)random;
 
-        /// Shorten but keep logic
+            /// Shorten but keep logic
 
-        randomColor = Random.Range(0, GameManager.Instance.clipManager.colorsToMats.Length);
-        //random = Random.Range(0, GameManager.Instance.clipManager.gameColors.Length - 2);
-        //rend.material = GameManager.Instance.clipManager.gameColors[random];
-        colorOfPiece = (PieceColor)randomColor;
+            randomColor = Random.Range(0, GameManager.Instance.clipManager.colorsToMats.Length);
+            //random = Random.Range(0, GameManager.Instance.clipManager.gameColors.Length - 2);
+            //rend.material = GameManager.Instance.clipManager.gameColors[random];
+            colorOfPiece = (PieceColor)randomColor;
 
 
-        randomSymbol = Random.Range(0, GameManager.Instance.clipManager.colorsToMats[randomColor].colorMats.Length);
-        //rend.material.SetTexture("_BumpMap", GameManager.Instance.clipManager.gameSymbols[random]);
-        //rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[random]);
-        //rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[random]);
-        rend.material = GameManager.Instance.clipManager.colorsToMats[randomColor].colorMats[randomSymbol];
-        symbolOfPiece = (PieceSymbol)randomSymbol;
+            randomSymbol = Random.Range(0, GameManager.Instance.clipManager.colorsToMats[randomColor].colorMats.Length);
+            //rend.material.SetTexture("_BumpMap", GameManager.Instance.clipManager.gameSymbols[random]);
+            //rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[random]);
+            //rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[random]);
+            rend.material = GameManager.Instance.clipManager.colorsToMats[randomColor].colorMats[randomSymbol];
+            symbolOfPiece = (PieceSymbol)randomSymbol;
 
-        if (rend.materials[0].IsKeywordEnabled("_EMISSION"))
-        {
-            rend.materials[0].DisableKeyword("_EMISSION");
-        }
 
+            if (rend.materials[0].IsKeywordEnabled("_EMISSION"))
+            {
+                rend.materials[0].DisableKeyword("_EMISSION");
+            }
 
     }
     public void SetPieceTutorial(bool isRight)
@@ -149,4 +149,5 @@ public class SubPiece : MonoBehaviour
             yield return null;
         }
     }
+
 }

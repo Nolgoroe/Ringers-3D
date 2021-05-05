@@ -35,9 +35,12 @@ public class ClipManager : MonoBehaviour
     public void Init()
     {
         clipCount = slots.Length;
+        int testnum = 0;
+
         foreach (Transform s in slots)
         {
-            PopulateSlot(s);
+            testnum++;
+            PopulateSlot(s,testnum);
         }
 
         originalPiecePos = piece.transform.position;
@@ -45,9 +48,10 @@ public class ClipManager : MonoBehaviour
     }
 
 
-    public void PopulateSlot(Transform s)
+    public void PopulateSlot(Transform s, int testnum)
     {
         GameObject go = Instantiate(piece, s);
+        go.name = "Piece" + " " + testnum;
         Piece p = go.GetComponent<Piece>();
         p.SetPieces();
     }
@@ -64,7 +68,7 @@ public class ClipManager : MonoBehaviour
 
         for (int i = 0; i < clipCount; i++)
         {
-            PopulateSlot(slots[i]);
+            PopulateSlot(slots[i], i);
         }
     }
     public void ExtraDealSlots()
@@ -79,7 +83,7 @@ public class ClipManager : MonoBehaviour
 
         for (int i = 0; i < slots.Length; i++)
         {
-            PopulateSlot(slots[i]);
+            PopulateSlot(slots[i], i);
         }
     }
 

@@ -237,7 +237,7 @@ public class CursorController : MonoBehaviour
                     {
                         if (newPiece && !cell.isFull)
                         {
-                            GameManager.Instance.clipManager.PopulateSlot(followerTarget.transform.parent);
+                            GameManager.Instance.clipManager.PopulateSlot(followerTarget.transform.parent, 10);
                             Debug.Log("!!!!!!!!!!!!!!!!!");
                         }
                     }
@@ -314,7 +314,7 @@ public class CursorController : MonoBehaviour
                         {
                             if (newPiece/* && !cell.isFull*/)
                             {
-                                GameManager.Instance.clipManager.PopulateSlot(currentParent);
+                                GameManager.Instance.clipManager.PopulateSlot(currentParent, 10);
                             }
 
                             TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
