@@ -504,7 +504,7 @@ public class ConnectionManager : MonoBehaviour
             }
         }
 
-        relevent.isLock = false;
+        //relevent.isLock = false;
         //}
         //else
         //{
@@ -523,40 +523,60 @@ public class ConnectionManager : MonoBehaviour
         //}
     }
 
-    public void UnlcokCell(Slice relevent, bool isLimiter)
+    public void UnlockPieces(Cell currentCell, Cell left, Cell right)
     {
-        Debug.Log("Unlock Cells");
-
-        cells[relevent.sliceIndex].pieceHeld.isLocked = false;
-
-        if (relevent.sliceIndex == 0)
+        foreach (Transform t in currentCell.pieceHeld.transform)
         {
-            cells[cells.Count - 1].pieceHeld.isLocked = false;
-        }
-        else
-        {
-            cells[relevent.sliceIndex - 1].pieceHeld.isLocked = false;
-        }
-
-        foreach (Cell c in relevent.connectedCells)
-        {
-            if (c.cellIndex == relevent.sliceIndex)
+            if (t.childCount > 0)
             {
-                if(c.pieceHeld.rightChild.transform.childCount > 0)
-                {
-                    Destroy(c.pieceHeld.leftChild.transform.GetChild(0));
-                }
-            }
-            else
-            {
-                if (c.pieceHeld.rightChild.transform.childCount > 0)
-                {
-                    Destroy(c.pieceHeld.rightChild.transform.GetChild(0));
-                }
+                Destroy(t.GetChild(0).gameObject);
             }
         }
 
-        relevent.isLock = true;
+        currentCell.pieceHeld.isLocked = false;
+
+        //if (currentCell.pieceHeld.leftChild.transform.childCount > 0)
+        //{
+        //    Destroy(currentCell.pieceHeld.leftChild.transform.GetChild(0).gameObject);
+        //}
+
+        //if (currentCell.pieceHeld.rightChild.transform.childCount > 0)
+        //{
+        //    Destroy(currentCell.pieceHeld.rightChild.transform.GetChild(0).gameObject);
+        //}
+
+        if (left.pieceHeld.rightChild.transform.childCount > 0)
+        {
+            Destroy(left.pieceHeld.rightChild.transform.GetChild(0).gameObject);
+
+            StartCoroutine(CheckAreCellsLocked(left));
+        }
+
+        if (right.pieceHeld.leftChild.transform.childCount > 0)
+        {
+            Destroy(right.pieceHeld.leftChild.transform.GetChild(0).gameObject);
+
+            StartCoroutine(CheckAreCellsLocked(right));
+        }
+
+
+
+
+    }
+
+    private IEnumerator CheckAreCellsLocked(Cell toCheck) // THIS IS ENUMERATOR BCAUSE I'M DESTROYING THE LOCK IN THE SAME FRAME I'M CHECKING IF IT'S DESTROYED.. SO I NEED A DEALY
+    {
+        yield return new WaitForEndOfFrame();
+
+        foreach (Transform t in toCheck.pieceHeld.transform)
+        {
+            if (t.childCount > 0)
+            {
+                yield break;
+            }
+        }
+
+        toCheck.pieceHeld.isLocked = false;
     }
 
     public bool CheckFulfilledSliceCondition(Slice relevent, CompareResault result, SubPiece a, SubPiece b)

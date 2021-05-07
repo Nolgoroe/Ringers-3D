@@ -126,6 +126,11 @@ public class Cell : MonoBehaviour
         Cell leftCell = ConnectionManager.Instance.cells[ConnectionManager.Instance.CheckIntRangeCells(cellIndex - 1)];
         Cell rightCell = ConnectionManager.Instance.cells[ConnectionManager.Instance.CheckIntRangeCells(cellIndex + 1)];
 
+        if (ConnectionManager.Instance.cells[cellIndex].pieceHeld.isLocked)
+        {
+            ConnectionManager.Instance.UnlockPieces(ConnectionManager.Instance.cells[cellIndex], leftCell, rightCell);
+        }
+
         if (leftCell.isFull)
         {
             if (pieceHeld.leftChild.isBadConnection)
@@ -175,6 +180,7 @@ public class Cell : MonoBehaviour
                 }
             }
         }
+
 
         if (pieceHeld.rightChild.relevantSlice)
         {
