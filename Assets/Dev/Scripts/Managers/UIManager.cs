@@ -505,20 +505,20 @@ public class UIManager : MonoBehaviour
 
         }
     }
-    public void UnlockZoneFirstTime(int ID)
-    {
-        ButtonsPerZone BPZ = buttonsPerZone.Where(p => p.theZone == ZoneManagerHelpData.Instance.listOfAllZones[ID]).Single();
+    //public void UnlockZoneFirstTime(int ID)
+    //{
+    //    ButtonsPerZone BPZ = buttonsPerZone.Where(p => p.theZone == ZoneManagerHelpData.Instance.listOfAllZones[ID]).Single();
 
-        for (int i = 0; i < BPZ.zoneButtons.Length; i++)
-        {
-            if( i == 0)
-            {
-                BPZ.zoneButtons[i].interactable = true;
-            }
+    //    for (int i = 0; i < BPZ.zoneButtons.Length; i++)
+    //    {
+    //        if( i == 0)
+    //        {
+    //            BPZ.zoneButtons[i].interactable = true;
+    //        }
 
-            BPZ.zoneButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconPath);
-        }
-    }
+    //        BPZ.zoneButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconPath);
+    //    }
+    //}
     public void RefreshGoldAndRubyDisplay()
     {
         //hubGoldText.text = PlayerManager.Instance.goldCount.ToString();
@@ -565,7 +565,6 @@ public class UIManager : MonoBehaviour
         gameplayCanvasBotom.SetActive(true);
         gameplayCanvasTop.SetActive(true);
     }
-
     public void RefreshDewDropsDisplay(int spriteIndex)
     {
         dewDropsImage.sprite = dewDropsSprites[spriteIndex];

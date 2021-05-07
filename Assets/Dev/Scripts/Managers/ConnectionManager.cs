@@ -476,7 +476,6 @@ public class ConnectionManager : MonoBehaviour
     {
         Debug.Log("Lock");
 
-
         //cells[relevent.sliceIndex].lockSprite.SetActive(true);
         cells[relevent.sliceIndex].pieceHeld.isLocked = true;
 
@@ -491,52 +490,73 @@ public class ConnectionManager : MonoBehaviour
             cells[relevent.sliceIndex - 1].pieceHeld.isLocked = true;
         }
 
-        if (!isLimiter)
+        //if (!isLimiter)
+        //{
+        foreach (Cell c in relevent.connectedCells)
         {
-            foreach (Cell c in relevent.connectedCells)
+            if (c.cellIndex == relevent.sliceIndex)
             {
-                if (c.cellIndex == relevent.sliceIndex)
-                {
-                    //c.lockSpriteCellLeft.gameObject.SetActive(true);
-                    Instantiate(leftPieceLockBrown, c.pieceHeld.leftChild.transform);
-                }
-                else
-                {
-                    //c.lockSpriteCellRight.gameObject.SetActive(true);
-                    Instantiate(rightPieceLockBrown, c.pieceHeld.rightChild.transform);
-                }
+                Instantiate(leftPieceLockBrown, c.pieceHeld.leftChild.transform);
             }
+            else
+            {
+                Instantiate(rightPieceLockBrown, c.pieceHeld.rightChild.transform);
+            }
+        }
 
-            //SpriteRenderer relevantSliceSR = relevent.child.GetComponent<SpriteRenderer>();
-            //relevantSliceSR.color = new Color(relevantSliceSR.color.r, relevantSliceSR.color.g, relevantSliceSR.color.b, 0.4f);
+        relevent.isLock = false;
+        //}
+        //else
+        //{
+        //    foreach (Cell c in relevent.connectedCells)
+        //    {
+        //        if (c.cellIndex == relevent.sliceIndex)
+        //        {
+        //            Instantiate(leftPieceLockBrown, c.pieceHeld.leftChild.transform);
+        //        }
+        //        else
+        //        {
+        //            Instantiate(rightPieceLockBrown, c.pieceHeld.rightChild.transform);
+        //        }
+        //    }
+        //    relevent.isLock = false;
+        //}
+    }
 
-            //SpriteRenderer ciconSR = relevent.child.transform.GetChild(0).GetComponent<SpriteRenderer>();
+    public void UnlcokCell(Slice relevent, bool isLimiter)
+    {
+        Debug.Log("Unlock Cells");
 
-            //ciconSR.color = new Color(ciconSR.color.r, ciconSR.color.g, ciconSR.color.b, 0.4f);
+        cells[relevent.sliceIndex].pieceHeld.isLocked = false;
 
-            //relevent.lockPrefab.GetComponent<Rigidbody2D>().simulated = true;
-            //relevent.lockPrefab.GetComponent<Rigidbody2D>().AddForce(Vector3.up * 5, ForceMode2D.Impulse);
-            relevent.isLock = false;
-            //Destroy(relevent.lockPrefab, 2f);
-
+        if (relevent.sliceIndex == 0)
+        {
+            cells[cells.Count - 1].pieceHeld.isLocked = false;
         }
         else
         {
-            foreach (Cell c in relevent.connectedCells)
+            cells[relevent.sliceIndex - 1].pieceHeld.isLocked = false;
+        }
+
+        foreach (Cell c in relevent.connectedCells)
+        {
+            if (c.cellIndex == relevent.sliceIndex)
             {
-                if (c.cellIndex == relevent.sliceIndex)
+                if(c.pieceHeld.rightChild.transform.childCount > 0)
                 {
-                    //c.lockSpriteCellLeft.gameObject.SetActive(true);
-                    Instantiate(leftPieceLockBrown, c.pieceHeld.leftChild.transform);
-                }
-                else
-                {
-                    //c.lockSpriteCellRight.gameObject.SetActive(true);
-                    Instantiate(rightPieceLockBrown, c.pieceHeld.rightChild.transform);
+                    Destroy(c.pieceHeld.leftChild.transform.GetChild(0));
                 }
             }
-            relevent.isLock = false;
+            else
+            {
+                if (c.pieceHeld.rightChild.transform.childCount > 0)
+                {
+                    Destroy(c.pieceHeld.rightChild.transform.GetChild(0));
+                }
+            }
         }
+
+        relevent.isLock = true;
     }
 
     public bool CheckFulfilledSliceCondition(Slice relevent, CompareResault result, SubPiece a, SubPiece b)
