@@ -63,7 +63,7 @@ public class ConnectionManager : MonoBehaviour
         {
             CheckConnections(subPiecesDoubleRing, outerCells,cellIndex, isOuterCell);
         }
-    }
+        }
 
     public void CheckConnections(SubPiece[] supPieceArray, List<Cell> cellList, int cellIndex, bool isOuterCell)
     {
@@ -106,6 +106,9 @@ public class ConnectionManager : MonoBehaviour
                 }
                 else
                 {
+                    supPieceArray[currentLeft].isBadConnection = false;
+                    supPieceArray[leftContested].isBadConnection = false;
+
                     CursorController.Instance.tutorialBadConnection = false;
 
                     //Instantiate(goodConnectionParticle, cellList[cellIndex].rightParticleZone);
@@ -159,6 +162,7 @@ public class ConnectionManager : MonoBehaviour
                     }
                     Debug.Log("Bad Connection Left Conetsted");
                     GameManager.Instance.unsuccessfullConnectionCount++;
+
                     supPieceArray[currentRight].isBadConnection = true;
                     supPieceArray[rightContested].isBadConnection = true;
                     //supPieceArray[currentRight].gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
@@ -174,6 +178,9 @@ public class ConnectionManager : MonoBehaviour
                 else
                 {
                     CursorController.Instance.tutorialBadConnection = false;
+
+                    supPieceArray[currentRight].isBadConnection = false;
+                    supPieceArray[rightContested].isBadConnection = false;
 
                     //Instantiate(goodConnectionParticle, cellList[cellIndex].leftParticleZone);
 
