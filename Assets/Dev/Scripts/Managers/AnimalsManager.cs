@@ -33,6 +33,7 @@ public class SummonedAnimalData
 {
     public AnimalsInGame animal;
     public GameObject animalPrefab;
+    public float weight;
 }
 
 [Serializable]
@@ -65,6 +66,9 @@ public class AnimalsManager : MonoBehaviour
         {
             LoadAnimalData();
         }
+
+
+        currentLevelAnimal = AnimalsInGame.None;
     }
 
 

@@ -7,4 +7,6 @@ public class AnimalPrefabData : MonoBehaviour
     public AnimalsInGame animalType;
 
     public GameObject animatedPrefab;
+
+    public AnimalScriptableObject animalSO;
 }

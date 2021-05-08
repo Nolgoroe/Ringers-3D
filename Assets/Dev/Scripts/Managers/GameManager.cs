@@ -179,6 +179,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                // Weight system here
                 AnimalsManager.Instance.statueToSwap = Instantiate(currentLevel.possibleAnimalsInLevel[Random.Range(0, currentLevel.possibleAnimalsInLevel.Length)].animalPrefab, parent.transform);
                 return AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
             }

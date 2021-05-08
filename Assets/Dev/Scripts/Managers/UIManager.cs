@@ -37,7 +37,9 @@ public class UIManager : MonoBehaviour
 
     public Text /*hubGoldText,*/ hubRubyText/*, dewDropsText*/, dewDropsTextTime;
 
-    public TMP_Text /*gameplayGoldText,*/ gameplayRubyText, gameplayDewDropsText;
+    public TMP_Text /*gameplayGoldText,*/ gameplayRubyText/*, gameplayDewDropsText*/;
+    public TMP_Text animalNameText;
+
     //public TMP_Text currentLevelName;
 
     //public Button commitButton;
@@ -87,6 +89,8 @@ public class UIManager : MonoBehaviour
         loseScreen.SetActive(false);
         tutorialCanvas.SetActive(false);
 
+
+        animalNameText.text = "";
         foreach (GameObject go in allTutorialScreens)
         {
             go.SetActive(false);
@@ -434,6 +438,10 @@ public class UIManager : MonoBehaviour
         isUsingUI = true;
 
         youWinScreen.SetActive(true);
+
+        AnimalPrefabData prefabData = AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
+
+        animalNameText.text = prefabData.animalSO.animalName;
     }
     public void DisplayLoseScreen()
     {
