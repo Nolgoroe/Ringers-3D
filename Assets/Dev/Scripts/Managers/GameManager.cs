@@ -269,7 +269,7 @@ public class GameManager : MonoBehaviour
 
         UIManager.Instance.WinLevel();
 
-        if (currentLevel.levelNum != ZoneManagerHelpData.Instance.currentZoneCheck.lastLevelNum)
+        if (currentLevel.levelIndexInZone != ZoneManagerHelpData.Instance.currentZoneCheck.lastLevelNum)
         {
 
             UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
