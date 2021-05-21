@@ -577,4 +577,9 @@ public class UIManager : MonoBehaviour
     {
         dewDropsImage.sprite = dewDropsSprites[spriteIndex];
     }
+
+    public void ChangeControls()
+    {
+        GameManager.Instance.isSecondaryControls = !GameManager.Instance.isSecondaryControls;
+    }
 }

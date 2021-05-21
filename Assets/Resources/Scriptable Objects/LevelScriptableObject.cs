@@ -20,8 +20,6 @@ public class LevelScriptableObject : ScriptableObject
     public bool[] limiterSlices;
     public LootPacks[] RewardBags;
 
-    public SummonedAnimalData[] possibleAnimalsInLevel;
-
     public bool isTutorial;
     public List<pieceDataStruct> arrayOfPieces;
     public int[] specificSliceSpots;

@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public int unsuccessfullConnectionCount;
 
     public bool gameStarted;
+    public bool isSecondaryControls;
 
     public Vector3 inGameCamPos;
 
@@ -37,14 +38,18 @@ public class GameManager : MonoBehaviour
     public List<int> copyOfSpecificSliceSpotsTutorial;
     public List<PieceColor> copyOfSpecificSliceColorsTutorial;
     public List<PieceSymbol> copyOfSpecificSliceSymbolsTutorial;
+
     private void Awake()
     {
         Instance = this;
     }
+
     private void Start()
     {
         GameAnalytics.Initialize();
+        isSecondaryControls = false;
     }
+
     public void StartLevel()
     {
         UIManager.Instance.TurnOnGameplayUI();
@@ -170,18 +175,28 @@ public class GameManager : MonoBehaviour
 
     AnimalPrefabData InstantiateAnimals(GameObject parent)
     {
-        if (currentLevel.possibleAnimalsInLevel.Length != 0)
+        Zone currentZone = ZoneManagerHelpData.Instance.currentZoneCheck;
+
+        if (currentZone.possibleAnimalsInLevel.Length != 0)
         {
-            if (currentLevel.possibleAnimalsInLevel.Length == 1)
+            if (currentZone.possibleAnimalsInLevel.Length == 1)
             {
-                AnimalsManager.Instance.statueToSwap = Instantiate(currentLevel.possibleAnimalsInLevel[0].animalPrefab, parent.transform);
+                AnimalsManager.Instance.statueToSwap = Instantiate(currentZone.possibleAnimalsInLevel[0].animalPrefab, parent.transform);
                 return AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
             }
             else
             {
-                // Weight system here
-                AnimalsManager.Instance.statueToSwap = Instantiate(currentLevel.possibleAnimalsInLevel[Random.Range(0, currentLevel.possibleAnimalsInLevel.Length)].animalPrefab, parent.transform);
-                return AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
+                GameObject go = AnimalsManager.Instance.PopulateWeightSystemAnimals();
+
+                if (go)
+                {
+                    AnimalsManager.Instance.statueToSwap = Instantiate(go, parent.transform);
+                    return AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
         else

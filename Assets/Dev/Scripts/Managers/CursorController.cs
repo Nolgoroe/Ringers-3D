@@ -47,151 +47,243 @@ public class CursorController : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.Instance.gameStarted && !UIManager.isUsingUI)
+        if (PowerUpManager.IsUsingPowerUp)
         {
-            if (PowerUpManager.IsUsingPowerUp)
-            {
-                if (Input.touchCount > 0)
-                {
-                    touch = Input.GetTouch(0);
+            PowerUpControls();
+        }
 
-                    if (!hasclickedPowerUp)
-                    {
-                        if (touch.phase == TouchPhase.Began)
-                        {
-                            Debug.Log("here");
-                            hasclickedPowerUp = true;
-                            mouseRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 0));
+        if (GameManager.Instance.gameStarted && !UIManager.isUsingUI && !GameManager.Instance.isSecondaryControls)
+        {
+            NormalControls();
+        }
 
-                            transform.position = mouseRay.origin;
-                            cursorPos.position = mouseRay.origin + mouseRay.direction * distanceFromBoard;
-                            cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y, gameBoard.transform.position.z);
-
-                            RaycastHit hit;
-
-                            if (Physics.Raycast(mouseRay, out hit, rayLength, GameManager.Instance.powerupManager.layerToHit))
-                            {
-                                PowerUpManager.IsUsingPowerUp = false;
-                                PowerUpManager.HasUsedPowerUp = true;
-                                PowerUpManager.ObjectToUsePowerUpOn = hit.transform.gameObject;
-                            }
-                            else
-                            {
-                                if (GameManager.Instance.powerupManager.currentlyInUse)
-                                {
-                                    GameManager.Instance.powerupManager.FinishedUsingPowerup(false, GameManager.Instance.powerupManager.currentlyInUse);
-                                }
-                            }
-                        }
-
-                    }
-
-                    if (touch.phase == TouchPhase.Ended)
-                    {
-                        hasclickedPowerUp = false;
-                    }
-
-                }
-            }
-            else
-            {
-                if (Input.touchCount > 0 && Input.touchCount < 2)
-                {
-                    touch = Input.GetTouch(0);
-
-                    if (touch.phase == TouchPhase.Began)
-                    {
-                        hasclickedPowerUp = false;
-
-                        mouseRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 0));
-
-                        transform.position = mouseRay.origin;
-                        cursorPos.position = mouseRay.origin + mouseRay.direction * distanceFromBoard;
-
-                        if (gameBoard)
-                        {
-                            cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y, gameBoard.transform.position.z);
-                        }
-
-                        RaycastHit hit;
-
-                        if (Physics.Raycast(mouseRay, out hit, rayLength, pieceLayer))
-                        {
-                            //Debug.Log(hit.transform.name);
-                            GrabPiece(hit.transform.parent);
-                        }
-
-                        //// Shoot ray
-                        ///Hit Something
-                        ///If hit piece - cache referance for it
-                        ///Make piece follow mouse
-                    }
-
-                    if (touch.phase == TouchPhase.Moved)
-                    {
-                        mouseRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 0));
-                        //transform.position = mouseRay.origin;
-                        cursorPos.position = mouseRay.origin + mouseRay.direction * distanceFromBoard;
-                        cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y, gameBoard.transform.position.z);
-
-                        if (followerTarget)
-                        {
-                            MoveFollower();
-                        }
-                    }
-
-                    if (touch.phase == TouchPhase.Ended)
-                    {
-                        RaycastHit hit;
-
-                        if (Physics.Raycast(mouseRay, out hit, rayLength, boardCellLayer))
-                        {
-                            SnapFollower(hit.transform);
-                        }
-                        else
-                        {
-                            float minDist = 1000;
-
-                            Collider closest = null;
-
-                            Collider[] hitColliders = Physics.OverlapSphere(cursorPos.position, radiusCollide, boardCellLayer);
-
-                            if (hitColliders.Length != 0)
-                            {
-                                foreach (Collider col in hitColliders)
-                                {
-                                    if (Vector3.Distance(col.transform.position, cursorPos.transform.position) < minDist)
-                                    {
-                                        minDist = Vector3.Distance(col.transform.position, cursorPos.transform.position);
-                                        closest = col;
-                                    }
-
-                                }
-                            }
-
-                            if (closest != null)
-                            {
-                                SnapFollower(closest.transform);
-                            }
-                            else
-                            {
-                                SnapFollower(null);
-                            }
-                        }
-
-
-                        ///If we have a piece - drop it
-                        ///If its in the board - snap
-                        ///If not in board - Snap back to original pos and parent
-                        ///If on board but slot full - snap to origin
-                        ///
-                    }
-
-                }
-            }
+        if (GameManager.Instance.gameStarted && !UIManager.isUsingUI && GameManager.Instance.isSecondaryControls)
+        {
+            SecondaryControls();
         }
     }
 
+    public void SecondaryControls()
+    {
+        if (Input.touchCount > 0 && Input.touchCount < 2)
+        {
+            touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                hasclickedPowerUp = false;
+
+                mouseRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 0));
+
+                if (!followerTarget)
+                {
+                    transform.position = mouseRay.origin;
+                    cursorPos.position = mouseRay.origin + mouseRay.direction * distanceFromBoard;
+
+                    Debug.Log(cursorPos.position + " Follower");
+
+                    if (gameBoard)
+                    {
+                        cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y, gameBoard.transform.position.z);
+                    }
+
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(mouseRay, out hit, rayLength, pieceLayer))
+                    {
+                        GrabPiece(hit.transform.parent);
+                    }
+                }
+                else
+                {
+                    cursorPos.position = mouseRay.origin + mouseRay.direction * distanceFromBoard;
+                    cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y, gameBoard.transform.position.z);
+
+                    Debug.Log(cursorPos.position);
+
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(mouseRay, out hit, rayLength, boardCellLayer))
+                    {
+                        SnapFollower(hit.transform);
+                    }
+                    else
+                    {
+                        float minDist = 1000;
+
+                        Collider closest = null;
+
+                        Collider[] hitColliders = Physics.OverlapSphere(cursorPos.position, radiusCollide, boardCellLayer);
+
+                        if (hitColliders.Length != 0)
+                        {
+                            foreach (Collider col in hitColliders)
+                            {
+                                if (Vector3.Distance(col.transform.position, cursorPos.transform.position) < minDist)
+                                {
+                                    minDist = Vector3.Distance(col.transform.position, cursorPos.transform.position);
+                                    closest = col;
+                                }
+
+                            }
+                        }
+
+                        if (closest != null)
+                        {
+                            SnapFollower(closest.transform);
+                        }
+                        else
+                        {
+                            SnapFollower(null);
+                        }
+                    }
+                }
+
+
+
+            }
+        }
+    }
+    public void NormalControls()
+    {
+        if (Input.touchCount > 0 && Input.touchCount < 2)
+        {
+            touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                hasclickedPowerUp = false;
+
+                mouseRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 0));
+
+                transform.position = mouseRay.origin;
+                cursorPos.position = mouseRay.origin + mouseRay.direction * distanceFromBoard;
+
+                if (gameBoard)
+                {
+                    cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y, gameBoard.transform.position.z);
+                }
+
+                RaycastHit hit;
+
+                if (Physics.Raycast(mouseRay, out hit, rayLength, pieceLayer))
+                {
+                    //Debug.Log(hit.transform.name);
+                    GrabPiece(hit.transform.parent);
+                }
+
+                //// Shoot ray
+                ///Hit Something
+                ///If hit piece - cache referance for it
+                ///Make piece follow mouse
+            }
+
+            if (touch.phase == TouchPhase.Moved)
+            {
+                mouseRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 0));
+                //transform.position = mouseRay.origin;
+                cursorPos.position = mouseRay.origin + mouseRay.direction * distanceFromBoard;
+                cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y, gameBoard.transform.position.z);
+
+                if (followerTarget)
+                {
+                    MoveFollower();
+                }
+            }
+
+            if (touch.phase == TouchPhase.Ended)
+            {
+                RaycastHit hit;
+
+                if (Physics.Raycast(mouseRay, out hit, rayLength, boardCellLayer))
+                {
+                    SnapFollower(hit.transform);
+                }
+                else
+                {
+                    float minDist = 1000;
+
+                    Collider closest = null;
+
+                    Collider[] hitColliders = Physics.OverlapSphere(cursorPos.position, radiusCollide, boardCellLayer);
+
+                    if (hitColliders.Length != 0)
+                    {
+                        foreach (Collider col in hitColliders)
+                        {
+                            if (Vector3.Distance(col.transform.position, cursorPos.transform.position) < minDist)
+                            {
+                                minDist = Vector3.Distance(col.transform.position, cursorPos.transform.position);
+                                closest = col;
+                            }
+
+                        }
+                    }
+
+                    if (closest != null)
+                    {
+                        SnapFollower(closest.transform);
+                    }
+                    else
+                    {
+                        SnapFollower(null);
+                    }
+                }
+
+
+                ///If we have a piece - drop it
+                ///If its in the board - snap
+                ///If not in board - Snap back to original pos and parent
+                ///If on board but slot full - snap to origin
+                ///
+            }
+
+        }
+    }
+    public void PowerUpControls()
+    {
+        if (Input.touchCount > 0)
+        {
+            touch = Input.GetTouch(0);
+
+            if (!hasclickedPowerUp)
+            {
+                if (touch.phase == TouchPhase.Began)
+                {
+                    Debug.Log("here");
+                    hasclickedPowerUp = true;
+                    mouseRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 0));
+
+                    transform.position = mouseRay.origin;
+                    cursorPos.position = mouseRay.origin + mouseRay.direction * distanceFromBoard;
+                    cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y, gameBoard.transform.position.z);
+
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(mouseRay, out hit, rayLength, GameManager.Instance.powerupManager.layerToHit))
+                    {
+                        PowerUpManager.IsUsingPowerUp = false;
+                        PowerUpManager.HasUsedPowerUp = true;
+                        PowerUpManager.ObjectToUsePowerUpOn = hit.transform.gameObject;
+                    }
+                    else
+                    {
+                        if (GameManager.Instance.powerupManager.currentlyInUse)
+                        {
+                            GameManager.Instance.powerupManager.FinishedUsingPowerup(false, GameManager.Instance.powerupManager.currentlyInUse);
+                        }
+                    }
+                }
+
+            }
+
+            if (touch.phase == TouchPhase.Ended)
+            {
+                hasclickedPowerUp = false;
+            }
+
+        }
+    }
     public void GrabPiece(Transform FT)
     {
         if (!FT.GetComponent<Piece>().isLocked && !FT.GetComponent<Piece>().isTutorialLocked)
