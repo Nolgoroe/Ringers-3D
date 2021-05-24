@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     public GameObject mainMenu, hudCanvasDisplay,hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasBotom, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
+    public GameObject blackLevelBG;
     public GameObject tutorialCanvas;
     public GameObject forge, itemBag;
     public GameObject craft, owned;
@@ -88,7 +89,7 @@ public class UIManager : MonoBehaviour
         sureWantToRestartNoLoot.SetActive(false);
         loseScreen.SetActive(false);
         tutorialCanvas.SetActive(false);
-
+        blackLevelBG.SetActive(false);
 
         animalNameText.text = "";
         foreach (GameObject go in allTutorialScreens)
@@ -273,7 +274,8 @@ public class UIManager : MonoBehaviour
             //youLoseText.SetActive(false);
             loseScreen.SetActive(false);
             tutorialCanvas.SetActive(false);
-            
+            blackLevelBG.SetActive(false);
+
             foreach (GameObject go in allTutorialScreens)
             {
                 go.SetActive(false);
@@ -436,12 +438,12 @@ public class UIManager : MonoBehaviour
     {
         ClearLootDisplays();
         isUsingUI = true;
-
+        blackLevelBG.SetActive(false);
         youWinScreen.SetActive(true);
 
         AnimalPrefabData prefabData = AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
 
-        animalNameText.text = prefabData.animalSO.animalName;
+        animalNameText.text = "You have released the " + prefabData.animalSO.animalName;
     }
     public void DisplayLoseScreen()
     {
@@ -570,6 +572,7 @@ public class UIManager : MonoBehaviour
     }
     public void TurnOnGameplayUI()
     {
+        blackLevelBG.SetActive(true);
         gameplayCanvasBotom.SetActive(true);
         gameplayCanvasTop.SetActive(true);
     }

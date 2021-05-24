@@ -175,13 +175,13 @@ public class GameManager : MonoBehaviour
 
     AnimalPrefabData InstantiateAnimals(GameObject parent)
     {
-        Zone currentZone = ZoneManagerHelpData.Instance.currentZoneCheck;
+        ZoneManagerHelpData ZMHD = ZoneManagerHelpData.Instance;
 
-        if (currentZone.possibleAnimalsInLevel.Length != 0)
+        if (ZMHD.possibleAnimalsInZones.Length != 0)
         {
-            if (currentZone.possibleAnimalsInLevel.Length == 1)
+            if (ZMHD.possibleAnimalsInZones.Length == 1)
             {
-                AnimalsManager.Instance.statueToSwap = Instantiate(currentZone.possibleAnimalsInLevel[0].animalPrefab, parent.transform);
+                AnimalsManager.Instance.statueToSwap = Instantiate(ZMHD.possibleAnimalsInZones[ZMHD.currentZoneCheck.id].animalsData[0].animalPrefab, parent.transform);
                 return AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
             }
             else

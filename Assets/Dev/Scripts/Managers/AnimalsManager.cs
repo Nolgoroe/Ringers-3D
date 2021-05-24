@@ -29,7 +29,14 @@ public enum AnimalsInGame
 }
 
 [Serializable]
-public class SummonedAnimalData
+public class animalsPerZone
+{
+    public Zone theZone;
+    public SummonedAnimalsData[] animalsData;
+}
+
+[Serializable]
+public class SummonedAnimalsData
 {
     public AnimalsInGame animalEnum;
     public GameObject animalPrefab;
@@ -145,45 +152,57 @@ public class AnimalsManager : MonoBehaviour
 
         int totalSum = 0; ////// THIS VARIABLE IS HERE INCASE TEAM DECIDED TOTAL IS NOT ALWAYS 100!
 
-        foreach (SummonedAnimalData SAD in ZoneManagerHelpData.Instance.currentZoneCheck.possibleAnimalsInLevel)
+        int zoneID = 0;
+
+
+        foreach (animalsPerZone APZ in ZoneManagerHelpData.Instance.possibleAnimalsInZones)
         {
-            int[] animalChances = new int[SAD.weight];
-
-            totalSum += (int)SAD.weight;
-
-            for (int i = 0; i < SAD.weight; i++)
+            if(ZoneManagerHelpData.Instance.CompareZonesSame(APZ.theZone, ZoneManagerHelpData.Instance.currentZoneCheck)) //// Ask Alon
             {
-                currentInnerIndex++;
+                zoneID = APZ.theZone.id;
 
-                animalChances[i] = currentInnerIndex;
+                foreach (SummonedAnimalsData SAD in APZ.animalsData)
+                {
+                    int[] animalChances = new int[SAD.weight];
+
+                    totalSum += SAD.weight;
+
+                    for (int i = 0; i < SAD.weight; i++)
+                    {
+                        currentInnerIndex++;
+
+                        animalChances[i] = currentInnerIndex;
+                    }
+
+                    listOfArrayInts.Add(animalChances);
+                }
+
+                break;
             }
-
-            listOfArrayInts.Add(animalChances);
         }
 
         if(totalSum < 100) //// THIS IS TEMPORARY, UNTIL TEAM DECIDES IF MAX IS ALWAYS 100 OR IS IT DYNAMIC
         {
-            totalSum = 100;
+            totalSum = 100; ///// THIS IS A BUG PROBABLY
         }
 
-        return GetFromAnimalChances(listOfArrayInts, totalSum);
+        return GetFromAnimalChances(listOfArrayInts, totalSum, zoneID);
     }
 
-    public GameObject GetFromAnimalChances(List<int[]> array, int totalSum)
+    public GameObject GetFromAnimalChances(List<int[]> array, int totalSum, int zoneID)
     {
         int rand = UnityEngine.Random.Range(1, totalSum + 1);
 
         int indexForMainAnimalArray = 0; ///// THIS VARIABLE IS USED TO FIND THE INDEX OF THE ANIMAL TO SUMMON IN ZoneManagerHelpData.Instance.currentZoneCheck.possibleAnimalsInLevel.
 
         foreach (int[] item in array)
-        {
-            
+        {            
             if (item.Contains(rand))
             {
                 Debug.Log("FOUND THE NUMBER!");
-                if (ZoneManagerHelpData.Instance.currentZoneCheck.possibleAnimalsInLevel[indexForMainAnimalArray].animalPrefab)
+                if (ZoneManagerHelpData.Instance.possibleAnimalsInZones[zoneID].animalsData[indexForMainAnimalArray].animalPrefab)
                 {
-                    return ZoneManagerHelpData.Instance.currentZoneCheck.possibleAnimalsInLevel[indexForMainAnimalArray].animalPrefab;
+                    return ZoneManagerHelpData.Instance.possibleAnimalsInZones[zoneID].animalsData[indexForMainAnimalArray].animalPrefab;
                 }
                 else
                 {

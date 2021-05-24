@@ -21,7 +21,6 @@ public class Zone : MonoBehaviour
 
     public string levelDonePath, levelFirstTimeIconPath/*, unlockedZonePath*//*, lockedZonePath*/;
 
-    public SummonedAnimalData[] possibleAnimalsInLevel;
 
     [HideInInspector]
     public Image zoneHeader;

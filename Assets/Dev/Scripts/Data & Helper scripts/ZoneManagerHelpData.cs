@@ -12,11 +12,23 @@ public class ZoneManagerHelpData : MonoBehaviour
 
     public static ZoneManagerHelpData Instance;
 
+    public animalsPerZone[] possibleAnimalsInZones;
+
     private void Start()
     {
         Instance = this;
 
 
         ZoneManager.Instance.ActivateLevelDisplay();
+    }
+
+    public bool CompareZonesSame(Zone first, Zone second)
+    {
+        if(first.Equals(second))
+        {
+            return true;
+        }
+
+        return false;
     }
 }

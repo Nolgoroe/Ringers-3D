@@ -7297,23 +7297,6 @@ MonoBehaviour:
   lastLevelNum: 12
   levelDonePath: 
   levelFirstTimeIconPath: 
-  possibleAnimalsInLevel:
-  - animalEnum: 0
-    animalPrefab: {fileID: 3910417472966877061, guid: 8ff6189da7f51614295e8eae7403d608,
-      type: 3}
-    weight: 40
-  - animalEnum: 0
-    animalPrefab: {fileID: 3910417472966877061, guid: 8ff6189da7f51614295e8eae7403d608,
-      type: 3}
-    weight: 30
-  - animalEnum: 0
-    animalPrefab: {fileID: 3910417472966877061, guid: 8ff6189da7f51614295e8eae7403d608,
-      type: 3}
-    weight: 5
-  - animalEnum: 0
-    animalPrefab: {fileID: 3910417472966877061, guid: 8ff6189da7f51614295e8eae7403d608,
-      type: 3}
-    weight: 25
   zoneHeader: {fileID: 0}
 --- !u!1 &290771587
 GameObject:
@@ -10187,15 +10170,6 @@ MonoBehaviour:
   lastLevelNum: 7
   levelDonePath: Level Sprites/Tutorial/MapScreen_TutorialLevel_PlayedLevel
   levelFirstTimeIconPath: Level Sprites/Tutorial/MapScreen_TutorialLevel_NonPlayedLevel
-  possibleAnimalsInLevel:
-  - animalEnum: 0
-    animalPrefab: {fileID: 3910417472966877061, guid: 8ff6189da7f51614295e8eae7403d608,
-      type: 3}
-    weight: 50
-  - animalEnum: 0
-    animalPrefab: {fileID: 3910417472966877061, guid: a795b0661c4afc442a83af74c0b2cf70,
-      type: 3}
-    weight: 50
   zoneHeader: {fileID: 0}
 --- !u!224 &367852705 stripped
 RectTransform:
@@ -13266,6 +13240,55 @@ MonoBehaviour:
   - {fileID: 1411373248}
   currentZoneCheck: {fileID: 0}
   nextZoneCheck: {fileID: 0}
+  possibleAnimalsInZones:
+  - theZone: {fileID: 367439026}
+    animalsData:
+    - animalEnum: 0
+      animalPrefab: {fileID: 3910417472966877061, guid: 8ff6189da7f51614295e8eae7403d608,
+        type: 3}
+      weight: 50
+    - animalEnum: 1
+      animalPrefab: {fileID: 3910417472966877061, guid: a795b0661c4afc442a83af74c0b2cf70,
+        type: 3}
+      weight: 50
+  - theZone: {fileID: 1785048655}
+    animalsData:
+    - animalEnum: 4
+      animalPrefab: {fileID: 3910417472966877061, guid: 8ff6189da7f51614295e8eae7403d608,
+        type: 3}
+      weight: 40
+    - animalEnum: 1
+      animalPrefab: {fileID: 3910417472966877061, guid: a795b0661c4afc442a83af74c0b2cf70,
+        type: 3}
+      weight: 30
+    - animalEnum: 2
+      animalPrefab: {fileID: 3910417472966877061, guid: 2d8a3b1d42975c74daa0049992c874ad,
+        type: 3}
+      weight: 10
+    - animalEnum: 0
+      animalPrefab: {fileID: 3910417472966877061, guid: 8ff6189da7f51614295e8eae7403d608,
+        type: 3}
+      weight: 20
+  - theZone: {fileID: 287934843}
+    animalsData:
+    - animalEnum: 5
+      animalPrefab: {fileID: 3910417472966877061, guid: 8ff6189da7f51614295e8eae7403d608,
+        type: 3}
+      weight: 40
+    - animalEnum: 6
+      animalPrefab: {fileID: 3910417472966877061, guid: 8ff6189da7f51614295e8eae7403d608,
+        type: 3}
+      weight: 30
+    - animalEnum: 7
+      animalPrefab: {fileID: 3910417472966877061, guid: 8ff6189da7f51614295e8eae7403d608,
+        type: 3}
+      weight: 5
+    - animalEnum: 8
+      animalPrefab: {fileID: 3910417472966877061, guid: 8ff6189da7f51614295e8eae7403d608,
+        type: 3}
+      weight: 25
+  - theZone: {fileID: 503189630}
+    animalsData: []
 --- !u!1 &470171674
 GameObject:
   m_ObjectHideFlags: 0
@@ -14260,7 +14283,6 @@ MonoBehaviour:
   lastLevelNum: 12
   levelDonePath: Level Sprites/GreyMoss Bog/MPScreen_GMB_LevelIcon_Off
   levelFirstTimeIconPath: 
-  possibleAnimalsInLevel: []
   zoneHeader: {fileID: 0}
 --- !u!1 &503364141
 GameObject:
@@ -17816,7 +17838,7 @@ GameObject:
   - component: {fileID: 658318443}
   - component: {fileID: 658318442}
   m_Layer: 0
-  m_Name: Canvas
+  m_Name: Black Level BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30941,6 +30963,7 @@ MonoBehaviour:
   ringersHutDisplay: {fileID: 242193359}
   ringersHutUICanvas: {fileID: 1686607921}
   hollowCraftAndOwned: {fileID: 73511793}
+  blackLevelBG: {fileID: 658318440}
   tutorialCanvas: {fileID: 965599395}
   forge: {fileID: 692552549}
   itemBag: {fileID: 935612590}
@@ -33783,7 +33806,6 @@ MonoBehaviour:
   lastLevelNum: 0
   levelDonePath: 
   levelFirstTimeIconPath: 
-  possibleAnimalsInLevel: []
   zoneHeader: {fileID: 0}
 --- !u!1 &1412485776
 GameObject:
@@ -39984,7 +40006,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 454.6, y: 90.1}
+  m_SizeDelta: {x: 719.5, y: 90.1}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1591434462
 MonoBehaviour:
@@ -40004,7 +40026,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Firefox Released
+  m_text: You have released the fire fox
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -40032,7 +40054,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 56.2
+  m_fontSize: 50.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -40073,10 +40095,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1591434462}
-    characterCount: 16
+    characterCount: 30
     spriteCount: 0
-    spaceCount: 1
-    wordCount: 2
+    spaceCount: 5
+    wordCount: 6
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -44207,23 +44229,6 @@ MonoBehaviour:
   lastLevelNum: 12
   levelDonePath: Level Sprites/Walnut Grove/MapScreen_WalnutGrove_PlayedLevel
   levelFirstTimeIconPath: Level Sprites/Walnut Grove/MapScreen_WalnutGrove_NonPlayedLevel
-  possibleAnimalsInLevel:
-  - animalEnum: 4
-    animalPrefab: {fileID: 3910417472966877061, guid: a795b0661c4afc442a83af74c0b2cf70,
-      type: 3}
-    weight: 40
-  - animalEnum: 1
-    animalPrefab: {fileID: 3910417472966877061, guid: a795b0661c4afc442a83af74c0b2cf70,
-      type: 3}
-    weight: 30
-  - animalEnum: 3
-    animalPrefab: {fileID: 3910417472966877061, guid: 2d8a3b1d42975c74daa0049992c874ad,
-      type: 3}
-    weight: 10
-  - animalEnum: 0
-    animalPrefab: {fileID: 3910417472966877061, guid: 8ff6189da7f51614295e8eae7403d608,
-      type: 3}
-    weight: 20
   zoneHeader: {fileID: 0}
 --- !u!222 &1785048657
 CanvasRenderer:
