@@ -1,8 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using GameAnalyticsSDK;
+
+[Serializable]
+public class NumAnimalTypedOnBoard
+{
+    public PieceSymbol animalSymbol;
+    public int amount;
+}
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -39,6 +47,8 @@ public class GameManager : MonoBehaviour
     public List<PieceColor> copyOfSpecificSliceColorsTutorial;
     public List<PieceSymbol> copyOfSpecificSliceSymbolsTutorial;
 
+    public NumAnimalTypedOnBoard[] numAnimalsOnBoard;
+
     private void Awake()
     {
         Instance = this;
@@ -52,6 +62,12 @@ public class GameManager : MonoBehaviour
 
     public void StartLevel()
     {
+        for (int i = 0; i < numAnimalsOnBoard.Length; i++)
+        {
+            numAnimalsOnBoard[i].amount = 0;
+        }
+
+        UIManager.Instance.ChangeZoneName(currentLevel.worldName);
         UIManager.Instance.TurnOnGameplayUI();
 
         //Camera.main.orthographicSize = 12;
@@ -104,6 +120,11 @@ public class GameManager : MonoBehaviour
 
     public void StartTutorialLevel()
     {
+        for (int i = 0; i < numAnimalsOnBoard.Length; i++)
+        {
+            numAnimalsOnBoard[i].amount = 0;
+        }
+
         if (copyOfArrayOfPiecesTutorial == null)
         {
             copyOfArrayOfPiecesTutorial = new List<pieceDataStruct>();
@@ -123,6 +144,7 @@ public class GameManager : MonoBehaviour
         copyOfSpecificSliceColorsTutorial.AddRange(currentLevel.specificSlicesColors);
         copyOfSpecificSliceSymbolsTutorial.AddRange(currentLevel.specificSlicesShapes);
 
+        UIManager.Instance.ChangeZoneName(currentLevel.worldName);
         UIManager.Instance.TurnOnGameplayUI();
 
         //Camera.main.orthographicSize = 12;
@@ -314,7 +336,6 @@ public class GameManager : MonoBehaviour
             StartLevel();
         }
     }
-
 
     public void NextLevelFromWinScreen()
     {

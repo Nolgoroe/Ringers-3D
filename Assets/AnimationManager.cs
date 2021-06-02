@@ -50,6 +50,8 @@ public class AnimationManager : MonoBehaviour
     }
     public IEnumerator StartEndLevelAnim()
     {
+        UIManager.Instance.skipAnimationButton.gameObject.SetActive(true);
+
         UIManager.Instance.restartButton.interactable = false;
 
         tempSubPieceArray.AddRange(ConnectionManager.Instance.subPiecesOnBoard);
@@ -117,6 +119,7 @@ public class AnimationManager : MonoBehaviour
 
         Destroy(GameManager.Instance.gameBoard.gameObject);
         Destroy(GameManager.Instance.gameClip.gameObject);
+
         yield return new WaitForSeconds(waitTimeFadeOut);
 
         LeanTween.value(fadeImage.gameObject, 1, 0, fadingSpeed).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
@@ -166,5 +169,37 @@ public class AnimationManager : MonoBehaviour
     public void PullIn(SubPiece toMove)
     {
         LeanTween.move(toMove.gameObject, GameManager.Instance.gameBoard.transform.position, speedPieceMove).setEase(LeanTweenType.easeInOutQuad); // animate
+    }
+
+    public void SkipEndLevelAnimation()
+    {
+        StopCoroutine("StartEndLevelAnim");
+
+        UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
+
+        tempSubPieceArray.Clear();
+
+        GameObject[] turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
+
+        foreach (GameObject GO in turnOff)
+        {
+            GO.SetActive(false);
+        }
+
+        fadeImage.gameObject.SetActive(false);
+
+
+        GameManager.Instance.WinAfterAnimation();
+
+        if (GameManager.Instance.gameBoard.gameObject)
+        {
+            Destroy(GameManager.Instance.gameBoard.gameObject);
+            Destroy(GameManager.Instance.gameClip.gameObject);
+        }
+        UIManager.Instance.restartButton.interactable = true;
+
+        UIManager.Instance.TurnOffGameplayUI();
+        AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
+
     }
 }

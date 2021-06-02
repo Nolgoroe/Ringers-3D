@@ -41,11 +41,12 @@ public class UIManager : MonoBehaviour
     public TMP_Text /*gameplayGoldText,*/ gameplayRubyText/*, gameplayDewDropsText*/;
     public TMP_Text animalNameText;
 
-    //public TMP_Text currentLevelName;
+    public TMP_Text currentLevelName;
 
     //public Button commitButton;
     public Button nextLevelFromWinScreen;
     public Button restartButton;
+    public Button skipAnimationButton;
 
     public Button dealButton;
     //public Button[] levelButtons;
@@ -90,6 +91,7 @@ public class UIManager : MonoBehaviour
         loseScreen.SetActive(false);
         tutorialCanvas.SetActive(false);
         blackLevelBG.SetActive(false);
+        skipAnimationButton.gameObject.SetActive(false);
 
         animalNameText.text = "";
         foreach (GameObject go in allTutorialScreens)
@@ -241,10 +243,10 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.RestartCurrentLevel();
     }
 
-    //public void ChangeZoneName(string name)
-    //{
-    //    currentLevelName.text = name;
-    //}
+    public void ChangeZoneName(string name)
+    {
+        currentLevelName.text = name;
+    }
     public void ToHud(GameObject currentCanvas)
     {
         isUsingUI = false;

@@ -27,6 +27,11 @@ public class CursorController : MonoBehaviour
 
     bool hasclickedPowerUp;
 
+    public Color secondaryControlsPieceColor;
+    public GameObject secondaryControlsCellChosenPrefab;
+
+    private Cell cellhitSecondaryControls;
+
     [HideInInspector]
     public bool tutorialBadConnection = false;
     private void OnDrawGizmos()
@@ -65,6 +70,7 @@ public class CursorController : MonoBehaviour
 
     public void SecondaryControls()
     {
+
         if (Input.touchCount > 0 && Input.touchCount < 2)
         {
             touch = Input.GetTouch(0);
@@ -75,7 +81,7 @@ public class CursorController : MonoBehaviour
 
                 mouseRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 0));
 
-                if (!followerTarget)
+                if (!followerTarget && !cellhitSecondaryControls)
                 {
                     transform.position = mouseRay.origin;
                     cursorPos.position = mouseRay.origin + mouseRay.direction * distanceFromBoard;
@@ -92,6 +98,16 @@ public class CursorController : MonoBehaviour
                     if (Physics.Raycast(mouseRay, out hit, rayLength, pieceLayer))
                     {
                         GrabPiece(hit.transform.parent);
+                        SetSecondaryControlsPieceColor(secondaryControlsPieceColor, followerTarget);
+                    }
+
+                    if (!followerTarget)
+                    {
+                        if (Physics.Raycast(mouseRay, out hit, rayLength, boardCellLayer))
+                        {
+                            cellhitSecondaryControls = hit.transform.GetComponent<Cell>();
+                            Instantiate(secondaryControlsCellChosenPrefab, cellhitSecondaryControls.transform);
+                        }
                     }
                 }
                 else
@@ -103,47 +119,84 @@ public class CursorController : MonoBehaviour
 
                     RaycastHit hit;
 
-                    if (Physics.Raycast(mouseRay, out hit, rayLength, boardCellLayer))
+                    if (!followerTarget)
                     {
-                        SnapFollower(hit.transform);
-                    }
-                    else
-                    {
-                        float minDist = 1000;
-
-                        Collider closest = null;
-
-                        Collider[] hitColliders = Physics.OverlapSphere(cursorPos.position, radiusCollide, boardCellLayer);
-
-                        if (hitColliders.Length != 0)
+                        if (Physics.Raycast(mouseRay, out hit, rayLength, pieceLayer))
                         {
-                            foreach (Collider col in hitColliders)
-                            {
-                                if (Vector3.Distance(col.transform.position, cursorPos.transform.position) < minDist)
-                                {
-                                    minDist = Vector3.Distance(col.transform.position, cursorPos.transform.position);
-                                    closest = col;
-                                }
+                            GrabPiece(hit.transform.parent);
 
-                            }
-                        }
+                            DestroySecondaryControlsPrefabCell(true);
 
-                        if (closest != null)
-                        {
-                            SnapFollower(closest.transform);
+                            SnapFollower(cellhitSecondaryControls.transform);
                         }
                         else
                         {
-                            SnapFollower(null);
+                            DestroySecondaryControlsPrefabCell(false);
+                        }
+                    }
+                    else
+                    {
+                        if (Physics.Raycast(mouseRay, out hit, rayLength, boardCellLayer))
+                        {
+                            if (followerTarget)
+                            {
+                                SetSecondaryControlsPieceColor(Color.white, followerTarget);
+                                SnapFollower(hit.transform);
+                            }
+                        }
+                        else
+                        {
+                            float minDist = 1000;
+
+                            Collider closest = null;
+
+                            Collider[] hitColliders = Physics.OverlapSphere(cursorPos.position, radiusCollide, boardCellLayer);
+
+                            if (hitColliders.Length != 0)
+                            {
+                                foreach (Collider col in hitColliders)
+                                {
+                                    if (Vector3.Distance(col.transform.position, cursorPos.transform.position) < minDist)
+                                    {
+                                        minDist = Vector3.Distance(col.transform.position, cursorPos.transform.position);
+                                        closest = col;
+                                    }
+                                }
+                            }
+
+                            if (closest != null)
+                            {
+                                if (followerTarget)
+                                {
+                                    SetSecondaryControlsPieceColor(Color.white, followerTarget);
+
+                                    SnapFollower(closest.transform);
+                                }
+                            }
+                            else
+                            {
+                                SetSecondaryControlsPieceColor(Color.white, followerTarget);
+
+                                SnapFollower(null);
+                            }
                         }
                     }
                 }
-
-
-
             }
         }
     }
+
+    void SetSecondaryControlsPieceColor(Color color, Transform piece)
+    {
+        Piece p = piece.GetComponent<Piece>();
+
+        Renderer rightWing = p.rightChild.GetComponent<Renderer>();
+        Renderer LeftWing = p.leftChild.GetComponent<Renderer>();
+
+        rightWing.material.SetColor("_BaseColor", color);
+        LeftWing.material.SetColor("_BaseColor", color);
+    }
+
     public void NormalControls()
     {
         if (Input.touchCount > 0 && Input.touchCount < 2)
@@ -197,7 +250,12 @@ public class CursorController : MonoBehaviour
 
                 if (Physics.Raycast(mouseRay, out hit, rayLength, boardCellLayer))
                 {
-                    SnapFollower(hit.transform);
+                    if (followerTarget)
+                    {
+
+                        SnapFollower(hit.transform);
+                    }
+
                 }
                 else
                 {
@@ -222,7 +280,10 @@ public class CursorController : MonoBehaviour
 
                     if (closest != null)
                     {
-                        SnapFollower(closest.transform);
+                        if (followerTarget)
+                        {
+                            SnapFollower(closest.transform);
+                        }
                     }
                     else
                     {
@@ -297,14 +358,12 @@ public class CursorController : MonoBehaviour
             }
         }
     }
-
     public void MoveFollower()
     {
         followerTarget.position = new Vector3(cursorPos.position.x, cursorPos.position.y, -0.8f);
         float angle = Mathf.Atan2(gameBoard.transform.position.y - followerTarget.position.y, gameBoard.transform.position.x - followerTarget.position.x) * Mathf.Rad2Deg;
         followerTarget.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
     }
-
     public void SnapFollower(Transform cellHit)
     {
         if (TutorialSequence.Instacne.duringSequence)
@@ -330,15 +389,14 @@ public class CursorController : MonoBehaviour
                         if (newPiece && !cell.isFull)
                         {
                             GameManager.Instance.clipManager.PopulateSlot(followerTarget.transform.parent, 10);
-                            Debug.Log("!!!!!!!!!!!!!!!!!");
+                            AddNumAnimalsToBoard(followerTarget);
                         }
                     }
                     else
                     {
                         GameManager.Instance.clipManager.emptyClip = followerTarget.transform.parent;
                         GameManager.Instance.clipManager.latestPiece = followerTarget;
-                        Debug.Log("**************");
-
+                        AddNumAnimalsToBoard(followerTarget);
                     }
 
 
@@ -356,7 +414,7 @@ public class CursorController : MonoBehaviour
                         ReturnHome();
                     }
 
-                    followerTarget = null;
+                    //followerTarget = null;
                 }
             }
             else
@@ -367,9 +425,13 @@ public class CursorController : MonoBehaviour
                 }
             }
 
+            if (GameManager.Instance.isSecondaryControls)
+            {
+                followerTarget = null;
+                cellhitSecondaryControls = null;
+            }
         }
     }
-
     private void SnapFollowerTutorial(Transform cellHit)
     {
         if (cellHit != null)
@@ -447,7 +509,6 @@ public class CursorController : MonoBehaviour
             }
         }
     }
-
     public void ReturnHome()
     {
         Vector3 home = GameManager.Instance.clipManager.piece.transform.position;
@@ -461,7 +522,6 @@ public class CursorController : MonoBehaviour
 
         followerTarget = null;
     }
-
     private bool SpecialTutorialConnectionLogic(int cellindex, Piece pieceHeld)
     {
         Slice relavent = GameManager.Instance.sliceManager.sliceSlots[cellindex].GetComponent<Slice>();
@@ -486,5 +546,44 @@ public class CursorController : MonoBehaviour
 
         return true;
     }
+    void AddNumAnimalsToBoard(Transform piece)
+    {
+        Piece p = piece.GetComponent<Piece>();
 
+        SubPiece right = p.rightChild;
+        SubPiece left = p.leftChild;
+
+        foreach (NumAnimalTypedOnBoard NATB in GameManager.Instance.numAnimalsOnBoard)
+        {
+            if (NATB.animalSymbol == right.symbolOfPiece && NATB.animalSymbol == left.symbolOfPiece)
+            {
+                NATB.amount += 2;
+                return;
+            }
+
+            if (NATB.animalSymbol == right.symbolOfPiece || NATB.animalSymbol == left.symbolOfPiece)
+            {
+                NATB.amount++;
+            }
+        }
+    }
+
+    void DestroySecondaryControlsPrefabCell(bool snappedFollower)
+    {
+        int numToDestroy = cellhitSecondaryControls.transform.childCount;
+
+        for (int i = 0; i < numToDestroy; i++)
+        {
+            if (cellhitSecondaryControls.transform.GetChild(i).CompareTag("Secondary Destroy"))
+            {
+                Destroy(cellhitSecondaryControls.transform.GetChild(i).gameObject);
+            }
+        }
+
+        if (!snappedFollower)
+        {
+            followerTarget = null;
+            cellhitSecondaryControls = null;
+        }
+    }
 }
