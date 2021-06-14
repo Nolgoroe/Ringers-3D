@@ -49,7 +49,6 @@ public class CursorController : MonoBehaviour
         gameBoard = GameManager.Instance.gameBoard;
         gameClip = GameManager.Instance.gameClip;
     }
-
     void Update()
     {
         if (PowerUpManager.IsUsingPowerUp)
@@ -67,7 +66,6 @@ public class CursorController : MonoBehaviour
             SecondaryControls();
         }
     }
-
     public void SecondaryControls()
     {
 
@@ -185,7 +183,6 @@ public class CursorController : MonoBehaviour
             }
         }
     }
-
     void SetSecondaryControlsPieceColor(Color color, Transform piece)
     {
         Piece p = piece.GetComponent<Piece>();
@@ -196,7 +193,6 @@ public class CursorController : MonoBehaviour
         rightWing.material.SetColor("_BaseColor", color);
         LeftWing.material.SetColor("_BaseColor", color);
     }
-
     public void NormalControls()
     {
         if (Input.touchCount > 0 && Input.touchCount < 2)
@@ -414,7 +410,7 @@ public class CursorController : MonoBehaviour
                         ReturnHome();
                     }
 
-                    //followerTarget = null;
+                    followerTarget = null;
                 }
             }
             else
@@ -558,14 +554,17 @@ public class CursorController : MonoBehaviour
             if (NATB.animalSymbol == right.symbolOfPiece && NATB.animalSymbol == left.symbolOfPiece)
             {
                 NATB.amount += 2;
-                return;
+                GameManager.Instance.powerupManager.UpdateSpecialPowerupsCount(2, NATB.animalSymbol);
+                break;
             }
 
             if (NATB.animalSymbol == right.symbolOfPiece || NATB.animalSymbol == left.symbolOfPiece)
             {
                 NATB.amount++;
+                GameManager.Instance.powerupManager.UpdateSpecialPowerupsCount(1, NATB.animalSymbol);
             }
         }
+
     }
 
     void DestroySecondaryControlsPrefabCell(bool snappedFollower)

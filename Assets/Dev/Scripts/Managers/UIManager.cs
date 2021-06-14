@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     public GameObject mainMenu, hudCanvasDisplay,hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasBotom, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
+    public GameObject InGameUiScreens;
     public GameObject blackLevelBG;
     public GameObject tutorialCanvas;
     public GameObject forge, itemBag;
@@ -92,6 +93,7 @@ public class UIManager : MonoBehaviour
         tutorialCanvas.SetActive(false);
         blackLevelBG.SetActive(false);
         skipAnimationButton.gameObject.SetActive(false);
+        InGameUiScreens.SetActive(false);
 
         animalNameText.text = "";
         foreach (GameObject go in allTutorialScreens)
@@ -223,7 +225,10 @@ public class UIManager : MonoBehaviour
             sureWantToRestartNoLoot.SetActive(false);
         }
 
-        TutorialSequence.Instacne.TurnOnTutorialScreensAfterOptions();
+        if (GameManager.Instance.currentLevel.isTutorial)
+        {
+            TutorialSequence.Instacne.TurnOnTutorialScreensAfterOptions();
+        }
     }
     public void SureWantToRestartMessageYes(bool withLoot)
     {
@@ -242,7 +247,6 @@ public class UIManager : MonoBehaviour
 
         GameManager.Instance.RestartCurrentLevel();
     }
-
     public void ChangeZoneName(string name)
     {
         currentLevelName.text = name;
@@ -569,20 +573,22 @@ public class UIManager : MonoBehaviour
     }
     public void TurnOffGameplayUI()
     {
+        blackLevelBG.SetActive(false);
         gameplayCanvasBotom.SetActive(false);
         gameplayCanvasTop.SetActive(false);
+        InGameUiScreens.SetActive(false);
     }
     public void TurnOnGameplayUI()
     {
         blackLevelBG.SetActive(true);
         gameplayCanvasBotom.SetActive(true);
         gameplayCanvasTop.SetActive(true);
+        InGameUiScreens.SetActive(true);
     }
     public void RefreshDewDropsDisplay(int spriteIndex)
     {
         dewDropsImage.sprite = dewDropsSprites[spriteIndex];
     }
-
     public void ChangeControls()
     {
         GameManager.Instance.isSecondaryControls = !GameManager.Instance.isSecondaryControls;

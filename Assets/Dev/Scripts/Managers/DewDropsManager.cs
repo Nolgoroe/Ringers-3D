@@ -38,10 +38,10 @@ public class DewDropsManager : MonoBehaviour
 
         if (savedDateTime != "")
         {
-            Debug.Log("has previos save time: " + savedDateTime);
+            //Debug.Log("has previos save time: " + savedDateTime);
             TimeSpan deltaDateTime = DateTime.Parse(savedDateTime) - currentTime;
 
-            Debug.Log("THIS IS THE DELTA TIME: " + deltaDateTime);
+            //Debug.Log("THIS IS THE DELTA TIME: " + deltaDateTime);
 
             GiveElapsedTimeDewDrops(deltaDateTime);
         }
@@ -59,12 +59,12 @@ public class DewDropsManager : MonoBehaviour
         if(timeLeftToGiveDrop < 0)
         {
             timeLeftToGiveDrop = (timeTillGiveDrewDropStatic * 60) + timeLeftToGiveDrop; /// its plus because if timeLeftToGiveDrop is below zero then if you use - it'll add to the time
-            Debug.Log("GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
+            //Debug.Log("GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
             GiveDrop(1);
         }
         else
         {
-            Debug.Log("NO GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
+            //Debug.Log("NO GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
         }
         float numDropToGive = (float)elapsedTime.TotalMinutes / timeTillGiveDrewDropStatic;
 
@@ -72,7 +72,7 @@ public class DewDropsManager : MonoBehaviour
 
         if (absDrops > 0)
         {
-            Debug.Log("GIVE!!! AMOUNT: " + absDrops);
+            //Debug.Log("GIVE!!! AMOUNT: " + absDrops);
 
             GiveDrop(absDrops);
 

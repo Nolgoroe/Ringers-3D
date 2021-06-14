@@ -13,6 +13,8 @@ public enum PowerUp
     //SliceBomb,
     //ExtraDeal,
     //FourShapeTransform,
+    DragonflyCross,
+    BadgerExtraDeal,
     None
 }
 public class PowerUpManager : MonoBehaviour
@@ -37,6 +39,9 @@ public class PowerUpManager : MonoBehaviour
     public PowerupProperties currentlyInUse;
 
     public int instnatiatedZonesCounter = 0;
+
+    public InGameSpecialPowerUp[] specialPowerupsInGame;
+
     private void Start()
     {
         GameManager.Instance.powerupManager = this;
@@ -188,8 +193,6 @@ public class PowerUpManager : MonoBehaviour
     {
         StartCoroutine(FourSymbolPower(prop));
     }
-
-
     public IEnumerator JokerPower(PowerupProperties prop)
     {
         layerToHit = LayerMask.GetMask("Piece Parent");
@@ -399,7 +402,6 @@ public class PowerUpManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
         IsUsingPowerUp = true;
     }
-
     public void FinishedUsingPowerup(bool successfull, PowerupProperties prop)
     {
         UIManager.Instance.ActivateUsingPowerupMessage(false);
@@ -434,6 +436,33 @@ public class PowerUpManager : MonoBehaviour
 
             PlayerManager.Instance.equipmentInCooldown.Add(ED);
             PlayerManager.Instance.SavePlayerData();
+        }
+    }
+    public void CallSpecialPowerUp(InGameSpecialPowerUp IGSP)
+    {
+        switch (IGSP.type)
+        {
+            case PowerUp.BadgerExtraDeal:
+                GameManager.Instance.clipManager.ExtraDealSlotsBadgerSpecial(IGSP);
+                break;
+            case PowerUp.DragonflyCross:
+                StartCoroutine(GameManager.Instance.clipManager.DragonflyCrossSpecial(IGSP));
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void UpdateSpecialPowerupsCount(int amount, PieceSymbol symbol)
+    {
+        foreach (InGameSpecialPowerUp IGSP in specialPowerupsInGame)
+        {
+            if(IGSP.SymbolNeeded == symbol)
+            {
+                Debug.Log(IGSP.SymbolNeeded);
+
+                IGSP.UpdateSlider(amount);
+            }
         }
     }
 }

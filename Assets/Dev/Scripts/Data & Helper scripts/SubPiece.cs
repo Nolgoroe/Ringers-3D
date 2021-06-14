@@ -90,11 +90,16 @@ public class SubPiece : MonoBehaviour
         //rend.material.SetTexture("_BumpMap", GameManager.Instance.clipManager.gameSymbols[(int)symbolOfPiece]);
         //rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[(int)symbolOfPiece]);
         rend.material = GameManager.Instance.clipManager.colorsToMats[randomColor].colorMats[(int)symbolOfPiece];
+
+        if (rend.materials[0].IsKeywordEnabled("_EMISSION"))
+        {
+            rend.materials[0].DisableKeyword("_EMISSION");
+        }
     }
 
     public void SetConnectedMaterial()
     {
-        Debug.Log("what?");
+        //Debug.Log("what?");
         Material[] matArray = rend.materials;
         //matArray[1] = ConnectionManager.Instance.rockLIT;
         if (!matArray[0].IsKeywordEnabled("_EMISSION"))
@@ -134,7 +139,7 @@ public class SubPiece : MonoBehaviour
 
         while (matArray[0].GetColor("_EmissionColor") != targetColor)
         {
-            Debug.Log("???");
+            //Debug.Log("???");
             timePassed += Time.deltaTime;
 
             if (timePassed > timeToLerp)
@@ -144,7 +149,7 @@ public class SubPiece : MonoBehaviour
 
             matArray[0].SetColor("_EmissionColor", Color.Lerp(matArray[0].GetColor("_EmissionColor"), targetColor, timePassed/timeToLerp));
 
-            Debug.Log(matArray[0].GetColor("_EmissionColor"));
+            //Debug.Log(matArray[0].GetColor("_EmissionColor"));
 
             yield return null;
         }

@@ -115,7 +115,7 @@ public class ConnectionManager : MonoBehaviour
                     supPieceArray[currentLeft].SetConnectedMaterial();
                     supPieceArray[leftContested].SetConnectedMaterial();
 
-                    Debug.Log("Emission is happening");
+                    //Debug.Log("Emission is happening");
                     //supPieceArray[currentLeft].gameObject.GetComponent<Renderer>().material.EnableKeyword ("_EMISSION");
                     //supPieceArray[leftContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
 
@@ -398,8 +398,8 @@ public class ConnectionManager : MonoBehaviour
 
     public void GiveLootFromConnections(Slice relevent, bool isLimiter)
     {
-        Debug.Log("Loot");
-        Debug.Log(relevent.lootPack);
+        //Debug.Log("Loot");
+        //Debug.Log(relevent.lootPack);
 
         //if(relevent.lootPack != LootPacks.None)
         //{
@@ -474,7 +474,7 @@ public class ConnectionManager : MonoBehaviour
     }
     public void LockCell(Slice relevent, bool isLimiter)
     {
-        Debug.Log("Lock");
+        //Debug.Log("Lock");
 
         //cells[relevent.sliceIndex].lockSprite.SetActive(true);
         cells[relevent.sliceIndex].pieceHeld.isLocked = true;
@@ -701,14 +701,14 @@ public class ConnectionManager : MonoBehaviour
 
             if (chance > rewardBagByLootPack.chancesPerItemTable[i])
             {
-                Debug.Log("Youa sucka Fuckkkkaeaeaeaeaeae");
+                //Debug.Log("Youa sucka Fuckkkkaeaeaeaeaeae");
                 craftingMatsFromTables.Clear();
             }
             else
             {
                 int randomMat = Random.Range(0, craftingMatsFromTables.Count);
 
-                Debug.Log(craftingMatsFromTables[randomMat]);
+                //Debug.Log(craftingMatsFromTables[randomMat]);
 
                 LootManager.Instance.craftingMatsLootForLevel.Add(craftingMatsFromTables[randomMat]);
 

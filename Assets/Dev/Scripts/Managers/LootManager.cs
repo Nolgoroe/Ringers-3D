@@ -118,10 +118,14 @@ public class LootManager : MonoBehaviour
     
     public void GiveLoot()
     {
+        Debug.Log("GIVING LOOT");
+
         if(rubiesToRecieveInLevel > 0)
         {
             DisplayLootGoldRubyToPlayer(rubiesToRecieveInLevel, rubySprite.texture);
             PlayerManager.Instance.AddRubies(rubiesToRecieveInLevel);
+
+            Debug.Log("Rubied to recieve " + rubiesToRecieveInLevel);
         }
         
         if(craftingMatsLootForLevel.Count > 0)
@@ -132,6 +136,7 @@ public class LootManager : MonoBehaviour
 
                 PlayerManager.Instance.AddMaterials(CM, 5); //////// Figure out how to get amount from outside dynamically
 
+                Debug.Log("materials recieved " + CM);
             }
         }
 

@@ -274,7 +274,8 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            StartCoroutine(AnimationManager.instance.StartEndLevelAnim());
+            AnimationManager.instance.StartEndLevelAnimSequence();
+
             Debug.Log("YOU WIN");
 
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevel.worldName, currentLevel.levelNum);
@@ -298,6 +299,7 @@ public class GameManager : MonoBehaviour
     }
     public void WinAfterAnimation()
     {
+        Debug.Log("IN HERE");
         if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
         {
             ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone++;
@@ -326,6 +328,11 @@ public class GameManager : MonoBehaviour
         CursorController.Instance.tutorialBadConnection = false;
         TutorialSequence.Instacne.currentPhaseInSequence = 0;
         TutorialSequence.Instacne.duringSequence = false;
+
+        foreach (InGameSpecialPowerUp IGSP in powerupManager.specialPowerupsInGame)
+        {
+            IGSP.ResetValues();
+        }
 
         if (currentLevel.isTutorial)
         {

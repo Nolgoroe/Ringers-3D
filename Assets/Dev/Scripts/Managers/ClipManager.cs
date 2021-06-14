@@ -86,6 +86,78 @@ public class ClipManager : MonoBehaviour
             PopulateSlot(slots[i], i);
         }
     }
+    public void ExtraDealSlotsBadgerSpecial(InGameSpecialPowerUp IGSP)
+    {
+        if(clipCount < 4)
+        {
+            PopulateSlot(slots[clipCount], clipCount);
+            clipCount++;
+            IGSP.ResetValues();
+        }
+    }
+    public IEnumerator DragonflyCrossSpecial(InGameSpecialPowerUp IGSP)
+    {
+        int topOrBottom = UnityEngine.Random.Range(1, 3);
+        IGSP.ResetValues();
+
+        if (topOrBottom == 1)
+        {
+            bool up = true;
+
+            for (int i = 0; i < clipCount; i++)
+            {
+                Piece p = slots[i].transform.GetChild(0).GetComponent<Piece>();
+
+                if (up) 
+                {
+                    //left wing
+                    p.leftChild.symbolOfPiece = IGSP.SymbolNeeded;
+                }
+                else
+                {
+                    //right wing
+
+                    p.rightChild.symbolOfPiece = IGSP.SymbolNeeded;
+                }
+
+                up = !up;
+
+                p.leftChild.RefreshPiece();
+                p.rightChild.RefreshPiece();
+
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
+        else
+        {
+            bool up = false;
+
+            for (int i = 0; i < clipCount; i++)
+            {
+                Piece p = slots[i].transform.GetChild(0).GetComponent<Piece>();
+
+                if (up)
+                {
+                    //left wing
+                    p.leftChild.symbolOfPiece = IGSP.SymbolNeeded;
+                }
+                else
+                {
+                    //right wing
+
+                    p.rightChild.symbolOfPiece = IGSP.SymbolNeeded;
+                }
+
+                up = !up;
+                p.leftChild.RefreshPiece();
+                p.rightChild.RefreshPiece();
+
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
+
+        yield return null;
+    }
 
     public void RepopulateLatestClip() //// In case player clicked the hell no option after placing last piece
     {

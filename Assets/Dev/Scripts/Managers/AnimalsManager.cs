@@ -199,7 +199,7 @@ public class AnimalsManager : MonoBehaviour
         {            
             if (item.Contains(rand))
             {
-                Debug.Log("FOUND THE NUMBER!");
+                //Debug.Log("FOUND THE NUMBER!");
                 if (ZoneManagerHelpData.Instance.possibleAnimalsInZones[zoneID].animalsData[indexForMainAnimalArray].animalPrefab)
                 {
                     return ZoneManagerHelpData.Instance.possibleAnimalsInZones[zoneID].animalsData[indexForMainAnimalArray].animalPrefab;
