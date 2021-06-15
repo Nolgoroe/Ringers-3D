@@ -70,8 +70,8 @@ public class ConnectionManager : MonoBehaviour
 
         StartCheckLeft(supPieceArray, cellList, cellIndex, isOuterCell, lastPiece); //// check start from left side which then checks the right side aswell
         ///// This function works like this to accomodate the last piece logic. 
-        ///When the last piece is placed on the board we HAVE TO check connections before activating slice animations and logic.
-        ///If one of the sides of the LAST PIECE are wrong then we don't activate any slices even if condition is met
+        //When the last piece is placed on the board we HAVE TO check connections before activating slice animations and logic.
+        //If one of the sides of the LAST PIECE are wrong then we don't activate any slices even if condition is met
        
     }
 
@@ -581,13 +581,27 @@ public class ConnectionManager : MonoBehaviour
         //{
         foreach (Cell c in relevent.connectedCells)
         {
-            if (c.cellIndex == relevent.sliceIndex)
+            if (!isLimiter)
             {
-                Instantiate(leftPieceLockBrown, c.pieceHeld.leftChild.transform);
+                if (c.cellIndex == relevent.sliceIndex)
+                {
+                    Instantiate(leftPieceLockBrown, c.pieceHeld.leftChild.transform);
+                }
+                else
+                {
+                    Instantiate(rightPieceLockBrown, c.pieceHeld.rightChild.transform);
+                }
             }
             else
             {
-                Instantiate(rightPieceLockBrown, c.pieceHeld.rightChild.transform);
+                if (c.cellIndex == relevent.sliceIndex)
+                {
+                    Instantiate(leftPieceLockBrown, c.pieceHeld.leftChild.transform);
+                }
+                else
+                {
+                    Instantiate(rightPieceLockBrown, c.pieceHeld.rightChild.transform);
+                }
             }
         }
 
