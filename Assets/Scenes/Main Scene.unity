@@ -15525,10 +15525,10 @@ MonoBehaviour:
   speedPieceMove: 0.5
   waitBetweenPiecePullIn: 0.5
   speedPiecePullIn: 0.5
-  paceFade: 0
   waitTimeParticlesStart: 0.6
   waitTimeMidParticleAppear: 0.2
-  waitTimePullIn: 1
+  waitTimeDissolveTiles: 0.7
+  waitTimePullIn: 0.7
   waitTimeFadeIn: 0.3
   waitTimeFadeOut: 0.3
   waitTimeWinScreen: 0.5
@@ -15542,9 +15542,9 @@ MonoBehaviour:
   midPieceParticle: {fileID: 7475159308211779684, guid: 1106028b21faa4b43b39439beaee7bd9,
     type: 3}
   tempSubPieceArray: []
-  minMaxWait:
+  minMaxWaitPullInPieces:
     a: 0.05
-    b: 0.1
+    b: 1
 --- !u!1 &550021082
 GameObject:
   m_ObjectHideFlags: 0

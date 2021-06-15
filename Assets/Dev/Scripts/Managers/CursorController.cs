@@ -69,7 +69,7 @@ public class CursorController : MonoBehaviour
     public void SecondaryControls()
     {
 
-        if (Input.touchCount > 0 && Input.touchCount < 2)
+        if (Input.touchCount > 0 /*&& Input.touchCount < 2*/)
         {
             touch = Input.GetTouch(0);
 
@@ -195,7 +195,7 @@ public class CursorController : MonoBehaviour
     }
     public void NormalControls()
     {
-        if (Input.touchCount > 0 && Input.touchCount < 2)
+        if (Input.touchCount > 0 /*&& Input.touchCount < 2*/)
         {
             touch = Input.GetTouch(0);
 

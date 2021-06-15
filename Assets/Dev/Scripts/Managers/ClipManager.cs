@@ -17,6 +17,7 @@ public class ClipManager : MonoBehaviour
     //public Texture2D[] gameSymbols;
 
     public ColorsAndMats[] colorsToMats;
+    public SymbolToMat[] symbolToMat;
 
     public int clipCount;
 
@@ -25,6 +26,13 @@ public class ClipManager : MonoBehaviour
     {
         public PieceColor mat;
         public Material[] colorMats;
+    }
+
+    [Serializable]
+    public class SymbolToMat
+    {
+        public PieceSymbol mat;
+        public Material symbolMat;
     }
 
     private void Awake()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class AnimationManager : MonoBehaviour
 {
@@ -13,10 +14,11 @@ public class AnimationManager : MonoBehaviour
     public float waitBetweenPiecePullIn;
     public float speedPiecePullIn;
 
-    public float paceFade;
+    //public float paceFade;
 
     public float waitTimeParticlesStart;
     public float waitTimeMidParticleAppear;
+    public float waitTimeDissolveTiles;
     public float waitTimePullIn;
     public float waitTimeFadeIn;
     public float waitTimeFadeOut;
@@ -35,7 +37,7 @@ public class AnimationManager : MonoBehaviour
     public ParticleSystem midPieceParticle;
     public List<SubPiece> tempSubPieceArray;
 
-    public timeWaitPull minMaxWait;
+    public timeWaitPull minMaxWaitPullInPieces;
 
     [HideInInspector]
     public Coroutine endAnim = null;
@@ -93,6 +95,11 @@ public class AnimationManager : MonoBehaviour
         //    }
         //}
 
+        yield return new WaitForSeconds(waitTimeDissolveTiles);
+
+        //// Dissolve Tiles Here
+        DissolveTiles();
+
         yield return new WaitForSeconds(waitTimePullIn);
 
 
@@ -107,7 +114,7 @@ public class AnimationManager : MonoBehaviour
 
             if (!noWaitPullIn)
             {
-                yield return new WaitForSeconds(Random.Range(minMaxWait.a, minMaxWait.b));
+                yield return new WaitForSeconds(Random.Range(minMaxWaitPullInPieces.a, minMaxWaitPullInPieces.b));
             }
         }
 
@@ -180,6 +187,19 @@ public class AnimationManager : MonoBehaviour
     public void PullIn(SubPiece toMove)
     {
         LeanTween.move(toMove.gameObject, GameManager.Instance.gameBoard.transform.position, speedPieceMove).setEase(LeanTweenType.easeInOutQuad); // animate
+    }
+
+    public void DissolveTiles()
+    {
+        foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
+        {
+            Renderer rend = SP.GetComponent<Renderer>();
+
+            Material mat = GameManager.Instance.clipManager.symbolToMat.Where(p => p.mat == SP.symbolOfPiece).Single().symbolMat;
+
+
+            rend.material = mat;
+        }
     }
 
     public void SkipEndLevelAnimation()
