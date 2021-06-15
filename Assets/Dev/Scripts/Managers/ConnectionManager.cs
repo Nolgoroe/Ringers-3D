@@ -53,31 +53,33 @@ public class ConnectionManager : MonoBehaviour
         slicesOnBoard = gb.GetComponentsInChildren<Slice>();
     }
 
-    public void CallConnection(int cellIndex, bool isOuterCell)
+    public void CallConnection(int cellIndex, bool isOuterCell, bool lastPiece)
     {
         if (!isOuterCell)
         {
-            CheckConnections(subPiecesOnBoard, cells, cellIndex, isOuterCell);
+            CheckConnections(subPiecesOnBoard, cells, cellIndex, isOuterCell, lastPiece);
         }
         else
         {
-            CheckConnections(subPiecesDoubleRing, outerCells,cellIndex, isOuterCell);
+            CheckConnections(subPiecesDoubleRing, outerCells,cellIndex, isOuterCell, lastPiece);
         }
-        }
+    }
 
-    public void CheckConnections(SubPiece[] supPieceArray, List<Cell> cellList, int cellIndex, bool isOuterCell)
+    public void CheckConnections(SubPiece[] supPieceArray, List<Cell> cellList, int cellIndex, bool isOuterCell, bool lastPiece)
+    {
+
+        StartCheckLeft(supPieceArray, cellList, cellIndex, isOuterCell, lastPiece); //// check start from left side which then checks the right side aswell
+        ///// This function works like this to accomodate the last piece logic. 
+        ///When the last piece is placed on the board we HAVE TO check connections before activating slice animations and logic.
+        ///If one of the sides of the LAST PIECE are wrong then we don't activate any slices even if condition is met
+       
+    }
+
+
+    public void StartCheckLeft(SubPiece[] supPieceArray, List<Cell> cellList, int cellIndex, bool isOuterCell, bool lastPiece)
     {
         int leftContested = CheckIntRange((cellIndex * 2) - 1);
-        int rightContested = CheckIntRange((cellIndex * 2) + 2);
-
         int currentLeft = cellIndex * 2;
-        int currentRight = cellIndex * 2 + 1;
-
-        //int rightContested = CheckIntRange((cellIndex * 2) + 2);
-        //int leftContested = CheckIntRange((cellIndex * 2) -1);
-
-        //int currentRight = cellIndex * 2 + 1;
-        //int currentLeft = cellIndex * 2;
 
         if (supPieceArray[leftContested])
         {
@@ -119,19 +121,58 @@ public class ConnectionManager : MonoBehaviour
                     //supPieceArray[currentLeft].gameObject.GetComponent<Renderer>().material.EnableKeyword ("_EMISSION");
                     //supPieceArray[leftContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
 
-                    if (conditionmet)
+                    if (lastPiece)
                     {
-                        supPieceArray[currentLeft].relevantSlice.fulfilledCondition = true;
+                        CheckRight(supPieceArray, cellList, cellIndex, isOuterCell, lastPiece);
 
-                        if (supPieceArray[currentLeft].relevantSlice.isLoot)
+                        bool gameWon = GameManager.Instance.CheckEndLevel();
+
+                        if (gameWon)
                         {
-                            GiveLootFromConnections(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
+                            if (conditionmet)
+                            {
+                                if (supPieceArray[currentLeft].relevantSlice.anim)
+                                {
+                                    supPieceArray[currentLeft].relevantSlice.anim.SetBool("Activate", true);
+                                }
+
+                                supPieceArray[currentLeft].relevantSlice.fulfilledCondition = true;
+
+                                if (supPieceArray[currentLeft].relevantSlice.isLoot)
+                                {
+                                    GiveLootFromConnections(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
+                                }
+
+                                if (supPieceArray[currentLeft].relevantSlice.isLock)
+                                {
+                                    LockCell(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (conditionmet)
+                        {
+                            if (supPieceArray[currentLeft].relevantSlice.anim)
+                            {
+                                supPieceArray[currentLeft].relevantSlice.anim.SetBool("Activate", true);
+                            }
+
+                            supPieceArray[currentLeft].relevantSlice.fulfilledCondition = true;
+
+                            if (supPieceArray[currentLeft].relevantSlice.isLoot)
+                            {
+                                GiveLootFromConnections(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
+                            }
+
+                            if (supPieceArray[currentLeft].relevantSlice.isLock)
+                            {
+                                LockCell(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
+                            }
                         }
 
-                        if (supPieceArray[currentLeft].relevantSlice.isLock)
-                        {
-                            LockCell(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
-                        }
+                        CheckRight(supPieceArray, cellList, cellIndex, isOuterCell, lastPiece);
                     }
                 }
             }
@@ -144,11 +185,27 @@ public class ConnectionManager : MonoBehaviour
         }
         else
         {
+            CheckRight(supPieceArray, cellList, cellIndex, isOuterCell, lastPiece); //// if there is no piece connected to left - check right side
+
             if (!isOuterCell)
             {
                 supPieceArray[currentLeft].relevantSlice.fulfilledCondition = false;
             }
         }
+
+    }
+
+    public void CheckRight(SubPiece[] supPieceArray, List<Cell> cellList, int cellIndex, bool isOuterCell, bool lastPiece)
+    {
+        int rightContested = CheckIntRange((cellIndex * 2) + 2);
+
+        int currentRight = cellIndex * 2 + 1;
+
+        //int rightContested = CheckIntRange((cellIndex * 2) + 2);
+        //int leftContested = CheckIntRange((cellIndex * 2) -1);
+
+        //int currentRight = cellIndex * 2 + 1;
+        //int currentLeft = cellIndex * 2;
 
         if (supPieceArray[rightContested])
         {
@@ -191,17 +248,51 @@ public class ConnectionManager : MonoBehaviour
                     //supPieceArray[currentRight].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     //supPieceArray[rightContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
 
-                    if (conditionmet)
+                    if (lastPiece)
                     {
-                        supPieceArray[currentRight].relevantSlice.fulfilledCondition = true;
-                        if (supPieceArray[currentRight].relevantSlice.isLoot)
-                        {
-                            GiveLootFromConnections(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
-                        }
+                        bool gameWon = GameManager.Instance.CheckEndLevel();
 
-                        if (supPieceArray[currentRight].relevantSlice.isLock)
+                        if (gameWon)
                         {
-                            LockCell(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
+                            if (conditionmet)
+                            {
+                                if (supPieceArray[currentRight].relevantSlice.anim)
+                                {
+                                    supPieceArray[currentRight].relevantSlice.anim.SetBool("Activate", true);
+                                }
+
+                                supPieceArray[currentRight].relevantSlice.fulfilledCondition = true;
+                                if (supPieceArray[currentRight].relevantSlice.isLoot)
+                                {
+                                    GiveLootFromConnections(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
+                                }
+
+                                if (supPieceArray[currentRight].relevantSlice.isLock)
+                                {
+                                    LockCell(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (conditionmet)
+                        {
+                            if (supPieceArray[currentRight].relevantSlice.anim)
+                            {
+                                supPieceArray[currentRight].relevantSlice.anim.SetBool("Activate", true);
+                            }
+
+                            supPieceArray[currentRight].relevantSlice.fulfilledCondition = true;
+                            if (supPieceArray[currentRight].relevantSlice.isLoot)
+                            {
+                                GiveLootFromConnections(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
+                            }
+
+                            if (supPieceArray[currentRight].relevantSlice.isLock)
+                            {
+                                LockCell(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
+                            }
                         }
                     }
                 }
@@ -220,10 +311,6 @@ public class ConnectionManager : MonoBehaviour
                 supPieceArray[currentRight].relevantSlice.fulfilledCondition = false;
             }
         }
-
-        /// Get slice
-        /// Check list of conditions for correct connections, 2 connection.
-        /// 
     }
     public bool CheckSubPieceConnection(SubPiece currentSide, SubPiece contestedSide, out bool conditionMet)
     {

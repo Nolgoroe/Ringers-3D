@@ -261,7 +261,7 @@ public class GameManager : MonoBehaviour
         unsuccessfullConnectionCount = 0;
     }
 
-    public void CheckEndLevel()
+    public bool CheckEndLevel()
     {
         //UIManager.Instance.DisableCommitButton();
         if (currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0)
@@ -274,11 +274,12 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            AnimationManager.instance.StartEndLevelAnimSequence();
-
             Debug.Log("YOU WIN");
 
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevel.worldName, currentLevel.levelNum);
+
+            PlayerManager.Instance.SavePlayerData();
+            return true;
         }
         else
         {
@@ -287,9 +288,11 @@ public class GameManager : MonoBehaviour
             //UIManager.Instance.LoseLevel();
             Debug.Log("You Lose");
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail, currentLevel.worldName, currentLevel.levelNum);
-        }
 
-        PlayerManager.Instance.SavePlayerData();
+            PlayerManager.Instance.SavePlayerData();
+
+            return false;
+        }
     }
 
     public void LoseLevelAction()

@@ -69,15 +69,21 @@ public class Cell : MonoBehaviour
 
             if(GameManager.Instance.currentFilledCellCount == GameManager.Instance.currentLevel.cellsCountInLevel)
             {
-                ConnectionManager.Instance.CallConnection(cellIndex, isOuter);
-                GameManager.Instance.CheckEndLevel();
+                ConnectionManager.Instance.CallConnection(cellIndex, isOuter, true);
+
+                bool gameWon = GameManager.Instance.CheckEndLevel();
+
+                if (gameWon)
+                {
+                    AnimationManager.instance.StartEndLevelAnimSequence();
+                }
 
                 return;
                 //UIManager.Instance.ActivateCommitButton();
             }
         }
 
-        ConnectionManager.Instance.CallConnection(cellIndex, isOuter);
+        ConnectionManager.Instance.CallConnection(cellIndex, isOuter, false);
     }
 
     public void RemovePiece()

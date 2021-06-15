@@ -39,8 +39,8 @@ public class SliceManager : MonoBehaviour
     public Texture[] sliceColors;
     public Texture[] sliceSymbolsSprites;
 
-    public Sprite[] limiterSliceColors;
-    public Sprite[] limiterSliceSymbolsSprites;
+    public Texture[] limiterSliceColors;
+    public Texture[] limiterSliceSymbolsSprites;
 
     public Sprite[] sliceLootIcons;
 
@@ -59,8 +59,8 @@ public class SliceManager : MonoBehaviour
     public Dictionary<PieceSymbol, Texture> sliceSymbolToSprite;
     public Dictionary<PieceColor, Texture> slicecolorToSprite;
 
-    public Dictionary<PieceSymbol, Sprite> limiterSliceSymbolToSprite;
-    public Dictionary<PieceColor, Sprite> limiterSlicecolorToSprite;
+    public Dictionary<PieceSymbol, Texture> limiterSliceSymbolToSprite;
+    public Dictionary<PieceColor, Texture> limiterSlicecolorToSprite;
     //public Dictionary<PieceColor, Material> pieceColorToColor;
 
     public Dictionary<LootPacks, Sprite> lootToIcon;
@@ -80,8 +80,8 @@ public class SliceManager : MonoBehaviour
         sliceSymbolToSprite = new Dictionary<PieceSymbol, Texture>();
         slicecolorToSprite = new Dictionary<PieceColor, Texture>();
 
-        limiterSliceSymbolToSprite = new Dictionary<PieceSymbol, Sprite>();
-        limiterSlicecolorToSprite = new Dictionary<PieceColor, Sprite>();
+        limiterSliceSymbolToSprite = new Dictionary<PieceSymbol, Texture>();
+        limiterSlicecolorToSprite = new Dictionary<PieceColor, Texture>();
 
         //pieceColorToColor = new Dictionary<PieceColor, Material>();
 
