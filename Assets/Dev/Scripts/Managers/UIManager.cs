@@ -42,7 +42,8 @@ public class UIManager : MonoBehaviour
     public TMP_Text /*gameplayGoldText,*/ gameplayRubyText/*, gameplayDewDropsText*/;
     public TMP_Text animalNameText;
 
-    public TMP_Text currentLevelName;
+    public TMP_Text currentLevelWorldName;
+    public TMP_Text currentLevelNumber;
 
     //public Button commitButton;
     public Button nextLevelFromWinScreen;
@@ -247,9 +248,10 @@ public class UIManager : MonoBehaviour
 
         GameManager.Instance.RestartCurrentLevel();
     }
-    public void ChangeZoneName(string name)
+    public void ChangeZoneName(string name, int levelID)
     {
-        currentLevelName.text = name;
+        currentLevelWorldName.text = name;
+        currentLevelNumber.text = levelID.ToString();
     }
     public void ToHud(GameObject currentCanvas)
     {

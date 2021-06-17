@@ -193,12 +193,24 @@ public class AnimationManager : MonoBehaviour
     {
         foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
         {
+            List<Material> matArray = new List<Material>();
+
             Renderer rend = SP.GetComponent<Renderer>();
+
+            matArray.AddRange(rend.materials);
 
             Material mat = GameManager.Instance.clipManager.symbolToMat.Where(p => p.mat == SP.symbolOfPiece).Single().symbolMat;
 
-
-            rend.material = mat;
+            if (matArray.Count > 1)
+            {
+                matArray.Clear();
+                matArray.Add(mat);
+                rend.materials = matArray.ToArray();
+            }
+            else
+            {
+                rend.material = mat;
+            }
         }
     }
 

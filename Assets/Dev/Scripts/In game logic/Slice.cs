@@ -279,17 +279,55 @@ public class Slice : MonoBehaviour
 
                     break;
                 case SliceCatagory.SpecificShape:
-                    sliceSymbol = (PieceSymbol)Random.Range(0, pieceSymbolEnumCount - 2);
-                    //sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol];
-                    matArray[0].SetTexture("_BaseMap", GameManager.Instance.sliceManager.sliceSymbolToSprite[sliceSymbol]);
-                    //sr.sprite = GameManager.Instance.sliceManager.lootSliceSymbolDict[sliceSymbol];
+                    if (GameManager.Instance.currentLevel.RandomSlices)
+                    {
+                        sliceSymbol = (PieceSymbol)Random.Range(0, pieceSymbolEnumCount - 2);
+                        //sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol];
+                        matArray[0].SetTexture("_BaseMap", GameManager.Instance.sliceManager.sliceSymbolToSprite[sliceSymbol]);
+                        //sr.sprite = GameManager.Instance.sliceManager.lootSliceSymbolDict[sliceSymbol];
+                    }
+                    else
+                    {
+                        if (GameManager.Instance.currentLevel.levelAvailablesymbols.Length > 0)
+                        {
+                            int rand = Random.Range(0, GameManager.Instance.currentLevel.levelAvailablesymbols.Length);
+                            sliceSymbol = GameManager.Instance.currentLevel.levelAvailablesymbols[rand];
+
+                            matArray[0].SetTexture("_BaseMap", GameManager.Instance.sliceManager.sliceSymbolToSprite[sliceSymbol]);
+                        }
+                        else
+                        {
+                            sliceSymbol = (PieceSymbol)Random.Range(0, pieceSymbolEnumCount - 2);
+
+                            matArray[0].SetTexture("_BaseMap", GameManager.Instance.sliceManager.sliceSymbolToSprite[sliceSymbol]);
+                        }
+                    }
                     break;
                 case SliceCatagory.SpecificColor:
-                    sliceColor = (PieceColor)Random.Range(0, pieceColorEnumCount - 2);
-                    //sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
-                    matArray[0].SetTexture("_BaseMap", GameManager.Instance.sliceManager.slicecolorToSprite[sliceColor]);
-                    //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[sliceColor];
-                    //sr.sprite = GameManager.Instance.sliceManager.lootSliceColorDict[sliceColor];
+                    if (GameManager.Instance.currentLevel.RandomSlices)
+                    {
+                        sliceColor = (PieceColor)Random.Range(0, pieceColorEnumCount - 2);
+                        //sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
+                        matArray[0].SetTexture("_BaseMap", GameManager.Instance.sliceManager.slicecolorToSprite[sliceColor]);
+                        //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[sliceColor];
+                        //sr.sprite = GameManager.Instance.sliceManager.lootSliceColorDict[sliceColor];
+                    }
+                    else
+                    {
+                        if(GameManager.Instance.currentLevel.levelAvailableColors.Length > 0)
+                        {
+                            int rand = Random.Range(0, GameManager.Instance.currentLevel.levelAvailableColors.Length);
+                            sliceColor = GameManager.Instance.currentLevel.levelAvailableColors[rand];
+
+                            matArray[0].SetTexture("_BaseMap", GameManager.Instance.sliceManager.slicecolorToSprite[sliceColor]);
+                        }
+                        else
+                        {
+                            sliceColor = (PieceColor)Random.Range(0, pieceColorEnumCount - 2);
+
+                            matArray[0].SetTexture("_BaseMap", GameManager.Instance.sliceManager.slicecolorToSprite[sliceColor]);
+                        }
+                    }
                     break;
                 default:
                     break;

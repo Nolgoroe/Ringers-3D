@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
             numAnimalsOnBoard[i].amount = 0;
         }
 
-        UIManager.Instance.ChangeZoneName(currentLevel.worldName);
+        UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
         UIManager.Instance.TurnOnGameplayUI();
 
         //Camera.main.orthographicSize = 12;
@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
         copyOfSpecificSliceColorsTutorial.AddRange(currentLevel.specificSlicesColors);
         copyOfSpecificSliceSymbolsTutorial.AddRange(currentLevel.specificSlicesShapes);
 
-        UIManager.Instance.ChangeZoneName(currentLevel.worldName);
+        UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
         UIManager.Instance.TurnOnGameplayUI();
 
         //Camera.main.orthographicSize = 12;

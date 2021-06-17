@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class SubPiece : MonoBehaviour
 {
@@ -20,39 +21,45 @@ public class SubPiece : MonoBehaviour
 
     public void SetPiece()
     {
+        if(GameManager.Instance.currentLevel.levelAvailableColors.Length > 0 || GameManager.Instance.currentLevel.levelAvailablesymbols.Length > 0)
+        {
+            int indexcColor = 0;
+            int indexcSymbol = 0;
 
-            ///// Shorten but keep logic
-            //random = Random.Range(0, GameManager.Instance.clipManager.gameColors.Length - 1);
-            //rend.material.SetColor("_BaseColor", GameManager.Instance.clipManager.gameColors[random]);
-            //colorOfPiece = (PieceColor)random;
-
-
-            //random = Random.Range(0, GameManager.Instance.clipManager.gameSymbols.Length - 1);
-            //rend.material.SetTexture("_BumpMap", GameManager.Instance.clipManager.gameSymbols[random]);
-            //rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[random]);
-            //symbolOfPiece = (PieceSymbol)random;
-
-            /// Shorten but keep logic
-
-            randomColor = Random.Range(0, GameManager.Instance.clipManager.colorsToMats.Length);
-            //random = Random.Range(0, GameManager.Instance.clipManager.gameColors.Length - 2);
-            //rend.material = GameManager.Instance.clipManager.gameColors[random];
-            colorOfPiece = (PieceColor)randomColor;
-
-
-            randomSymbol = Random.Range(0, GameManager.Instance.clipManager.colorsToMats[randomColor].colorMats.Length);
-            //rend.material.SetTexture("_BumpMap", GameManager.Instance.clipManager.gameSymbols[random]);
-            //rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[random]);
-            //rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[random]);
-            rend.material = GameManager.Instance.clipManager.colorsToMats[randomColor].colorMats[randomSymbol];
-            symbolOfPiece = (PieceSymbol)randomSymbol;
-
-
-            if (rend.materials[0].IsKeywordEnabled("_EMISSION"))
+            if (GameManager.Instance.currentLevel.levelAvailableColors.Length > 0)
             {
-                rend.materials[0].DisableKeyword("_EMISSION");
+                randomColor = Random.Range(0, GameManager.Instance.currentLevel.levelAvailableColors.Length);
+                colorOfPiece = GameManager.Instance.currentLevel.levelAvailableColors[randomColor];
+                indexcColor = System.Array.IndexOf(GameManager.Instance.clipManager.colorsToMats, GameManager.Instance.clipManager.colorsToMats.Where(p => p.matColor == colorOfPiece).Single());
+            }
+            else
+            {
+                indexcColor = Random.Range(0, GameManager.Instance.clipManager.colorsToMats.Length);
             }
 
+            if (GameManager.Instance.currentLevel.levelAvailablesymbols.Length > 0)
+            {
+                randomSymbol = Random.Range(0, GameManager.Instance.currentLevel.levelAvailablesymbols.Length);
+                symbolOfPiece = GameManager.Instance.currentLevel.levelAvailablesymbols[randomSymbol];
+                indexcSymbol = (int)symbolOfPiece;
+            }
+            else
+            {
+                indexcSymbol = Random.Range(0, GameManager.Instance.clipManager.colorsToMats[randomColor].colorMats.Length);
+            }
+
+            rend.material = GameManager.Instance.clipManager.colorsToMats[indexcColor].colorMats[indexcSymbol];
+        }
+        else
+        {
+            randomColor = Random.Range(0, GameManager.Instance.clipManager.colorsToMats.Length);
+            colorOfPiece = (PieceColor)randomColor;
+
+            randomSymbol = Random.Range(0, GameManager.Instance.clipManager.colorsToMats[randomColor].colorMats.Length);
+            symbolOfPiece = (PieceSymbol)randomSymbol;
+
+            rend.material = GameManager.Instance.clipManager.colorsToMats[randomColor].colorMats[randomSymbol];
+        }
     }
     public void SetPieceTutorial(bool isRight)
     {
@@ -73,10 +80,10 @@ public class SubPiece : MonoBehaviour
             rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
         }
 
-        if (rend.materials[0].IsKeywordEnabled("_EMISSION"))
-        {
-            rend.materials[0].DisableKeyword("_EMISSION");
-        }
+        //if (rend.materials[0].IsKeywordEnabled("_EMISSION"))
+        //{
+        //    rend.materials[0].DisableKeyword("_EMISSION");
+        //}
 
     }
 
@@ -100,38 +107,49 @@ public class SubPiece : MonoBehaviour
     public void SetConnectedMaterial()
     {
         //Debug.Log("what?");
-        Material[] matArray = rend.materials;
-        //matArray[1] = ConnectionManager.Instance.rockLIT;
-        if (!matArray[0].IsKeywordEnabled("_EMISSION"))
-        {
-            matArray[0].EnableKeyword("_EMISSION");
-        }
+        List<Material> matArray = new List<Material>();
+        matArray.AddRange(rend.materials);
 
-        matArray[0].SetColor("_EmissionColor", Color.black);
+        Material mat = GameManager.Instance.clipManager.symbolToMat.Where(p => p.mat == symbolOfPiece).Single().symbolMat;
+
+        matArray.Add(mat);
+
+        ////matArray[1] = ConnectionManager.Instance.rockLIT;
+        //if (!matArray[0].IsKeywordEnabled("_EMISSION"))
+        //{
+        //    matArray[0].EnableKeyword("_EMISSION");
+        //}
+
+        //matArray[0].SetColor("_EmissionColor", Color.black);
 
 
-        StartCoroutine(LerpColors(matArray, connectedColor));
-        //matArray[0].SetColor("_EmissionMap", Color.white);
-        //matArray[0].SetColor("_EmissionColor", Color.red);
-        rend.materials = matArray;
+        //StartCoroutine(LerpColors(matArray, connectedColor));
+        ////matArray[0].SetColor("_EmissionMap", Color.white);
+        ////matArray[0].SetColor("_EmissionColor", Color.red);
+        rend.materials = matArray.ToArray();
     }
 
     public void SetDisconnectedMaterial()
     {
-        Debug.Log("what????");
+        //Debug.Log("what????");
 
-        Material[] matArray = rend.materials;
+        List<Material> matArray = new List<Material>();
+        matArray.AddRange(rend.materials);
+
+
+        matArray.RemoveAt(1);
+
         //matArray[1] = ConnectionManager.Instance.rockUnLIT;
-        StartCoroutine(LerpColors(matArray, Color.black));
+        //StartCoroutine(LerpColors(matArray, Color.black));
 
         //matArray[0].DisableKeyword("_EMISSION");
         //matArray[0].SetColor("_EmissionMap", Color.white);
         //matArray[0].SetColor("_EmissionColor", Color.white);
-        rend.materials = matArray;
+        rend.materials = matArray.ToArray();
 
     }
 
-    IEnumerator LerpColors(Material[] matArray, Color targetColor)
+    IEnumerator LerpColors(List<Material> matArray, Color targetColor)
     {
 
         float timeToLerp = ConnectionManager.Instance.timeToLerpConnectionEmission;

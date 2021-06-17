@@ -14,11 +14,19 @@ public class LevelScriptableObject : ScriptableObject
     public int tutorialIndexForList;
     public int cellsCountInLevel;
 
+    public bool RandomSlices;
     public SliceCatagory[] slicesToSpawn;
+    public int[] sliceCellIndexes;
     public bool[] lockSlices;
     public bool[] lootSlices;
     public bool[] limiterSlices;
     public LootPacks[] RewardBags;
+
+
+    public PieceColor[] levelAvailableColors;
+    public PieceSymbol[] levelAvailablesymbols;
+
+
 
     public bool isTutorial;
     public List<pieceDataStruct> arrayOfPieces;

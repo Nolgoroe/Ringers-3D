@@ -24,7 +24,7 @@ public class ClipManager : MonoBehaviour
     [Serializable]
     public class ColorsAndMats
     {
-        public PieceColor mat;
+        public PieceColor matColor;
         public Material[] colorMats;
     }
 
@@ -32,6 +32,7 @@ public class ClipManager : MonoBehaviour
     public class SymbolToMat
     {
         public PieceSymbol mat;
+        //public Material symbolMat;
         public Material symbolMat;
     }
 

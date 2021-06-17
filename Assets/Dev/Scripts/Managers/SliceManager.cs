@@ -179,110 +179,126 @@ public class SliceManager : MonoBehaviour
                 possibleSlotsTemp.Add(i);
             }
 
-            int randomPos = Random.Range(0, sliceSlots.Length);
-
-            //go = Instantiate(slicePrefabs, sliceSlots[randomPos]);
-
-            //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
-            fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
-            //o.transform.parent.GetComponent<Slice>().child = go;
-
-            if (numOfSlices < 4)
+            if (GameManager.Instance.currentLevel.RandomSlices)
             {
-                RemovePositions(randomPos);
+                int randomPos = Random.Range(0, sliceSlots.Length);
 
-                for (int i = 1; i < numOfSlices; i++)
+                //go = Instantiate(slicePrefabs, sliceSlots[randomPos]);
+
+                //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
+                fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
+                //o.transform.parent.GetComponent<Slice>().child = go;
+
+                if (numOfSlices < 4)
                 {
+                    RemovePositions(randomPos);
 
-                    randomPos = Random.Range(0, possibleSlotsTemp.Count);
-                    //randomPrefab = Random.Range(0, slicePrefabs.Length);
-
-                    //go = Instantiate(slicePrefabs, sliceSlots[possibleSlots[randomPos]]);
-                    //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
-                    fullSlices.Add(sliceSlots[possibleSlotsTemp[randomPos]].transform.GetComponent<Slice>());
-                    //go.transform.parent.GetComponent<Slice>().child = go;
-
-                    RemovePositions(possibleSlotsTemp[randomPos]);
-                }
-            }
-            else if (numOfSlices == 4)
-            {
-                for (int i = 1; i < numOfSlices; i++)
-                {
-                    randomPos += 2;
-
-                    if (randomPos >= sliceSlots.Length)
+                    for (int i = 1; i < numOfSlices; i++)
                     {
-                        randomPos -= sliceSlots.Length;
+
+                        randomPos = Random.Range(0, possibleSlotsTemp.Count);
+                        //randomPrefab = Random.Range(0, slicePrefabs.Length);
+
+                        //go = Instantiate(slicePrefabs, sliceSlots[possibleSlots[randomPos]]);
+                        //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
+                        fullSlices.Add(sliceSlots[possibleSlotsTemp[randomPos]].transform.GetComponent<Slice>());
+                        //go.transform.parent.GetComponent<Slice>().child = go;
+
+                        RemovePositions(possibleSlotsTemp[randomPos]);
                     }
-                    //randomPrefab = Random.Range(0, slicePrefabs.Length);
+                }
+                else if (numOfSlices == 4)
+                {
+                    for (int i = 1; i < numOfSlices; i++)
+                    {
+                        randomPos += 2;
 
-                    //go = Instantiate(slicePrefabs, sliceSlots[randomPos]);
-                    //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
-                    fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
-                    //go.transform.parent.GetComponent<Slice>().child = go;
+                        if (randomPos >= sliceSlots.Length)
+                        {
+                            randomPos -= sliceSlots.Length;
+                        }
+                        //randomPrefab = Random.Range(0, slicePrefabs.Length);
 
+                        //go = Instantiate(slicePrefabs, sliceSlots[randomPos]);
+                        //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
+                        fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
+                        //go.transform.parent.GetComponent<Slice>().child = go;
+
+                    }
+                }
+                else
+                {
+                    possibleSlotsTemp.Remove(randomPos);
+
+                    for (int i = 1; i < sliceSlots.Length / 2; i++)
+                    {
+                        randomPos += 2;
+
+                        if (randomPos >= sliceSlots.Length)
+                        {
+                            randomPos -= sliceSlots.Length;
+                        }
+
+                        //randomPrefab = Random.Range(0, slicePrefabs.Length);
+
+                        //go = Instantiate(slicePrefabs, sliceSlots[randomPos]);
+                        //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
+                        fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
+                        //go.transform.parent.GetComponent<Slice>().child = go;
+                        possibleSlotsTemp.Remove(randomPos);
+                    }
+
+                    for (int i = 0; i < numOfSlices - sliceSlots.Length / 2; i++)
+                    {
+                        randomPos = Random.Range(0, possibleSlotsTemp.Count);
+                        //randomPrefab = Random.Range(0, slicePrefabs.Length);
+
+                        //go = Instantiate(slicePrefabs, sliceSlots[possibleSlots[randomPos]]);
+                        //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
+                        fullSlices.Add(sliceSlots[possibleSlotsTemp[randomPos]].transform.GetComponent<Slice>());
+                        //go.transform.parent.GetComponent<Slice>().child = go;
+                        possibleSlotsTemp.Remove(possibleSlotsTemp[randomPos]);
+                    }
+                }
+
+                //if (GameManager.Instance.currentLevel.isRandomDistributionToSlices)
+                //{
+                //    List<LootPacks> tempList = new List<LootPacks>();
+                //    tempList.AddRange(GameManager.Instance.currentLevel.RewardBags);
+
+                //    for (int i = 0; i < fullSlices.Count; i++)
+                //    {
+                //        fullSlices[i].SetSliceData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
+                //    }
+
+                //    for (int i = 0; i < GameManager.Instance.currentLevel.RewardBags.Length; i++)
+                //    {
+                //        int randomSlice = Random.Range(0, tempList.Count);
+                //        fullSlices[i].SetSliceLootData(tempList[randomSlice]);
+                //        tempList.RemoveAt(randomSlice);
+                //    }
+                //}
+
+                for (int i = 0; i < fullSlices.Count; i++)
+                {
+                    fullSlices[i].SetSliceData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
                 }
             }
             else
             {
-                possibleSlotsTemp.Remove(randomPos);
 
-                for (int i = 1; i < sliceSlots.Length / 2; i++)
+                for (int i = 0; i < GameManager.Instance.currentLevel.slicesToSpawn.Length; i++)
                 {
-                    randomPos += 2;
-
-                    if (randomPos >= sliceSlots.Length)
-                    {
-                        randomPos -= sliceSlots.Length;
-                    }
-
-                    //randomPrefab = Random.Range(0, slicePrefabs.Length);
-
-                    //go = Instantiate(slicePrefabs, sliceSlots[randomPos]);
-                    //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
-                    fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
-                    //go.transform.parent.GetComponent<Slice>().child = go;
-                    possibleSlotsTemp.Remove(randomPos);
+                    fullSlices.Add(sliceSlots[GameManager.Instance.currentLevel.sliceCellIndexes[i]].transform.GetComponent<Slice>());
                 }
 
-                for (int i = 0; i < numOfSlices - sliceSlots.Length / 2; i++)
-                {
-                    randomPos = Random.Range(0, possibleSlotsTemp.Count);
-                    //randomPrefab = Random.Range(0, slicePrefabs.Length);
 
-                    //go = Instantiate(slicePrefabs, sliceSlots[possibleSlots[randomPos]]);
-                    //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
-                    fullSlices.Add(sliceSlots[possibleSlotsTemp[randomPos]].transform.GetComponent<Slice>());
-                    //go.transform.parent.GetComponent<Slice>().child = go;
-                    possibleSlotsTemp.Remove(possibleSlotsTemp[randomPos]);
+                for (int i = 0; i < fullSlices.Count; i++)
+                {
+                    fullSlices[i].SetSliceData(sliceSlots[GameManager.Instance.currentLevel.sliceCellIndexes[i]].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
                 }
             }
 
-            //if (GameManager.Instance.currentLevel.isRandomDistributionToSlices)
-            //{
-            //    List<LootPacks> tempList = new List<LootPacks>();
-            //    tempList.AddRange(GameManager.Instance.currentLevel.RewardBags);
-
-            //    for (int i = 0; i < fullSlices.Count; i++)
-            //    {
-            //        fullSlices[i].SetSliceData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
-            //    }
-
-            //    for (int i = 0; i < GameManager.Instance.currentLevel.RewardBags.Length; i++)
-            //    {
-            //        int randomSlice = Random.Range(0, tempList.Count);
-            //        fullSlices[i].SetSliceLootData(tempList[randomSlice]);
-            //        tempList.RemoveAt(randomSlice);
-            //    }
-            //}
-            //else
-            //{
-
-            for (int i = 0; i < fullSlices.Count; i++)
-            {
-                fullSlices[i].SetSliceData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
-            }
 
             if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
             {
