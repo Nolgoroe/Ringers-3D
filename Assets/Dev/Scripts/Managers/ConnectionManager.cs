@@ -22,7 +22,8 @@ public class ConnectionManager : MonoBehaviour
     public ParticleSystem goodConnectionParticle, badConnectionParticle;
 
     public GameObject lootEffectPrefab;
-    public GameObject rightPieceLockBrown, leftPieceLockBrown;
+    public GameObject rightPieceLockObject, leftPieceLockObject;
+    public GameObject rightPieceLockLimiterObject, leftPieceLockLimiterObject;
 
     //public Material rockLIT,rockUnLIT;
 
@@ -585,22 +586,22 @@ public class ConnectionManager : MonoBehaviour
             {
                 if (c.cellIndex == relevent.sliceIndex)
                 {
-                    Instantiate(leftPieceLockBrown, c.pieceHeld.leftChild.transform);
+                    GameObject go = Instantiate(leftPieceLockObject, c.pieceHeld.leftChild.transform);
                 }
                 else
                 {
-                    Instantiate(rightPieceLockBrown, c.pieceHeld.rightChild.transform);
+                    GameObject go = Instantiate(rightPieceLockObject, c.pieceHeld.rightChild.transform);
                 }
             }
             else
             {
                 if (c.cellIndex == relevent.sliceIndex)
                 {
-                    Instantiate(leftPieceLockBrown, c.pieceHeld.leftChild.transform);
+                    GameObject go = Instantiate(leftPieceLockLimiterObject, c.pieceHeld.leftChild.transform);
                 }
                 else
                 {
-                    Instantiate(rightPieceLockBrown, c.pieceHeld.rightChild.transform);
+                    GameObject go = Instantiate(rightPieceLockLimiterObject, c.pieceHeld.rightChild.transform);
                 }
             }
         }
