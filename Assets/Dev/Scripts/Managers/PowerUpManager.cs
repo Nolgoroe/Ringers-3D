@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System;
 
 public enum PowerUp
 {
@@ -13,19 +14,35 @@ public enum PowerUp
     //SliceBomb,
     //ExtraDeal,
     //FourShapeTransform,
+    None
+}
+public enum SpecialPowerUp
+{
     DragonflyCross,
     BadgerExtraDeal,
     None
 }
+
+[Serializable]
+public class SpecialPowerData
+{
+    public PieceSymbol symbol;
+    public int amount;
+}
+
 public class PowerUpManager : MonoBehaviour
 {
     public Transform[] instnatiateZones;
     public GameObject powerupButtonPreab;
+    public GameObject specialPowerPrefab;
+    public Transform specialPowerPrefabParent;
     public Dictionary<PowerUp, string> spriteByType;
     public Dictionary<PowerUp, string> nameTextByType;
+    public Dictionary<SpecialPowerUp, Sprite> specialPowerUpSpriteByType;
 
     public string[] powerupSpritesPath;
     public string[] powerupNames;
+    public Sprite[] specialPowerupSprites;
 
 
     public List<Button> powerupButtons;
@@ -40,7 +57,7 @@ public class PowerUpManager : MonoBehaviour
 
     public int instnatiatedZonesCounter = 0;
 
-    public InGameSpecialPowerUp[] specialPowerupsInGame;
+    public List<InGameSpecialPowerUp> specialPowerupsInGame;
 
     private void Start()
     {
@@ -48,11 +65,13 @@ public class PowerUpManager : MonoBehaviour
 
         spriteByType = new Dictionary<PowerUp, string>();
         nameTextByType = new Dictionary<PowerUp, string>();
+        specialPowerUpSpriteByType = new Dictionary<SpecialPowerUp, Sprite>();
 
         for (int i = 0; i < System.Enum.GetValues(typeof(PowerUp)).Length - 1; i++)
         {
             spriteByType.Add((PowerUp)i, powerupSpritesPath[i]);
             nameTextByType.Add((PowerUp)i, powerupNames[i]);
+            specialPowerUpSpriteByType.Add((SpecialPowerUp)i, specialPowerupSprites[i]);
         }
 
     }
@@ -442,10 +461,10 @@ public class PowerUpManager : MonoBehaviour
     {
         switch (IGSP.type)
         {
-            case PowerUp.BadgerExtraDeal:
+            case SpecialPowerUp.BadgerExtraDeal:
                 GameManager.Instance.clipManager.ExtraDealSlotsBadgerSpecial(IGSP);
                 break;
-            case PowerUp.DragonflyCross:
+            case SpecialPowerUp.DragonflyCross:
                 StartCoroutine(GameManager.Instance.clipManager.DragonflyCrossSpecial(IGSP));
                 break;
             default:
@@ -462,6 +481,60 @@ public class PowerUpManager : MonoBehaviour
                 Debug.Log(IGSP.SymbolNeeded);
 
                 IGSP.UpdateSlider(amount);
+            }
+        }
+    }
+
+    public void InstantiateSpecialPowers()
+    {
+        if(GameManager.Instance.currentLevel.symbolsNeededForSpecialPowers.Length > 0)
+        {
+            foreach (SpecialPowerData SPD in GameManager.Instance.currentLevel.symbolsNeededForSpecialPowers)
+            {
+                bool rightside = true;
+
+                GameObject go = Instantiate(specialPowerPrefab, specialPowerPrefabParent);
+
+                if (!rightside)
+                {
+                    Transform pos = go.transform;
+
+                    go.transform.position = new Vector3(-pos.position.x, pos.position.y, pos.position.z);
+                }
+
+                InGameSpecialPowerUp IGSP = go.GetComponent<InGameSpecialPowerUp>();
+
+                go.GetComponent<Button>().onClick.AddListener(() => CallSpecialPowerUp(IGSP));
+
+                specialPowerupsInGame.Add(IGSP);
+
+                switch (SPD.symbol)
+                {
+                    case PieceSymbol.FireFly:
+                        IGSP.type = SpecialPowerUp.DragonflyCross;
+                        IGSP.SymbolNeeded = PieceSymbol.FireFly;
+                        IGSP.amountNeededToActivate = SPD.amount;
+                        go.GetComponent<Image>().sprite = specialPowerUpSpriteByType[IGSP.type];
+                        break;
+                    case PieceSymbol.Badger:
+                        IGSP.type = SpecialPowerUp.BadgerExtraDeal;
+                        IGSP.SymbolNeeded = PieceSymbol.Badger;
+                        IGSP.amountNeededToActivate = SPD.amount;
+                        go.GetComponent<Image>().sprite = specialPowerUpSpriteByType[IGSP.type];
+                        break;
+                    case PieceSymbol.Goat:
+                        break;
+                    case PieceSymbol.Turtle:
+                        break;
+                    case PieceSymbol.Joker:
+                        break;
+                    case PieceSymbol.None:
+                        break;
+                    default:
+                        break;
+                }
+
+                rightside = !rightside;
             }
         }
     }

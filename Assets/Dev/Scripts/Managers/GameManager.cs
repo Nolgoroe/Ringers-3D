@@ -96,6 +96,8 @@ public class GameManager : MonoBehaviour
 
         PlayerManager.Instance.PopulatePowerUps();
 
+        powerupManager.InstantiateSpecialPowers();
+
         if (backGroundPrefab)
         {
             GameObject go = Instantiate(backGroundPrefab, destroyOutOfLevel);
@@ -172,6 +174,8 @@ public class GameManager : MonoBehaviour
         PlayerManager.Instance.HandleItemCooldowns();
 
         PlayerManager.Instance.PopulatePowerUps();
+
+        powerupManager.InstantiateSpecialPowers();
 
         if (backGroundPrefab)
         {

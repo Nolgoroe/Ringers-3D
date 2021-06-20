@@ -25,7 +25,7 @@ public class LevelScriptableObject : ScriptableObject
 
     public PieceColor[] levelAvailableColors;
     public PieceSymbol[] levelAvailablesymbols;
-
+    public SpecialPowerData[] symbolsNeededForSpecialPowers;
 
 
     public bool isTutorial;

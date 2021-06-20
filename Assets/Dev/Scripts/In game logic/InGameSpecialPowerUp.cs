@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class InGameSpecialPowerUp : MonoBehaviour
 {
-    public PowerUp type;
+    public SpecialPowerUp type;
     public PieceSymbol SymbolNeeded;
 
 

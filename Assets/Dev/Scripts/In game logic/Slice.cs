@@ -217,6 +217,8 @@ public class Slice : MonoBehaviour
         Material[] matArray = rend.materials;
         anim = go.GetComponent<Animator>();
         rend.materials = matArray;
+        GameObject ropeChild = go.transform.GetChild(1).gameObject;
+        ropeChild.SetActive(false);
 
         //SpriteRenderer sr = go.transform.GetChild(0).GetComponent<SpriteRenderer>();
         child = go;
@@ -487,5 +489,12 @@ public class Slice : MonoBehaviour
         {
             return ConnectionManager.Instance.cells[num];
         }
+    }
+
+    public void SetEmpty()
+    {
+        Renderer rend = child.transform.GetChild(0).GetComponent<Renderer>();
+        Material[] matArray = rend.materials;
+        matArray[0].SetTexture("_BaseMap", GameManager.Instance.sliceManager.emptyScrollTexture);
     }
 }

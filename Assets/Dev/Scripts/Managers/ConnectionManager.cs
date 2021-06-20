@@ -157,6 +157,7 @@ public class ConnectionManager : MonoBehaviour
                         {
                             if (supPieceArray[currentLeft].relevantSlice.anim)
                             {
+
                                 supPieceArray[currentLeft].relevantSlice.anim.SetBool("Activate", true);
                             }
 
@@ -259,6 +260,7 @@ public class ConnectionManager : MonoBehaviour
                             {
                                 if (supPieceArray[currentRight].relevantSlice.anim)
                                 {
+
                                     supPieceArray[currentRight].relevantSlice.anim.SetBool("Activate", true);
                                 }
 

@@ -20,6 +20,8 @@ public class SliceManager : MonoBehaviour
     public GameObject slicePrefab;
     public GameObject slicePrefabLimiter;
 
+    public Texture emptyScrollTexture;
+
     public Transform[] sliceSlots;
 
     //public Sprite[] lootSliceSymbolSprites;
