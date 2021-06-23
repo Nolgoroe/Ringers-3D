@@ -20,6 +20,8 @@ public enum SpecialPowerUp
 {
     DragonflyCross,
     BadgerExtraDeal,
+    GoatWhatever,
+    TurtleWhatever,
     None
 }
 
@@ -34,7 +36,7 @@ public class PowerUpManager : MonoBehaviour
 {
     public Transform[] instnatiateZones;
     public GameObject powerupButtonPreab;
-    public GameObject specialPowerPrefab;
+    public GameObject specialPowerPrefabLeft, specialPowerPrefabRight;
     public Transform specialPowerPrefabParent;
     public Dictionary<PowerUp, string> spriteByType;
     public Dictionary<PowerUp, string> nameTextByType;
@@ -59,6 +61,8 @@ public class PowerUpManager : MonoBehaviour
 
     public List<InGameSpecialPowerUp> specialPowerupsInGame;
 
+    public float offsetYSpecialPowers = 100;
+
     private void Start()
     {
         GameManager.Instance.powerupManager = this;
@@ -71,6 +75,10 @@ public class PowerUpManager : MonoBehaviour
         {
             spriteByType.Add((PowerUp)i, powerupSpritesPath[i]);
             nameTextByType.Add((PowerUp)i, powerupNames[i]);
+        }
+
+        for (int i = 0; i < System.Enum.GetValues(typeof(SpecialPowerUp)).Length - 1; i++)
+        {
             specialPowerUpSpriteByType.Add((SpecialPowerUp)i, specialPowerupSprites[i]);
         }
 
@@ -489,24 +497,58 @@ public class PowerUpManager : MonoBehaviour
     {
         if(GameManager.Instance.currentLevel.symbolsNeededForSpecialPowers.Length > 0)
         {
+            bool leftSide = true;
+            bool up = false;
+            GameObject go = null;
+
             foreach (SpecialPowerData SPD in GameManager.Instance.currentLevel.symbolsNeededForSpecialPowers)
             {
-                bool rightside = true;
-
-                GameObject go = Instantiate(specialPowerPrefab, specialPowerPrefabParent);
-
-                if (!rightside)
+                if (up)
                 {
-                    Transform pos = go.transform;
+                    if (!leftSide)
+                    {
+                        go = Instantiate(specialPowerPrefabRight, specialPowerPrefabParent);
 
-                    go.transform.position = new Vector3(-pos.position.x, pos.position.y, pos.position.z);
+                        Transform pos = go.transform;
+
+                        go.transform.localPosition = new Vector3(-pos.localPosition.x, pos.localPosition.y + offsetYSpecialPowers, pos.localPosition.z);
+                    }
+                    else
+                    {
+                        go = Instantiate(specialPowerPrefabLeft, specialPowerPrefabParent);
+
+                        Transform pos = go.transform;
+
+                        go.transform.localPosition = new Vector3(pos.localPosition.x, pos.localPosition.y + offsetYSpecialPowers, pos.localPosition.z);
+                    }
+                }
+                else
+                {
+                    if (!leftSide)
+                    {
+                        go = Instantiate(specialPowerPrefabRight, specialPowerPrefabParent);
+
+                        Transform pos = go.transform;
+
+                        go.transform.position = new Vector3(-pos.position.x, pos.position.y, pos.position.z);
+                        up = true;
+                    }
+                    else
+                    {
+                        go = Instantiate(specialPowerPrefabLeft, specialPowerPrefabParent);
+                    }
                 }
 
-                InGameSpecialPowerUp IGSP = go.GetComponent<InGameSpecialPowerUp>();
+                InGameSpecialPowerUp IGSP = null;
 
-                go.GetComponent<Button>().onClick.AddListener(() => CallSpecialPowerUp(IGSP));
+                if (go)
+                {
+                    IGSP = go.GetComponent<InGameSpecialPowerUp>();
 
-                specialPowerupsInGame.Add(IGSP);
+                    go.GetComponent<Button>().onClick.AddListener(() => CallSpecialPowerUp(IGSP));
+                    specialPowerupsInGame.Add(IGSP);
+                }
+
 
                 switch (SPD.symbol)
                 {
@@ -523,8 +565,16 @@ public class PowerUpManager : MonoBehaviour
                         go.GetComponent<Image>().sprite = specialPowerUpSpriteByType[IGSP.type];
                         break;
                     case PieceSymbol.Goat:
+                        IGSP.type = SpecialPowerUp.GoatWhatever;
+                        IGSP.SymbolNeeded = PieceSymbol.Goat;
+                        IGSP.amountNeededToActivate = SPD.amount;
+                        go.GetComponent<Image>().sprite = specialPowerUpSpriteByType[IGSP.type];
                         break;
                     case PieceSymbol.Turtle:
+                        IGSP.type = SpecialPowerUp.TurtleWhatever;
+                        IGSP.SymbolNeeded = PieceSymbol.Turtle;
+                        IGSP.amountNeededToActivate = SPD.amount;
+                        go.GetComponent<Image>().sprite = specialPowerUpSpriteByType[IGSP.type];
                         break;
                     case PieceSymbol.Joker:
                         break;
@@ -534,8 +584,18 @@ public class PowerUpManager : MonoBehaviour
                         break;
                 }
 
-                rightside = !rightside;
+                leftSide = !leftSide;
             }
         }
+    }
+
+    public void DestroySpecialPowersObjects()
+    {
+        for (int i = 0; i < specialPowerupsInGame.Count; i++)
+        {
+            Destroy(specialPowerupsInGame[i].gameObject);
+        }
+
+        specialPowerupsInGame.Clear();
     }
 }

@@ -1,6 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
+[System.Serializable]
+public class stonePieceDataStruct
+{
+    public int cellIndex;
+    public PieceColor colorOfPieceRight;
+    public PieceSymbol symbolOfPieceRight;
+    public PieceColor colorOfPieceLeft;
+    public PieceSymbol symbolOfPieceLeft;
+}
 
 [CreateAssetMenu(fileName = "Level", menuName = "ScriptableObjects/Create Level")]
 public class LevelScriptableObject : ScriptableObject
@@ -15,6 +26,8 @@ public class LevelScriptableObject : ScriptableObject
     public int cellsCountInLevel;
 
     public bool RandomSlices;
+
+    public stonePieceDataStruct[] stoneSlices;
     public SliceCatagory[] slicesToSpawn;
     public int[] sliceCellIndexes;
     public bool[] lockSlices;
@@ -33,6 +46,4 @@ public class LevelScriptableObject : ScriptableObject
     public int[] specificSliceSpots;
     public PieceSymbol[] specificSlicesShapes;
     public PieceColor[] specificSlicesColors;
-
-    //public bool isRandomDistributionToSlices;
 }

@@ -273,6 +273,7 @@ public class UIManager : MonoBehaviour
             GameManager.Instance.copyOfArrayOfPiecesTutorial.Clear();
             ZoneManager.Instance.ActivateLevelDisplay();
             LootManager.Instance.DestoryWinScreenDisplyedLoot();
+            GameManager.Instance.powerupManager.DestroySpecialPowersObjects();
 
             Camera.main.transform.position = hubCameraPos;
 

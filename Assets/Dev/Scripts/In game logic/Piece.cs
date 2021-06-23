@@ -29,6 +29,7 @@ public class Piece : MonoBehaviour
     //public GameObject midPiece;
 
     public bool isLocked;
+    public bool isStone;
     public bool isTutorialLocked;
     public bool partOfBoard;
     public void SetPieces()
@@ -41,7 +42,7 @@ public class Piece : MonoBehaviour
 
             if (GameManager.Instance.currentLevel.isTutorial)
             {
-                if (repeatIndicator > 0)
+                if (repeatIndicator > 0 || GameManager.Instance.copyOfArrayOfPiecesTutorial.Count <= 0)
                 {
                     rightChild.SetPiece();
                     leftChild.SetPiece();
@@ -53,8 +54,6 @@ public class Piece : MonoBehaviour
                     rightChild.SetPieceTutorial(true);
                     leftChild.SetPieceTutorial(false);
                 }
-
-
             }
             else
             {
@@ -148,6 +147,11 @@ public class Piece : MonoBehaviour
         }
     }
 
+    public void SetStonePiece(stonePieceDataStruct SPDS)
+    {
+        rightChild.SetStonePiece(SPDS, true);
+        leftChild.SetStonePiece(SPDS, false);
+    }
     public bool CheckNoRepeatPiece()
     {
         Piece currectCheckPiece = GetComponent<Piece>();

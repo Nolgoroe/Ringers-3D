@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ZoneManagerHelpData : MonoBehaviour
 {
+    public string currentZoneName;
+
     public GameObject[] zoneLevelDisplays;
 
     public Zone[] listOfAllZones;
@@ -20,6 +22,7 @@ public class ZoneManagerHelpData : MonoBehaviour
 
 
         ZoneManager.Instance.ActivateLevelDisplay();
+        currentZoneName = null;
     }
 
     public bool CompareZonesSame(Zone first, Zone second)

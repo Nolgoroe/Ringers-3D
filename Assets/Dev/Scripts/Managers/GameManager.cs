@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
 
     public NumAnimalTypedOnBoard[] numAnimalsOnBoard;
 
+
     private void Awake()
     {
         Instance = this;
@@ -90,6 +91,7 @@ public class GameManager : MonoBehaviour
         ConnectionManager.Instance.GrabCellList(gameBoard.transform);
         ConnectionManager.Instance.SetLevelConnectionData();
 
+
         sliceManager.SpawnSlices(currentLevel.slicesToSpawn.Length);
 
         PlayerManager.Instance.HandleItemCooldowns();
@@ -97,6 +99,7 @@ public class GameManager : MonoBehaviour
         PlayerManager.Instance.PopulatePowerUps();
 
         powerupManager.InstantiateSpecialPowers();
+
 
         if (backGroundPrefab)
         {
@@ -114,6 +117,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        InstantiateStonePieces();
 
         powerupManager.instnatiatedZonesCounter = 0;
 
@@ -193,6 +197,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        InstantiateStonePieces();
         powerupManager.instnatiatedZonesCounter = 0;
 
         TutorialSequence.Instacne.StartSequence(currentLevel.tutorialIndexForList);
@@ -230,9 +235,21 @@ public class GameManager : MonoBehaviour
             return null;
         }
     }
-    public void ChooseLevel(int levelNum)
+
+    public void SetZoneName(string zoneName)
     {
-        currentLevel = (LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/Level " + levelNum);
+
+    }
+    public void ChooseLevel(int levelNum/*, string zoneName*/)
+    {
+        if (currentLevel)
+        {
+            DestroyImmediate(currentLevel);
+        }
+
+        //currentLevel = (LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/Level " + levelNum);
+        Debug.Log("Scriptable Objects/Levels/" + ZoneManagerHelpData.Instance.currentZoneName + "/Level " + levelNum);
+        currentLevel = Instantiate((LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/" + ZoneManagerHelpData.Instance.currentZoneName + "/Level " + levelNum));
     }
 
     public void DestroyAllLevelChildern()
@@ -385,7 +402,7 @@ public class GameManager : MonoBehaviour
 
         bool nextIsTutorial = CheckNextLevelIsTutorial(currentLevel.levelNum + 1);
 
-        ChooseLevel(currentLevel.levelNum + 1);
+        ChooseLevel(currentLevel.levelNum + 1/*, currentLevel.worldName*/);
         if (currentLevel.isTutorial || nextIsTutorial)
         {
             TutorialSequence.Instacne.currentPhaseInSequence = 0;
@@ -409,6 +426,22 @@ public class GameManager : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+
+    void InstantiateStonePieces()
+    {
+        foreach (stonePieceDataStruct SPDS in currentLevel.stoneSlices)
+        {
+
+            if(SPDS.cellIndex >= 0 && SPDS.cellIndex <= 7)
+            {
+                ConnectionManager.Instance.cells[SPDS.cellIndex].AddStonePieceToBoard(SPDS);
+            }
+            else
+            {
+                Debug.LogError("Cell index is either too high or too low - Min 0, Max 7");
+            }
         }
     }
 }

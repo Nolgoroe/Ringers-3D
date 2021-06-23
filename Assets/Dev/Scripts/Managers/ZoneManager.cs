@@ -44,6 +44,8 @@ public class ZoneManager : MonoBehaviour
 
         ZoneManagerHelpData.Instance.currentZoneCheck = ZoneManagerHelpData.Instance.listOfAllZones[current];
 
+        ZoneManagerHelpData.Instance.currentZoneName = ZoneManagerHelpData.Instance.currentZoneCheck.zoneName;
+
         isKeyLevel = true;
     }
     public void SetUnlockZone(int zoneToUnlock)
@@ -54,6 +56,8 @@ public class ZoneManager : MonoBehaviour
     public void SetCurrentZone(int current)
     {
         ZoneManagerHelpData.Instance.currentZoneCheck = ZoneManagerHelpData.Instance.listOfAllZones[current];
+
+        ZoneManagerHelpData.Instance.currentZoneName = ZoneManagerHelpData.Instance.currentZoneCheck.zoneName;
 
         //UIManager.Instance.ChangeZoneName(ZoneManagerHelpData.Instance.currentZoneCheck.zoneName);
 

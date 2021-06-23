@@ -85,6 +85,82 @@ public class Cell : MonoBehaviour
 
         ConnectionManager.Instance.CallConnection(cellIndex, isOuter, false);
     }
+    public void AddStonePieceToBoard(stonePieceDataStruct SPDS)
+    {
+        if (!isFull)
+        {
+            GameObject go = Instantiate(GameManager.Instance.clipManager.piece, transform);
+
+            Piece p = null;
+            if (go)
+            {
+                p = go.GetComponent<Piece>();
+                p.SetStonePiece(SPDS);
+                p.isStone = true;
+                pieceHeld = p;
+            }
+            else
+            {
+                Debug.Log("Faild to create piece");
+            }
+
+
+            isFull = true;
+            p.transform.SetParent(transform);
+            p.transform.position = new Vector3(p.transform.parent.position.x, p.transform.parent.position.y, p.transform.parent.position.z);
+            p.transform.rotation = p.transform.parent.rotation;
+
+            p.partOfBoard = true;
+            p.transform.localScale = new Vector3(1.15f, 1.15f, 1f);
+
+            if (!isOuter)
+            {
+                ConnectionManager.Instance.subPiecesOnBoard[cellIndex * 2] = p.leftChild;
+                ConnectionManager.Instance.subPiecesOnBoard[cellIndex * 2 + 1] = p.rightChild;
+                ConnectionManager.Instance.FillSubPieceIndex();
+            }
+            else
+            {
+                ConnectionManager.Instance.subPiecesDoubleRing[cellIndex * 2] = p.leftChild;
+                ConnectionManager.Instance.subPiecesDoubleRing[cellIndex * 2 + 1] = p.rightChild;
+                ConnectionManager.Instance.FillSubPieceIndex();
+            }
+
+            if (!isOuter)
+            {
+                p.leftChild.relevantSlice = ConnectionManager.Instance.slicesOnBoard[Mathf.CeilToInt((float)p.leftChild.subPieceIndex / 2)];
+
+
+                if (p.rightChild.subPieceIndex >= ConnectionManager.Instance.lengthOfSubPiecesOuter - 1)
+                {
+                    p.rightChild.relevantSlice = ConnectionManager.Instance.slicesOnBoard[0];
+                }
+                else
+                {
+                    p.rightChild.relevantSlice = ConnectionManager.Instance.slicesOnBoard[Mathf.CeilToInt((float)p.rightChild.subPieceIndex / 2)];
+                }
+
+            }
+
+            if (GameManager.Instance.currentLevel.isDoubleRing)
+            {
+                int badInterConnections = 0;
+
+                badInterConnections = InterconnectionManager.Instance.CheckInterConnection(cellIndex, isOuter);
+
+                GameManager.Instance.unsuccessfullConnectionCount += badInterConnections;
+
+            }
+
+            GameManager.Instance.currentFilledCellCount++;
+
+            ConnectionManager.Instance.CallConnection(cellIndex, isOuter, false);
+        }
+        else
+        {
+            Debug.LogError("Trying to create piece on an already full cell");
+        }
+    }
 
     public void RemovePiece()
     {

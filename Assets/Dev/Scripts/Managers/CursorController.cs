@@ -95,7 +95,8 @@ public class CursorController : MonoBehaviour
 
                     if (Physics.Raycast(mouseRay, out hit, rayLength, pieceLayer))
                     {
-                        GrabPiece(hit.transform.parent);
+                        Piece p = hit.transform.parent.GetComponent<Piece>();
+                        GrabPiece(p);
                         SetSecondaryControlsPieceColor(secondaryControlsPieceColor, followerTarget);
                     }
 
@@ -121,7 +122,8 @@ public class CursorController : MonoBehaviour
                     {
                         if (Physics.Raycast(mouseRay, out hit, rayLength, pieceLayer))
                         {
-                            GrabPiece(hit.transform.parent);
+                            Piece p = hit.transform.parent.GetComponent<Piece>();
+                            GrabPiece(p);
 
                             DestroySecondaryControlsPrefabCell(true);
 
@@ -217,8 +219,9 @@ public class CursorController : MonoBehaviour
 
                 if (Physics.Raycast(mouseRay, out hit, rayLength, pieceLayer))
                 {
+                    Piece p = hit.transform.parent.GetComponent<Piece>();
                     //Debug.Log(hit.transform.name);
-                    GrabPiece(hit.transform.parent);
+                    GrabPiece(p);
                 }
 
                 //// Shoot ray
@@ -341,12 +344,12 @@ public class CursorController : MonoBehaviour
 
         }
     }
-    public void GrabPiece(Transform FT)
+    public void GrabPiece(Piece p)
     {
-        if (!FT.GetComponent<Piece>().isLocked && !FT.GetComponent<Piece>().isTutorialLocked)
+        if (!p.isLocked && !p.isTutorialLocked && !p.isStone)
         {
-            followerTarget = FT;
-            Cell c = FT.transform.parent.GetComponent<Cell>();
+            followerTarget = p.transform;
+            Cell c = p.transform.parent.GetComponent<Cell>();
 
             if (c)
             {
