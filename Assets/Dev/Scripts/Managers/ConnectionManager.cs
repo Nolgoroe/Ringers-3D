@@ -135,7 +135,11 @@ public class ConnectionManager : MonoBehaviour
                                 if (supPieceArray[currentLeft].relevantSlice.anim)
                                 {
                                     supPieceArray[currentLeft].relevantSlice.anim.SetBool("Activate", true);
-                                    supPieceArray[currentLeft].relevantSlice.anim.SetBool("Reverse", false);
+
+                                    if (supPieceArray[currentLeft].relevantSlice.isLimiter)
+                                    {
+                                        supPieceArray[currentLeft].relevantSlice.anim.SetBool("Reverse", false);
+                                    }
                                 }
 
                                 supPieceArray[currentLeft].relevantSlice.fulfilledCondition = true;
@@ -160,7 +164,11 @@ public class ConnectionManager : MonoBehaviour
                             {
 
                                 supPieceArray[currentLeft].relevantSlice.anim.SetBool("Activate", true);
-                                supPieceArray[currentLeft].relevantSlice.anim.SetBool("Reverse", false);
+
+                                if (supPieceArray[currentLeft].relevantSlice.isLimiter)
+                                {
+                                    supPieceArray[currentLeft].relevantSlice.anim.SetBool("Reverse", false);
+                                }
                             }
 
                             supPieceArray[currentLeft].relevantSlice.fulfilledCondition = true;
@@ -263,7 +271,11 @@ public class ConnectionManager : MonoBehaviour
                                 if (supPieceArray[currentRight].relevantSlice.anim)
                                 {
                                     supPieceArray[currentRight].relevantSlice.anim.SetBool("Activate", true);
-                                    supPieceArray[currentRight].relevantSlice.anim.SetBool("Reverse", false);
+
+                                    if (supPieceArray[currentRight].relevantSlice.isLimiter)
+                                    {
+                                        supPieceArray[currentRight].relevantSlice.anim.SetBool("Reverse", false);
+                                    }
                                 }
 
                                 supPieceArray[currentRight].relevantSlice.fulfilledCondition = true;
@@ -286,7 +298,11 @@ public class ConnectionManager : MonoBehaviour
                             if (supPieceArray[currentRight].relevantSlice.anim)
                             {
                                 supPieceArray[currentRight].relevantSlice.anim.SetBool("Activate", true);
-                                supPieceArray[currentRight].relevantSlice.anim.SetBool("Reverse", false);
+
+                                if (supPieceArray[currentRight].relevantSlice.isLimiter)
+                                {
+                                    supPieceArray[currentRight].relevantSlice.anim.SetBool("Reverse", false);
+                                }
                             }
 
                             supPieceArray[currentRight].relevantSlice.fulfilledCondition = true;
