@@ -7,6 +7,7 @@ using System;
 public class stonePieceDataStruct
 {
     public int cellIndex;
+    public bool randomValues;
     public PieceColor colorOfPieceRight;
     public PieceSymbol symbolOfPieceRight;
     public PieceColor colorOfPieceLeft;

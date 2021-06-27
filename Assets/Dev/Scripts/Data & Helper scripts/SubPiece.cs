@@ -64,21 +64,31 @@ public class SubPiece : MonoBehaviour
 
     public void SetStonePiece(stonePieceDataStruct SPDS, bool isRight)
     {
-        if (isRight)
+        if (SPDS.randomValues)
         {
-            colorOfPiece = SPDS.colorOfPieceRight;
-
-            symbolOfPiece = SPDS.symbolOfPieceRight;
-
-            rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
+            SetPiece();
+            rend.material.SetColor("_BaseColor", CursorController.Instance.secondaryControlTileColor);
         }
         else
         {
-            colorOfPiece = SPDS.colorOfPieceLeft;
+            if (isRight)
+            {
+                colorOfPiece = SPDS.colorOfPieceRight;
 
-            symbolOfPiece = SPDS.symbolOfPieceLeft;
+                symbolOfPiece = SPDS.symbolOfPieceRight;
 
-            rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
+                rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
+            }
+            else
+            {
+                colorOfPiece = SPDS.colorOfPieceLeft;
+
+                symbolOfPiece = SPDS.symbolOfPieceLeft;
+
+                rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
+            }
+
+            rend.material.SetColor("_BaseColor", new Color(210, 210, 210, rend.material.color.a));
         }
     }
     public void SetPieceTutorial(bool isRight)

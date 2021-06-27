@@ -22,29 +22,32 @@ MonoBehaviour:
   cellsCountInLevel: 8
   RandomSlices: 0
   stoneSlices:
-  - cellIndex: 7
-    colorOfPieceRight: 2
-    symbolOfPieceRight: 0
-    colorOfPieceLeft: 1
-    symbolOfPieceLeft: 3
-  - cellIndex: 0
-    colorOfPieceRight: 0
-    symbolOfPieceRight: 1
-    colorOfPieceLeft: 2
-    symbolOfPieceLeft: 2
-  - cellIndex: 4
-    colorOfPieceRight: 1
-    symbolOfPieceRight: 3
-    colorOfPieceLeft: 0
-    symbolOfPieceLeft: 3
+  - cellIndex: 5
+    randomValues: 1
+    colorOfPieceRight: 5
+    symbolOfPieceRight: 5
+    colorOfPieceLeft: 5
+    symbolOfPieceLeft: 5
+  - cellIndex: 1
+    randomValues: 1
+    colorOfPieceRight: 5
+    symbolOfPieceRight: 5
+    colorOfPieceLeft: 5
+    symbolOfPieceLeft: 5
+  - cellIndex: 2
+    randomValues: 1
+    colorOfPieceRight: 5
+    symbolOfPieceRight: 5
+    colorOfPieceLeft: 5
+    symbolOfPieceLeft: 5
   slicesToSpawn: 01000000000000000300000002000000
   sliceCellIndexes: 00000000010000000200000003000000
   lockSlices: 01000000
   lootSlices: 01010101
   limiterSlices: 00000000
   RewardBags: 08000000010000000200000007000000
-  levelAvailableColors: 00000000
-  levelAvailablesymbols: 01000000
+  levelAvailableColors: 0000000001000000
+  levelAvailablesymbols: 010000000000000003000000
   symbolsNeededForSpecialPowers:
   - symbol: 0
     amount: 4

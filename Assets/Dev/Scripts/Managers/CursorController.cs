@@ -29,8 +29,12 @@ public class CursorController : MonoBehaviour
 
     public Color secondaryControlsPieceColor;
     public GameObject secondaryControlsCellChosenPrefab;
+    public GameObject secondaryControlsTileHighlightChosenPrefab;
+    public Material secondaryControlsPieceMat;
+    public Color secondaryControlTileColor;
 
     private Cell cellhitSecondaryControls;
+    private GameObject tempTileHighlight;
 
     [HideInInspector]
     public bool tutorialBadConnection = false;
@@ -97,7 +101,7 @@ public class CursorController : MonoBehaviour
                     {
                         Piece p = hit.transform.parent.GetComponent<Piece>();
                         GrabPiece(p);
-                        SetSecondaryControlsPieceColor(secondaryControlsPieceColor, followerTarget);
+                        SetSecondaryControlsPieceColor(followerTarget);
                     }
 
                     if (!followerTarget)
@@ -140,7 +144,7 @@ public class CursorController : MonoBehaviour
                         {
                             if (followerTarget)
                             {
-                                SetSecondaryControlsPieceColor(Color.white, followerTarget);
+                                ResetSecondaryControlsPieceColor(followerTarget);
                                 SnapFollower(hit.transform);
                             }
                         }
@@ -168,14 +172,14 @@ public class CursorController : MonoBehaviour
                             {
                                 if (followerTarget)
                                 {
-                                    SetSecondaryControlsPieceColor(Color.white, followerTarget);
+                                    ResetSecondaryControlsPieceColor(followerTarget);
 
                                     SnapFollower(closest.transform);
                                 }
                             }
                             else
                             {
-                                SetSecondaryControlsPieceColor(Color.white, followerTarget);
+                                ResetSecondaryControlsPieceColor(followerTarget);
 
                                 SnapFollower(null);
                             }
@@ -185,15 +189,51 @@ public class CursorController : MonoBehaviour
             }
         }
     }
-    void SetSecondaryControlsPieceColor(Color color, Transform piece)
+    void SetSecondaryControlsPieceColor(Transform piece)
+    {
+        Piece p = piece.GetComponent<Piece>();
+
+        tempTileHighlight = Instantiate(secondaryControlsTileHighlightChosenPrefab, p.transform);
+        Renderer rightWing = p.rightChild.GetComponent<Renderer>();
+        Renderer LeftWing = p.leftChild.GetComponent<Renderer>();
+
+        List<Material> matArrayRight = new List<Material>();
+        List<Material> matArrayLeft = new List<Material>();
+
+        matArrayRight.AddRange(rightWing.materials);
+        matArrayLeft.AddRange(LeftWing.materials);
+
+        matArrayRight.Add(secondaryControlsPieceMat);
+        matArrayLeft.Add(secondaryControlsPieceMat);
+
+        rightWing.materials = matArrayRight.ToArray();
+        LeftWing.materials = matArrayLeft.ToArray();
+
+        //rightWing.material.SetColor("_BaseColor", color);
+        //LeftWing.material.SetColor("_BaseColor", color);
+    }
+    void ResetSecondaryControlsPieceColor(Transform piece)
     {
         Piece p = piece.GetComponent<Piece>();
 
         Renderer rightWing = p.rightChild.GetComponent<Renderer>();
         Renderer LeftWing = p.leftChild.GetComponent<Renderer>();
 
-        rightWing.material.SetColor("_BaseColor", color);
-        LeftWing.material.SetColor("_BaseColor", color);
+        List<Material> matArrayRight = new List<Material>();
+        List<Material> matArrayLeft = new List<Material>();
+
+        matArrayRight.AddRange(rightWing.materials);
+        matArrayLeft.AddRange(LeftWing.materials);
+
+        matArrayRight.RemoveAt(1);
+        matArrayLeft.RemoveAt(1);
+
+        rightWing.materials = matArrayRight.ToArray();
+        LeftWing.materials = matArrayLeft.ToArray();
+
+        Destroy(tempTileHighlight.gameObject);
+        //rightWing.material.SetColor("_BaseColor", color);
+        //LeftWing.material.SetColor("_BaseColor", color);
     }
     public void NormalControls()
     {
@@ -569,7 +609,6 @@ public class CursorController : MonoBehaviour
         }
 
     }
-
     void DestroySecondaryControlsPrefabCell(bool snappedFollower)
     {
         int numToDestroy = cellhitSecondaryControls.transform.childCount;

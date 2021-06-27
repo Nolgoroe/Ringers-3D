@@ -227,13 +227,16 @@ public class Cell : MonoBehaviour
                 //pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
                 pieceHeld.leftChild.SetDisconnectedMaterial();
 
-                if (leftCell.isFull)
+                if (pieceHeld.leftChild.relevantSlice.isLimiter && pieceHeld.leftChild.relevantSlice.fulfilledCondition)
                 {
-                    if (!leftCell.pieceHeld.rightChild.isBadConnection)
-                    {
-                        //leftCell.pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
-                        leftCell.pieceHeld.rightChild.SetDisconnectedMaterial();
-                    }
+                    pieceHeld.leftChild.relevantSlice.anim.SetBool("Reverse", true);
+                    pieceHeld.leftChild.relevantSlice.anim.SetBool("Activate", false);
+                }
+
+                if (!leftCell.pieceHeld.rightChild.isBadConnection)
+                {
+                    //leftCell.pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+                    leftCell.pieceHeld.rightChild.SetDisconnectedMaterial();
                 }
             }
         }
@@ -251,6 +254,12 @@ public class Cell : MonoBehaviour
             {
                 //pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
                 pieceHeld.rightChild.SetDisconnectedMaterial();
+
+                if (pieceHeld.rightChild.relevantSlice.isLimiter && pieceHeld.rightChild.relevantSlice.fulfilledCondition)
+                {
+                    pieceHeld.rightChild.relevantSlice.anim.SetBool("Reverse", true);
+                    pieceHeld.rightChild.relevantSlice.anim.SetBool("Activate", false);
+                }
 
                 if (rightCell.isFull)
                 {

@@ -352,6 +352,7 @@ public class GameManager : MonoBehaviour
         CursorController.Instance.tutorialBadConnection = false;
         TutorialSequence.Instacne.currentPhaseInSequence = 0;
         TutorialSequence.Instacne.duringSequence = false;
+        ChooseLevel(currentLevel.levelNum/*, currentLevel.worldName*/);
 
         foreach (InGameSpecialPowerUp IGSP in powerupManager.specialPowerupsInGame)
         {
