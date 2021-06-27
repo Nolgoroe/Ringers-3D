@@ -67,7 +67,7 @@ public class SubPiece : MonoBehaviour
         if (SPDS.randomValues)
         {
             SetPiece();
-            rend.material.SetColor("_BaseColor", CursorController.Instance.secondaryControlTileColor);
+            rend.material.SetColor("_BaseColor", CursorController.Instance.stonePieceColorTInt);
         }
         else
         {

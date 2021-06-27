@@ -27,11 +27,11 @@ public class CursorController : MonoBehaviour
 
     bool hasclickedPowerUp;
 
-    public Color secondaryControlsPieceColor;
+    //public Color secondaryControlsPieceColor;
     public GameObject secondaryControlsCellChosenPrefab;
     public GameObject secondaryControlsTileHighlightChosenPrefab;
     public Material secondaryControlsPieceMat;
-    public Color secondaryControlTileColor;
+    public Color stonePieceColorTInt;
 
     private Cell cellhitSecondaryControls;
     private GameObject tempTileHighlight;
