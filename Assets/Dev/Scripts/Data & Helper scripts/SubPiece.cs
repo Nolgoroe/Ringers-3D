@@ -52,7 +52,7 @@ public class SubPiece : MonoBehaviour
         }
         else
         {
-            randomColor = Random.Range(0, GameManager.Instance.clipManager.colorsToMats.Length);
+            randomColor = Random.Range(0, GameManager.Instance.clipManager.colorsToMats.Length - 1);
             colorOfPiece = (PieceColor)randomColor;
 
             randomSymbol = Random.Range(0, GameManager.Instance.clipManager.colorsToMats[randomColor].colorMats.Length);
@@ -64,10 +64,24 @@ public class SubPiece : MonoBehaviour
 
     public void SetStonePiece(stonePieceDataStruct SPDS, bool isRight)
     {
-        if (SPDS.randomValues)
+        if (SPDS.randomValues && !SPDS.isNeutral)
         {
             SetPiece();
-            rend.material.SetColor("_BaseColor", CursorController.Instance.stonePieceColorTInt);
+            rend.material.SetColor("_BaseColor", CursorController.Instance.stonePieceColorTint);
+        }
+        else if(SPDS.randomValues && SPDS.isNeutral)
+        {
+            colorOfPiece = PieceColor.None;
+            int indexcSymbol = 0;
+
+            if (GameManager.Instance.currentLevel.levelAvailablesymbols.Length > 0)
+            {
+                randomSymbol = Random.Range(0, GameManager.Instance.currentLevel.levelAvailablesymbols.Length);
+                symbolOfPiece = GameManager.Instance.currentLevel.levelAvailablesymbols[randomSymbol];
+                indexcSymbol = (int)symbolOfPiece;
+            }
+
+            rend.material = GameManager.Instance.clipManager.colorsToMats[(int)PieceColor.None].colorMats[indexcSymbol];
         }
         else
         {
@@ -87,9 +101,9 @@ public class SubPiece : MonoBehaviour
 
                 rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
             }
-
-            rend.material.SetColor("_BaseColor", new Color(210, 210, 210, rend.material.color.a));
         }
+
+        rend.material.SetColor("_BaseColor", CursorController.Instance.stonePieceColorTint);
     }
     public void SetPieceTutorial(bool isRight)
     {

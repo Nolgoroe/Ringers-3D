@@ -44,7 +44,7 @@ public class SliceManager : MonoBehaviour
     public Texture[] limiterSliceColors;
     public Texture[] limiterSliceSymbolsSprites;
 
-    public Sprite[] sliceLootIcons;
+   //public Sprite[] sliceLootIcons;
 
 
     //public Dictionary<PieceSymbol, Sprite> lootSliceSymbolDict;
@@ -65,7 +65,7 @@ public class SliceManager : MonoBehaviour
     public Dictionary<PieceColor, Texture> limiterSlicecolorToSprite;
     //public Dictionary<PieceColor, Material> pieceColorToColor;
 
-    public Dictionary<LootPacks, Sprite> lootToIcon;
+    //public Dictionary<LootPacks, Sprite> lootToIcon;
 
     List<int> possibleSlotsTemp;
 
@@ -96,21 +96,21 @@ public class SliceManager : MonoBehaviour
         //lootLockLimiterSliceSymbolSpritesDict = new Dictionary<PieceSymbol, Sprite>();
         //lootLockSLimiterliceColorDict = new Dictionary<PieceColor, Sprite>();
 
-        lootToIcon = new Dictionary<LootPacks, Sprite>();
+        //lootToIcon = new Dictionary<LootPacks, Sprite>();
 
-        for (int i = 1; i < System.Enum.GetValues(typeof(LootPacks)).Length; i++)
-        {
-            string lootPackName = System.Enum.GetName(typeof(LootPacks), i);
+        //for (int i = 1; i < System.Enum.GetValues(typeof(LootPacks)).Length; i++)
+        //{
+        //    string lootPackName = System.Enum.GetName(typeof(LootPacks), i);
 
-            if (lootPackName.Contains("I"))
-            {
-                lootToIcon.Add((LootPacks)i, sliceLootIcons[1]); ////// The last sprite in the list is the same sprite for all Loot packes with 'I' in them
-            }
-            else
-            {
-                lootToIcon.Add((LootPacks)i, sliceLootIcons[0]);
-            }
-        }
+        //    if (lootPackName.Contains("I"))
+        //    {
+        //        //lootToIcon.Add((LootPacks)i, sliceLootIcons[1]); ////// The last sprite in the list is the same sprite for all Loot packes with 'I' in them
+        //    }
+        //    else
+        //    {
+        //        //lootToIcon.Add((LootPacks)i, sliceLootIcons[0]);
+        //    }
+        //}
 
         for (int i = 0; i < sliceSymbolsSprites.Length; i++)
         {

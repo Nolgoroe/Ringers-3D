@@ -8,6 +8,7 @@ public class stonePieceDataStruct
 {
     public int cellIndex;
     public bool randomValues;
+    public bool isNeutral;
     public PieceColor colorOfPieceRight;
     public PieceSymbol symbolOfPieceRight;
     public PieceColor colorOfPieceLeft;
@@ -28,7 +29,7 @@ public class LevelScriptableObject : ScriptableObject
 
     public bool RandomSlices;
 
-    public stonePieceDataStruct[] stoneSlices;
+    public stonePieceDataStruct[] stoneTiles;
     public SliceCatagory[] slicesToSpawn;
     public int[] sliceCellIndexes;
     public bool[] lockSlices;

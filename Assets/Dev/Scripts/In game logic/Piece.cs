@@ -9,8 +9,8 @@ public enum PieceColor
     Blue,
     Yellow,
     Green,
-    Joker,
-    None
+    None,
+    Joker
 }
 [System.Serializable]
 public enum PieceSymbol
@@ -19,8 +19,8 @@ public enum PieceSymbol
     Badger,
     Goat,
     Turtle,
-    Joker,
-    None
+    None,
+    Joker
 }
 
 public class Piece : MonoBehaviour

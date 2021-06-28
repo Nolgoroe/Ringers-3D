@@ -105,6 +105,8 @@ public class ConnectionManager : MonoBehaviour
                         supPieceArray[currentLeft].relevantSlice.fulfilledCondition = false;
                     }
 
+                    CheckRight(supPieceArray, cellList, cellIndex, isOuterCell, lastPiece);
+
                     //Instantiate(badConnectionParticle, cellList[cellIndex].rightParticleZone);
                 }
                 else
@@ -488,7 +490,7 @@ public class ConnectionManager : MonoBehaviour
     }
     public bool EqualColorOrJoker(PieceColor colA, PieceColor colB)/// Colorcheck is to see if we need to check color or symbol
     {
-        if(colA == colB || (colA == PieceColor.Joker || colB == PieceColor.Joker))
+        if((colA == colB || (colA == PieceColor.Joker || colB == PieceColor.Joker)) && (colA != PieceColor.None && colB!= PieceColor.None))
         {
             return true;
         }

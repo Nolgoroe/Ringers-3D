@@ -432,7 +432,7 @@ public class GameManager : MonoBehaviour
 
     void InstantiateStonePieces()
     {
-        foreach (stonePieceDataStruct SPDS in currentLevel.stoneSlices)
+        foreach (stonePieceDataStruct SPDS in currentLevel.stoneTiles)
         {
 
             if(SPDS.cellIndex >= 0 && SPDS.cellIndex <= 7)

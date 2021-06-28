@@ -31,7 +31,7 @@ public class CursorController : MonoBehaviour
     public GameObject secondaryControlsCellChosenPrefab;
     public GameObject secondaryControlsTileHighlightChosenPrefab;
     public Material secondaryControlsPieceMat;
-    public Color stonePieceColorTInt;
+    public Color stonePieceColorTint;
 
     private Cell cellhitSecondaryControls;
     private GameObject tempTileHighlight;
