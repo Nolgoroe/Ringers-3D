@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f245e6ade46975b42912a0bdcd673818, type: 3}
+  m_Name: Level 8
+  m_EditorClassIdentifier: 
+  worldName: Walnut Grove
+  isDoubleRing: 0
+  boardPrefab: {fileID: 6382559071292991177, guid: 0379f269da8f3aa46bc62a2f1709c2be,
+    type: 3}
+  levelNum: 8
+  levelIndexInZone: 1
+  tutorialIndexForList: 0
+  cellsCountInLevel: 8
+  RandomSlices: 0
+  stoneTiles:
+  - cellIndex: 0
+    randomValues: 1
+    isNeutral: 1
+    colorOfPieceRight: 4
+    symbolOfPieceRight: 5
+    colorOfPieceLeft: 4
+    symbolOfPieceLeft: 5
+  - cellIndex: 5
+    randomValues: 1
+    isNeutral: 0
+    colorOfPieceRight: 4
+    symbolOfPieceRight: 5
+    colorOfPieceLeft: 4
+    symbolOfPieceLeft: 5
+  slicesToSpawn: 01000000000000000300000002000000
+  sliceCellIndexes: 07000000010000000200000003000000
+  lockSlices: 01000000
+  lootSlices: 01010101
+  limiterSlices: 00000000
+  RewardBags: 08000000010000000200000007000000
+  levelAvailableColors: 0000000001000000
+  levelAvailablesymbols: 010000000000000003000000
+  symbolsNeededForSpecialPowers:
+  - symbol: 0
+    amount: 4
+  - symbol: 1
+    amount: 4
+  - symbol: 2
+    amount: 4
+  - symbol: 3
+    amount: 4
+  isTutorial: 0
+  arrayOfPieces: []
+  specificSliceSpots: 
+  specificSlicesShapes: 
+  specificSlicesColors: 
