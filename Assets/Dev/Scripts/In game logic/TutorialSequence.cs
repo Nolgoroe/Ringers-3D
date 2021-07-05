@@ -79,7 +79,7 @@ public class TutorialSequence : MonoBehaviour
 
             //for (int k = 0; k < levelSequences[levelNum - 1].phase[currentPhaseInSequence].unlockedClips.Length; k++)
             //{
-                if (levelSequences[levelNum - 1].phase[currentPhaseInSequence].unlockedClips.Contains (i)/*[k]*/)
+                if (levelSequences[levelNum - 1].phase[currentPhaseInSequence].unlockedClips.Contains(i)/*[k]*/)
                 {
                     p.isTutorialLocked = false;
                 }
@@ -197,6 +197,7 @@ public class TutorialSequence : MonoBehaviour
         {
             if (c.isFull)
             {
+                c.pieceHeld.isTutorialLocked = true;
                 //int length = levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[currentPhaseInSequence].unlockedBoardCells.Length;
                 //for (int i = 0; i < length; i++)
                 //{

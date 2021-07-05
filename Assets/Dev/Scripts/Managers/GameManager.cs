@@ -404,7 +404,8 @@ public class GameManager : MonoBehaviour
         bool nextIsTutorial = CheckNextLevelIsTutorial(currentLevel.levelNum + 1);
 
         ChooseLevel(currentLevel.levelNum + 1/*, currentLevel.worldName*/);
-        if (currentLevel.isTutorial || nextIsTutorial)
+
+        if (nextIsTutorial)
         {
             TutorialSequence.Instacne.currentPhaseInSequence = 0;
 
@@ -418,7 +419,8 @@ public class GameManager : MonoBehaviour
 
     private bool CheckNextLevelIsTutorial(int levelNum)
     {
-        LevelScriptableObject next = (LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/Level " + levelNum);
+        LevelScriptableObject next = (LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/" + ZoneManagerHelpData.Instance.currentZoneName + "/Level " + levelNum);
+
 
         if (next.isTutorial)
         {
