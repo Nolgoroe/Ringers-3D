@@ -57,7 +57,9 @@ public class tempMoveScript : MonoBehaviour
 
             Debug.Log("Line is: " + g.name + " " + Vector3.Distance(LC.gameObject1.transform.position, LC.gameObject2.transform.position));
 
-            if(Vector3.Distance(LC.gameObject1.transform.position, LC.gameObject2.transform.position) > 0.5f)
+            float distnace = CalculateDisance(LC.gameObject1, LC.gameObject2);
+
+            if (distnace > 0.5f)
             {
                 LineRenderer LR = LC.gameObject.GetComponent<LineRenderer>();
 
@@ -80,9 +82,9 @@ public class tempMoveScript : MonoBehaviour
         }
     }
 
-    void CalculateDisance()
+    float CalculateDisance(GameObject one, GameObject two)
     {
-
+        return Vector3.Distance(one.transform.position, two.transform.position);
     }
     private void OnDrawGizmosSelected()
     {
