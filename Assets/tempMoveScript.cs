@@ -59,14 +59,23 @@ public class tempMoveScript : MonoBehaviour
 
             if(Vector3.Distance(LC.gameObject1.transform.position, LC.gameObject2.transform.position) > 0.5f)
             {
-                Color color = LC.lineMat.color;
+                LineRenderer LR = LC.gameObject.GetComponent<LineRenderer>();
+
+                Color color = LR.materials[0].color;
 
                 color.a = 0;
 
-                LC.lineMat.color = color;
+                LR.material.SetColor("_BaseColor", new Color(1f, 1f, 1f, color.a));
+            }
+            else
+            {
+                LineRenderer LR = LC.gameObject.GetComponent<LineRenderer>();
 
+                Color color = LR.materials[0].color;
 
-                Debug.Log("alpha zero");
+                color.a = 255;
+
+                LR.material.SetColor("_BaseColor", new Color(1f, 1f, 1f, color.a));
             }
         }
     }
