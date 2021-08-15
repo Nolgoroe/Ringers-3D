@@ -8,6 +8,7 @@ public class AnimationManager : MonoBehaviour
 {
     public static AnimationManager instance;
 
+    [Header("Health Settings")]
     public float waitBetweenPieceMove;
     public float speedPieceMove;
 
@@ -28,16 +29,25 @@ public class AnimationManager : MonoBehaviour
 
     public float animalWaitTime;
 
-    public Image fadeImage;
+    public Image fadeImageEndLevel;
 
     public bool noWaitPieces;
     public bool noWaitParticles;
     public bool noWaitPullIn;
     public bool noWaitAnimal;
-    public ParticleSystem midPieceParticle;
+    //public ParticleSystem midPieceParticle;
     public List<SubPiece> tempSubPieceArray;
 
     public timeWaitPull minMaxWaitPullInPieces;
+
+
+    [Header("Enter Corrupt Zone")]
+    [Space(30)]
+    public float zoomSpeed = 0;
+    public float transitionTime;
+
+    public float cameraOrthoSizeTarget;
+    public Image fadeIntoLevel;
 
     [HideInInspector]
     public Coroutine endAnim = null;
@@ -46,7 +56,7 @@ public class AnimationManager : MonoBehaviour
     {
         instance = this;
         tempSubPieceArray = new List<SubPiece>();
-        fadeImage.gameObject.SetActive(false);
+        fadeImageEndLevel.gameObject.SetActive(false);
     }
 
     [System.Serializable]
@@ -57,6 +67,10 @@ public class AnimationManager : MonoBehaviour
     public void StartEndLevelAnimSequence()
     {
         endAnim = StartCoroutine(StartEndLevelAnim());
+    }
+    public void StartZoomIntoCorruptArea()
+    {
+        ZoomIntoCorruptArea();
     }
 
     public IEnumerator StartEndLevelAnim()
@@ -119,11 +133,11 @@ public class AnimationManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(waitTimeFadeIn);
-        fadeImage.gameObject.SetActive(true);
+        fadeImageEndLevel.gameObject.SetActive(true);
 
-        LeanTween.value(fadeImage.gameObject, 0f, 1, fadingSpeed).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        LeanTween.value(fadeImageEndLevel.gameObject, 0f, 1, fadingSpeed).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
         {
-            Image sr = fadeImage;
+            Image sr = fadeImageEndLevel;
             Color newColor = sr.color;
             newColor.a = val;
             sr.color = newColor;
@@ -138,9 +152,9 @@ public class AnimationManager : MonoBehaviour
 
         yield return new WaitForSeconds(waitTimeFadeOut);
 
-        LeanTween.value(fadeImage.gameObject, 1, 0, fadingSpeed).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        LeanTween.value(fadeImageEndLevel.gameObject, 1, 0, fadingSpeed).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
         {
-            Image sr = fadeImage;
+            Image sr = fadeImageEndLevel;
             Color newColor = sr.color;
             newColor.a = val;
             sr.color = newColor;
@@ -158,9 +172,9 @@ public class AnimationManager : MonoBehaviour
         AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
 
 
-        yield return new WaitForSeconds(waitTimeFadeOut);
-        yield return new WaitUntil((() => fadeImage.color.a <= 0.1f));
-        fadeImage.gameObject.SetActive(false);
+        //yield return new WaitForSeconds(waitTimeFadeOut);
+        yield return new WaitUntil((() => fadeImageEndLevel.color.a <= 0.1f));
+        fadeImageEndLevel.gameObject.SetActive(false);
 
         UIManager.Instance.restartButton.interactable = true;
 
@@ -179,10 +193,10 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
-    public void ActivateParticleEffectsMiddle(GameObject midPiece)
-    {
-        Instantiate(midPieceParticle, midPiece.transform);
-    }
+    //public void ActivateParticleEffectsMiddle(GameObject midPiece)
+    //{
+    //    Instantiate(midPieceParticle, midPiece.transform);
+    //}
 
     public void PullIn(SubPiece toMove)
     {
@@ -229,7 +243,7 @@ public class AnimationManager : MonoBehaviour
             GO.SetActive(false);
         }
 
-        fadeImage.gameObject.SetActive(false);
+        fadeImageEndLevel.gameObject.SetActive(false);
 
 
         GameManager.Instance.WinAfterAnimation();
@@ -246,5 +260,40 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.InGameUiScreens.SetActive(true);
         AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
 
+    }
+
+
+    public void ZoomIntoCorruptArea()
+    {
+        LeanTween.value(Camera.main.orthographicSize, cameraOrthoSizeTarget, transitionTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate(UpdateCamOrthoSize);
+
+        LeanTween.value(fadeIntoLevel.gameObject, 0f, 1, transitionTime).setEase(LeanTweenType.easeInOutQuad).setOnComplete(FadeInCorruptZone).setOnUpdate((float val) =>
+        {
+            Image sr = fadeIntoLevel;
+            Color newColor = sr.color;
+            newColor.a = val;
+            sr.color = newColor;
+        });
+    }
+
+    void UpdateCamOrthoSize(float value)
+    {
+        Camera.main.orthographicSize = value;
+    }
+
+    void FadeInCorruptZone()
+    {
+        UIManager.Instance.hudCanvasDisplay.SetActive(false);
+        UIManager.Instance.hudCanvasUI.SetActive(false);
+
+        UIManager.Instance.corruptedZoneScreen.SetActive(true);
+
+        LeanTween.value(fadeIntoLevel.gameObject, 1, 0, transitionTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            Image sr = fadeIntoLevel;
+            Color newColor = sr.color;
+            newColor.a = val;
+            sr.color = newColor;
+        });
     }
 }

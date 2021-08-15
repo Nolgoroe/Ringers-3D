@@ -7,7 +7,8 @@ using System;
 public enum DocumentType
 {
     Equipment,
-    HollowObject
+    HollowObject,
+    CorruptedDevices
 }
 
 [System.Serializable]
@@ -20,6 +21,7 @@ public class CSVParser : MonoBehaviour
 {
     public List<EquipmentData> allEquipmentInGame;
     public List<HollowCraftObjectData> allHollowCraftObjectsInGame;
+    public List<CorruptedDevicesData> allCorruptedDevicesInGame;
 
     public csvFileInfo[] csvFiles;
 
@@ -69,6 +71,9 @@ public class CSVParser : MonoBehaviour
                 case DocumentType.HollowObject:
                     inputStream = new StreamReader(Application.persistentDataPath + "/Hollow Crafts.csv");
                     break;
+                case DocumentType.CorruptedDevices:
+                    inputStream = new StreamReader(Application.persistentDataPath + "/Corrupted Devices.csv");
+                    break;
                 default:
                     break;
             }
@@ -82,6 +87,9 @@ public class CSVParser : MonoBehaviour
                     break;
                 case DocumentType.HollowObject:
                     inputStream = new StreamReader("Assets/Resources/HollowObjects csv data/Hollow Crafts.csv");
+                    break;
+                case DocumentType.CorruptedDevices:
+                    inputStream = new StreamReader("Assets/Resources/Corrupted Devices csv data/Corrupted Devices.csv");
                     break;
                 default:
                     break;
@@ -122,6 +130,9 @@ public class CSVParser : MonoBehaviour
                 break;
             case DocumentType.HollowObject:
                 TranslateToHollowObjects(parsedList);
+                break;
+            case DocumentType.CorruptedDevices:
+                TranslateToCorruptedDevices(parsedList);
                 break;
             default:
                 break;
@@ -233,6 +244,54 @@ public class CSVParser : MonoBehaviour
             HCOD.spritePath = parsedList[i][3].ToString();
 
             allHollowCraftObjectsInGame.Add(HCOD);
+        }
+
+
+        HollowCraftAndOwnedManager.Instance.FillCraftScreen(allHollowCraftObjectsInGame); /// Fill The Craft screen
+    }
+
+    public void TranslateToCorruptedDevices(List<string[]> parsedList)
+    {
+
+        for (int i = 1; i < parsedList.Count; i++) //// i = 1 becuase we are skipping the first row in the CSV file (they are the titles)
+        {
+            CorruptedDevicesData CDD = new CorruptedDevicesData();
+
+            CDD.hpmPerDistance = new List<HPMPerDistance>();
+
+            CDD.deviceName = parsedList[i][0].ToString();
+
+            string type = parsedList[i][1].ToString();
+
+            CDD.deciveType = (CorruptedDeviceType)Convert.ToInt16(type);
+
+
+            string[] tempHPM = parsedList[i][2].ToString().Split('-');
+            string[] tempDistances = parsedList[i][3].ToString().Split('-');
+
+            for (int j = 0; j < tempDistances.Length; j++)
+            {
+                tempHPM[j] = tempHPM[j].Trim();
+                tempDistances[j] = tempDistances[j].Trim();
+            }
+
+
+            for (int j = 0; j < tempDistances.Length; j++)
+            {
+                HPMPerDistance HPMPD = new HPMPerDistance();
+
+                HPMPD.HPM = float.Parse(tempHPM[j]);
+                HPMPD.distance = float.Parse(tempDistances[j]);
+
+                CDD.hpmPerDistance.Add(HPMPD);
+
+            }
+
+            CDD.mats = parsedList[i][4].ToString();
+
+            CDD.spritePath = parsedList[i][5].ToString();
+
+            allCorruptedDevicesInGame.Add(CDD);
         }
 
 

@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     public GameObject mainMenu, hudCanvasDisplay,hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasBotom, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
     public GameObject InGameUiScreens;
     public GameObject blackLevelBG;
+    public GameObject zoomInCorruptedBlack;
     public GameObject tutorialCanvas;
     public GameObject forge, itemBag;
     public GameObject craft, owned;
@@ -32,6 +33,7 @@ public class UIManager : MonoBehaviour
     public GameObject clipsAboutToEndMessage;
     public GameObject sureWantToRestartWithLoot;
     public GameObject sureWantToRestartNoLoot;
+    public GameObject corruptedZoneScreen;
     public Image dewDropsImage;
 
 
@@ -93,8 +95,10 @@ public class UIManager : MonoBehaviour
         loseScreen.SetActive(false);
         tutorialCanvas.SetActive(false);
         blackLevelBG.SetActive(false);
+        zoomInCorruptedBlack.SetActive(false);
         skipAnimationButton.gameObject.SetActive(false);
         InGameUiScreens.SetActive(false);
+        corruptedZoneScreen.SetActive(false);
 
         animalNameText.text = "";
         foreach (GameObject go in allTutorialScreens)
@@ -317,6 +321,11 @@ public class UIManager : MonoBehaviour
         if (currentCanvas == mainMenu)
         {
             mainMenu.SetActive(false);
+        }
+
+        if (currentCanvas == corruptedZoneScreen)
+        {
+            corruptedZoneScreen.SetActive(false);
         }
 
         if (GameObject.FindWithTag("Key"))
@@ -595,5 +604,12 @@ public class UIManager : MonoBehaviour
     public void ChangeControls()
     {
         GameManager.Instance.isSecondaryControls = !GameManager.Instance.isSecondaryControls;
+    }
+
+    public void StartEnterCorruptedSequence()
+    {
+        zoomInCorruptedBlack.SetActive(true);
+
+        AnimationManager.instance.StartZoomIntoCorruptArea();
     }
 }
