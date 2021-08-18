@@ -252,12 +252,15 @@ public class CSVParser : MonoBehaviour
 
     public void TranslateToCorruptedDevices(List<string[]> parsedList)
     {
+        string[] tempDevicesToConnectWith = null;
+        string[] tempHPM = null;
+        string[] tempDistances = null;
 
         for (int i = 1; i < parsedList.Count; i++) //// i = 1 becuase we are skipping the first row in the CSV file (they are the titles)
         {
             CorruptedDevicesData CDD = new CorruptedDevicesData();
 
-            CDD.hpmPerDistance = new List<HPMPerDistance>();
+            CDD.deviceConnectionsList = new List<DeviceConnections>();
 
             CDD.deviceName = parsedList[i][0].ToString();
 
@@ -265,36 +268,73 @@ public class CSVParser : MonoBehaviour
 
             CDD.deciveType = (CorruptedDeviceType)Convert.ToInt16(type);
 
+            CDD.mats = parsedList[i][5].ToString();
 
-            string[] tempHPM = parsedList[i][2].ToString().Split('-');
-            string[] tempDistances = parsedList[i][3].ToString().Split('-');
+            CDD.spritePath = parsedList[i][6].ToString();
 
-            for (int j = 0; j < tempDistances.Length; j++)
+            CDD.prefabPath = parsedList[i][7].ToString();
+
+
+
+
+
+
+            tempDevicesToConnectWith = parsedList[i][2].Split('-');
+
+            for (int k = 0; k < tempDevicesToConnectWith.Length; k++)
             {
-                tempHPM[j] = tempHPM[j].Trim();
-                tempDistances[j] = tempDistances[j].Trim();
+                tempDevicesToConnectWith[k] = tempDevicesToConnectWith[k].Trim();
+            }
+
+            tempHPM = parsedList[i][3].Split('|');
+
+            for (int k = 0; k < tempHPM.Length; k++)
+            {
+                tempHPM[k] = tempHPM[k].Trim();
+            }
+
+            tempDistances = parsedList[i][4].Split('|');
+
+            for (int k = 0; k < tempDistances.Length; k++)
+            {
+                tempDistances[k] = tempDistances[k].Trim();
             }
 
 
-            for (int j = 0; j < tempDistances.Length; j++)
+
+
+
+            for (int j = 0; j < tempDevicesToConnectWith.Length; j++)
             {
-                HPMPerDistance HPMPD = new HPMPerDistance();
+                DeviceConnections DC = new DeviceConnections();
 
-                HPMPD.HPM = float.Parse(tempHPM[j]);
-                HPMPD.distance = float.Parse(tempDistances[j]);
+                DC.distances = new List<float>();
+                DC.HPM = new List<float>();
 
-                CDD.hpmPerDistance.Add(HPMPD);
+                DC.deviceToConnectWith = tempDevicesToConnectWith[j];
 
+                string[] temp = tempHPM[j].Split('-');
+
+                for (int l = 0; l < temp.Length; l++)
+                {
+                    DC.HPM.Add(float.Parse(temp[l]));
+                }
+
+                temp = tempDistances[j].Split('-');
+
+                for (int l = 0; l < temp.Length; l++)
+                {
+                    DC.distances.Add(float.Parse(temp[l]));
+                }
+
+                CDD.deviceConnectionsList.Add(DC);
             }
-
-            CDD.mats = parsedList[i][4].ToString();
-
-            CDD.spritePath = parsedList[i][5].ToString();
 
             allCorruptedDevicesInGame.Add(CDD);
+
+            PlayerManager.Instance.ownedCorruptDevices.Add(CDD);
+
         }
 
-
-        HollowCraftAndOwnedManager.Instance.FillCraftScreen(allHollowCraftObjectsInGame); /// Fill The Craft screen
     }
 }

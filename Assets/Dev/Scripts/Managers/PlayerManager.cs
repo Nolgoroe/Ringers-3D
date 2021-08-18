@@ -69,6 +69,7 @@ public class PlayerManager : MonoBehaviour
     public List<EquipmentData> equipmentInCooldown;
 
     public List<HollowCraftObjectData> ownedHollowObjects;
+    public List<CorruptedDevicesData> ownedCorruptDevices;
 
     public static PlayerManager Instance;
 
@@ -102,6 +103,7 @@ public class PlayerManager : MonoBehaviour
             UIManager.Instance.RefreshDewDropsDisplay(collectedDewDrops);
         }
 
+        ownedCorruptDevices.Clear();
         //if (wardrobeEquipment.Count > 0)
         //{
         //    foreach (EquipmentData ED in wardrobeEquipment)
@@ -286,5 +288,25 @@ public class PlayerManager : MonoBehaviour
         //        return;
         //    }
         //}
+    }
+
+    public void SpawnOwnedCorruptionDevices()
+    {
+        int num = 1;
+
+        foreach (CorruptedDevicesData CDD in ownedCorruptDevices)
+        {
+            GameObject go = Instantiate(CorruptedZonesManager.instance.generalDevicePrefab, UIManager.Instance.ownedCorruptDevicesZone);
+
+            go.name = "D" + num;
+
+            tempMoveScript TMS = go.GetComponent<tempMoveScript>();
+
+            TMS.connectedCDD = CDD;
+
+            UIManager.Instance.SetCorruptedDeviceImage(TMS);
+
+            num++;
+        }
     }
 }

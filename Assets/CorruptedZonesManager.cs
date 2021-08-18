@@ -8,9 +8,11 @@ public class CorruptedZonesManager : MonoBehaviour
     public static CorruptedZonesManager instance;
 
     public GameObject lineGO;
+    public GameObject generalDevicePrefab;
 
-    public List<GameObject> currentDevices;
+    public CorruptedZoneData currentActiveZone;
 
+    public tempMoveScript currentDeviceToPlace;
     private void Start()
     {
         instance = this;

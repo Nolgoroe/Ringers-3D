@@ -12,10 +12,11 @@ public enum CorruptedDeviceType
 
 
 [Serializable]
-public class HPMPerDistance
+public class DeviceConnections
 {
-    public float distance = 0;
-    public float HPM = 0; /// Harmony Per Minute
+    public string deviceToConnectWith;
+    public List<float> distances;
+    public List<float> HPM; /// Harmony Per Minute
 }
 
 [Serializable]
@@ -25,7 +26,8 @@ public class CorruptedDevicesData
     public CorruptedDeviceType deciveType;
     public string mats;
     public string spritePath;
-    public List<HPMPerDistance> hpmPerDistance;
+    public string prefabPath;
+    public List<DeviceConnections> deviceConnectionsList;
 
 
     public CorruptedDevicesData(string objectName, CorruptedDeviceType objecttype, string objectmatList, string path)

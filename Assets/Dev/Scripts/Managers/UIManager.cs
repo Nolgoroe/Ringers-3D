@@ -34,10 +34,12 @@ public class UIManager : MonoBehaviour
     public GameObject sureWantToRestartWithLoot;
     public GameObject sureWantToRestartNoLoot;
     public GameObject corruptedZoneScreen;
+    public GameObject corruptedZoneSureMessage;
     public Image dewDropsImage;
 
 
     public Transform sureLevelRestartLootDislpay;
+    public Transform ownedCorruptDevicesZone;
 
     public Text /*hubGoldText,*/ hubRubyText/*, dewDropsText*/, dewDropsTextTime;
 
@@ -46,6 +48,7 @@ public class UIManager : MonoBehaviour
 
     public TMP_Text currentLevelWorldName;
     public TMP_Text currentLevelNumber;
+    public TMP_Text corruptedZoneSureMessageText;
 
     //public Button commitButton;
     public Button nextLevelFromWinScreen;
@@ -99,6 +102,7 @@ public class UIManager : MonoBehaviour
         skipAnimationButton.gameObject.SetActive(false);
         InGameUiScreens.SetActive(false);
         corruptedZoneScreen.SetActive(false);
+        corruptedZoneSureMessage.SetActive(false);
 
         animalNameText.text = "";
         foreach (GameObject go in allTutorialScreens)
@@ -326,6 +330,11 @@ public class UIManager : MonoBehaviour
         if (currentCanvas == corruptedZoneScreen)
         {
             corruptedZoneScreen.SetActive(false);
+
+            for (int i = 0; i < ownedCorruptDevicesZone.transform.childCount; i++)
+            {
+                Destroy(ownedCorruptDevicesZone.transform.GetChild(i).gameObject);
+            }
         }
 
         if (GameObject.FindWithTag("Key"))
@@ -605,11 +614,41 @@ public class UIManager : MonoBehaviour
     {
         GameManager.Instance.isSecondaryControls = !GameManager.Instance.isSecondaryControls;
     }
-
     public void StartEnterCorruptedSequence()
     {
         zoomInCorruptedBlack.SetActive(true);
 
+        PlayerManager.Instance.SpawnOwnedCorruptionDevices();
+
         AnimationManager.instance.StartZoomIntoCorruptArea();
+    }
+    public void ActivateAreYouSureCorruptZone(string name)
+    {
+        corruptedZoneSureMessageText.text = "Is this the spot you want to place your " + name;
+        corruptedZoneSureMessage.SetActive(true);
+    }
+    public void AreYouSureCorruptZoneYes()
+    {
+        corruptedZoneSureMessage.SetActive(false);
+
+        CorruptedZonesManager.instance.currentDeviceToPlace.SetDeviceOnZone();
+
+        CorruptedZonesManager.instance.currentDeviceToPlace = null;
+    }
+    public void AreYouSureCorruptZoneNo()
+    {
+        corruptedZoneSureMessage.SetActive(false);
+
+        CorruptedZonesManager.instance.currentDeviceToPlace.transform.SetParent(ownedCorruptDevicesZone);
+        CorruptedZonesManager.instance.currentDeviceToPlace.DiscradLines();
+
+        CorruptedZonesManager.instance.currentDeviceToPlace = null;
+    }
+
+    public void SetCorruptedDeviceImage(tempMoveScript TMS)
+    {
+        Image deviceImage = TMS.gameObject.GetComponent<Image>();
+
+        deviceImage.sprite = Resources.Load<Sprite>(TMS.connectedCDD.spritePath);
     }
 }

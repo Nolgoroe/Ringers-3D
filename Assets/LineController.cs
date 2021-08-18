@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class LineController : MonoBehaviour
 {
-    public GameObject gameObject1;          
-    public GameObject gameObject2;
+    public GameObject CDDOrigin;          
+    public GameObject CDDTarget;
 
     public Material lineMat;
 
-    private LineRenderer line1;                           
+    private LineRenderer line1;
+
+    public List<float> distnaces;
 
     void Start()
     {
@@ -19,11 +21,11 @@ public class LineController : MonoBehaviour
         line1.endWidth = 0.1f;
         line1.positionCount = 2;
         line1.material = lineMat;
-        line1.sortingOrder = 10;
+        line1.sortingOrder = 2;
     }
     void Update()
     {
-        line1.SetPosition(0, gameObject1.transform.position);
-        line1.SetPosition(1, gameObject2.transform.position);
+        line1.SetPosition(0, CDDOrigin.transform.position);
+        line1.SetPosition(1, CDDTarget.transform.position);
     }
 }
