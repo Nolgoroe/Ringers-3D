@@ -3740,9 +3740,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61586a6e4660c344a93bdf1aa538ad47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CZSO: {fileID: 11400000, guid: 2731f237ce5b3284980f59374eb9448f, type: 2}
+  corruptionLevel: 0
   isClensing: 0
   timeLeftForClense: 0
-  HPM: 0
+  corruptionAmountPerStage: 1500
+  HPM: 1500
   currentDevicesInZone: []
 --- !u!1 &135231627
 GameObject:

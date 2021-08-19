@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System;
 
 public class tempMoveScript : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class tempMoveScript : MonoBehaviour
     private Vector2 mousePosition;
 
     public bool hasBeenSet = false;
+
+    public float maxLineWidth = 10;
+    public float lineDevideWidth = 10;
 
     Image myImage;
 
@@ -77,19 +81,30 @@ public class tempMoveScript : MonoBehaviour
     {
         if (!hasBeenSet)
         {
-            foreach (GameObject g in lines)
+            if(lines.Count > 0)
             {
-                LineRenderer LR = g.GetComponent<LineRenderer>();
-
-                Color c = LR.material.GetColor("_BaseColor");
-
-                if (c.a <= 0)
+                foreach (GameObject g in lines)
                 {
-                    Destroy(g);
-                }
-            }
+                    LineRenderer LR = g.GetComponent<LineRenderer>();
+                    LineController LC = g.GetComponent<LineController>();
 
-            lines.Clear();
+                    Color c = LR.material.GetColor("_BaseColor");
+
+                    if (c.a <= 0)
+                    {
+                        Destroy(g);
+                    }
+
+
+                    CorruptedZonesManager.instance.currentActiveZone.HPM += CalculateZoneHPM(LC);
+                }
+
+                lines.Clear();
+            }
+            else
+            {
+                CorruptedZonesManager.instance.currentActiveZone.HPM += connectedCDD.currentHarmonyToGive;
+            }
 
             CorruptedZonesManager.instance.currentActiveZone.currentDevicesInZone.Add(this);
 
@@ -103,6 +118,11 @@ public class tempMoveScript : MonoBehaviour
         }
     }
 
+    private float CalculateZoneHPM(LineController LC)
+    {
+        return LC.currentHPMMultiplier * LC.CDDOrigin.GetComponent<tempMoveScript>().connectedCDD.currentHarmonyToGive;
+    }
+
     private void OnMouseDrag()
     {
         if (!hasBeenSet && !UIManager.Instance.corruptedZoneSureMessage.activeInHierarchy)
@@ -114,7 +134,7 @@ public class tempMoveScript : MonoBehaviour
             mousePosition.y = Mathf.Clamp(mousePosition.y, -10, -8);
 
 
-            Debug.Log(mousePosition);
+            //Debug.Log(mousePosition);
             Vector2 pos = new Vector2(mousePosition.x, mousePosition.y);
 
             //pos.x = Mathf.Clamp(pos.x, -620, 720);
@@ -130,22 +150,38 @@ public class tempMoveScript : MonoBehaviour
                 {
                     LineController LC = g.GetComponent<LineController>();
                     LC.distnaces = new List<float>();
+                    LC.HPMPerDistance = new List<float>();
 
                     if (connectedCDD != null)
                     {
                         DeviceConnections DC = connectedCDD.deviceConnectionsList.Where(p => p.deviceToConnectWith == LC.CDDTarget.name).Single();
                         LC.distnaces.AddRange(DC.distances);
+                        LC.HPMPerDistance.AddRange(DC.HPM);
+                    }
+
+                    LC.maxDistance = LC.distnaces.Max();
+                    LC.minDistance = LC.distnaces.Min();
+
+                    for (int i = 0; i < LC.distnaces.Count; i++)
+                    {
+                        if(LC.distnaces[i] != LC.maxDistance && LC.distnaces[i] != LC.minDistance)
+                        {
+                            LC.mediumDistance = LC.distnaces[i];
+                            break;
+                        }
                     }
 
                     float distance = CalculateDisance(LC.CDDOrigin, LC.CDDTarget);
 
                     //Debug.Log("Line is: " + g.name + " " + distance * 10);
 
-                    UpdateLineAlpha(distance, LC);
+                    UpdateLineAlpha(distance * 10, LC);
+                    LC.UpdateHPMValue(distance * 10, LC);
                 }
             }
         }
     }
+
 
     float CalculateDisance(GameObject one, GameObject two)
     {
@@ -162,7 +198,7 @@ public class tempMoveScript : MonoBehaviour
         //Debug.Log(distance * 10);
         LineRenderer LR = LC.gameObject.GetComponent<LineRenderer>();
 
-        if (distance * 10 >= LC.distnaces[0])
+        if (distance > LC.maxDistance || distance < LC.minDistance)
         {
             Color color = LR.materials[0].color;
 
@@ -170,17 +206,9 @@ public class tempMoveScript : MonoBehaviour
 
             LR.material.SetColor("_BaseColor", new Color(1f, 1f, 1f, color.a));
         }
-        else if (distance * 10 <= LC.distnaces[2])
-        {
-            Color color = LR.materials[0].color;
-
-            color.a = 255;
-
-            LR.material.SetColor("_BaseColor", new Color(1f, 1f, 1f, color.a));
-        }
         else
         {
-            float lerpAmt = 1.0f - Mathf.Clamp01(((distance * 10) - LC.distnaces[2]) / (LC.distnaces[0] - LC.distnaces[2]));
+            float lerpAmt = 1.0f - Mathf.Clamp01(((distance) - LC.distnaces[2]) / (LC.distnaces[0] - LC.distnaces[2]));
 
             //Debug.Log(lerpAmt);
 
@@ -192,10 +220,11 @@ public class tempMoveScript : MonoBehaviour
             LR.material.SetColor("_BaseColor", new Color(1f, 1f, 1f, color.a));
 
             lerpAmt = Mathf.Clamp(lerpAmt, 0, 0.5f);
-            LC.GetComponent<LineRenderer>().startWidth = lerpAmt / 10;
-            LC.GetComponent<LineRenderer>().endWidth = lerpAmt / 10;
+            LC.GetComponent<LineRenderer>().startWidth = (lerpAmt / lineDevideWidth) * maxLineWidth;
+            LC.GetComponent<LineRenderer>().endWidth = (lerpAmt / lineDevideWidth) * maxLineWidth;
         }
     }
+
 
     public void DiscradLines()
     {

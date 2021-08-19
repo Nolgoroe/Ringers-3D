@@ -268,32 +268,33 @@ public class CSVParser : MonoBehaviour
 
             CDD.deciveType = (CorruptedDeviceType)Convert.ToInt16(type);
 
-            CDD.mats = parsedList[i][5].ToString();
+            CDD.currentHarmonyToGive = float.Parse(parsedList[i][2]);
 
-            CDD.spritePath = parsedList[i][6].ToString();
+            CDD.mats = parsedList[i][6].ToString();
 
-            CDD.prefabPath = parsedList[i][7].ToString();
+            CDD.spritePath = parsedList[i][7].ToString();
 
-
-
-
+            CDD.prefabPath = parsedList[i][8].ToString();
 
 
-            tempDevicesToConnectWith = parsedList[i][2].Split('-');
+
+
+
+            tempDevicesToConnectWith = parsedList[i][3].Split('-');
 
             for (int k = 0; k < tempDevicesToConnectWith.Length; k++)
             {
                 tempDevicesToConnectWith[k] = tempDevicesToConnectWith[k].Trim();
             }
 
-            tempHPM = parsedList[i][3].Split('|');
+            tempHPM = parsedList[i][4].Split('|');
 
             for (int k = 0; k < tempHPM.Length; k++)
             {
                 tempHPM[k] = tempHPM[k].Trim();
             }
 
-            tempDistances = parsedList[i][4].Split('|');
+            tempDistances = parsedList[i][5].Split('|');
 
             for (int k = 0; k < tempDistances.Length; k++)
             {

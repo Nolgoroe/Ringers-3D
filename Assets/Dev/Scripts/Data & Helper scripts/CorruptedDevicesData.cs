@@ -28,6 +28,7 @@ public class CorruptedDevicesData
     public string spritePath;
     public string prefabPath;
     public List<DeviceConnections> deviceConnectionsList;
+    public float currentHarmonyToGive = 0;
 
 
     public CorruptedDevicesData(string objectName, CorruptedDeviceType objecttype, string objectmatList, string path)
