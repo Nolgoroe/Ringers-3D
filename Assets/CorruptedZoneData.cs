@@ -23,43 +23,17 @@ public class CorruptedZoneData : MonoBehaviour
 
         corruptionLevel = CZSO.corruptionLevel;
 
-        StartCoroutine(DisplayTime());
+
+        isClensing = true;
     }
 
-    IEnumerator DisplayTime()
+    private void Update()
     {
-        //DisplayTimeNoDelay();
-
-        while (corruptionLevel > 0)
+        if (isClensing)
         {
-            //UIManager.Instance.dewDropsTextTime.gameObject.SetActive(true);
-
-            //yield return new WaitForSecondsRealtime(1);
-            //timeLeftToNextMin--;
-
-            //if (timeLeftToNextMin <= 0)
-            //{
-            //timeLeftToNextMin = 1 * 10;
-
-            //}
-
-            //float minutes = Mathf.FloorToInt(timeLeftToNextMin / 60);
-            //float seconds = Mathf.FloorToInt(timeLeftToNextMin % 60);
-
             ClenseWave();
-            yield return null;
         }
-
-        //UIManager.Instance.dewDropsTextTime.gameObject.SetActive(false);
     }
-
-    //void DisplayTimeNoDelay() ///// This function is only for the star of the game no that players wont see the defult time while the real time is updating
-    //{
-    //    float minutes = Mathf.FloorToInt(timeLeftToNextMin / 60);
-    //    float seconds = Mathf.FloorToInt(timeLeftToNextMin % 60);
-
-    //    UIManager.Instance.dewDropsTextTime.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-    //}
 
     public void ClenseWave()
     {
