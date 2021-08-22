@@ -16292,7 +16292,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &656761288
 RectTransform:
@@ -46340,7 +46340,11 @@ MonoBehaviour:
   gameStarted: 0
   isSecondaryControls: 0
   inGameCamPos: {x: 0, y: 0, z: -20}
-  copyOfArrayOfPiecesTutorial: []
+  copyOfArrayOfPiecesTutorial:
+  - colorOfPieceRight: 0
+    symbolOfPieceRight: 0
+    colorOfPieceLeft: 0
+    symbolOfPieceLeft: 0
   copyOfSpecificSliceSpotsTutorial: 
   copyOfSpecificSliceColorsTutorial: 
   copyOfSpecificSliceSymbolsTutorial: 
