@@ -9,6 +9,7 @@ public enum PieceColor
     Blue,
     Yellow,
     Green,
+    Red,
     None,
     Joker
 }
