@@ -217,7 +217,7 @@ public class Slice : MonoBehaviour
                         sliceColor = (PieceColor)Random.Range(0, pieceSymbolEnumCount - 2);
                     }
 
-                    sliceColor = (PieceColor)Random.Range(0, pieceColorEnumCount - 2);
+                    //sliceColor = (PieceColor)Random.Range(0, pieceColorEnumCount - 2);
                     //sr.sprite = GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor];
                     foreach (Renderer r in rend)
                     {
