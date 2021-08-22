@@ -27,11 +27,11 @@ public class LevelScriptableObject : ScriptableObject
     public int tutorialIndexForList;
     public int cellsCountInLevel;
 
-    public bool RandomSlices;
+    public bool RandomSlicePositions;
 
     public stonePieceDataStruct[] stoneTiles;
     public SliceCatagory[] slicesToSpawn;
-    public int[] sliceCellIndexes;
+    //public int[] sliceCellIndexes;
     public bool[] lockSlices;
     public bool[] lootSlices;
     public bool[] limiterSlices;

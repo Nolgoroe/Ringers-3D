@@ -181,7 +181,7 @@ public class SliceManager : MonoBehaviour
                 possibleSlotsTemp.Add(i);
             }
 
-            if (GameManager.Instance.currentLevel.RandomSlices)
+            if (GameManager.Instance.currentLevel.RandomSlicePositions)
             {
                 int randomPos = Random.Range(0, sliceSlots.Length);
 
@@ -291,13 +291,13 @@ public class SliceManager : MonoBehaviour
 
                 for (int i = 0; i < GameManager.Instance.currentLevel.slicesToSpawn.Length; i++)
                 {
-                    fullSlices.Add(sliceSlots[GameManager.Instance.currentLevel.sliceCellIndexes[i]].transform.GetComponent<Slice>());
+                    fullSlices.Add(sliceSlots[GameManager.Instance.currentLevel.specificSliceSpots[i]].transform.GetComponent<Slice>());
                 }
 
 
                 for (int i = 0; i < fullSlices.Count; i++)
                 {
-                    fullSlices[i].SetSliceData(sliceSlots[GameManager.Instance.currentLevel.sliceCellIndexes[i]].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
+                    fullSlices[i].SetSliceData(sliceSlots[GameManager.Instance.currentLevel.specificSliceSpots[i]].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
                 }
             }
 
@@ -327,22 +327,93 @@ public class SliceManager : MonoBehaviour
         {
             fullSlices = new List<Slice>();
 
+            possibleSlotsTemp = new List<int>();
+
+            for (int i = 0; i < sliceSlots.Length; i++)
+            {
+                possibleSlotsTemp.Add(i);
+            }
+
             for (int i = 0; i < numOfSlices; i++)
             {
-                if(GameManager.Instance.copyOfSpecificSliceSpotsTutorial[0] >= ConnectionManager.Instance.cells.Count)
+                if (GameManager.Instance.currentLevel.RandomSlicePositions)
                 {
-                    Debug.LogError("The value you put in the slice index list is larger than 7!");
-                    return;
+                    int randomPos = Random.Range(0, sliceSlots.Length);
+
+
+                    fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
+
+                    if (numOfSlices < 4)
+                    {
+                        RemovePositions(randomPos);
+
+                        for (int j = 1; j < numOfSlices; j++)
+                        {
+
+                            randomPos = Random.Range(0, possibleSlotsTemp.Count);
+
+                            fullSlices.Add(sliceSlots[possibleSlotsTemp[randomPos]].transform.GetComponent<Slice>());
+
+                            RemovePositions(possibleSlotsTemp[randomPos]);
+                        }
+                    }
+                    else if (numOfSlices == 4)
+                    {
+                        for (int j = 1; j < numOfSlices; j++)
+                        {
+                            randomPos += 2;
+
+                            if (randomPos >= sliceSlots.Length)
+                            {
+                                randomPos -= sliceSlots.Length;
+                            }
+
+                            fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
+                        }
+                    }
+                    else
+                    {
+                        possibleSlotsTemp.Remove(randomPos);
+
+                        for (int j = 1; j < sliceSlots.Length / 2; j++)
+                        {
+                            randomPos += 2;
+
+                            if (randomPos >= sliceSlots.Length)
+                            {
+                                randomPos -= sliceSlots.Length;
+                            }
+
+
+                            fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
+                            possibleSlotsTemp.Remove(randomPos);
+                        }
+
+                        for (int j = 0; j < numOfSlices - sliceSlots.Length / 2; j++)
+                        {
+                            randomPos = Random.Range(0, possibleSlotsTemp.Count);
+
+                            fullSlices.Add(sliceSlots[possibleSlotsTemp[randomPos]].transform.GetComponent<Slice>());
+                            possibleSlotsTemp.Remove(possibleSlotsTemp[randomPos]);
+                        }
+                    }
                 }
                 else
                 {
-                    int specifPos = GameManager.Instance.copyOfSpecificSliceSpotsTutorial[0];
+                    if (GameManager.Instance.copyOfSpecificSliceSpotsTutorial[0] >= ConnectionManager.Instance.cells.Count)
+                    {
+                        Debug.LogError("The value you put in the slice index list is larger than 7!");
+                        return;
+                    }
+                    else
+                    {
+                        int specifPos = GameManager.Instance.copyOfSpecificSliceSpotsTutorial[0];
 
-                    fullSlices.Add(sliceSlots[specifPos].transform.GetComponent<Slice>());
+                        fullSlices.Add(sliceSlots[specifPos].transform.GetComponent<Slice>());
 
-                    GameManager.Instance.copyOfSpecificSliceSpotsTutorial.RemoveAt(0);
+                        GameManager.Instance.copyOfSpecificSliceSpotsTutorial.RemoveAt(0);
+                    }
                 }
-
             }
 
             for (int k = 0; k < fullSlices.Count; k++)
