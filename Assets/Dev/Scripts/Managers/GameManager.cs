@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     public bool isSecondaryControls;
 
     public Vector3 inGameCamPos;
+    public Vector3 inGameCamRot;
 
     public List<pieceDataStruct> copyOfArrayOfPiecesTutorial;
     public List<int> copyOfSpecificSliceSpotsTutorial;
@@ -75,6 +76,7 @@ public class GameManager : MonoBehaviour
         Camera.main.orthographic = false;
         Camera.main.fieldOfView = 60f;
         Camera.main.transform.position = inGameCamPos;
+        Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
         gameStarted = true;
 
@@ -157,6 +159,7 @@ public class GameManager : MonoBehaviour
         Camera.main.orthographic = false;
         Camera.main.fieldOfView = 60f;
         Camera.main.transform.position = inGameCamPos;
+        Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
         gameStarted = true;
 

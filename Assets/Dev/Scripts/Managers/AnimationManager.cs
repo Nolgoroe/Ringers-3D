@@ -68,9 +68,9 @@ public class AnimationManager : MonoBehaviour
     {
         endAnim = StartCoroutine(StartEndLevelAnim());
     }
-    public void StartZoomIntoCorruptArea()
+    public void StartZoomIntoCorruptArea(int ID)
     {
-        ZoomIntoCorruptArea();
+        ZoomIntoCorruptArea(ID);
     }
 
     public IEnumerator StartEndLevelAnim()
@@ -263,11 +263,11 @@ public class AnimationManager : MonoBehaviour
     }
 
 
-    public void ZoomIntoCorruptArea()
+    public void ZoomIntoCorruptArea(int ID)
     {
         LeanTween.value(Camera.main.orthographicSize, cameraOrthoSizeTarget, transitionTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate(UpdateCamOrthoSize);
 
-        LeanTween.value(fadeIntoLevel.gameObject, 0f, 1, transitionTime).setEase(LeanTweenType.easeInOutQuad).setOnComplete(FadeInCorruptZone).setOnUpdate((float val) =>
+        LeanTween.value(fadeIntoLevel.gameObject, 0f, 1, transitionTime).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => FadeInCorruptZone(ID)).setOnUpdate((float val) =>
         {
             Image sr = fadeIntoLevel;
             Color newColor = sr.color;
@@ -281,12 +281,20 @@ public class AnimationManager : MonoBehaviour
         Camera.main.orthographicSize = value;
     }
 
-    void FadeInCorruptZone()
+    void FadeInCorruptZone(int ID)
     {
         UIManager.Instance.hudCanvasDisplay.SetActive(false);
-        UIManager.Instance.hudCanvasUI.SetActive(false);
+        UIManager.Instance.hudCanvasUIBottomZoneMainMap.SetActive(false);
+        //UIManager.Instance.hudCanvasUI.SetActive(false);
 
         UIManager.Instance.corruptedZoneScreen.SetActive(true);
+        UIManager.Instance.hudCanvasUIBottomZoneCorruption.SetActive(true);
+
+        CorruptedZoneViewHelpData CZVHD = CorruptedZonesManager.Instance.allCorruptedZonesView.Where(p => p.ZoneID == ID).Single();
+
+        CZVHD.gameObject.SetActive(true);
+
+        CZVHD.UpdateCorruptionManagerData();
 
         LeanTween.value(fadeIntoLevel.gameObject, 1, 0, transitionTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
         {

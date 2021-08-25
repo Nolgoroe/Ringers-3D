@@ -399,7 +399,7 @@ public class CursorController : MonoBehaviour
     }
     public void MoveFollower()
     {
-        followerTarget.position = new Vector3(cursorPos.position.x, cursorPos.position.y, -0.8f);
+        followerTarget.position = new Vector3(cursorPos.position.x, cursorPos.position.y, -0.1f);
         float angle = Mathf.Atan2(gameBoard.transform.position.y - followerTarget.position.y, gameBoard.transform.position.x - followerTarget.position.x) * Mathf.Rad2Deg;
         followerTarget.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
     }

@@ -238,7 +238,7 @@ public class PrefabLightmapData : MonoBehaviour
                 RendererInfo info = new RendererInfo();
                 info.renderer = renderer;
 
-                if (renderer.lightmapScaleOffset != Vector4.zero)
+                if (renderer.lightmapScaleOffset != Vector4.zero && renderer.receiveGI != ReceiveGI.LightProbes)
                 {
                     info.lightmapOffsetScale = renderer.lightmapScaleOffset;
 

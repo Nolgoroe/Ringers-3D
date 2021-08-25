@@ -17,7 +17,9 @@ public enum CorruptionLevel
 [CreateAssetMenu(fileName = "Corrupted Zone", menuName = "ScriptableObjects/Create Corrupted Zone")]
 public class CorruptedZoneScriptableObject : ScriptableObject
 {
+    public int zoneID;
+
     public CorruptionLevel corruptionLevel;
 
-    public Sprite backGroundSprite;
+    //public Sprite backGroundSprite;
 }

@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    public GameObject mainMenu, hudCanvasDisplay,hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasBotom, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
+    public GameObject mainMenu, hudCanvasDisplay, hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasBotom, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
     public GameObject InGameUiScreens;
     public GameObject blackLevelBG;
     public GameObject zoomInCorruptedBlack;
@@ -35,6 +35,8 @@ public class UIManager : MonoBehaviour
     public GameObject sureWantToRestartNoLoot;
     public GameObject corruptedZoneScreen;
     public GameObject corruptedZoneSureMessage;
+    public GameObject hudCanvasUIBottomZoneMainMap;
+    public GameObject hudCanvasUIBottomZoneCorruption;
     public Image dewDropsImage;
 
 
@@ -73,6 +75,7 @@ public class UIManager : MonoBehaviour
 
         hudCanvasDisplay.SetActive(true);
         hudCanvasUI.SetActive(false);
+        hudCanvasUIBottomZoneMainMap.SetActive(true);
 
         itemForgeCanvas.SetActive(false);
         gameplayCanvas.SetActive(false);
@@ -103,6 +106,7 @@ public class UIManager : MonoBehaviour
         InGameUiScreens.SetActive(false);
         corruptedZoneScreen.SetActive(false);
         corruptedZoneSureMessage.SetActive(false);
+        hudCanvasUIBottomZoneCorruption.SetActive(false);
 
         animalNameText.text = "";
         foreach (GameObject go in allTutorialScreens)
@@ -200,7 +204,7 @@ public class UIManager : MonoBehaviour
     }
     private void DisplayRestartLoot()
     {
-        if(LootManager.Instance.rubiesToRecieveInLevel > 0)
+        if (LootManager.Instance.rubiesToRecieveInLevel > 0)
         {
             GameObject go = Instantiate(LootManager.Instance.lootDisplayPrefab, sureLevelRestartLootDislpay);
 
@@ -272,6 +276,7 @@ public class UIManager : MonoBehaviour
         Camera.main.orthographic = true;
         Camera.main.orthographicSize = 9f;
         Camera.main.transform.position = hubCameraPos;
+        Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
 
         if (currentCanvas == gameplayCanvas)
         {
@@ -314,7 +319,7 @@ public class UIManager : MonoBehaviour
             ZoneManager.Instance.SaveZoneManager();
         }
 
-        if(currentCanvas == ringersHutDisplay)
+        if (currentCanvas == ringersHutDisplay)
         {
             ringersHutDisplay.SetActive(false);
             ringersHutUICanvas.SetActive(false);
@@ -329,6 +334,13 @@ public class UIManager : MonoBehaviour
 
         if (currentCanvas == corruptedZoneScreen)
         {
+            CorruptedZonesManager.Instance.currentActiveZoneView.gameObject.SetActive(false);
+
+            CorruptedZonesManager.Instance.currentActiveZoneData = null;
+            CorruptedZonesManager.Instance.currentActiveZoneView = null;
+
+            hudCanvasUIBottomZoneMainMap.SetActive(true);
+            hudCanvasUIBottomZoneCorruption.SetActive(false);
             corruptedZoneScreen.SetActive(false);
 
             for (int i = 0; i < ownedCorruptDevicesZone.transform.childCount; i++)
@@ -523,14 +535,14 @@ public class UIManager : MonoBehaviour
 
             for (int i = 0; i < BPZ.theZone.maxLevelReachedInZone; i++)
             {
-                if(i == BPZ.zoneButtons.Length)
+                if (i == BPZ.zoneButtons.Length)
                 {
                     break;
                 }
 
                 BPZ.zoneButtons[i].interactable = true;
 
-                if(i + 1 != BPZ.theZone.maxLevelReachedInZone)
+                if (i + 1 != BPZ.theZone.maxLevelReachedInZone)
                 {
                     BPZ.zoneButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelDonePath);
                 }
@@ -566,9 +578,9 @@ public class UIManager : MonoBehaviour
     public void ToggleAnimalAlbum(bool Open)
     {
         if (Open)
-        {            
+        {
             animalAlbum.SetActive(true);
-            AnimalAlbumManager.Instance.pageNumInspector =0;
+            AnimalAlbumManager.Instance.pageNumInspector = 0;
             AnimalAlbumManager.Instance.ChangePageLogic(0);
         }
         else
@@ -582,10 +594,14 @@ public class UIManager : MonoBehaviour
         {
             if (ISBD.id != buttonID)
             {
-                ISBD.transformImage.sprite = ISBD.notSelectedSprite;
+                Color c = new Color(ISBD.transformImage.color.r, ISBD.transformImage.color.g, ISBD.transformImage.color.b, 0);
+                ISBD.transformImage.color = c;
+                ISBD.transformImage.sprite = null;
             }
             else
             {
+                Color c = new Color(ISBD.transformImage.color.r, ISBD.transformImage.color.g, ISBD.transformImage.color.b, 255);
+                ISBD.transformImage.color = c;
                 ISBD.transformImage.sprite = ISBD.selectedSprite;
             }
         }
@@ -614,13 +630,13 @@ public class UIManager : MonoBehaviour
     {
         GameManager.Instance.isSecondaryControls = !GameManager.Instance.isSecondaryControls;
     }
-    public void StartEnterCorruptedSequence()
+    public void StartEnterCorruptedSequence(int ID)
     {
         zoomInCorruptedBlack.SetActive(true);
 
         PlayerManager.Instance.SpawnOwnedCorruptionDevices();
 
-        AnimationManager.instance.StartZoomIntoCorruptArea();
+        AnimationManager.instance.StartZoomIntoCorruptArea(ID);
     }
     public void ActivateAreYouSureCorruptZone(string name)
     {
@@ -631,20 +647,19 @@ public class UIManager : MonoBehaviour
     {
         corruptedZoneSureMessage.SetActive(false);
 
-        CorruptedZonesManager.instance.currentDeviceToPlace.SetDeviceOnZone();
+        CorruptedZonesManager.Instance.currentDeviceToPlace.SetDeviceOnZone();
 
-        CorruptedZonesManager.instance.currentDeviceToPlace = null;
+        CorruptedZonesManager.Instance.currentDeviceToPlace = null;
     }
     public void AreYouSureCorruptZoneNo()
     {
         corruptedZoneSureMessage.SetActive(false);
 
-        CorruptedZonesManager.instance.currentDeviceToPlace.transform.SetParent(ownedCorruptDevicesZone);
-        CorruptedZonesManager.instance.currentDeviceToPlace.DiscradLines();
+        CorruptedZonesManager.Instance.currentDeviceToPlace.transform.SetParent(ownedCorruptDevicesZone);
+        CorruptedZonesManager.Instance.currentDeviceToPlace.DiscradLines();
 
-        CorruptedZonesManager.instance.currentDeviceToPlace = null;
+        CorruptedZonesManager.Instance.currentDeviceToPlace = null;
     }
-
     public void SetCorruptedDeviceImage(tempMoveScript TMS)
     {
         Image deviceImage = TMS.gameObject.GetComponent<Image>();

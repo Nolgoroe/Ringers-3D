@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class InventorySortButtonData : MonoBehaviour
 {
-    public Sprite notSelectedSprite, selectedSprite;
+    public Sprite selectedSprite;
     public int id;
     public Image transformImage;
 }

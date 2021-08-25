@@ -40,9 +40,9 @@ public enum CraftingMatType
 {
     None,
     Build,
-    Witchcraft,
-    Herb,
     Gem,
+    Herb,  
+    Witchcraft
 }
 [Serializable]
 public class CraftingMatEntry
@@ -296,7 +296,7 @@ public class PlayerManager : MonoBehaviour
 
         foreach (CorruptedDevicesData CDD in ownedCorruptDevices)
         {
-            GameObject go = Instantiate(CorruptedZonesManager.instance.generalDevicePrefab, UIManager.Instance.ownedCorruptDevicesZone);
+            GameObject go = Instantiate(CorruptedZonesManager.Instance.generalDevicePrefab, UIManager.Instance.ownedCorruptDevicesZone);
 
             go.name = "D" + num;
 
