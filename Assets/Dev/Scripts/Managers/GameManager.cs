@@ -215,7 +215,7 @@ public class GameManager : MonoBehaviour
         {
             if (ZMHD.possibleAnimalsInZones.Length == 1)
             {
-                AnimalsManager.Instance.statueToSwap = Instantiate(ZMHD.possibleAnimalsInZones[ZMHD.currentZoneCheck.id].animalsData[0].animalPrefab, parent.transform);
+                AnimalsManager.Instance.statueToSwap = Instantiate(ZMHD.possibleAnimalsInZones[ZMHD.currentZoneCheck.id].animalsData[0].animalPrefab, destroyOutOfLevel);
                 return AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
             }
             else
@@ -224,7 +224,7 @@ public class GameManager : MonoBehaviour
 
                 if (go)
                 {
-                    AnimalsManager.Instance.statueToSwap = Instantiate(go, parent.transform);
+                    AnimalsManager.Instance.statueToSwap = Instantiate(go, destroyOutOfLevel);
                     return AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
                 }
                 else
