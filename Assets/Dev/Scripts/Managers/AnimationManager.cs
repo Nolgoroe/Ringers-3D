@@ -290,11 +290,25 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.corruptedZoneScreen.SetActive(true);
         UIManager.Instance.hudCanvasUIBottomZoneCorruption.SetActive(true);
 
-        CorruptedZoneViewHelpData CZVHD = CorruptedZonesManager.Instance.allCorruptedZonesView.Where(p => p.ZoneID == ID).Single();
+        CorruptedZoneViewHelpData CZVHD = CorruptedZonesManager.Instance.allCorruptedZonesView.Where(p => p.ZoneIDView == ID).Single();
 
         CZVHD.gameObject.SetActive(true);
 
         CZVHD.UpdateCorruptionManagerData();
+
+        if (CZVHD.connectedCZD)
+        {
+            if (CZVHD.connectedCZD.saveDataZone.isClensing)
+            {
+                CZVHD.harmonySliderInCorruptedZone.gameObject.SetActive(true);
+                CZVHD.harmonySliderOnMap.gameObject.SetActive(true);
+            }
+        }
+
+        if (!CorruptedZonesManager.Instance.currentActiveZoneView.isFullyClensed)
+        {
+            PlayerManager.Instance.SpawnOwnedCorruptionDevices();
+        }
 
         LeanTween.value(fadeIntoLevel.gameObject, 1, 0, transitionTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
         {

@@ -40,7 +40,7 @@ public class tempMoveScript : MonoBehaviour
             }
             otherDevices.Clear();
 
-            foreach (tempMoveScript TMS in CorruptedZonesManager.Instance.currentActiveZoneData.currentDevicesInZone)
+            foreach (tempMoveScript TMS in CorruptedZonesManager.Instance.currentActiveZoneData.saveDataZone.currentDevicesInZone)
             {
                 if (TMS != this)
                 {
@@ -96,17 +96,17 @@ public class tempMoveScript : MonoBehaviour
                     }
 
 
-                    CorruptedZonesManager.Instance.currentActiveZoneData.HPM += CalculateZoneHPM(LC);
+                    CorruptedZonesManager.Instance.currentActiveZoneData.saveDataZone.HPM += CalculateZoneHPM(LC);
                 }
 
                 lines.Clear();
             }
             else
             {
-                CorruptedZonesManager.Instance.currentActiveZoneData.HPM += connectedCDD.currentHarmonyToGive;
+                CorruptedZonesManager.Instance.currentActiveZoneData.saveDataZone.HPM += connectedCDD.currentHarmonyToGive;
             }
 
-            CorruptedZonesManager.Instance.currentActiveZoneData.currentDevicesInZone.Add(this);
+            CorruptedZonesManager.Instance.currentActiveZoneData.saveDataZone.currentDevicesInZone.Add(this);
 
             if (PlayerManager.Instance.ownedCorruptDevices.Contains(connectedCDD))
             {
@@ -151,7 +151,7 @@ public class tempMoveScript : MonoBehaviour
 
             transform.position = pos;
 
-            if (CorruptedZonesManager.Instance.currentActiveZoneData.currentDevicesInZone.Count > 0)
+            if (CorruptedZonesManager.Instance.currentActiveZoneData.saveDataZone.currentDevicesInZone.Count > 0)
             {
                 foreach (GameObject g in lines)
                 {

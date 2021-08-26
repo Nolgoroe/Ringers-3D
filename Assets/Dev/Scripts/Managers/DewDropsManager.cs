@@ -49,6 +49,7 @@ public class DewDropsManager : MonoBehaviour
         {
             StartCoroutine(DisplayTime());
         }
+
         savedDateTime = "";
     }
 

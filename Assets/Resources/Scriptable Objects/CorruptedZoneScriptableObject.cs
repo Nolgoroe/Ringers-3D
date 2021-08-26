@@ -5,6 +5,7 @@ using UnityEngine;
 
 public enum CorruptionLevel
 {
+    level0,
     level1,
     level2,
     level3,

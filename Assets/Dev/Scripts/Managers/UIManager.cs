@@ -107,6 +107,7 @@ public class UIManager : MonoBehaviour
         corruptedZoneScreen.SetActive(false);
         corruptedZoneSureMessage.SetActive(false);
         hudCanvasUIBottomZoneCorruption.SetActive(false);
+        ownedCorruptDevicesZone.gameObject.SetActive(false);
 
         animalNameText.text = "";
         foreach (GameObject go in allTutorialScreens)
@@ -634,7 +635,6 @@ public class UIManager : MonoBehaviour
     {
         zoomInCorruptedBlack.SetActive(true);
 
-        PlayerManager.Instance.SpawnOwnedCorruptionDevices();
 
         AnimationManager.instance.StartZoomIntoCorruptArea(ID);
     }

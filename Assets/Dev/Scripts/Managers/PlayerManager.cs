@@ -292,6 +292,7 @@ public class PlayerManager : MonoBehaviour
 
     public void SpawnOwnedCorruptionDevices()
     {
+        UIManager.Instance.ownedCorruptDevicesZone.gameObject.SetActive(true);
         int num = 1;
 
         foreach (CorruptedDevicesData CDD in ownedCorruptDevices)

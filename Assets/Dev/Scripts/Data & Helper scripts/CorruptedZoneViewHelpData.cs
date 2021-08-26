@@ -1,13 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CorruptedZoneViewHelpData : MonoBehaviour
 {
-    public int ZoneID;
+    public int ZoneIDView;
     public CorruptedZoneData connectedCZD;
 
     public Transform placedObjetZone;
+
+    public Slider harmonySliderInCorruptedZone;
+    public Slider harmonySliderOnMap;
+
+    public bool isFullyClensed;
 
     //private void Start()
     //{
@@ -19,4 +25,5 @@ public class CorruptedZoneViewHelpData : MonoBehaviour
         CorruptedZonesManager.Instance.currentActiveZoneData = connectedCZD;
         CorruptedZonesManager.Instance.currentActiveZoneView = this;
     }
+
 }

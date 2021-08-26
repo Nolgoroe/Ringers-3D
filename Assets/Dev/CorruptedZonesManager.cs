@@ -18,6 +18,7 @@ public class CorruptedZonesManager : MonoBehaviour
     public tempMoveScript currentDeviceToPlace;
 
     public CorruptedZoneViewHelpData[] allCorruptedZonesView;
+    public List<CorruptedZoneViewHelpData> allCurrentlyCorruptedZonesBeingClensed;
 
     private void Start()
     {
@@ -27,10 +28,24 @@ public class CorruptedZonesManager : MonoBehaviour
 
     public void SetClensingZone()
     {
-        if (!currentActiveZoneData.isClensing)
+        if (!currentActiveZoneData.saveDataZone.isClensing)
         {
-            currentActiveZoneData.isClensing = true;
+            currentActiveZoneData.saveDataZone.isClensing = true;
+
+            allCurrentlyCorruptedZonesBeingClensed.Add(currentActiveZoneView);
+
             currentActiveZoneData.transform.SetParent(clensingZone);
+
+            currentActiveZoneData.connectedView.harmonySliderInCorruptedZone.gameObject.SetActive(true);
+            currentActiveZoneData.connectedView.harmonySliderOnMap.gameObject.SetActive(true);
+        }
+    }
+
+    public void RemoveElementFromBeingClensed(CorruptedZoneViewHelpData CZVHD)
+    {
+        if (allCurrentlyCorruptedZonesBeingClensed.Contains(CZVHD))
+        {
+            allCurrentlyCorruptedZonesBeingClensed.Remove(CZVHD);
         }
     }
 }
