@@ -22,5 +22,6 @@ public class CorruptedZoneScriptableObject : ScriptableObject
 
     public CorruptionLevel corruptionLevel;
 
+    public float CorruptionAmountPerStage;
     //public Sprite backGroundSprite;
 }

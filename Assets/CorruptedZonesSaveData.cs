@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using System.Linq;
 
 [System.Serializable]
 public class SavedTimePerZone
 {
     //public CorruptedZoneViewHelpData connectedCZVHD;
 
+    public int ID;
+
     public string timelastClosed = " ";
+
+    public string timeElapsed = " ";
 
     public CorruptionLevel corruptionLevel;
 
     public bool isClensing = false;
+    public bool isCompletlyClensed = false;
 
     //public float timeLeftForClense = 0;
 
@@ -52,13 +58,10 @@ public class CorruptedZonesSaveData : MonoBehaviour
         {
             LoadZonesData();
         }
-
-
-        DateTime currentTime = DateTime.Now.ToLocalTime();
     }
 
 
-    public void SaveIteration()
+    public void SaveIteration() ///// THIS IS INVOKED!!
     {
         Debug.Log("Save Corruption");
 
@@ -72,18 +75,166 @@ public class CorruptedZonesSaveData : MonoBehaviour
                 }
             }
         }
+
+        SaveZonesData();
     }
 
-    public void RemoveElementFromSaveData(CorruptedZoneViewHelpData CZVHD)
-    {
-        if (timesPerZones.Contains(CZVHD.connectedCZD.saveDataZone))
-        {
-            timesPerZones.Remove(CZVHD.connectedCZD.saveDataZone);
-        }
-    }
+    //public void RemoveElementFromSaveData(CorruptedZoneViewHelpData CZVHD)
+    //{
+    //    if (timesPerZones.Contains(CZVHD.connectedCZD.saveDataZone))
+    //    {
+    //        timesPerZones.Remove(CZVHD.connectedCZD.saveDataZone);
+    //    }
+    //}
 
     public void LoadZonesData()
     {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            savePath = Application.persistentDataPath + "/timesPerZones.txt";
+        }
+        else
+        {
+            savePath = Application.dataPath + "/timesPerZones.txt";
+        }
 
+        JsonUtility.FromJsonOverwrite(File.ReadAllText(savePath), this);
+
+
+        UpdateStateInGame();
+    }
+
+    private void UpdateStateInGame()
+    {
+        foreach (SavedTimePerZone STPZ in timesPerZones)
+        {
+            CorruptedZoneViewHelpData CZVHD = CorruptedZonesManager.Instance.allCorruptedZonesView.Where(p => p.ZoneIDView == STPZ.ID).Single();
+
+            if (STPZ.isClensing)
+            {
+                CZVHD.connectedCZD.connectedView = CZVHD;
+
+                CZVHD.connectedCZD.saveDataZone = STPZ;
+
+                CZVHD.connectedCZD.gameObject.SetActive(true);
+
+                UpdateCorruptionLevelElapsedTime(STPZ, CZVHD);
+
+                if (CZVHD.connectedCZD)
+                {
+                    CorruptedZonesManager.Instance.SetClensingZone(CZVHD.connectedCZD);
+                }
+            }
+
+            if (STPZ.isCompletlyClensed)
+            {
+                if (CZVHD.connectedCZD)
+                {
+                    CZVHD.connectedCZD.connectedView = CZVHD;
+
+                    CZVHD.connectedCZD.FullyClensedLogic();
+                }
+            }
+        }
+
+        //ClearTimesPerZonesListAfterLoad();
+    }
+
+    public void UpdateCorruptionLevelElapsedTime(SavedTimePerZone STPZ, CorruptedZoneViewHelpData CZVHD)
+    {
+        DateTime currentTime = DateTime.Now.ToLocalTime();
+
+        if (STPZ.timelastClosed != " ")
+        {
+            TimeSpan deltaDateTime = DateTime.Parse(STPZ.timelastClosed) - currentTime;
+
+            STPZ.timeElapsed = deltaDateTime.ToString();
+
+            int minutes = Mathf.Abs(deltaDateTime.Minutes);
+            int seconds = Mathf.Abs(deltaDateTime.Seconds);
+
+            float totalAmountsByMinutes = minutes * STPZ.HPM;
+            float totalAmountsBySeconds = (STPZ.HPM / 60) * seconds;
+
+            float totalSum = totalAmountsByMinutes + totalAmountsBySeconds;
+
+
+            float totalSumOutOfCurrentCorruption = totalSum / STPZ.originalCorruptionAmountPerStage;
+
+            if(totalSumOutOfCurrentCorruption >= 1)
+            {
+                STPZ.corruptionLevel -= (int)totalSumOutOfCurrentCorruption;
+
+                if(STPZ.corruptionLevel <= CorruptionLevel.level0)
+                {
+                    STPZ.corruptionLevel = CorruptionLevel.level0;
+                    CZVHD.connectedCZD.FullyClensedLogic();
+                    return;
+                }
+
+                float moduloNum = totalSum % STPZ.originalCorruptionAmountPerStage;
+
+                STPZ.corruptionAmountPerStage = STPZ.originalCorruptionAmountPerStage - moduloNum;
+            }
+            else
+            {
+                STPZ.corruptionAmountPerStage -= totalSum;
+
+                if(STPZ.corruptionAmountPerStage <= 0)
+                {
+                    STPZ.corruptionLevel--;
+
+                    if (STPZ.corruptionLevel <= CorruptionLevel.level0)
+                    {
+                        STPZ.corruptionLevel = CorruptionLevel.level0;
+
+                        CZVHD.connectedCZD.FullyClensedLogic();
+                        return;
+                    }
+
+                    STPZ.corruptionAmountPerStage = STPZ.originalCorruptionAmountPerStage - Mathf.Abs(STPZ.corruptionAmountPerStage);
+                }
+            }
+        }
+    }
+
+    public void SaveZonesData()
+    {
+        string savedData = JsonUtility.ToJson(this);
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            savePath = Application.persistentDataPath + "/timesPerZones.txt";
+        }
+        else
+        {
+            savePath = Application.dataPath + "/timesPerZones.txt";
+        }
+        File.WriteAllText(savePath, savedData);
+    }
+
+
+    //public void ClearTimesPerZonesListAfterLoad()
+    //{
+    //    List<SavedTimePerZone> tempTimesPerZones = new List<SavedTimePerZone>();
+
+    //    tempTimesPerZones.AddRange(timesPerZones);
+
+    //    foreach (SavedTimePerZone STPZ in tempTimesPerZones)
+    //    {
+    //        if (STPZ.isCompletlyClensed)
+    //        {
+    //            timesPerZones.Remove(STPZ);
+    //        }
+    //    }
+    //}
+    private void OnApplicationQuit()
+    {
+        foreach (SavedTimePerZone STPZ in timesPerZones)
+        {
+            STPZ.timelastClosed = DateTime.Now.ToLocalTime().ToString();
+        }
+
+        SaveZonesData();
     }
 }

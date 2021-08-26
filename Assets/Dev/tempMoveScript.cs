@@ -121,7 +121,7 @@ public class tempMoveScript : MonoBehaviour
 
             hasBeenSet = true;
 
-            CorruptedZonesManager.Instance.SetClensingZone();
+            CorruptedZonesManager.Instance.SetClensingZone(CorruptedZonesManager.Instance.currentActiveZoneData);
         }
     }
 

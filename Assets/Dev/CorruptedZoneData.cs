@@ -24,13 +24,22 @@ public class CorruptedZoneData : MonoBehaviour
 
     public void Start()
     {
-        saveDataZone.originalCorruptionAmountPerStage = saveDataZone.corruptionAmountPerStage;
+        saveDataZone.originalCorruptionAmountPerStage = CZSO.CorruptionAmountPerStage;
 
-        saveDataZone.corruptionLevel = CZSO.corruptionLevel;
 
-        CorruptedZoneViewHelpData CZVHD = CorruptedZonesManager.Instance.allCorruptedZonesView.Where(p => p.ZoneIDView == CZSO.zoneID).Single();
+        saveDataZone.ID = CZSO.zoneID;
 
-        connectedView = CZVHD;
+        if(connectedView == null)
+        {
+            CorruptedZoneViewHelpData CZVHD = CorruptedZonesManager.Instance.allCorruptedZonesView.Where(p => p.ZoneIDView == CZSO.zoneID).Single();
+
+            connectedView = CZVHD;
+        }
+
+        if (!saveDataZone.isClensing)
+        {
+            saveDataZone.corruptionLevel = CZSO.corruptionLevel;
+        }
     }
 
     private void Update()
@@ -57,32 +66,45 @@ public class CorruptedZoneData : MonoBehaviour
 
                 saveDataZone.corruptionLevel--;
 
+                CorruptedZonesSaveData.Instance.SaveZonesData();
+
+
                 if (saveDataZone.corruptionLevel == CorruptionLevel.level0)
                 {
-                    Destroy(connectedView.harmonySliderInCorruptedZone.gameObject);
-                    Destroy(connectedView.harmonySliderOnMap.gameObject);
-                    Destroy(connectedView.harmonySliderOnMap.gameObject);
-                    Destroy(connectedView.placedObjetZone.gameObject);
 
-                    CorruptedZonesSaveData.Instance.RemoveElementFromSaveData(connectedView);
-                    CorruptedZonesManager.Instance.RemoveElementFromBeingClensed(connectedView);
-
-                    connectedView.harmonySliderOnMap = null;
-                    connectedView.harmonySliderInCorruptedZone = null;
-                    connectedView.connectedCZD = null;
-
-                    connectedView.placedObjetZone = null;
-                    connectedView.isFullyClensed = true;
-
-                    if (UIManager.Instance.ownedCorruptDevicesZone.gameObject.activeInHierarchy)
-                    {
-                        UIManager.Instance.ownedCorruptDevicesZone.gameObject.SetActive(false);
-                    }
-
-                    Destroy(gameObject, 3f);
+                    FullyClensedLogic();
                 }
             }
         }
         //PlayerManager.Instance.SavePlayerData();
+    }
+
+    public void FullyClensedLogic()
+    {
+        Destroy(connectedView.harmonySliderInCorruptedZone.gameObject);
+        Destroy(connectedView.harmonySliderOnMap.gameObject);
+        Destroy(connectedView.harmonySliderOnMap.gameObject);
+        Destroy(connectedView.placedObjetZone.gameObject);
+
+        //CorruptedZonesSaveData.Instance.RemoveElementFromSaveData(connectedView);
+        CorruptedZonesManager.Instance.RemoveElementFromBeingClensed(connectedView);
+
+        connectedView.harmonySliderOnMap = null;
+        connectedView.harmonySliderInCorruptedZone = null;
+        connectedView.connectedCZD = null;
+
+        connectedView.placedObjetZone = null;
+
+
+        connectedView.isFullyClensed = true;
+        saveDataZone.isCompletlyClensed = true;
+        saveDataZone.isClensing = false;
+
+        if (UIManager.Instance.ownedCorruptDevicesZone.gameObject.activeInHierarchy)
+        {
+            UIManager.Instance.ownedCorruptDevicesZone.gameObject.SetActive(false);
+        }
+
+        Destroy(gameObject, 3f);
     }
 }

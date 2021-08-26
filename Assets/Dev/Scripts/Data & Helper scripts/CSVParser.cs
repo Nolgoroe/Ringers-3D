@@ -334,8 +334,6 @@ public class CSVParser : MonoBehaviour
             allCorruptedDevicesInGame.Add(CDD);
 
             PlayerManager.Instance.ownedCorruptDevices.Add(CDD);
-
         }
-
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class CorruptedZonesManager : MonoBehaviour
 {
@@ -26,20 +27,23 @@ public class CorruptedZonesManager : MonoBehaviour
     }
 
 
-    public void SetClensingZone()
+    public void SetClensingZone(CorruptedZoneData CZD)
     {
-        if (!currentActiveZoneData.saveDataZone.isClensing)
+        allCurrentlyCorruptedZonesBeingClensed.Add(CZD.connectedView);
+
+        CZD.transform.SetParent(clensingZone);
+
+        CZD.connectedView.harmonySliderInCorruptedZone.gameObject.SetActive(true);
+        CZD.connectedView.harmonySliderOnMap.gameObject.SetActive(true);
+
+        if (!CZD.saveDataZone.isClensing)
         {
-            currentActiveZoneData.saveDataZone.isClensing = true;
+            CZD.saveDataZone.isClensing = true;
 
-            allCurrentlyCorruptedZonesBeingClensed.Add(currentActiveZoneView);
-
-            currentActiveZoneData.transform.SetParent(clensingZone);
-
-            currentActiveZoneData.connectedView.harmonySliderInCorruptedZone.gameObject.SetActive(true);
-            currentActiveZoneData.connectedView.harmonySliderOnMap.gameObject.SetActive(true);
+            CorruptedZonesSaveData.Instance.SaveIteration();
         }
     }
+
 
     public void RemoveElementFromBeingClensed(CorruptedZoneViewHelpData CZVHD)
     {
