@@ -364,7 +364,8 @@ public class UIManager : MonoBehaviour
 
         isUsingUI = true;
 
-        SortMaster.Instance.SortMatInventory(CraftingMatType.Gem); //// For now we always open the inventory sorted on gems
+        ChangeInventorySortButtonSprites((int)CraftingMatType.Build);
+        //SortMaster.Instance.SortMatInventory(CraftingMatType.Build); //// For now we always open the inventory sorted on gems
     }
     public void OpenHollowCraftAndOwnedZone()
     {

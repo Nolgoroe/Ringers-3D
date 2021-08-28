@@ -3703,9 +3703,12 @@ MonoBehaviour:
   CZSO: {fileID: 11400000, guid: 2731f237ce5b3284980f59374eb9448f, type: 2}
   connectedView: {fileID: 0}
   saveDataZone:
+    ID: 0
     timelastClosed: ' '
+    timeElapsed: ' '
     corruptionLevel: 0
     isClensing: 0
+    isCompletlyClensed: 0
     corruptionAmountPerStage: 1500
     originalCorruptionAmountPerStage: 0
     HPM: 0
@@ -4856,7 +4859,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &162410062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15796,9 +15799,12 @@ MonoBehaviour:
   CZSO: {fileID: 11400000, guid: 0c6d75a1c2d1a3943a8431f38eca7052, type: 2}
   connectedView: {fileID: 0}
   saveDataZone:
+    ID: 0
     timelastClosed: ' '
+    timeElapsed: ' '
     corruptionLevel: 0
     isClensing: 0
+    isCompletlyClensed: 0
     corruptionAmountPerStage: 1500
     originalCorruptionAmountPerStage: 0
     HPM: 0
@@ -17198,7 +17204,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -17216,7 +17222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedSprite: {fileID: 21300000, guid: 1003378efd8aed2448df95dbf06fa0a4, type: 3}
-  id: 3
+  id: 4
   transformImage: {fileID: 683663110}
 --- !u!1 &687478870
 GameObject:
@@ -28462,7 +28468,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -28480,7 +28486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedSprite: {fileID: 21300000, guid: 66375f9d6ae691d4db9511f7f6ac2b69, type: 3}
-  id: 1
+  id: 2
   transformImage: {fileID: 1205769476}
 --- !u!1 &1209724280
 GameObject:
@@ -29020,7 +29026,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -29038,7 +29044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedSprite: {fileID: 21300000, guid: a682364478f986d44ba0f3c28d77d974, type: 3}
-  id: 2
+  id: 3
   transformImage: {fileID: 1222626517}
 --- !u!1 &1226255744
 GameObject:
@@ -54160,7 +54166,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -54178,7 +54184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedSprite: {fileID: 21300000, guid: 8efbcb44b2a3e8e499ca36db6b45a2d3, type: 3}
-  id: 0
+  id: 1
   transformImage: {fileID: 2124954371}
 --- !u!1 &2126709716
 GameObject:
