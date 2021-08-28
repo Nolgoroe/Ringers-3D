@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
 
     public bool gameStarted;
     public bool isSecondaryControls;
+    public bool isDisableTutorials;
 
     public Vector3 inGameCamPos;
     public Vector3 inGameCamRot;
@@ -60,10 +61,13 @@ public class GameManager : MonoBehaviour
     {
         GameAnalytics.Initialize();
         isSecondaryControls = false;
+        isDisableTutorials = false;
     }
 
     public void StartLevel()
     {
+        TutorialSequence.Instacne.DisableTutorialSequence(); //// Make sure tutorial is disabled
+
         for (int i = 0; i < numAnimalsOnBoard.Length; i++)
         {
             numAnimalsOnBoard[i].amount = 0;
@@ -128,83 +132,92 @@ public class GameManager : MonoBehaviour
 
     public void StartTutorialLevel()
     {
-        for (int i = 0; i < numAnimalsOnBoard.Length; i++)
+        if (!isDisableTutorials)
         {
-            numAnimalsOnBoard[i].amount = 0;
-        }
-
-        if (copyOfArrayOfPiecesTutorial == null)
-        {
-            copyOfArrayOfPiecesTutorial = new List<pieceDataStruct>();
-        }
-        else
-        {
-            copyOfArrayOfPiecesTutorial.Clear();
-        }
-
-        copyOfArrayOfPiecesTutorial.AddRange(currentLevel.arrayOfPieces);
-
-        copyOfSpecificSliceSpotsTutorial = new List<int>();
-        copyOfSpecificSliceColorsTutorial = new List<PieceColor>();
-        copyOfSpecificSliceSymbolsTutorial = new List<PieceSymbol>();
-
-        copyOfSpecificSliceSpotsTutorial.AddRange(currentLevel.specificSliceSpots);
-        copyOfSpecificSliceColorsTutorial.AddRange(currentLevel.specificSlicesColors);
-        copyOfSpecificSliceSymbolsTutorial.AddRange(currentLevel.specificSlicesShapes);
-
-        UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
-        UIManager.Instance.TurnOnGameplayUI();
-
-        //Camera.main.orthographicSize = 12;
-        Camera.main.orthographic = false;
-        Camera.main.fieldOfView = 60f;
-        Camera.main.transform.position = inGameCamPos;
-        Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
-
-        gameStarted = true;
-
-        gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
-
-        gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
-
-        //UIManager.Instance.GetCommitButton(gameBoard); 
-        clipManager.Init();
-        sliceManager.Init();
-        cursorControl.Init();
-
-
-        ConnectionManager.Instance.GrabCellList(gameBoard.transform);
-        ConnectionManager.Instance.SetLevelConnectionData();
-
-        sliceManager.SpawnSlicesTutorial(currentLevel.slicesToSpawn.Length);
-
-        PlayerManager.Instance.HandleItemCooldowns();
-
-        PlayerManager.Instance.PopulatePowerUps();
-
-        powerupManager.InstantiateSpecialPowers();
-
-        if (backGroundPrefab)
-        {
-            GameObject go = Instantiate(backGroundPrefab, destroyOutOfLevel);
-
-            AnimalPrefabData data = InstantiateAnimals(go);
-
-            if (data != null)
+            for (int i = 0; i < numAnimalsOnBoard.Length; i++)
             {
-                AnimalsManager.Instance.currentLevelAnimal = data.animalType;
+                numAnimalsOnBoard[i].amount = 0;
+            }
+
+            if (copyOfArrayOfPiecesTutorial == null)
+            {
+                copyOfArrayOfPiecesTutorial = new List<pieceDataStruct>();
             }
             else
             {
-                Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
+                copyOfArrayOfPiecesTutorial.Clear();
             }
+
+            copyOfArrayOfPiecesTutorial.AddRange(currentLevel.arrayOfPieces);
+
+            copyOfSpecificSliceSpotsTutorial = new List<int>();
+            copyOfSpecificSliceColorsTutorial = new List<PieceColor>();
+            copyOfSpecificSliceSymbolsTutorial = new List<PieceSymbol>();
+
+            copyOfSpecificSliceSpotsTutorial.AddRange(currentLevel.specificSliceSpots);
+            copyOfSpecificSliceColorsTutorial.AddRange(currentLevel.specificSlicesColors);
+            copyOfSpecificSliceSymbolsTutorial.AddRange(currentLevel.specificSlicesShapes);
+
+            UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
+            UIManager.Instance.TurnOnGameplayUI();
+
+            //Camera.main.orthographicSize = 12;
+            Camera.main.orthographic = false;
+            Camera.main.fieldOfView = 60f;
+            Camera.main.transform.position = inGameCamPos;
+            Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
+
+            gameStarted = true;
+
+            gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
+
+            gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
+
+            //UIManager.Instance.GetCommitButton(gameBoard); 
+            clipManager.Init();
+            sliceManager.Init();
+            cursorControl.Init();
+
+
+            ConnectionManager.Instance.GrabCellList(gameBoard.transform);
+            ConnectionManager.Instance.SetLevelConnectionData();
+
+            sliceManager.SpawnSlicesTutorial(currentLevel.slicesToSpawn.Length);
+
+            PlayerManager.Instance.HandleItemCooldowns();
+
+            PlayerManager.Instance.PopulatePowerUps();
+
+            powerupManager.InstantiateSpecialPowers();
+
+            if (backGroundPrefab)
+            {
+                GameObject go = Instantiate(backGroundPrefab, destroyOutOfLevel);
+
+                AnimalPrefabData data = InstantiateAnimals(go);
+
+                if (data != null)
+                {
+                    AnimalsManager.Instance.currentLevelAnimal = data.animalType;
+                }
+                else
+                {
+                    Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
+                }
+            }
+
+            InstantiateStonePieces();
+            powerupManager.instnatiatedZonesCounter = 0;
+
+            TutorialSequence.Instacne.StartSequence(currentLevel.tutorialIndexForList);
+
+
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelNum);
         }
-
-        InstantiateStonePieces();
-        powerupManager.instnatiatedZonesCounter = 0;
-
-        TutorialSequence.Instacne.StartSequence(currentLevel.tutorialIndexForList);
-        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelNum);
+        else
+        {
+            StartLevel();
+        }
     }
 
     AnimalPrefabData InstantiateAnimals(GameObject parent)
@@ -353,8 +366,13 @@ public class GameManager : MonoBehaviour
         LootManager.Instance.ResetLevelLootData();
         ConnectionManager.Instance.cells.Clear();
         CursorController.Instance.tutorialBadConnection = false;
-        TutorialSequence.Instacne.currentPhaseInSequence = 0;
-        TutorialSequence.Instacne.duringSequence = false;
+
+        if (!isDisableTutorials && currentLevel.isTutorial)
+        {
+            TutorialSequence.Instacne.currentPhaseInSequence = 0;
+            TutorialSequence.Instacne.duringSequence = false;
+        }
+
         ChooseLevel(currentLevel.levelNum/*, currentLevel.worldName*/);
 
         foreach (InGameSpecialPowerUp IGSP in powerupManager.specialPowerupsInGame)
@@ -362,7 +380,7 @@ public class GameManager : MonoBehaviour
             IGSP.ResetValues();
         }
 
-        if (currentLevel.isTutorial)
+        if (!isDisableTutorials && currentLevel.isTutorial )
         {
             StartTutorialLevel();
         }
@@ -425,7 +443,7 @@ public class GameManager : MonoBehaviour
         LevelScriptableObject next = (LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/" + ZoneManagerHelpData.Instance.currentZoneName + "/Level " + levelNum);
 
 
-        if (next.isTutorial)
+        if (!isDisableTutorials && next.isTutorial)
         {
             return true;
         }

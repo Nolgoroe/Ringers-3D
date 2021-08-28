@@ -160,7 +160,7 @@ public class PowerUpManager : MonoBehaviour
     public void Deal()
     {
 
-        if (GameManager.Instance.currentLevel.isTutorial)
+        if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
         {
             if (TutorialSequence.Instacne.currentPhaseInSequence < TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase.Length)
             {

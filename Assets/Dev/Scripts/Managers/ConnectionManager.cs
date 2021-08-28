@@ -88,7 +88,7 @@ public class ConnectionManager : MonoBehaviour
             {
                 if (!CheckSubPieceConnection(supPieceArray[currentLeft], supPieceArray[leftContested], out bool conditionmet))
                 {
-                    if (GameManager.Instance.currentLevel.isTutorial)
+                    if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
                     {
                         CursorController.Instance.tutorialBadConnection = true;
                     }
@@ -227,7 +227,7 @@ public class ConnectionManager : MonoBehaviour
             {
                 if (!CheckSubPieceConnection(supPieceArray[currentRight], supPieceArray[rightContested], out bool conditionmet))
                 {
-                    if (GameManager.Instance.currentLevel.isTutorial)
+                    if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
                     {
                         CursorController.Instance.tutorialBadConnection = true;
                     }

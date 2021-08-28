@@ -103,7 +103,7 @@ public class Slice : MonoBehaviour
         anim = go.GetComponent<Animator>();
 
         //SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
-        if (GameManager.Instance.currentLevel.isTutorial)
+        if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
         {
             switch (sliceCatagory)
             {
@@ -243,7 +243,7 @@ public class Slice : MonoBehaviour
         //SpriteRenderer sr = go.transform.GetChild(0).GetComponent<SpriteRenderer>();
         child = go;
 
-        if (GameManager.Instance.currentLevel.isTutorial)
+        if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
         {
             switch (sliceCatagory)
             {

@@ -182,7 +182,7 @@ public class UIManager : MonoBehaviour
         {
             isUsingUI = true;
 
-            if (GameManager.Instance.currentLevel.isTutorial)
+            if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
             {
                 foreach (GameObject go in TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens)
                 {
@@ -239,7 +239,7 @@ public class UIManager : MonoBehaviour
             sureWantToRestartNoLoot.SetActive(false);
         }
 
-        if (GameManager.Instance.currentLevel.isTutorial)
+        if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
         {
             TutorialSequence.Instacne.TurnOnTutorialScreensAfterOptions();
         }
@@ -631,6 +631,10 @@ public class UIManager : MonoBehaviour
     public void ChangeControls()
     {
         GameManager.Instance.isSecondaryControls = !GameManager.Instance.isSecondaryControls;
+    }
+    public void DisableTutorials()
+    {
+        GameManager.Instance.isDisableTutorials = !GameManager.Instance.isDisableTutorials;
     }
     public void StartEnterCorruptedSequence(int ID)
     {

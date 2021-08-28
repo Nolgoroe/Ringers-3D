@@ -64,21 +64,23 @@ public class TutorialSequence : MonoBehaviour
 
     public void StartSequence(int levelNum)
     {
-        UIManager.Instance.tutorialCanvas.SetActive(true);
-
-        DisplayTutorialScreens();
-        OutlineInstantiate();
-        UIManager.Instance.dealButton.interactable = false;
-
-        currentPhaseInSequence = 0;
-        duringSequence = true;
-
-        for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
+        if (!GameManager.Instance.isDisableTutorials)
         {
-            Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
+            UIManager.Instance.tutorialCanvas.SetActive(true);
 
-            //for (int k = 0; k < levelSequences[levelNum - 1].phase[currentPhaseInSequence].unlockedClips.Length; k++)
-            //{
+            DisplayTutorialScreens();
+            OutlineInstantiate();
+            UIManager.Instance.dealButton.interactable = false;
+
+            currentPhaseInSequence = 0;
+            duringSequence = true;
+
+            for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
+            {
+                Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
+
+                //for (int k = 0; k < levelSequences[levelNum - 1].phase[currentPhaseInSequence].unlockedClips.Length; k++)
+                //{
                 if (levelSequences[levelNum - 1].phase[currentPhaseInSequence].unlockedClips.Contains(i)/*[k]*/)
                 {
                     p.isTutorialLocked = false;
@@ -87,8 +89,36 @@ public class TutorialSequence : MonoBehaviour
                 {
                     p.isTutorialLocked = true;
                 }
-            //}
+                //}
+            }
         }
+    }
+
+    public void DisableTutorialSequence()
+    {
+        UIManager.Instance.tutorialCanvas.SetActive(false);
+
+        UIManager.Instance.dealButton.interactable = true;
+
+        currentPhaseInSequence = 0;
+        duringSequence = false;
+
+        //for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
+        //{
+        //    Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
+
+        //    //for (int k = 0; k < levelSequences[levelNum - 1].phase[currentPhaseInSequence].unlockedClips.Length; k++)
+        //    //{
+        //    if (levelSequences[levelNum - 1].phase[currentPhaseInSequence].unlockedClips.Contains(i)/*[k]*/)
+        //    {
+        //        p.isTutorialLocked = false;
+        //    }
+        //    else
+        //    {
+        //        p.isTutorialLocked = true;
+        //    }
+        //    //}
+        //}
     }
 
     private void DisplayTutorialScreens()

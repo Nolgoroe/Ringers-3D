@@ -41,7 +41,7 @@ public class Piece : MonoBehaviour
         while (isSamePiece)
         {
 
-            if (GameManager.Instance.currentLevel.isTutorial)
+            if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
             {
                 if (repeatIndicator > 0 || GameManager.Instance.copyOfArrayOfPiecesTutorial.Count <= 0)
                 {
@@ -141,7 +141,7 @@ public class Piece : MonoBehaviour
             {
                 repeatIndicator++;
             }
-            else if(!isSamePiece && GameManager.Instance.currentLevel.isTutorial)
+            else if(!isSamePiece && !GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial )
             {
                 GameManager.Instance.copyOfArrayOfPiecesTutorial.RemoveAt(0);
             }
