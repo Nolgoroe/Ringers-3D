@@ -20,16 +20,22 @@ MonoBehaviour:
   levelIndexInZone: 4
   tutorialIndexForList: 0
   cellsCountInLevel: 8
-  RandomSlices: 1
-  stoneSlices: []
-  slicesToSpawn: 00000000030000000200000001000000010000000200000000000000
-  sliceCellIndexes: 
-  lockSlices: 01010101000000
-  lootSlices: 01010101010101
-  limiterSlices: 01010100000000
-  RewardBags: 05000000040000000d0000000f0000000e000000
-  levelAvailableColors: 
-  levelAvailablesymbols: 
+  RandomSlicePositions: 1
+  stoneTiles:
+  - cellIndex: 0
+    randomValues: 1
+    isNeutral: 1
+    colorOfPieceRight: 5
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 5
+    symbolOfPieceLeft: 4
+  slicesToSpawn: 010000000000000002000000
+  lockSlices: 000000
+  lootSlices: 010101
+  limiterSlices: 010000
+  RewardBags: 080000000900000002000000010000000b0000000a000000
+  levelAvailableColors: 00000000010000000200000004000000
+  levelAvailablesymbols: 000000000200000003000000
   symbolsNeededForSpecialPowers: []
   isTutorial: 0
   arrayOfPieces: []

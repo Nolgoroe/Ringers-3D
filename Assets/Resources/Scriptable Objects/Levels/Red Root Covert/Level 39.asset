@@ -10,26 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f245e6ade46975b42912a0bdcd673818, type: 3}
-  m_Name: Level 31
+  m_Name: Level 39
   m_EditorClassIdentifier: 
-  worldName: Vinebloom Pines
+  worldName: Greymoss Bog
   isDoubleRing: 0
   boardPrefab: {fileID: 6382559071292991177, guid: 0379f269da8f3aa46bc62a2f1709c2be,
     type: 3}
-  levelNum: 31
-  levelIndexInZone: 12
+  levelNum: 39
+  levelIndexInZone: 8
   tutorialIndexForList: 0
   cellsCountInLevel: 8
-  RandomSlices: 1
-  stoneSlices: []
-  slicesToSpawn: 030000000300000002000000030000000200000003000000
-  sliceCellIndexes: 
-  lockSlices: 010000010101
-  lootSlices: 010101010101
-  limiterSlices: 010000000000
-  RewardBags: 03000000050000000f00000010000000
-  levelAvailableColors: 
-  levelAvailablesymbols: 
+  RandomSlicePositions: 1
+  stoneTiles:
+  - cellIndex: 0
+    randomValues: 1
+    isNeutral: 1
+    colorOfPieceRight: 5
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 5
+    symbolOfPieceLeft: 4
+  slicesToSpawn: 010000000000000003000000
+  lockSlices: 010100
+  lootSlices: 010101
+  limiterSlices: 010101
+  RewardBags: 0a00000002000000010000000c0000000d0000000b000000
+  levelAvailableColors: 0000000001000000020000000300000004000000
+  levelAvailablesymbols: 00000000010000000200000003000000
   symbolsNeededForSpecialPowers: []
   isTutorial: 0
   arrayOfPieces: []
