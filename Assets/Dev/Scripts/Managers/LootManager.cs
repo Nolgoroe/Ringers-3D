@@ -153,12 +153,19 @@ public class LootManager : MonoBehaviour
         {
             Instantiate(keyPrefab, GameManager.Instance.destroyOutOfLevel);
             ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey = true;
-            ZoneManagerHelpData.Instance.nextZoneCheck.isUnlocked = true;
-            ZoneManagerHelpData.Instance.nextZoneCheck.maxLevelReachedInZone = 1;
-            //ZoneManagerHelpData.Instance.nextZoneCheck.zoneHeader.sprite = Resources.Load<Sprite>(ZoneManagerHelpData.Instance.nextZoneCheck.unlockedZonePath);
 
-            ZoneManager.Instance.unlockedZoneID.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
-            //UIManager.Instance.UnlockZoneFirstTime(ZoneManagerHelpData.Instance.nextZoneCheck.id);
+            if (ZoneManagerHelpData.Instance.nextZoneCheck)
+            {
+                ZoneManagerHelpData.Instance.nextZoneCheck.isUnlocked = true;
+                ZoneManagerHelpData.Instance.nextZoneCheck.maxLevelReachedInZone = 1;
+
+                //ZoneManagerHelpData.Instance.nextZoneCheck.zoneHeader.sprite = Resources.Load<Sprite>(ZoneManagerHelpData.Instance.nextZoneCheck.unlockedZonePath);
+
+                //UIManager.Instance.UnlockZoneFirstTime(ZoneManagerHelpData.Instance.nextZoneCheck.id);
+
+                ZoneManager.Instance.unlockedZoneID.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
+            }
+
             giveKey = false;
         }
 

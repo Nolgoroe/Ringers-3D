@@ -50,7 +50,10 @@ public class ZoneManager : MonoBehaviour
     }
     public void SetUnlockZone(int zoneToUnlock)
     {
-        ZoneManagerHelpData.Instance.nextZoneCheck = ZoneManagerHelpData.Instance.listOfAllZones[zoneToUnlock];
+        if(zoneToUnlock < ZoneManagerHelpData.Instance.listOfAllZones.Length)
+        {
+            ZoneManagerHelpData.Instance.nextZoneCheck = ZoneManagerHelpData.Instance.listOfAllZones[zoneToUnlock];
+        }
 
     }
     public void SetCurrentZone(int current)

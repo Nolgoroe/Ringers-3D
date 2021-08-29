@@ -43,7 +43,8 @@ public class UIManager : MonoBehaviour
     public Transform sureLevelRestartLootDislpay;
     public Transform ownedCorruptDevicesZone;
 
-    public Text /*hubGoldText,*/ hubRubyText/*, dewDropsText*/, dewDropsTextTime;
+    public Text /*hubGoldText,*/ hubRubyText, dewDropsText;
+    public TMP_Text dewDropsTextTime;
 
     public TMP_Text /*gameplayGoldText,*/ gameplayRubyText/*, gameplayDewDropsText*/;
     public TMP_Text animalNameText;
@@ -63,7 +64,7 @@ public class UIManager : MonoBehaviour
     public ButtonsPerZone[] buttonsPerZone;
     public InventorySortButtonData[] inventorySortButtons;
     public GameObject[] allTutorialScreens;
-    public Sprite[] dewDropsSprites;
+    //public Sprite[] dewDropsSprites;
 
     public Vector3 hubCameraPos;
 
@@ -624,10 +625,10 @@ public class UIManager : MonoBehaviour
         gameplayCanvasTop.SetActive(true);
         InGameUiScreens.SetActive(true);
     }
-    public void RefreshDewDropsDisplay(int spriteIndex)
-    {
-        dewDropsImage.sprite = dewDropsSprites[spriteIndex];
-    }
+    //public void RefreshDewDropsDisplay(int spriteIndex)
+    //{
+    //    dewDropsImage.sprite = dewDropsSprites[spriteIndex];
+    //}
     public void ChangeControls()
     {
         GameManager.Instance.isSecondaryControls = !GameManager.Instance.isSecondaryControls;

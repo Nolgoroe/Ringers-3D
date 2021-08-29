@@ -135,10 +135,10 @@ public class AnimalsManager : MonoBehaviour
     public IEnumerator RescueAnimalSequance()
     {
         AnimalPrefabData APD = statueToSwap.GetComponent<AnimalPrefabData>();
-        Instantiate(APD.animatedPrefab, statueToSwap.transform.parent);
-
+        GameObject go = Instantiate(APD.animatedPrefab, statueToSwap.transform.parent);
 
         Destroy(statueToSwap.gameObject);
+        Destroy(go, 3.7f);
         statueToSwap = null;
 
         yield return null;

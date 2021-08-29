@@ -313,12 +313,13 @@ public class SliceManager : MonoBehaviour
             //}
 
             /// Distribute Key to a random slice
-            if (ZoneManager.Instance.isKeyLevel)
-            {
-                int randomSlice = Random.Range(0, fullSlices.Count);
-                Debug.Log(randomSlice);
-                fullSlices[randomSlice].isKey = true;
-            }
+            //if (ZoneManager.Instance.isKeyLevel)
+            //{
+            //    int randomSlice = Random.Range(0, fullSlices.Count);
+            //    Debug.Log(randomSlice);
+            //    fullSlices[randomSlice].isKey = true;
+            //    ////// KEY HERE
+            //}
         }
     }
     public void SpawnSlicesTutorial(int numOfSlices)
@@ -429,12 +430,14 @@ public class SliceManager : MonoBehaviour
                 }
             }
 
-            if (ZoneManager.Instance.isKeyLevel)
-            {
-                int randomSlice = Random.Range(0, fullSlices.Count);
-                Debug.Log(randomSlice);
-                fullSlices[randomSlice].isKey = true;
-            }
+            //if (ZoneManager.Instance.isKeyLevel)
+            //{
+            //    int randomSlice = Random.Range(0, fullSlices.Count);
+            //    Debug.Log(randomSlice);
+            //    fullSlices[randomSlice].isKey = true;
+
+            //    ////// KEY HERE
+            //}
         }
     }
 

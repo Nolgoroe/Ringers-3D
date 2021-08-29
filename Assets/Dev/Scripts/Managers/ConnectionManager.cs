@@ -265,7 +265,7 @@ public class ConnectionManager : MonoBehaviour
                     if (lastPiece)
                     {
                         bool gameWon = GameManager.Instance.CheckEndLevel();
-
+                        //////////// CHECK WHY CHECK END LEVEL IS BEING CALLED MORE THAN ONCE;
                         if (gameWon)
                         {
                             if (conditionmet)

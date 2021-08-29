@@ -77,7 +77,7 @@ public class DewDropsManager : MonoBehaviour
 
             GiveDrop(absDrops);
 
-            UIManager.Instance.RefreshDewDropsDisplay(PlayerManager.Instance.collectedDewDrops);
+            //UIManager.Instance.RefreshDewDropsDisplay(PlayerManager.Instance.collectedDewDrops);
 
             PlayerManager.Instance.SavePlayerData();
         }
@@ -132,7 +132,10 @@ public class DewDropsManager : MonoBehaviour
         {
             path = Application.dataPath + "/DewDropInfo.txt";
         }
+
         JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
+
+        UIManager.Instance.dewDropsText.text = PlayerManager.Instance.collectedDewDrops.ToString();
     }
 
     IEnumerator DisplayTime()
@@ -180,7 +183,8 @@ public class DewDropsManager : MonoBehaviour
             PlayerManager.Instance.collectedDewDrops = maxDrops;
         }
 
-        UIManager.Instance.RefreshDewDropsDisplay(PlayerManager.Instance.collectedDewDrops);
+        UIManager.Instance.dewDropsText.text = PlayerManager.Instance.collectedDewDrops.ToString();
+        //UIManager.Instance.RefreshDewDropsDisplay(PlayerManager.Instance.collectedDewDrops);
 
         PlayerManager.Instance.SavePlayerData();
     }
