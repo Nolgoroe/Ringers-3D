@@ -2714,10 +2714,10 @@ RectTransform:
   m_Children:
   - {fileID: 988846315}
   - {fileID: 1895486029}
-  - {fileID: 295321904}
+  - {fileID: 1999142638}
   - {fileID: 707315977}
   - {fileID: 1789233}
-  - {fileID: 1999142638}
+  - {fileID: 295321904}
   - {fileID: 2028980803}
   - {fileID: 1048086207}
   - {fileID: 2008675372}
@@ -6540,7 +6540,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 3
+  m_Text: '6
+
+'
 --- !u!222 &245510640
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7552,7 +7554,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 2
-  keyLevelIndex: 6
+  keyLevelIndex: 3
   zoneName: Vinebloom Pines
   hasAwardedKey: 0
   isUnlocked: 0
@@ -7731,7 +7733,7 @@ GameObject:
   - component: {fileID: 295321906}
   - component: {fileID: 295321905}
   m_Layer: 5
-  m_Name: Level 22
+  m_Name: Level 25
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7750,11 +7752,11 @@ RectTransform:
   m_Children:
   - {fileID: 245510638}
   m_Father: {fileID: 102763200}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -512, y: 501}
+  m_AnchoredPosition: {x: 163, y: 592}
   m_SizeDelta: {x: 175, y: 175}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &295321905
@@ -7828,7 +7830,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 22
+          m_IntArgument: 25
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -33212,10 +33214,10 @@ MonoBehaviour:
     zoneButtons:
     - {fileID: 988846316}
     - {fileID: 1895486030}
-    - {fileID: 295321905}
+    - {fileID: 1999142639}
     - {fileID: 707315978}
     - {fileID: 1789234}
-    - {fileID: 1999142639}
+    - {fileID: 295321905}
     - {fileID: 2028980804}
     - {fileID: 1048086208}
     - {fileID: 2008675373}
@@ -35466,7 +35468,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 6
+  m_Text: 3
 --- !u!222 &1419941202
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -49503,7 +49505,7 @@ MonoBehaviour:
   gameStarted: 0
   isSecondaryControls: 0
   isDisableTutorials: 0
-  inGameCamPos: {x: 0, y: 1.548, z: -2.983}
+  inGameCamPos: {x: 0, y: 1.9, z: -2.983}
   inGameCamRot: {x: -6.312, y: 0, z: 0}
   copyOfArrayOfPiecesTutorial: []
   copyOfSpecificSliceSpotsTutorial: 
@@ -51851,7 +51853,7 @@ GameObject:
   - component: {fileID: 1999142640}
   - component: {fileID: 1999142639}
   m_Layer: 5
-  m_Name: Level 25 - Key Level
+  m_Name: Level 22 - Key Level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51870,11 +51872,11 @@ RectTransform:
   m_Children:
   - {fileID: 1419941200}
   m_Father: {fileID: 102763200}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 162, y: 591}
+  m_AnchoredPosition: {x: -515, y: 483}
   m_SizeDelta: {x: 175, y: 175}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1999142639
@@ -51948,7 +51950,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 25
+          m_IntArgument: 22
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

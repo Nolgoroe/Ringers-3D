@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         Camera.main.orthographic = false;
         Camera.main.fieldOfView = 60f;
         Camera.main.transform.position = inGameCamPos;
-        Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
+        //Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
         gameStarted = true;
 
@@ -165,7 +165,7 @@ public class GameManager : MonoBehaviour
             Camera.main.orthographic = false;
             Camera.main.fieldOfView = 60f;
             Camera.main.transform.position = inGameCamPos;
-            Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
+            //Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
             gameStarted = true;
 
