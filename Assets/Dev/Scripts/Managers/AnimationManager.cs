@@ -50,6 +50,7 @@ public class AnimationManager : MonoBehaviour
     public ParticleSystem particleFade;
     public TMP_Text zoneToUnlcokHeaderText;
     public TMP_Text zoneToUnlcokNameText;
+    public TMP_Text tapToContinueText;
 
     [Header("Enter Corrupt Zone")]
     [Space(30)]
@@ -348,6 +349,7 @@ public class AnimationManager : MonoBehaviour
         bgFadeImage.color = new Color(bgFadeImage.color.r, bgFadeImage.color.g, bgFadeImage.color.b, 0);
         zoneToUnlcokHeaderText.color = new Color(zoneToUnlcokHeaderText.color.r, zoneToUnlcokHeaderText.color.g, zoneToUnlcokHeaderText.color.b, 0);
         zoneToUnlcokNameText.color = new Color(zoneToUnlcokNameText.color.r, zoneToUnlcokNameText.color.g, zoneToUnlcokNameText.color.b, 0);
+        tapToContinueText.color = new Color(tapToContinueText.color.r, tapToContinueText.color.g, tapToContinueText.color.b, 0);
 
 
         ParticleSystemRenderer r = particleFade.GetComponent<ParticleSystemRenderer>();
@@ -388,6 +390,14 @@ public class AnimationManager : MonoBehaviour
         LeanTween.value(zoneToUnlcokNameText.gameObject, 0f, 1, fadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
         {
             TMP_Text text = zoneToUnlcokNameText;
+            Color newColor = text.color;
+            newColor.a = val;
+            text.color = newColor;
+        });
+
+        LeanTween.value(tapToContinueText.gameObject, 0f, 1, fadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            TMP_Text text = tapToContinueText;
             Color newColor = text.color;
             newColor.a = val;
             text.color = newColor;
