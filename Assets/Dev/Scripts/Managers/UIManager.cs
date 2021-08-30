@@ -122,8 +122,8 @@ public class UIManager : MonoBehaviour
     public void PlayButton()
     {
         ToHud(mainMenu);
-        UnlockLevels();
         ZoneManager.Instance.UnlockLevelViewSequence();
+        UnlockLevels();
     }
     public void ActivateGmaeplayCanvas()
     {
@@ -314,7 +314,6 @@ public class UIManager : MonoBehaviour
             LootManager.Instance.giveKey = false;
             ZoneManager.Instance.ResetZoneManagerData();
             ConnectionManager.Instance.ResetConnectionData();
-            UnlockLevels();
 
             foreach (int ID in ZoneManager.Instance.unlockedZoneID)
             {
@@ -323,6 +322,7 @@ public class UIManager : MonoBehaviour
 
 
             ZoneManager.Instance.UnlockLevelViewSequence();
+            UnlockLevels();
 
             //// SAVE ZONE MANAGER HERE???
         }
