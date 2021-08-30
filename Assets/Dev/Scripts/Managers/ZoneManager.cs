@@ -128,9 +128,10 @@ public class ZoneManager : MonoBehaviour
 
     public void UnlockLevelViewSequence()
     {
-        UIManager.isUsingUI = true;
         if (zonesToUnlock.Count > 0)
         {
+            UIManager.isUsingUI = true;
+
             int num = zonesToUnlock[0];
             //List<int> temp = new List<int>();
             //temp.AddRange(zonesToUnlock);
