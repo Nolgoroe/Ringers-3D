@@ -55,6 +55,29 @@ public class CursorController : MonoBehaviour
     }
     void Update()
     {
+        if(UIManager.isUsingUI && UIManager.Instance.UnlockedZoneMessageView.activeInHierarchy)
+        {
+            if (Input.touchCount > 0)
+            {
+                touch = Input.touches[0];
+
+                if (touch.phase == TouchPhase.Began)
+                {
+                    UIManager.Instance.UnlockedZoneMessageView.SetActive(false);
+                    Debug.Log("THIS IS HOW MANY TIMES");
+                    if (ZoneManager.Instance.zonesToUnlock.Count <= 0)
+                    {
+
+                        UIManager.isUsingUI = false;
+                    }
+                    else
+                    {
+                        ZoneManager.Instance.UnlockLevelViewSequence();
+                    }
+                }
+            }
+        }
+
         if (PowerUpManager.IsUsingPowerUp)
         {
             PowerUpControls();

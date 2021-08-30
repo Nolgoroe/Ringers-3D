@@ -37,6 +37,7 @@ public class UIManager : MonoBehaviour
     public GameObject corruptedZoneSureMessage;
     public GameObject hudCanvasUIBottomZoneMainMap;
     public GameObject hudCanvasUIBottomZoneCorruption;
+    public GameObject UnlockedZoneMessageView;
     public Image dewDropsImage;
 
 
@@ -52,6 +53,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text currentLevelWorldName;
     public TMP_Text currentLevelNumber;
     public TMP_Text corruptedZoneSureMessageText;
+    public TMP_Text zoneToUnlcokNameText;
 
     //public Button commitButton;
     public Button nextLevelFromWinScreen;
@@ -109,6 +111,7 @@ public class UIManager : MonoBehaviour
         corruptedZoneSureMessage.SetActive(false);
         hudCanvasUIBottomZoneCorruption.SetActive(false);
         ownedCorruptDevicesZone.gameObject.SetActive(false);
+        UnlockedZoneMessageView.gameObject.SetActive(false);
 
         animalNameText.text = "";
         foreach (GameObject go in allTutorialScreens)
@@ -120,6 +123,7 @@ public class UIManager : MonoBehaviour
     {
         ToHud(mainMenu);
         UnlockLevels();
+        ZoneManager.Instance.UnlockLevelViewSequence();
     }
     public void ActivateGmaeplayCanvas()
     {
@@ -282,7 +286,6 @@ public class UIManager : MonoBehaviour
 
         if (currentCanvas == gameplayCanvas)
         {
-
             TutorialSequence.Instacne.currentPhaseInSequence = 0;
             TutorialSequence.Instacne.duringSequence = false;
             GameManager.Instance.copyOfArrayOfPiecesTutorial.Clear();
@@ -318,7 +321,10 @@ public class UIManager : MonoBehaviour
                 ZoneManagerHelpData.Instance.listOfAllZones[ID].SaveZone();
             }
 
-            ZoneManager.Instance.SaveZoneManager();
+
+            ZoneManager.Instance.UnlockLevelViewSequence();
+
+            //// SAVE ZONE MANAGER HERE???
         }
 
         if (currentCanvas == ringersHutDisplay)
@@ -671,5 +677,10 @@ public class UIManager : MonoBehaviour
         Image deviceImage = TMS.gameObject.GetComponent<Image>();
 
         deviceImage.sprite = Resources.Load<Sprite>(TMS.connectedCDD.spritePath);
+    }
+
+    public void DisplayUnlockedZoneMessage(int ID)
+    {
+        StartCoroutine(AnimationManager.instance.AnimateUnlockScreen(ID));
     }
 }

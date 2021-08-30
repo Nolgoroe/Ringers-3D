@@ -163,13 +163,20 @@ public class LootManager : MonoBehaviour
 
                 //UIManager.Instance.UnlockZoneFirstTime(ZoneManagerHelpData.Instance.nextZoneCheck.id);
 
-                ZoneManager.Instance.unlockedZoneID.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
+                //ZoneManager.Instance.unlockedZoneID.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id); //// this needs to move to zone manager (WIP)
+                ZoneManager.Instance.zonesToUnlock.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
+
+
+                ZoneManager.Instance.SaveZoneManager();
+                ZoneManagerHelpData.Instance.currentZoneCheck.SaveZone();
+                ZoneManagerHelpData.Instance.nextZoneCheck.SaveZone();
             }
 
             giveKey = false;
         }
 
         PlayerManager.Instance.SavePlayerData();
+
     }
     public void RollOnTable(LootPacks lootPack)
     {

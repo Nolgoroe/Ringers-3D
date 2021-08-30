@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using TMPro;
+
 
 public class AnimationManager : MonoBehaviour
 {
     public static AnimationManager instance;
 
-    [Header("Health Settings")]
+    //[Header("Health Settings")]
     public float waitBetweenPieceMove;
     public float speedPieceMove;
 
@@ -25,7 +27,7 @@ public class AnimationManager : MonoBehaviour
     public float waitTimeFadeOut;
     public float waitTimeWinScreen;
 
-    public float fadingSpeed;
+    public float fadingSpeedGameplay;
 
     public float animalWaitTime;
 
@@ -40,6 +42,14 @@ public class AnimationManager : MonoBehaviour
 
     public timeWaitPull minMaxWaitPullInPieces;
 
+    [Header("Unlcok Zone Settings")]
+    public float cameraMoveTime;
+    public float fadingTime;
+
+    public Image bgFadeImage;
+    public ParticleSystem particleFade;
+    public TMP_Text zoneToUnlcokHeaderText;
+    public TMP_Text zoneToUnlcokNameText;
 
     [Header("Enter Corrupt Zone")]
     [Space(30)]
@@ -135,7 +145,7 @@ public class AnimationManager : MonoBehaviour
         yield return new WaitForSeconds(waitTimeFadeIn);
         fadeImageEndLevel.gameObject.SetActive(true);
 
-        LeanTween.value(fadeImageEndLevel.gameObject, 0f, 1, fadingSpeed).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        LeanTween.value(fadeImageEndLevel.gameObject, 0f, 1, fadingSpeedGameplay).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
         {
             Image sr = fadeImageEndLevel;
             Color newColor = sr.color;
@@ -152,7 +162,7 @@ public class AnimationManager : MonoBehaviour
 
         yield return new WaitForSeconds(waitTimeFadeOut);
 
-        LeanTween.value(fadeImageEndLevel.gameObject, 1, 0, fadingSpeed).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        LeanTween.value(fadeImageEndLevel.gameObject, 1, 0, fadingSpeedGameplay).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
         {
             Image sr = fadeImageEndLevel;
             Color newColor = sr.color;
@@ -317,5 +327,71 @@ public class AnimationManager : MonoBehaviour
             newColor.a = val;
             sr.color = newColor;
         });
+    }
+
+    public IEnumerator AnimateUnlockScreen(int ID)
+    {
+        Camera toMove = Camera.main;
+
+        UIManager.Instance.zoneToUnlcokNameText.text = ZoneManagerHelpData.Instance.listOfAllZones[ID].zoneName;
+
+        Transform target = ZoneManagerHelpData.Instance.listOfAllZones[ID].transform;
+
+        LeanTween.move(toMove.gameObject, new Vector3(target.position.x, target.position.y, toMove.transform.position.z), cameraMoveTime).setEase(LeanTweenType.easeInOutQuad); // animate
+
+        yield return new WaitUntil((() => Vector2.Distance(toMove.gameObject.transform.position, target.position) <= 0.1f));
+        FadeInUnlcokScreen();
+    }
+
+    void FadeInUnlcokScreen()
+    {
+        bgFadeImage.color = new Color(bgFadeImage.color.r, bgFadeImage.color.g, bgFadeImage.color.b, 0);
+        zoneToUnlcokHeaderText.color = new Color(zoneToUnlcokHeaderText.color.r, zoneToUnlcokHeaderText.color.g, zoneToUnlcokHeaderText.color.b, 0);
+        zoneToUnlcokNameText.color = new Color(zoneToUnlcokNameText.color.r, zoneToUnlcokNameText.color.g, zoneToUnlcokNameText.color.b, 0);
+
+
+        ParticleSystemRenderer r = particleFade.GetComponent<ParticleSystemRenderer>();
+        //r.material.color = new Color(r.material.color.r, r.material.color.g, r.material.color.b, 0);
+
+        Color c = Color.white;
+        r.sharedMaterial.SetColor("_BaseColor", new Color(c.r, c.g, c.b, 0));
+
+        UIManager.Instance.UnlockedZoneMessageView.SetActive(true);
+
+
+        LeanTween.value(bgFadeImage.gameObject, 0f, 0.65f, fadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            Image image = bgFadeImage;
+            Color newColor = image.color;
+            newColor.a = val;
+            image.color = newColor;
+        });
+
+        LeanTween.value(particleFade.gameObject, 0f, 0.68f, fadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            //ParticleSystemRenderer r = particleFade.GetComponent<ParticleSystemRenderer>();
+
+            Color newColor = Color.white;
+            newColor.a = val;
+            //r.material.color = newColor;
+            r.sharedMaterial.SetColor("_BaseColor", newColor);
+        });
+
+        LeanTween.value(zoneToUnlcokHeaderText.gameObject, 0f, 1f, fadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            TMP_Text text = zoneToUnlcokHeaderText;
+            Color newColor = text.color;
+            newColor.a = val;
+            text.color = newColor;
+        });
+
+        LeanTween.value(zoneToUnlcokNameText.gameObject, 0f, 1, fadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            TMP_Text text = zoneToUnlcokNameText;
+            Color newColor = text.color;
+            newColor.a = val;
+            text.color = newColor;
+        });
+
     }
 }

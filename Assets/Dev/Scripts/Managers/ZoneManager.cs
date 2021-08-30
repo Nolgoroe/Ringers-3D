@@ -7,12 +7,16 @@ using System.Linq;
 
 public class ZoneManager : MonoBehaviour
 {
-
+    /// <summary>
+    /// SAVE ZONE IS BEING CALLED TO MANY TIMES - OPTEMIZE THIS!
+    /// </summary>
     public bool isKeyLevel;
 
     string path;
 
     public static ZoneManager Instance;
+
+    public List<int> zonesToUnlock;
 
     public List<int> unlockedZoneID;
     private void Start()
@@ -104,6 +108,7 @@ public class ZoneManager : MonoBehaviour
         JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
 
         Instance = this;
+        isKeyLevel = false;
     }
 
     public void DiactiavteLevelDisplay()
@@ -118,6 +123,26 @@ public class ZoneManager : MonoBehaviour
         for (int i = 0; i < ZoneManagerHelpData.Instance.zoneLevelDisplays.Length; i++)
         {
             ZoneManagerHelpData.Instance.zoneLevelDisplays[i].SetActive(true);
+        }
+    }
+
+    public void UnlockLevelViewSequence()
+    {
+        UIManager.isUsingUI = true;
+        if (zonesToUnlock.Count > 0)
+        {
+            int num = zonesToUnlock[0];
+            //List<int> temp = new List<int>();
+            //temp.AddRange(zonesToUnlock);
+
+            //foreach (int num in temp)
+            //{
+            unlockedZoneID.Add(num);
+            zonesToUnlock.Remove(num);
+            UIManager.Instance.DisplayUnlockedZoneMessage(num);
+            //}
+
+            SaveZoneManager();
         }
     }
 }
