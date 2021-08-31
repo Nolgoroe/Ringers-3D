@@ -32,6 +32,10 @@ public class DewDropsManager : MonoBehaviour
         {
             LoadDewDropsData();
         }
+        else
+        {
+            UIManager.Instance.dewDropsText.text = PlayerManager.Instance.collectedDewDrops.ToString();
+        }
 
         DateTime currentTime = DateTime.Now.ToLocalTime();
         //Debug.Log(currentTime);
