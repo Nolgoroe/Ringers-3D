@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
         GameAnalytics.Initialize();
         isSecondaryControls = false;
         isDisableTutorials = false;
+        levelBGModel.SetActive(false); /// temp
     }
 
     public void StartLevel()

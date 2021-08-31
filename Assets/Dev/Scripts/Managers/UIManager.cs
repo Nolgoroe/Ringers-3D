@@ -40,6 +40,9 @@ public class UIManager : MonoBehaviour
     public GameObject UnlockedZoneMessageView;
     public Image dewDropsImage;
 
+    public Image tapControlsImage, dragControlsImage, tutorialDisableImage;
+
+    public Sprite toggleOffSprite, toggleOnSprite;
 
     public Transform sureLevelRestartLootDislpay;
     public Transform ownedCorruptDevicesZone;
@@ -69,6 +72,8 @@ public class UIManager : MonoBehaviour
     //public Sprite[] dewDropsSprites;
 
     public Vector3 hubCameraPos;
+
+
 
     public static bool isUsingUI;
     private void Start()
@@ -112,6 +117,11 @@ public class UIManager : MonoBehaviour
         hudCanvasUIBottomZoneCorruption.SetActive(false);
         ownedCorruptDevicesZone.gameObject.SetActive(false);
         UnlockedZoneMessageView.gameObject.SetActive(false);
+
+
+        dragControlsImage.sprite = toggleOnSprite;
+        tapControlsImage.sprite = toggleOffSprite;
+        tutorialDisableImage.sprite = toggleOnSprite;
 
         animalNameText.text = "";
         foreach (GameObject go in allTutorialScreens)
@@ -635,13 +645,31 @@ public class UIManager : MonoBehaviour
     //{
     //    dewDropsImage.sprite = dewDropsSprites[spriteIndex];
     //}
-    public void ChangeControls()
+    public void ChangeControlsTap()
     {
-        GameManager.Instance.isSecondaryControls = !GameManager.Instance.isSecondaryControls;
+        GameManager.Instance.isSecondaryControls = true;
+        tapControlsImage.sprite = toggleOnSprite;
+        dragControlsImage.sprite = toggleOffSprite;
     }
+    public void ChangeControlsDrag()
+    {
+        GameManager.Instance.isSecondaryControls = false;
+        dragControlsImage.sprite = toggleOnSprite;
+        tapControlsImage.sprite = toggleOffSprite;
+    }
+
     public void DisableTutorials()
     {
         GameManager.Instance.isDisableTutorials = !GameManager.Instance.isDisableTutorials;
+
+        if (GameManager.Instance.isDisableTutorials)
+        {
+            tutorialDisableImage.sprite = toggleOffSprite;
+        }
+        else
+        {
+            tutorialDisableImage.sprite = toggleOnSprite;
+        }
     }
     public void StartEnterCorruptedSequence(int ID)
     {
