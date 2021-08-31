@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject circleBoardPrefab;
     //public GameObject doubleCircleBoardPrefab;
-    public GameObject backGroundPrefab;
+    public GameObject levelBGModel;
     public GameObject clipPrefab;
 
     public GameObject gameBoard;
@@ -107,10 +107,10 @@ public class GameManager : MonoBehaviour
         powerupManager.InstantiateSpecialPowers();
 
 
-        if (backGroundPrefab)
+        if (levelBGModel)
         {
             //GameObject go = Instantiate(backGroundPrefab, destroyOutOfLevel);
-            GameObject go = backGroundPrefab;
+            GameObject go = levelBGModel;
             go.SetActive(true);
             AnimalPrefabData data = InstantiateAnimals(go);
 
@@ -191,10 +191,10 @@ public class GameManager : MonoBehaviour
 
             powerupManager.InstantiateSpecialPowers();
 
-            if (backGroundPrefab)
+            if (levelBGModel)
             {
                 //GameObject go = Instantiate(backGroundPrefab, destroyOutOfLevel);
-                GameObject go = backGroundPrefab;
+                GameObject go = levelBGModel;
                 go.SetActive(true);
 
                 AnimalPrefabData data = InstantiateAnimals(go);
@@ -276,6 +276,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Destroying Level");
 
         gameStarted = false;
+        levelBGModel.SetActive(false);
 
         foreach (Transform child in destroyOutOfLevel)
         {

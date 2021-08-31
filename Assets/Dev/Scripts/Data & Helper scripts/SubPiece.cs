@@ -9,6 +9,7 @@ public class SubPiece : MonoBehaviour
     public PieceColor colorOfPiece;
     public Color connectedColor;
 
+    //public Renderer rend;
     public Renderer rend;
     //public Renderer symbolHolder;
 
@@ -48,6 +49,13 @@ public class SubPiece : MonoBehaviour
                 indexcSymbol = Random.Range(0, GameManager.Instance.clipManager.colorsToMats[randomColor].colorMats.Length);
             }
 
+            //MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+            //MeshRenderer r = new MeshRenderer();
+            //r.GetPropertyBlock(mpb);
+            //mpb.SetColor("_BaseColor", Color.white);
+            //r.SetPropertyBlock(mpb); 
+            ///////////PERFORMACE FOR DRAW CALLS
+            
             rend.material = GameManager.Instance.clipManager.colorsToMats[indexcColor].colorMats[indexcSymbol];
         }
         else
