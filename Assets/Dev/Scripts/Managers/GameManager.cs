@@ -109,8 +109,9 @@ public class GameManager : MonoBehaviour
 
         if (backGroundPrefab)
         {
-            GameObject go = Instantiate(backGroundPrefab, destroyOutOfLevel);
-
+            //GameObject go = Instantiate(backGroundPrefab, destroyOutOfLevel);
+            GameObject go = backGroundPrefab;
+            go.SetActive(true);
             AnimalPrefabData data = InstantiateAnimals(go);
 
             if (data != null)
@@ -192,7 +193,9 @@ public class GameManager : MonoBehaviour
 
             if (backGroundPrefab)
             {
-                GameObject go = Instantiate(backGroundPrefab, destroyOutOfLevel);
+                //GameObject go = Instantiate(backGroundPrefab, destroyOutOfLevel);
+                GameObject go = backGroundPrefab;
+                go.SetActive(true);
 
                 AnimalPrefabData data = InstantiateAnimals(go);
 
