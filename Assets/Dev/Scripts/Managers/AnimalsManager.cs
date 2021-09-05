@@ -138,7 +138,7 @@ public class AnimalsManager : MonoBehaviour
         GameObject go = Instantiate(APD.animatedPrefab, statueToSwap.transform.parent);
 
         Destroy(statueToSwap.gameObject);
-        Destroy(go, 3.7f);
+        //Destroy(go, 3.7f);
         statueToSwap = null;
 
         yield return null;
