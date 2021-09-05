@@ -8,6 +8,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
     public static MaterialsAndForgeManager Instance;
 
     public GameObject equipmentForgeDisplayerPrefab;
+    public GameObject corruptedDeviceDisplayerPrefab;
     public GameObject crafingMatPrefab;
     public Transform equipmentContent; /// Parent
     public Dictionary<CraftingMats, string> materialSpriteByName;
@@ -15,6 +16,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
     public Transform matInventoryParent;
 
     public List<EquipmentDisplayer> equipmentInForge; /// Equipment that the player does not have / has not created yet
+    public List<CorruptedDevicesDisplayer> corruptedDevicesInForge; /// Equipment that the player does not have / has not created yet
 
     public string[] materialPaths;
 
@@ -38,7 +40,6 @@ public class MaterialsAndForgeManager : MonoBehaviour
 
     public void FillForge(List<EquipmentData> equipment)
     {
-
         foreach (EquipmentData EQ in equipment)
         {
             GameObject go = Instantiate(equipmentForgeDisplayerPrefab, equipmentContent);
@@ -123,7 +124,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
             //}
         }
 
-        PopulateMaterialBagAll();///// Ask Alon to explain Logic here
+        //PopulateMaterialBagAll();///// Ask Alon to explain Logic here
     }
 
     [ContextMenu("Refresh Forge")]
@@ -136,6 +137,39 @@ public class MaterialsAndForgeManager : MonoBehaviour
             Destroy(EQ.gameObject);
         }
 
-        FillForge(GameManager.Instance.csvParser.allEquipmentInGame);
+        //FillForge(GameManager.Instance.csvParser.allEquipmentInGame);
     }
+
+
+
+    public void FillCorruptionDevices(List<CorruptedDevicesData> corruptedDevices)
+    {
+        foreach (CorruptedDevicesData CDD in corruptedDevices)
+        {
+            GameObject go = Instantiate(corruptedDeviceDisplayerPrefab, equipmentContent);
+            CorruptedDevicesDisplayer CDDisplay = go.GetComponent<CorruptedDevicesDisplayer>();
+
+            //CDDisplay.itemName.text = CDD.deviceName;
+            CDDisplay.data = CDD;
+
+            CDDisplay.itemImage.texture = Resources.Load(CDD.spritePath) as Texture2D;
+
+            //CDDisplay.name = CDDisplay.itemName.text;
+            corruptedDevicesInForge.Add(CDDisplay);
+            CDDisplay.SpawnMaterialsNeeded(CDD.mats);
+        }
+    }
+
+    public void RefreshCorruptionDevices()
+    {
+        corruptedDevicesInForge.Clear();
+
+        //foreach (Transform EQ in equipmentContent)
+        //{
+        //    Destroy(EQ.gameObject);
+        //}
+
+        //FillForge(GameManager.Instance.csvParser.allEquipmentInGame);
+    }
+
 }

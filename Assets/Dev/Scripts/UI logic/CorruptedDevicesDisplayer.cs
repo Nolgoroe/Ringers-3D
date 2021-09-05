@@ -8,11 +8,14 @@ using System;
 using System.Linq;
 
 
-public class HollowObjectDisplayer : MonoBehaviour
+
+public class CorruptedDevicesDisplayer : MonoBehaviour
 {
-    public Button craftButton;
+    public Button forgeButton;
 
     //public TMP_Text itemName;
+    //public TMP_Text usageCount;
+    //public RawImage powerUp;
     public RawImage itemImage;
 
     public Transform ingrediantContentParent;
@@ -20,7 +23,7 @@ public class HollowObjectDisplayer : MonoBehaviour
 
     public List<string> materialCountPairs;
 
-    public HollowCraftObjectData objectData;
+    public CorruptedDevicesData data;
 
     public List<CraftingMatsNeeded> craftingMatsForEquipment;
 
@@ -56,10 +59,15 @@ public class HollowObjectDisplayer : MonoBehaviour
             CMD.SetImageAndMaterialCount(MaterialsAndForgeManager.Instance.materialSpriteByName[parsed_enum], matAndCount[1]);
 
             SetDataMatsNeeded(nameOfMat, Convert.ToInt16(matAndCount[1]), CMD, parsed_enum);
+
+            //CMD.SetImageAndMaterialCount("Crafting Mat Icons/" + matAndCount[0], matAndCount[1]);
+            //CMD.SetImageAndMaterialCount(MaterialsAndForgeManager.Instance.materialSpriteByName[parsed_enum], matAndCount[1]);
+
+            //SetDataMatsNeeded(matAndCount[0], Convert.ToInt16(matAndCount[1]), CMD);
         }
 
 
-        CheckIfCanCraftHollowObject(craftingMatsForEquipment);
+        CheckIfCanForgeEquipment(craftingMatsForEquipment);
     }
 
     public void SetDataMatsNeeded(string nameOfMat, int amountOfMat, CraftingMatDisplayer CMD, CraftingMats parsed_enum)
@@ -74,7 +82,28 @@ public class HollowObjectDisplayer : MonoBehaviour
         CMD.CheckIfHasEnough(parsed_enum, amountOfMat);
     }
 
-    public void CheckIfCanCraftHollowObject(List<CraftingMatsNeeded> CMN)
+    public void ForgeCorruptedDevice() ///// Here because the forge button and resources data are local
+    {
+        foreach (CraftingMatsNeeded CMN in craftingMatsForEquipment)
+        {
+            Debug.Log(CMN.mat.ToString());
+            Debug.Log(CMN.amount);
+
+            PlayerManager.Instance.DecreaseNumOfMats(CMN);
+        }
+
+        SortMaster.Instance.ClearAllForgeScreens();
+        SortMaster.Instance.RefreshAllScreens();
+
+        //PlayerManager.Instance.wardrobeEquipment.Add(data);
+        //WardrobeManager.Instance.SpawnWardrobeEquipment(data);
+
+        PlayerManager.Instance.ownedCorruptDevices.Add(data);
+
+        PlayerManager.Instance.SavePlayerData();
+    }
+
+    public void CheckIfCanForgeEquipment(List<CraftingMatsNeeded> CMN)
     {
         bool canCraft = true;
 
@@ -89,32 +118,14 @@ public class HollowObjectDisplayer : MonoBehaviour
 
         if (canCraft)
         {
-            craftButton.interactable = true;
-            //craftButton.gameObject.SetActive(true);
+            forgeButton.interactable = true;
+            //forgeButton.gameObject.SetActive(true);
         }
         else
         {
-            craftButton.interactable = false;
-            //craftButton.gameObject.SetActive(false);
+            forgeButton.interactable = false;
+
+            //forgeButton.gameObject.SetActive(false);
         }
-    }
-
-    public void CraftHollowObject() ///// Here because the forge button and resources data are local
-    {
-        foreach (CraftingMatsNeeded CMN in craftingMatsForEquipment)
-        {
-            Debug.Log(CMN.mat.ToString());
-            Debug.Log(CMN.amount);
-
-            PlayerManager.Instance.DecreaseNumOfMats(CMN);
-        }
-
-        PlayerManager.Instance.ownedHollowObjects.Add(objectData);
-
-        SortMaster.Instance.ClearAllForgeScreens();
-        SortMaster.Instance.RefreshAllScreens();
-
-        PlayerManager.Instance.SavePlayerData();
-
     }
 }

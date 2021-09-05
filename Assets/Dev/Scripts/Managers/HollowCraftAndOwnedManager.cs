@@ -43,7 +43,7 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
             GameObject go = Instantiate(HollowObjectPrefab, HollowObjectContent);
             HollowObjectDisplayer HOD = go.GetComponent<HollowObjectDisplayer>();
 
-            HOD.itemName.text = HCOD.objectname;
+            //HOD.itemName.text = HCOD.objectname;
             HOD.objectData = HCOD;
 
             HOD.itemImage.texture = Resources.Load(HCOD.spritePath) as Texture2D;
@@ -80,7 +80,7 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
             Destroy(ownedObject.gameObject);
         }
 
-        FillOwnedScreen();
+        //FillOwnedScreen();
     }
 
     [ContextMenu("Refresh Hollow Objects")]
@@ -93,7 +93,7 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
             Destroy(HO.gameObject);
         }
 
-        FillCraftScreen(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
+        //FillCraftScreen(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
     }
 
     public void OpenOwnedFurnitureToPlace(int typeOfHollow)

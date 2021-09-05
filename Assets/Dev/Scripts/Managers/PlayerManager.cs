@@ -94,16 +94,13 @@ public class PlayerManager : MonoBehaviour
         {
             LoadPlayerData();
 
-            MaterialsAndForgeManager.Instance.RefreshForge();
-            MaterialsAndForgeManager.Instance.RefreshMaterialBag();
-
-            HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
-            HollowCraftAndOwnedManager.Instance.RefreshOwnedScreen();
+            SortMaster.Instance.ClearAllForgeScreens();
+            SortMaster.Instance.RefreshAllScreens();
 
             //UIManager.Instance.RefreshDewDropsDisplay(collectedDewDrops);
         }
 
-        ownedCorruptDevices.Clear();
+        //ownedCorruptDevices.Clear();
         //if (wardrobeEquipment.Count > 0)
         //{
         //    foreach (EquipmentData ED in wardrobeEquipment)
@@ -243,10 +240,8 @@ public class PlayerManager : MonoBehaviour
 
         SavePlayerData();
 
-        MaterialsAndForgeManager.Instance.RefreshMaterialBag();
-        MaterialsAndForgeManager.Instance.RefreshForge();
-
-        HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
+        SortMaster.Instance.ClearAllForgeScreens();
+        SortMaster.Instance.RefreshAllScreens();
     }
 
     [ContextMenu("Add 100 Player Mats")]
@@ -259,10 +254,12 @@ public class PlayerManager : MonoBehaviour
 
         SavePlayerData();
 
-        MaterialsAndForgeManager.Instance.RefreshMaterialBag();
-        MaterialsAndForgeManager.Instance.RefreshForge();
+        //MaterialsAndForgeManager.Instance.RefreshMaterialBag();
+        //MaterialsAndForgeManager.Instance.RefreshForge();
+        //HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
 
-        HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
+        SortMaster.Instance.ClearAllForgeScreens();
+        SortMaster.Instance.RefreshAllScreens();
     }
 
     public bool SearchEquippedItemsForMatch(EquipmentData ED)

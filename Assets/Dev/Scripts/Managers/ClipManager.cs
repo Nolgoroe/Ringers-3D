@@ -21,11 +21,14 @@ public class ClipManager : MonoBehaviour
 
     public int clipCount;
 
+    public Material generalPieceMat;
+
     [Serializable]
     public class ColorsAndMats
     {
         public PieceColor matColor;
-        public Material[] colorMats;
+        //public Material[] colorMats;
+        public Texture[] colorTex;
     }
 
     [Serializable]

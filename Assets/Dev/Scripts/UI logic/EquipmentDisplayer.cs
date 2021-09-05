@@ -98,11 +98,11 @@ public class EquipmentDisplayer : MonoBehaviour
             PlayerManager.Instance.DecreaseNumOfMats(CMN);
         }
 
-        MaterialsAndForgeManager.Instance.RefreshMaterialBag();
-        MaterialsAndForgeManager.Instance.RefreshForge();
+        SortMaster.Instance.ClearAllForgeScreens();
+        SortMaster.Instance.RefreshAllScreens();
 
         //PlayerManager.Instance.wardrobeEquipment.Add(data);
-        WardrobeManager.Instance.SpawnWardrobeEquipment(data);
+        //WardrobeManager.Instance.SpawnWardrobeEquipment(data);
 
         WardrobeManager.Instance.EquipMe(data);
     }
@@ -122,11 +122,14 @@ public class EquipmentDisplayer : MonoBehaviour
 
         if (canCraft)
         {
-            forgeButton.gameObject.SetActive(true);
+            forgeButton.interactable = true;
+            //forgeButton.gameObject.SetActive(true);
         }
         else
         {
-            forgeButton.gameObject.SetActive(false);
+            forgeButton.interactable = false;
+
+            //forgeButton.gameObject.SetActive(false);
         }
     }
 }

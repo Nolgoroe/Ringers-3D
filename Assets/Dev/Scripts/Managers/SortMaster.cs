@@ -13,7 +13,7 @@ public class SortMaster : MonoBehaviour
     public TMP_Dropdown ownedHollowObjectsFilter;
     public static SortMaster Instance;
 
-    private void Start()
+    private void Awake()
     {
         Instance = this;
     }
@@ -137,5 +137,25 @@ public class SortMaster : MonoBehaviour
     {
         Debug.Log(matToSort);
         MaterialsAndForgeManager.Instance.RefreshMaterialBagSort(matToSort);
+    }
+
+    public void RefreshAllScreens()
+    {
+        MaterialsAndForgeManager.Instance.PopulateMaterialBagAll();///// Ask Alon to explain Logic here
+        HollowCraftAndOwnedManager.Instance.FillCraftScreen(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
+        HollowCraftAndOwnedManager.Instance.FillOwnedScreen();
+        MaterialsAndForgeManager.Instance.FillForge(GameManager.Instance.csvParser.allEquipmentInGame);
+        MaterialsAndForgeManager.Instance.FillCorruptionDevices(GameManager.Instance.csvParser.allCorruptedDevicesInGame);
+
+    }
+
+    public void ClearAllForgeScreens()
+    {
+        MaterialsAndForgeManager.Instance.RefreshMaterialBag();
+        MaterialsAndForgeManager.Instance.RefreshForge();
+        MaterialsAndForgeManager.Instance.RefreshCorruptionDevices();
+
+        HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
+        HollowCraftAndOwnedManager.Instance.RefreshOwnedScreen();
     }
 }
