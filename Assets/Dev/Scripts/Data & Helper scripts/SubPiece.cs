@@ -49,15 +49,16 @@ public class SubPiece : MonoBehaviour
                 indexcSymbol = Random.Range(0, GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex.Length);
             }
 
-            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-            MeshRenderer r = GetComponent<MeshRenderer>();
-
-            r.GetPropertyBlock(mpb);
-            mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[indexcColor].colorTex[indexcSymbol]);
-            r.SetPropertyBlock(mpb);
-            /////////PERFORMACE FOR DRAW CALLS
+            //MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+            //MeshRenderer r = GetComponent<MeshRenderer>();
+            
+            //r.GetPropertyBlock(mpb);
+            //mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[indexcColor].colorTex[indexcSymbol]);
+            //r.SetPropertyBlock(mpb);
+            ///////PERFORMACE FOR DRAW CALLS
 
             //rend.material = GameManager.Instance.clipManager.colorsToMats[indexcColor].colorTex[indexcSymbol];
+            rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[indexcColor].colorTex[indexcSymbol]);
         }
         else
         {
@@ -68,14 +69,15 @@ public class SubPiece : MonoBehaviour
             symbolOfPiece = (PieceSymbol)randomSymbol;
 
 
-            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-            MeshRenderer r = GetComponent<MeshRenderer>();
+            //MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+            //MeshRenderer r = GetComponent<MeshRenderer>();
 
-            r.GetPropertyBlock(mpb);
-            mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex[randomSymbol]);
-            r.SetPropertyBlock(mpb);
+            //r.GetPropertyBlock(mpb);
+            //mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex[randomSymbol]);
+            //r.SetPropertyBlock(mpb);
 
             //rend.material = GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex[randomSymbol];
+            rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex[randomSymbol]);
         }
     }
 
@@ -98,14 +100,15 @@ public class SubPiece : MonoBehaviour
                 indexcSymbol = (int)symbolOfPiece;
             }
 
-            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-            MeshRenderer r = GetComponent<MeshRenderer>();
+            //MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+            //MeshRenderer r = GetComponent<MeshRenderer>();
 
-            r.GetPropertyBlock(mpb);
-            mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)PieceColor.None].colorTex[indexcSymbol]);
-            r.SetPropertyBlock(mpb);
+            //r.GetPropertyBlock(mpb);
+            //mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)PieceColor.None].colorTex[indexcSymbol]);
+            //r.SetPropertyBlock(mpb);
 
             //rend.material = GameManager.Instance.clipManager.colorsToMats[(int)PieceColor.None].colorMats[indexcSymbol];
+            rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)PieceColor.None].colorTex[indexcSymbol]);
         }
         else
         {
@@ -115,14 +118,15 @@ public class SubPiece : MonoBehaviour
 
                 symbolOfPiece = SPDS.symbolOfPieceRight;
 
-                MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-                MeshRenderer r = GetComponent<MeshRenderer>();
+                //MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+                //MeshRenderer r = GetComponent<MeshRenderer>();
 
-                r.GetPropertyBlock(mpb);
-                mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
-                r.SetPropertyBlock(mpb);
+                //r.GetPropertyBlock(mpb);
+                //mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
+                //r.SetPropertyBlock(mpb);
 
                 //rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
+                rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
             }
             else
             {
@@ -130,14 +134,15 @@ public class SubPiece : MonoBehaviour
 
                 symbolOfPiece = SPDS.symbolOfPieceLeft;
 
-                MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-                MeshRenderer r = GetComponent<MeshRenderer>();
+                //MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+                //MeshRenderer r = GetComponent<MeshRenderer>();
 
-                r.GetPropertyBlock(mpb);
-                mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
-                r.SetPropertyBlock(mpb);
+                //r.GetPropertyBlock(mpb);
+                //mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
+                //r.SetPropertyBlock(mpb);
 
                 //rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
+                rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
             }
         }
 
@@ -152,14 +157,15 @@ public class SubPiece : MonoBehaviour
             symbolOfPiece = GameManager.Instance.copyOfArrayOfPiecesTutorial[0].symbolOfPieceRight;
 
 
-            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-            MeshRenderer r = GetComponent<MeshRenderer>();
+            //MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+            //MeshRenderer r = GetComponent<MeshRenderer>();
 
-            r.GetPropertyBlock(mpb);
-            mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
-            r.SetPropertyBlock(mpb);
+            //r.GetPropertyBlock(mpb);
+            //mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
+            //r.SetPropertyBlock(mpb);
 
             //rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
+            rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
         }
         else
         {
@@ -168,14 +174,15 @@ public class SubPiece : MonoBehaviour
             symbolOfPiece = GameManager.Instance.copyOfArrayOfPiecesTutorial[0].symbolOfPieceLeft;
 
 
-            MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-            MeshRenderer r = GetComponent<MeshRenderer>();
+            //MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+            //MeshRenderer r = GetComponent<MeshRenderer>();
 
-            r.GetPropertyBlock(mpb);
-            mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
-            r.SetPropertyBlock(mpb);
+            //r.GetPropertyBlock(mpb);
+            //mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
+            //r.SetPropertyBlock(mpb);
 
             //rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
+            rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
         }
 
         //if (rend.materials[0].IsKeywordEnabled("_EMISSION"))
@@ -195,14 +202,15 @@ public class SubPiece : MonoBehaviour
         //rend.material.SetTexture("_BumpMap", GameManager.Instance.clipManager.gameSymbols[(int)symbolOfPiece]);
         //rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.gameSymbols[(int)symbolOfPiece]);
 
-        MaterialPropertyBlock mpb = new MaterialPropertyBlock();
-        MeshRenderer r = GetComponent<MeshRenderer>();
+        //MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+        //MeshRenderer r = GetComponent<MeshRenderer>();
 
-        r.GetPropertyBlock(mpb);
-        mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex[(int)symbolOfPiece]);
-        r.SetPropertyBlock(mpb);
+        //r.GetPropertyBlock(mpb);
+        //mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex[(int)symbolOfPiece]);
+        //r.SetPropertyBlock(mpb);
 
         //rend.material = GameManager.Instance.clipManager.colorsToMats[randomColor].colorMats[(int)symbolOfPiece];
+        rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex[(int)symbolOfPiece]);
 
         if (rend.materials[0].IsKeywordEnabled("_EMISSION"))
         {
