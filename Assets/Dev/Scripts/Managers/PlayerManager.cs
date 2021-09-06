@@ -154,6 +154,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void PopulatePowerUps()
     {
+        
         foreach (EquipmentData ED in ownedPowerups)
         {
             activePowerups.Add(ED.power);

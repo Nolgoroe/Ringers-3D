@@ -120,42 +120,45 @@ public class PowerUpManager : MonoBehaviour
     }
     public void InstantiatePowerUps(EquipmentData data)
     {
-        GameObject go = Instantiate(powerupButtonPreab, instnatiateZones[instnatiatedZonesCounter]);
-
-        instnatiatedZonesCounter++;
-
-        PowerupProperties prop = go.GetComponent<PowerupProperties>();
-
-        prop.connectedEquipment = data;
-
-        PowerUp current = data.power;
-
-        go.name = current.ToString();
-
-        prop.SetProperties(current);
-
-        prop.numOfUses = data.numOfUses;
-
-        if (current == PowerUp.FourColorTransform)
+        if(instnatiatedZonesCounter < instnatiateZones.Length)
         {
-            prop.transformColor = data.specificColor;
-        }
-        //else if(current == PowerUp.FourShapeTransform)
-        //{
-        //    prop.transformSymbol = data.specificSymbol;
-        //}
+            GameObject go = Instantiate(powerupButtonPreab, instnatiateZones[instnatiatedZonesCounter]);
 
-        if(prop.connectedEquipment.scopeOfUses == 0) /// 0 = daily 1 = per patch
-        {
-            go.GetComponent<Button>().interactable = prop.connectedEquipment.nextTimeAvailable == null || prop.connectedEquipment.nextTimeAvailable == "";
-        }
-        else
-        {
-            go.GetComponent<Button>().interactable = true;
-        }
-        AssignPowerUp(current, go.GetComponent<Button>());
+            instnatiatedZonesCounter++;
 
-        powerupButtons.Add(go.GetComponent<Button>());
+            PowerupProperties prop = go.GetComponent<PowerupProperties>();
+
+            prop.connectedEquipment = data;
+
+            PowerUp current = data.power;
+
+            go.name = current.ToString();
+
+            prop.SetProperties(current);
+
+            prop.numOfUses = data.numOfUses;
+
+            if (current == PowerUp.FourColorTransform)
+            {
+                prop.transformColor = data.specificColor;
+            }
+            //else if(current == PowerUp.FourShapeTransform)
+            //{
+            //    prop.transformSymbol = data.specificSymbol;
+            //}
+
+            if (prop.connectedEquipment.scopeOfUses == 0) /// 0 = daily 1 = per patch
+            {
+                go.GetComponent<Button>().interactable = prop.connectedEquipment.nextTimeAvailable == null || prop.connectedEquipment.nextTimeAvailable == "";
+            }
+            else
+            {
+                go.GetComponent<Button>().interactable = true;
+            }
+            AssignPowerUp(current, go.GetComponent<Button>());
+
+            powerupButtons.Add(go.GetComponent<Button>());
+        }
     }
     public void Deal()
     {
