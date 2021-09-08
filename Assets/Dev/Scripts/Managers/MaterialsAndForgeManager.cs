@@ -10,10 +10,12 @@ public class MaterialsAndForgeManager : MonoBehaviour
     public GameObject equipmentForgeDisplayerPrefab;
     public GameObject corruptedDeviceDisplayerPrefab;
     public GameObject crafingMatPrefab;
-    public Transform equipmentContent; /// Parent
+    public Transform powerUpContent; 
+    public Transform matInventoryContent;
+    public Transform ForgeContent;
+
     public Dictionary<CraftingMats, string> materialSpriteByName;
     //public Dictionary<CraftingMatType, Transform> matTypeToParent;
-    public Transform matInventoryParent;
 
     public List<EquipmentDisplayer> equipmentInForge; /// Equipment that the player does not have / has not created yet
     public List<CorruptedDevicesDisplayer> corruptedDevicesInForge; /// Equipment that the player does not have / has not created yet
@@ -42,7 +44,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
     {
         foreach (EquipmentData EQ in equipment)
         {
-            GameObject go = Instantiate(equipmentForgeDisplayerPrefab, equipmentContent);
+            GameObject go = Instantiate(equipmentForgeDisplayerPrefab, powerUpContent);
             EquipmentDisplayer ED = go.GetComponent<EquipmentDisplayer>();
 
             ED.itemName.text = EQ.name;
@@ -80,7 +82,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
         {
             if(CM.craftingMatType != CraftingMatType.None && CM.amount > 0)
             {
-                GameObject go = Instantiate(crafingMatPrefab, matInventoryParent);
+                GameObject go = Instantiate(crafingMatPrefab, matInventoryContent);
 
                 CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
 
@@ -91,7 +93,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
     }
     public void RefreshMaterialBagSort(CraftingMatType type)
     {
-        foreach (Transform Mat in matInventoryParent)
+        foreach (Transform Mat in matInventoryContent)
         {
             //for (int i = 0; i < Mat.childCount; i++)
             //{
@@ -103,7 +105,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
         {
             if(CM.craftingMatType == type && CM.amount > 0)
             {
-                GameObject go = Instantiate(crafingMatPrefab, matInventoryParent);
+                GameObject go = Instantiate(crafingMatPrefab, matInventoryContent);
 
                 CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
 
@@ -116,7 +118,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
     [ContextMenu("Refresh Material Bag")]
     public void RefreshMaterialBag()
     {
-        foreach (Transform Mat in matInventoryParent)
+        foreach (Transform Mat in matInventoryContent)
         {
             //for (int i = 0; i < Mat.childCount; i++)
             //{
@@ -132,7 +134,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
     {
         equipmentInForge.Clear();
 
-        foreach (Transform EQ in equipmentContent)
+        foreach (Transform EQ in powerUpContent)
         {
             Destroy(EQ.gameObject);
         }
@@ -146,7 +148,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
     {
         foreach (CorruptedDevicesData CDD in corruptedDevices)
         {
-            GameObject go = Instantiate(corruptedDeviceDisplayerPrefab, equipmentContent);
+            GameObject go = Instantiate(corruptedDeviceDisplayerPrefab, ForgeContent);
             CorruptedDevicesDisplayer CDDisplay = go.GetComponent<CorruptedDevicesDisplayer>();
 
             //CDDisplay.itemName.text = CDD.deviceName;

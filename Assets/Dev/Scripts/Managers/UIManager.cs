@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
     public GameObject blackLevelBG;
     public GameObject zoomInCorruptedBlack;
     public GameObject tutorialCanvas;
-    public GameObject forge, itemBag;
+    public GameObject forge, itemBag, Brewery;
     public GameObject craft, owned;
     public GameObject animalAlbum;
     public GameObject OptionsScreen;
@@ -88,6 +88,7 @@ public class UIManager : MonoBehaviour
         itemForgeCanvas.SetActive(false);
         gameplayCanvas.SetActive(false);
         forge.SetActive(false);
+        Brewery.SetActive(false);
 
         itemBag.SetActive(true); //// so this will be the first screen displayed, or else everyone will be turned off
 
@@ -410,6 +411,8 @@ public class UIManager : MonoBehaviour
         {
             itemForgeCanvas.SetActive(false);
             forge.SetActive(false);
+            Brewery.SetActive(false);
+
             itemBag.SetActive(true);
         }
 
@@ -434,12 +437,20 @@ public class UIManager : MonoBehaviour
     public void ToForge()
     {
         itemBag.SetActive(false);
+        Brewery.SetActive(false);
         forge.SetActive(true);
     }
     public void ToItemsBag()
     {
         itemBag.SetActive(true);
         forge.SetActive(false);
+        Brewery.SetActive(false);
+    }
+    public void ToBrewery()
+    {
+        itemBag.SetActive(false);
+        forge.SetActive(false);
+        Brewery.SetActive(true);
     }
     public void ToCraft()
     {
