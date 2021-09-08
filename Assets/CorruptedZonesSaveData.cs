@@ -63,7 +63,7 @@ public class CorruptedZonesSaveData : MonoBehaviour
 
     public void SaveIteration() ///// THIS IS INVOKED!!
     {
-        Debug.Log("Save Corruption");
+        //Debug.Log("Save Corruption");
 
         if(CorruptedZonesManager.Instance.allCurrentlyCorruptedZonesBeingClensed.Count > 0)
         {

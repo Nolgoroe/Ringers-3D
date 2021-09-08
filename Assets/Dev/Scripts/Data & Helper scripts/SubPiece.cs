@@ -99,6 +99,12 @@ public class SubPiece : MonoBehaviour
                 symbolOfPiece = GameManager.Instance.currentLevel.levelAvailablesymbols[randomSymbol];
                 indexcSymbol = (int)symbolOfPiece;
             }
+            else
+            {
+                randomSymbol = Random.Range(0, GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex.Length);
+                symbolOfPiece = GameManager.Instance.currentLevel.levelAvailablesymbols[randomSymbol];
+                indexcSymbol = (int)symbolOfPiece;
+            }
 
             //MaterialPropertyBlock mpb = new MaterialPropertyBlock();
             //MeshRenderer r = GetComponent<MeshRenderer>();
@@ -285,6 +291,14 @@ public class SubPiece : MonoBehaviour
 
             yield return null;
         }
+    }
+
+    public void SetSpecificSymbol(PieceSymbol symbol)
+    {
+        int indexcSymbol = (int)symbol;
+        symbolOfPiece = symbol;
+        rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)PieceColor.None].colorTex[indexcSymbol]);
+
     }
 
 }

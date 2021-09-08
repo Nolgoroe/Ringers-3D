@@ -21,6 +21,7 @@ MonoBehaviour:
   tutorialIndexForList: 0
   cellsCountInLevel: 8
   RandomSlicePositions: 1
+  allowRepeatSlices: 1
   stoneTiles:
   - cellIndex: 0
     randomValues: 1
@@ -36,10 +37,10 @@ MonoBehaviour:
     symbolOfPieceRight: 4
     colorOfPieceLeft: 5
     symbolOfPieceLeft: 4
-  slicesToSpawn: 010000000200000000000000
-  lockSlices: 010100
-  lootSlices: 010101
-  limiterSlices: 010001
+  slicesToSpawn: 020000000200000002000000020000000200000002000000
+  lockSlices: 010100000000
+  lootSlices: 010101010101
+  limiterSlices: 010001010001
   RewardBags: 0b00000002000000010000000c0000000d0000000e000000
   levelAvailableColors: 00000000010000000200000003000000
   levelAvailablesymbols: 000000000200000003000000

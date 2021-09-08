@@ -28,6 +28,7 @@ public class LevelScriptableObject : ScriptableObject
     public int cellsCountInLevel;
 
     public bool RandomSlicePositions;
+    public bool allowRepeatSlices;
 
     public stonePieceDataStruct[] stoneTiles;
     public SliceCatagory[] slicesToSpawn;

@@ -274,7 +274,7 @@ public class GameManager : MonoBehaviour
 
     public void DestroyAllLevelChildern()
     {
-        Debug.Log("Destroying Level");
+        //Debug.Log("Destroying Level");
 
         gameStarted = false;
         levelBGModel.SetActive(false);
@@ -462,7 +462,6 @@ public class GameManager : MonoBehaviour
     {
         foreach (stonePieceDataStruct SPDS in currentLevel.stoneTiles)
         {
-
             if(SPDS.cellIndex >= 0 && SPDS.cellIndex <= 7)
             {
                 ConnectionManager.Instance.cells[SPDS.cellIndex].AddStonePieceToBoard(SPDS);

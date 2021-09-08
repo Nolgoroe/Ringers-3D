@@ -120,45 +120,42 @@ public class PowerUpManager : MonoBehaviour
     }
     public void InstantiatePowerUps(EquipmentData data)
     {
-        if(instnatiatedZonesCounter < instnatiateZones.Length)
+        GameObject go = Instantiate(powerupButtonPreab, instnatiateZones[instnatiatedZonesCounter]);
+
+        instnatiatedZonesCounter++;
+
+        PowerupProperties prop = go.GetComponent<PowerupProperties>();
+
+        prop.connectedEquipment = data;
+
+        PowerUp current = data.power;
+
+        go.name = current.ToString();
+
+        prop.SetProperties(current);
+
+        prop.numOfUses = data.numOfUses;
+
+        if (current == PowerUp.FourColorTransform)
         {
-            GameObject go = Instantiate(powerupButtonPreab, instnatiateZones[instnatiatedZonesCounter]);
-
-            instnatiatedZonesCounter++;
-
-            PowerupProperties prop = go.GetComponent<PowerupProperties>();
-
-            prop.connectedEquipment = data;
-
-            PowerUp current = data.power;
-
-            go.name = current.ToString();
-
-            prop.SetProperties(current);
-
-            prop.numOfUses = data.numOfUses;
-
-            if (current == PowerUp.FourColorTransform)
-            {
-                prop.transformColor = data.specificColor;
-            }
-            //else if(current == PowerUp.FourShapeTransform)
-            //{
-            //    prop.transformSymbol = data.specificSymbol;
-            //}
-
-            if (prop.connectedEquipment.scopeOfUses == 0) /// 0 = daily 1 = per patch
-            {
-                go.GetComponent<Button>().interactable = prop.connectedEquipment.nextTimeAvailable == null || prop.connectedEquipment.nextTimeAvailable == "";
-            }
-            else
-            {
-                go.GetComponent<Button>().interactable = true;
-            }
-            AssignPowerUp(current, go.GetComponent<Button>());
-
-            powerupButtons.Add(go.GetComponent<Button>());
+            prop.transformColor = data.specificColor;
         }
+        //else if(current == PowerUp.FourShapeTransform)
+        //{
+        //    prop.transformSymbol = data.specificSymbol;
+        //}
+
+        if (prop.connectedEquipment.scopeOfUses == 0) /// 0 = daily 1 = per patch
+        {
+            go.GetComponent<Button>().interactable = prop.connectedEquipment.nextTimeAvailable == null || prop.connectedEquipment.nextTimeAvailable == "";
+        }
+        else
+        {
+            go.GetComponent<Button>().interactable = true;
+        }
+        AssignPowerUp(current, go.GetComponent<Button>());
+
+        powerupButtons.Add(go.GetComponent<Button>());
     }
     public void Deal()
     {
@@ -460,7 +457,7 @@ public class PowerUpManager : MonoBehaviour
 
         if(prop.numOfUses == 0 && prop.connectedEquipment.scopeOfUses == 0) //// if the num of uses is 0 and the scope is cooldown and not per match
         {
-            EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).Single();
+            EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).First();
 
             ED.nextTimeAvailable = System.DateTime.Now.AddSeconds(ED.timeForCooldown).ToString(); ///// change the datetime for equipment on player
 

@@ -154,12 +154,17 @@ public class PlayerManager : MonoBehaviour
     }
     public void PopulatePowerUps()
     {
-        
+        int instantiatedCount = 0;
+
         foreach (EquipmentData ED in ownedPowerups)
         {
-            activePowerups.Add(ED.power);
+            if(instantiatedCount < GameManager.Instance.powerupManager.instnatiateZones.Length)
+            {
+                instantiatedCount++;
+                activePowerups.Add(ED.power);
 
-            GameManager.Instance.powerupManager.InstantiatePowerUps(ED);
+                GameManager.Instance.powerupManager.InstantiatePowerUps(ED);
+            }
         }
     }
 

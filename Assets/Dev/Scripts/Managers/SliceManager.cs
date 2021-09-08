@@ -72,6 +72,8 @@ public class SliceManager : MonoBehaviour
     public List<Slice> fullSlices;
     //GameObject go;
 
+    private int fourRandomSlicePos;
+
     private void Awake()
     {
         GameManager.Instance.sliceManager = this;
@@ -335,67 +337,72 @@ public class SliceManager : MonoBehaviour
                 possibleSlotsTemp.Add(i);
             }
 
+            if (numOfSlices == 4)
+            {
+                fourRandomSlicePos = Random.Range(0, 2);
+            }
+
             for (int i = 0; i < numOfSlices; i++)
             {
                 if (GameManager.Instance.currentLevel.RandomSlicePositions)
                 {
-                    int randomPos = Random.Range(0, sliceSlots.Length);
+                    //int randomPos = Random.Range(0, possibleSlotsTemp.Count);
+                    int randomPos = 0;
 
 
-                    fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
+                    //fullSlices.Add(sliceSlots[possibleSlotsTemp[randomPos]].transform.GetComponent<Slice>());
+                    //RemovePositions(randomPos);
 
                     if (numOfSlices < 4)
                     {
-                        RemovePositions(randomPos);
 
-                        for (int j = 1; j < numOfSlices; j++)
-                        {
+                        randomPos = Random.Range(0, possibleSlotsTemp.Count);
 
-                            randomPos = Random.Range(0, possibleSlotsTemp.Count);
+                        fullSlices.Add(sliceSlots[possibleSlotsTemp[randomPos]].transform.GetComponent<Slice>());
 
-                            fullSlices.Add(sliceSlots[possibleSlotsTemp[randomPos]].transform.GetComponent<Slice>());
-
-                            RemovePositions(possibleSlotsTemp[randomPos]);
-                        }
+                        RemovePositions(possibleSlotsTemp[randomPos]);
                     }
                     else if (numOfSlices == 4)
                     {
-                        for (int j = 1; j < numOfSlices; j++)
+                        fullSlices.Add(sliceSlots[fourRandomSlicePos].transform.GetComponent<Slice>());
+
+                        //for (int j = 1; j < numOfSlices; j++)
+                        //{
+                        fourRandomSlicePos += 2;
+
+                        if (fourRandomSlicePos >= sliceSlots.Length)
                         {
-                            randomPos += 2;
-
-                            if (randomPos >= sliceSlots.Length)
-                            {
-                                randomPos -= sliceSlots.Length;
-                            }
-
-                            fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
+                            fourRandomSlicePos -= sliceSlots.Length;
                         }
+
+                        //}
                     }
                     else
                     {
-                        possibleSlotsTemp.Remove(randomPos);
-
-                        for (int j = 1; j < sliceSlots.Length / 2; j++)
+                        if(fullSlices.Count < 4)
                         {
-                            randomPos += 2;
+                            fullSlices.Add(sliceSlots[fourRandomSlicePos].transform.GetComponent<Slice>());
+                            possibleSlotsTemp.Remove(fourRandomSlicePos);
 
-                            if (randomPos >= sliceSlots.Length)
+                            // for (int j = 1; j < sliceSlots.Length / 2; j++)
+                            //{
+                            fourRandomSlicePos += 2;
+
+                            if (fourRandomSlicePos >= sliceSlots.Length)
                             {
-                                randomPos -= sliceSlots.Length;
+                                fourRandomSlicePos -= sliceSlots.Length;
                             }
-
-
-                            fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
-                            possibleSlotsTemp.Remove(randomPos);
+                            //}
                         }
-
-                        for (int j = 0; j < numOfSlices - sliceSlots.Length / 2; j++)
+                        else
                         {
-                            randomPos = Random.Range(0, possibleSlotsTemp.Count);
+                            for (int j = 0; j < numOfSlices - sliceSlots.Length / 2; j++)
+                            {
+                                randomPos = Random.Range(0, possibleSlotsTemp.Count);
 
-                            fullSlices.Add(sliceSlots[possibleSlotsTemp[randomPos]].transform.GetComponent<Slice>());
-                            possibleSlotsTemp.Remove(possibleSlotsTemp[randomPos]);
+                                fullSlices.Add(sliceSlots[possibleSlotsTemp[randomPos]].transform.GetComponent<Slice>());
+                                possibleSlotsTemp.Remove(possibleSlotsTemp[randomPos]);
+                            }
                         }
                     }
                 }

@@ -130,6 +130,10 @@ public class Cell : MonoBehaviour
             {
                 p.leftChild.relevantSlice = ConnectionManager.Instance.slicesOnBoard[Mathf.CeilToInt((float)p.leftChild.subPieceIndex / 2)];
 
+                if (p.leftChild.relevantSlice.sliceSymbol != PieceSymbol.None)
+                {
+                    p.leftChild.SetSpecificSymbol(p.leftChild.relevantSlice.sliceSymbol);
+                }
 
                 if (p.rightChild.subPieceIndex >= ConnectionManager.Instance.lengthOfSubPiecesOuter - 1)
                 {
@@ -138,6 +142,11 @@ public class Cell : MonoBehaviour
                 else
                 {
                     p.rightChild.relevantSlice = ConnectionManager.Instance.slicesOnBoard[Mathf.CeilToInt((float)p.rightChild.subPieceIndex / 2)];
+
+                    if (p.rightChild.relevantSlice.sliceSymbol != PieceSymbol.None)
+                    {
+                        p.rightChild.SetSpecificSymbol(p.rightChild.relevantSlice.sliceSymbol);
+                    }
                 }
 
             }
