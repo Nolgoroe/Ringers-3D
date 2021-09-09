@@ -21893,6 +21893,8 @@ GameObject:
   - component: {fileID: 6382559071292991178}
   - component: {fileID: 8467901069590196258}
   - component: {fileID: 2364524190024533076}
+  - component: {fileID: 5110192560203274110}
+  - component: {fileID: 5292002987733491043}
   m_Layer: 0
   m_Name: Circle Board
   m_TagString: Board
@@ -22044,6 +22046,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rubyTargetLoot: {fileID: 6675506912518192741}
   materialsTargetLoot: {fileID: 1771027937315062175}
+--- !u!114 &5110192560203274110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382559071292991177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0e1c03e2e62dbf4c92a92193e075920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalWidth: 1080
+  originalHeight: 1920
+  doUpdate: 0
+--- !u!114 &5292002987733491043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382559071292991177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f2100c49204b4984dd9595cea8e34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anchorType: 4
+  anchorOffset: {x: 0, y: -0.23, z: 0}
 --- !u!1 &6481315729166118644
 GameObject:
   m_ObjectHideFlags: 0

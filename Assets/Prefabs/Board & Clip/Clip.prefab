@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4176704889398601460}
   - component: {fileID: 7953207476499316520}
+  - component: {fileID: 4062283129818416184}
+  - component: {fileID: 6346413772729111857}
   m_Layer: 0
   m_Name: Clip
   m_TagString: Clip
@@ -25,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4176704889398601467}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.897, y: 2.417, z: 0}
+  m_LocalPosition: {x: 0.9, y: 2.44, z: 0}
   m_LocalScale: {x: 0.16, y: 0.16, z: 0.16}
   m_Children:
   - {fileID: 3310681654377795546}
@@ -105,6 +107,35 @@ MonoBehaviour:
     symbolMat: {fileID: 2100000, guid: 49a4f689d8e778447bd9842958abcb39, type: 2}
   clipCount: 0
   generalPieceMat: {fileID: 0}
+--- !u!114 &4062283129818416184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4176704889398601467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f2100c49204b4984dd9595cea8e34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anchorType: 4
+  anchorOffset: {x: 0.79, y: 0.48, z: 0}
+--- !u!114 &6346413772729111857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4176704889398601467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0e1c03e2e62dbf4c92a92193e075920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalWidth: 1080
+  originalHeight: 1920
+  doUpdate: 0
 --- !u!1 &8800353954120255586
 GameObject:
   m_ObjectHideFlags: 0
