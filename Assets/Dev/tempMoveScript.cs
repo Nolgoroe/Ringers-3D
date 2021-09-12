@@ -121,6 +121,14 @@ public class tempMoveScript : MonoBehaviour
 
             hasBeenSet = true;
 
+            RectTransform RT = GetComponent<RectTransform>();
+
+            Vector3 pos = RT.anchoredPosition3D;
+
+            CorruptedZonesSaveData.Instance.SetNewDeviceToSave(connectedCDD, pos);
+            CorruptedZonesSaveData.Instance.SaveZonesData();
+
+
             CorruptedZonesManager.Instance.SetClensingZone(CorruptedZonesManager.Instance.currentActiveZoneData);
 
             PlayerManager.Instance.SavePlayerData();

@@ -12,6 +12,8 @@ public class savedDevicesData
     public CorruptedDevicesData deviceData;
 
     public Vector3 position;
+
+    public int zoneID;
 }
 
 [System.Serializable]
@@ -36,7 +38,6 @@ public class SavedTimePerZone
     public float originalCorruptionAmountPerStage;
     public float HPM = 0;
     public List<tempMoveScript> currentDevicesInZone;
-
 }
 public class CorruptedZonesSaveData : MonoBehaviour
 {
@@ -44,22 +45,25 @@ public class CorruptedZonesSaveData : MonoBehaviour
 
     public List<SavedTimePerZone> timesPerZones;
 
+    public List<savedDevicesData> devicesToSave;
+
     string savePath;
 
     void Start()
     {
         Instance = this;
         timesPerZones = new List<SavedTimePerZone>();
+        devicesToSave = new List<savedDevicesData>();
 
         InvokeRepeating("SaveIteration", 0, 5f);
 
         if (Application.platform == RuntimePlatform.Android)
         {
-            savePath = Application.persistentDataPath + "/timesPerZones.txt";
+            savePath = Application.persistentDataPath + "/CorruptZoneSaveData.txt";
         }
         else
         {
-            savePath = Application.dataPath + "/Save Files Folder/timesPerZones.txt";
+            savePath = Application.dataPath + "/Save Files Folder/CorruptZoneSaveData.txt";
         }
 
 
@@ -100,11 +104,11 @@ public class CorruptedZonesSaveData : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.Android)
         {
-            savePath = Application.persistentDataPath + "/timesPerZones.txt";
+            savePath = Application.persistentDataPath + "/CorruptZoneSaveData.txt";
         }
         else
         {
-            savePath = Application.dataPath + "/Save Files Folder/timesPerZones.txt";
+            savePath = Application.dataPath + "/Save Files Folder/CorruptZoneSaveData.txt";
         }
 
         JsonUtility.FromJsonOverwrite(File.ReadAllText(savePath), this);
@@ -146,6 +150,33 @@ public class CorruptedZonesSaveData : MonoBehaviour
             }
         }
 
+        List<savedDevicesData> tempList = new List<savedDevicesData>();
+        tempList = devicesToSave;
+
+        foreach (savedDevicesData SDD in tempList)
+        {
+            CorruptedZoneViewHelpData CZVHD = CorruptedZonesManager.Instance.allCorruptedZonesView.Where(p => p.ZoneIDView == SDD.zoneID).Single();
+
+            if (CZVHD.isFullyClensed)
+            {
+                devicesToSave.Remove(SDD);
+            }
+            else
+            {
+                GameObject device = Instantiate(CorruptedZonesManager.Instance.generalDevicePrefab, CZVHD.placedObjetZone);
+                device.name = SDD.deviceData.deviceName;
+
+                RectTransform RT = device.GetComponent<RectTransform>();
+
+                RT.anchoredPosition3D = SDD.position;
+
+
+                GameObject go = Resources.Load<GameObject>(SDD.deviceData.prefabPath);
+
+                Instantiate(go, device.transform);
+            }
+        }
+        devicesToSave = tempList;
         //ClearTimesPerZonesListAfterLoad();
     }
 
@@ -213,11 +244,11 @@ public class CorruptedZonesSaveData : MonoBehaviour
 
         if (Application.platform == RuntimePlatform.Android)
         {
-            savePath = Application.persistentDataPath + "/timesPerZones.txt";
+            savePath = Application.persistentDataPath + "/CorruptZoneSaveData.txt";
         }
         else
         {
-            savePath = Application.dataPath + "/Save Files Folder/timesPerZones.txt";
+            savePath = Application.dataPath + "/Save Files Folder/CorruptZoneSaveData.txt";
         }
         File.WriteAllText(savePath, savedData);
     }
@@ -245,5 +276,17 @@ public class CorruptedZonesSaveData : MonoBehaviour
         }
 
         SaveZonesData();
+    }
+
+    public void SetNewDeviceToSave(CorruptedDevicesData CDD, Vector3 position)
+    {
+        savedDevicesData newDevice = new savedDevicesData();
+
+        newDevice.deviceData = CDD;
+        newDevice.zoneID = CorruptedZonesManager.Instance.currentActiveZoneView.ZoneIDView;
+        newDevice.position = position;
+
+        devicesToSave.Add(newDevice);
+
     }
 }

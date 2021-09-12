@@ -24,6 +24,7 @@ public class CorruptedZoneData : MonoBehaviour
 
     public void Start()
     {
+        saveDataZone.currentDevicesInZone.Clear();
         saveDataZone.originalCorruptionAmountPerStage = CZSO.CorruptionAmountPerStage;
 
 
