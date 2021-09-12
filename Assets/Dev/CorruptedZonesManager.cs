@@ -21,6 +21,10 @@ public class CorruptedZonesManager : MonoBehaviour
     public CorruptedZoneViewHelpData[] allCorruptedZonesView;
     public List<CorruptedZoneViewHelpData> allCurrentlyCorruptedZonesBeingClensed;
 
+    [Header("Clamp Objects")]
+    public float minClampPosX;
+    public float maxClampPosX, minClampPosY, maxClampPosY;
+
     private void Start()
     {
         Instance = this;

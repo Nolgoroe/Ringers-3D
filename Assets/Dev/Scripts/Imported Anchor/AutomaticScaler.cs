@@ -46,8 +46,6 @@ public class AutomaticScaler : MonoBehaviour
         if ( width >= originalWidth)
         {
             deltaWidth = originalWidth / width;
-
-
         }
         else
         {
@@ -61,8 +59,6 @@ public class AutomaticScaler : MonoBehaviour
         else
         {
             deltaHeight = height / originalHeight;
-
-
         }
 
         float actualDelta = 1;

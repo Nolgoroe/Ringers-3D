@@ -87,7 +87,7 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
-            path = Application.dataPath + "/PlayerSaveData.txt";
+            path = Application.dataPath + "/Save Files Folder/PlayerSaveData.txt";
         }
 
         if (File.Exists(path))
@@ -179,7 +179,7 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
-            string path = Application.dataPath + "/PlayerSaveData.txt";
+            string path = Application.dataPath + "/Save Files Folder/PlayerSaveData.txt";
         }
         File.WriteAllText(path, savedData);
     }
@@ -193,7 +193,7 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
-            string path = Application.dataPath + "/PlayerSaveData.txt";
+            string path = Application.dataPath + "/Save Files Folder/PlayerSaveData.txt";
         }
         JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7345171113010585685}
   - component: {fileID: 7345171113010585684}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: line GO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,6 +48,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f0a3094598f3e94abb032558eb1076c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObject1: {fileID: 0}
-  gameObject2: {fileID: 0}
+  CDDOrigin: {fileID: 0}
+  CDDTarget: {fileID: 0}
   lineMat: {fileID: 2100000, guid: e29eba4d0855a6f46881a2fc2ebce9e6, type: 2}
+  distnaces: []
+  HPMPerDistance: []
+  maxDistance: 0
+  minDistance: 0
+  mediumDistance: 0
+  currentHPMMultiplier: 1

@@ -122,6 +122,8 @@ public class tempMoveScript : MonoBehaviour
             hasBeenSet = true;
 
             CorruptedZonesManager.Instance.SetClensingZone(CorruptedZonesManager.Instance.currentActiveZoneData);
+
+            PlayerManager.Instance.SavePlayerData();
         }
     }
 
@@ -137,8 +139,8 @@ public class tempMoveScript : MonoBehaviour
             //Debug.Log("BLA");
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            mousePosition.x = Mathf.Clamp(mousePosition.x, -0.5f, 0.5f);
-            mousePosition.y = Mathf.Clamp(mousePosition.y, -10, -8);
+            mousePosition.x = Mathf.Clamp(mousePosition.x, CorruptedZonesManager.Instance.minClampPosX, CorruptedZonesManager.Instance.maxClampPosX);
+            mousePosition.y = Mathf.Clamp(mousePosition.y, CorruptedZonesManager.Instance.minClampPosY, CorruptedZonesManager.Instance.maxClampPosY);
 
 
             //Debug.Log(mousePosition);
@@ -182,8 +184,8 @@ public class tempMoveScript : MonoBehaviour
 
                     //Debug.Log("Line is: " + g.name + " " + distance * 10);
 
-                    UpdateLineAlpha(distance * 10, LC);
-                    LC.UpdateHPMValue(distance * 10, LC);
+                    UpdateLineAlpha(distance, LC);
+                    LC.UpdateHPMValue(distance, LC);
                 }
             }
         }

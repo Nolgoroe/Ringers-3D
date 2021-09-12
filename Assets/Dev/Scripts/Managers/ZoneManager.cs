@@ -27,7 +27,7 @@ public class ZoneManager : MonoBehaviour
         }
         else
         {
-            path = Application.dataPath + "/ZoneManager.txt";
+            path = Application.dataPath + "/Save Files Folder/ZoneManager.txt";
         }
 
         if (File.Exists(path))
@@ -89,7 +89,7 @@ public class ZoneManager : MonoBehaviour
         }
         else
         {
-            string path = Application.dataPath + "/ZoneManager.txt";
+            string path = Application.dataPath + "/Save Files Folder/ZoneManager.txt";
         }
         File.WriteAllText(path, savedData);
     }
@@ -103,7 +103,7 @@ public class ZoneManager : MonoBehaviour
         }
         else
         {
-            string path = Application.dataPath + "/ZoneManager.txt";
+            string path = Application.dataPath + "/Save Files Folder/ZoneManager.txt";
         }
         JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
 

@@ -32,7 +32,7 @@ public class Zone : MonoBehaviour
         }
         else
         {
-            path = Application.dataPath + "/Zone" + id + ".txt";
+            path = Application.dataPath + "/Save Files Folder/Zone" + id + ".txt";
         }
 
         if (File.Exists(path))
@@ -67,7 +67,7 @@ public class Zone : MonoBehaviour
         }
         else
         {
-            string path = Application.dataPath + "/Zone" + id + ".txt";
+            string path = Application.dataPath + "/Save Files Folder/Zone" + id + ".txt";
         }
         File.WriteAllText(path, savedData);
     }
@@ -81,7 +81,7 @@ public class Zone : MonoBehaviour
         }
         else
         {
-            string path = Application.dataPath + "/Zone" + id + ".txt";
+            string path = Application.dataPath + "/Save Files Folder/Zone" + id + ".txt";
         }
         JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
     }

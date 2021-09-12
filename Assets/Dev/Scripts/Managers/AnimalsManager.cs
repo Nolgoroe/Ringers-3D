@@ -66,7 +66,7 @@ public class AnimalsManager : MonoBehaviour
         }
         else
         {
-            path = Application.dataPath + "/AnimalsSaveData.txt";
+            path = Application.dataPath + "/Save Files Folder/AnimalsSaveData.txt";
         }
 
         if (File.Exists(path))
@@ -104,7 +104,7 @@ public class AnimalsManager : MonoBehaviour
         }
         else
         {
-            string path = Application.dataPath + "/AnimalsSaveData.txt";
+            string path = Application.dataPath + "/Save Files Folder/AnimalsSaveData.txt";
         }
         File.WriteAllText(path, savedData);
     }
@@ -118,7 +118,7 @@ public class AnimalsManager : MonoBehaviour
         }
         else
         {
-            string path = Application.dataPath + "/AnimalsSaveData.txt";
+            string path = Application.dataPath + "/Save Files Folder/AnimalsSaveData.txt";
         }
         JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
 

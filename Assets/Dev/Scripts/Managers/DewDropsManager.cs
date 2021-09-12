@@ -25,7 +25,7 @@ public class DewDropsManager : MonoBehaviour
         }
         else
         {
-            path = Application.dataPath + "/DewDropInfo.txt";
+            path = Application.dataPath + "/Save Files Folder/DewDropInfo.txt";
         }
 
         if (File.Exists(path))
@@ -121,7 +121,7 @@ public class DewDropsManager : MonoBehaviour
         }
         else
         {
-            path = Application.dataPath + "/DewDropInfo.txt";
+            path = Application.dataPath + "/Save Files Folder/DewDropInfo.txt";
         }
         File.WriteAllText(path, savedData);
     }
@@ -134,7 +134,7 @@ public class DewDropsManager : MonoBehaviour
         }
         else
         {
-            path = Application.dataPath + "/DewDropInfo.txt";
+            path = Application.dataPath + "/Save Files Folder/DewDropInfo.txt";
         }
 
         JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);

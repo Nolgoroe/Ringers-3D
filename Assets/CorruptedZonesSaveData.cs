@@ -6,6 +6,15 @@ using System;
 using System.Linq;
 
 [System.Serializable]
+
+public class savedDevicesData
+{
+    public CorruptedDevicesData deviceData;
+
+    public Vector3 position;
+}
+
+[System.Serializable]
 public class SavedTimePerZone
 {
     //public CorruptedZoneViewHelpData connectedCZVHD;
@@ -50,7 +59,7 @@ public class CorruptedZonesSaveData : MonoBehaviour
         }
         else
         {
-            savePath = Application.dataPath + "/timesPerZones.txt";
+            savePath = Application.dataPath + "/Save Files Folder/timesPerZones.txt";
         }
 
 
@@ -95,7 +104,7 @@ public class CorruptedZonesSaveData : MonoBehaviour
         }
         else
         {
-            savePath = Application.dataPath + "/timesPerZones.txt";
+            savePath = Application.dataPath + "/Save Files Folder/timesPerZones.txt";
         }
 
         JsonUtility.FromJsonOverwrite(File.ReadAllText(savePath), this);
@@ -208,7 +217,7 @@ public class CorruptedZonesSaveData : MonoBehaviour
         }
         else
         {
-            savePath = Application.dataPath + "/timesPerZones.txt";
+            savePath = Application.dataPath + "/Save Files Folder/timesPerZones.txt";
         }
         File.WriteAllText(savePath, savedData);
     }

@@ -54,7 +54,7 @@ public class CSVParser : MonoBehaviour
 
     public void SaveToPersistentDataPath(csvFileInfo FI)
     {
-        File.WriteAllText(Application.persistentDataPath +"/" + FI.csvFiles.name + ".csv", FI.csvFiles.text);
+        File.WriteAllText(Application.persistentDataPath + "/" + FI.csvFiles.name + ".csv", FI.csvFiles.text);
 
         readTextFile(FI);
     }
