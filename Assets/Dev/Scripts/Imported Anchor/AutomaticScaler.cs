@@ -40,8 +40,30 @@ public class AutomaticScaler : MonoBehaviour
         float width = Screen.width;
         float height = Screen.height;
 
-        float deltaWidth = originalWidth / width; 
-        float deltaHeight = originalHeight / height;
+        float deltaWidth = 0;
+        float deltaHeight = 0;
+
+        if ( width >= originalWidth)
+        {
+            deltaWidth = originalWidth / width;
+
+
+        }
+        else
+        {
+            deltaWidth = width / originalWidth;
+        }
+
+        if (height >= originalHeight)
+        {
+            deltaHeight = originalHeight / height;
+        }
+        else
+        {
+            deltaHeight = height / originalHeight;
+
+
+        }
 
         float actualDelta = 1;
 
