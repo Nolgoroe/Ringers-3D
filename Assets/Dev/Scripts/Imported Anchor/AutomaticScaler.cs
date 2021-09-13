@@ -13,6 +13,8 @@ public class AutomaticScaler : MonoBehaviour
     Vector3 originalScale;
 
     CameraAnchor CA;
+
+    bool dobuffer = false;
     private void Start()
     {
         CA = GetComponent<CameraAnchor>();
@@ -47,10 +49,14 @@ public class AutomaticScaler : MonoBehaviour
 
         if ( width >= originalWidth)
         {
+            dobuffer = false;
+
             deltaWidth = originalWidth / width;
         }
         else
         {
+            dobuffer = true;
+
             deltaWidth = width / originalWidth;
         }
 
@@ -87,7 +93,11 @@ public class AutomaticScaler : MonoBehaviour
 
         Debug.LogError("ACTUAL DELTA IS: " + actualDelta);
 
-        actualDelta += buffer;
+        if (dobuffer)
+        {
+            actualDelta += buffer;
+        }
+
         newScale = new Vector3((originalScale.x * actualDelta), (originalScale.y * actualDelta), originalScale.z);
 
         Debug.LogError("NEW SCALE FOR " + transform.name + "IS: " + newScale);
