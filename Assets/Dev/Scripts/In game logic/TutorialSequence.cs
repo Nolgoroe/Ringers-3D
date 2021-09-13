@@ -146,13 +146,13 @@ public class TutorialSequence : MonoBehaviour
     [ContextMenu("Render Now")]
     public void toTexture()
     {
-        if(secondCam.targetTexture.width != Screen.width || secondCam.targetTexture.height != Screen.height)
+        if(secondCam.targetTexture.width != Display.main.systemWidth || secondCam.targetTexture.height != Display.main.systemHeight)
         {
             StartCoroutine(RecreateRenderTexture());
         }
         else
         {
-            Texture2D texture = new Texture2D(Screen.width, Screen.height, TextureFormat.ARGB32, false);
+            Texture2D texture = new Texture2D(Display.main.systemWidth, Display.main.systemHeight, TextureFormat.ARGB32, false);
 
             Graphics.CopyTexture(secondCam.targetTexture, texture);
             
@@ -172,7 +172,7 @@ public class TutorialSequence : MonoBehaviour
 
         //float deltaW = Screen.width;
         //float deltaH = Screen.height;
-        secondCam.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
+        secondCam.targetTexture = new RenderTexture(Display.main.systemWidth, Display.main.systemHeight, 24);
         secondCam.Render();
 
         yield return null;

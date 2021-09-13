@@ -41,8 +41,8 @@ public class AutomaticScaler : MonoBehaviour
     }
     public void Scaler()
     {
-        float width = Screen.width;
-        float height = Screen.height;
+        float width = Display.main.systemWidth;
+        float height = Display.main.systemHeight;
 
         float deltaWidth = 0;
         float deltaHeight = 0;

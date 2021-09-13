@@ -139,8 +139,8 @@ public class UIManager : MonoBehaviour
         width.text = "Width: " + Display.main.systemWidth;
         height.text = "Height: " + Display.main.systemHeight;
 
-        float a = (float)1080 / (float)Screen.width;
-        float b = (float)1920 / (float)Screen.height;
+        float a = (float)1080 / (float)Display.main.systemWidth;
+        float b = (float)1920 / (float)Display.main.systemHeight;
         deltaHeight.text = "Delta Width: " + a;
         deltaWidth.text = "Delta Height: " + b ;
 
