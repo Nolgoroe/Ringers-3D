@@ -136,6 +136,7 @@ public class GameManager : MonoBehaviour
     {
         if (!isDisableTutorials)
         {
+
             for (int i = 0; i < numAnimalsOnBoard.Length; i++)
             {
                 numAnimalsOnBoard[i].amount = 0;
@@ -212,6 +213,8 @@ public class GameManager : MonoBehaviour
 
             InstantiateStonePieces();
             powerupManager.instnatiatedZonesCounter = 0;
+
+            TutorialSequence.Instacne.activatedHeighlights.Clear();
 
             TutorialSequence.Instacne.StartSequence(currentLevel.tutorialIndexForList);
 
@@ -376,6 +379,7 @@ public class GameManager : MonoBehaviour
         {
             TutorialSequence.Instacne.currentPhaseInSequence = 0;
             TutorialSequence.Instacne.duringSequence = false;
+            TutorialSequence.Instacne.maskImage.gameObject.SetActive(true);
         }
 
         ChooseLevel(currentLevel.levelNum/*, currentLevel.worldName*/);

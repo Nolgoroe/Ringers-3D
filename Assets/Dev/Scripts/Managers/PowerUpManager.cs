@@ -171,7 +171,7 @@ public class PowerUpManager : MonoBehaviour
             }
         }
 
-        if (GameManager.Instance.clipManager.clipCount - 1 == 0)
+         if (GameManager.Instance.clipManager.clipCount - 1 == 0)
         {
             UIManager.Instance.DisplayClipsAboutToEndMessage();
         }

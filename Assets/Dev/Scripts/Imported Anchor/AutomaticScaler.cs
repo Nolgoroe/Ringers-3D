@@ -7,6 +7,8 @@ public class AutomaticScaler : MonoBehaviour
     public int originalWidth = 1080;
     public int originalHeight = 1920;
 
+    public float buffer = 0;
+
     public bool doUpdate;
     Vector3 originalScale;
 
@@ -83,7 +85,12 @@ public class AutomaticScaler : MonoBehaviour
             actualDelta = deltaHeight;
         }
 
-        newScale = new Vector3(originalScale.x * actualDelta, originalScale.y * actualDelta, originalScale.z);
+        Debug.LogError("ACTUAL DELTA IS: " + actualDelta);
+
+        actualDelta += buffer;
+        newScale = new Vector3((originalScale.x * actualDelta), (originalScale.y * actualDelta), originalScale.z);
+
+        Debug.LogError("NEW SCALE FOR " + transform.name + "IS: " + newScale);
         transform.localScale = newScale;
     }
 }

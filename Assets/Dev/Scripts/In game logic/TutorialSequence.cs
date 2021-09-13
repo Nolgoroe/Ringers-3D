@@ -23,7 +23,7 @@ public class Sequence
     public OutLineData[] cellOutlines;
     public Phase[] phase;
     public GameObject[] screens;
-    public Sprite[] sprites;
+    //public Sprite[] sprites;
 }
 
 [System.Serializable]
@@ -55,11 +55,20 @@ public class TutorialSequence : MonoBehaviour
 
     public bool duringSequence;
 
-    public Image maskImage;
+    public RawImage maskImage;
+
+    //public RenderTexture tempToWorkOn;
+
+    public Texture currentTex;
+
+    public List<GameObject> activatedHeighlights;
+
+    public Camera secondCam;
     private void Start()
     {
         Instacne = this;
-        maskImage.gameObject.SetActive(false);
+        //maskImage.gameObject.SetActive(false);
+        activatedHeighlights = new List<GameObject>();
     }
 
     public void StartSequence(int levelNum)
@@ -91,6 +100,7 @@ public class TutorialSequence : MonoBehaviour
                 }
                 //}
             }
+
         }
     }
 
@@ -123,17 +133,116 @@ public class TutorialSequence : MonoBehaviour
 
     private void DisplayTutorialScreens()
     {
-        foreach (GameObject go in levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens)
+        foreach (GameObject go in levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens) /// THESE ARE ALL THE TEXT POPUPS
         {
             go.SetActive(false);
         }
 
-        levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens[0].SetActive(true);
+        StartCoroutine(SelectReleventHeighlights(0));
 
-        maskImage.gameObject.SetActive(true);
-        maskImage.sprite = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].sprites[0];
+        //maskImage.sprite = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].sprites[0]; /// NEW
     }
 
+    [ContextMenu("Render Now")]
+    public void toTexture()
+    {
+        if(secondCam.targetTexture.width != Screen.width || secondCam.targetTexture.height != Screen.height)
+        {
+            StartCoroutine(RecreateRenderTexture());
+        }
+        else
+        {
+            Texture2D texture = new Texture2D(Screen.width, Screen.height, TextureFormat.ARGB32, false);
+
+            Graphics.CopyTexture(secondCam.targetTexture, texture);
+            
+            maskImage.texture = texture;
+
+            maskImage.gameObject.SetActive(true);
+        }
+    }
+
+    public IEnumerator RecreateRenderTexture()
+    {
+        secondCam.targetTexture.Release();
+        yield return null;
+
+        //tempToWorkOn.width = Screen.width;
+        //tempToWorkOn.height = Screen.height;
+
+        //float deltaW = Screen.width;
+        //float deltaH = Screen.height;
+        secondCam.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
+        secondCam.Render();
+
+        yield return null;
+
+        //ScalableBufferManager.ResizeBuffers(deltaW, deltaH);
+        //tempToWorkOn.Create();
+        yield return null;
+        yield return null;
+        toTexture();
+    }
+    public IEnumerator SelectReleventHeighlights(int index)
+    {
+        foreach (GameObject go in activatedHeighlights)
+        {
+            go.SetActive(false);
+        }
+
+        activatedHeighlights.Clear();
+
+        levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens[index].SetActive(true);
+
+        if(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[index].dealPhase)
+        {
+            for (int i = 0; i < UIManager.Instance.dealButton.transform.childCount; i++)
+            {
+                if (UIManager.Instance.dealButton.transform.GetChild(i).CompareTag("Tile Hole"))
+                {
+                    UIManager.Instance.dealButton.transform.GetChild(i).gameObject.SetActive(true);
+
+                    activatedHeighlights.Add(UIManager.Instance.dealButton.transform.GetChild(i).gameObject);
+                }
+
+            }
+        }
+
+        if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[index].unlockedClips.Length > 0)
+        {
+            foreach (int i in levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[index].unlockedClips)
+            {
+                for (int k = 0; k < GameManager.Instance.clipManager.slots[i].childCount; k++)
+                {
+                    if (GameManager.Instance.clipManager.slots[i].GetChild(k).CompareTag("Tile Hole"))
+                    {
+                        GameManager.Instance.clipManager.slots[i].GetChild(k).gameObject.SetActive(true);
+
+                        activatedHeighlights.Add(GameManager.Instance.clipManager.slots[i].GetChild(k).gameObject);
+                    }
+                }
+            }
+        }
+
+        if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[index].targetCells.Length > 0)
+        {
+            foreach (int i in levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[index].targetCells)
+            {
+                for (int k = 0; k < ConnectionManager.Instance.cells[i].transform.childCount; k++)
+                {
+                    if (ConnectionManager.Instance.cells[i].transform.GetChild(k).CompareTag("Tile Hole"))
+                    {
+                        ConnectionManager.Instance.cells[i].transform.GetChild(k).gameObject.SetActive(true);
+
+                        activatedHeighlights.Add(ConnectionManager.Instance.cells[i].transform.GetChild(k).gameObject);
+                    }
+                }
+            }
+        }
+
+        yield return new WaitForEndOfFrame();
+        toTexture();
+    }
     public void IncrementCurrentPhaseInSequence()
     {
         currentPhaseInSequence++;
@@ -154,12 +263,14 @@ public class TutorialSequence : MonoBehaviour
             //Invoke("UnlockAll", 2);
 
             UnlockAll();
-            Invoke("DeactivateTutorialScreens", 2);
+            Invoke("DeactivateTutorialScreens", 0.1f);
 
             return;
         }
 
-        maskImage.sprite = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].sprites[currentPhaseInSequence];
+        StartCoroutine(SelectReleventHeighlights(currentPhaseInSequence));
+
+        ///maskImage.sprite = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].sprites[currentPhaseInSequence]; /// NEW
 
         ChangePhase();
     }
@@ -347,7 +458,7 @@ public class TutorialSequence : MonoBehaviour
         if (isText)
         {
             yield return new WaitForSeconds(time);
-            go.SetActive(false);
+            //go.SetActive(false);
             TMP_Text sr = go.GetComponent<TMP_Text>();
             sr.color = new Color(0.2f, 0.2f, 0.2f, 1); ////////////VERY TEMPORARY
         }

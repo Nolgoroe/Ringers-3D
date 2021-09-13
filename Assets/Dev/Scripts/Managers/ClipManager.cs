@@ -74,7 +74,13 @@ public class ClipManager : MonoBehaviour
         {
             if (t.childCount > 0)
             {
-                Destroy(t.GetChild(0).gameObject);
+                for (int i = 0; i < t.childCount; i++)
+                {
+                    if (t.GetChild(i).CompareTag("MainPiece"))
+                    {
+                        Destroy(t.GetChild(i).gameObject);
+                    }
+                }
             }
         }
 

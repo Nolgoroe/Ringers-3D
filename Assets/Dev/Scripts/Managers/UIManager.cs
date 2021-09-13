@@ -48,6 +48,8 @@ public class UIManager : MonoBehaviour
     public Transform ownedCorruptDevicesZone;
 
     public Text /*hubGoldText,*/ hubRubyText, dewDropsText;
+    public Text width, height;
+    public Text deltaWidth, deltaHeight;
     public TMP_Text dewDropsTextTime;
 
     public TMP_Text /*gameplayGoldText,*/ gameplayRubyText/*, gameplayDewDropsText*/;
@@ -129,6 +131,17 @@ public class UIManager : MonoBehaviour
         {
             go.SetActive(false);
         }
+    }
+
+    private void Update()
+    {
+        width.text = "Width: " + Screen.width;
+        height.text = "Height: " + Screen.height;
+
+        float a = (float)1080 / (float)Screen.width;
+        float b = (float)1920 / (float)Screen.height;
+        deltaHeight.text = "Delta Width: " + a;
+        deltaWidth.text = "Delta Height: " + b ;
     }
     public void PlayButton()
     {
@@ -299,6 +312,7 @@ public class UIManager : MonoBehaviour
         {
             TutorialSequence.Instacne.currentPhaseInSequence = 0;
             TutorialSequence.Instacne.duringSequence = false;
+            TutorialSequence.Instacne.activatedHeighlights.Clear();
             GameManager.Instance.copyOfArrayOfPiecesTutorial.Clear();
             ZoneManager.Instance.ActivateLevelDisplay();
             LootManager.Instance.DestoryWinScreenDisplyedLoot();
