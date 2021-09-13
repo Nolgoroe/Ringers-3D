@@ -50,6 +50,7 @@ public class UIManager : MonoBehaviour
     public Text /*hubGoldText,*/ hubRubyText, dewDropsText;
     public Text width, height;
     public Text deltaWidth, deltaHeight;
+    public Text boardScale;
     public TMP_Text dewDropsTextTime;
 
     public TMP_Text /*gameplayGoldText,*/ gameplayRubyText/*, gameplayDewDropsText*/;
@@ -135,13 +136,22 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        width.text = "Width: " + Screen.width;
-        height.text = "Height: " + Screen.height;
+        width.text = "Width: " + Display.main.systemWidth;
+        height.text = "Height: " + Display.main.systemHeight;
 
         float a = (float)1080 / (float)Screen.width;
         float b = (float)1920 / (float)Screen.height;
         deltaHeight.text = "Delta Width: " + a;
         deltaWidth.text = "Delta Height: " + b ;
+
+        if (GameManager.Instance.gameBoard)
+        {
+            boardScale.text = "Board Scale" + GameManager.Instance.gameBoard.transform.localScale.x.ToString();
+        }
+        else
+        {
+            boardScale.text = "No board";
+        }
     }
     public void PlayButton()
     {

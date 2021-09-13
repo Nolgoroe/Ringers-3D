@@ -14,7 +14,7 @@ public class AutomaticScaler : MonoBehaviour
 
     CameraAnchor CA;
 
-    bool dobuffer = false;
+    public bool dobuffer = false;
     private void Start()
     {
         CA = GetComponent<CameraAnchor>();
@@ -92,6 +92,8 @@ public class AutomaticScaler : MonoBehaviour
         }
 
         Debug.LogError("ACTUAL DELTA IS: " + actualDelta);
+
+        dobuffer = false; //// DISABLE THIS
 
         if (dobuffer)
         {
