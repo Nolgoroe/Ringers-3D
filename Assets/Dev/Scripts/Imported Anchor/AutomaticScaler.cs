@@ -93,7 +93,7 @@ public class AutomaticScaler : MonoBehaviour
 
         Debug.LogError("ACTUAL DELTA IS: " + actualDelta);
 
-        dobuffer = false; //// DISABLE THIS
+        //dobuffer = false; //// DISABLE THIS
 
         if (dobuffer)
         {
