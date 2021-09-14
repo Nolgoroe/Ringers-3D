@@ -13,7 +13,7 @@ public enum AnimalsInGame
     BrownFox,
     BlueFox,
     CelestialFox,
-    WoodMarmot,
+    Stag,
     SimpleMarmot,
     SecondMarmot,
     LegendaryMarmot,
@@ -135,6 +135,8 @@ public class AnimalsManager : MonoBehaviour
     public IEnumerator RescueAnimalSequance()
     {
         AnimalPrefabData APD = statueToSwap.GetComponent<AnimalPrefabData>();
+        statueToSwap.SetActive(false);
+
         GameObject go = Instantiate(APD.animatedPrefab, statueToSwap.transform.parent);
 
         Destroy(statueToSwap.gameObject);
