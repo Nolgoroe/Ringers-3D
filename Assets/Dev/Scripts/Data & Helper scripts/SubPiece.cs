@@ -51,14 +51,15 @@ public class SubPiece : MonoBehaviour
 
             //MaterialPropertyBlock mpb = new MaterialPropertyBlock();
             //MeshRenderer r = GetComponent<MeshRenderer>();
-            
+
             //r.GetPropertyBlock(mpb);
             //mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[indexcColor].colorTex[indexcSymbol]);
             //r.SetPropertyBlock(mpb);
             ///////PERFORMACE FOR DRAW CALLS
 
             //rend.material = GameManager.Instance.clipManager.colorsToMats[indexcColor].colorTex[indexcSymbol];
-            rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[indexcColor].colorTex[indexcSymbol]);
+            rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[indexcColor].colorTex[indexcSymbol]);
+            rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[indexcSymbol].symbolTex);
         }
         else
         {
@@ -77,7 +78,9 @@ public class SubPiece : MonoBehaviour
             //r.SetPropertyBlock(mpb);
 
             //rend.material = GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex[randomSymbol];
-            rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex[randomSymbol]);
+            rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex[randomSymbol]);
+            rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[randomSymbol].symbolTex);
+
         }
     }
 
@@ -86,7 +89,7 @@ public class SubPiece : MonoBehaviour
         if (SPDS.randomValues && !SPDS.isNeutral)
         {
             SetPiece();
-            rend.material.SetColor("_BaseColor", CursorController.Instance.stonePieceColorTint);
+            //rend.material.SetColor("_BaseColor", CursorController.Instance.stonePieceColorTint);
         }
         else if(SPDS.randomValues && SPDS.isNeutral)
         {
@@ -114,7 +117,8 @@ public class SubPiece : MonoBehaviour
             //r.SetPropertyBlock(mpb);
 
             //rend.material = GameManager.Instance.clipManager.colorsToMats[(int)PieceColor.None].colorMats[indexcSymbol];
-            rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)PieceColor.None].colorTex[indexcSymbol]);
+            rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[(int)PieceColor.None].colorTex[indexcSymbol]);
+            rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[indexcSymbol].symbolTex);
         }
         else
         {
@@ -132,7 +136,8 @@ public class SubPiece : MonoBehaviour
                 //r.SetPropertyBlock(mpb);
 
                 //rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
-                rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
+                rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
+                rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[(int)symbolOfPiece].symbolTex);
             }
             else
             {
@@ -148,11 +153,12 @@ public class SubPiece : MonoBehaviour
                 //r.SetPropertyBlock(mpb);
 
                 //rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
-                rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
+                rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
+                rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[(int)symbolOfPiece].symbolTex);
             }
         }
 
-        rend.material.SetColor("_BaseColor", CursorController.Instance.stonePieceColorTint);
+        //rend.material.SetColor("_BaseColor", CursorController.Instance.stonePieceColorTint);
     }
     public void SetPieceTutorial(bool isRight)
     {
@@ -171,7 +177,8 @@ public class SubPiece : MonoBehaviour
             //r.SetPropertyBlock(mpb);
 
             //rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
-            rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
+            rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
+            rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[(int)symbolOfPiece].symbolTex);
         }
         else
         {
@@ -188,7 +195,8 @@ public class SubPiece : MonoBehaviour
             //r.SetPropertyBlock(mpb);
 
             //rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
-            rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
+            rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
+            rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[(int)symbolOfPiece].symbolTex);
         }
 
         //if (rend.materials[0].IsKeywordEnabled("_EMISSION"))
@@ -215,24 +223,27 @@ public class SubPiece : MonoBehaviour
         //mpb.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex[(int)symbolOfPiece]);
         //r.SetPropertyBlock(mpb);
 
-        //rend.material = GameManager.Instance.clipManager.colorsToMats[randomColor].colorMats[(int)symbolOfPiece];
-        rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex[(int)symbolOfPiece]);
-
-        if (rend.materials[0].IsKeywordEnabled("_EMISSION"))
-        {
-            rend.materials[0].DisableKeyword("_EMISSION");
-        }
+        //rend.material = GameManager.Tile_Albedo_Map.clipManager.colorsToMats[randomColor].colorMats[(int)symbolOfPiece];
+        rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex[(int)symbolOfPiece]);
+        rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[(int)symbolOfPiece].symbolTex);
+        //if (rend.materials[0].IsKeywordEnabled("_EMISSION"))
+        //{
+        //    rend.materials[0].DisableKeyword("_EMISSION");
+        //}
     }
 
     public void SetConnectedMaterial()
     {
+        Material mat = GetComponent<Renderer>().material;
+
+        mat.SetInt("Is_Piece_Match", 1);
         //Debug.Log("what?");
-        List<Material> matArray = new List<Material>();
-        matArray.AddRange(rend.materials);
+        //List<Material> matArray = new List<Material>();
+        //matArray.AddRange(rend.materials);
 
-        Material mat = GameManager.Instance.clipManager.symbolToMat.Where(p => p.mat == symbolOfPiece).Single().symbolMat;
+        //Material mat = GameManager.Instance.clipManager.symbolToMat.Where(p => p.mat == symbolOfPiece).Single().symbolMat;
 
-        matArray.Add(mat);
+        //matArray.Add(mat);
 
         ////matArray[1] = ConnectionManager.Instance.rockLIT;
         //if (!matArray[0].IsKeywordEnabled("_EMISSION"))
@@ -246,18 +257,22 @@ public class SubPiece : MonoBehaviour
         //StartCoroutine(LerpColors(matArray, connectedColor));
         ////matArray[0].SetColor("_EmissionMap", Color.white);
         ////matArray[0].SetColor("_EmissionColor", Color.red);
-        rend.materials = matArray.ToArray();
+        //rend.materials = matArray.ToArray();
     }
 
     public void SetDisconnectedMaterial()
     {
+        Material mat = GetComponent<Renderer>().material;
+
+        mat.SetInt("Is_Piece_Match", 0);
+
         //Debug.Log("what????");
 
-        List<Material> matArray = new List<Material>();
-        matArray.AddRange(rend.materials);
+        //List<Material> matArray = new List<Material>();
+        //matArray.AddRange(rend.materials);
 
 
-        matArray.RemoveAt(1);
+        //matArray.RemoveAt(1);
 
         //matArray[1] = ConnectionManager.Instance.rockUnLIT;
         //StartCoroutine(LerpColors(matArray, Color.black));
@@ -265,39 +280,42 @@ public class SubPiece : MonoBehaviour
         //matArray[0].DisableKeyword("_EMISSION");
         //matArray[0].SetColor("_EmissionMap", Color.white);
         //matArray[0].SetColor("_EmissionColor", Color.white);
-        rend.materials = matArray.ToArray();
+        //rend.materials = matArray.ToArray();
 
     }
 
-    IEnumerator LerpColors(List<Material> matArray, Color targetColor)
-    {
+    //IEnumerator LerpColors(List<Material> matArray, Color targetColor)
+    //{
 
-        float timeToLerp = ConnectionManager.Instance.timeToLerpConnectionEmission;
-        float timePassed = 0;
+    //    //float timeToLerp = ConnectionManager.Instance.timeToLerpConnectionEmission;
+    //    //float timePassed = 0;
 
-        while (matArray[0].GetColor("_EmissionColor") != targetColor)
-        {
-            //Debug.Log("???");
-            timePassed += Time.deltaTime;
+    //    //while (matArray[0].GetColor("_EmissionColor") != targetColor)
+    //    //{
+    //    //    //Debug.Log("???");
+    //    //    timePassed += Time.deltaTime;
 
-            if (timePassed > timeToLerp)
-            {
-                break;
-            }
+    //    //    if (timePassed > timeToLerp)
+    //    //    {
+    //    //        break;
+    //    //    }
 
-            matArray[0].SetColor("_EmissionColor", Color.Lerp(matArray[0].GetColor("_EmissionColor"), targetColor, timePassed/timeToLerp));
+    //    //    matArray[0].SetColor("_EmissionColor", Color.Lerp(matArray[0].GetColor("_EmissionColor"), targetColor, timePassed/timeToLerp));
 
-            //Debug.Log(matArray[0].GetColor("_EmissionColor"));
+    //    //    //Debug.Log(matArray[0].GetColor("_EmissionColor"));
 
-            yield return null;
-        }
-    }
+    //        yield return null;
+    //    //}
+
+    //    ////FINISH THIS
+    //}
 
     public void SetSpecificSymbol(PieceSymbol symbol)
     {
         int indexcSymbol = (int)symbol;
         symbolOfPiece = symbol;
-        rend.material.SetTexture("_BaseMap", GameManager.Instance.clipManager.colorsToMats[(int)PieceColor.None].colorTex[indexcSymbol]);
+        rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[(int)PieceColor.None].colorTex[indexcSymbol]);
+        rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[(int)symbolOfPiece].symbolTex);
 
     }
 

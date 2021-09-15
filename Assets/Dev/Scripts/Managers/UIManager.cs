@@ -38,6 +38,7 @@ public class UIManager : MonoBehaviour
     public GameObject hudCanvasUIBottomZoneMainMap;
     public GameObject hudCanvasUIBottomZoneCorruption;
     public GameObject UnlockedZoneMessageView;
+    public GameObject dealButtonHeighlight;
     public Image dewDropsImage;
 
     public Image tapControlsImage, dragControlsImage, tutorialDisableImage;
@@ -221,13 +222,13 @@ public class UIManager : MonoBehaviour
         {
             isUsingUI = true;
 
-            if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
-            {
-                foreach (GameObject go in TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens)
-                {
-                    go.SetActive(false);
-                }
-            }
+            //if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
+            //{
+            //    foreach (GameObject go in TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens)
+            //    {
+            //        go.SetActive(false);
+            //    }
+            //}
 
             isUsingUI = true;
 

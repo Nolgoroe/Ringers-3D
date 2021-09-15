@@ -10,12 +10,12 @@ public class AnimationManager : MonoBehaviour
 {
     public static AnimationManager instance;
 
-    //[Header("Health Settings")]
     public float waitBetweenPieceMove;
     public float speedPieceMove;
 
     public float waitBetweenPiecePullIn;
     public float speedPiecePullIn;
+    public float dissolveSpeed = 5;
 
     //public float paceFade;
 
@@ -35,6 +35,7 @@ public class AnimationManager : MonoBehaviour
 
     public bool noWaitPieces;
     public bool noWaitParticles;
+    public bool noWaitDissolve;
     public bool noWaitPullIn;
     public bool noWaitAnimal;
     //public ParticleSystem midPieceParticle;
@@ -120,7 +121,10 @@ public class AnimationManager : MonoBehaviour
         //    }
         //}
 
-        yield return new WaitForSeconds(waitTimeDissolveTiles);
+        if (!noWaitDissolve)
+        {
+            yield return new WaitForSeconds(waitTimeDissolveTiles);
+        }
 
         //// Dissolve Tiles Here
         DissolveTiles();
@@ -214,28 +218,17 @@ public class AnimationManager : MonoBehaviour
         LeanTween.move(toMove.gameObject, GameManager.Instance.gameBoard.transform.position, speedPieceMove).setEase(LeanTweenType.easeInOutQuad); // animate
     }
 
+    [ContextMenu("Disslove Tiles")]
     public void DissolveTiles()
     {
         foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
         {
-            List<Material> matArray = new List<Material>();
+            Material mat = SP.GetComponent<Renderer>().material;
 
-            Renderer rend = SP.GetComponent<Renderer>();
-
-            matArray.AddRange(rend.materials);
-
-            Material mat = GameManager.Instance.clipManager.symbolToMat.Where(p => p.mat == SP.symbolOfPiece).Single().symbolMat;
-
-            if (matArray.Count > 1)
+            LeanTween.value(mat.GetFloat("Dissolve_Amount"), 0.5f, dissolveSpeed).setOnUpdate((float val) =>
             {
-                matArray.Clear();
-                matArray.Add(mat);
-                rend.materials = matArray.ToArray();
-            }
-            else
-            {
-                rend.material = mat;
-            }
+                mat.SetFloat("Dissolve_Amount", val);
+            });
         }
     }
 
@@ -342,6 +335,11 @@ public class AnimationManager : MonoBehaviour
 
         yield return new WaitUntil((() => Vector2.Distance(toMove.gameObject.transform.position, target.position) <= 0.1f));
         FadeInUnlcokScreen();
+    }
+
+    internal void CheckContinuedTutorials()
+    {
+        throw new System.NotImplementedException();
     }
 
     void FadeInUnlcokScreen()

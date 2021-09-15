@@ -36,7 +36,7 @@ public class ClipManager : MonoBehaviour
     {
         public PieceSymbol mat;
         //public Material symbolMat;
-        public Material symbolMat;
+        public Texture symbolTex;
     }
 
     private void Awake()

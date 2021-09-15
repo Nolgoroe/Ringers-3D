@@ -324,6 +324,8 @@ public class GameManager : MonoBehaviour
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevel.worldName, currentLevel.levelNum);
 
             PlayerManager.Instance.SavePlayerData();
+
+            //TutorialSequence.Instacne.CheckContinuedTutorials();
             return true;
         }
         else

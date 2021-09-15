@@ -375,8 +375,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: If you match two adjacent tiles over a scroll bejeweled with a gem of the
-    same color, you will receive magical loot!
+  m_text: Each a rune is succsessfully matched, you will also recieve special loot.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -690,7 +689,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: Drag tiles into the ring and match them to cast a powerful spell and release
-    the petrified fox from the curse!
+    the petrified fox!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -3318,7 +3317,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 126121281}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 342714152}
@@ -4627,7 +4626,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 150559050}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
   m_Name: 
@@ -4802,7 +4801,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &162410062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5537,8 +5536,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You can also change a tile's location inside the ring by dragging it to
-    a different slot.
+  m_text: You can change a tile's location inside the ring by dragging it to a different
+    slot.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -5608,10 +5607,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0.0028076172, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 193052285}
-    characterCount: 89
+    characterCount: 84
     spriteCount: 0
-    spaceCount: 16
-    wordCount: 17
+    spaceCount: 15
+    wordCount: 16
     linkCount: 0
     lineCount: 4
     pageCount: 1
@@ -6764,8 +6763,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.000011444}
-  m_SizeDelta: {x: 678.4, y: 68.4}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 536.4, y: 218.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &252585970
 MonoBehaviour:
@@ -6785,18 +6784,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Complete the ring to release the fox!
+  m_text: If you want to replace your available tiles, you can press the deal button
+    to refresh them, but each time you do, you will get back one less tile.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
-  m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
-    type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: fd9b7ba0fb066fc45b7182fefd8dc043, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6814,7 +6813,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 48
+  m_fontSize: 42.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6855,18 +6854,18 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0.0028076172, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 252585970}
-    characterCount: 37
+    characterCount: 146
     spriteCount: 0
-    spaceCount: 6
-    wordCount: 7
+    spaceCount: 28
+    wordCount: 29
     linkCount: 0
-    lineCount: 1
+    lineCount: 5
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -7797,8 +7796,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: If you match two adjacent tiles over a scroll with the same symbol, you
-    will recieve magical loot!
+  m_text: Runes are key components in casting the releasing spell. You must match
+    two tiles with the corresponding symbol over a rune for the spell to succeed.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -7827,7 +7826,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 42.85
+  m_fontSize: 42.35
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7868,18 +7867,18 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0.0028076172, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 290771589}
-    characterCount: 98
+    characterCount: 149
     spriteCount: 0
-    spaceCount: 17
-    wordCount: 18
+    spaceCount: 25
+    wordCount: 26
     linkCount: 0
-    lineCount: 4
+    lineCount: 5
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -10098,6 +10097,162 @@ MonoBehaviour:
     chancesPerItemTable: 640000006400000050000000
   craftingMatsLootForLevel: 
   rubiesToRecieveInLevel: 0
+--- !u!1 &361180633
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 361180634}
+  - component: {fileID: 361180636}
+  - component: {fileID: 361180635}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &361180634
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361180633}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2071014672}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -0.000011444}
+  m_SizeDelta: {x: 678.4, y: 68.4}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &361180635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361180633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Complete the ring to release the fox!
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
+  m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4281479730
+  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 48
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 1
+  m_fontSizeMax: 100
+  m_fontStyle: 0
+  m_textAlignment: 513
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0.0028076172, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 361180635}
+    characterCount: 37
+    spriteCount: 0
+    spaceCount: 6
+    wordCount: 7
+    linkCount: 0
+    lineCount: 1
+    pageCount: 1
+    materialCount: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 1
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &361180636
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361180633}
+  m_CullTransparentMesh: 0
 --- !u!1 &365444430
 GameObject:
   m_ObjectHideFlags: 0
@@ -10989,7 +11144,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 381781696}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
   m_Name: 
@@ -11879,7 +12034,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 417216827}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -11889,8 +12044,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -463}
-  m_SizeDelta: {x: 1615, y: 107.8}
+  m_AnchoredPosition: {x: 0, y: -110}
+  m_SizeDelta: {x: 620, y: 310}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &417216829
 MonoBehaviour:
@@ -11910,8 +12065,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0f6142daac8348f49a8facbe8fdb6170, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 80292ffad6146cf4689cfd797ce64027, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -13221,7 +13376,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &471699814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14483,6 +14638,87 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 503714062}
   m_CullTransparentMesh: 0
+--- !u!1 &506894760
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 506894761}
+  - component: {fileID: 506894762}
+  m_Layer: 12
+  m_Name: DealHole_Tutorial_TEST
+  m_TagString: Tile Hole
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &506894761
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506894760}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.005, y: 0.452, z: 0}
+  m_LocalScale: {x: 0.1442428, y: 0.1442428, z: 0.014424279}
+  m_Children: []
+  m_Father: {fileID: 1660594507}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &506894762
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506894760}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 77e17ce0d0d784c46aed2679a5ade93a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.56, y: 2.56}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &517419693
 GameObject:
   m_ObjectHideFlags: 0
@@ -14718,8 +14954,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You can match any two animal symbols over a scroll or rune with a paw symbol
-    on it.
+  m_text: When a rune has a paw symbol on top, it will accept a match of any animal
+    symbol between the two tiles above it.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -15263,10 +15499,11 @@ MonoBehaviour:
   speedPieceMove: 0.5
   waitBetweenPiecePullIn: 0.5
   speedPiecePullIn: 0.5
+  dissolveSpeed: 3.5
   waitTimeParticlesStart: 0.6
   waitTimeMidParticleAppear: 0.2
-  waitTimeDissolveTiles: 0.7
-  waitTimePullIn: 0.7
+  waitTimeDissolveTiles: 0.3
+  waitTimePullIn: 0.4
   waitTimeFadeIn: 0.3
   waitTimeFadeOut: 0.3
   waitTimeWinScreen: 0.5
@@ -15275,6 +15512,7 @@ MonoBehaviour:
   fadeImageEndLevel: {fileID: 1400797655}
   noWaitPieces: 1
   noWaitParticles: 1
+  noWaitDissolve: 0
   noWaitPullIn: 1
   noWaitAnimal: 0
   tempSubPieceArray: []
@@ -16038,7 +16276,7 @@ GameObject:
   - component: {fileID: 591865597}
   - component: {fileID: 591865596}
   m_Layer: 5
-  m_Name: Phase 2
+  m_Name: Phase 2 - no
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16878,7 +17116,7 @@ Canvas:
   m_GameObject: {fileID: 656761284}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 2
   m_Camera: {fileID: 1687258584}
   m_PlaneDistance: 3
   m_PixelPerfect: 0
@@ -16898,8 +17136,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 656761284}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.01699996}
+  m_LocalScale: {x: 0.0018042196, y: 0.0018042196, z: 0.0018042196}
   m_Children:
   - {fileID: 2137641458}
   - {fileID: 1582820838}
@@ -16909,9 +17147,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1.9}
+  m_SizeDelta: {x: 1080, y: 1920}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &657640662
 GameObject:
   m_ObjectHideFlags: 0
@@ -17078,7 +17316,7 @@ GameObject:
   - component: {fileID: 658318443}
   - component: {fileID: 658318442}
   m_Layer: 0
-  m_Name: Situational UI
+  m_Name: Situational UI (Screenspace Camera)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17095,7 +17333,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 944664241}
   - {fileID: 2030928337}
   - {fileID: 1013976274}
   m_Father: {fileID: 1323445853}
@@ -23630,79 +23867,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 936835920}
   m_CullTransparentMesh: 0
---- !u!1 &944664240
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 944664241}
-  - component: {fileID: 944664243}
-  - component: {fileID: 944664242}
-  m_Layer: 0
-  m_Name: BlackLevelBG
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &944664241
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 944664240}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1400}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 658318441}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -85, y: 147.5}
-  m_SizeDelta: {x: -100.00003, y: -175}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &944664242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 944664240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 0.5686275}
-  m_RaycastTarget: 0
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &944664243
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 944664240}
-  m_CullTransparentMesh: 0
 --- !u!1 &947465686
 GameObject:
   m_ObjectHideFlags: 0
@@ -24241,7 +24405,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 100
   m_TargetDisplay: 0
@@ -25557,7 +25721,7 @@ RectTransform:
   - {fileID: 125474310}
   - {fileID: 875638109}
   m_Father: {fileID: 658318441}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -26182,7 +26346,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1043428618}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -84.99993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 290771588}
@@ -27887,8 +28051,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: If you can't find any matching tiles, you can press the deal button to
-    refresh them, but each time you will get one tile less.
+  m_text: Runes can also require a specific color to be complete.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -27917,7 +28080,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 35.1
+  m_fontSize: 67
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -27958,18 +28121,18 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0.0028076172, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1117455293}
-    characterCount: 126
+    characterCount: 55
     spriteCount: 0
-    spaceCount: 24
-    wordCount: 25
+    spaceCount: 9
+    wordCount: 10
     linkCount: 0
-    lineCount: 5
+    lineCount: 3
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -31349,7 +31512,7 @@ MonoBehaviour:
   currentPhaseInSequence: 0
   levelSequences:
   - levelTutorialIndex: 1
-    EndPhaseID: 4
+    EndPhaseID: 5
     cellOutlines: []
     phase:
     - phaseID: 1
@@ -31359,6 +31522,7 @@ MonoBehaviour:
       unlockedClips: 01000000
       unlockedBoardCells: 0
       targetCells: 00000000
+      targetSlices: 
     - phaseID: 2
       isClipPhase: 1
       isBoardPhase: 0
@@ -31366,6 +31530,7 @@ MonoBehaviour:
       unlockedClips: 02000000
       unlockedBoardCells: 0
       targetCells: 07000000
+      targetSlices: 
     - phaseID: 3
       isClipPhase: 1
       isBoardPhase: 0
@@ -31373,6 +31538,7 @@ MonoBehaviour:
       unlockedClips: 00000000
       unlockedBoardCells: 0
       targetCells: 01000000
+      targetSlices: 
     - phaseID: 4
       isClipPhase: 0
       isBoardPhase: 1
@@ -31380,44 +31546,70 @@ MonoBehaviour:
       unlockedClips: 
       unlockedBoardCells: 1
       targetCells: 0100000006000000
-    screens:
-    - {fileID: 1854048183}
-    - {fileID: 702775383}
-    - {fileID: 1265889137}
-    - {fileID: 1176987051}
-    - {fileID: 417216827}
-  - levelTutorialIndex: 2
-    EndPhaseID: 3
-    cellOutlines:
-    - cellIndex: 7
-      right: 1
-    - cellIndex: 0
-      right: 0
-    phase:
-    - phaseID: 1
-      isClipPhase: 1
-      isBoardPhase: 0
-      dealPhase: 0
-      unlockedClips: 02000000
-      unlockedBoardCells: 0
-      targetCells: 0000000007000000
-    - phaseID: 2
-      isClipPhase: 1
-      isBoardPhase: 0
-      dealPhase: 0
-      unlockedClips: 03000000
-      unlockedBoardCells: 0
-      targetCells: 0000000007000000
-    - phaseID: 3
+      targetSlices: 
+    - phaseID: 5
       isClipPhase: 0
       isBoardPhase: 0
       dealPhase: 1
       unlockedClips: 
       unlockedBoardCells: 0
       targetCells: 
+      targetSlices: 
+    screens:
+    - {fileID: 1854048183}
+    - {fileID: 702775383}
+    - {fileID: 1265889137}
+    - {fileID: 1176987051}
+    - {fileID: 417216827}
+    - {fileID: 2071014671}
+  - levelTutorialIndex: 2
+    EndPhaseID: 4
+    cellOutlines:
+    - cellIndex: 7
+      right: 1
+    - cellIndex: 0
+      right: 0
+    - cellIndex: 3
+      right: 1
+    - cellIndex: 4
+      right: 0
+    phase:
+    - phaseID: 1
+      isClipPhase: 1
+      isBoardPhase: 0
+      dealPhase: 0
+      unlockedClips: 0000000001000000
+      unlockedBoardCells: 0
+      targetCells: 0000000007000000
+      targetSlices: 00000000
+    - phaseID: 2
+      isClipPhase: 1
+      isBoardPhase: 0
+      dealPhase: 0
+      unlockedClips: 0000000001000000
+      unlockedBoardCells: 0
+      targetCells: 0000000007000000
+      targetSlices: 00000000
+    - phaseID: 3
+      isClipPhase: 1
+      isBoardPhase: 0
+      dealPhase: 0
+      unlockedClips: 0200000003000000
+      unlockedBoardCells: 0
+      targetCells: 0300000004000000
+      targetSlices: 00000000
+    - phaseID: 4
+      isClipPhase: 1
+      isBoardPhase: 0
+      dealPhase: 0
+      unlockedClips: 0200000003000000
+      unlockedBoardCells: 0
+      targetCells: 0300000004000000
+      targetSlices: 00000000
     screens:
     - {fileID: 1043428618}
     - {fileID: 1043428618}
+    - {fileID: 2063133148}
     - {fileID: 2063133148}
     - {fileID: 126121281}
   - levelTutorialIndex: 3
@@ -31434,17 +31626,19 @@ MonoBehaviour:
       dealPhase: 0
       unlockedClips: 00000000
       unlockedBoardCells: 0
-      targetCells: 01000000
+      targetCells: 0100000002000000
+      targetSlices: 02000000
     - phaseID: 2
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 02000000
+      unlockedClips: 00000000
       unlockedBoardCells: 0
-      targetCells: 02000000
+      targetCells: 0100000002000000
+      targetSlices: 02000000
     screens:
     - {fileID: 2123312440}
-    - {fileID: 591865594}
+    - {fileID: 2123312440}
     - {fileID: 1757760607}
   - levelTutorialIndex: 5
     EndPhaseID: 2
@@ -31461,6 +31655,7 @@ MonoBehaviour:
       unlockedClips: 010000000200000003000000
       unlockedBoardCells: 0
       targetCells: 0000000001000000
+      targetSlices: 01000000
     - phaseID: 2
       isClipPhase: 1
       isBoardPhase: 0
@@ -31468,6 +31663,7 @@ MonoBehaviour:
       unlockedClips: 010000000200000003000000
       unlockedBoardCells: 0
       targetCells: 0000000001000000
+      targetSlices: 
     screens:
     - {fileID: 432097514}
     - {fileID: 432097514}
@@ -31491,6 +31687,7 @@ MonoBehaviour:
       unlockedClips: 01000000
       unlockedBoardCells: 0
       targetCells: 0000000001000000
+      targetSlices: 01000000
     - phaseID: 2
       isClipPhase: 1
       isBoardPhase: 0
@@ -31498,6 +31695,7 @@ MonoBehaviour:
       unlockedClips: 02000000
       unlockedBoardCells: 0
       targetCells: 0000000001000000
+      targetSlices: 01000000
     - phaseID: 3
       isClipPhase: 1
       isBoardPhase: 0
@@ -31505,6 +31703,7 @@ MonoBehaviour:
       unlockedClips: 00000000
       unlockedBoardCells: 0
       targetCells: 0300000004000000
+      targetSlices: 04000000
     - phaseID: 4
       isClipPhase: 1
       isBoardPhase: 0
@@ -31512,6 +31711,57 @@ MonoBehaviour:
       unlockedClips: 03000000
       unlockedBoardCells: 0
       targetCells: 0300000004000000
+      targetSlices: 04000000
+    screens:
+    - {fileID: 1890713266}
+    - {fileID: 1890713266}
+    - {fileID: 1376208567}
+    - {fileID: 1376208567}
+    - {fileID: 1348711234}
+  - levelTutorialIndex: 7
+    EndPhaseID: 4
+    cellOutlines:
+    - cellIndex: 0
+      right: 1
+    - cellIndex: 1
+      right: 0
+    - cellIndex: 3
+      right: 1
+    - cellIndex: 4
+      right: 0
+    phase:
+    - phaseID: 1
+      isClipPhase: 1
+      isBoardPhase: 0
+      dealPhase: 0
+      unlockedClips: 01000000
+      unlockedBoardCells: 0
+      targetCells: 0000000001000000
+      targetSlices: 01000000
+    - phaseID: 2
+      isClipPhase: 1
+      isBoardPhase: 0
+      dealPhase: 0
+      unlockedClips: 02000000
+      unlockedBoardCells: 0
+      targetCells: 0000000001000000
+      targetSlices: 01000000
+    - phaseID: 3
+      isClipPhase: 1
+      isBoardPhase: 0
+      dealPhase: 0
+      unlockedClips: 00000000
+      unlockedBoardCells: 0
+      targetCells: 0300000004000000
+      targetSlices: 04000000
+    - phaseID: 4
+      isClipPhase: 1
+      isBoardPhase: 0
+      dealPhase: 0
+      unlockedClips: 03000000
+      unlockedBoardCells: 0
+      targetCells: 0300000004000000
+      targetSlices: 04000000
     screens:
     - {fileID: 1890713266}
     - {fileID: 1890713266}
@@ -31523,6 +31773,7 @@ MonoBehaviour:
   currentTex: {fileID: 0}
   activatedHeighlights: []
   secondCam: {fileID: 1807676373}
+  level3TurorialFlag: 0
 --- !u!1 &1259284961
 GameObject:
   m_ObjectHideFlags: 0
@@ -33502,6 +33753,7 @@ Transform:
   - {fileID: 852137832}
   - {fileID: 1240318829}
   - {fileID: 658318441}
+  - {fileID: 1660594507}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -33559,7 +33811,7 @@ MonoBehaviour:
   ringersHutUICanvas: {fileID: 1686607921}
   hollowCraftAndOwned: {fileID: 73511793}
   InGameUiScreens: {fileID: 138833114}
-  blackLevelBG: {fileID: 944664240}
+  blackLevelBG: {fileID: 1626347517}
   zoomInCorruptedBlack: {fileID: 2030928336}
   tutorialCanvas: {fileID: 965599395}
   forge: {fileID: 1271767204}
@@ -33582,6 +33834,7 @@ MonoBehaviour:
   hudCanvasUIBottomZoneMainMap: {fileID: 531889887}
   hudCanvasUIBottomZoneCorruption: {fileID: 2138082971}
   UnlockedZoneMessageView: {fileID: 1013976273}
+  dealButtonHeighlight: {fileID: 506894760}
   dewDropsImage: {fileID: 1801717205}
   tapControlsImage: {fileID: 894891440}
   dragControlsImage: {fileID: 837644898}
@@ -33942,7 +34195,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1338993686}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -40}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 896078207}
@@ -33951,7 +34204,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -10}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1338993688
@@ -36896,8 +37149,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Runes are key components in casting the spell. Unlike scrolls, you must
-    match two tiles over a rune for the spell to succeed, granting you loot on completion.
+  m_text: 'Some runes will appear with a lock symbol above them
+
+
+    These type
+    of runes will lock two tiles in place, once they are matched.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -36925,7 +37181,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 25.1
+  m_fontSize: 32.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -36966,10 +37222,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0.0028076172, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1447609609}
-    characterCount: 158
+    characterCount: 126
     spriteCount: 0
-    spaceCount: 27
-    wordCount: 28
+    spaceCount: 24
+    wordCount: 24
     linkCount: 0
     lineCount: 5
     pageCount: 1
@@ -37497,7 +37753,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1480338723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40199,8 +40455,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: While the multicolored symbol allows for any two matching colored tiled
-    to be used over it.
+  m_text: While runes with the multicolored symbol will accept a match of any color
+    between the tiles above it.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -42358,6 +42614,87 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1615361733}
   m_CullTransparentMesh: 0
+--- !u!1 &1626347517
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1626347518}
+  - component: {fileID: 1626347519}
+  m_Layer: 0
+  m_Name: Black Level BG
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1626347518
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626347517}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.249, y: 3.36, z: 0.158}
+  m_LocalScale: {x: 51.841896, y: 51.841896, z: 51.841896}
+  m_Children: []
+  m_Father: {fileID: 1660594507}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1626347519
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626347517}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Color: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 0.5686275}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.56, y: 2.56}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1626415105
 GameObject:
   m_ObjectHideFlags: 0
@@ -43048,7 +43385,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Scrolls with a lock above them will lock two tiles in place, once matched.
+  m_text: Complete the ring to release the fox!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -43363,6 +43700,38 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 255.21295, y: 965.36755}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1660594506
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1660594507}
+  m_Layer: 0
+  m_Name: Situaltional UI (No camera)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1660594507
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660594506}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 506894761}
+  - {fileID: 1626347518}
+  m_Father: {fileID: 1323445853}
+  m_RootOrder: 30
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1663953771
 GameObject:
   m_ObjectHideFlags: 0
@@ -45955,7 +46324,7 @@ GameObject:
   - component: {fileID: 1757760610}
   - component: {fileID: 1757760609}
   m_Layer: 5
-  m_Name: Phase 3
+  m_Name: Phase 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50671,6 +51040,7 @@ RectTransform:
   - {fileID: 1265889138}
   - {fileID: 1176987052}
   - {fileID: 417216828}
+  - {fileID: 2071014672}
   m_Father: {fileID: 952127875}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -53192,7 +53562,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 658318441}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -53929,7 +54299,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2063133148}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -84.99993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1117455292}
@@ -53938,7 +54308,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -429}
+  m_AnchoredPosition: {x: 123, y: -27}
   m_SizeDelta: {x: 620, y: 310}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2063133150
@@ -54049,6 +54419,80 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2067003033}
+  m_CullTransparentMesh: 0
+--- !u!1 &2071014671
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2071014672}
+  - component: {fileID: 2071014674}
+  - component: {fileID: 2071014673}
+  m_Layer: 5
+  m_Name: Phase 6
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &2071014672
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071014671}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 361180634}
+  m_Father: {fileID: 1926656343}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -463}
+  m_SizeDelta: {x: 1615, y: 107.8}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2071014673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071014671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 0f6142daac8348f49a8facbe8fdb6170, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &2071014674
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071014671}
   m_CullTransparentMesh: 0
 --- !u!1 &2077001869
 GameObject:
