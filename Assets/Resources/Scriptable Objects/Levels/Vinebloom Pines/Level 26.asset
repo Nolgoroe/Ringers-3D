@@ -37,13 +37,20 @@ MonoBehaviour:
     symbolOfPieceRight: 4
     colorOfPieceLeft: 5
     symbolOfPieceLeft: 4
-  slicesToSpawn: 020000000200000002000000020000000200000002000000
-  lockSlices: 010100000000
-  lootSlices: 010101010101
-  limiterSlices: 010001010001
+  - cellIndex: 4
+    randomValues: 1
+    isNeutral: 1
+    colorOfPieceRight: 5
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 5
+    symbolOfPieceLeft: 4
+  slicesToSpawn: 01000000030000000200000002000000
+  lockSlices: 01000100
+  lootSlices: 01010101
+  limiterSlices: 01010000
   RewardBags: 0b00000002000000010000000c0000000d0000000e000000
   levelAvailableColors: 00000000010000000200000003000000
-  levelAvailablesymbols: 000000000200000003000000
+  levelAvailablesymbols: 00000000020000000300000001000000
   symbolsNeededForSpecialPowers: []
   isTutorial: 0
   arrayOfPieces: []

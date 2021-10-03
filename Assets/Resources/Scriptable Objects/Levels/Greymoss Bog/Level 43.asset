@@ -10,24 +10,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f245e6ade46975b42912a0bdcd673818, type: 3}
-  m_Name: Level 34
+  m_Name: Level 43
   m_EditorClassIdentifier: 
-  worldName: Red Root Covet
+  worldName: Greymoss Bog
   isDoubleRing: 0
   boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
     type: 3}
-  levelNum: 34
-  levelIndexInZone: 3
+  levelNum: 43
+  levelIndexInZone: 12
   tutorialIndexForList: 0
   cellsCountInLevel: 8
   RandomSlicePositions: 1
   allowRepeatSlices: 0
-  stoneTiles: []
-  slicesToSpawn: 010000000200000001000000
-  lockSlices: 000001
+  stoneTiles:
+  - cellIndex: 0
+    randomValues: 1
+    isNeutral: 1
+    colorOfPieceRight: 5
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 5
+    symbolOfPieceLeft: 4
+  - cellIndex: 4
+    randomValues: 1
+    isNeutral: 1
+    colorOfPieceRight: 5
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 5
+    symbolOfPieceLeft: 4
+  slicesToSpawn: 030000000300000003000000
+  lockSlices: 010000
   lootSlices: 010101
-  limiterSlices: 010100
-  RewardBags: 0700000008000000020000000100000009000000
+  limiterSlices: 010101
+  RewardBags: 02000000010000000c0000000d0000000e0000000f000000
   levelAvailableColors: 0000000001000000020000000300000004000000
   levelAvailablesymbols: 00000000010000000200000003000000
   symbolsNeededForSpecialPowers: []
