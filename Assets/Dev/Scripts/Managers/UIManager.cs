@@ -213,6 +213,7 @@ public class UIManager : MonoBehaviour
         clipsAboutToEndMessage.SetActive(false);
         //LootManager.Instance.currentLevelLootToGive.Clear();
         LootManager.Instance.craftingMatsLootForLevel.Clear();
+        LootManager.Instance.tempDataList.Clear();
         DisplayLoseScreen();
 
     }
@@ -251,17 +252,19 @@ public class UIManager : MonoBehaviour
 
             CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
 
-            CMD.materialImage.texture = LootManager.Instance.rubySprite.texture;
+            CMD.materialImage.sprite = LootManager.Instance.rubySprite;
             CMD.materialCount.gameObject.SetActive(false);
         }
 
-        foreach (CraftingMats CM in LootManager.Instance.craftingMatsLootForLevel)
+        foreach (LootToRecieve LTR in LootManager.Instance.craftingMatsLootForLevel)
         {
             GameObject go = Instantiate(LootManager.Instance.lootDisplayPrefab, sureLevelRestartLootDislpay);
 
             CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
 
-            CMD.materialImage.texture = Resources.Load(MaterialsAndForgeManager.Instance.materialSpriteByName[CM]) as Texture2D;
+            //CMD.materialImage.texture = Resources.Load(MaterialsAndForgeManager.Instance.materialSpriteByName[CM]) as Texture2D;
+            CMD.materialImage.sprite = LootManager.Instance.allMaterialSprites[(int)LTR.type];
+
             CMD.materialCount.gameObject.SetActive(false);
         }
     }
@@ -595,15 +598,15 @@ public class UIManager : MonoBehaviour
                     break;
                 }
 
-                BPZ.zoneButtons[i].interactable = true;
-
                 if (i + 1 != BPZ.theZone.maxLevelReachedInZone)
                 {
                     BPZ.zoneButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelDonePath);
+                    BPZ.zoneButtons[i].interactable = false;
                 }
                 else
                 {
                     BPZ.zoneButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconPath);
+                    BPZ.zoneButtons[i].interactable = true;
                 }
             }
 

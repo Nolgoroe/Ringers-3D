@@ -1,6 +1,40 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System;
+
+[Serializable]
+public enum CraftingMats
+{
+    DawnDew,
+    Wood,
+    TreeSap,
+    GrassBlades,
+    Wax,
+    MossFleck,
+    Scarletpimpernel,
+    PeppermintLeaves,
+    RockClump,
+    AmberShard,
+    CloverSeeds,
+    Feverfew,
+    MoonDust,
+    Amethyst,
+    ElderStalks,
+    SilkThread,
+    MoonStone,
+    None
+}
+public enum CraftingMatType
+{
+    None,
+    Build,
+    Gem,
+    Herb,
+    Witchcraft
+}
+
 public enum LootPacks ////// Names of loot packs containing loot packs
 {
     None,
@@ -64,6 +98,20 @@ public class ItemTablesToCraftingMats
     public List<CraftingMats> tableToMat;
 }
 
+[System.Serializable]
+public class LootToRecieve
+{
+    public CraftingMats type;
+    public int amount;
+
+
+    public LootToRecieve(CraftingMats type_In, int amount_In)
+    {
+        type = type_In;
+        amount = amount_In;
+    }
+}
+
 public class LootManager : MonoBehaviour
 {
     public static LootManager Instance;
@@ -74,6 +122,8 @@ public class LootManager : MonoBehaviour
     public Transform winScreenLootDisplayContent;
 
     public Sprite /*goldSprite,*/ rubySprite;
+
+    public Sprite[] allMaterialSprites;
 
     public bool giveKey;
 
@@ -92,15 +142,17 @@ public class LootManager : MonoBehaviour
 
     public Dictionary<ItemTables, List<CraftingMats>> itemTableToListOfMats;
 
-    public List<CraftingMats> craftingMatsLootForLevel;
+    public List<LootToRecieve> craftingMatsLootForLevel;
 
+    public List<CraftingMats> tempDataList;
 
     public int rubiesToRecieveInLevel;
     private void Start()
     {
         Instance = this;
 
-        craftingMatsLootForLevel = new List<CraftingMats>();
+        craftingMatsLootForLevel = new List<LootToRecieve>();
+        tempDataList = new List<CraftingMats>();
         //currentLevelLootToGive = new List<LootPacks>();
         itemTableToListOfMats = new Dictionary<ItemTables, List<CraftingMats>>();
         lootpackEnumToRewardBag = new Dictionary<LootPacks, RewardBag>();
@@ -122,7 +174,7 @@ public class LootManager : MonoBehaviour
 
         if(rubiesToRecieveInLevel > 0)
         {
-            DisplayLootGoldRubyToPlayer(rubiesToRecieveInLevel, rubySprite.texture);
+            DisplayLootGoldRubyToPlayer(rubiesToRecieveInLevel, rubySprite);
             PlayerManager.Instance.AddRubies(rubiesToRecieveInLevel);
 
             Debug.Log("Rubied to recieve " + rubiesToRecieveInLevel);
@@ -130,17 +182,18 @@ public class LootManager : MonoBehaviour
         
         if(craftingMatsLootForLevel.Count > 0)
         {
-            foreach (CraftingMats CM in craftingMatsLootForLevel)
+            foreach (LootToRecieve LTR in craftingMatsLootForLevel)
             {
-                DisplayLootMaterialsToPlayer(5, CM);
+                DisplayLootMaterialsToPlayer(LTR.amount, LTR.type);
 
-                PlayerManager.Instance.AddMaterials(CM, 5); //////// Figure out how to get amount from outside dynamically
+                PlayerManager.Instance.AddMaterials(LTR.type, LTR.amount); //////// Figure out how to get amount from outside dynamically
 
-                Debug.Log("materials recieved " + CM);
+                Debug.Log("materials recieved " + LTR.type);
             }
         }
 
         craftingMatsLootForLevel.Clear();
+        LootManager.Instance.tempDataList.Clear();
 
         //foreach (LootPacks LP in currentLevelLootToGive)
         //{
@@ -255,24 +308,25 @@ public class LootManager : MonoBehaviour
         //currentLevelLootToGive.Clear();
         rubiesToRecieveInLevel = 0;
         craftingMatsLootForLevel.Clear();
+        LootManager.Instance.tempDataList.Clear();
     }
 
-    public void DisplayLootMaterialsToPlayer(int count, CraftingMats CM)
+    public void DisplayLootMaterialsToPlayer(int amount, CraftingMats CM)
     {
         GameObject go = Instantiate(lootDisplayPrefab, winScreenLootDisplayContent);
 
         CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
 
-        CMD.materialImage.texture = Resources.Load(MaterialsAndForgeManager.Instance.materialSpriteByName[CM]) as Texture2D;
-        CMD.materialCount.text = count.ToString();
+        CMD.materialImage.sprite = allMaterialSprites[(int)CM];
+        CMD.materialCount.text = amount.ToString();
     }
-    public void DisplayLootGoldRubyToPlayer(int count, Texture s)
+    public void DisplayLootGoldRubyToPlayer(int count, Sprite sprite)
     {
         GameObject go = Instantiate(lootDisplayPrefab, winScreenLootDisplayContent);
 
         CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
 
-        CMD.materialImage.texture = s as Texture2D;
+        CMD.materialImage.sprite = sprite;
         CMD.materialCount.text = count.ToString();
     }
 

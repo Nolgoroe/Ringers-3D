@@ -11,7 +11,7 @@ using System.Linq;
 
 public class CorruptedDevicesDisplayer : MonoBehaviour
 {
-    public Button forgeButton;
+    public Button craftButton;
 
     //public TMP_Text itemName;
     //public TMP_Text usageCount;
@@ -26,6 +26,11 @@ public class CorruptedDevicesDisplayer : MonoBehaviour
     public CorruptedDevicesData data;
 
     public List<CraftingMatsNeeded> craftingMatsForEquipment;
+
+    private void Start()
+    {
+        craftButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(Sounds.ButtonPressUI));
+    }
 
     public void SpawnMaterialsNeeded(string matList)
     {
@@ -56,7 +61,8 @@ public class CorruptedDevicesDisplayer : MonoBehaviour
 
             CraftingMats parsed_enum = (CraftingMats)System.Enum.Parse(typeof(CraftingMats), nameOfMat);
 
-            CMD.SetImageAndMaterialCount(MaterialsAndForgeManager.Instance.materialSpriteByName[parsed_enum], matAndCount[1]);
+            //CMD.SetImageAndMaterialCount(MaterialsAndForgeManager.Instance.materialSpriteByName[parsed_enum], matAndCount[1]);
+            CMD.SetImageAndMaterialCount(LootManager.Instance.allMaterialSprites[(int)parsed_enum], matAndCount[1]);
 
             SetDataMatsNeeded(nameOfMat, Convert.ToInt16(matAndCount[1]), CMD, parsed_enum);
 
@@ -118,12 +124,12 @@ public class CorruptedDevicesDisplayer : MonoBehaviour
 
         if (canCraft)
         {
-            forgeButton.interactable = true;
+            craftButton.interactable = true;
             //forgeButton.gameObject.SetActive(true);
         }
         else
         {
-            forgeButton.interactable = false;
+            craftButton.interactable = false;
 
             //forgeButton.gameObject.SetActive(false);
         }

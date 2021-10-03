@@ -24,6 +24,11 @@ public class HollowObjectDisplayer : MonoBehaviour
 
     public List<CraftingMatsNeeded> craftingMatsForEquipment;
 
+    private void Start()
+    {
+        craftButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(Sounds.ButtonPressUI));
+    }
+
     public void SpawnMaterialsNeeded(string matList)
     {
         materialCountPairs = new List<string>();
@@ -53,7 +58,7 @@ public class HollowObjectDisplayer : MonoBehaviour
 
             CraftingMats parsed_enum = (CraftingMats)System.Enum.Parse(typeof(CraftingMats), nameOfMat);
 
-            CMD.SetImageAndMaterialCount(MaterialsAndForgeManager.Instance.materialSpriteByName[parsed_enum], matAndCount[1]);
+            CMD.SetImageAndMaterialCount(LootManager.Instance.allMaterialSprites[(int)parsed_enum], matAndCount[1]);
 
             SetDataMatsNeeded(nameOfMat, Convert.ToInt16(matAndCount[1]), CMD, parsed_enum);
         }

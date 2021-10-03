@@ -136,7 +136,6 @@ public class GameManager : MonoBehaviour
     {
         if (!isDisableTutorials)
         {
-
             for (int i = 0; i < numAnimalsOnBoard.Length; i++)
             {
                 numAnimalsOnBoard[i].amount = 0;
@@ -346,6 +345,8 @@ public class GameManager : MonoBehaviour
     {
         //LootManager.Instance.currentLevelLootToGive.Clear();
         LootManager.Instance.craftingMatsLootForLevel.Clear();
+        LootManager.Instance.tempDataList.Clear();
+
     }
     public void WinAfterAnimation()
     {

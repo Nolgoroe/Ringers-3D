@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 
 public class ConnectionManager : MonoBehaviour
@@ -120,6 +121,8 @@ public class ConnectionManager : MonoBehaviour
                     supPieceArray[currentLeft].SetConnectedMaterial();
                     supPieceArray[leftContested].SetConnectedMaterial();
 
+                    SoundManager.Instance.PlaySound(Sounds.TileMatch);
+
                     //Debug.Log("Emission is happening");
                     //supPieceArray[currentLeft].gameObject.GetComponent<Renderer>().material.EnableKeyword ("_EMISSION");
                     //supPieceArray[leftContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
@@ -140,7 +143,13 @@ public class ConnectionManager : MonoBehaviour
 
                                     if (supPieceArray[currentLeft].relevantSlice.isLimiter)
                                     {
+                                        SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
+
                                         supPieceArray[currentLeft].relevantSlice.anim.SetBool("Reverse", false);
+                                    }
+                                    else
+                                    {
+                                        SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
                                     }
                                 }
 
@@ -169,7 +178,13 @@ public class ConnectionManager : MonoBehaviour
 
                                 if (supPieceArray[currentLeft].relevantSlice.isLimiter)
                                 {
+                                    SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
+
                                     supPieceArray[currentLeft].relevantSlice.anim.SetBool("Reverse", false);
+                                }
+                                else
+                                {
+                                    SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
                                 }
                             }
 
@@ -257,7 +272,9 @@ public class ConnectionManager : MonoBehaviour
 
                     supPieceArray[currentRight].SetConnectedMaterial();
                     supPieceArray[rightContested].SetConnectedMaterial();
-                    Debug.Log("Emission is happening");
+                    //Debug.Log("Emission is happening");
+
+                    SoundManager.Instance.PlaySound(Sounds.TileMatch);
 
                     //supPieceArray[currentRight].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     //supPieceArray[rightContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
@@ -276,7 +293,13 @@ public class ConnectionManager : MonoBehaviour
 
                                     if (supPieceArray[currentRight].relevantSlice.isLimiter)
                                     {
+                                        SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
+
                                         supPieceArray[currentRight].relevantSlice.anim.SetBool("Reverse", false);
+                                    }
+                                    else
+                                    {
+                                        SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
                                     }
                                 }
 
@@ -303,7 +326,13 @@ public class ConnectionManager : MonoBehaviour
 
                                 if (supPieceArray[currentRight].relevantSlice.isLimiter)
                                 {
+                                    SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
+
                                     supPieceArray[currentRight].relevantSlice.anim.SetBool("Reverse", false);
+                                }
+                                else
+                                {
+                                    SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
                                 }
                             }
 
@@ -808,6 +837,8 @@ public class ConnectionManager : MonoBehaviour
 
         LootManager.Instance.rubiesToRecieveInLevel += randomNum;
 
+        Debug.LogError("GAVE RUBIES");
+
         //Destroy(relevent.lootIcon.gameObject);
     }
     public void AddMaterialsToLootList(Slice relevent)
@@ -835,7 +866,22 @@ public class ConnectionManager : MonoBehaviour
 
                 //Debug.Log(craftingMatsFromTables[randomMat]);
 
-                LootManager.Instance.craftingMatsLootForLevel.Add(craftingMatsFromTables[randomMat]);
+                LootToRecieve LTR = new LootToRecieve(craftingMatsFromTables[randomMat], Random.Range(1,6));
+
+                if (!LootManager.Instance.tempDataList.Contains(LTR.type))
+                {
+                    LootManager.Instance.craftingMatsLootForLevel.Add(LTR);
+                    LootManager.Instance.tempDataList.Add(LTR.type);
+                }
+                else
+                {
+                    LootToRecieve LTR_exsists = LootManager.Instance.craftingMatsLootForLevel.Where(p => p.type == LTR.type).Single();
+                    LTR_exsists.amount += LTR.amount;
+
+                    Debug.Log("Added " + LTR.amount + " " + "To " + LTR_exsists.type);
+                }
+
+                Debug.LogError("GAVE LOOT");
 
                 craftingMatsFromTables.Clear();
             }

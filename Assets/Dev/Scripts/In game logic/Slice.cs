@@ -82,7 +82,6 @@ public class Slice : MonoBehaviour
         //lootIcon.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.sliceManager.lootToIcon[lp];
     }
 
-
     public void InstantiateSlice(int pieceSymbolEnumCount, int pieceColorEnumCount)
     {
         //GameObject go = Instantiate(GameManager.Instance.sliceManager.lootSlicePrefab, transform);

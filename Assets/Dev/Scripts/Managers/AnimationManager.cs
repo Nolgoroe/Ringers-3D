@@ -234,6 +234,8 @@ public class AnimationManager : MonoBehaviour
 
     public void SkipEndLevelAnimation()
     {
+        SoundManager.Instance.audioSource.Stop();
+
         StopCoroutine(endAnim);
 
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
@@ -325,6 +327,8 @@ public class AnimationManager : MonoBehaviour
 
     public IEnumerator AnimateUnlockScreen(int ID)
     {
+        SoundManager.Instance.PlaySound(Sounds.UnlockZone);
+
         Camera toMove = Camera.main;
 
         UIManager.Instance.zoneToUnlcokNameText.text = ZoneManagerHelpData.Instance.listOfAllZones[ID].zoneName;

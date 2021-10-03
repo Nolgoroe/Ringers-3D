@@ -191,6 +191,8 @@ public class TutorialSequence : MonoBehaviour
     }
     public IEnumerator SelectReleventHeighlights(int index)
     {
+        UIManager.Instance.dealButtonHeighlight.SetActive(false);
+
         foreach (GameObject go in activatedHeighlights)
         {
             go.SetActive(false);

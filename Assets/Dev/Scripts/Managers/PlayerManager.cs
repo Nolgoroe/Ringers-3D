@@ -6,45 +6,6 @@ using System.IO;
 using System.Linq;
 
 [Serializable]
-public enum CraftingMats
-{
-    None,
-    Wood,
-    SunDew,
-    //PurpleFlower,
-    //FireShard,
-    //Feather,
-    Wax,
-    //LeatherBand,
-    RedRibbon,
-    SilverNugget,
-    //Amber,
-    MoonStone,
-    //VenerableOakBranch,
-    //MoonwellWater,
-    Scarletpimpernel,
-    //Saphire,
-    //Hay,
-    //CloverBunch,
-    SunPetals,
-    //BirchBark,
-    //JadeShard,
-    NettleTears,
-    MossFleck,
-    //SilkThread,
-    //MoonDust,
-    //DustCrystal
-    RedClay,
-}
-public enum CraftingMatType
-{
-    None,
-    Build,
-    Gem,
-    Herb,  
-    Witchcraft
-}
-[Serializable]
 public class CraftingMatEntry
 {
     public CraftingMats mat;

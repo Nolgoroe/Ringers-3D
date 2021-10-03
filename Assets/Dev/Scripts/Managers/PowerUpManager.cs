@@ -159,6 +159,7 @@ public class PowerUpManager : MonoBehaviour
     }
     public void Deal()
     {
+        SoundManager.Instance.PlaySound(Sounds.DealButton);
 
         if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
         {

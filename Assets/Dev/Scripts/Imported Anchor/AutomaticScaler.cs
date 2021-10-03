@@ -91,7 +91,7 @@ public class AutomaticScaler : MonoBehaviour
             actualDelta = deltaHeight;
         }
 
-        Debug.LogError("ACTUAL DELTA IS: " + actualDelta);
+        //Debug.LogError("ACTUAL DELTA IS: " + actualDelta);
 
         //dobuffer = false; //// DISABLE THIS
 
@@ -102,7 +102,7 @@ public class AutomaticScaler : MonoBehaviour
 
         newScale = new Vector3((originalScale.x * actualDelta), (originalScale.y * actualDelta), originalScale.z);
 
-        Debug.LogError("NEW SCALE FOR " + transform.name + "IS: " + newScale);
+        //Debug.LogError("NEW SCALE FOR " + transform.name + "IS: " + newScale);
         transform.localScale = newScale;
     }
 }

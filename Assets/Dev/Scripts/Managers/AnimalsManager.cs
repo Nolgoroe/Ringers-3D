@@ -14,7 +14,7 @@ public enum AnimalsInGame
     BlueFox,
     CelestialFox,
     Stag,
-    SimpleMarmot,
+    LegendaryStag,
     SecondMarmot,
     LegendaryMarmot,
     SimpleHawk,
@@ -129,6 +129,10 @@ public class AnimalsManager : MonoBehaviour
     [ContextMenu("Get Animal")]
     public void GiveAnimal()
     {
+        TempEasyLifeScript t = GetComponent<TempEasyLifeScript>();
+
+        t.turnoffall();
+
         CheckUnlockAnimal(currentLevelAnimal);
     }
 

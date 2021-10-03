@@ -191,7 +191,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 1930694634892588985}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -681,7 +681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 228728a235b878343aa10af2a230a816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forgeButton: {fileID: 1930694634892588984}
+  craftButton: {fileID: 1930694634892588984}
   itemImage: {fileID: 286250198003679498}
   ingrediantContentParent: {fileID: 1930694636548318023}
   ingrediantDisplayerPrefab: {fileID: 9034230963978331936, guid: 221f93ae6df30cb4bb5011c961339dd3,
@@ -769,8 +769,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 327, y: -17.1}
-  m_SizeDelta: {x: 456.3, y: 131.04}
+  m_AnchoredPosition: {x: 327, y: -6.5}
+  m_SizeDelta: {x: 456.3, y: 152.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1930694635824551268
 CanvasRenderer:
@@ -1048,14 +1048,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
+    m_Left: 12
     m_Right: 0
-    m_Top: 0
+    m_Top: -36
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 3
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 10, y: 0}
-  m_Constraint: 0
-  m_ConstraintCount: 2
+  m_CellSize: {x: 95, y: 95}
+  m_Spacing: {x: 15, y: 0}
+  m_Constraint: 2
+  m_ConstraintCount: 1

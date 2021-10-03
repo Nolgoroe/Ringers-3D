@@ -63,6 +63,7 @@ public class CursorController : MonoBehaviour
 
                 if (touch.phase == TouchPhase.Began)
                 {
+                    SoundManager.Instance.audioSource.Stop();
                     UIManager.Instance.UnlockedZoneMessageView.SetActive(false);
                     Debug.Log("THIS IS HOW MANY TIMES");
                     if (ZoneManager.Instance.zonesToUnlock.Count <= 0)

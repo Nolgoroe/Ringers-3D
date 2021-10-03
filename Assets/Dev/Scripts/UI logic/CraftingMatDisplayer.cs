@@ -7,14 +7,13 @@ using System;
 using System.Linq;
 public class CraftingMatDisplayer : MonoBehaviour
 {
-    public RawImage materialImage;
+    public Image materialImage;
     //public Image textBG;
     public TMP_Text materialCount;
 
-
-    public void SetImageAndMaterialCount(string iconPath, string count)
+    public void SetImageAndMaterialCount(Sprite icon, string count)
     {
-        materialImage.texture = Resources.Load(iconPath) as Texture2D;
+        materialImage.sprite = icon;
         materialCount.text = count;
     }
 

@@ -4,10 +4,15 @@ using UnityEngine;
 
 public enum Sounds
 {
-    UsePower,
-    PlacePiece,
-    RemovePiece,
-    ButtonClick,
+    DealButton,
+    UnlockZone,
+    RuneLimiterUnMatch,
+    RuneLimiterMatch,
+    SliceLimiterMatch,
+    SolvedRing,
+    TileMatch,
+    TileUnmatch,
+    ButtonPressUI
     //// Add all sounds here
 }
 
@@ -28,10 +33,13 @@ public class SoundManager : MonoBehaviour
     public EnumAndClip[] soundsForGame;
 
     public Dictionary<Sounds, AudioClip> enumToSound;
+
     private void Start()
     {
         Instance = this;
         audioSource = GetComponent<AudioSource>();
+        enumToSound = new Dictionary<Sounds, AudioClip>();
+
 
         foreach (EnumAndClip EAC in soundsForGame)
         {

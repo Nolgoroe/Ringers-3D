@@ -75,6 +75,7 @@ public class Cell : MonoBehaviour
 
                 if (gameWon)
                 {
+                    SoundManager.Instance.PlaySound(Sounds.SolvedRing);
                     AnimationManager.instance.StartEndLevelAnimSequence();
                 }
 
@@ -234,10 +235,14 @@ public class Cell : MonoBehaviour
             else
             {
                 //pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+
+                SoundManager.Instance.PlaySound(Sounds.TileUnmatch);
                 pieceHeld.leftChild.SetDisconnectedMaterial();
 
                 if (pieceHeld.leftChild.relevantSlice.isLimiter && pieceHeld.leftChild.relevantSlice.fulfilledCondition)
                 {
+                    SoundManager.Instance.PlaySound(Sounds.RuneLimiterUnMatch);
+
                     pieceHeld.leftChild.relevantSlice.anim.SetBool("Reverse", true);
                     pieceHeld.leftChild.relevantSlice.anim.SetBool("Activate", false);
                 }
@@ -262,10 +267,14 @@ public class Cell : MonoBehaviour
             else
             {
                 //pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
+
+                SoundManager.Instance.PlaySound(Sounds.TileUnmatch);
                 pieceHeld.rightChild.SetDisconnectedMaterial();
 
                 if (pieceHeld.rightChild.relevantSlice.isLimiter && pieceHeld.rightChild.relevantSlice.fulfilledCondition)
                 {
+                    SoundManager.Instance.PlaySound(Sounds.RuneLimiterUnMatch);
+
                     pieceHeld.rightChild.relevantSlice.anim.SetBool("Reverse", true);
                     pieceHeld.rightChild.relevantSlice.anim.SetBool("Activate", false);
                 }
@@ -282,13 +291,14 @@ public class Cell : MonoBehaviour
         }
 
 
-        if (pieceHeld.rightChild.relevantSlice)
+        if (pieceHeld.rightChild.relevantSlice || pieceHeld.leftChild.relevantSlice)
         {
             pieceHeld.rightChild.relevantSlice.fulfilledCondition = false;
             pieceHeld.leftChild.relevantSlice.fulfilledCondition = false;
             pieceHeld.rightChild.relevantSlice = null;
             pieceHeld.leftChild.relevantSlice = null;
         }
+
         ConnectionManager.Instance.RemoveSubPieceIndex(pieceHeld.leftChild.subPieceIndex, isOuter);
         ConnectionManager.Instance.RemoveSubPieceIndex(pieceHeld.rightChild.subPieceIndex, isOuter);
     }

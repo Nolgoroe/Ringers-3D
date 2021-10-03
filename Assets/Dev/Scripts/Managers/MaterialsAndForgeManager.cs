@@ -14,25 +14,25 @@ public class MaterialsAndForgeManager : MonoBehaviour
     public Transform matInventoryContent;
     public Transform ForgeContent;
 
-    public Dictionary<CraftingMats, string> materialSpriteByName;
+    //public Dictionary<CraftingMats, string> materialSpriteByName;
     //public Dictionary<CraftingMatType, Transform> matTypeToParent;
 
     public List<EquipmentDisplayer> equipmentInForge; /// Equipment that the player does not have / has not created yet
     public List<CorruptedDevicesDisplayer> corruptedDevicesInForge; /// Equipment that the player does not have / has not created yet
 
-    public string[] materialPaths;
+    //public string[] materialPaths;
 
     //public Transform[] matTypeCatagorieParents;
     private void Start()
     {
         Instance = this;
-        materialSpriteByName = new Dictionary<CraftingMats, string>();
-        //matTypeToParent = new Dictionary<CraftingMatType, Transform>();
+        //materialSpriteByName = new Dictionary<CraftingMats, string>();
+        ////matTypeToParent = new Dictionary<CraftingMatType, Transform>();
 
-        for (int i = 1; i <= materialPaths.Length; i++)
-        {
-            materialSpriteByName.Add((CraftingMats)i, materialPaths[i -1]);//// i - 1 becuase there is no "NONE" to paths, see the below comment
-        }
+        //for (int i = 1; i <= materialPaths.Length; i++)
+        //{
+        //    materialSpriteByName.Add((CraftingMats)i, materialPaths[i -1]);//// i - 1 becuase there is no "NONE" to paths, see the below comment
+        //}
 
         //for (int i = 1; i < Enum.GetValues(typeof(CraftingMatType)).Length; i++) /// i = 1 because we are skipping "None" ( 0 == None )
         //{
@@ -86,7 +86,8 @@ public class MaterialsAndForgeManager : MonoBehaviour
 
                 CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
 
-                CMD.materialImage.texture = Resources.Load(materialSpriteByName[CM.mat]) as Texture2D;
+                //CMD.materialImage.texture = Resources.Load(materialSpriteByName[CM.mat]) as Texture2D;
+                CMD.materialImage.sprite = LootManager.Instance.allMaterialSprites[(int)CM.mat];
                 CMD.materialCount.text = CM.amount.ToString();
             }
         }
@@ -109,7 +110,8 @@ public class MaterialsAndForgeManager : MonoBehaviour
 
                 CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
 
-                CMD.materialImage.texture = Resources.Load(materialSpriteByName[CM.mat]) as Texture2D;
+                //CMD.materialImage.texture = Resources.Load(materialSpriteByName[CM.mat]) as Texture2D;
+                CMD.materialImage.sprite = LootManager.Instance.allMaterialSprites[(int)CM.mat];
                 CMD.materialCount.text = CM.amount.ToString();
             }
         }
