@@ -64,6 +64,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text currentLevelNumber;
     public TMP_Text corruptedZoneSureMessageText;
     public TMP_Text zoneToUnlcokNameText;
+    public TMP_Text versionText;
 
     //public Button commitButton;
     public Button nextLevelFromWinScreen;
@@ -137,6 +138,8 @@ public class UIManager : MonoBehaviour
         {
             go.SetActive(false);
         }
+
+        versionText.text = Application.version;
     }
 
     private void Update()
