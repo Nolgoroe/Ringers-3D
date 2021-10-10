@@ -20,7 +20,7 @@ public class ConnectionManager : MonoBehaviour
     public int lengthOfSubPiecesOuter;
     public float timeToLerpConnectionEmission;
 
-    public ParticleSystem goodConnectionParticle, badConnectionParticle;
+    public ParticleSystem connectedTilesVFX /*, badConnectionParticle*/;
 
     public GameObject lootEffectPrefab;
     public GameObject rightPieceLockObject, leftPieceLockObject;

@@ -82,11 +82,11 @@ public class InterconnectionManager : MonoBehaviour
             {
                 if (isOuter)
                 {
-                    Instantiate(ConnectionManager.Instance.goodConnectionParticle, interconnectedCellOne.interconnectedRightParticleZone);
+                    //Instantiate(ConnectionManager.Instance.goodConnectionParticle, interconnectedCellOne.interconnectedRightParticleZone);
                 }
                 else
                 {
-                    Instantiate(ConnectionManager.Instance.goodConnectionParticle, interconnectedCellTwo.interconnectedRightParticleZone);
+                    //Instantiate(ConnectionManager.Instance.goodConnectionParticle, interconnectedCellTwo.interconnectedRightParticleZone);
                 }
             }
         }
@@ -114,11 +114,11 @@ public class InterconnectionManager : MonoBehaviour
             {
                 if (isOuter)
                 {
-                    Instantiate(ConnectionManager.Instance.goodConnectionParticle, interconnectedCellTwo.interconnectedLeftParticleZone);
+                    //Instantiate(ConnectionManager.Instance.goodConnectionParticle, interconnectedCellTwo.interconnectedLeftParticleZone);
                 }
                 else
                 {
-                    Instantiate(ConnectionManager.Instance.goodConnectionParticle, interconnectedCellOne.interconnectedLeftParticleZone);
+                    //Instantiate(ConnectionManager.Instance.goodConnectionParticle, interconnectedCellOne.interconnectedLeftParticleZone);
                 }
             }
         }

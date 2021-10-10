@@ -237,6 +237,8 @@ public class SubPiece : MonoBehaviour
         Material mat = GetComponent<Renderer>().material;
 
         mat.SetInt("Is_Piece_Match", 1);
+
+        Destroy(Instantiate(ConnectionManager.Instance.connectedTilesVFX, transform).gameObject, 1.5f);
         //Debug.Log("what?");
         //List<Material> matArray = new List<Material>();
         //matArray.AddRange(rend.materials);

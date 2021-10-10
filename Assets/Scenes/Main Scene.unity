@@ -26378,9 +26378,7 @@ MonoBehaviour:
   lengthOfSubPiecesRegular: 16
   lengthOfSubPiecesOuter: 16
   timeToLerpConnectionEmission: 0.3
-  goodConnectionParticle: {fileID: 7475159308211779684, guid: 1106028b21faa4b43b39439beaee7bd9,
-    type: 3}
-  badConnectionParticle: {fileID: 4854255903230474168, guid: 9f8949da6808efa4f95544bbbd7b811b,
+  connectedTilesVFX: {fileID: 279369252551035081, guid: 92571069d9755c944b46dcfed1f9c884,
     type: 3}
   lootEffectPrefab: {fileID: 3657806499365896026, guid: 9a117e8348ba5f8428d1c099bba27b63,
     type: 3}
@@ -32075,7 +32073,7 @@ MonoBehaviour:
       unlockedClips: 0200000003000000
       unlockedBoardCells: -1
       targetCells: 0300000004000000
-      targetSlices: 00000000
+      targetSlices: 04000000
     - phaseID: 4
       isClipPhase: 1
       isBoardPhase: 0
@@ -32083,7 +32081,7 @@ MonoBehaviour:
       unlockedClips: 0200000003000000
       unlockedBoardCells: -1
       targetCells: 0300000004000000
-      targetSlices: 00000000
+      targetSlices: 04000000
     screens:
     - {fileID: 1043428618}
     - {fileID: 1043428618}
@@ -35881,7 +35879,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1376208567}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1554662069}
@@ -35890,7 +35888,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 75, y: -266}
+  m_AnchoredPosition: {x: -120, y: 329.3}
   m_SizeDelta: {x: 700, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1376208569
@@ -55295,7 +55293,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 44, y: -197}
+  m_AnchoredPosition: {x: -130, y: 393}
   m_SizeDelta: {x: 700, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2063133150
