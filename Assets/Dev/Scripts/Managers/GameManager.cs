@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public GameObject circleBoardPrefab;
+    //public GameObject circleBoardPrefab;
     //public GameObject doubleCircleBoardPrefab;
     public GameObject levelBGModel;
     public GameObject clipPrefab;
