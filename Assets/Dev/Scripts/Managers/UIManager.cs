@@ -39,9 +39,12 @@ public class UIManager : MonoBehaviour
     public GameObject hudCanvasUIBottomZoneCorruption;
     public GameObject UnlockedZoneMessageView;
     public GameObject dealButtonHeighlight;
+    public GameObject normalBookBG, potionsBookBG;
+
     public Image dewDropsImage;
 
     public Image tapControlsImage, dragControlsImage, tutorialDisableImage;
+    public Image matsInventoryButton, forgeInventoryButton, potionInventoryButton;
 
     public Sprite toggleOffSprite, toggleOnSprite;
 
@@ -68,6 +71,7 @@ public class UIManager : MonoBehaviour
     public Button skipAnimationButton;
 
     public Button dealButton;
+
     //public Button[] levelButtons;
 
     public ButtonsPerZone[] buttonsPerZone;
@@ -411,6 +415,14 @@ public class UIManager : MonoBehaviour
         isUsingUI = true;
 
         ChangeInventorySortButtonSprites((int)CraftingMatType.Build);
+
+        matsInventoryButton.enabled = false;
+        forgeInventoryButton.enabled = true;
+        potionInventoryButton.enabled = true;
+
+        normalBookBG.SetActive(true);
+        potionsBookBG.SetActive(false);
+
         //SortMaster.Instance.SortMatInventory(CraftingMatType.Build); //// For now we always open the inventory sorted on gems
     }
     public void OpenHollowCraftAndOwnedZone()
@@ -467,18 +479,40 @@ public class UIManager : MonoBehaviour
         itemBag.SetActive(false);
         Brewery.SetActive(false);
         forge.SetActive(true);
+        matsInventoryButton.enabled = true;
+        forgeInventoryButton.enabled = false;
+        potionInventoryButton.enabled = true;
+        normalBookBG.SetActive(true);
+        potionsBookBG.SetActive(false);
+
     }
     public void ToItemsBag()
     {
         itemBag.SetActive(true);
         forge.SetActive(false);
         Brewery.SetActive(false);
+
+        matsInventoryButton.enabled = false;
+        forgeInventoryButton.enabled = true;
+        potionInventoryButton.enabled = true;
+
+        normalBookBG.SetActive(true);
+        potionsBookBG.SetActive(false);
+
     }
     public void ToBrewery()
     {
         itemBag.SetActive(false);
         forge.SetActive(false);
         Brewery.SetActive(true);
+
+        matsInventoryButton.enabled = true;
+        forgeInventoryButton.enabled = true;
+        potionInventoryButton.enabled = false;
+
+        normalBookBG.SetActive(false);
+        potionsBookBG.SetActive(true);
+
     }
     public void ToCraft()
     {
