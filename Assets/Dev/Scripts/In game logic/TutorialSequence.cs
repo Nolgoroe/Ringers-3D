@@ -305,8 +305,6 @@ public class TutorialSequence : MonoBehaviour
         }
 
 
-        StartCoroutine(SelectReleventHeighlights(currentPhaseInSequence));
-
         if (currentPhaseInSequence >= levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].EndPhaseID)
         {
 
@@ -316,12 +314,15 @@ public class TutorialSequence : MonoBehaviour
             //Invoke("UnlockAll", 2);
 
             UnlockAll();
+
+
             Invoke("DeactivateTutorialScreens", 0.1f);
 
             return;
         }
         else
         {
+            StartCoroutine(SelectReleventHeighlights(currentPhaseInSequence));
             ChangePhase();
         }
 
@@ -470,6 +471,21 @@ public class TutorialSequence : MonoBehaviour
 
             p.isTutorialLocked = false;
         }
+
+        UIManager.Instance.dealButtonHeighlight.SetActive(false);
+
+        foreach (GameObject go in activatedHeighlights)
+        {
+            go.SetActive(false);
+        }
+
+        foreach (ParticleSystem go in activatedBoardParticles)
+        {
+            go.gameObject.SetActive(false);
+        }
+
+        activatedHeighlights.Clear();
+        activatedBoardParticles.Clear();
     }
 
     public void DeactivateTutorialScreens()
