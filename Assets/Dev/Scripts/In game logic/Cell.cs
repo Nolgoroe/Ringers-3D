@@ -14,6 +14,9 @@ public class Cell : MonoBehaviour
     public GameObject outlinedSpriteRight, outlinedSpriteLeft;
     public Transform rightParticleZone, leftParticleZone;
     public Transform interconnectedRightParticleZone, interconnectedLeftParticleZone;
+
+    public ParticleSystem highlightParticle;
+
     public void AddPiece(Transform followerTarget, bool isNew)
     {
         isFull = true;

@@ -13695,6 +13695,75 @@ MonoBehaviour:
   anchorType: 4
   anchorOffset: {x: -0.6, y: 11.7, z: 0}
   isMovePos: 0
+--- !u!1001 &473860533
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 506894761}
+    m_Modifications:
+    - target: {fileID: 6624979363166362417, guid: a9232d5ce3247724eba3f65a58fdaca8,
+        type: 3}
+      propertyPath: m_Name
+      value: TutorialIndicator_ParticleDeal
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644038354014218893, guid: a9232d5ce3247724eba3f65a58fdaca8,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644038354014218893, guid: a9232d5ce3247724eba3f65a58fdaca8,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644038354014218893, guid: a9232d5ce3247724eba3f65a58fdaca8,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644038354014218893, guid: a9232d5ce3247724eba3f65a58fdaca8,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644038354014218893, guid: a9232d5ce3247724eba3f65a58fdaca8,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644038354014218893, guid: a9232d5ce3247724eba3f65a58fdaca8,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644038354014218893, guid: a9232d5ce3247724eba3f65a58fdaca8,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644038354014218893, guid: a9232d5ce3247724eba3f65a58fdaca8,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644038354014218893, guid: a9232d5ce3247724eba3f65a58fdaca8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644038354014218893, guid: a9232d5ce3247724eba3f65a58fdaca8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644038354014218893, guid: a9232d5ce3247724eba3f65a58fdaca8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a9232d5ce3247724eba3f65a58fdaca8, type: 3}
 --- !u!1 &476776885
 GameObject:
   m_ObjectHideFlags: 0
@@ -14767,9 +14836,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 506894760}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.005, y: 0.452, z: 0}
-  m_LocalScale: {x: 0.1442428, y: 0.1442428, z: 0.014424279}
-  m_Children: []
+  m_LocalPosition: {x: -0.001, y: 0.433, z: 0}
+  m_LocalScale: {x: 0.112861454, y: 0.112861454, z: 0.011286145}
+  m_Children:
+  - {fileID: 979742717}
   m_Father: {fileID: 1660594507}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -24968,6 +25038,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
+--- !u!4 &979742717 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6644038354014218893, guid: a9232d5ce3247724eba3f65a58fdaca8,
+    type: 3}
+  m_PrefabInstance: {fileID: 473860533}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &979962526
 GameObject:
   m_ObjectHideFlags: 0
@@ -31846,7 +31922,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 01000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 00000000
       targetSlices: 
     - phaseID: 2
@@ -31854,7 +31930,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 02000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 07000000
       targetSlices: 
     - phaseID: 3
@@ -31862,7 +31938,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 00000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 01000000
       targetSlices: 
     - phaseID: 4
@@ -31878,7 +31954,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 1
       unlockedClips: 
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 
       targetSlices: 
     screens:
@@ -31905,7 +31981,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 0000000001000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 0000000007000000
       targetSlices: 00000000
     - phaseID: 2
@@ -31913,7 +31989,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 0000000001000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 0000000007000000
       targetSlices: 00000000
     - phaseID: 3
@@ -31921,7 +31997,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 0200000003000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 0300000004000000
       targetSlices: 00000000
     - phaseID: 4
@@ -31929,7 +32005,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 0200000003000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 0300000004000000
       targetSlices: 00000000
     screens:
@@ -31951,7 +32027,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 00000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 0100000002000000
       targetSlices: 02000000
     - phaseID: 2
@@ -31959,7 +32035,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 00000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 0100000002000000
       targetSlices: 02000000
     screens:
@@ -31979,7 +32055,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 010000000200000003000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 0000000001000000
       targetSlices: 01000000
     - phaseID: 2
@@ -31987,7 +32063,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 010000000200000003000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 0000000001000000
       targetSlices: 
     screens:
@@ -32011,7 +32087,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 01000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 0000000001000000
       targetSlices: 01000000
     - phaseID: 2
@@ -32019,7 +32095,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 02000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 0000000001000000
       targetSlices: 01000000
     - phaseID: 3
@@ -32027,7 +32103,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 00000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 0300000004000000
       targetSlices: 04000000
     - phaseID: 4
@@ -32035,7 +32111,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 03000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 0300000004000000
       targetSlices: 04000000
     screens:
@@ -32061,7 +32137,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 01000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 0000000001000000
       targetSlices: 01000000
     - phaseID: 2
@@ -32069,7 +32145,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 02000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 0000000001000000
       targetSlices: 01000000
     - phaseID: 3
@@ -32077,7 +32153,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 00000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 0300000004000000
       targetSlices: 04000000
     - phaseID: 4
@@ -32085,7 +32161,7 @@ MonoBehaviour:
       isBoardPhase: 0
       dealPhase: 0
       unlockedClips: 03000000
-      unlockedBoardCells: 0
+      unlockedBoardCells: -1
       targetCells: 0300000004000000
       targetSlices: 04000000
     screens:
@@ -32098,6 +32174,7 @@ MonoBehaviour:
   maskImage: {fileID: 1338993689}
   currentTex: {fileID: 0}
   activatedHeighlights: []
+  activatedBoardParticles: []
   secondCam: {fileID: 1807676373}
   level3TurorialFlag: 0
 --- !u!1 &1259284961
@@ -42692,7 +42769,7 @@ MonoBehaviour:
   audioSource: {fileID: 1591066688}
   soundsForGame:
   - enumSound: 0
-    theSound: {fileID: 8300000, guid: 222ae1b5625d6b8418c56268899c7492, type: 3}
+    theSound: {fileID: 8300000, guid: 82634cbb89395a8499ba62d1151060fa, type: 3}
   - enumSound: 1
     theSound: {fileID: 8300000, guid: 976a8f0008d8ed043be77026fc4e63ed, type: 3}
   - enumSound: 2
@@ -42706,7 +42783,7 @@ MonoBehaviour:
   - enumSound: 6
     theSound: {fileID: 8300000, guid: 49d57b91e0ee05241bc14614a41cff93, type: 3}
   - enumSound: 7
-    theSound: {fileID: 8300000, guid: 5e766b6f51e2a2d44b03909693a9530f, type: 3}
+    theSound: {fileID: 8300000, guid: 7c26a2ffaa1d6a8459a864ac93d6c54b, type: 3}
   - enumSound: 8
     theSound: {fileID: 8300000, guid: 8c1e8ebb8ceb05443b681265e16887c4, type: 3}
 --- !u!1 &1591434460

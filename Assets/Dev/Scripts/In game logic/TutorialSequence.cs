@@ -35,7 +35,7 @@ public class Phase
     public bool dealPhase;
 
     public int[] unlockedClips;
-    public int unlockedBoardCells;
+    public int unlockedBoardCells = -1;
 
     public int[] targetCells;
 
@@ -66,6 +66,9 @@ public class TutorialSequence : MonoBehaviour
 
     public List<GameObject> activatedHeighlights;
 
+    
+    public List<ParticleSystem> activatedBoardParticles;
+
     public Camera secondCam;
 
     public bool level3TurorialFlag;
@@ -75,6 +78,7 @@ public class TutorialSequence : MonoBehaviour
         Instacne = this;
         //maskImage.gameObject.SetActive(false);
         activatedHeighlights = new List<GameObject>();
+        activatedBoardParticles = new List<ParticleSystem>();
     }
 
     public void StartSequence(int sequenceNum)
@@ -198,8 +202,13 @@ public class TutorialSequence : MonoBehaviour
             go.SetActive(false);
         }
 
-        activatedHeighlights.Clear();
+        foreach (ParticleSystem go in activatedBoardParticles)
+        {
+            go.gameObject.SetActive(false);
+        }
 
+        activatedHeighlights.Clear();
+        activatedBoardParticles.Clear();
 
         ///// Maybe do this part below better
         levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens[index].SetActive(true);
@@ -240,15 +249,25 @@ public class TutorialSequence : MonoBehaviour
 
         if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[index].targetCells.Length > 0)
         {
-            foreach (int i in levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[index].targetCells)
+            for (int i = 0; i < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[index].targetCells.Length; i++)
             {
-                for (int k = 0; k < ConnectionManager.Instance.cells[i].transform.childCount; k++)
-                {
-                    if (ConnectionManager.Instance.cells[i].transform.GetChild(k).CompareTag("Tile Hole"))
-                    {
-                        ConnectionManager.Instance.cells[i].transform.GetChild(k).gameObject.SetActive(true);
+                int num = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[index].targetCells[i];
+                Debug.Log(num + "yasbfyabfyasb");
 
-                        activatedHeighlights.Add(ConnectionManager.Instance.cells[i].transform.GetChild(k).gameObject);
+
+                for (int k = 0; k < ConnectionManager.Instance.cells[num].transform.childCount; k++)
+                {
+                    if (ConnectionManager.Instance.cells[num].transform.GetChild(k).CompareTag("Tile Hole"))
+                    {
+                        ConnectionManager.Instance.cells[num].transform.GetChild(k).gameObject.SetActive(true);
+
+                        if (num != levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[index].unlockedBoardCells)
+                        {
+                            ConnectionManager.Instance.cells[num].highlightParticle.gameObject.SetActive(true);
+                            activatedBoardParticles.Add(ConnectionManager.Instance.cells[num].highlightParticle);
+                        }
+
+                        activatedHeighlights.Add(ConnectionManager.Instance.cells[num].transform.GetChild(k).gameObject);
                     }
                 }
             }
@@ -286,6 +305,8 @@ public class TutorialSequence : MonoBehaviour
         }
 
 
+        StartCoroutine(SelectReleventHeighlights(currentPhaseInSequence));
+
         if (currentPhaseInSequence >= levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].EndPhaseID)
         {
 
@@ -299,12 +320,13 @@ public class TutorialSequence : MonoBehaviour
 
             return;
         }
-
-        StartCoroutine(SelectReleventHeighlights(currentPhaseInSequence));
+        else
+        {
+            ChangePhase();
+        }
 
         ///maskImage.sprite = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].sprites[currentPhaseInSequence]; /// NEW
 
-        ChangePhase();
     }
 
     //public void CheckContinuedTutorials()

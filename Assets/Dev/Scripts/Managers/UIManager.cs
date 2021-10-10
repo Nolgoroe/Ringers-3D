@@ -331,6 +331,7 @@ public class UIManager : MonoBehaviour
             TutorialSequence.Instacne.currentPhaseInSequence = 0;
             TutorialSequence.Instacne.duringSequence = false;
             TutorialSequence.Instacne.activatedHeighlights.Clear();
+            TutorialSequence.Instacne.activatedBoardParticles.Clear();
             GameManager.Instance.copyOfArrayOfPiecesTutorial.Clear();
             ZoneManager.Instance.ActivateLevelDisplay();
             LootManager.Instance.DestoryWinScreenDisplyedLoot();

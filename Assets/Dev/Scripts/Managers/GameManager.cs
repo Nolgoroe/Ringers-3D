@@ -214,6 +214,7 @@ public class GameManager : MonoBehaviour
             powerupManager.instnatiatedZonesCounter = 0;
 
             TutorialSequence.Instacne.activatedHeighlights.Clear();
+            TutorialSequence.Instacne.activatedBoardParticles.Clear();
 
             TutorialSequence.Instacne.StartSequence(currentLevel.tutorialIndexForList);
 
