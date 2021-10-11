@@ -15,7 +15,7 @@ public enum AnimalsInGame
     CelestialFox,
     Stag,
     LegendaryStag,
-    SecondMarmot,
+    Owl,
     LegendaryMarmot,
     SimpleHawk,
     Sheep,
