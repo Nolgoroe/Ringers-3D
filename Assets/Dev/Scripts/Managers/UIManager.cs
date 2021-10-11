@@ -639,7 +639,8 @@ public class UIManager : MonoBehaviour
                 if (i + 1 != BPZ.theZone.maxLevelReachedInZone)
                 {
                     BPZ.zoneButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelDonePath);
-                    BPZ.zoneButtons[i].interactable = false;
+                    //BPZ.zoneButtons[i].interactable = false; //// Disable levels that have already been completed
+                    BPZ.zoneButtons[i].interactable = true; /// temp for testing
                 }
                 else
                 {
