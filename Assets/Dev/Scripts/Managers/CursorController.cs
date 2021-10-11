@@ -523,7 +523,7 @@ public class CursorController : MonoBehaviour
                     Cell previousCell = followerTarget.parent.GetComponent<Cell>(); //// Only relevant if piece is moved from cell to cell
 
                     bool newPiece = followerTarget.transform.parent.CompareTag("Clip");
-                    if (!cell.isFull)
+                    if (!cell.isFull && cell != previousCell)
                     {
                         cell.AddPiece(followerTarget, newPiece);
 

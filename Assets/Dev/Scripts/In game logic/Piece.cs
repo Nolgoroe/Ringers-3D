@@ -142,7 +142,10 @@ public class Piece : MonoBehaviour
             }
             else if(!isSamePiece && !GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial )
             {
-                GameManager.Instance.copyOfArrayOfPiecesTutorial.RemoveAt(0);
+                if (GameManager.Instance.copyOfArrayOfPiecesTutorial.Count > 0)
+                {
+                    GameManager.Instance.copyOfArrayOfPiecesTutorial.RemoveAt(0);
+                }
             }
         }
     }
