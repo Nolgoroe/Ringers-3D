@@ -26,6 +26,8 @@ public class EquipmentData
     public string spritePath;
     public string nextTimeAvailable /*= DateTime.Now.AddMinutes(15).ToString()*/;
 
+    public string Description = "This a temporaty description for all potions";
+
     public EquipmentData(string equipName, int equiptype, int equippower, int equipnumUses, string equipmatList, string path)
     {
         name = equipName;

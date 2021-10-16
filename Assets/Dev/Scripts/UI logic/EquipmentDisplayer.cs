@@ -17,6 +17,7 @@ public class CraftingMatsNeeded
 }
 public class EquipmentDisplayer : MonoBehaviour
 {
+    public Button selectPotionButton;
     public Button craftButton;
 
     public TMP_Text itemName;
@@ -33,13 +34,33 @@ public class EquipmentDisplayer : MonoBehaviour
 
     public List<CraftingMatsNeeded> craftingMatsForEquipment;
 
+    public BreweryDisplayLogic BDL;
+
+    private void Awake()
+    {
+        BDL = GetComponentInParent<BreweryDisplayLogic>();
+    }
     private void Start()
     {
         craftButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(Sounds.ButtonPressUI));
+
+
+        selectPotionButton.onClick.AddListener(() => BDL.SetSelectedPotion(this));
+        selectPotionButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(Sounds.ButtonPressUI));
     }
 
-    public void SpawnMaterialsNeeded(string matList)
+    public void SpawnMaterialsNeeded(string matList, Transform[] matPositions)
     {
+        foreach (Transform matPos in matPositions)
+        {
+            for (int i = 0; i < matPos.childCount; i++)
+            {
+                Destroy(matPos.GetChild(i).gameObject);
+            }
+
+        }
+        craftingMatsForEquipment.Clear();
+
         materialCountPairs = new List<string>();
 
         string[] temp = matList.Split('|'); /// Split by the | Char
@@ -50,17 +71,17 @@ public class EquipmentDisplayer : MonoBehaviour
             materialCountPairs.Add(temp[i]);
         }
 
-        foreach (string item in materialCountPairs)
+        for (int i = 0; i < materialCountPairs.Count; i++)
         {
-            GameObject go = Instantiate(ingrediantDisplayerPrefab, ingrediantContentParent);
+            GameObject go = Instantiate(ingrediantDisplayerPrefab, matPositions[i]);
 
             CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
 
-            string[] matAndCount = item.Split('-'); /// Split by the - Char
+            string[] matAndCount = materialCountPairs[i].Split('-'); /// Split by the - Char
 
-            for (int i = 0; i < matAndCount.Length; i++)
+            for (int j = 0; j < matAndCount.Length; j++)
             {
-                matAndCount[i] = matAndCount[i].Trim();  //remove the blank spaces
+                matAndCount[j] = matAndCount[j].Trim();  //remove the blank spaces
             }
 
             string nameOfMat = matAndCount[0].Replace(" ", string.Empty);
@@ -77,9 +98,6 @@ public class EquipmentDisplayer : MonoBehaviour
 
             //SetDataMatsNeeded(matAndCount[0], Convert.ToInt16(matAndCount[1]), CMD);
         }
-
-
-        CheckIfCanForgeEquipment(craftingMatsForEquipment);
     }
 
     public void SetDataMatsNeeded(string nameOfMat, int amountOfMat, CraftingMatDisplayer CMD, CraftingMats parsed_enum)
@@ -115,6 +133,11 @@ public class EquipmentDisplayer : MonoBehaviour
 
     public void CheckIfCanForgeEquipment(List<CraftingMatsNeeded> CMN)
     {
+        if (!BDL)
+        {
+            BDL = GetComponentInParent<BreweryDisplayLogic>();
+        }
+
         bool canCraft = true;
 
         foreach (CraftingMatsNeeded CM in CMN)
@@ -128,12 +151,16 @@ public class EquipmentDisplayer : MonoBehaviour
 
         if (canCraft)
         {
-            craftButton.interactable = true;
+            BDL.brewButton.interactable = true;
+            BDL.brewButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Brew";
+            //craftButton.interactable = true;
             //forgeButton.gameObject.SetActive(true);
         }
         else
         {
-            craftButton.interactable = false;
+            BDL.brewButton.interactable = false;
+            BDL.brewButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "No mats!";
+            //craftButton.interactable = false;
 
             //forgeButton.gameObject.SetActive(false);
         }

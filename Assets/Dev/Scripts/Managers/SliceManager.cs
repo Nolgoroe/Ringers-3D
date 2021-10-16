@@ -192,25 +192,63 @@ public class SliceManager : MonoBehaviour
                 //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
                 fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
                 //o.transform.parent.GetComponent<Slice>().child = go;
-
-                if (numOfSlices < 4)
+                if (numOfSlices == 2)
                 {
-                    RemovePositions(randomPos);
-
                     for (int i = 1; i < numOfSlices; i++)
                     {
+                        randomPos += 4;
 
-                        randomPos = Random.Range(0, possibleSlotsTemp.Count);
+                        if (randomPos >= sliceSlots.Length)
+                        {
+                            randomPos -= sliceSlots.Length;
+                        }
                         //randomPrefab = Random.Range(0, slicePrefabs.Length);
 
-                        //go = Instantiate(slicePrefabs, sliceSlots[possibleSlots[randomPos]]);
+                        //go = Instantiate(slicePrefabs, sliceSlots[randomPos]);
                         //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
-                        fullSlices.Add(sliceSlots[possibleSlotsTemp[randomPos]].transform.GetComponent<Slice>());
+                        fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
                         //go.transform.parent.GetComponent<Slice>().child = go;
 
-                        RemovePositions(possibleSlotsTemp[randomPos]);
+                    }
+
+                }
+                else if( numOfSlices == 3)
+                {
+                    for (int i = 1; i < numOfSlices; i++)
+                    {
+                        randomPos += 3;
+
+                        if (randomPos >= sliceSlots.Length)
+                        {
+                            randomPos -= sliceSlots.Length;
+                        }
+                        //randomPrefab = Random.Range(0, slicePrefabs.Length);
+
+                        //go = Instantiate(slicePrefabs, sliceSlots[randomPos]);
+                        //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
+                        fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
+                        //go.transform.parent.GetComponent<Slice>().child = go;
+
                     }
                 }
+                //if (numOfSlices < 4)
+                //{
+                //    RemovePositions(randomPos);
+
+                //    for (int i = 1; i < numOfSlices; i++)
+                //    {
+
+                //        randomPos = Random.Range(0, possibleSlotsTemp.Count);
+                //        //randomPrefab = Random.Range(0, slicePrefabs.Length);
+
+                //        //go = Instantiate(slicePrefabs, sliceSlots[possibleSlots[randomPos]]);
+                //        //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
+                //        fullSlices.Add(sliceSlots[possibleSlotsTemp[randomPos]].transform.GetComponent<Slice>());
+                //        //go.transform.parent.GetComponent<Slice>().child = go;
+
+                //        RemovePositions(possibleSlotsTemp[randomPos]);
+                //    }
+                //}
                 else if (numOfSlices == 4)
                 {
                     for (int i = 1; i < numOfSlices; i++)

@@ -10,7 +10,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
     public GameObject equipmentForgeDisplayerPrefab;
     public GameObject corruptedDeviceDisplayerPrefab;
     public GameObject crafingMatPrefab;
-    public Transform powerUpContent; 
+    public Transform brewMatZones; 
     public Transform matInventoryContent;
     public Transform ForgeContent;
 
@@ -44,7 +44,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
     {
         foreach (EquipmentData EQ in equipment)
         {
-            GameObject go = Instantiate(equipmentForgeDisplayerPrefab, powerUpContent);
+            GameObject go = Instantiate(equipmentForgeDisplayerPrefab, brewMatZones);
             EquipmentDisplayer ED = go.GetComponent<EquipmentDisplayer>();
 
             ED.itemName.text = EQ.name;
@@ -71,8 +71,10 @@ public class MaterialsAndForgeManager : MonoBehaviour
             ED.itemImage.texture = Resources.Load(EQ.spritePath)as Texture2D;
 
             ED.name = ED.itemName.text;
+
+
             equipmentInForge.Add(ED);
-            ED.SpawnMaterialsNeeded(EQ.mats);
+            //ED.SpawnMaterialsNeeded(EQ.mats);
         }
     }
 
@@ -136,7 +138,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
     {
         equipmentInForge.Clear();
 
-        foreach (Transform EQ in powerUpContent)
+        foreach (Transform EQ in brewMatZones)
         {
             Destroy(EQ.gameObject);
         }

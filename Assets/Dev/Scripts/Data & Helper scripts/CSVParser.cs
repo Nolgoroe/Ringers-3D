@@ -203,6 +203,8 @@ public class CSVParser : MonoBehaviour
 
             EQ.spritePath = parsedList[i][4].ToString();
 
+            EQ.Description = parsedList[i][5];
+
             allEquipmentInGame.Add(EQ);
         }
 
