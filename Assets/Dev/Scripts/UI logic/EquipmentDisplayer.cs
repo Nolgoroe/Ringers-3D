@@ -128,7 +128,10 @@ public class EquipmentDisplayer : MonoBehaviour
         //PlayerManager.Instance.wardrobeEquipment.Add(data);
         //WardrobeManager.Instance.SpawnWardrobeEquipment(data);
 
-        WardrobeManager.Instance.EquipMe(data);
+        EquipmentData newData = new EquipmentData(data.name, data.power, data.specificSymbol, data.specificColor, data.numOfUses, data.scopeOfUses,
+                                                  data.timeForCooldown, data.nextTimeAvailable, data.Description, data.isTutorialPower, data.mats, data.spritePath);
+
+        PlayerManager.Instance.EquipMe(newData);
     }
 
     public void CheckIfCanForgeEquipment(List<CraftingMatsNeeded> CMN)

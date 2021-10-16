@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
     public void StartLevel()
     {
         TutorialSequence.Instacne.DisableTutorialSequence(); //// Make sure tutorial is disabled
+        powerupManager.ClearTutorialPowerups(); /// Make sure there are no leftover powerups
 
         for (int i = 0; i < numAnimalsOnBoard.Length; i++)
         {
@@ -136,6 +137,8 @@ public class GameManager : MonoBehaviour
     {
         if (!isDisableTutorials)
         {
+            powerupManager.ClearTutorialPowerups();// Make sure there are no leftoever tutorial powerups
+
             for (int i = 0; i < numAnimalsOnBoard.Length; i++)
             {
                 numAnimalsOnBoard[i].amount = 0;
@@ -188,8 +191,6 @@ public class GameManager : MonoBehaviour
 
             PlayerManager.Instance.HandleItemCooldowns();
 
-            PlayerManager.Instance.PopulatePowerUps();
-
             powerupManager.InstantiateSpecialPowers();
 
             if (levelBGModel)
@@ -211,13 +212,15 @@ public class GameManager : MonoBehaviour
             }
 
             InstantiateStonePieces();
-            powerupManager.instnatiatedZonesCounter = 0;
 
             TutorialSequence.Instacne.activatedHeighlights.Clear();
             TutorialSequence.Instacne.activatedBoardParticles.Clear();
 
-            TutorialSequence.Instacne.StartSequence(currentLevel.tutorialIndexForList);
 
+            PlayerManager.Instance.PopulatePowerUps();
+            powerupManager.instnatiatedZonesCounter = 0;
+
+            TutorialSequence.Instacne.StartSequence(currentLevel.tutorialIndexForList);
 
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelNum);
         }
@@ -231,31 +234,48 @@ public class GameManager : MonoBehaviour
     {
         ZoneManagerHelpData ZMHD = ZoneManagerHelpData.Instance;
 
-        if (ZMHD.possibleAnimalsInZones.Length != 0)
+        if (currentLevel.isTutorial && currentLevel.specificAnimalForLevel)
         {
-            if (ZMHD.possibleAnimalsInZones.Length == 1)
+            GameObject go = currentLevel.specificAnimalForLevel;
+
+            if (go)
             {
-                AnimalsManager.Instance.statueToSwap = Instantiate(ZMHD.possibleAnimalsInZones[ZMHD.currentZoneCheck.id].animalsData[0].animalPrefab, destroyOutOfLevel);
+                AnimalsManager.Instance.statueToSwap = Instantiate(go, destroyOutOfLevel);
                 return AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
             }
             else
             {
-                GameObject go = AnimalsManager.Instance.PopulateWeightSystemAnimals();
-
-                if (go)
-                {
-                    AnimalsManager.Instance.statueToSwap = Instantiate(go, destroyOutOfLevel);
-                    return AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
-                }
-                else
-                {
-                    return null;
-                }
+                return null;
             }
         }
         else
         {
-            return null;
+            if (ZMHD.possibleAnimalsPerZone.Length != 0)
+            {
+                if (ZMHD.possibleAnimalsPerZone[ZMHD.currentZoneCheck.id].animalsData.Length == 1)
+                {
+                    AnimalsManager.Instance.statueToSwap = Instantiate(ZMHD.possibleAnimalsPerZone[ZMHD.currentZoneCheck.id].animalsData[0].animalPrefab, destroyOutOfLevel);
+                    return AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
+                }
+                else
+                {
+                    GameObject go = AnimalsManager.Instance.PopulateWeightSystemAnimals();
+
+                    if (go)
+                    {
+                        AnimalsManager.Instance.statueToSwap = Instantiate(go, destroyOutOfLevel);
+                        return AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 
@@ -384,6 +404,8 @@ public class GameManager : MonoBehaviour
             TutorialSequence.Instacne.currentPhaseInSequence = 0;
             TutorialSequence.Instacne.duringSequence = false;
             TutorialSequence.Instacne.maskImage.gameObject.SetActive(true);
+
+            powerupManager.ClearTutorialPowerups();
         }
 
         ChooseLevel(currentLevel.levelNum/*, currentLevel.worldName*/);

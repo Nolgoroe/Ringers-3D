@@ -1319,17 +1319,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1254451078}
-        m_MethodName: StartSequence
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &30289435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3100,6 +3089,7 @@ MonoBehaviour:
     spritePath: 
     nextTimeAvailable: 11/5/2020 1:44:28 PM
     Description: This a temporaty description for all potions
+    isTutorialPower: 0
   isFull: 0
 --- !u!1 &120625311
 GameObject:
@@ -11913,17 +11903,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1254451078}
-        m_MethodName: StartSequence
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &405303676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13629,17 +13608,21 @@ MonoBehaviour:
   - {fileID: 814354108}
   currentZoneCheck: {fileID: 0}
   nextZoneCheck: {fileID: 0}
-  possibleAnimalsInZones:
+  possibleAnimalsPerZone:
   - theZone: {fileID: 367439026}
     animalsData:
     - animalEnum: 0
       animalPrefab: {fileID: 6115078496944762639, guid: d1a8291b0c507914395923b514ec9c1e,
         type: 3}
-      weight: 100
+      weight: 20
+    - animalEnum: 4
+      animalPrefab: {fileID: 1551197849347798067, guid: e0fb4777993a8a44fa5c0e8fdee6cc86,
+        type: 3}
+      weight: 20
   - theZone: {fileID: 1785048655}
     animalsData:
-    - animalEnum: 6
-      animalPrefab: {fileID: 4175622570200575740, guid: 589c0d1266d7d3646a164d68b43baaa8,
+    - animalEnum: 0
+      animalPrefab: {fileID: 6115078496944762639, guid: d1a8291b0c507914395923b514ec9c1e,
         type: 3}
       weight: 100
   - theZone: {fileID: 287934843}
@@ -22185,6 +22168,7 @@ MonoBehaviour:
     spritePath: 
     nextTimeAvailable: 11/5/2020 1:44:28 PM
     Description: This a temporaty description for all potions
+    isTutorialPower: 0
   isFull: 0
 --- !u!1 &855430967
 GameObject:
@@ -25144,6 +25128,7 @@ MonoBehaviour:
     spritePath: 
     nextTimeAvailable: 11/5/2020 1:44:28 PM
     Description: This a temporaty description for all potions
+    isTutorialPower: 0
   isFull: 0
 --- !u!1 &962742224
 GameObject:
@@ -28857,17 +28842,6 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1254451078}
-        m_MethodName: StartSequence
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -33297,17 +33271,6 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1254451078}
-        m_MethodName: StartSequence
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -52523,17 +52486,6 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1254451078}
-        m_MethodName: StartSequence
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

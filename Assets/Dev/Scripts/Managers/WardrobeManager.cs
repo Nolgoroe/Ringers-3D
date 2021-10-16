@@ -66,28 +66,6 @@ public class WardrobeManager : MonoBehaviour
         equipmentInWardrobe.Add(WED);
     }
 
-    public void EquipMe(EquipmentData data/*, WardrobeEquipmentDisplayer displayer*/)
-    {
-        //if (!slotToSpot[data.slot].isFull)
-        //{
-        //    slotToSpot[data.slot].isFull = true;
-
-        //    slotToSpot[data.slot].equipmentInSlot = data;
-
-        //    equipmentInWardrobe.Remove(displayer);
-        //    PlayerManager.Instance.wardrobeEquipment.Remove(data);
-
-        //    Destroy(displayer.gameObject);
-
-        //    GameObject go = Instantiate(equippedPrefab, slotToSpot[data.slot].transform);
-
-        //    go.GetComponentInChildren<RawImage>().texture = Resources.Load(data.spritePath) as Texture2D;
-
-        PlayerManager.Instance.ownedPowerups.Add(data);
-
-        PlayerManager.Instance.SavePlayerData();
-        //}
-    }
 
     //public void EquipMe(EquipmentData data) //// Called only when loading the game
     //{

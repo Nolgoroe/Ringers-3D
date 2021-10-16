@@ -163,9 +163,9 @@ public class PowerUpManager : MonoBehaviour
 
         if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
         {
-            if (TutorialSequence.Instacne.currentPhaseInSequence < TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase.Length)
+            if (TutorialSequence.Instacne.currentPhaseInSequence < TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Length)
             {
-                if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].dealPhase)
+                if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequence].dealPhase)
                 {
                     TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
                 }
@@ -598,5 +598,29 @@ public class PowerUpManager : MonoBehaviour
         }
 
         specialPowerupsInGame.Clear();
+    }
+
+    public void PowerupButtonsActivation(bool activate)
+    {
+        foreach (Button b in powerupButtons)
+        {
+            b.interactable = activate;
+        }
+    }
+
+    public void ClearTutorialPowerups()
+    {
+        List<EquipmentData> tempList = new List<EquipmentData>();
+        tempList.AddRange(PlayerManager.Instance.ownedPowerups);
+
+        foreach (EquipmentData ED in tempList)
+        {
+            if (ED.isTutorialPower)
+            {
+                PlayerManager.Instance.ownedPowerups.Remove(ED);
+            }
+        }
+
+        PlayerManager.Instance.SavePlayerData();
     }
 }

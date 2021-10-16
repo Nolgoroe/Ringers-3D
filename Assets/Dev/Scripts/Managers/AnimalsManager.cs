@@ -161,9 +161,9 @@ public class AnimalsManager : MonoBehaviour
         int zoneID = 0;
 
 
-        foreach (animalsPerZone APZ in ZoneManagerHelpData.Instance.possibleAnimalsInZones)
+        foreach (animalsPerZone APZ in ZoneManagerHelpData.Instance.possibleAnimalsPerZone)
         {
-            if(ZoneManagerHelpData.Instance.CompareZonesSame(APZ.theZone, ZoneManagerHelpData.Instance.currentZoneCheck)) //// Ask Alon
+            if(ZoneManagerHelpData.Instance.CompareZonesSame(APZ.theZone, ZoneManagerHelpData.Instance.currentZoneCheck))
             {
                 zoneID = APZ.theZone.id;
 
@@ -187,10 +187,10 @@ public class AnimalsManager : MonoBehaviour
             }
         }
 
-        if(totalSum < 100) //// THIS IS TEMPORARY, UNTIL TEAM DECIDES IF MAX IS ALWAYS 100 OR IS IT DYNAMIC
-        {
-            totalSum = 100; ///// THIS IS A BUG PROBABLY
-        }
+        //if(totalSum < 100) //// THIS IS TEMPORARY, UNTIL TEAM DECIDES IF MAX IS ALWAYS 100 OR IS IT DYNAMIC
+        //{
+        //    totalSum = 100; ///// THIS IS A BUG PROBABLY
+        //}
 
         return GetFromAnimalChances(listOfArrayInts, totalSum, zoneID);
     }
@@ -206,9 +206,9 @@ public class AnimalsManager : MonoBehaviour
             if (item.Contains(rand))
             {
                 //Debug.Log("FOUND THE NUMBER!");
-                if (ZoneManagerHelpData.Instance.possibleAnimalsInZones[zoneID].animalsData[indexForMainAnimalArray].animalPrefab)
+                if (ZoneManagerHelpData.Instance.possibleAnimalsPerZone[zoneID].animalsData[indexForMainAnimalArray].animalPrefab)
                 {
-                    return ZoneManagerHelpData.Instance.possibleAnimalsInZones[zoneID].animalsData[indexForMainAnimalArray].animalPrefab;
+                    return ZoneManagerHelpData.Instance.possibleAnimalsPerZone[zoneID].animalsData[indexForMainAnimalArray].animalPrefab;
                 }
                 else
                 {

@@ -29,6 +29,8 @@ public class LevelScriptableObject : ScriptableObject
 
     public bool RandomSlicePositions;
     public bool allowRepeatSlices;
+    public PowerUp[] powerupsForLevel;
+    public GameObject specificAnimalForLevel;
 
     public stonePieceDataStruct[] stoneTiles;
     public SliceCatagory[] slicesToSpawn;

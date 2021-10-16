@@ -14,7 +14,7 @@ public class ZoneManagerHelpData : MonoBehaviour
 
     public static ZoneManagerHelpData Instance;
 
-    public animalsPerZone[] possibleAnimalsInZones;
+    public animalsPerZone[] possibleAnimalsPerZone;
 
     private void Start()
     {

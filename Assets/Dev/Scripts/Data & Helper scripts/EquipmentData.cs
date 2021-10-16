@@ -28,12 +28,27 @@ public class EquipmentData
 
     public string Description = "This a temporaty description for all potions";
 
-    public EquipmentData(string equipName, int equiptype, int equippower, int equipnumUses, string equipmatList, string path)
+    public bool isTutorialPower = false;
+
+    public EquipmentData(string equipName, PowerUp equippower, PieceSymbol equipSpecificSymbol, PieceColor equipSpecificColor, int equipnumUses,
+                        int equipScopeUses, int equipTimeCooldown, string equipNextTimeAvailable, string equipDescription, bool equipIsTutorialPower, string equipmatList, string path)
     {
         name = equipName;
+
         //slot = (slotType)equiptype;
-        power = (PowerUp)equippower;
+        power = equippower;
+        specificSymbol = equipSpecificSymbol;
+        specificColor = equipSpecificColor;
+
         numOfUses = equipnumUses;
+        scopeOfUses = equipScopeUses;
+        timeForCooldown = equipTimeCooldown;
+
+        nextTimeAvailable = equipNextTimeAvailable;
+        Description = equipDescription;
+
+        isTutorialPower = equipIsTutorialPower;
+
         mats = equipmatList;
         spritePath = path;
     }

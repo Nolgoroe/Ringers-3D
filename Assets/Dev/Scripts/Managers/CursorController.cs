@@ -82,14 +82,16 @@ public class CursorController : MonoBehaviour
         if (PowerUpManager.IsUsingPowerUp)
         {
             PowerUpControls();
+            return;
         }
 
-        if (GameManager.Instance.gameStarted && !UIManager.isUsingUI && !GameManager.Instance.isSecondaryControls)
+        if (GameManager.Instance.gameStarted && !UIManager.isUsingUI && !GameManager.Instance.isSecondaryControls && !PowerUpManager.IsUsingPowerUp)
         {
             NormalControls();
+            return;
         }
 
-        if (GameManager.Instance.gameStarted && !UIManager.isUsingUI && GameManager.Instance.isSecondaryControls)
+        if (GameManager.Instance.gameStarted && !UIManager.isUsingUI && GameManager.Instance.isSecondaryControls && !PowerUpManager.IsUsingPowerUp)
         {
             SecondaryControls();
         }
@@ -515,7 +517,7 @@ public class CursorController : MonoBehaviour
                     }
                 }
 
-                if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].targetCells.Contains(cellHit.GetComponent<Cell>().cellIndex))
+                if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequence].targetCells.Contains(cellHit.GetComponent<Cell>().cellIndex))
                 {
                     Cell cell = cellHit.GetComponent<Cell>();
 

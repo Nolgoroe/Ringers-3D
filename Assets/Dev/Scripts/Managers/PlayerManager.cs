@@ -117,6 +117,19 @@ public class PlayerManager : MonoBehaviour
     {
         int instantiatedCount = 0;
 
+        if(GameManager.Instance.currentLevel.isTutorial && GameManager.Instance.currentLevel.powerupsForLevel.Length > 0)
+        {
+            foreach (PowerUp PU in GameManager.Instance.currentLevel.powerupsForLevel)
+            {
+                EquipmentData ED = GameManager.Instance.csvParser.allEquipmentInGame.Where(p => p.power == PU).Single();
+
+                EquipmentData newData = new EquipmentData(ED.name, ED.power, ED.specificSymbol, ED.specificColor, ED.numOfUses, ED.scopeOfUses,
+                                          ED.timeForCooldown, ED.nextTimeAvailable, ED.Description, ED.isTutorialPower, ED.mats, ED.spritePath);
+
+                EquipMeTutorial(newData);
+            }
+        }
+
         foreach (EquipmentData ED in ownedPowerups)
         {
             if(instantiatedCount < GameManager.Instance.powerupManager.instnatiateZones.Length)
@@ -159,6 +172,9 @@ public class PlayerManager : MonoBehaviour
         JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
 
         Instance = this;
+
+
+        GameManager.Instance.powerupManager.ClearTutorialPowerups();
     }
 
     public void HandleItemCooldowns()
@@ -273,5 +289,34 @@ public class PlayerManager : MonoBehaviour
 
             num++;
         }
+    }
+
+    public void EquipMe(EquipmentData data/*, WardrobeEquipmentDisplayer displayer*/)
+    {
+        //if (!slotToSpot[data.slot].isFull)
+        //{
+        //    slotToSpot[data.slot].isFull = true;
+
+        //    slotToSpot[data.slot].equipmentInSlot = data;
+
+        //    equipmentInWardrobe.Remove(displayer);
+        //    PlayerManager.Instance.wardrobeEquipment.Remove(data);
+
+        //    Destroy(displayer.gameObject);
+
+        //    GameObject go = Instantiate(equippedPrefab, slotToSpot[data.slot].transform);
+
+        //    go.GetComponentInChildren<RawImage>().texture = Resources.Load(data.spritePath) as Texture2D;
+
+        ownedPowerups.Add(data);
+
+        SavePlayerData();
+        //}
+    }
+
+    public void EquipMeTutorial(EquipmentData data)
+    {
+        data.isTutorialPower = true;
+        ownedPowerups.Add(data);
     }
 }
