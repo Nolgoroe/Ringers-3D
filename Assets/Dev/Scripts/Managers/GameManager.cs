@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
 
         powerupManager.instnatiatedZonesCounter = 0;
 
-        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelNum);
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
     }
 
     public void StartTutorialLevel()
@@ -222,7 +222,7 @@ public class GameManager : MonoBehaviour
 
             TutorialSequence.Instacne.StartSequence(currentLevel.tutorialIndexForList);
 
-            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelNum);
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
         }
         else
         {
@@ -341,7 +341,7 @@ public class GameManager : MonoBehaviour
 
             Debug.Log("YOU WIN");
 
-            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevel.worldName, currentLevel.levelNum);
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
 
             PlayerManager.Instance.SavePlayerData();
 
@@ -354,7 +354,7 @@ public class GameManager : MonoBehaviour
 
             //UIManager.Instance.LoseLevel();
             Debug.Log("You Lose");
-            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail, currentLevel.worldName, currentLevel.levelNum);
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
 
             PlayerManager.Instance.SavePlayerData();
 
