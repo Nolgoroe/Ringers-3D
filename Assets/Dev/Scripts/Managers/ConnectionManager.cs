@@ -63,18 +63,19 @@ public class ConnectionManager : MonoBehaviour
         }
         else
         {
-            CheckConnections(subPiecesDoubleRing, outerCells,cellIndex, isOuterCell, lastPiece);
+            CheckConnections(subPiecesDoubleRing, outerCells, cellIndex, isOuterCell, lastPiece);
         }
+
     }
 
     public void CheckConnections(SubPiece[] supPieceArray, List<Cell> cellList, int cellIndex, bool isOuterCell, bool lastPiece)
     {
 
         StartCheckLeft(supPieceArray, cellList, cellIndex, isOuterCell, lastPiece); //// check start from left side which then checks the right side aswell
-        ///// This function works like this to accomodate the last piece logic. 
-        //When the last piece is placed on the board we HAVE TO check connections before activating slice animations and logic.
-        //If one of the sides of the LAST PIECE are wrong then we don't activate any slices even if condition is met
-       
+                                                                                    ///// This function works like this to accomodate the last piece logic. 
+                                                                                    //When the last piece is placed on the board we HAVE TO check connections before activating slice animations and logic.
+                                                                                    //If one of the sides of the LAST PIECE are wrong then we don't activate any slices even if condition is met
+
     }
 
 
@@ -131,41 +132,41 @@ public class ConnectionManager : MonoBehaviour
                     {
                         CheckRight(supPieceArray, cellList, cellIndex, isOuterCell, lastPiece);
 
-                        bool gameWon = GameManager.Instance.CheckEndLevel();
+                        //bool gameWon = GameManager.Instance.CheckEndLevel();
 
-                        if (gameWon)
+                        //if (GameManager.gameWon)
+                        //{
+                        if (conditionmet)
                         {
-                            if (conditionmet)
+                            if (supPieceArray[currentLeft].relevantSlice.anim)
                             {
-                                if (supPieceArray[currentLeft].relevantSlice.anim)
+                                supPieceArray[currentLeft].relevantSlice.anim.SetBool("Activate", true);
+
+                                if (supPieceArray[currentLeft].relevantSlice.isLimiter)
                                 {
-                                    supPieceArray[currentLeft].relevantSlice.anim.SetBool("Activate", true);
+                                    SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
 
-                                    if (supPieceArray[currentLeft].relevantSlice.isLimiter)
-                                    {
-                                        SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
-
-                                        supPieceArray[currentLeft].relevantSlice.anim.SetBool("Reverse", false);
-                                    }
-                                    else
-                                    {
-                                        SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
-                                    }
+                                    supPieceArray[currentLeft].relevantSlice.anim.SetBool("Reverse", false);
                                 }
-
-                                supPieceArray[currentLeft].relevantSlice.fulfilledCondition = true;
-
-                                if (supPieceArray[currentLeft].relevantSlice.isLoot)
+                                else
                                 {
-                                    GiveLootFromConnections(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
-                                }
-
-                                if (supPieceArray[currentLeft].relevantSlice.isLock)
-                                {
-                                    LockCell(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
+                                    SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
                                 }
                             }
+
+                            supPieceArray[currentLeft].relevantSlice.fulfilledCondition = true;
+
+                            if (supPieceArray[currentLeft].relevantSlice.isLoot)
+                            {
+                                GiveLootFromConnections(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
+                            }
+
+                            if (supPieceArray[currentLeft].relevantSlice.isLock)
+                            {
+                                LockCell(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
+                            }
                         }
+                        //}
                     }
                     else
                     {
@@ -279,75 +280,36 @@ public class ConnectionManager : MonoBehaviour
                     //supPieceArray[currentRight].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     //supPieceArray[rightContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
 
-                    if (lastPiece)
+                    if (conditionmet)
                     {
-                        bool gameWon = GameManager.Instance.CheckEndLevel();
-                        //////////// CHECK WHY CHECK END LEVEL IS BEING CALLED MORE THAN ONCE;
-                        if (gameWon)
+                        if (supPieceArray[currentRight].relevantSlice.anim)
                         {
-                            if (conditionmet)
+                            supPieceArray[currentRight].relevantSlice.anim.SetBool("Activate", true);
+
+                            if (supPieceArray[currentRight].relevantSlice.isLimiter)
                             {
-                                if (supPieceArray[currentRight].relevantSlice.anim)
-                                {
-                                    supPieceArray[currentRight].relevantSlice.anim.SetBool("Activate", true);
+                                SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
 
-                                    if (supPieceArray[currentRight].relevantSlice.isLimiter)
-                                    {
-                                        SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
-
-                                        supPieceArray[currentRight].relevantSlice.anim.SetBool("Reverse", false);
-                                    }
-                                    else
-                                    {
-                                        SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
-                                    }
-                                }
-
-                                supPieceArray[currentRight].relevantSlice.fulfilledCondition = true;
-                                if (supPieceArray[currentRight].relevantSlice.isLoot)
-                                {
-                                    GiveLootFromConnections(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
-                                }
-
-                                if (supPieceArray[currentRight].relevantSlice.isLock)
-                                {
-                                    LockCell(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
-                                }
+                                supPieceArray[currentRight].relevantSlice.anim.SetBool("Reverse", false);
+                            }
+                            else
+                            {
+                                SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
                             }
                         }
-                    }
-                    else
-                    {
-                        if (conditionmet)
+
+                        supPieceArray[currentRight].relevantSlice.fulfilledCondition = true;
+                        if (supPieceArray[currentRight].relevantSlice.isLoot)
                         {
-                            if (supPieceArray[currentRight].relevantSlice.anim)
-                            {
-                                supPieceArray[currentRight].relevantSlice.anim.SetBool("Activate", true);
+                            GiveLootFromConnections(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
+                        }
 
-                                if (supPieceArray[currentRight].relevantSlice.isLimiter)
-                                {
-                                    SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
-
-                                    supPieceArray[currentRight].relevantSlice.anim.SetBool("Reverse", false);
-                                }
-                                else
-                                {
-                                    SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
-                                }
-                            }
-
-                            supPieceArray[currentRight].relevantSlice.fulfilledCondition = true;
-                            if (supPieceArray[currentRight].relevantSlice.isLoot)
-                            {
-                                GiveLootFromConnections(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
-                            }
-
-                            if (supPieceArray[currentRight].relevantSlice.isLock)
-                            {
-                                LockCell(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
-                            }
+                        if (supPieceArray[currentRight].relevantSlice.isLock)
+                        {
+                            LockCell(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
                         }
                     }
+
                 }
             }
             else
@@ -363,6 +325,11 @@ public class ConnectionManager : MonoBehaviour
             {
                 supPieceArray[currentRight].relevantSlice.fulfilledCondition = false;
             }
+        }
+
+        if (lastPiece)
+        {
+            GameManager.Instance.CheckEndLevel();
         }
     }
     public bool CheckSubPieceConnection(SubPiece currentSide, SubPiece contestedSide, out bool conditionMet)
@@ -452,7 +419,7 @@ public class ConnectionManager : MonoBehaviour
     {
         CompareResault result = new CompareResault();
 
-        if(current && contested)
+        if (current && contested)
         {
             result.gColorMatch = EqualColorOrJoker(current.colorOfPiece, contested.colorOfPiece);
             result.gSymbolMatch = EqualSymbolOrJoker(current.symbolOfPiece, contested.symbolOfPiece);
@@ -519,7 +486,7 @@ public class ConnectionManager : MonoBehaviour
     }
     public bool EqualColorOrJoker(PieceColor colA, PieceColor colB)/// Colorcheck is to see if we need to check color or symbol
     {
-        if((colA == colB || (colA == PieceColor.Joker || colB == PieceColor.Joker)) && (colA != PieceColor.None && colB!= PieceColor.None))
+        if ((colA == colB || (colA == PieceColor.Joker || colB == PieceColor.Joker)) && (colA != PieceColor.None && colB != PieceColor.None))
         {
             return true;
         }
@@ -866,7 +833,7 @@ public class ConnectionManager : MonoBehaviour
 
                 //Debug.Log(craftingMatsFromTables[randomMat]);
 
-                LootToRecieve LTR = new LootToRecieve(craftingMatsFromTables[randomMat], Random.Range(1,6));
+                LootToRecieve LTR = new LootToRecieve(craftingMatsFromTables[randomMat], Random.Range(1, 6));
 
                 if (!LootManager.Instance.tempDataList.Contains(LTR.type))
                 {

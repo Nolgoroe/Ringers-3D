@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Linq;
 using System;
+using GameAnalyticsSDK;
 
 [System.Serializable]
 public class ButtonsPerZone
@@ -596,6 +597,8 @@ public class UIManager : MonoBehaviour
         isUsingUI = true;
 
         loseScreen.SetActive(true);
+
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail,GameManager.Instance.currentLevel.worldName, GameManager.Instance.currentLevel.levelIndexInZone.ToString());
     }
     private void ClearLootDisplays()
     {

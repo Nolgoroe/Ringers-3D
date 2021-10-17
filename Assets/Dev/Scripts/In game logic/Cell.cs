@@ -74,9 +74,9 @@ public class Cell : MonoBehaviour
             {
                 ConnectionManager.Instance.CallConnection(cellIndex, isOuter, true);
 
-                bool gameWon = GameManager.Instance.CheckEndLevel();
+                //bool gameWon = GameManager.Instance.CheckEndLevel();
 
-                if (gameWon)
+                if (GameManager.gameWon)
                 {
                     SoundManager.Instance.PlaySound(Sounds.SolvedRing);
                     AnimationManager.instance.StartEndLevelAnimSequence();

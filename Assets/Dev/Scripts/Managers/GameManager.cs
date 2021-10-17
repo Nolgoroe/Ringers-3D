@@ -14,7 +14,7 @@ public class NumAnimalTypedOnBoard
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-
+    public static bool gameWon;
     //public GameObject circleBoardPrefab;
     //public GameObject doubleCircleBoardPrefab;
     public GameObject levelBGModel;
@@ -63,10 +63,12 @@ public class GameManager : MonoBehaviour
         isSecondaryControls = false;
         isDisableTutorials = false;
         levelBGModel.SetActive(false); /// temp
+        gameWon = false;
     }
 
     public void StartLevel()
     {
+        gameWon = false;
         TutorialSequence.Instacne.DisableTutorialSequence(); //// Make sure tutorial is disabled
         powerupManager.ClearTutorialPowerups(); /// Make sure there are no leftover powerups
 
@@ -135,6 +137,8 @@ public class GameManager : MonoBehaviour
 
     public void StartTutorialLevel()
     {
+        gameWon = false;
+
         if (!isDisableTutorials)
         {
             powerupManager.ClearTutorialPowerups();// Make sure there are no leftoever tutorial powerups
@@ -341,9 +345,12 @@ public class GameManager : MonoBehaviour
 
             Debug.Log("YOU WIN");
 
-            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
+            gameWon = true;
 
             PlayerManager.Instance.SavePlayerData();
+
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
+
 
             //TutorialSequence.Instacne.CheckContinuedTutorials();
             return true;
@@ -354,9 +361,12 @@ public class GameManager : MonoBehaviour
 
             //UIManager.Instance.LoseLevel();
             Debug.Log("You Lose");
-            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Fail, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
+
+            gameWon = false;
 
             PlayerManager.Instance.SavePlayerData();
+
+
 
             return false;
         }
