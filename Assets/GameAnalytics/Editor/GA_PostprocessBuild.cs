@@ -16,6 +16,10 @@ namespace GameAnalyticsSDK.Editor
         private static string gameanalytics_mopub = "gameanalytics_mopub_enabled";
         private static string gameanalytics_fyber = "gameanalytics_fyber_enabled";
         private static string gameanalytics_ironsource = "gameanalytics_ironsource_enabled";
+        private static string gameanalytics_topon = "gameanalytics_topon_enabled";
+        private static string gameanalytics_max = "gameanalytics_max_enabled";
+        private static string gameanalytics_aequus = "gameanalytics_aequus_enabled";
+        private static string gameanalytics_hyperbid = "gameanalytics_hyperbid_enabled";
 
 #if UNITY_2018_1_OR_NEWER
         public int callbackOrder
@@ -40,6 +44,10 @@ namespace GameAnalyticsSDK.Editor
             UpdateMoPub();
             UpdateFyber();
             UpdateIronSource();
+            UpdateTopOn();
+            UpdateMax();
+            UpdateAequus();
+            UpdateHyperBid();
         }
 
         private static void UpdateDefines(string entry, bool enabled, BuildTargetGroup[] groups)
@@ -99,18 +107,82 @@ namespace GameAnalyticsSDK.Editor
         }
 
         /// <summary>
-        /// Sets the scripting define symbol `gameanalytics_ironsource_enabled` to true if Fyber classes are detected within the Unity project
+        /// Sets the scripting define symbol `gameanalytics_ironsource_enabled` to true if IronSource classes are detected within the Unity project
         /// </summary>
         private static void UpdateIronSource()
         {
-            var fyberTypes = new string[] { "IronSourceEvents", "IronSource" };
-            if (TypeExists(fyberTypes))
+            var ironSourceTypes = new string[] { "IronSourceEvents", "IronSource" };
+            if (TypeExists(ironSourceTypes))
             {
                 UpdateDefines(gameanalytics_ironsource, true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
             }
             else
             {
                 UpdateDefines(gameanalytics_ironsource, false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            }
+        }
+
+        /// <summary>
+        /// Sets the scripting define symbol `gameanalytics_topon_enabled` to true if TopOn classes are detected within the Unity project
+        /// </summary>
+        private static void UpdateTopOn()
+        {
+            var topOnTypes = new string[] { "AnyThinkAds.Api.ATBannerAd", "AnyThinkAds.Api.ATInterstitialAd", "AnyThinkAds.Api.ATRewardedVideo", "AnyThinkAds.Api.ATNativeAd" };
+            if (TypeExists(topOnTypes))
+            {
+                UpdateDefines(gameanalytics_topon, true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            }
+            else
+            {
+                UpdateDefines(gameanalytics_topon, false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            }
+        }
+
+        /// <summary>
+        /// Sets the scripting define symbol `gameanalytics_max_enabled` to true if Max classes are detected within the Unity project
+        /// </summary>
+        private static void UpdateMax()
+        {
+            var maxTypes = new string[] { "MaxSdkCallbacks", "MaxSdk", "MaxSdkBase.AdInfo" };
+            if (TypeExists(maxTypes))
+            {
+                UpdateDefines(gameanalytics_max, true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            }
+            else
+            {
+                UpdateDefines(gameanalytics_max, false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            }
+        }
+
+        /// <summary>
+        /// Sets the scripting define symbol `gameanalytics_aequus_enabled` to true if Aequus classes are detected within the Unity project
+        /// </summary>
+        private static void UpdateAequus()
+        {
+            var aequusTypes = new string[] { "Mobi.Aequus.Sdk.Aequus", "Mobi.Aequus.Sdk.AequusILRDListener", "Mobi.Aequus.Sdk.ImpressionData" };
+            if (TypeExists(aequusTypes))
+            {
+                UpdateDefines(gameanalytics_aequus, true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            }
+            else
+            {
+                UpdateDefines(gameanalytics_aequus, false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            }
+        }
+
+        /// <summary>
+        /// Sets the scripting define symbol `gameanalytics_hyperbid_enabled` to true if HyperBid classes are detected within the Unity project
+        /// </summary>
+        private static void UpdateHyperBid()
+        {
+            var topOnTypes = new string[] { "HyperBid.Api.HBBannerAd", "HyperBid.Api.HBInterstitialAd", "HyperBid.Api.HBRewardedVideo", "HyperBid.Api.HBNativeAd" };
+            if (TypeExists(topOnTypes))
+            {
+                UpdateDefines(gameanalytics_hyperbid, true, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
+            }
+            else
+            {
+                UpdateDefines(gameanalytics_hyperbid, false, new BuildTargetGroup[] { BuildTargetGroup.iOS, BuildTargetGroup.Android });
             }
         }
 
@@ -155,6 +227,38 @@ namespace GameAnalyticsSDK.Editor
                 proj.AddFrameworkToProject(target, "AdSupport.framework", false);
                 proj.AddFrameworkToProject(target, "AppTrackingTransparency.framework", true);
                 //proj.SetBuildProperty(target, "ENABLE_BITCODE", "YES");
+#if gameanalytics_topon_enabled
+                string toponSubPath = "Libraries/GameAnalytics/Plugins/iOS/GameAnalyticsTopOnHelper.m";
+                string[] topOnGuids = AssetDatabase.FindAssets("GameAnalyticsTopOnHelper", null);
+                if (topOnGuids.Length > 0)
+                {
+                    string[] p = AssetDatabase.GUIDToAssetPath(topOnGuids[0]).Split(new char[] { '/' }, 2);
+                    if(p.Length > 1)
+                    {
+                        toponSubPath = "Libraries/" + p[1];
+                    }
+                }
+                string toponHelperFilePath = Path.Combine(path, toponSubPath);
+                string topOncontents = File.ReadAllText(toponHelperFilePath);
+                topOncontents = topOncontents.Replace("#if gameanalytics_topon_enabled", "").Replace("#endif", "");
+                File.WriteAllText(toponHelperFilePath, topOncontents);
+#endif
+#if gameanalytics_hyperbid_enabled
+                string hyperbidSubPath = "Libraries/GameAnalytics/Plugins/iOS/GameAnalyticsHyperBidHelper.m";
+                string[] hyperBidGuids = AssetDatabase.FindAssets("GameAnalyticsHyperBidHelper", null);
+                if (hyperBidGuids.Length > 0)
+                {
+                    string[] p = AssetDatabase.GUIDToAssetPath(hyperBidGuids[0]).Split(new char[] { '/' }, 2);
+                    if(p.Length > 1)
+                    {
+                        hyperbidSubPath = "Libraries/" + p[1];
+                    }
+                }
+                string hyperbidHelperFilePath = Path.Combine(path, hyperbidSubPath);
+                string hyperbidContents = File.ReadAllText(hyperbidHelperFilePath);
+                hyperbidContents = hyperbidContents.Replace("#if gameanalytics_hyperbid_enabled", "").Replace("#endif", "");
+                File.WriteAllText(hyperbidHelperFilePath, hyperbidContents);
+#endif
 
                 File.WriteAllText(projPath, proj.WriteToString());
 #endif
