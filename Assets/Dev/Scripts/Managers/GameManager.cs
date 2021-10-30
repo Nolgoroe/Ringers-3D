@@ -224,7 +224,10 @@ public class GameManager : MonoBehaviour
             PlayerManager.Instance.PopulatePowerUps();
             powerupManager.instnatiatedZonesCounter = 0;
 
-            TutorialSequence.Instacne.StartSequence(currentLevel.tutorialIndexForList);
+            if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.levelNum))
+            {
+                TutorialSequence.Instacne.StartTutorialLevelSequence(currentLevel.tutorialIndexForList);
+            }
 
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
         }
@@ -347,6 +350,9 @@ public class GameManager : MonoBehaviour
 
             gameWon = true;
 
+            SoundManager.Instance.PlaySound(Sounds.SolvedRing);
+            AnimationManager.instance.StartEndLevelAnimSequence();
+
             PlayerManager.Instance.SavePlayerData();
 
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
@@ -413,7 +419,7 @@ public class GameManager : MonoBehaviour
         {
             TutorialSequence.Instacne.currentPhaseInSequence = 0;
             TutorialSequence.Instacne.duringSequence = false;
-            TutorialSequence.Instacne.maskImage.gameObject.SetActive(true);
+            //TutorialSequence.Instacne.maskImage.gameObject.SetActive(true);
 
             powerupManager.ClearTutorialPowerups();
         }
@@ -463,6 +469,12 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.youWinScreen.SetActive(false);
         UIManager.Instance.TurnOnGameplayUI();
         UIManager.isUsingUI = false;
+
+        foreach (GameObject go in UIManager.Instance.allTutorialScreens)
+        {
+            go.SetActive(false);
+        }
+
 
         ZoneManagerHelpData.Instance.listOfAllZones[ZoneManagerHelpData.Instance.currentZoneCheck.id].SaveZone();
 

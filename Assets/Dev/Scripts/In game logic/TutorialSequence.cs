@@ -28,6 +28,23 @@ public class Sequence
 }
 
 [System.Serializable]
+public class SpecificTutorialsData
+{
+    public int EndPhaseID;
+    public SpecificTutorialsPhaseData[] phase;
+    public GameObject[] screens;
+
+    //public Sprite[] sprites;
+}
+
+[System.Serializable]
+public class SpecificTutorialsPhaseData
+{
+    public int phaseID;
+    public float timeDelay;
+}
+
+[System.Serializable]
 public class Phase
 {
     public int phaseID;
@@ -55,6 +72,7 @@ public class TutorialSequence : MonoBehaviour
     public int currentPhaseInSequence;
 
     public Sequence[] levelSequences;
+    public SpecificTutorialsData[] specificTutorials;
 
     public bool duringSequence;
 
@@ -71,8 +89,6 @@ public class TutorialSequence : MonoBehaviour
 
     public Camera secondCam;
 
-    public bool level3TurorialFlag;
-
     private void Start()
     {
         Instacne = this;
@@ -81,7 +97,7 @@ public class TutorialSequence : MonoBehaviour
         activatedBoardParticles = new List<ParticleSystem>();
     }
 
-    public void StartSequence(int sequenceNum)
+    public void StartTutorialLevelSequence(int sequenceNum) /// ONLY for level tutorials
     {
         Debug.Log("IN HERE CHECKING");
         if (!GameManager.Instance.isDisableTutorials)
@@ -114,6 +130,24 @@ public class TutorialSequence : MonoBehaviour
                 //}
             }
 
+        }
+    }
+
+    public void DisplaySpecificTutorialSequence(int tutorialIndex) /// for anything not levels - like loot tutorial or crafting tutorial
+    {
+        if (!GameManager.Instance.isDisableTutorials)
+        {
+            GameManager.Instance.powerupManager.PowerupButtonsActivation(false);
+
+            UIManager.Instance.tutorialCanvas.SetActive(true);
+
+            UIManager.Instance.dealButton.interactable = false;
+
+            specificTutorials[tutorialIndex].screens[0].SetActive(true);
+
+            //currentPhaseInSequence = 0;
+            //duringSequence = true;
+            // Might need this later for other types of tutorials
         }
     }
 
@@ -310,6 +344,8 @@ public class TutorialSequence : MonoBehaviour
 
         if (currentPhaseInSequence >= levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].EndPhaseID)
         {
+            TutorialSaveData.Instance.completedTutorialLevelId.Add(GameManager.Instance.currentLevel.levelNum);
+            TutorialSaveData.Instance.SaveTutorialSaveData();
 
             maskImage.gameObject.SetActive(false);
             duringSequence = false;
@@ -558,7 +594,7 @@ public class TutorialSequence : MonoBehaviour
         }
 
     }
-    public void TurnOnTutorialScreensAfterOptions()
+    public void TurnOnTutorialScreensAfterRestart()
     {
         if(currentPhaseInSequence < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].EndPhaseID)
         {

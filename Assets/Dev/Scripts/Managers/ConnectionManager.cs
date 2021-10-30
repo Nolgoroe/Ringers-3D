@@ -75,7 +75,6 @@ public class ConnectionManager : MonoBehaviour
                                                                                     ///// This function works like this to accomodate the last piece logic. 
                                                                                     //When the last piece is placed on the board we HAVE TO check connections before activating slice animations and logic.
                                                                                     //If one of the sides of the LAST PIECE are wrong then we don't activate any slices even if condition is met
-
     }
 
 

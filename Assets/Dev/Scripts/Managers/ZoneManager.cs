@@ -19,6 +19,7 @@ public class ZoneManager : MonoBehaviour
     public List<int> zonesToUnlock;
 
     public List<int> unlockedZoneID;
+
     private void Start()
     {
         if (Application.platform == RuntimePlatform.Android)

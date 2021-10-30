@@ -328,6 +328,8 @@ public class LootManager : MonoBehaviour
 
         CMD.materialImage.sprite = sprite;
         CMD.materialCount.text = count.ToString();
+
+        ////Tutorial Level 2
     }
 
     public void DestoryWinScreenDisplyedLoot()

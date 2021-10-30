@@ -158,12 +158,16 @@ public class AnimationManager : MonoBehaviour
             sr.color = newColor;
         });
 
+
         yield return new WaitForSeconds(waitTimeWinScreen);
+
+        CheckShowLootTutorial();
 
         GameManager.Instance.WinAfterAnimation();
 
         Destroy(GameManager.Instance.gameBoard.gameObject);
         Destroy(GameManager.Instance.gameClip.gameObject);
+
 
         yield return new WaitForSeconds(waitTimeFadeOut);
 
@@ -251,6 +255,7 @@ public class AnimationManager : MonoBehaviour
 
         fadeImageEndLevel.gameObject.SetActive(false);
 
+        CheckShowLootTutorial();
 
         GameManager.Instance.WinAfterAnimation();
 
@@ -268,7 +273,17 @@ public class AnimationManager : MonoBehaviour
 
     }
 
+    private void CheckShowLootTutorial()
+    {
+        if (GameManager.Instance.currentLevel.isLootTutorial && !TutorialSaveData.Instance.completedLootTutorial)
+        {
+            TutorialSaveData.Instance.completedLootTutorial = true;
+            LootManager.Instance.rubiesToRecieveInLevel = 8;
+            TutorialSequence.Instacne.DisplaySpecificTutorialSequence(0); /// 0 = loot tutorial.. its the index of the loot turtorial in the array
 
+            TutorialSaveData.Instance.SaveTutorialSaveData();
+        }
+    }
     public void ZoomIntoCorruptArea(int ID)
     {
         LeanTween.value(Camera.main.orthographicSize, cameraOrthoSizeTarget, transitionTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate(UpdateCamOrthoSize);

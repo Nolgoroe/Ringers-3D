@@ -521,32 +521,45 @@ public class CursorController : MonoBehaviour
                 {
                     Cell cell = cellHit.GetComponent<Cell>();
 
-                    Transform currentParent = followerTarget.parent; //// ONLY IF WERE COMING FROM A CLIP THIS IS RELEVANT
+                    Transform clipParent = followerTarget.parent; //// ONLY IF WERE COMING FROM A CLIP THIS IS RELEVANT
                     Cell previousCell = followerTarget.parent.GetComponent<Cell>(); //// Only relevant if piece is moved from cell to cell
 
-                    bool newPiece = followerTarget.transform.parent.CompareTag("Clip");
+                    bool isFromClip = followerTarget.transform.parent.CompareTag("Clip");
+
+                    Vector3 originalScale = followerTarget.transform.localScale;
+
                     if (!cell.isFull && cell != previousCell)
                     {
-                        cell.AddPiece(followerTarget, newPiece);
+                        cell.AddPiece(followerTarget, isFromClip);
 
                         if (GameManager.Instance.currentFilledCellCount + 1 != GameManager.Instance.currentLevel.cellsCountInLevel && !tutorialBadConnection)
                         {
-                            if (newPiece/* && !cell.isFull*/)
+
+                            if (isFromClip/* && !cell.isFull*/)
                             {
-                                GameManager.Instance.clipManager.PopulateSlot(currentParent, 10);
+                                GameManager.Instance.clipManager.PopulateSlot(clipParent, 10);
                             }
 
                             TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
                         }
                         else
                         {
-                            ReturnHome();
+                            cell.RemovePiece();
+
+                            if (isFromClip)
+                            {
+                                GameManager.Instance.currentFilledCellCount--;
+                            }
+
+                            followerTarget.transform.SetParent(clipParent.transform);
+                            followerTarget.transform.localScale = originalScale;
 
                             GameManager.Instance.clipManager.emptyClip = followerTarget.transform.parent;
                             GameManager.Instance.clipManager.latestPiece = followerTarget;
+                            ReturnHome();
                         }
 
-                        if (!newPiece && cell != previousCell)
+                        if (!isFromClip && cell != previousCell)
                         {
                             previousCell.isFull = false;
                         }

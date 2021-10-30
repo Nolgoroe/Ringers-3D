@@ -47,6 +47,7 @@ public class LevelScriptableObject : ScriptableObject
 
 
     public bool isTutorial;
+    public bool isLootTutorial;
     public List<pieceDataStruct> arrayOfPieces;
     public int[] specificSliceSpots;
     public PieceSymbol[] specificSlicesShapes;

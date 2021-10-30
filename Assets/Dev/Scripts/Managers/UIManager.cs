@@ -135,6 +135,7 @@ public class UIManager : MonoBehaviour
         tutorialDisableImage.sprite = toggleOnSprite;
 
         animalNameText.text = "";
+
         foreach (GameObject go in allTutorialScreens)
         {
             go.SetActive(false);
@@ -292,7 +293,7 @@ public class UIManager : MonoBehaviour
 
         if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
         {
-            TutorialSequence.Instacne.TurnOnTutorialScreensAfterOptions();
+            TutorialSequence.Instacne.TurnOnTutorialScreensAfterRestart();
         }
     }
     public void SureWantToRestartMessageYes(bool withLoot)

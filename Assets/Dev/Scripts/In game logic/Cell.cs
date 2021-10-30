@@ -76,12 +76,6 @@ public class Cell : MonoBehaviour
 
                 //bool gameWon = GameManager.Instance.CheckEndLevel();
 
-                if (GameManager.gameWon)
-                {
-                    SoundManager.Instance.PlaySound(Sounds.SolvedRing);
-                    AnimationManager.instance.StartEndLevelAnimSequence();
-                }
-
                 return;
                 //UIManager.Instance.ActivateCommitButton();
             }
