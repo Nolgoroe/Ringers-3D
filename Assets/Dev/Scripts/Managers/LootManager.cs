@@ -24,6 +24,7 @@ public enum CraftingMats
     ElderStalks,
     SilkThread,
     MoonStone,
+    DewDrops,
     None
 }
 public enum CraftingMatType
@@ -122,6 +123,7 @@ public class LootManager : MonoBehaviour
     public Transform winScreenLootDisplayContent;
 
     public Sprite /*goldSprite,*/ rubySprite;
+    public Sprite dewDropsSprite;
 
     public Sprite[] allMaterialSprites;
 

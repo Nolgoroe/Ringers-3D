@@ -7,6 +7,8 @@ using System.IO;
 
 public class DewDropsManager : MonoBehaviour
 {
+    public static DewDropsManager Instance;
+
     public float timeTillGiveDrewDropStatic;
     public float timeLeftToGiveDrop = 0;
     public int maxDrops;
@@ -17,6 +19,8 @@ public class DewDropsManager : MonoBehaviour
 
     void Start()
     {
+        Instance = this;
+
         timeLeftToGiveDrop = timeTillGiveDrewDropStatic * 60;
 
         if (Application.platform == RuntimePlatform.Android)
@@ -142,7 +146,7 @@ public class DewDropsManager : MonoBehaviour
         UIManager.Instance.dewDropsText.text = PlayerManager.Instance.collectedDewDrops.ToString();
     }
 
-    IEnumerator DisplayTime()
+    public IEnumerator DisplayTime()
     {
         DisplayTimeNoDelay();
         while (PlayerManager.Instance.collectedDewDrops < maxDrops)
@@ -150,6 +154,7 @@ public class DewDropsManager : MonoBehaviour
             UIManager.Instance.dewDropsTextTime.gameObject.SetActive(true);
 
             yield return new WaitForSecondsRealtime(1);
+            Debug.Log("Inside Coroutine!");
             timeLeftToGiveDrop--;
 
             if (timeLeftToGiveDrop <= 0)
@@ -171,6 +176,7 @@ public class DewDropsManager : MonoBehaviour
 
         UIManager.Instance.dewDropsTextTime.gameObject.SetActive(false);
     }
+
     void DisplayTimeNoDelay() ///// This function is only for the star of the game no that players wont see the defult time while the real time is updating
     {
         float minutes = Mathf.FloorToInt(timeLeftToGiveDrop / 60);
@@ -178,6 +184,7 @@ public class DewDropsManager : MonoBehaviour
 
         UIManager.Instance.dewDropsTextTime.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
+
     public void GiveDrop(int amount)
     {
         PlayerManager.Instance.collectedDewDrops += amount;

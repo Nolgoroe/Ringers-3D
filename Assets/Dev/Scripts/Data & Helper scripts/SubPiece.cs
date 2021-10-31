@@ -321,4 +321,9 @@ public class SubPiece : MonoBehaviour
 
     }
 
+    public void SetPieceAsJoker()
+    {
+        rend.material = GameManager.Instance.powerupManager.jokerMat;
+    }
+
 }

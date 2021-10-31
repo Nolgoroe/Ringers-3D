@@ -10226,6 +10226,7 @@ MonoBehaviour:
     type: 3}
   winScreenLootDisplayContent: {fileID: 780702208}
   rubySprite: {fileID: 21300000, guid: 5485675f4a5f11e4599ca59de939cd25, type: 3}
+  dewDropsSprite: {fileID: 21300000, guid: 7d83631da60dc174194b68152f940550, type: 3}
   allMaterialSprites:
   - {fileID: 7516060236732144515, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
   - {fileID: 57775375713221152, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
@@ -22133,7 +22134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28579f1850b31744be4abc0246743ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetFrameRate: 60
+  targetFrameRate: 120
 --- !u!4 &837969371
 Transform:
   m_ObjectHideFlags: 0
@@ -32829,6 +32830,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eb457c8e750da949b124d81b03ece25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorialHandPrefabMove: {fileID: 4109478664383188052, guid: a7c2e36485f6030459204fb0b94b4329,
+    type: 3}
+  tutorialHandPrefabTap: {fileID: 4109478664383188052, guid: 8d2e9c9b4d23b114b83f3e44bf136948,
+    type: 3}
+  tutorialHandPosDealButton: {x: 0.37, y: 1, z: -0.1}
+  tutorialHandRotationDealButton: {x: 7, y: -7, z: 120}
+  tutorialHandMoveSpeed: 1.5
+  tutorialHandTapSpeed: 0.45
+  currentlyActiveTutorialHand: {fileID: 0}
   currentPhaseInSequence: 0
   levelSequences:
   - levelTutorialIndex: 1
@@ -32898,33 +32908,33 @@ MonoBehaviour:
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 0000000001000000
+      unlockedClips: 00000000
       unlockedBoardCells: -1
-      targetCells: 0000000007000000
+      targetCells: 00000000
       targetSlices: 00000000
     - phaseID: 2
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 0000000001000000
+      unlockedClips: 01000000
       unlockedBoardCells: -1
-      targetCells: 0000000007000000
+      targetCells: 07000000
       targetSlices: 00000000
     - phaseID: 3
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 0200000003000000
+      unlockedClips: 02000000
       unlockedBoardCells: -1
-      targetCells: 0300000004000000
+      targetCells: 03000000
       targetSlices: 04000000
     - phaseID: 4
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 0200000003000000
+      unlockedClips: 03000000
       unlockedBoardCells: -1
-      targetCells: 0300000004000000
+      targetCells: 04000000
       targetSlices: 04000000
     screens:
     - {fileID: 1043428618}
@@ -32946,7 +32956,7 @@ MonoBehaviour:
       dealPhase: 0
       unlockedClips: 00000000
       unlockedBoardCells: -1
-      targetCells: 0100000002000000
+      targetCells: 01000000
       targetSlices: 02000000
     - phaseID: 2
       isClipPhase: 1
@@ -32954,7 +32964,7 @@ MonoBehaviour:
       dealPhase: 0
       unlockedClips: 00000000
       unlockedBoardCells: -1
-      targetCells: 0100000002000000
+      targetCells: 02000000
       targetSlices: 02000000
     screens:
     - {fileID: 2123312440}
@@ -32972,17 +32982,17 @@ MonoBehaviour:
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 010000000200000003000000
+      unlockedClips: 01000000
       unlockedBoardCells: -1
-      targetCells: 0000000001000000
+      targetCells: 00000000
       targetSlices: 01000000
     - phaseID: 2
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 010000000200000003000000
+      unlockedClips: 02000000
       unlockedBoardCells: -1
-      targetCells: 0000000001000000
+      targetCells: 01000000
       targetSlices: 
     screens:
     - {fileID: 432097514}
@@ -33006,7 +33016,7 @@ MonoBehaviour:
       dealPhase: 0
       unlockedClips: 01000000
       unlockedBoardCells: -1
-      targetCells: 0000000001000000
+      targetCells: 00000000
       targetSlices: 01000000
     - phaseID: 2
       isClipPhase: 1
@@ -33014,7 +33024,7 @@ MonoBehaviour:
       dealPhase: 0
       unlockedClips: 02000000
       unlockedBoardCells: -1
-      targetCells: 0000000001000000
+      targetCells: 01000000
       targetSlices: 01000000
     - phaseID: 3
       isClipPhase: 1
@@ -33022,7 +33032,7 @@ MonoBehaviour:
       dealPhase: 0
       unlockedClips: 00000000
       unlockedBoardCells: -1
-      targetCells: 0300000004000000
+      targetCells: 03000000
       targetSlices: 04000000
     - phaseID: 4
       isClipPhase: 1
@@ -33030,7 +33040,7 @@ MonoBehaviour:
       dealPhase: 0
       unlockedClips: 03000000
       unlockedBoardCells: -1
-      targetCells: 0300000004000000
+      targetCells: 04000000
       targetSlices: 04000000
     screens:
     - {fileID: 1890713266}
@@ -33056,7 +33066,7 @@ MonoBehaviour:
       dealPhase: 0
       unlockedClips: 01000000
       unlockedBoardCells: -1
-      targetCells: 0000000001000000
+      targetCells: 00000000
       targetSlices: 01000000
     - phaseID: 2
       isClipPhase: 1
@@ -33064,7 +33074,7 @@ MonoBehaviour:
       dealPhase: 0
       unlockedClips: 02000000
       unlockedBoardCells: -1
-      targetCells: 0000000001000000
+      targetCells: 01000000
       targetSlices: 01000000
     - phaseID: 3
       isClipPhase: 1
@@ -33072,7 +33082,7 @@ MonoBehaviour:
       dealPhase: 0
       unlockedClips: 00000000
       unlockedBoardCells: -1
-      targetCells: 0300000004000000
+      targetCells: 03000000
       targetSlices: 04000000
     - phaseID: 4
       isClipPhase: 1
@@ -33080,7 +33090,7 @@ MonoBehaviour:
       dealPhase: 0
       unlockedClips: 03000000
       unlockedBoardCells: -1
-      targetCells: 0300000004000000
+      targetCells: 04000000
       targetSlices: 04000000
     screens:
     - {fileID: 1890713266}
@@ -39655,8 +39665,7 @@ MonoBehaviour:
   powerupSpritesPath:
   - powerup Icons/Blue_Color_Transform_Button
   - powerup Icons/Switch_Button
-  - powerup Icons/Switch_Button
-  - powerup Icons/Switch_Button
+  - powerup Icons/PowerUpIcon_Joker
   powerupNames:
   - Joker
   - Switch
@@ -39678,6 +39687,7 @@ MonoBehaviour:
   instnatiatedZonesCounter: 0
   specialPowerupsInGame: []
   offsetYSpecialPowers: 150
+  jokerMat: {fileID: 2100000, guid: 41226dd126c37f34baddb2e15186b625, type: 2}
 --- !u!1 &1504644118
 GameObject:
   m_ObjectHideFlags: 0
@@ -46356,6 +46366,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1687258585}
   - component: {fileID: 1687258584}
+  - component: {fileID: 1687258587}
   - component: {fileID: 1687258582}
   - component: {fileID: 1687258586}
   - component: {fileID: 1687258583}
@@ -46478,6 +46489,22 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &1687258587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687258581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7536f5480f8cb2541a8e756e7c770003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Amount: {x: 0.05, y: 0.05, z: 0}
+  Duration: 0.3
+  Speed: 10
+  ResetPosition: 1
 --- !u!1 &1690288855
 GameObject:
   m_ObjectHideFlags: 0
@@ -52017,7 +52044,7 @@ MonoBehaviour:
   csvFiles:
   - csvFiles: {fileID: 4900000, guid: 37edeef80fb710846b2e51fc4d611164, type: 3}
     typeOfCsvDoc: 1
-  - csvFiles: {fileID: 4900000, guid: 2df1c02e85aa02443b1385b61a1c716e, type: 3}
+  - csvFiles: {fileID: 4900000, guid: 56f417545ab33e545ae4a166cb2e3142, type: 3}
     typeOfCsvDoc: 0
   - csvFiles: {fileID: 4900000, guid: 5ce016adb9c736141a9e35861960ea56, type: 3}
     typeOfCsvDoc: 2
@@ -58192,11 +58219,11 @@ RectTransform:
   m_Father: {fileID: 2137641458}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -6.5998535}
-  m_SizeDelta: {x: 239.8, y: 239.8}
-  m_Pivot: {x: 0.5, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -987}
+  m_SizeDelta: {x: 239.8, y: 239.80005}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2136243412
 MonoBehaviour:
   m_ObjectHideFlags: 0

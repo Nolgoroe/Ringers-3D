@@ -7,13 +7,14 @@ using System;
 
 public enum PowerUp
 {
-    //Joker,
+    
     FourColorTransform,
     Switch,
     //PieceBomb,
     //SliceBomb,
     //ExtraDeal,
     //FourShapeTransform,
+    Joker,
     None
 }
 public enum SpecialPowerUp
@@ -63,6 +64,8 @@ public class PowerUpManager : MonoBehaviour
 
     public float offsetYSpecialPowers = 100;
 
+    public Material jokerMat;
+
     private void Start()
     {
         GameManager.Instance.powerupManager = this;
@@ -93,9 +96,9 @@ public class PowerUpManager : MonoBehaviour
         PowerupProperties prop = theButton.gameObject.GetComponent<PowerupProperties>();
         switch (ThePower)
         {
-            //case PowerUp.Joker:
-            //    theButton.onClick.AddListener(() => CallJokerCoroutine(prop));
-            //    break;
+            case PowerUp.Joker:
+                theButton.onClick.AddListener(() => CallJokerCoroutine(prop));
+                break;
             case PowerUp.Switch:
                 theButton.onClick.AddListener(() => CallSwitchPowerCoroutine(prop));
                 break;
@@ -159,6 +162,8 @@ public class PowerUpManager : MonoBehaviour
     }
     public void Deal()
     {
+        CameraShake.ShakeOnce();
+
         SoundManager.Instance.PlaySound(Sounds.DealButton);
 
         if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
@@ -240,8 +245,8 @@ public class PowerUpManager : MonoBehaviour
                 toWorkOn.rightChild.symbolOfPiece = PieceSymbol.Joker;
                 toWorkOn.rightChild.colorOfPiece = PieceColor.Joker;
 
-                toWorkOn.leftChild.RefreshPiece();
-                toWorkOn.rightChild.RefreshPiece();
+                toWorkOn.leftChild.SetPieceAsJoker();
+                toWorkOn.rightChild.SetPieceAsJoker();
 
                 toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
             }

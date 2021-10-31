@@ -82,15 +82,41 @@ public class PlayerManager : MonoBehaviour
     }
     public bool CheckIfHasMaterialts(CraftingMatsNeeded CMN)
     {
-        CraftingMatEntry CME = craftingMatsInInventory.Where(p => p.mat == CMN.mat).Single();
+        if(CMN.mat == CraftingMats.DewDrops)
+        {
+            int amount = collectedDewDrops;
+            return amount >= CMN.amount;
+        }
+        else
+        {
+            CraftingMatEntry CME = craftingMatsInInventory.Where(p => p.mat == CMN.mat).Single();
+            return CME.amount >= CMN.amount;
+        }
 
-        return CME.amount >= CMN.amount;
     }
     public void DecreaseNumOfMats(CraftingMatsNeeded CMN)
     {
-        CraftingMatEntry CME = craftingMatsInInventory.Where(p => p.mat == CMN.mat).Single();
+        if (CMN.mat == CraftingMats.DewDrops)
+        {
+            int currentAmountOfDrops = collectedDewDrops;
 
-        CME.amount -= CMN.amount;
+            collectedDewDrops -= CMN.amount;
+            UIManager.Instance.dewDropsText.text = collectedDewDrops.ToString();
+
+            if(currentAmountOfDrops >= DewDropsManager.Instance.maxDrops)
+            {           
+                if(currentAmountOfDrops - CMN.amount < DewDropsManager.Instance.maxDrops)
+                {
+                    StartCoroutine(DewDropsManager.Instance.DisplayTime());
+                }
+            }
+        }
+        else
+        {
+            CraftingMatEntry CME = craftingMatsInInventory.Where(p => p.mat == CMN.mat).Single();
+
+            CME.amount -= CMN.amount;
+        }
     }
     public void AddMaterials(CraftingMats matToAdd, int amountToAdd)
     {

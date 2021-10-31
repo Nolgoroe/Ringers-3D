@@ -112,6 +112,7 @@ public class ConnectionManager : MonoBehaviour
                 }
                 else
                 {
+                    CameraShake.ShakeOnce();
                     supPieceArray[currentLeft].isBadConnection = false;
                     supPieceArray[leftContested].isBadConnection = false;
 
@@ -263,6 +264,8 @@ public class ConnectionManager : MonoBehaviour
                 }
                 else
                 {
+                    CameraShake.ShakeOnce();
+
                     CursorController.Instance.tutorialBadConnection = false;
 
                     supPieceArray[currentRight].isBadConnection = false;

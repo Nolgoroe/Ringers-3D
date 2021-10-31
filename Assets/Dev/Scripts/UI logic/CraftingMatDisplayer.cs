@@ -19,7 +19,14 @@ public class CraftingMatDisplayer : MonoBehaviour
 
     public void CheckIfHasEnough(CraftingMats matEnum, int amountRequired)
     {
-        CraftingMatEntry CME = PlayerManager.Instance.craftingMatsInInventory.Where(p => p.mat == matEnum).Single();
+        if(matEnum == CraftingMats.DewDrops)
+        {
+            int hasAmount = PlayerManager.Instance.collectedDewDrops;
+        }
+        else
+        {
+            CraftingMatEntry CME = PlayerManager.Instance.craftingMatsInInventory.Where(p => p.mat == matEnum).Single();
+        }
 
         //CMN.indexMatInPlayerInventory = i; //// Nice trick - ask Alon what he thinks
 

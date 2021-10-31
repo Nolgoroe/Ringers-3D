@@ -391,6 +391,7 @@ public class CursorController : MonoBehaviour
                         PowerUpManager.IsUsingPowerUp = false;
                         PowerUpManager.HasUsedPowerUp = true;
                         PowerUpManager.ObjectToUsePowerUpOn = hit.transform.gameObject;
+                        CameraShake.ShakeOnce();
                     }
                     else
                     {
@@ -503,19 +504,19 @@ public class CursorController : MonoBehaviour
         {
             if (followerTarget)
             {
-                bool isAccording = false;
+                //bool isAccording = false;
 
-                if (GameManager.Instance.currentLevel.tutorialIndexForList == 4)
-                {
-                    Cell cell = cellHit.GetComponent<Cell>();
-                    Piece p = followerTarget.GetComponent<Piece>();
-                    isAccording = SpecialTutorialConnectionLogic(cell.cellIndex, p);
+                //if (GameManager.Instance.currentLevel.tutorialIndexForList == 4)
+                //{
+                //    Cell cell = cellHit.GetComponent<Cell>();
+                //    Piece p = followerTarget.GetComponent<Piece>();
+                //    //isAccording = SpecialTutorialConnectionLogic(cell.cellIndex, p);
 
-                    if (!isAccording)
-                    {
-                        return;
-                    }
-                }
+                //    //if (!isAccording)
+                //    //{
+                //    //    return;
+                //    //}
+                //}
 
                 if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequence].targetCells.Contains(cellHit.GetComponent<Cell>().cellIndex))
                 {
@@ -600,30 +601,31 @@ public class CursorController : MonoBehaviour
 
         followerTarget = null;
     }
-    private bool SpecialTutorialConnectionLogic(int cellindex, Piece pieceHeld)
-    {
-        Slice relavent = GameManager.Instance.sliceManager.sliceSlots[cellindex].GetComponent<Slice>();
+    //private bool SpecialTutorialConnectionLogic(int cellindex, Piece pieceHeld)
+    //{
+    //    Slice relavent = GameManager.Instance.sliceManager.sliceSlots[cellindex].GetComponent<Slice>();
 
-        if (relavent.sliceCatagory == SliceCatagory.None)
-        {
-            if (pieceHeld.rightChild.colorOfPiece != PieceColor.Blue)
-            {
-                ReturnHome();
-                return false;
-            }
-        }
-        else
-        {
-            if (pieceHeld.leftChild.colorOfPiece != PieceColor.Blue)
-            {
-                ReturnHome();
-                return false;
-            }
-        }
+    //    if (relavent.sliceCatagory == SliceCatagory.None)
+    //    {
+    //        return true;
+    //        //if (pieceHeld.rightChild.colorOfPiece != PieceColor.Blue)
+    //        //{
+    //        //    ReturnHome();
+    //        //    return false;
+    //        //}
+    //    }
+    //    else
+    //    {
+    //        if (pieceHeld.leftChild.colorOfPiece != PieceColor.Blue)
+    //        {
+    //            ReturnHome();
+    //            return false;
+    //        }
+    //    }
 
 
-        return true;
-    }
+    //    return true;
+    //}
     void AddNumAnimalsToBoard(Transform piece)
     {
         Piece p = piece.GetComponent<Piece>();

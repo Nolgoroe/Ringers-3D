@@ -69,6 +69,14 @@ public class OutLineData
 public class TutorialSequence : MonoBehaviour
 {
     public static TutorialSequence Instacne;
+
+    public GameObject tutorialHandPrefabMove;
+    public GameObject tutorialHandPrefabTap;
+    public Vector3 tutorialHandPosDealButton, tutorialHandRotationDealButton;
+    public float tutorialHandMoveSpeed, tutorialHandTapSpeed;
+
+    public GameObject currentlyActiveTutorialHand;
+
     public int currentPhaseInSequence;
 
     public Sequence[] levelSequences;
@@ -99,36 +107,42 @@ public class TutorialSequence : MonoBehaviour
 
     public void StartTutorialLevelSequence(int sequenceNum) /// ONLY for level tutorials
     {
-        Debug.Log("IN HERE CHECKING");
         if (!GameManager.Instance.isDisableTutorials)
         {
+            foreach (GameObject go in levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens) /// THESE ARE ALL THE TEXT POPUPS
+            {
+                go.SetActive(false);
+            }
+
             GameManager.Instance.powerupManager.PowerupButtonsActivation(false);
 
             UIManager.Instance.tutorialCanvas.SetActive(true);
 
-            DisplayTutorialScreens();
+            //DisplayTutorialScreens();
+
             OutlineInstantiate();
             UIManager.Instance.dealButton.interactable = false;
 
-            currentPhaseInSequence = 0;
+            currentPhaseInSequence = -1; /// it goes up by one in function so it actually starts at 0
             duringSequence = true;
+            IncrementCurrentPhaseInSequence();
 
-            for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
-            {
-                Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
+            //for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
+            //{
+            //    Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
 
-                //for (int k = 0; k < levelSequences[levelNum - 1].phase[currentPhaseInSequence].unlockedClips.Length; k++)
-                //{
-                if (levelSequences[sequenceNum].phase[currentPhaseInSequence].unlockedClips.Contains(i)/*[k]*/)
-                {
-                    p.isTutorialLocked = false;
-                }
-                else
-                {
-                    p.isTutorialLocked = true;
-                }
-                //}
-            }
+            //    //for (int k = 0; k < levelSequences[levelNum - 1].phase[currentPhaseInSequence].unlockedClips.Length; k++)
+            //    //{
+            //    if (levelSequences[sequenceNum].phase[currentPhaseInSequence].unlockedClips.Contains(i)/*[k]*/)
+            //    {
+            //        p.isTutorialLocked = false;
+            //    }
+            //    else
+            //    {
+            //        p.isTutorialLocked = true;
+            //    }
+            //    //}
+            //}
 
         }
     }
@@ -178,17 +192,17 @@ public class TutorialSequence : MonoBehaviour
         //}
     }
 
-    private void DisplayTutorialScreens()
-    {
-        foreach (GameObject go in levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens) /// THESE ARE ALL THE TEXT POPUPS
-        {
-            go.SetActive(false);
-        }
+    //private void DisplayTutorialScreens()
+    //{
+    //    foreach (GameObject go in levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens) /// THESE ARE ALL THE TEXT POPUPS
+    //    {
+    //        go.SetActive(false);
+    //    }
 
-        StartCoroutine(SelectReleventHeighlights(0));
+    //    StartCoroutine(SelectReleventHeighlights(0));
 
-        //maskImage.sprite = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].sprites[0]; /// NEW
-    }
+    //    //maskImage.sprite = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].sprites[0]; /// NEW
+    //}
 
     [ContextMenu("Render Now")]
     public void toTexture()
@@ -265,7 +279,6 @@ public class TutorialSequence : MonoBehaviour
 
             UIManager.Instance.dealButtonHeighlight.SetActive(true);
             activatedHeighlights.Add(UIManager.Instance.dealButtonHeighlight.gameObject);
-            
         }
 
         if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[index].unlockedClips.Length > 0)
@@ -332,11 +345,20 @@ public class TutorialSequence : MonoBehaviour
     }
     public void IncrementCurrentPhaseInSequence()
     {
+        if (currentlyActiveTutorialHand)
+        {
+            Destroy(currentlyActiveTutorialHand.gameObject);
+        }
+
         currentPhaseInSequence++;
 
         if(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[currentPhaseInSequence])
         {
-            levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[currentPhaseInSequence - 1].SetActive(false);
+            if(currentPhaseInSequence > 0)
+            {
+                levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[currentPhaseInSequence - 1].SetActive(false);
+            }
+
             levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[currentPhaseInSequence].SetActive(true);
             levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[currentPhaseInSequence].transform.GetChild(0).gameObject.SetActive(true);
         }
@@ -424,6 +446,11 @@ public class TutorialSequence : MonoBehaviour
                 }
                 //}
             }
+
+        int clipID = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequence].unlockedClips[0];
+        int cellID = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequence].targetCells[0];
+
+        DisplayTutorialHandClipToBoardCell(clipID, cellID);
     }
     public void BoardPhaseLogic()
     {
@@ -452,6 +479,26 @@ public class TutorialSequence : MonoBehaviour
                 //}
             }
         }
+
+        int cellID1 = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequence].unlockedBoardCells;
+        int cellID2 = -1;
+
+        for (int i = 0; i < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequence].targetCells.Length; i++)
+        {
+            if(cellID1 != levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequence].targetCells[i])
+            {
+                cellID2 = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequence].targetCells[i];
+                break;
+            }
+        }
+
+        if(cellID2 == -1)
+        {
+            Debug.LogError("Something bad happened here!");
+            return;
+        }
+
+        DisplayTutorialHandBoardCellToBoardCell(cellID1, cellID2);
     }
     public void DealPhaseLogic()
     {
@@ -471,6 +518,8 @@ public class TutorialSequence : MonoBehaviour
                 c.pieceHeld.isTutorialLocked = true;
             }
         }
+
+        DisplayTutorialHandTap(tutorialHandPosDealButton, tutorialHandRotationDealButton);
     }
     public void OutlineInstantiate()
     {
@@ -604,6 +653,47 @@ public class TutorialSequence : MonoBehaviour
             }
             levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[currentPhaseInSequence].SetActive(true);
         }
+    }
+
+    public void DisplayTutorialHandClipToBoardCell(int clipIndex, int CellIndex)
+    {
+        Vector3 pos = GameManager.Instance.clipManager.slots[clipIndex].transform.position;
+        pos.z = -0.3f;
+        
+        Vector3 targetPos = ConnectionManager.Instance.cells[CellIndex].transform.position;
+        targetPos.z = -0.3f;
+
+        GameObject go = Instantiate(tutorialHandPrefabMove, pos, Quaternion.identity);
+        currentlyActiveTutorialHand = go;
+
+        LeanTween.move(go, targetPos, tutorialHandMoveSpeed).setEase(LeanTweenType.easeInOutQuad).setLoopClamp(); // animate
+    }
+
+    public void DisplayTutorialHandBoardCellToBoardCell(int CellIndexFrom, int CellIndexTo)
+    {
+        Vector3 pos = ConnectionManager.Instance.cells[CellIndexFrom].transform.position;
+        pos.z = -0.3f;
+
+        GameObject go = Instantiate(tutorialHandPrefabMove, pos, Quaternion.identity);
+        currentlyActiveTutorialHand = go;
+
+        Vector3 targetPos = ConnectionManager.Instance.cells[CellIndexTo].transform.position;
+        targetPos.z = -0.3f;
+
+        LeanTween.move(go, targetPos, tutorialHandMoveSpeed).setEase(LeanTweenType.easeInOutQuad).setLoopClamp(); // animate
+    }
+
+    public void DisplayTutorialHandTap(Vector3 position, Vector3 rotation)
+    {
+        Vector3 pos = position;
+        pos.z = -0.3f;
+
+        GameObject go = Instantiate(tutorialHandPrefabTap, pos, Quaternion.Euler(rotation));
+        currentlyActiveTutorialHand = go;
+
+        LeanTween.rotate(go, new Vector3(rotation.x, rotation.y, rotation.z + 5), tutorialHandTapSpeed).setEase(LeanTweenType.linear).setLoopPingPong();
+
+
     }
 
 }
