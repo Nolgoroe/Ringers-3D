@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2375032900632741406}
   - component: {fileID: 1634408702117311502}
-  m_Layer: 0
+  - component: {fileID: -358401087043179443}
+  - component: {fileID: -3023291772198508627}
+  m_Layer: 11
   m_Name: LimiterStone_Anim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,6 +55,35 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!65 &-358401087043179443
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634408702117311501}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5033947, y: 1.597362, z: 0.5972839}
+  m_Center: {x: 0.0637632, y: -0.18457808, z: -0.14766254}
+--- !u!114 &-3023291772198508627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634408702117311501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7536f5480f8cb2541a8e756e7c770003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Amount: {x: 0.03, y: 0.03, z: 0}
+  Duration: 0.4
+  Speed: 7
+  ResetPosition: 1
 --- !u!1 &5464167154052465809
 GameObject:
   m_ObjectHideFlags: 0

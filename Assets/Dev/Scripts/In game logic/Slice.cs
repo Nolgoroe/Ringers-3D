@@ -152,7 +152,16 @@ public class Slice : MonoBehaviour
 
                     break;
                 case SliceCatagory.SpecificShape:
-                    sliceSymbol = GameManager.Instance.copyOfSpecificSliceSymbolsTutorial[0];
+                    if (GameManager.Instance.copyOfSpecificSliceSymbolsTutorial.Count > 0)
+                    {
+                        sliceSymbol = GameManager.Instance.copyOfSpecificSliceSymbolsTutorial[0];
+                    }
+                    else
+                    {
+                        int random = Random.Range(0, GameManager.Instance.currentLevel.levelAvailablesymbols.Length);
+                        sliceSymbol = GameManager.Instance.currentLevel.levelAvailablesymbols[random];
+
+                    }
                     //sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol];
                     //sr.sprite = GameManager.Instance.sliceManager.limiterSliceSymbolToSprite[sliceSymbol];
 
@@ -163,10 +172,22 @@ public class Slice : MonoBehaviour
 
                     //sr.sprite = GameManager.Instance.sliceManager.lootSliceSymbolDict[sliceSymbol];
 
-                    GameManager.Instance.copyOfSpecificSliceSymbolsTutorial.RemoveAt(0);
+                    if (GameManager.Instance.copyOfSpecificSliceSymbolsTutorial.Count > 0)
+                    {
+                        GameManager.Instance.copyOfSpecificSliceSymbolsTutorial.RemoveAt(0);
+                    }
                     break;
                 case SliceCatagory.SpecificColor:
-                    sliceColor = GameManager.Instance.copyOfSpecificSliceColorsTutorial[0];
+
+                    if (GameManager.Instance.copyOfSpecificSliceColorsTutorial.Count > 0)
+                    {
+                        sliceColor = GameManager.Instance.copyOfSpecificSliceColorsTutorial[0];
+                    }
+                    else
+                    {
+                        int random = Random.Range(0, GameManager.Instance.currentLevel.levelAvailableColors.Length);
+                        sliceColor = GameManager.Instance.currentLevel.levelAvailableColors[random];
+                    }
                     //sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
                     // sr.sprite = GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor];
 
@@ -178,7 +199,10 @@ public class Slice : MonoBehaviour
                     //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[sliceColor];
                     //sr.sprite = GameManager.Instance.sliceManager.lootSliceColorDict[sliceColor];
 
-                    GameManager.Instance.copyOfSpecificSliceColorsTutorial.RemoveAt(0);
+                    if (GameManager.Instance.copyOfSpecificSliceColorsTutorial.Count > 0)
+                    {
+                        GameManager.Instance.copyOfSpecificSliceColorsTutorial.RemoveAt(0);
+                    }
                     break;
                 default:
                     break;

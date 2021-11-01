@@ -10,11 +10,11 @@ public enum PowerUp
     
     FourColorTransform,
     Switch,
-    //PieceBomb,
-    //SliceBomb,
+    Joker,
+    PieceBomb,
+    SliceBomb,
     //ExtraDeal,
     //FourShapeTransform,
-    Joker,
     None
 }
 public enum SpecialPowerUp
@@ -102,12 +102,12 @@ public class PowerUpManager : MonoBehaviour
             case PowerUp.Switch:
                 theButton.onClick.AddListener(() => CallSwitchPowerCoroutine(prop));
                 break;
-            //case PowerUp.PieceBomb:
-            //    theButton.onClick.AddListener(() => CallPieceBombPowerCoroutine(prop));
-            //    break;
-            //case PowerUp.SliceBomb:
-            //    theButton.onClick.AddListener(() => CallSliceBombPowerCoroutine(prop));
-            //    break;
+            case PowerUp.PieceBomb:
+                theButton.onClick.AddListener(() => CallPieceBombPowerCoroutine(prop));
+                break;
+            case PowerUp.SliceBomb:
+                theButton.onClick.AddListener(() => CallSliceBombPowerCoroutine(prop));
+                break;
             //case PowerUp.ExtraDeal:
             //    theButton.onClick.AddListener(() => ExtraDealPower(prop));
             //    break;
@@ -162,7 +162,7 @@ public class PowerUpManager : MonoBehaviour
     }
     public void Deal()
     {
-        CameraShake.ShakeOnce();
+        //CameraShake.ShakeOnce();
 
         SoundManager.Instance.PlaySound(Sounds.DealButton);
 
@@ -251,6 +251,8 @@ public class PowerUpManager : MonoBehaviour
                 toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
             }
 
+            ShakePiecePowerUp(toWorkOn.gameObject);
+
             FinishedUsingPowerup(toWorkOn.partOfBoard && !toWorkOn.isLocked, prop);
 
             Debug.Log("Joker");
@@ -285,6 +287,7 @@ public class PowerUpManager : MonoBehaviour
                 toWorkOn.rightChild.RefreshPiece();
 
                 toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
+                ShakePiecePowerUp(toWorkOn.gameObject);
             }
 
             FinishedUsingPowerup(toWorkOn.partOfBoard && !toWorkOn.isLocked, prop);
@@ -313,7 +316,10 @@ public class PowerUpManager : MonoBehaviour
             }
             yield return new WaitForEndOfFrame();
             GameManager.Instance.currentFilledCellCount--;
-            Destroy(toWorkOn.gameObject);
+
+            ShakePiecePowerUp(toWorkOn.gameObject);
+
+            Destroy(toWorkOn.gameObject, 0.5f);
 
         }
 
@@ -331,6 +337,10 @@ public class PowerUpManager : MonoBehaviour
         int a, b;
         a = toWorkOn.sliceIndex;
         b = toWorkOn.sliceIndex - 1;
+
+        bool rightFull = false;
+        bool leftFull = false;
+
         if (a == 0)
         {
             b = ConnectionManager.Instance.cells.Count - 1;
@@ -338,23 +348,75 @@ public class PowerUpManager : MonoBehaviour
 
         if (ConnectionManager.Instance.cells[a].isFull)
         {
-            ConnectionManager.Instance.cells[a].pieceHeld.isLocked = false;
+            rightFull = true;
 
-            //ConnectionManager.Instance.cells[a].lockSprite.SetActive(false);
-            Destroy(ConnectionManager.Instance.cells[a].pieceHeld.leftChild.transform.GetChild(0).gameObject);
+            if (ConnectionManager.Instance.cells[a].pieceHeld.isLocked)
+            {
+                ConnectionManager.Instance.cells[a].pieceHeld.isLocked = false;
+
+                Destroy(ConnectionManager.Instance.cells[a].pieceHeld.leftChild.transform.GetChild(0).gameObject);
+                ConnectionManager.Instance.cells[a].lockSpriteCellLeft.SetActive(false);
+            }
         }
 
-        if(ConnectionManager.Instance.cells[b].isFull)
+        if (ConnectionManager.Instance.cells[b].isFull)
         {
-            //ConnectionManager.Instance.cells[b].pieceHeld.isLocked = false;
+            leftFull = true;
 
-            Destroy(ConnectionManager.Instance.cells[b].pieceHeld.leftChild.transform.GetChild(0).gameObject);
+            if (ConnectionManager.Instance.cells[b].pieceHeld.isLocked)
+            {
+                ConnectionManager.Instance.cells[b].pieceHeld.isLocked = false;
+
+                Destroy(ConnectionManager.Instance.cells[b].pieceHeld.rightChild.transform.GetChild(0).gameObject);
+                ConnectionManager.Instance.cells[b].lockSpriteCellRight.SetActive(false);
+            }
+        }
+
+
+        if (toWorkOn.isLimiter)
+        {
+            if (rightFull && leftFull)
+            {
+                Debug.Log("Right and Left");
+                Transform p = ConnectionManager.Instance.cells[a].pieceHeld.transform;
+                ConnectionManager.Instance.cells[a].RemovePiece();
+
+                yield return new WaitForEndOfFrame();
+                ConnectionManager.Instance.cells[a].AddPiece(p, false);
+                //ConnectionManager.Instance.CallConnection(ConnectionManager.Instance.cells[a].cellIndex, ConnectionManager.Instance.cells[a].isOuter, false);
+            }
+            else if (leftFull)
+            {
+                Debug.Log("Left Only");
+
+                Transform p = ConnectionManager.Instance.cells[b].pieceHeld.transform;
+                ConnectionManager.Instance.cells[b].RemovePiece();
+
+                yield return new WaitForEndOfFrame();
+                ConnectionManager.Instance.cells[b].AddPiece(p, false);
+            }
+            else if (rightFull)
+            {
+                Debug.Log("Right Only");
+
+                Transform p = ConnectionManager.Instance.cells[a].pieceHeld.transform;
+                ConnectionManager.Instance.cells[a].RemovePiece();
+
+                yield return new WaitForEndOfFrame();
+                ConnectionManager.Instance.cells[a].AddPiece(p, false);
+            }
+            else
+            {
+                Debug.LogError("No Pieces to check connections");
+            }
         }
 
         toWorkOn.ResetDate();
 
+        ObjectToUsePowerUpOn.GetComponent<CameraShake>().ShakeOnce();
+
         yield return new WaitForEndOfFrame();
-        Destroy(toWorkOn.gameObject);
+        Destroy(ObjectToUsePowerUpOn.gameObject, 0.6f);
 
         FinishedUsingPowerup(true, prop);
 
@@ -366,7 +428,7 @@ public class PowerUpManager : MonoBehaviour
         layerToHit = LayerMask.GetMask("Sub Piece");
         yield return new WaitUntil(() => HasUsedPowerUp == true);
         SubPiece toWorkOn = ObjectToUsePowerUpOn.GetComponent<SubPiece>();
-
+        
         Piece par = toWorkOn.transform.parent.GetComponent<Piece>();
 
         if(toWorkOn.colorOfPiece != prop.transformColor && !par.isLocked && par.partOfBoard)
@@ -378,6 +440,8 @@ public class PowerUpManager : MonoBehaviour
             toWorkOn.RefreshPiece();
 
             par.transform.parent.GetComponent<Cell>().AddPiece(par.transform, false);
+
+            ShakePiecePowerUp(par.gameObject);
 
             FinishedUsingPowerup(par.partOfBoard, prop);
 
@@ -426,6 +490,14 @@ public class PowerUpManager : MonoBehaviour
             {
                 but.interactable = false;
             }
+            else
+            {
+                but.interactable = false;
+                Vector3 pos = butt.gameObject.transform.position;
+                pos.y += 0.1f;
+
+                LeanTween.move(butt.gameObject, pos, 0.5f).setEase(LeanTweenType.easeInOutQuad); // animate
+            }
         }
 
         StartCoroutine(WaitForEndFrame());
@@ -439,6 +511,11 @@ public class PowerUpManager : MonoBehaviour
     {
         UIManager.Instance.ActivateUsingPowerupMessage(false);
 
+        Vector3 pos = prop.gameObject.transform.position;
+        pos.y -= 0.1f;
+
+        LeanTween.move(prop.gameObject, pos, 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => ReactivatePowerButtons()); // animate
+
         IsUsingPowerUp = false;
         currentlyInUse = null;
         HasUsedPowerUp = false;
@@ -449,17 +526,6 @@ public class PowerUpManager : MonoBehaviour
             prop.numOfUses--;
         }
        
-        foreach (Button but in powerupButtons)
-        {
-            if (but.gameObject.GetComponent<PowerupProperties>().numOfUses > 0)
-            {
-                but.interactable = true;
-            }
-            else
-            {
-                but.interactable = false;
-            }
-        }
 
         if(prop.numOfUses == 0 && prop.connectedEquipment.scopeOfUses == 0) //// if the num of uses is 0 and the scope is cooldown and not per match
         {
@@ -471,6 +537,22 @@ public class PowerUpManager : MonoBehaviour
             PlayerManager.Instance.SavePlayerData();
         }
     }
+
+    public void ReactivatePowerButtons()
+    {
+        foreach (Button but in powerupButtons)
+        {
+            if (but.gameObject.GetComponent<PowerupProperties>().numOfUses > 0)
+            {
+                but.interactable = true;
+            }
+            else
+            {
+                but.interactable = false;
+            }
+        }
+    }
+
     public void CallSpecialPowerUp(InGameSpecialPowerUp IGSP)
     {
         switch (IGSP.type)
@@ -627,5 +709,10 @@ public class PowerUpManager : MonoBehaviour
         }
 
         PlayerManager.Instance.SavePlayerData();
+    }
+
+    void ShakePiecePowerUp(GameObject toShake)
+    {
+        toShake.GetComponent<CameraShake>().ShakeOnce();
     }
 }

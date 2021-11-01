@@ -268,7 +268,7 @@ public class SliceManager : MonoBehaviour
 
                     }
                 }
-                else
+                else if (numOfSlices > 4)
                 {
                     possibleSlotsTemp.Remove(randomPos);
 

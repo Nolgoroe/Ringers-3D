@@ -226,7 +226,7 @@ public class GameManager : MonoBehaviour
 
             if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.levelNum))
             {
-                TutorialSequence.Instacne.StartTutorialLevelSequence(currentLevel.tutorialIndexForList);
+                TutorialSequence.Instacne.StartTutorialLevelSequence();
             }
 
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());

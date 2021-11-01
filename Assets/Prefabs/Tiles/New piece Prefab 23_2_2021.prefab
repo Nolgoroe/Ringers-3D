@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 2346371762228157122}
   - component: {fileID: 8138872271461324668}
   - component: {fileID: 4801052585063378316}
+  - component: {fileID: 5181250236781162904}
   m_Layer: 10
   m_Name: New piece Prefab 23_2_2021
   m_TagString: MainPiece
@@ -179,6 +180,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.2340028, y: 1.644768, z: 0.46502545}
   m_Center: {x: -0.013515045, y: -0.00544885, z: -0.031092927}
+--- !u!114 &5181250236781162904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645121695642233041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7536f5480f8cb2541a8e756e7c770003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Amount: {x: 0.03, y: 0.03, z: 0}
+  Duration: 0.3
+  Speed: 7
+  ResetPosition: 1
 --- !u!1 &3511628377651697941
 GameObject:
   m_ObjectHideFlags: 0

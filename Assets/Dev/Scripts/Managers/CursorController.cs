@@ -391,7 +391,6 @@ public class CursorController : MonoBehaviour
                         PowerUpManager.IsUsingPowerUp = false;
                         PowerUpManager.HasUsedPowerUp = true;
                         PowerUpManager.ObjectToUsePowerUpOn = hit.transform.gameObject;
-                        CameraShake.ShakeOnce();
                     }
                     else
                     {

@@ -18,13 +18,15 @@ MonoBehaviour:
     type: 3}
   levelNum: 6
   levelIndexInZone: 6
-  tutorialIndexForList: 4
+  tutorialIndexForList: 3
   cellsCountInLevel: 8
   RandomSlicePositions: 0
   allowRepeatSlices: 0
+  powerupsForLevel: 
+  specificAnimalForLevel: {fileID: 0}
   stoneTiles: []
-  slicesToSpawn: 0000000001000000
-  lockSlices: 0001
+  slicesToSpawn: 0100000002000000
+  lockSlices: 0101
   lootSlices: 0101
   limiterSlices: 0101
   RewardBags: 06000000
@@ -32,6 +34,7 @@ MonoBehaviour:
   levelAvailablesymbols: 000000000100000003000000
   symbolsNeededForSpecialPowers: []
   isTutorial: 1
+  isLootTutorial: 0
   arrayOfPieces:
   - colorOfPieceRight: 1
     symbolOfPieceRight: 1

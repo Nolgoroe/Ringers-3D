@@ -105,7 +105,7 @@ public class TutorialSequence : MonoBehaviour
         activatedBoardParticles = new List<ParticleSystem>();
     }
 
-    public void StartTutorialLevelSequence(int sequenceNum) /// ONLY for level tutorials
+    public void StartTutorialLevelSequence() /// ONLY for level tutorials
     {
         if (!GameManager.Instance.isDisableTutorials)
         {

@@ -155,6 +155,7 @@ public class DewDropsManager : MonoBehaviour
 
             yield return new WaitForSecondsRealtime(1);
             Debug.Log("Inside Coroutine!");
+
             timeLeftToGiveDrop--;
 
             if (timeLeftToGiveDrop <= 0)

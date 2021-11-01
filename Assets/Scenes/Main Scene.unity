@@ -375,8 +375,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: When a <b>rune</b> is succsessfully <b>matched</b>, you will also recieve
-    <b>special loot</b>.
+  m_text: When a rune has a paw symbol on top, it will accept a match of any animal
+    symbol between the two tiles above it.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -651,7 +651,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8357505
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2634,7 +2634,7 @@ GameObject:
   m_Component:
   - component: {fileID: 101702986}
   m_Layer: 5
-  m_Name: Level 3
+  m_Name: Level 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10228,23 +10228,39 @@ MonoBehaviour:
   rubySprite: {fileID: 21300000, guid: 5485675f4a5f11e4599ca59de939cd25, type: 3}
   dewDropsSprite: {fileID: 21300000, guid: 7d83631da60dc174194b68152f940550, type: 3}
   allMaterialSprites:
-  - {fileID: 7516060236732144515, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
-  - {fileID: 57775375713221152, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
-  - {fileID: -1144602828583464891, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
-  - {fileID: -5062471344853958584, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
-  - {fileID: -6323844268250230980, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
-  - {fileID: 8002237531977889990, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
-  - {fileID: -1101261007596364288, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
-  - {fileID: 5490261832038154070, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
-  - {fileID: 5695502084034153991, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
-  - {fileID: 3704392137798788475, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
-  - {fileID: 5629783009079249976, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
-  - {fileID: 5168791029957084160, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
-  - {fileID: -7616866332811486075, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
-  - {fileID: -6430402960008735481, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
-  - {fileID: 8521033345931816038, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
-  - {fileID: 355464747219199435, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
-  - {fileID: -2822472237690591805, guid: 0af9b7d8862ebb14486878c3e43a6540, type: 3}
+  - {fileID: 8956018323652285954, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 1390359757327349512, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 3770644484320268949, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 1926541943842298830, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 1561314557787729016, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 2391128062998942540, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 1922594723460217644, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 7784479205793349662, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 4276444237033839163, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 6500000456666680320, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 4180401808512119707, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 7958678428954961071, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: -363766384219231894, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 395714816334819480, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 6071384114321706261, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: -3978496504765487417, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 7643984671718592174, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: -6027760278672025610, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 5344240800153015608, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 4260034890895155289, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: -1061458399888699643, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 3224834937133902844, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 5169594783177636715, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: -5572379762481589816, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 1283020263173874655, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 8821528073837212149, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 5062822556896415106, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: -1459154993687607754, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: -1128291682574861562, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: -3786912344644608917, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 8681243849806534231, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: -242486013975232904, guid: 848868508e39b494c90053ccc936e040, type: 3}
+  - {fileID: 5007707712406652956, guid: 848868508e39b494c90053ccc936e040, type: 3}
   giveKey: 0
   listOfTablesToMats:
   - tableToMat: 020000000100000003000000
@@ -11894,7 +11910,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1887064404}
-        m_MethodName: StartTutorialLevel
+        m_MethodName: StartLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15192,7 +15208,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 1.1}
-  m_SizeDelta: {x: 540, y: 220}
+  m_SizeDelta: {x: 494.5, y: 201.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &522351423
 MonoBehaviour:
@@ -15212,8 +15228,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: A rune with <b>paw symbol</b>, it will accept a match of <b>any animal
-    symbol</b> between the two tiles above it.
+  m_text: Some runes will appear with a lock symbol above them
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -16534,7 +16549,7 @@ GameObject:
   - component: {fileID: 591865597}
   - component: {fileID: 591865596}
   m_Layer: 5
-  m_Name: Phase 2 - no
+  m_Name: Phase 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22691,7 +22706,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &866528263
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22706,7 +22721,7 @@ RectTransform:
   - {fileID: 432097515}
   - {fileID: 2127877952}
   m_Father: {fileID: 952127875}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -24443,7 +24458,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 929586315}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
   m_Name: 
@@ -24713,7 +24728,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &935612591
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24971,8 +24986,8 @@ RectTransform:
   - {fileID: 1926656343}
   - {fileID: 1480540859}
   - {fileID: 101702986}
-  - {fileID: 866528263}
   - {fileID: 1954536103}
+  - {fileID: 866528263}
   m_Father: {fileID: 965599399}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -25161,17 +25176,17 @@ MonoBehaviour:
     craftingMatType: 1
     amount: 0
     priceInGems: 1
-    amountPerPurchaseGems: 1
+    amountPerPurchaseGems: 2
   - mat: 4
     craftingMatType: 4
     amount: 0
     priceInGems: 1
-    amountPerPurchaseGems: 1
+    amountPerPurchaseGems: 2
   - mat: 5
     craftingMatType: 3
     amount: 0
     priceInGems: 1
-    amountPerPurchaseGems: 1
+    amountPerPurchaseGems: 2
   - mat: 6
     craftingMatType: 3
     amount: 0
@@ -25180,52 +25195,132 @@ MonoBehaviour:
   - mat: 7
     craftingMatType: 3
     amount: 0
-    priceInGems: 2
+    priceInGems: 1
     amountPerPurchaseGems: 1
   - mat: 8
     craftingMatType: 1
     amount: 0
-    priceInGems: 2
+    priceInGems: 1
     amountPerPurchaseGems: 1
   - mat: 9
-    craftingMatType: 2
-    amount: 0
-    priceInGems: 2
-    amountPerPurchaseGems: 1
-  - mat: 10
     craftingMatType: 3
     amount: 0
-    priceInGems: 5
+    priceInGems: 1
+    amountPerPurchaseGems: 1
+  - mat: 10
+    craftingMatType: 2
+    amount: 0
+    priceInGems: 1
     amountPerPurchaseGems: 1
   - mat: 11
     craftingMatType: 3
     amount: 0
-    priceInGems: 5
+    priceInGems: 1
     amountPerPurchaseGems: 1
   - mat: 12
-    craftingMatType: 4
-    amount: 0
-    priceInGems: 5
-    amountPerPurchaseGems: 1
-  - mat: 13
-    craftingMatType: 2
-    amount: 0
-    priceInGems: 5
-    amountPerPurchaseGems: 1
-  - mat: 14
     craftingMatType: 3
     amount: 0
-    priceInGems: 5
+    priceInGems: 1
     amountPerPurchaseGems: 1
-  - mat: 15
+  - mat: 13
     craftingMatType: 4
     amount: 0
-    priceInGems: 5
+    priceInGems: 1
+    amountPerPurchaseGems: 1
+  - mat: 14
+    craftingMatType: 1
+    amount: 0
+    priceInGems: 1
+    amountPerPurchaseGems: 1
+  - mat: 15
+    craftingMatType: 3
+    amount: 0
+    priceInGems: 1
     amountPerPurchaseGems: 1
   - mat: 16
     craftingMatType: 2
     amount: 0
-    priceInGems: 5
+    priceInGems: 1
+    amountPerPurchaseGems: 1
+  - mat: 17
+    craftingMatType: 1
+    amount: 0
+    priceInGems: 1
+    amountPerPurchaseGems: 1
+  - mat: 18
+    craftingMatType: 3
+    amount: 0
+    priceInGems: 2
+    amountPerPurchaseGems: 1
+  - mat: 19
+    craftingMatType: 2
+    amount: 0
+    priceInGems: 2
+    amountPerPurchaseGems: 1
+  - mat: 20
+    craftingMatType: 4
+    amount: 0
+    priceInGems: 2
+    amountPerPurchaseGems: 1
+  - mat: 21
+    craftingMatType: 2
+    amount: 0
+    priceInGems: 2
+    amountPerPurchaseGems: 1
+  - mat: 22
+    craftingMatType: 4
+    amount: 0
+    priceInGems: 2
+    amountPerPurchaseGems: 1
+  - mat: 23
+    craftingMatType: 3
+    amount: 0
+    priceInGems: 2
+    amountPerPurchaseGems: 1
+  - mat: 24
+    craftingMatType: 4
+    amount: 0
+    priceInGems: 2
+    amountPerPurchaseGems: 1
+  - mat: 25
+    craftingMatType: 3
+    amount: 0
+    priceInGems: 2
+    amountPerPurchaseGems: 1
+  - mat: 26
+    craftingMatType: 2
+    amount: 0
+    priceInGems: 2
+    amountPerPurchaseGems: 1
+  - mat: 27
+    craftingMatType: 1
+    amount: 0
+    priceInGems: 2
+    amountPerPurchaseGems: 1
+  - mat: 28
+    craftingMatType: 1
+    amount: 0
+    priceInGems: 2
+    amountPerPurchaseGems: 1
+  - mat: 29
+    craftingMatType: 4
+    amount: 0
+    priceInGems: 2
+    amountPerPurchaseGems: 1
+  - mat: 30
+    craftingMatType: 3
+    amount: 0
+    priceInGems: 2
+    amountPerPurchaseGems: 1
+  - mat: 31
+    craftingMatType: 1
+    amount: 0
+    priceInGems: 2
+    amountPerPurchaseGems: 1
+  - mat: 32
+    craftingMatType: 2
+    amount: 0
+    priceInGems: 2
     amountPerPurchaseGems: 1
   ownedPowerups: []
   equipmentInCooldown: []
@@ -31980,8 +32075,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 2506}
+  m_AnchoredPosition: {x: 0, y: -0.00009918213}
+  m_SizeDelta: {x: 0, y: 2365.2}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1231476808
 MonoBehaviour:
@@ -32834,7 +32929,7 @@ MonoBehaviour:
     type: 3}
   tutorialHandPrefabTap: {fileID: 4109478664383188052, guid: 8d2e9c9b4d23b114b83f3e44bf136948,
     type: 3}
-  tutorialHandPosDealButton: {x: 0.37, y: 1, z: -0.1}
+  tutorialHandPosDealButton: {x: 0.23, y: 0.85, z: -0.1}
   tutorialHandRotationDealButton: {x: 7, y: -7, z: 120}
   tutorialHandMoveSpeed: 1.5
   tutorialHandTapSpeed: 0.45
@@ -32942,8 +33037,8 @@ MonoBehaviour:
     - {fileID: 2063133148}
     - {fileID: 2063133148}
     - {fileID: 126121281}
-  - levelTutorialIndex: 3
-    EndPhaseID: 2
+  - levelTutorialIndex: 5
+    EndPhaseID: 4
     cellOutlines:
     - cellIndex: 1
       right: 1
@@ -32966,45 +33061,35 @@ MonoBehaviour:
       unlockedBoardCells: -1
       targetCells: 02000000
       targetSlices: 02000000
+    - phaseID: 3
+      isClipPhase: 1
+      isBoardPhase: 0
+      dealPhase: 0
+      unlockedClips: 02000000
+      unlockedBoardCells: -1
+      targetCells: 07000000
+      targetSlices: 07000000
+    - phaseID: 4
+      isClipPhase: 1
+      isBoardPhase: 0
+      dealPhase: 0
+      unlockedClips: 03000000
+      unlockedBoardCells: -1
+      targetCells: 06000000
+      targetSlices: 07000000
     screens:
     - {fileID: 2123312440}
     - {fileID: 2123312440}
+    - {fileID: 591865594}
+    - {fileID: 591865594}
     - {fileID: 1757760607}
-  - levelTutorialIndex: 5
+  - levelTutorialIndex: 6
     EndPhaseID: 2
     cellOutlines:
     - cellIndex: 0
       right: 1
     - cellIndex: 1
       right: 0
-    phase:
-    - phaseID: 1
-      isClipPhase: 1
-      isBoardPhase: 0
-      dealPhase: 0
-      unlockedClips: 01000000
-      unlockedBoardCells: -1
-      targetCells: 00000000
-      targetSlices: 01000000
-    - phaseID: 2
-      isClipPhase: 1
-      isBoardPhase: 0
-      dealPhase: 0
-      unlockedClips: 02000000
-      unlockedBoardCells: -1
-      targetCells: 01000000
-      targetSlices: 
-    screens:
-    - {fileID: 432097514}
-    - {fileID: 432097514}
-    - {fileID: 2127877951}
-  - levelTutorialIndex: 6
-    EndPhaseID: 4
-    cellOutlines:
-    - cellIndex: 0
-      right: 1
-    - cellIndex: 1
-      right: 0
     - cellIndex: 3
       right: 1
     - cellIndex: 4
@@ -33014,7 +33099,7 @@ MonoBehaviour:
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 01000000
+      unlockedClips: 00000000
       unlockedBoardCells: -1
       targetCells: 00000000
       targetSlices: 01000000
@@ -33022,80 +33107,12 @@ MonoBehaviour:
       isClipPhase: 1
       isBoardPhase: 0
       dealPhase: 0
-      unlockedClips: 02000000
-      unlockedBoardCells: -1
-      targetCells: 01000000
-      targetSlices: 01000000
-    - phaseID: 3
-      isClipPhase: 1
-      isBoardPhase: 0
-      dealPhase: 0
-      unlockedClips: 00000000
-      unlockedBoardCells: -1
-      targetCells: 03000000
-      targetSlices: 04000000
-    - phaseID: 4
-      isClipPhase: 1
-      isBoardPhase: 0
-      dealPhase: 0
-      unlockedClips: 03000000
-      unlockedBoardCells: -1
-      targetCells: 04000000
-      targetSlices: 04000000
-    screens:
-    - {fileID: 1890713266}
-    - {fileID: 1890713266}
-    - {fileID: 1376208567}
-    - {fileID: 1376208567}
-    - {fileID: 1348711234}
-  - levelTutorialIndex: 7
-    EndPhaseID: 4
-    cellOutlines:
-    - cellIndex: 0
-      right: 1
-    - cellIndex: 1
-      right: 0
-    - cellIndex: 3
-      right: 1
-    - cellIndex: 4
-      right: 0
-    phase:
-    - phaseID: 1
-      isClipPhase: 1
-      isBoardPhase: 0
-      dealPhase: 0
       unlockedClips: 01000000
       unlockedBoardCells: -1
-      targetCells: 00000000
-      targetSlices: 01000000
-    - phaseID: 2
-      isClipPhase: 1
-      isBoardPhase: 0
-      dealPhase: 0
-      unlockedClips: 02000000
-      unlockedBoardCells: -1
       targetCells: 01000000
       targetSlices: 01000000
-    - phaseID: 3
-      isClipPhase: 1
-      isBoardPhase: 0
-      dealPhase: 0
-      unlockedClips: 00000000
-      unlockedBoardCells: -1
-      targetCells: 03000000
-      targetSlices: 04000000
-    - phaseID: 4
-      isClipPhase: 1
-      isBoardPhase: 0
-      dealPhase: 0
-      unlockedClips: 03000000
-      unlockedBoardCells: -1
-      targetCells: 04000000
-      targetSlices: 04000000
     screens:
     - {fileID: 1890713266}
-    - {fileID: 1890713266}
-    - {fileID: 1376208567}
     - {fileID: 1376208567}
     - {fileID: 1348711234}
   specificTutorials:
@@ -36706,7 +36723,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -120, y: 329.3}
+  m_AnchoredPosition: {x: -120, y: 78}
   m_SizeDelta: {x: 700, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1376208569
@@ -39664,8 +39681,10 @@ MonoBehaviour:
   specialPowerPrefabParent: {fileID: 2137641458}
   powerupSpritesPath:
   - powerup Icons/Blue_Color_Transform_Button
-  - powerup Icons/Switch_Button
-  - powerup Icons/PowerUpIcon_Joker
+  - powerup Icons/SwapSidesBooster_PotionIcon
+  - powerup Icons/JokerBooster_PotionIcon
+  - powerup Icons/TileBombBooster_PotionIcon
+  - powerup Icons/SliceBombBooster_PotionIcon
   powerupNames:
   - Joker
   - Switch
@@ -42056,8 +42075,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Runes with the <b>multicolored symbol</b> will accept a match of <b>any
-    color</b> between the tiles above it.
+  m_text: These type of runes will lock two tiles in place, once they are matched.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -43010,8 +43028,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 100.3, y: 278.2}
-  m_SizeDelta: {x: -185.7, y: 531}
+  m_AnchoredPosition: {x: 132.5, y: 239.5}
+  m_SizeDelta: {x: -204.2, y: 492.3}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1577196313
 MonoBehaviour:
@@ -45294,7 +45312,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Complete the ring to release the fox!
+  m_text: While runes with the multicolored symbol will accept a match of any color
+    between the tiles above it.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -46366,7 +46385,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1687258585}
   - component: {fileID: 1687258584}
-  - component: {fileID: 1687258587}
   - component: {fileID: 1687258582}
   - component: {fileID: 1687258586}
   - component: {fileID: 1687258583}
@@ -46489,22 +46507,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &1687258587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1687258581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7536f5480f8cb2541a8e756e7c770003, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Amount: {x: 0.05, y: 0.05, z: 0}
-  Duration: 0.3
-  Speed: 10
-  ResetPosition: 1
 --- !u!1 &1690288855
 GameObject:
   m_ObjectHideFlags: 0
@@ -48297,7 +48299,7 @@ GameObject:
   - component: {fileID: 1757760610}
   - component: {fileID: 1757760609}
   m_Layer: 5
-  m_Name: Phase 2
+  m_Name: Phase 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49893,7 +49895,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1802914490
 RectTransform:
   m_ObjectHideFlags: 0
@@ -52044,7 +52046,7 @@ MonoBehaviour:
   csvFiles:
   - csvFiles: {fileID: 4900000, guid: 37edeef80fb710846b2e51fc4d611164, type: 3}
     typeOfCsvDoc: 1
-  - csvFiles: {fileID: 4900000, guid: 56f417545ab33e545ae4a166cb2e3142, type: 3}
+  - csvFiles: {fileID: 4900000, guid: ee6406bc26fff5649a529613593c595e, type: 3}
     typeOfCsvDoc: 0
   - csvFiles: {fileID: 4900000, guid: 5ce016adb9c736141a9e35861960ea56, type: 3}
     typeOfCsvDoc: 2
@@ -52086,7 +52088,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1890713266}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 522351422}
@@ -52095,7 +52097,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1, y: -283}
+  m_AnchoredPosition: {x: -120, y: 78}
   m_SizeDelta: {x: 700, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1890713268
@@ -53407,7 +53409,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1947383554
 RectTransform:
   m_ObjectHideFlags: 0
@@ -53566,7 +53568,7 @@ RectTransform:
   - {fileID: 1376208568}
   - {fileID: 1348711235}
   m_Father: {fileID: 952127875}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
