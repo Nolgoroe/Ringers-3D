@@ -46,8 +46,10 @@ public class LevelScriptableObject : ScriptableObject
     public SpecialPowerData[] symbolsNeededForSpecialPowers;
 
 
+    public bool isSpecificTutorial;
+    //public int specificTutorialIndex;
+    public SpecificTutorialsEnum specificTutorialEnum;
     public bool isTutorial;
-    public bool isLootTutorial;
     public List<pieceDataStruct> arrayOfPieces;
     public int[] specificSliceSpots;
     public PieceSymbol[] specificSlicesShapes;

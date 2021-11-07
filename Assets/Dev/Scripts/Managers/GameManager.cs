@@ -132,6 +132,13 @@ public class GameManager : MonoBehaviour
 
         powerupManager.instnatiatedZonesCounter = 0;
 
+        if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)currentLevel.specificTutorialEnum)) /////FOR TESTING ONLY FOR NOW!!!
+        {
+            //TutorialSequence.Instacne.DisplaySpecificTutorialSequence();
+            StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
+            TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
+        }
+
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
     }
 
@@ -417,7 +424,7 @@ public class GameManager : MonoBehaviour
 
         if (!isDisableTutorials && currentLevel.isTutorial)
         {
-            TutorialSequence.Instacne.currentPhaseInSequence = 0;
+            TutorialSequence.Instacne.currentPhaseInSequenceLevels = 0;
             TutorialSequence.Instacne.duringSequence = false;
             //TutorialSequence.Instacne.maskImage.gameObject.SetActive(true);
 
@@ -485,7 +492,7 @@ public class GameManager : MonoBehaviour
 
         if (nextIsTutorial)
         {
-            TutorialSequence.Instacne.currentPhaseInSequence = 0;
+            TutorialSequence.Instacne.currentPhaseInSequenceLevels = 0;
 
             StartTutorialLevel();
         }

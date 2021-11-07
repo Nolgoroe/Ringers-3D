@@ -275,12 +275,13 @@ public class AnimationManager : MonoBehaviour
 
     private void CheckShowLootTutorial()
     {
-        if (GameManager.Instance.currentLevel.isLootTutorial && !TutorialSaveData.Instance.completedLootTutorial)
+        if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.lootTutorial && GameManager.Instance.currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)GameManager.Instance.currentLevel.specificTutorialEnum)) /// specificTutorialIndex == 0  is loot tutorial
         {
-            TutorialSaveData.Instance.completedLootTutorial = true;
+            //TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.specificTutorialIndex);
             LootManager.Instance.rubiesToRecieveInLevel = 8;
-            TutorialSequence.Instacne.DisplaySpecificTutorialSequence(0); /// 0 = loot tutorial.. its the index of the loot turtorial in the array
-
+            StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
+            //TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add((int)GameManager.Instance.currentLevel.specificTutorialEnum);
+            TutorialSequence.Instacne.currentSpecificTutorial = SpecificTutorialsEnum.lootTutorial;
             TutorialSaveData.Instance.SaveTutorialSaveData();
         }
     }

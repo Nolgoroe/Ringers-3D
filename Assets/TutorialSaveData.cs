@@ -9,8 +9,9 @@ public class TutorialSaveData : MonoBehaviour
     public static TutorialSaveData Instance;
     
     public List<int> completedTutorialLevelId;
+    public List<int> completedSpecificTutorialLevelId;
 
-    public bool completedLootTutorial;
+    //public bool completedLootTutorial;
 
     string path;
 

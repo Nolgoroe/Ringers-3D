@@ -22,7 +22,8 @@ public class UIManager : MonoBehaviour
     public GameObject InGameUiScreens;
     public GameObject blackLevelBG;
     public GameObject zoomInCorruptedBlack;
-    public GameObject tutorialCanvas;
+    public GameObject tutorialCanvasLevels;
+    public GameObject tutorialCanvasSpecific;
     public GameObject forge, itemBag, Brewery;
     public GameObject craft, owned;
     public GameObject animalAlbum;
@@ -118,7 +119,7 @@ public class UIManager : MonoBehaviour
         sureWantToRestartWithLoot.SetActive(false);
         sureWantToRestartNoLoot.SetActive(false);
         loseScreen.SetActive(false);
-        tutorialCanvas.SetActive(false);
+        tutorialCanvasLevels.SetActive(false);
         blackLevelBG.SetActive(false);
         zoomInCorruptedBlack.SetActive(false);
         skipAnimationButton.gameObject.SetActive(false);
@@ -333,10 +334,13 @@ public class UIManager : MonoBehaviour
 
         if (currentCanvas == gameplayCanvas)
         {
-            if (GameManager.Instance.currentLevel.isTutorial)
+            if (GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial)
             {
-                TutorialSequence.Instacne.currentPhaseInSequence = 0;
+                TutorialSequence.Instacne.currentPhaseInSequenceLevels = 0;
+                TutorialSequence.Instacne.currentPhaseInSequenceSpecific = 0;
                 TutorialSequence.Instacne.duringSequence = false;
+                TutorialSequence.Instacne.DeactivateAllTutorialScreens();
+
                 TutorialSequence.Instacne.activatedHeighlights.Clear();
                 TutorialSequence.Instacne.activatedBoardParticles.Clear();
 
@@ -355,7 +359,7 @@ public class UIManager : MonoBehaviour
             youWinScreen.SetActive(false);
             //youLoseText.SetActive(false);
             loseScreen.SetActive(false);
-            tutorialCanvas.SetActive(false);
+            tutorialCanvasLevels.SetActive(false);
             blackLevelBG.SetActive(false);
 
             foreach (GameObject go in allTutorialScreens)

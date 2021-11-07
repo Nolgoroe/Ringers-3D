@@ -503,79 +503,135 @@ public class CursorController : MonoBehaviour
         {
             if (followerTarget)
             {
-                //bool isAccording = false;
-
-                //if (GameManager.Instance.currentLevel.tutorialIndexForList == 4)
-                //{
-                //    Cell cell = cellHit.GetComponent<Cell>();
-                //    Piece p = followerTarget.GetComponent<Piece>();
-                //    //isAccording = SpecialTutorialConnectionLogic(cell.cellIndex, p);
-
-                //    //if (!isAccording)
-                //    //{
-                //    //    return;
-                //    //}
-                //}
-
-                if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequence].targetCells.Contains(cellHit.GetComponent<Cell>().cellIndex))
+                if (GameManager.Instance.currentLevel.isSpecificTutorial)
                 {
-                    Cell cell = cellHit.GetComponent<Cell>();
-
-                    Transform clipParent = followerTarget.parent; //// ONLY IF WERE COMING FROM A CLIP THIS IS RELEVANT
-                    Cell previousCell = followerTarget.parent.GetComponent<Cell>(); //// Only relevant if piece is moved from cell to cell
-
-                    bool isFromClip = followerTarget.transform.parent.CompareTag("Clip");
-
-                    Vector3 originalScale = followerTarget.transform.localScale;
-
-                    if (!cell.isFull && cell != previousCell)
+                    if(TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Length > 0)
                     {
-                        cell.AddPiece(followerTarget, isFromClip);
-
-                        if (GameManager.Instance.currentFilledCellCount + 1 != GameManager.Instance.currentLevel.cellsCountInLevel && !tutorialBadConnection)
+                        if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Contains(cellHit.GetComponent<Cell>().cellIndex))
                         {
+                            Cell cell = cellHit.GetComponent<Cell>();
 
-                            if (isFromClip/* && !cell.isFull*/)
+                            Transform clipParent = followerTarget.parent; //// ONLY IF WERE COMING FROM A CLIP THIS IS RELEVANT
+                            Cell previousCell = followerTarget.parent.GetComponent<Cell>(); //// Only relevant if piece is moved from cell to cell
+
+                            bool isFromClip = followerTarget.transform.parent.CompareTag("Clip");
+
+                            Vector3 originalScale = followerTarget.transform.localScale;
+
+                            if (!cell.isFull && cell != previousCell)
                             {
-                                GameManager.Instance.clipManager.PopulateSlot(clipParent, 10);
+                                cell.AddPiece(followerTarget, isFromClip);
+
+                                if (GameManager.Instance.currentFilledCellCount + 1 != GameManager.Instance.currentLevel.cellsCountInLevel && !tutorialBadConnection)
+                                {
+
+                                    if (isFromClip/* && !cell.isFull*/)
+                                    {
+                                        GameManager.Instance.clipManager.PopulateSlot(clipParent, 10);
+                                    }
+
+                                    TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                                }
+                                else
+                                {
+                                    cell.RemovePiece();
+
+                                    if (isFromClip)
+                                    {
+                                        GameManager.Instance.currentFilledCellCount--;
+                                    }
+
+                                    followerTarget.transform.SetParent(clipParent.transform);
+                                    followerTarget.transform.localScale = originalScale;
+
+                                    GameManager.Instance.clipManager.emptyClip = followerTarget.transform.parent;
+                                    GameManager.Instance.clipManager.latestPiece = followerTarget;
+                                    ReturnHome();
+                                }
+
+                                if (!isFromClip && cell != previousCell)
+                                {
+                                    previousCell.isFull = false;
+                                }
+                            }
+                            else
+                            {
+                                ReturnHome();
                             }
 
-                            TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
+
+                            followerTarget = null;
+
                         }
                         else
                         {
-                            cell.RemovePiece();
+                            ReturnHome();
+                        }
+                    }
+                }
 
-                            if (isFromClip)
+                if (GameManager.Instance.currentLevel.isTutorial)
+                {
+                    if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Contains(cellHit.GetComponent<Cell>().cellIndex))
+                    {
+                        Cell cell = cellHit.GetComponent<Cell>();
+
+                        Transform clipParent = followerTarget.parent; //// ONLY IF WERE COMING FROM A CLIP THIS IS RELEVANT
+                        Cell previousCell = followerTarget.parent.GetComponent<Cell>(); //// Only relevant if piece is moved from cell to cell
+
+                        bool isFromClip = followerTarget.transform.parent.CompareTag("Clip");
+
+                        Vector3 originalScale = followerTarget.transform.localScale;
+
+                        if (!cell.isFull && cell != previousCell)
+                        {
+                            cell.AddPiece(followerTarget, isFromClip);
+
+                            if (GameManager.Instance.currentFilledCellCount + 1 != GameManager.Instance.currentLevel.cellsCountInLevel && !tutorialBadConnection)
                             {
-                                GameManager.Instance.currentFilledCellCount--;
+
+                                if (isFromClip/* && !cell.isFull*/)
+                                {
+                                    GameManager.Instance.clipManager.PopulateSlot(clipParent, 10);
+                                }
+
+                                TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
+                            }
+                            else
+                            {
+                                cell.RemovePiece();
+
+                                if (isFromClip)
+                                {
+                                    GameManager.Instance.currentFilledCellCount--;
+                                }
+
+                                followerTarget.transform.SetParent(clipParent.transform);
+                                followerTarget.transform.localScale = originalScale;
+
+                                GameManager.Instance.clipManager.emptyClip = followerTarget.transform.parent;
+                                GameManager.Instance.clipManager.latestPiece = followerTarget;
+                                ReturnHome();
                             }
 
-                            followerTarget.transform.SetParent(clipParent.transform);
-                            followerTarget.transform.localScale = originalScale;
-
-                            GameManager.Instance.clipManager.emptyClip = followerTarget.transform.parent;
-                            GameManager.Instance.clipManager.latestPiece = followerTarget;
+                            if (!isFromClip && cell != previousCell)
+                            {
+                                previousCell.isFull = false;
+                            }
+                        }
+                        else
+                        {
                             ReturnHome();
                         }
 
-                        if (!isFromClip && cell != previousCell)
-                        {
-                            previousCell.isFull = false;
-                        }
+
+                        followerTarget = null;
+
                     }
                     else
                     {
                         ReturnHome();
                     }
-
-
-                    followerTarget = null;
-
-                }
-                else
-                {
-                    ReturnHome();
                 }
             }
         }

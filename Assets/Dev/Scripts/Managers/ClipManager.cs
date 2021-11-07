@@ -187,4 +187,13 @@ public class ClipManager : MonoBehaviour
 
         GameManager.Instance.currentFilledCellCount--;
     }
+
+    public void DealAnimation()
+    {
+        for (int i = 0; i < clipCount; i++)
+        {
+
+        }
+        LeanTween.move(butt.gameObject, pos, 0.5f).setEase(LeanTweenType.easeInOutQuad); // animate
+    }
 }

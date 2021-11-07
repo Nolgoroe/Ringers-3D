@@ -143,7 +143,7 @@ public class PlayerManager : MonoBehaviour
     {
         int instantiatedCount = 0;
 
-        if(GameManager.Instance.currentLevel.isTutorial && GameManager.Instance.currentLevel.powerupsForLevel.Length > 0)
+        if(GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.powerupsForLevel.Length > 0)
         {
             foreach (PowerUp PU in GameManager.Instance.currentLevel.powerupsForLevel)
             {

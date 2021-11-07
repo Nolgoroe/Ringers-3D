@@ -168,9 +168,9 @@ public class PowerUpManager : MonoBehaviour
 
         if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
         {
-            if (TutorialSequence.Instacne.currentPhaseInSequence < TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Length)
+            if (TutorialSequence.Instacne.currentPhaseInSequenceLevels < TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Length)
             {
-                if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequence].dealPhase)
+                if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].dealPhase)
                 {
                     TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
                 }
@@ -204,18 +204,38 @@ public class PowerUpManager : MonoBehaviour
     }
     public void CallJokerCoroutine(PowerupProperties prop)
     {
+        if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.JokerTutorial)
+        {
+            TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+        }
+
         StartCoroutine(JokerPower(prop));
     }
     public void CallSwitchPowerCoroutine(PowerupProperties prop)
     {
+        if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SwapSidesTutorial)
+        {
+            TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+        }
+
         StartCoroutine(SwitchPower(prop));
     }
     public void CallPieceBombPowerCoroutine(PowerupProperties prop)
     {
+        if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.TileBombTutorial)
+        {
+            TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+        }
+
         StartCoroutine(PieceBombPower(prop));
     }
     public void CallSliceBombPowerCoroutine(PowerupProperties prop)
     {
+        if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SliceBombTutorial)
+        {
+            TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+        }
+
         StartCoroutine(SliceBombPower(prop));
     }
     public void CallFourColorPowerCoroutine(PowerupProperties prop)
@@ -235,6 +255,11 @@ public class PowerUpManager : MonoBehaviour
 
         if(toWorkOn.leftChild.symbolOfPiece != PieceSymbol.Joker) ///// If 1 of the sub pieces is a joker - so is the other. If the symbol is a joker then the color is awell
         {
+            if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.JokerTutorial)
+            {
+                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            }
+
             if (toWorkOn.partOfBoard && !toWorkOn.isLocked)
             {
                 toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece();
@@ -270,6 +295,11 @@ public class PowerUpManager : MonoBehaviour
 
         if(toWorkOn.leftChild.symbolOfPiece != toWorkOn.rightChild.symbolOfPiece || toWorkOn.leftChild.colorOfPiece != toWorkOn.rightChild.colorOfPiece)
         {
+            if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SwapSidesTutorial)
+            {
+                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            }
+
             if (toWorkOn.partOfBoard && !toWorkOn.isLocked)
             {
                 toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece();
@@ -307,6 +337,11 @@ public class PowerUpManager : MonoBehaviour
 
         if (toWorkOn.partOfBoard)
         {
+            if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.TileBombTutorial)
+            {
+                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            }
+
             toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece();
 
             if (toWorkOn.isLocked)
@@ -332,6 +367,11 @@ public class PowerUpManager : MonoBehaviour
     {
         layerToHit = LayerMask.GetMask("Slice");
         yield return new WaitUntil(() => HasUsedPowerUp == true);
+
+        if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SliceBombTutorial)
+        {
+            TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+        }
 
         Slice toWorkOn = ObjectToUsePowerUpOn.transform.parent.GetComponent<Slice>();
         int a, b;
@@ -372,6 +412,11 @@ public class PowerUpManager : MonoBehaviour
             }
         }
 
+        if (toWorkOn.isLock)
+        {
+            toWorkOn.connectedCells[0].lockSpriteCellLeft.SetActive(false);
+            toWorkOn.connectedCells[1].lockSpriteCellRight.SetActive(false);
+        }
 
         if (toWorkOn.isLimiter)
         {
