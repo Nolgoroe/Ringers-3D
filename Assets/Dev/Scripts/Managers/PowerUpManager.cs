@@ -177,14 +177,15 @@ public class PowerUpManager : MonoBehaviour
             }
         }
 
-         if (GameManager.Instance.clipManager.clipCount - 1 == 0)
+        if (GameManager.Instance.clipManager.clipCount - 1 == 0)
         {
             UIManager.Instance.DisplayClipsAboutToEndMessage();
         }
         else
         {
-            GameManager.Instance.clipManager.clipCount--;
-            GameManager.Instance.clipManager.RefreshSlots();
+            StartCoroutine(GameManager.Instance.clipManager.DealAnimation());
+            //GameManager.Instance.clipManager.clipCount--;
+            //GameManager.Instance.clipManager.RefreshSlots();
         }
     }
     public void ExtraDealPower(PowerupProperties prop)

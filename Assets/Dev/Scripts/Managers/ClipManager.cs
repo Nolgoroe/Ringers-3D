@@ -23,6 +23,12 @@ public class ClipManager : MonoBehaviour
 
     public Material generalPieceMat;
 
+    public Color darkTintedColor;
+
+    public Vector3[] piecesDealPositionsOut;
+    public float delayClipMove, timeToAnimateMove, WaitTimeBeforeIn, delayDarkenClip, timeToDarkenClip;
+
+
     [Serializable]
     public class ColorsAndMats
     {
@@ -68,25 +74,28 @@ public class ClipManager : MonoBehaviour
         p.SetPieces();
     }
 
+    public void RerollSlotPieceData(Piece p)
+    {
+        p.SetPieces();
+    }
+
     public void RefreshSlots()
     {
-        foreach (Transform t in slots)
+        if(slots[clipCount - 1].childCount > 0)
         {
-            if (t.childCount > 0)
+            for (int i = 0; i < slots[clipCount - 1].childCount; i++)
             {
-                for (int i = 0; i < t.childCount; i++)
+                if (slots[clipCount - 1].GetChild(i).CompareTag("MainPiece"))
                 {
-                    if (t.GetChild(i).CompareTag("MainPiece"))
-                    {
-                        Destroy(t.GetChild(i).gameObject);
-                    }
+                    Destroy(slots[clipCount - 1].GetChild(i).gameObject);
                 }
             }
         }
 
         for (int i = 0; i < clipCount; i++)
         {
-            PopulateSlot(slots[i], i);
+            Piece p = slots[i].GetComponentInChildren<Piece>();
+            RerollSlotPieceData(p);
         }
     }
     public void ExtraDealSlots()
@@ -188,12 +197,55 @@ public class ClipManager : MonoBehaviour
         GameManager.Instance.currentFilledCellCount--;
     }
 
-    public void DealAnimation()
+    public IEnumerator DealAnimation()
     {
+        StartCoroutine(DeactivateClip(clipCount - 1));
+
         for (int i = 0; i < clipCount; i++)
         {
+            GameObject toMove = slots[i].GetChild(1).gameObject;
 
+            LeanTween.move(toMove, piecesDealPositionsOut[i], timeToAnimateMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
+
+
+            yield return new WaitForSeconds(delayClipMove);
         }
-        LeanTween.move(butt.gameObject, pos, 0.5f).setEase(LeanTweenType.easeInOutQuad); // animate
+
+        yield return new WaitForSeconds(WaitTimeBeforeIn);
+        DealAnimClipLogic();
+        clipCount--;
+
+        for (int i = clipCount -1; i > -1; i--)
+        {
+            GameObject toMove = slots[i].GetChild(1).gameObject;
+
+            LeanTween.move(toMove, originalPiecePos, timeToAnimateMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
+            yield return new WaitForSeconds(delayClipMove);
+        }
+    }
+
+    public void DealAnimClipLogic()
+    {
+        RefreshSlots();
+    }
+    public IEnumerator DeactivateClip(int index)
+    {
+        yield return new WaitForSeconds(delayDarkenClip);
+
+        Color fromColor = slots[index].GetComponent<SpriteRenderer>().color;
+        Color toColor = darkTintedColor;
+
+        LeanTween.value(slots[index].gameObject, fromColor, toColor, timeToDarkenClip).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        {
+            SpriteRenderer sr = slots[index].gameObject.GetComponent<SpriteRenderer>();
+            Color newColor = sr.color;
+            newColor = Color.Lerp(fromColor, toColor, val);
+            sr.color = newColor;
+        });
+    }
+
+    public void ReactivateClip(int index)
+    {
+        slots[index].GetComponent<SpriteRenderer>().color = Color.white;
     }
 }
