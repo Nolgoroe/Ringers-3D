@@ -218,14 +218,24 @@ public class Cell : MonoBehaviour
 
         if (pieceHeld.leftChild.relevantSlice.hasSlice)
         {
-            if (pieceHeld.leftChild.relevantSlice.isLimiter && pieceHeld.leftChild.relevantSlice.fulfilledCondition)
+            if (pieceHeld.leftChild.relevantSlice.isLimiter)
             {
-                GameManager.Instance.unsuccessfullSlicesCount++;
+                if (pieceHeld.leftChild.relevantSlice.fulfilledCondition)
+                {
+                    GameManager.Instance.unsuccessfullSlicesCount++;
+                }
+                else
+                {
+                    GameManager.Instance.unsuccessfullSlicesCount--;
+                }
             }
-            else
-            {
-                GameManager.Instance.unsuccessfullSlicesCount--;
-            }
+            //else
+            //{
+            //    if (!pieceHeld.leftChild.relevantSlice.fulfilledCondition)
+            //    {
+            //        GameManager.Instance.unsuccessfullSlicesCount--;
+            //    }
+            //}
 
             //if (!leftCell.isFull)
             //{
@@ -240,14 +250,24 @@ public class Cell : MonoBehaviour
 
         if (pieceHeld.rightChild.relevantSlice.hasSlice)
         {
-            if(pieceHeld.rightChild.relevantSlice.isLimiter && pieceHeld.rightChild.relevantSlice.fulfilledCondition)
+            if(pieceHeld.rightChild.relevantSlice.isLimiter)
             {
-                GameManager.Instance.unsuccessfullSlicesCount++;
+                if (pieceHeld.rightChild.relevantSlice.fulfilledCondition)
+                {
+                    GameManager.Instance.unsuccessfullSlicesCount++;
+                }
+                else
+                {
+                    GameManager.Instance.unsuccessfullSlicesCount--;
+                }
             }
-            else
-            {
-                GameManager.Instance.unsuccessfullSlicesCount--;
-            }
+            //else
+            //{
+            //    if (!pieceHeld.rightChild.relevantSlice.fulfilledCondition)
+            //    {
+            //        GameManager.Instance.unsuccessfullSlicesCount--;
+            //    }
+            //}
 
             //if (!rightCell.isFull)
             //{
@@ -274,10 +294,10 @@ public class Cell : MonoBehaviour
                 pieceHeld.leftChild.isBadConnection = false;
                 int i = ConnectionManager.Instance.CheckIntRange(pieceHeld.leftChild.subPieceIndex - 1);
 
-                if (pieceHeld.leftChild.relevantSlice.hasSlice)
-                {
-                    GameManager.Instance.unsuccessfullSlicesCount--;
-                }
+                //if (pieceHeld.leftChild.relevantSlice.hasSlice)
+                //{
+                //    GameManager.Instance.unsuccessfullSlicesCount--;
+                //}
 
             }
             else
@@ -314,10 +334,10 @@ public class Cell : MonoBehaviour
             {
                 GameManager.Instance.unsuccessfullConnectionCount--;
 
-                if (pieceHeld.rightChild.relevantSlice.hasSlice)
-                {
-                    GameManager.Instance.unsuccessfullSlicesCount--;
-                }
+                //if (pieceHeld.rightChild.relevantSlice.hasSlice)
+                //{
+                //    GameManager.Instance.unsuccessfullSlicesCount--;
+                //}
 
                 pieceHeld.rightChild.isBadConnection = false;
                 int i = ConnectionManager.Instance.CheckIntRange(pieceHeld.rightChild.subPieceIndex + 1);
@@ -355,13 +375,19 @@ public class Cell : MonoBehaviour
         }
 
 
-        if (pieceHeld.rightChild.relevantSlice.hasSlice || pieceHeld.leftChild.relevantSlice.hasSlice )
+        if (pieceHeld.rightChild.relevantSlice.hasSlice && pieceHeld.rightChild.relevantSlice.isLimiter)
         {
             pieceHeld.rightChild.relevantSlice.fulfilledCondition = false;
-            pieceHeld.leftChild.relevantSlice.fulfilledCondition = false;
-            pieceHeld.rightChild.relevantSlice = null;
-            pieceHeld.leftChild.relevantSlice = null;
         }
+
+        if (pieceHeld.leftChild.relevantSlice.hasSlice && pieceHeld.leftChild.relevantSlice.isLimiter)
+        {
+            pieceHeld.leftChild.relevantSlice.fulfilledCondition = false;
+        }
+
+
+        pieceHeld.rightChild.relevantSlice = null;
+        pieceHeld.leftChild.relevantSlice = null;
 
         ConnectionManager.Instance.RemoveSubPieceIndex(pieceHeld.leftChild.subPieceIndex, isOuter);
         ConnectionManager.Instance.RemoveSubPieceIndex(pieceHeld.rightChild.subPieceIndex, isOuter);

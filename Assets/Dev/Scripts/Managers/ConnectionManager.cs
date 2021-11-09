@@ -99,7 +99,10 @@ public class ConnectionManager : MonoBehaviour
 
                     if (supPieceArray[currentLeft].relevantSlice.hasSlice)
                     {
-                        GameManager.Instance.unsuccessfullSlicesCount++;
+                        if (supPieceArray[currentLeft].relevantSlice.isLimiter)
+                        {
+                            GameManager.Instance.unsuccessfullSlicesCount++;
+                        }
                     }
 
 
@@ -121,14 +124,32 @@ public class ConnectionManager : MonoBehaviour
                 {
                     if (supPieceArray[currentLeft].relevantSlice.hasSlice)
                     {
-                        if (!conditionmet)
+                        if (supPieceArray[currentLeft].relevantSlice.isLimiter)
                         {
-                            GameManager.Instance.unsuccessfullSlicesCount++;
+                            if (!conditionmet)
+                            {
+                                GameManager.Instance.unsuccessfullSlicesCount++;
+                            }
+                            else
+                            {
+                                GameManager.Instance.unsuccessfullSlicesCount--;
+                            }
                         }
-                        else
-                        {
-                            GameManager.Instance.unsuccessfullSlicesCount--;
-                        }
+                        //else
+                        //{
+                        //    if (!supPieceArray[currentLeft].relevantSlice.fulfilledCondition)
+                        //    {
+                        //        if (conditionmet)
+                        //        {
+                        //            GameManager.Instance.unsuccessfullSlicesCount++;
+                        //        }
+                        //        else
+                        //        {
+                        //            GameManager.Instance.unsuccessfullSlicesCount--;
+                        //        }
+                        //    }
+
+                        //}
                     }
 
 
@@ -207,7 +228,10 @@ public class ConnectionManager : MonoBehaviour
                                 }
                                 else
                                 {
-                                    SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
+                                    if (!supPieceArray[currentLeft].relevantSlice.fulfilledCondition)
+                                    {
+                                        SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
+                                    }
                                 }
                             }
 
@@ -243,8 +267,10 @@ public class ConnectionManager : MonoBehaviour
             {
                 if (supPieceArray[currentLeft].relevantSlice.hasSlice)
                 {
-                    supPieceArray[currentLeft].relevantSlice.fulfilledCondition = false;
-                    GameManager.Instance.unsuccessfullSlicesCount++;
+                    if (supPieceArray[currentLeft].relevantSlice.isLimiter)
+                    {
+                        GameManager.Instance.unsuccessfullSlicesCount++;
+                    }
                 }
             }
         }
@@ -278,7 +304,10 @@ public class ConnectionManager : MonoBehaviour
 
                     if (supPieceArray[currentRight].relevantSlice.hasSlice)
                     {
-                        GameManager.Instance.unsuccessfullSlicesCount++;
+                        if (supPieceArray[currentRight].relevantSlice.isLimiter)
+                        {
+                            GameManager.Instance.unsuccessfullSlicesCount++;
+                        }
                     }
 
                     supPieceArray[currentRight].isBadConnection = true;
@@ -297,14 +326,31 @@ public class ConnectionManager : MonoBehaviour
                 {
                     if (supPieceArray[currentRight].relevantSlice.hasSlice)
                     {
-                        if (!conditionmet)
+                        if (supPieceArray[currentRight].relevantSlice.isLimiter)
                         {
-                            GameManager.Instance.unsuccessfullSlicesCount++;
+                            if (!conditionmet)
+                            {
+                                GameManager.Instance.unsuccessfullSlicesCount++;
+                            }
+                            else
+                            {
+                                GameManager.Instance.unsuccessfullSlicesCount--;
+                            }
                         }
-                        else
-                        {
-                            GameManager.Instance.unsuccessfullSlicesCount--;
-                        }
+                        //else
+                        //{
+                        //    if (!supPieceArray[currentRight].relevantSlice.fulfilledCondition)
+                        //    {
+                        //        if (!conditionmet)
+                        //        {
+                        //            GameManager.Instance.unsuccessfullSlicesCount++;
+                        //        }
+                        //        else
+                        //        {
+                        //            GameManager.Instance.unsuccessfullSlicesCount--;
+                        //        }
+                        //    }
+                        //}
 
                     }
 
@@ -341,7 +387,10 @@ public class ConnectionManager : MonoBehaviour
                             }
                             else
                             {
-                                SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
+                                if (!supPieceArray[currentRight].relevantSlice.fulfilledCondition)
+                                {
+                                    SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
+                                }
                             }
                         }
 
@@ -372,8 +421,11 @@ public class ConnectionManager : MonoBehaviour
             {      
                 if (supPieceArray[currentRight].relevantSlice.hasSlice)
                 {
-                    supPieceArray[currentRight].relevantSlice.fulfilledCondition = false;
-                    GameManager.Instance.unsuccessfullSlicesCount++;
+                    if (supPieceArray[currentRight].relevantSlice.isLimiter)
+                    {
+                        GameManager.Instance.unsuccessfullSlicesCount++;
+                    }
+                    //supPieceArray[currentRight].relevantSlice.fulfilledCondition = false;
                 }
             }
         }
