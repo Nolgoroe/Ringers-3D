@@ -12,6 +12,7 @@ public class Slice : MonoBehaviour
 
     public GameObject child;
 
+    public bool hasSlice;
     public bool isLock;
     public bool isLoot;
     public bool isLimiter;
@@ -24,6 +25,8 @@ public class Slice : MonoBehaviour
     public List<Cell> connectedCells;
     public void SetSliceData(Transform parent, SliceCatagory sc, bool islocking, bool isLooting, bool isLimiting)
     {
+        hasSlice = true;
+
         int sliceCatagorycount = System.Enum.GetValues(typeof(SliceCatagory)).Length;
         int sliceSymbolcount = System.Enum.GetValues(typeof(PieceSymbol)).Length;
         int sliceColorcount = System.Enum.GetValues(typeof(PieceColor)).Length;

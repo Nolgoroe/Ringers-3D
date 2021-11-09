@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
 
     public int currentFilledCellCount;
     public int unsuccessfullConnectionCount;
+    public int unsuccessfullSlicesCount;
 
     public bool gameStarted;
     public bool isSecondaryControls;
@@ -338,12 +339,13 @@ public class GameManager : MonoBehaviour
 
         currentFilledCellCount = 0;
         unsuccessfullConnectionCount = 0;
+        unsuccessfullSlicesCount = 0;
     }
 
     public bool CheckEndLevel()
     {
         //UIManager.Instance.DisableCommitButton();
-        if (currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0)
+        if (currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0 && unsuccessfullSlicesCount == 0)
         {
             if (ZoneManagerHelpData.Instance.currentZoneCheck)
             {

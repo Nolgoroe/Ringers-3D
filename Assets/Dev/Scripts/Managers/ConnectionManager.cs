@@ -87,7 +87,7 @@ public class ConnectionManager : MonoBehaviour
         {
             if (supPieceArray[currentLeft])
             {
-                if (!CheckSubPieceConnection(supPieceArray[currentLeft], supPieceArray[leftContested], out bool conditionmet))
+                if (!CheckSubPieceConnection(supPieceArray[currentLeft], supPieceArray[leftContested], out bool conditionmet, out bool isGoodConnect))
                 {
                     if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
                     {
@@ -96,6 +96,13 @@ public class ConnectionManager : MonoBehaviour
 
                     Debug.Log("Bad Connection Right Conetsted");
                     GameManager.Instance.unsuccessfullConnectionCount++;
+
+                    if (supPieceArray[currentLeft].relevantSlice.hasSlice)
+                    {
+                        GameManager.Instance.unsuccessfullSlicesCount++;
+                    }
+
+
                     supPieceArray[currentLeft].isBadConnection = true;
                     supPieceArray[leftContested].isBadConnection = true;
                     //supPieceArray[currentLeft].gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
@@ -112,6 +119,19 @@ public class ConnectionManager : MonoBehaviour
                 }
                 else
                 {
+                    if (supPieceArray[currentLeft].relevantSlice.hasSlice)
+                    {
+                        if (!conditionmet)
+                        {
+                            GameManager.Instance.unsuccessfullSlicesCount++;
+                        }
+                        else
+                        {
+                            GameManager.Instance.unsuccessfullSlicesCount--;
+                        }
+                    }
+
+
                     supPieceArray[currentLeft].isBadConnection = false;
                     supPieceArray[leftContested].isBadConnection = false;
 
@@ -221,7 +241,11 @@ public class ConnectionManager : MonoBehaviour
 
             if (!isOuterCell)
             {
-                supPieceArray[currentLeft].relevantSlice.fulfilledCondition = false;
+                if (supPieceArray[currentLeft].relevantSlice.hasSlice)
+                {
+                    supPieceArray[currentLeft].relevantSlice.fulfilledCondition = false;
+                    GameManager.Instance.unsuccessfullSlicesCount++;
+                }
             }
         }
 
@@ -243,7 +267,7 @@ public class ConnectionManager : MonoBehaviour
         {
             if (supPieceArray[currentRight])
             {
-                if (!CheckSubPieceConnection(supPieceArray[currentRight], supPieceArray[rightContested], out bool conditionmet))
+                if (!CheckSubPieceConnection(supPieceArray[currentRight], supPieceArray[rightContested], out bool conditionmet, out bool isGoodConnect))
                 {
                     if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
                     {
@@ -251,6 +275,11 @@ public class ConnectionManager : MonoBehaviour
                     }
                     Debug.Log("Bad Connection Left Conetsted");
                     GameManager.Instance.unsuccessfullConnectionCount++;
+
+                    if (supPieceArray[currentRight].relevantSlice.hasSlice)
+                    {
+                        GameManager.Instance.unsuccessfullSlicesCount++;
+                    }
 
                     supPieceArray[currentRight].isBadConnection = true;
                     supPieceArray[rightContested].isBadConnection = true;
@@ -266,6 +295,19 @@ public class ConnectionManager : MonoBehaviour
                 }
                 else
                 {
+                    if (supPieceArray[currentRight].relevantSlice.hasSlice)
+                    {
+                        if (!conditionmet)
+                        {
+                            GameManager.Instance.unsuccessfullSlicesCount++;
+                        }
+                        else
+                        {
+                            GameManager.Instance.unsuccessfullSlicesCount--;
+                        }
+
+                    }
+
                     CursorController.Instance.tutorialBadConnection = false;
 
                     supPieceArray[currentRight].isBadConnection = false;
@@ -327,8 +369,12 @@ public class ConnectionManager : MonoBehaviour
         else
         {
             if (!isOuterCell)
-            {
-                supPieceArray[currentRight].relevantSlice.fulfilledCondition = false;
+            {      
+                if (supPieceArray[currentRight].relevantSlice.hasSlice)
+                {
+                    supPieceArray[currentRight].relevantSlice.fulfilledCondition = false;
+                    GameManager.Instance.unsuccessfullSlicesCount++;
+                }
             }
         }
 
@@ -337,10 +383,12 @@ public class ConnectionManager : MonoBehaviour
             GameManager.Instance.CheckEndLevel();
         }
     }
-    public bool CheckSubPieceConnection(SubPiece currentSide, SubPiece contestedSide, out bool conditionMet)
+    public bool CheckSubPieceConnection(SubPiece currentSide, SubPiece contestedSide, out bool conditionMet, out bool isGoodConnect)
     {
-        bool isGoodConnect = false;
-        bool conditionCheck = false;
+        conditionMet = false;
+        isGoodConnect = false;
+        //bool isGoodConnect = false;
+        //bool conditionCheck = false;
 
         if (currentSide.relevantSlice)
         {
@@ -348,41 +396,42 @@ public class ConnectionManager : MonoBehaviour
             {
                 CompareResault result = TotalCheck(currentSide, contestedSide);
 
+                if (result.gColorMatch)
+                {
+                    isGoodConnect = true;
+                }
+
+                if (result.gSymbolMatch)
+                {
+                    isGoodConnect = true;
+                }
+
                 if (!currentSide.relevantSlice.isLimiter)
                 {
 
-                    conditionCheck = CheckFulfilledSliceCondition(currentSide.relevantSlice, result, currentSide, contestedSide);
+                    conditionMet = CheckFulfilledSliceCondition(currentSide.relevantSlice, result, currentSide, contestedSide);
 
-                    if (conditionCheck)
-                    {
-                        conditionMet = conditionCheck;
-                        return true;
-                    }
 
-                    if (result.gColorMatch)
-                    {
-                        isGoodConnect = true;
-                    }
+                    //if (conditionMet)
+                    //{
+                    //    return true;
+                    //}
 
-                    if (result.gSymbolMatch)
-                    {
-                        isGoodConnect = true;
-                    }
                 }
                 else
                 {
-                    conditionCheck = CheckFulfilledSliceCondition(currentSide.relevantSlice, result, currentSide, contestedSide);
+                    conditionMet = CheckFulfilledSliceCondition(currentSide.relevantSlice, result, currentSide, contestedSide);
 
-                    if (conditionCheck)
-                    {
-                        conditionMet = conditionCheck;
-                        return true;
-                    }
-                    else
-                    {
-                        conditionMet = false;
-                        return false;
-                    }
+                    //if (conditionCheck)
+                    //{
+                    //    conditionMet = conditionCheck;
+                    //    return true;
+                    //}
+                    //else
+                    //{
+                    //    conditionMet = false;
+                    //    return false;
+                    //}
 
                 }
             }
@@ -417,8 +466,16 @@ public class ConnectionManager : MonoBehaviour
 
         }
 
-        conditionMet = conditionCheck;
-        return isGoodConnect;
+        if (isGoodConnect)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        //conditionMet = conditionCheck;
+        //return isGoodConnect;
     }
     public CompareResault TotalCheck(SubPiece current, SubPiece contested/*, PieceColor sCol, PieceSymbol sSym*/)
     {
