@@ -734,6 +734,7 @@ public class UIManager : MonoBehaviour
         gameplayCanvasBotom.SetActive(true);
         gameplayCanvasTop.SetActive(true);
         InGameUiScreens.SetActive(true);
+        dealButton.interactable = true;
     }
     //public void RefreshDewDropsDisplay(int spriteIndex)
     //{

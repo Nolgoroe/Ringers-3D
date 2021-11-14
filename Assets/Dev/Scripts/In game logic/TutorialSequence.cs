@@ -43,8 +43,6 @@ public class Phase
     public int[] targetCells;
 
     public int[] targetSlices;
-    public float timeDelay;
-
 }
 [System.Serializable]
 public class OutLineData
@@ -785,7 +783,7 @@ public class TutorialSequence : MonoBehaviour
 
     public IEnumerator DeactivateTutorialScreens(Sequence[] tutorialArray, int index)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         foreach (GameObject go in tutorialArray[index].screens)
         {
             if (go.activeInHierarchy)
