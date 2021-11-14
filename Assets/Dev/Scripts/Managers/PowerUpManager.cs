@@ -8,7 +8,7 @@ using System;
 public enum PowerUp
 {
     
-    FourColorTransform,
+    //FourColorTransform,
     Switch,
     Joker,
     PieceBomb,
@@ -111,9 +111,9 @@ public class PowerUpManager : MonoBehaviour
             //case PowerUp.ExtraDeal:
             //    theButton.onClick.AddListener(() => ExtraDealPower(prop));
             //    break;
-            case PowerUp.FourColorTransform:
-                theButton.onClick.AddListener(() => CallFourColorPowerCoroutine(prop));
-                break;
+            //case PowerUp.FourColorTransform:
+            //    theButton.onClick.AddListener(() => CallFourColorPowerCoroutine(prop));
+            //    break;
             //case PowerUp.FourShapeTransform:
             //    theButton.onClick.AddListener(() => CallFourSymbolPowerCoroutine(prop));
             //    break;
@@ -139,10 +139,10 @@ public class PowerUpManager : MonoBehaviour
 
         prop.numOfUses = data.numOfUses;
 
-        if (current == PowerUp.FourColorTransform)
-        {
-            prop.transformColor = data.specificColor;
-        }
+        //if (current == PowerUp.FourColorTransform)
+        //{
+        //    prop.transformColor = data.specificColor;
+        //}
         //else if(current == PowerUp.FourShapeTransform)
         //{
         //    prop.transformSymbol = data.specificSymbol;
@@ -557,11 +557,6 @@ public class PowerUpManager : MonoBehaviour
     {
         UIManager.Instance.ActivateUsingPowerupMessage(false);
 
-        Vector3 pos = prop.gameObject.transform.position;
-        pos.y -= 0.1f;
-
-        LeanTween.move(prop.gameObject, pos, 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => ReactivatePowerButtons()); // animate
-
         IsUsingPowerUp = false;
         currentlyInUse = null;
         HasUsedPowerUp = false;
@@ -571,17 +566,45 @@ public class PowerUpManager : MonoBehaviour
         {
             prop.numOfUses--;
         }
-       
 
-        if(prop.numOfUses == 0 && prop.connectedEquipment.scopeOfUses == 0) //// if the num of uses is 0 and the scope is cooldown and not per match
+        if (prop.connectedEquipment.isTutorialPower)
         {
-            EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).First();
-
-            ED.nextTimeAvailable = System.DateTime.Now.AddSeconds(ED.timeForCooldown).ToString(); ///// change the datetime for equipment on player
-
-            PlayerManager.Instance.equipmentInCooldown.Add(ED);
-            PlayerManager.Instance.SavePlayerData();
+            if (prop.numOfUses == 0)
+            {
+                ReactivatePowerButtons();
+                powerupButtons.Remove(prop.GetComponent<Button>());
+                Destroy(prop.gameObject, 0.55f);
+            }
         }
+        else
+        {
+            if (prop.numOfUses == 0 && prop.connectedEquipment.scopeOfUses == 0) //// if the num of uses is 0 and the scope is cooldown and not per match
+            {
+                EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).First();
+
+                ED.nextTimeAvailable = System.DateTime.Now.AddSeconds(ED.timeForCooldown).ToString(); ///// change the datetime for equipment on player
+
+                PlayerManager.Instance.equipmentInCooldown.Add(ED);
+                PlayerManager.Instance.SavePlayerData();
+            }
+
+            if (prop.numOfUses == 0 && prop.connectedEquipment.scopeOfUses == 1) //// if the num of uses is 0 and the scope is per match
+            {
+                EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).First();
+
+                PlayerManager.Instance.activePowerups.Remove(ED.power);
+                PlayerManager.Instance.ownedPowerups.Remove(ED);                
+                PlayerManager.Instance.SavePlayerData();
+
+                powerupButtons.Remove(prop.GetComponent<Button>());
+                Destroy(prop.gameObject, 1f);
+            }
+        }
+
+        Vector3 pos = prop.gameObject.transform.position;
+        pos.y -= 0.1f;
+
+        LeanTween.move(prop.gameObject, pos, 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => ReactivatePowerButtons()); // animate
     }
 
     public void ReactivatePowerButtons()

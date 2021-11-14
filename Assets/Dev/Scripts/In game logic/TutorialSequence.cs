@@ -111,6 +111,7 @@ public class TutorialSequence : MonoBehaviour
 
             GameManager.Instance.powerupManager.PowerupButtonsActivation(false);
 
+            UIManager.Instance.tutorialCanvasParent.SetActive(true);
             UIManager.Instance.tutorialCanvasLevels.SetActive(true);
 
             //DisplayTutorialScreens();
@@ -148,12 +149,13 @@ public class TutorialSequence : MonoBehaviour
 
         if (!GameManager.Instance.isDisableTutorials)
         {
+
             DeactivateAllTutorialScreens();
 
             //GameManager.Instance.powerupManager.PowerupButtonsActivation(false);
 
+            UIManager.Instance.tutorialCanvasParent.SetActive(true);
             UIManager.Instance.tutorialCanvasSpecific.SetActive(true);
-
             UIManager.Instance.dealButton.interactable = false;
 
             specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[0].transform.parent.gameObject.SetActive(true);

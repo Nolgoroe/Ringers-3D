@@ -160,16 +160,16 @@ public class CSVParser : MonoBehaviour
 
                 EQ.power = (PowerUp)Convert.ToInt16(temp[0]);
 
-                if(EQ.power == PowerUp.FourColorTransform)
-                {
-                    EQ.specificColor = (PieceColor)Convert.ToInt16(temp[1]);
-                    EQ.specificSymbol = PieceSymbol.None;
-                }
-                else
-                {
+                //if(EQ.power == PowerUp.FourColorTransform)
+                //{
+                //    EQ.specificColor = (PieceColor)Convert.ToInt16(temp[1]);
+                //    EQ.specificSymbol = PieceSymbol.None;
+                //}
+                //else
+                //{
                     EQ.specificSymbol = (PieceSymbol)Convert.ToInt16(temp[1]);
                     EQ.specificColor = PieceColor.None;
-                }
+                //}
             }
             else
             {

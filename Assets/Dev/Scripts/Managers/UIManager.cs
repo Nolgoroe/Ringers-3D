@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
     public GameObject zoomInCorruptedBlack;
     public GameObject tutorialCanvasLevels;
     public GameObject tutorialCanvasSpecific;
+    public GameObject tutorialCanvasParent;
     public GameObject forge, itemBag, Brewery;
     public GameObject craft, owned;
     public GameObject animalAlbum;
@@ -119,7 +120,6 @@ public class UIManager : MonoBehaviour
         sureWantToRestartWithLoot.SetActive(false);
         sureWantToRestartNoLoot.SetActive(false);
         loseScreen.SetActive(false);
-        tutorialCanvasLevels.SetActive(false);
         blackLevelBG.SetActive(false);
         zoomInCorruptedBlack.SetActive(false);
         skipAnimationButton.gameObject.SetActive(false);
@@ -129,6 +129,9 @@ public class UIManager : MonoBehaviour
         hudCanvasUIBottomZoneCorruption.SetActive(false);
         ownedCorruptDevicesZone.gameObject.SetActive(false);
         UnlockedZoneMessageView.gameObject.SetActive(false);
+        tutorialCanvasParent.gameObject.SetActive(false);
+        tutorialCanvasSpecific.SetActive(false);
+        tutorialCanvasLevels.SetActive(false);
 
 
         dragControlsImage.sprite = toggleOnSprite;
