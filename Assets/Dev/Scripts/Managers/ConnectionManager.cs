@@ -156,8 +156,8 @@ public class ConnectionManager : MonoBehaviour
                     supPieceArray[currentLeft].isBadConnection = false;
                     supPieceArray[leftContested].isBadConnection = false;
 
-                    supPieceArray[currentLeft].transform.parent.GetComponent<CameraShake>().ShakeOnce();
-                    supPieceArray[leftContested].transform.parent.GetComponent<CameraShake>().ShakeOnce();
+                    //supPieceArray[currentLeft].transform.parent.GetComponent<CameraShake>().ShakeOnce();
+                    //supPieceArray[leftContested].transform.parent.GetComponent<CameraShake>().ShakeOnce();
 
                     CursorController.Instance.tutorialBadConnection = false;
 
@@ -359,8 +359,8 @@ public class ConnectionManager : MonoBehaviour
                     supPieceArray[currentRight].isBadConnection = false;
                     supPieceArray[rightContested].isBadConnection = false;
 
-                    supPieceArray[currentRight].transform.parent.GetComponent<CameraShake>().ShakeOnce();
-                    supPieceArray[rightContested].transform.parent.GetComponent<CameraShake>().ShakeOnce();
+                    //supPieceArray[currentRight].transform.parent.GetComponent<CameraShake>().ShakeOnce();
+                    //supPieceArray[rightContested].transform.parent.GetComponent<CameraShake>().ShakeOnce();
 
                     //Instantiate(goodConnectionParticle, cellList[cellIndex].leftParticleZone);
 

@@ -783,7 +783,7 @@ public class TutorialSequence : MonoBehaviour
 
     public IEnumerator DeactivateTutorialScreens(Sequence[] tutorialArray, int index)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         foreach (GameObject go in tutorialArray[index].screens)
         {
             if (go.activeInHierarchy)
