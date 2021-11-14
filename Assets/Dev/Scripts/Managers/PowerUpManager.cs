@@ -38,6 +38,7 @@ public class PowerUpManager : MonoBehaviour
     public Transform[] instnatiateZones;
     public GameObject powerupButtonPreab;
     public GameObject specialPowerPrefabLeft, specialPowerPrefabRight;
+    public GameObject selectedPowerupVFX;
     public Transform specialPowerPrefabParent;
     public Dictionary<PowerUp, string> spriteByType;
     public Dictionary<PowerUp, string> nameTextByType;
@@ -543,6 +544,7 @@ public class PowerUpManager : MonoBehaviour
                 pos.y += 0.1f;
 
                 LeanTween.move(butt.gameObject, pos, 0.5f).setEase(LeanTweenType.easeInOutQuad); // animate
+                Instantiate(selectedPowerupVFX, but.transform);
             }
         }
 
@@ -561,6 +563,14 @@ public class PowerUpManager : MonoBehaviour
         currentlyInUse = null;
         HasUsedPowerUp = false;
         layerToHit = new LayerMask();
+
+        for (int i = 0; i < prop.transform.childCount; i++)
+        {
+            if (prop.transform.GetChild(i).CompareTag("DestroyVFX"))
+            {
+                Destroy(prop.transform.GetChild(i).gameObject);
+            }
+        }
 
         if (successfull)
         {
