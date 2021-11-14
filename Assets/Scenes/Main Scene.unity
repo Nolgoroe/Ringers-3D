@@ -16463,6 +16463,8 @@ GameObject:
   m_Component:
   - component: {fileID: 506894761}
   - component: {fileID: 506894762}
+  - component: {fileID: 506894764}
+  - component: {fileID: 506894763}
   m_Layer: 12
   m_Name: DealHole_Tutorial_TEST
   m_TagString: Tile Hole
@@ -16479,7 +16481,7 @@ Transform:
   m_GameObject: {fileID: 506894760}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.001, y: 0.433, z: 0}
-  m_LocalScale: {x: 0.112861454, y: 0.112861454, z: 0.011286145}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children:
   - {fileID: 979742717}
   m_Father: {fileID: 1660594507}
@@ -16535,6 +16537,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &506894763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506894760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f2100c49204b4984dd9595cea8e34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anchorType: 4
+  anchorOffset: {x: 0, y: 9.38, z: 0}
+  isMovePos: 0
+--- !u!114 &506894764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 506894760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0e1c03e2e62dbf4c92a92193e075920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalWidth: 1080
+  originalHeight: 1920
+  buffer: 0
+  doUpdate: 1
+  dobuffer: 0
 --- !u!1 &509925930
 GameObject:
   m_ObjectHideFlags: 0
@@ -26904,7 +26938,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 1.25
+  m_padding: 0
   m_canvasRenderer: {fileID: 929586318}
   m_TextComponent: {fileID: 2027295412}
   m_materialReferenceIndex: 1
@@ -35292,15 +35326,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 56
+    m_Left: 41
     m_Right: 0
-    m_Top: 65
+    m_Top: 45
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 150, y: 150}
-  m_Spacing: {x: 70, y: 85}
+  m_Spacing: {x: 70, y: 65}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1 &1231730185
@@ -44404,7 +44438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1522565225
 RectTransform:
   m_ObjectHideFlags: 0

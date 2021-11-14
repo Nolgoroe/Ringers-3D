@@ -337,6 +337,7 @@ public class LootManager : MonoBehaviour
 
         CMD.materialImage.sprite = allMaterialSprites[(int)CM];
         CMD.materialCount.text = amount.ToString();
+        CMD.materialCount.color = Color.white;
     }
     public void DisplayLootGoldRubyToPlayer(int count, Sprite sprite)
     {
