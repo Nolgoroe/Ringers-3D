@@ -11,10 +11,22 @@ public class CraftingMatDisplayer : MonoBehaviour
     //public Image textBG;
     public TMP_Text materialCount;
 
-    public void SetImageAndMaterialCount(Sprite icon, string count)
+    public void SetImageAndMaterialCount(Sprite icon, CraftingMats matEnum,string amountNeeded)
     {
+        string amountHas = null;
+
+        if (matEnum == CraftingMats.DewDrops)
+        {
+            amountHas = PlayerManager.Instance.collectedDewDrops.ToString();
+        }
+        else
+        {
+            CraftingMatEntry CME = PlayerManager.Instance.craftingMatsInInventory.Where(p => p.mat == matEnum).Single();
+            amountHas = CME.amount.ToString();
+        }
+
         materialImage.sprite = icon;
-        materialCount.text = count;
+        materialCount.text = amountHas + "/" + amountNeeded;
     }
 
     public void CheckIfHasEnough(CraftingMats matEnum, int amountRequired)
