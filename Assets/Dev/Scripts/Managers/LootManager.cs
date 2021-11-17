@@ -347,7 +347,7 @@ public class LootManager : MonoBehaviour
 
         CMD.materialImage.sprite = sprite;
         CMD.materialCount.text = count.ToString();
-
+        CMD.materialCount.color = Color.white;
         ////Tutorial Level 2
     }
 

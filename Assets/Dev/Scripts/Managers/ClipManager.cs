@@ -199,6 +199,7 @@ public class ClipManager : MonoBehaviour
 
     public IEnumerator DealAnimation()
     {
+        UIManager.Instance.dealButton.interactable = false;
         StartCoroutine(DeactivateClip(clipCount - 1));
 
         for (int i = 0; i < clipCount; i++)
@@ -222,6 +223,7 @@ public class ClipManager : MonoBehaviour
             LeanTween.move(toMove, originalPiecePos, timeToAnimateMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
             yield return new WaitForSeconds(delayClipMove);
         }
+        UIManager.Instance.dealButton.interactable = true;
     }
 
     public void DealAnimClipLogic()
