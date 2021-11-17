@@ -375,8 +375,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: When a rune has a paw symbol on top, it will accept a match of any animal
-    symbol between the two tiles above it.
+  m_text: When a rune has a <b>paw symbol</b> on top, it will accept a match of <b>any
+    symbol</b> on the tiles above it.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -405,7 +405,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 54.05
+  m_fontSize: 53.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -446,12 +446,12 @@ MonoBehaviour:
   m_margin: {x: -24.79182, y: 0.0028076172, z: -31.219463, w: 0}
   m_textInfo:
     textComponent: {fileID: 6773929}
-    characterCount: 73
+    characterCount: 96
     spriteCount: 0
-    spaceCount: 11
-    wordCount: 12
+    spaceCount: 21
+    wordCount: 22
     linkCount: 0
-    lineCount: 3
+    lineCount: 4
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -1151,8 +1151,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -87.200005, y: -952.0001}
-  m_SizeDelta: {x: 700, y: 400}
+  m_AnchoredPosition: {x: -176, y: -881}
+  m_SizeDelta: {x: 700, y: 370}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &24935193
 MonoBehaviour:
@@ -5392,7 +5392,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: -24}
+  m_AnchoredPosition: {x: -6, y: -14}
   m_SizeDelta: {x: 564.05, y: 141.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &170711011
@@ -5413,7 +5413,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tap on the new potion to select it
+  m_text: <b>Tap</b> on the new <b>potion</b> to <b>select</b> it.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -5442,7 +5442,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 63.3
+  m_fontSize: 64
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5480,15 +5480,15 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -53.750507, z: -21.116835, w: 0}
+  m_margin: {x: 0, y: 11.912847, z: -21.116835, w: 0}
   m_textInfo:
     textComponent: {fileID: 170711011}
-    characterCount: 65
+    characterCount: 35
     spriteCount: 0
-    spaceCount: 12
-    wordCount: 13
+    spaceCount: 7
+    wordCount: 8
     linkCount: 0
-    lineCount: 3
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -6082,7 +6082,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -13}
   m_SizeDelta: {x: 540, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &193052285
@@ -6133,7 +6133,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 51.65
+  m_fontSize: 54.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6171,7 +6171,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -6.206952, y: 0.0028076172, z: -35.734936, w: 14.680198}
+  m_margin: {x: -29.735237, y: -6.5892315, z: -28.984705, w: -0.78956366}
   m_textInfo:
     textComponent: {fileID: 193052285}
     characterCount: 84
@@ -6179,7 +6179,7 @@ MonoBehaviour:
     spaceCount: 15
     wordCount: 16
     linkCount: 0
-    lineCount: 3
+    lineCount: 4
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -6831,7 +6831,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: -24}
+  m_AnchoredPosition: {x: 2, y: -24}
   m_SizeDelta: {x: 564.05, y: 141.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &220006302
@@ -6852,7 +6852,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: It's time we used some comlpicated magic! Drag a tile to the board
+  m_text: It's time we tried some complicated magic! <b>Drag a tile</b> to the ring.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -6881,7 +6881,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 63.3
+  m_fontSize: 57.35
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6919,10 +6919,10 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -53.750507, z: -21.116835, w: 0}
+  m_margin: {x: 0, y: -35.516838, z: -6.5620713, w: 0}
   m_textInfo:
     textComponent: {fileID: 220006302}
-    characterCount: 65
+    characterCount: 67
     spriteCount: 0
     spaceCount: 12
     wordCount: 13
@@ -7285,7 +7285,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 1.25
+  m_padding: 0
   m_canvasRenderer: {fileID: 230394785}
   m_TextComponent: {fileID: 220006302}
   m_materialReferenceIndex: 1
@@ -7332,7 +7332,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: -24}
+  m_AnchoredPosition: {x: 15, y: 5}
   m_SizeDelta: {x: 564.05, y: 141.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &236695837
@@ -7353,7 +7353,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Great! Now tap on the tile you want to transform!
+  m_text: Great! Now <b>tap</b> on the <b>tile</b> to <b>transform</b> it.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -7382,7 +7382,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 63.3
+  m_fontSize: 60.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7420,15 +7420,15 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -53.750507, z: -21.116835, w: 0}
+  m_margin: {x: 0, y: 19.12718, z: -4.4098806, w: 0}
   m_textInfo:
     textComponent: {fileID: 236695837}
-    characterCount: 65
+    characterCount: 43
     spriteCount: 0
-    spaceCount: 12
-    wordCount: 13
+    spaceCount: 8
+    wordCount: 9
     linkCount: 0
-    lineCount: 3
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -9137,7 +9137,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: -24}
+  m_AnchoredPosition: {x: -8, y: -16}
   m_SizeDelta: {x: 564.05, y: 141.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &303967478
@@ -9158,7 +9158,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Great! Here are a few bottles
+  m_text: Awesome! Here are a <b>few bottles</b> to help you out.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -9187,7 +9187,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 63.3
+  m_fontSize: 58.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9225,15 +9225,15 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -53.750507, z: -21.116835, w: 0}
+  m_margin: {x: 0, y: -25.064253, z: -21.116835, w: 0}
   m_textInfo:
     textComponent: {fileID: 303967478}
-    characterCount: 65
+    characterCount: 48
     spriteCount: 0
-    spaceCount: 12
-    wordCount: 13
+    spaceCount: 9
+    wordCount: 10
     linkCount: 0
-    lineCount: 3
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -9485,8 +9485,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -87.200005, y: -952.0001}
-  m_SizeDelta: {x: 700, y: 400}
+  m_AnchoredPosition: {x: -87.200005, y: -889}
+  m_SizeDelta: {x: 700, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &308882705
 MonoBehaviour:
@@ -11918,7 +11918,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 1.25
+  m_padding: 0
   m_canvasRenderer: {fileID: 368638359}
   m_TextComponent: {fileID: 1701731738}
   m_materialReferenceIndex: 1
@@ -12243,8 +12243,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -87.200005, y: -952.0001}
-  m_SizeDelta: {x: 700, y: 400}
+  m_AnchoredPosition: {x: -87.200005, y: -872}
+  m_SizeDelta: {x: 700, y: 370}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &373550829
 MonoBehaviour:
@@ -13088,7 +13088,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 1.25
+  m_padding: 0
   m_canvasRenderer: {fileID: 395961653}
   m_TextComponent: {fileID: 1710279321}
   m_materialReferenceIndex: 1
@@ -15550,8 +15550,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -87.200005, y: -952.0001}
-  m_SizeDelta: {x: 700, y: 400}
+  m_AnchoredPosition: {x: -205, y: -899}
+  m_SizeDelta: {x: 700, y: 350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &480912485
 MonoBehaviour:
@@ -16604,8 +16604,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -87.200005, y: -952.0001}
-  m_SizeDelta: {x: 700, y: 400}
+  m_AnchoredPosition: {x: -87.200005, y: -897}
+  m_SizeDelta: {x: 700, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &509925932
 MonoBehaviour:
@@ -16857,7 +16857,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1.1}
+  m_AnchoredPosition: {x: -12, y: 7}
   m_SizeDelta: {x: 494.5, y: 201.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &522351423
@@ -16878,7 +16878,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Some runes will appear with a lock symbol above them
+  m_text: Some runes will appear with a <b>lock symbol</b> above them
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -16907,7 +16907,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 51.35
+  m_fontSize: 56.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -16945,15 +16945,15 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.0028076172, z: 0, w: 0}
+  m_margin: {x: -43.23683, y: 28.275923, z: -66.136925, w: 0}
   m_textInfo:
     textComponent: {fileID: 522351423}
-    characterCount: 99
+    characterCount: 52
     spriteCount: 0
-    spaceCount: 19
-    wordCount: 20
+    spaceCount: 9
+    wordCount: 10
     linkCount: 0
-    lineCount: 4
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -18295,8 +18295,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2, y: -305}
-  m_SizeDelta: {x: 620, y: 310}
+  m_AnchoredPosition: {x: -122, y: -259}
+  m_SizeDelta: {x: 700, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &591865596
 MonoBehaviour:
@@ -18316,8 +18316,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 80292ffad6146cf4689cfd797ce64027, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 75db418d96d756f47b7d1d453d342ac6, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -19057,7 +19057,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: -24}
+  m_AnchoredPosition: {x: -6, y: 1}
   m_SizeDelta: {x: 564.05, y: 141.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &646365244
@@ -19078,7 +19078,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Great! Now tap on the tile to swap it's sides!
+  m_text: Great, <b>tap</b> on the <b>tile</b> to <b>switch</b> between its <b>sides</b>.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -19107,7 +19107,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 63.3
+  m_fontSize: 56.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -19145,15 +19145,15 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -53.750507, z: -21.116835, w: 0}
+  m_margin: {x: 0, y: 26.10798, z: -21.116835, w: 0}
   m_textInfo:
     textComponent: {fileID: 646365244}
-    characterCount: 65
+    characterCount: 51
     spriteCount: 0
-    spaceCount: 12
-    wordCount: 13
+    spaceCount: 9
+    wordCount: 10
     linkCount: 0
-    lineCount: 3
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -20823,7 +20823,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -269}
+  m_AnchoredPosition: {x: 0, y: -244}
   m_SizeDelta: {x: 700, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &702775385
@@ -22318,7 +22318,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 1.25
+  m_padding: 0
   m_canvasRenderer: {fileID: 758444402}
   m_TextComponent: {fileID: 861796930}
   m_materialReferenceIndex: 1
@@ -22779,14 +22779,15 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1090099990}
   m_Father: {fileID: 1584967720}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.1, y: -0.000011444}
-  m_SizeDelta: {x: 745.5, y: 89}
+  m_AnchoredPosition: {x: -17, y: 12}
+  m_SizeDelta: {x: 800, y: 89}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &776656291
 MonoBehaviour:
@@ -22806,17 +22807,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The runes you solved have granted you 8 gems, awesome!
+  m_text: The runes you solved have granted you <b>8 gems</b>, awesome!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
+  m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4282339166
+  m_fontColor: {r: 0.36862746, g: 0.30980393, b: 0.24705882, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -22834,7 +22836,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 39.25
+  m_fontSize: 53.55
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -22872,7 +22874,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.0028076172, z: 0, w: 0}
+  m_margin: {x: 95.98741, y: -18.282278, z: 56.892487, w: -57.504707}
   m_textInfo:
     textComponent: {fileID: 776656291}
     characterCount: 54
@@ -22889,7 +22891,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1090099991}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -23653,9 +23655,9 @@ MonoBehaviour:
   id: 3
   keyLevelIndex: 6
   zoneName: Greymoss Bog
-  hasAwardedKey: 0
-  isUnlocked: 0
-  maxLevelReachedInZone: 0
+  hasAwardedKey: 1
+  isUnlocked: 1
+  maxLevelReachedInZone: 12
   lastLevelNum: 12
   levelDonePath: Level Sprites/Rod Root Covet/MapScreen_RedRootCovert_PlayedLevel
   levelFirstTimeIconPath: Level Sprites/Rod Root Covet/MapScreen_RedRootCovert_NonPlayedLevel
@@ -24089,8 +24091,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -87.200005, y: -952.0001}
-  m_SizeDelta: {x: 700, y: 400}
+  m_AnchoredPosition: {x: -87.200005, y: -610}
+  m_SizeDelta: {x: 680, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &833695817
 MonoBehaviour:
@@ -24699,7 +24701,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: -24}
+  m_AnchoredPosition: {x: -16, y: -18}
   m_SizeDelta: {x: 564.05, y: 141.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &858873849
@@ -24720,7 +24722,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Let's try this new potion, tap on the bottle to select it
+  m_text: Let's try this new potion, <b>tap</b> on the <b>bottle</b> to select it
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -24749,7 +24751,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 63.3
+  m_fontSize: 52.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -24787,15 +24789,15 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -53.750507, z: -21.116835, w: 0}
+  m_margin: {x: 0, y: -19.487232, z: -21.116835, w: 0}
   m_textInfo:
     textComponent: {fileID: 858873849}
-    characterCount: 65
+    characterCount: 57
     spriteCount: 0
-    spaceCount: 12
-    wordCount: 13
+    spaceCount: 11
+    wordCount: 12
     linkCount: 0
-    lineCount: 3
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -24893,7 +24895,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: -24}
+  m_AnchoredPosition: {x: -6, y: -32}
   m_SizeDelta: {x: 564.05, y: 141.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &861796930
@@ -24914,7 +24916,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Great! Now tap on the corrupted tile to remove it!
+  m_text: Great! Now <b>tap</b> on the <b>corrupted tile</b> to <b>remove</b> it!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -24943,7 +24945,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 63.3
+  m_fontSize: 54.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -24981,15 +24983,15 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -53.750507, z: -21.116835, w: 0}
+  m_margin: {x: 0, y: -33.256645, z: -21.116835, w: 14.438253}
   m_textInfo:
     textComponent: {fileID: 861796930}
-    characterCount: 65
+    characterCount: 50
     spriteCount: 0
-    spaceCount: 12
-    wordCount: 13
+    spaceCount: 9
+    wordCount: 10
     linkCount: 0
-    lineCount: 3
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -27455,7 +27457,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: -24}
+  m_AnchoredPosition: {x: -6, y: 5}
   m_SizeDelta: {x: 564.05, y: 141.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &951926090
@@ -27476,7 +27478,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Great! Here are a few bottles
+  m_text: Amazing! Here are a <b>few bottles</b> to help you out.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -27505,7 +27507,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 63.3
+  m_fontSize: 58.85
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -27543,15 +27545,15 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -53.750507, z: -21.116835, w: 0}
+  m_margin: {x: 0, y: 22.225744, z: -21.116835, w: 0}
   m_textInfo:
     textComponent: {fileID: 951926090}
-    characterCount: 65
+    characterCount: 48
     spriteCount: 0
-    spaceCount: 12
-    wordCount: 13
+    spaceCount: 9
+    wordCount: 10
     linkCount: 0
-    lineCount: 3
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -28471,7 +28473,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 1.25
+  m_padding: 0
   m_canvasRenderer: {fileID: 976886754}
   m_TextComponent: {fileID: 1205482666}
   m_materialReferenceIndex: 1
@@ -31359,6 +31361,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1089081318}
   m_CullTransparentMesh: 0
+--- !u!1 &1090099989
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1090099990}
+  - component: {fileID: 1090099992}
+  - component: {fileID: 1090099991}
+  m_Layer: 5
+  m_Name: TMP SubMeshUI [LTReponse Rounded Two_Font Atlas Material + LiberationSans
+    SDF Atlas]
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1090099990
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090099989}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 776656290}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1090099991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090099989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_spriteAsset: {fileID: 0}
+  m_material: {fileID: 0}
+  m_sharedMaterial: {fileID: 0}
+  m_isDefaultMaterial: 0
+  m_padding: 0
+  m_canvasRenderer: {fileID: 1090099992}
+  m_TextComponent: {fileID: 776656291}
+  m_materialReferenceIndex: 1
+--- !u!222 &1090099992
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090099989}
+  m_CullTransparentMesh: 0
 --- !u!1 &1090412244
 GameObject:
   m_ObjectHideFlags: 0
@@ -32985,7 +33060,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173226881}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
   m_Name: 
@@ -33001,7 +33076,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 1.25
+  m_padding: 0
   m_canvasRenderer: {fileID: 1173226884}
   m_TextComponent: {fileID: 8695794}
   m_materialReferenceIndex: 1
@@ -33308,8 +33383,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Its time we fought back against the rive! Tap on the new potion to select
-    it
+  m_text: Its time we fought back against the corruption! <b>Tap</b> on the new <b>potion</b>
+    to <b>select</b> it.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -33338,7 +33413,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 63.3
+  m_fontSize: 50.9
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -33379,10 +33454,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: -53.750507, z: -21.116835, w: 0}
   m_textInfo:
     textComponent: {fileID: 1182595986}
-    characterCount: 65
+    characterCount: 83
     spriteCount: 0
-    spaceCount: 12
-    wordCount: 13
+    spaceCount: 15
+    wordCount: 16
     linkCount: 0
     lineCount: 3
     pageCount: 1
@@ -33751,7 +33826,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: -24}
+  m_AnchoredPosition: {x: -14, y: -7}
   m_SizeDelta: {x: 564.05, y: 141.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1198500351
@@ -33772,7 +33847,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Let's try this new potion! Drag a tile to the board.
+  m_text: Let's try this new potion! <b>Drag</b> a <b>tile</b> to the Ring.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -33801,7 +33876,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 63.3
+  m_fontSize: 61.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -33839,15 +33914,15 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -53.750507, z: -21.116835, w: 0}
+  m_margin: {x: 0, y: 11.244484, z: -21.116835, w: 0}
   m_textInfo:
     textComponent: {fileID: 1198500351}
-    characterCount: 65
+    characterCount: 51
     spriteCount: 0
-    spaceCount: 12
-    wordCount: 13
+    spaceCount: 10
+    wordCount: 11
     linkCount: 0
-    lineCount: 3
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -34222,7 +34297,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: -24}
+  m_AnchoredPosition: {x: 5, y: 6}
   m_SizeDelta: {x: 564.05, y: 141.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1205482666
@@ -34243,7 +34318,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Here are a few bottles to get you started!
+  m_text: Here are a <b>few bottles</b> to get you started!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -34272,7 +34347,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 63.3
+  m_fontSize: 55.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -34310,15 +34385,15 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -53.750507, z: -21.116835, w: 0}
+  m_margin: {x: 0, y: 28.128582, z: 16.982367, w: 0}
   m_textInfo:
     textComponent: {fileID: 1205482666}
-    characterCount: 65
+    characterCount: 42
     spriteCount: 0
-    spaceCount: 12
-    wordCount: 13
+    spaceCount: 8
+    wordCount: 9
     linkCount: 0
-    lineCount: 3
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -41187,7 +41262,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 1.25
+  m_padding: 0
   m_canvasRenderer: {fileID: 1417434344}
   m_TextComponent: {fileID: 170711011}
   m_materialReferenceIndex: 1
@@ -43321,7 +43396,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: -24}
+  m_AnchoredPosition: {x: -6, y: -14}
   m_SizeDelta: {x: 564.05, y: 141.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1499816452
@@ -43342,7 +43417,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Great! Now tap on the slice you want to remove!
+  m_text: Great! Now <b>tap</b> on the <b>rune or scroll</b> you want to remove!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -43371,7 +43446,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 63.3
+  m_fontSize: 52
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -43409,15 +43484,15 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -53.750507, z: -21.116835, w: 0}
+  m_margin: {x: 0, y: -16.881807, z: -21.116835, w: 0}
   m_textInfo:
     textComponent: {fileID: 1499816452}
-    characterCount: 65
+    characterCount: 56
     spriteCount: 0
-    spaceCount: 12
-    wordCount: 13
+    spaceCount: 11
+    wordCount: 12
     linkCount: 0
-    lineCount: 3
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -45413,8 +45488,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -87.2, y: -952.00006}
-  m_SizeDelta: {x: 700, y: 400}
+  m_AnchoredPosition: {x: -218, y: -893}
+  m_SizeDelta: {x: 700, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1545465201
 MonoBehaviour:
@@ -45970,7 +46045,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: These type of runes will lock two tiles in place, once they are matched.
+  m_text: These runes will <b>lock</b> the two <b>tiles above</b> them in place,
+    once they are <b>matched</b>.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -46040,10 +46116,10 @@ MonoBehaviour:
   m_margin: {x: -17.439981, y: 0.0028076172, z: -27.028185, w: 0}
   m_textInfo:
     textComponent: {fileID: 1554662070}
-    characterCount: 95
+    characterCount: 79
     spriteCount: 0
-    spaceCount: 16
-    wordCount: 17
+    spaceCount: 14
+    wordCount: 15
     linkCount: 0
     lineCount: 4
     pageCount: 1
@@ -46343,8 +46419,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Or <b>match</b> two tiles with the same <b>animal symbol</b> by placing
-    them <b>adjecent</b> to one another.
+  m_text: Or <b>match</b> two tiles with the same <b>symbol</b> by placing them <b>adjecent</b>
+    to one another.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -46411,13 +46487,13 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.0028076172, z: 0, w: 0}
+  m_margin: {x: 0, y: 0.0028076172, z: -24.767557, w: 0}
   m_textInfo:
     textComponent: {fileID: 1569612076}
-    characterCount: 87
+    characterCount: 80
     spriteCount: 0
-    spaceCount: 15
-    wordCount: 16
+    spaceCount: 14
+    wordCount: 15
     linkCount: 0
     lineCount: 4
     pageCount: 1
@@ -47050,8 +47126,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -87.200005, y: -952.0001}
-  m_SizeDelta: {x: 700, y: 400}
+  m_AnchoredPosition: {x: -172, y: -825}
+  m_SizeDelta: {x: 700, y: 340}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1584139765
 MonoBehaviour:
@@ -47171,8 +47247,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 87.2, y: 657}
-  m_SizeDelta: {x: 817.9, y: 293.3}
+  m_AnchoredPosition: {x: 3, y: 71}
+  m_SizeDelta: {x: 750, y: 310}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1584967721
 MonoBehaviour:
@@ -49354,8 +49430,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: While runes with the multicolored symbol will accept a match of any color
-    between the tiles above it.
+  m_text: While runes with the <b>multicolored symbol</b> will accept a match of
+    <b>any color</b> between the tiles above it.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -49365,8 +49441,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4282339166
+  m_fontColor: {r: 0.36862746, g: 0.30980393, b: 0.24705882, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -49384,7 +49460,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 76.85
+  m_fontSize: 53.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -49422,21 +49498,21 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.0028076172, z: 0, w: 0}
+  m_margin: {x: 0, y: 0.0028076172, z: -31.52221, w: 0}
   m_textInfo:
     textComponent: {fileID: 1641683502}
-    characterCount: 37
+    characterCount: 101
     spriteCount: 0
-    spaceCount: 6
-    wordCount: 7
+    spaceCount: 17
+    wordCount: 18
     linkCount: 0
-    lineCount: 2
+    lineCount: 4
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -49820,8 +49896,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -87.200005, y: -952.0001}
-  m_SizeDelta: {x: 700, y: 400}
+  m_AnchoredPosition: {x: -70, y: -864}
+  m_SizeDelta: {x: 650, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1663833036
 MonoBehaviour:
@@ -50885,7 +50961,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 1.25
+  m_padding: 0
   m_canvasRenderer: {fileID: 1698240643}
   m_TextComponent: {fileID: 1182595986}
   m_materialReferenceIndex: 1
@@ -51010,7 +51086,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: -24}
+  m_AnchoredPosition: {x: -10, y: -24}
   m_SizeDelta: {x: 564.05, y: 141.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1701731738
@@ -51031,8 +51107,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Awesome! We transformed this tile into a joker! It will match any tile
-    you place near it!
+  m_text: Awesome! We transformed this tile into a <b>joker</b>! It will match <b>any
+    tile</b> you place near it!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -51061,7 +51137,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 63.3
+  m_fontSize: 49.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -51099,13 +51175,13 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -53.750507, z: -21.116835, w: 0}
+  m_margin: {x: 0, y: -53.750507, z: -29.51796, w: -8.241369}
   m_textInfo:
     textComponent: {fileID: 1701731738}
-    characterCount: 65
+    characterCount: 89
     spriteCount: 0
-    spaceCount: 12
-    wordCount: 13
+    spaceCount: 16
+    wordCount: 17
     linkCount: 0
     lineCount: 3
     pageCount: 1
@@ -51168,7 +51244,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: -24}
+  m_AnchoredPosition: {x: -6, y: -30}
   m_SizeDelta: {x: 564.05, y: 141.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1710279321
@@ -51189,8 +51265,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Great, now we can easly complete the spell. Here are a few bottles to get
-    you started.
+  m_text: Awesome! Now we can complete the spell. Here are a <b>few bottles</b> to
+    get you started.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -51219,7 +51295,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 63.3
+  m_fontSize: 47.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -51260,10 +51336,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: -53.750507, z: -21.116835, w: 0}
   m_textInfo:
     textComponent: {fileID: 1710279321}
-    characterCount: 65
+    characterCount: 82
     spriteCount: 0
-    spaceCount: 12
-    wordCount: 13
+    spaceCount: 15
+    wordCount: 16
     linkCount: 0
     lineCount: 3
     pageCount: 1
@@ -51403,7 +51479,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6, y: -24}
+  m_AnchoredPosition: {x: -6, y: 1}
   m_SizeDelta: {x: 564.05, y: 141.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1719439024
@@ -51424,7 +51500,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: tap on the bottle to select it
+  m_text: Wonderful! Now <b>tap</b> on the <b>potion</b> to select it.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -51453,7 +51529,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 63.3
+  m_fontSize: 58.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -51491,15 +51567,15 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -53.750507, z: -21.116835, w: 0}
+  m_margin: {x: 0, y: 23.353424, z: -21.116835, w: 0}
   m_textInfo:
     textComponent: {fileID: 1719439024}
-    characterCount: 65
+    characterCount: 46
     spriteCount: 0
-    spaceCount: 12
-    wordCount: 13
+    spaceCount: 8
+    wordCount: 9
     linkCount: 0
-    lineCount: 3
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -55062,8 +55138,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -87.200005, y: -952.0001}
-  m_SizeDelta: {x: 700, y: 400}
+  m_AnchoredPosition: {x: -5, y: -887}
+  m_SizeDelta: {x: 700, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1811356785
 MonoBehaviour:
@@ -55146,7 +55222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isKeyLevel: 0
   zonesToUnlock: 
-  unlockedZoneID: 00000000
+  unlockedZoneID: 00000000010000000200000003000000
 --- !u!1 &1835554784
 GameObject:
   m_ObjectHideFlags: 0
@@ -55334,8 +55410,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -87.200005, y: -952.0001}
-  m_SizeDelta: {x: 700, y: 400}
+  m_AnchoredPosition: {x: -195, y: -866}
+  m_SizeDelta: {x: 700, y: 360}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1835616115
 MonoBehaviour:
@@ -55809,7 +55885,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -10}
+  m_AnchoredPosition: {x: -9, y: -17}
   m_SizeDelta: {x: 540, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1843068574
@@ -55830,8 +55906,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You can match two tiles of the <b>same color</b> by placing them <b>adjacent</b>
-    to one another.
+  m_text: You can <b>match</b> two tiles of the <b>same color</b> by placing them
+    <b>adjacent</b> to one another.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -55860,7 +55936,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 53.2
+  m_fontSize: 56.35
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -55898,7 +55974,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0.0028076172, z: 0, w: 0}
+  m_margin: {x: 0, y: -13.170486, z: -22.418589, w: 0}
   m_textInfo:
     textComponent: {fileID: 1843068574}
     characterCount: 82
@@ -56224,7 +56300,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1854048184
 RectTransform:
   m_ObjectHideFlags: 0
@@ -56242,7 +56318,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -295}
+  m_AnchoredPosition: {x: 0, y: -259}
   m_SizeDelta: {x: 700, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1854048185
@@ -56352,8 +56428,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -87.200005, y: -952.0001}
-  m_SizeDelta: {x: 700, y: 400}
+  m_AnchoredPosition: {x: -230, y: -785}
+  m_SizeDelta: {x: 680, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1857968392
 MonoBehaviour:
@@ -56615,7 +56691,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 1.25
+  m_padding: 0
   m_canvasRenderer: {fileID: 1865866752}
   m_TextComponent: {fileID: 236695837}
   m_materialReferenceIndex: 1
@@ -57104,7 +57180,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -120, y: 78}
-  m_SizeDelta: {x: 700, y: 400}
+  m_SizeDelta: {x: 710, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1890713268
 MonoBehaviour:
@@ -59729,8 +59805,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -87.200005, y: -952.0001}
-  m_SizeDelta: {x: 700, y: 400}
+  m_AnchoredPosition: {x: -87.200005, y: -908}
+  m_SizeDelta: {x: 700, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2002569109
 MonoBehaviour:
@@ -60326,7 +60402,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: To Hud
+  m_text: To Hub
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -362303363670197902, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -61187,8 +61263,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -87.200005, y: -952.0001}
-  m_SizeDelta: {x: 700, y: 400}
+  m_AnchoredPosition: {x: -242, y: -851}
+  m_SizeDelta: {x: 700, y: 340}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2040208476
 MonoBehaviour:
@@ -61905,8 +61981,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -87.200005, y: -952.0001}
-  m_SizeDelta: {x: 700, y: 400}
+  m_AnchoredPosition: {x: -7, y: -927}
+  m_SizeDelta: {x: 700, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2070836063
 MonoBehaviour:
@@ -63008,7 +63084,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2, y: -305}
+  m_AnchoredPosition: {x: -2, y: -240}
   m_SizeDelta: {x: 700, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2123312442
@@ -63584,7 +63660,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -987}
+  m_AnchoredPosition: {x: 0, y: -874}
   m_SizeDelta: {x: 470, y: 470}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2136243412
