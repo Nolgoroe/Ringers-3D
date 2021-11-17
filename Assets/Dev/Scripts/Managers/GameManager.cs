@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
 
         powerupManager.instnatiatedZonesCounter = 0;
 
-        if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)currentLevel.specificTutorialEnum)) /////FOR TESTING ONLY FOR NOW!!!
+        if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)currentLevel.specificTutorialEnum))
         {
             //TutorialSequence.Instacne.DisplaySpecificTutorialSequence();
             StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
