@@ -262,9 +262,9 @@ public class PowerUpManager : MonoBehaviour
                 TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
             }
 
-            if (toWorkOn.partOfBoard && !toWorkOn.isLocked)
+            if (toWorkOn.partOfBoard /*&& !toWorkOn.isLocked*/)
             {
-                toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece();
+                toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(false);
 
                 toWorkOn.leftChild.symbolOfPiece = PieceSymbol.Joker;
                 toWorkOn.leftChild.colorOfPiece = PieceColor.Joker;
@@ -280,7 +280,7 @@ public class PowerUpManager : MonoBehaviour
 
             ShakePiecePowerUp(toWorkOn.gameObject);
 
-            FinishedUsingPowerup(toWorkOn.partOfBoard && !toWorkOn.isLocked, prop);
+            FinishedUsingPowerup(toWorkOn.partOfBoard /*&& !toWorkOn.isLocked*/, prop);
 
             Debug.Log("Joker");
         }
@@ -302,9 +302,9 @@ public class PowerUpManager : MonoBehaviour
                 TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
             }
 
-            if (toWorkOn.partOfBoard && !toWorkOn.isLocked)
+            if (toWorkOn.partOfBoard/* && !toWorkOn.isLocked*/)
             {
-                toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece();
+                toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(false);
 
                 PieceColor tempColor = toWorkOn.leftChild.colorOfPiece;
                 PieceSymbol tempSymbol = toWorkOn.leftChild.symbolOfPiece;
@@ -322,7 +322,7 @@ public class PowerUpManager : MonoBehaviour
                 ShakePiecePowerUp(toWorkOn.gameObject);
             }
 
-            FinishedUsingPowerup(toWorkOn.partOfBoard && !toWorkOn.isLocked, prop);
+            FinishedUsingPowerup(toWorkOn.partOfBoard /*&& !toWorkOn.isLocked*/, prop);
             Debug.Log("Switch");
         }
         else
@@ -344,7 +344,7 @@ public class PowerUpManager : MonoBehaviour
                 TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
             }
 
-            toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece();
+            toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(true);
 
             if (toWorkOn.isLocked)
             {
@@ -376,6 +376,7 @@ public class PowerUpManager : MonoBehaviour
         }
 
         Slice toWorkOn = ObjectToUsePowerUpOn.transform.parent.GetComponent<Slice>();
+
         int a, b;
         a = toWorkOn.sliceIndex;
         b = toWorkOn.sliceIndex - 1;
@@ -390,27 +391,31 @@ public class PowerUpManager : MonoBehaviour
 
         if (ConnectionManager.Instance.cells[a].isFull)
         {
+            SubPiece subPieceL = ConnectionManager.Instance.cells[a].pieceHeld.leftChild;
+
             rightFull = true;
 
             if (ConnectionManager.Instance.cells[a].pieceHeld.isLocked)
             {
                 ConnectionManager.Instance.cells[a].pieceHeld.isLocked = false;
 
-                Destroy(ConnectionManager.Instance.cells[a].pieceHeld.leftChild.transform.GetChild(0).gameObject);
-                ConnectionManager.Instance.cells[a].lockSpriteCellLeft.SetActive(false);
+                Destroy(subPieceL.transform.GetChild(0).gameObject);
+                //ConnectionManager.Instance.cells[a].lockSpriteCellLeft.SetActive(false);
             }
         }
 
         if (ConnectionManager.Instance.cells[b].isFull)
         {
+            SubPiece subPieceR = ConnectionManager.Instance.cells[b].pieceHeld.rightChild;
+
             leftFull = true;
 
             if (ConnectionManager.Instance.cells[b].pieceHeld.isLocked)
             {
                 ConnectionManager.Instance.cells[b].pieceHeld.isLocked = false;
 
-                Destroy(ConnectionManager.Instance.cells[b].pieceHeld.rightChild.transform.GetChild(0).gameObject);
-                ConnectionManager.Instance.cells[b].lockSpriteCellRight.SetActive(false);
+                Destroy(subPieceR.transform.GetChild(0).gameObject);
+                //ConnectionManager.Instance.cells[b].lockSpriteCellRight.SetActive(false);
             }
         }
 
@@ -420,13 +425,15 @@ public class PowerUpManager : MonoBehaviour
             toWorkOn.connectedCells[1].lockSpriteCellRight.SetActive(false);
         }
 
+        toWorkOn.isLock = false;
+
         if (toWorkOn.isLimiter)
         {
             if (rightFull && leftFull)
             {
                 Debug.Log("Right and Left");
                 Transform p = ConnectionManager.Instance.cells[a].pieceHeld.transform;
-                ConnectionManager.Instance.cells[a].RemovePiece();
+                ConnectionManager.Instance.cells[a].RemovePiece(true);
 
                 yield return new WaitForEndOfFrame();
                 ConnectionManager.Instance.cells[a].AddPiece(p, false);
@@ -437,7 +444,7 @@ public class PowerUpManager : MonoBehaviour
                 Debug.Log("Left Only");
 
                 Transform p = ConnectionManager.Instance.cells[b].pieceHeld.transform;
-                ConnectionManager.Instance.cells[b].RemovePiece();
+                ConnectionManager.Instance.cells[b].RemovePiece(true);
 
                 yield return new WaitForEndOfFrame();
                 ConnectionManager.Instance.cells[b].AddPiece(p, false);
@@ -447,7 +454,7 @@ public class PowerUpManager : MonoBehaviour
                 Debug.Log("Right Only");
 
                 Transform p = ConnectionManager.Instance.cells[a].pieceHeld.transform;
-                ConnectionManager.Instance.cells[a].RemovePiece();
+                ConnectionManager.Instance.cells[a].RemovePiece(true);
 
                 yield return new WaitForEndOfFrame();
                 ConnectionManager.Instance.cells[a].AddPiece(p, false);
@@ -478,9 +485,9 @@ public class PowerUpManager : MonoBehaviour
         
         Piece par = toWorkOn.transform.parent.GetComponent<Piece>();
 
-        if(toWorkOn.colorOfPiece != prop.transformColor && !par.isLocked && par.partOfBoard)
+        if(toWorkOn.colorOfPiece != prop.transformColor /*&& !par.isLocked*/ && par.partOfBoard)
         {
-            par.transform.parent.GetComponent<Cell>().RemovePiece();
+            par.transform.parent.GetComponent<Cell>().RemovePiece(false);
 
             toWorkOn.colorOfPiece = prop.transformColor;
 
@@ -507,9 +514,9 @@ public class PowerUpManager : MonoBehaviour
 
         Piece par = toWorkOn.transform.parent.GetComponent<Piece>();
 
-        if(toWorkOn.symbolOfPiece != prop.transformSymbol && par.partOfBoard && !par.isLocked)
+        if(toWorkOn.symbolOfPiece != prop.transformSymbol && par.partOfBoard /*&& !par.isLocked*/)
         {
-            par.transform.parent.GetComponent<Cell>().RemovePiece();
+            par.transform.parent.GetComponent<Cell>().RemovePiece(false);
 
             toWorkOn.symbolOfPiece = prop.transformSymbol;
 

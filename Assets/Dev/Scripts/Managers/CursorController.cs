@@ -419,7 +419,7 @@ public class CursorController : MonoBehaviour
 
             if (c)
             {
-                c.RemovePiece();
+                c.RemovePiece(false);
             }
         }
     }
@@ -534,7 +534,7 @@ public class CursorController : MonoBehaviour
                                 }
                                 else
                                 {
-                                    cell.RemovePiece();
+                                    cell.RemovePiece(false);
 
                                     if (isFromClip)
                                     {
@@ -599,7 +599,7 @@ public class CursorController : MonoBehaviour
                             }
                             else
                             {
-                                cell.RemovePiece();
+                                cell.RemovePiece(false);
 
                                 if (isFromClip)
                                 {

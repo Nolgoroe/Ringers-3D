@@ -14,6 +14,7 @@ public class SubPiece : MonoBehaviour
     //public Renderer symbolHolder;
 
     public bool isBadConnection;
+    //public bool isLocked;
     public int subPieceIndex;
 
     public Slice relevantSlice;

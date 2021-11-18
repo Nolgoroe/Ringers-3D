@@ -169,7 +169,7 @@ public class Cell : MonoBehaviour
         }
     }
 
-    public void RemovePiece()
+    public void RemovePiece(bool destoryLock)
     {
         isFull = false;
 
@@ -282,7 +282,7 @@ public class Cell : MonoBehaviour
 
         if (ConnectionManager.Instance.cells[cellIndex].pieceHeld.isLocked)
         {
-            ConnectionManager.Instance.UnlockPieces(ConnectionManager.Instance.cells[cellIndex], leftCell, rightCell);
+            ConnectionManager.Instance.UnlockPieces(ConnectionManager.Instance.cells[cellIndex], leftCell, rightCell, destoryLock);
         }
 
         if (leftCell.isFull)

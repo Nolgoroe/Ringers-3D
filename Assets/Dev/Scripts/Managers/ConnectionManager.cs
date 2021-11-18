@@ -698,43 +698,63 @@ public class ConnectionManager : MonoBehaviour
         //Debug.Log("Lock");
 
         //cells[relevent.sliceIndex].lockSprite.SetActive(true);
-        cells[relevent.sliceIndex].pieceHeld.isLocked = true;
+        //cells[relevent.sliceIndex].pieceHeld.isLocked = true;
 
-        if (relevent.sliceIndex == 0)
-        {
-            //cells[cells.Count - 1].lockSprite.SetActive(true);
-            cells[cells.Count - 1].pieceHeld.isLocked = true;
-        }
-        else
-        {
-            //cells[relevent.sliceIndex - 1].lockSprite.SetActive(true);
-            cells[relevent.sliceIndex - 1].pieceHeld.isLocked = true;
-        }
+        //if (relevent.sliceIndex == 0)
+        //{
+        //    //cells[cells.Count - 1].lockSprite.SetActive(true);
+        //    cells[cells.Count - 1].pieceHeld.isLocked = true;
+        //}
+        //else
+        //{
+        //    //cells[relevent.sliceIndex - 1].lockSprite.SetActive(true);
+        //    cells[relevent.sliceIndex - 1].pieceHeld.isLocked = true;
+        //}
 
         //if (!isLimiter)
         //{
         foreach (Cell c in relevent.connectedCells)
         {
+            Piece p = c.pieceHeld;
+            //SubPiece rightPiece = c.pieceHeld.rightChild.GetComponent<SubPiece>();
+            //SubPiece leftPiece = c.pieceHeld.leftChild.GetComponent<SubPiece>();
             if (!isLimiter)
             {
                 if (c.cellIndex == relevent.sliceIndex)
                 {
-                    GameObject go = Instantiate(leftPieceLockObject, c.pieceHeld.leftChild.transform);
+                    if (!p.isLocked)/// IF THERE IS NO LOCK ALREADY ON PIECE
+                    {
+                        GameObject go = Instantiate(leftPieceLockObject, c.pieceHeld.leftChild.transform);
+                        p.isLocked = true;
+                    }
+
                 }
                 else
                 {
-                    GameObject go = Instantiate(rightPieceLockObject, c.pieceHeld.rightChild.transform);
+                    if (!p.isLocked)/// IF THERE IS NO LOCK ALREADY ON PIECE
+                    {
+                        GameObject go = Instantiate(rightPieceLockObject, c.pieceHeld.rightChild.transform);
+                        p.isLocked = true;
+                    }
                 }
             }
             else
             {
                 if (c.cellIndex == relevent.sliceIndex)
                 {
-                    GameObject go = Instantiate(leftPieceLockLimiterObject, c.pieceHeld.leftChild.transform);
+                    if (!p.isLocked)/// IF THERE IS NO LOCK ALREADY ON PIECE
+                    {
+                        GameObject go = Instantiate(leftPieceLockLimiterObject, c.pieceHeld.leftChild.transform);
+                        p.isLocked = true;
+                    }
                 }
                 else
                 {
-                    GameObject go = Instantiate(rightPieceLockLimiterObject, c.pieceHeld.rightChild.transform);
+                    if (!p.isLocked)/// IF THERE IS NO LOCK ALREADY ON PIECE
+                    {
+                        GameObject go = Instantiate(rightPieceLockLimiterObject, c.pieceHeld.rightChild.transform);
+                        p.isLocked = true;
+                    }
                 }
             }
         }
@@ -758,17 +778,20 @@ public class ConnectionManager : MonoBehaviour
         //}
     }
 
-    public void UnlockPieces(Cell currentCell, Cell left, Cell right)
+    public void UnlockPieces(Cell currentCell, Cell left, Cell right, bool destoryLock)
     {
-        foreach (Transform t in currentCell.pieceHeld.transform)
+        if (destoryLock)
         {
-            if (t.childCount > 0)
+            foreach (Transform t in currentCell.pieceHeld.transform)
             {
-                Destroy(t.GetChild(0).gameObject);
+                if (t.childCount > 0)
+                {
+                    Destroy(t.GetChild(0).gameObject);
+                }
             }
-        }
 
-        currentCell.pieceHeld.isLocked = false;
+            currentCell.pieceHeld.isLocked = false;
+        }
 
         //if (currentCell.pieceHeld.leftChild.transform.childCount > 0)
         //{
@@ -780,23 +803,31 @@ public class ConnectionManager : MonoBehaviour
         //    Destroy(currentCell.pieceHeld.rightChild.transform.GetChild(0).gameObject);
         //}
 
-        if (left.pieceHeld.rightChild.transform.childCount > 0)
+        if (left.pieceHeld)
         {
-            Destroy(left.pieceHeld.rightChild.transform.GetChild(0).gameObject);
+            if (left.pieceHeld.rightChild.transform.childCount > 0)
+            {
+                if (destoryLock)
+                {
+                    Destroy(left.pieceHeld.rightChild.transform.GetChild(0).gameObject);
+                }
 
-            StartCoroutine(CheckAreCellsLocked(left));
+                StartCoroutine(CheckAreCellsLocked(left));
+            }
         }
 
-        if (right.pieceHeld.leftChild.transform.childCount > 0)
+        if (right.pieceHeld)
         {
-            Destroy(right.pieceHeld.leftChild.transform.GetChild(0).gameObject);
+            if (right.pieceHeld.leftChild.transform.childCount > 0)
+            {
+                if (destoryLock)
+                {
+                    Destroy(right.pieceHeld.leftChild.transform.GetChild(0).gameObject);
+                }
 
-            StartCoroutine(CheckAreCellsLocked(right));
+                StartCoroutine(CheckAreCellsLocked(right));
+            }
         }
-
-
-
-
     }
 
     private IEnumerator CheckAreCellsLocked(Cell toCheck) // THIS IS ENUMERATOR BCAUSE I'M DESTROYING THE LOCK IN THE SAME FRAME I'M CHECKING IF IT'S DESTROYED.. SO I NEED A DEALY

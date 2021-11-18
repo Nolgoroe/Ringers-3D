@@ -188,7 +188,7 @@ public class ClipManager : MonoBehaviour
 
     public void RepopulateLatestClip() //// In case player clicked the hell no option after placing last piece
     {
-        latestPiece.transform.parent.GetComponent<Cell>().RemovePiece();
+        latestPiece.transform.parent.GetComponent<Cell>().RemovePiece(false);
 
         latestPiece.transform.SetParent(emptyClip);
         latestPiece.localPosition = originalPiecePos;
