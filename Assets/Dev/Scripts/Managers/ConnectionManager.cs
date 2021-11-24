@@ -135,21 +135,6 @@ public class ConnectionManager : MonoBehaviour
                                 GameManager.Instance.unsuccessfullSlicesCount--;
                             }
                         }
-                        //else
-                        //{
-                        //    if (!supPieceArray[currentLeft].relevantSlice.fulfilledCondition)
-                        //    {
-                        //        if (conditionmet)
-                        //        {
-                        //            GameManager.Instance.unsuccessfullSlicesCount++;
-                        //        }
-                        //        else
-                        //        {
-                        //            GameManager.Instance.unsuccessfullSlicesCount--;
-                        //        }
-                        //    }
-
-                        //}
                     }
 
 
@@ -439,8 +424,6 @@ public class ConnectionManager : MonoBehaviour
     {
         conditionMet = false;
         isGoodConnect = false;
-        //bool isGoodConnect = false;
-        //bool conditionCheck = false;
 
         if (currentSide.relevantSlice)
         {
@@ -458,32 +441,29 @@ public class ConnectionManager : MonoBehaviour
                     isGoodConnect = true;
                 }
 
+                conditionMet = CheckFulfilledSliceCondition(currentSide.relevantSlice, result, currentSide, contestedSide);
+
                 if (!currentSide.relevantSlice.isLimiter)
                 {
-
-                    conditionMet = CheckFulfilledSliceCondition(currentSide.relevantSlice, result, currentSide, contestedSide);
-
-
-                    //if (conditionMet)
-                    //{
-                    //    return true;
-                    //}
-
+                    if (isGoodConnect)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
-                    conditionMet = CheckFulfilledSliceCondition(currentSide.relevantSlice, result, currentSide, contestedSide);
-
-                    //if (conditionCheck)
-                    //{
-                    //    conditionMet = conditionCheck;
-                    //    return true;
-                    //}
-                    //else
-                    //{
-                    //    conditionMet = false;
-                    //    return false;
-                    //}
+                    if (conditionMet)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
                 }
             }
@@ -499,6 +479,15 @@ public class ConnectionManager : MonoBehaviour
                 if (result.gSymbolMatch)
                 {
                     isGoodConnect = true;
+                }
+
+                if (isGoodConnect)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
         }
@@ -516,18 +505,15 @@ public class ConnectionManager : MonoBehaviour
                 isGoodConnect = true;
             }
 
+            if (isGoodConnect)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-
-        if (isGoodConnect)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-        //conditionMet = conditionCheck;
-        //return isGoodConnect;
     }
     public CompareResault TotalCheck(SubPiece current, SubPiece contested/*, PieceColor sCol, PieceSymbol sSym*/)
     {

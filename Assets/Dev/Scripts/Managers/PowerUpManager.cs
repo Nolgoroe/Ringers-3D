@@ -67,6 +67,8 @@ public class PowerUpManager : MonoBehaviour
 
     public Material jokerMat;
 
+    Vector3 originalPotionPos = Vector3.zero;
+
     private void Start()
     {
         GameManager.Instance.powerupManager = this;
@@ -277,6 +279,17 @@ public class PowerUpManager : MonoBehaviour
 
                 toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
             }
+            else
+            {
+                toWorkOn.leftChild.symbolOfPiece = PieceSymbol.Joker;
+                toWorkOn.leftChild.colorOfPiece = PieceColor.Joker;
+
+                toWorkOn.rightChild.symbolOfPiece = PieceSymbol.Joker;
+                toWorkOn.rightChild.colorOfPiece = PieceColor.Joker;
+
+                toWorkOn.leftChild.SetPieceAsJoker();
+                toWorkOn.rightChild.SetPieceAsJoker();
+            }
 
             ShakePiecePowerUp(toWorkOn.gameObject);
 
@@ -319,8 +332,23 @@ public class PowerUpManager : MonoBehaviour
                 toWorkOn.rightChild.RefreshPiece();
 
                 toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
-                ShakePiecePowerUp(toWorkOn.gameObject);
             }
+            else
+            {
+                PieceColor tempColor = toWorkOn.leftChild.colorOfPiece;
+                PieceSymbol tempSymbol = toWorkOn.leftChild.symbolOfPiece;
+
+                toWorkOn.leftChild.colorOfPiece = toWorkOn.rightChild.colorOfPiece;
+                toWorkOn.leftChild.symbolOfPiece = toWorkOn.rightChild.symbolOfPiece;
+
+                toWorkOn.rightChild.colorOfPiece = tempColor;
+                toWorkOn.rightChild.symbolOfPiece = tempSymbol;
+
+                toWorkOn.leftChild.RefreshPiece();
+                toWorkOn.rightChild.RefreshPiece();
+            }
+
+            ShakePiecePowerUp(toWorkOn.gameObject);
 
             FinishedUsingPowerup(toWorkOn.partOfBoard /*&& !toWorkOn.isLocked*/, prop);
             Debug.Log("Switch");
@@ -534,7 +562,7 @@ public class PowerUpManager : MonoBehaviour
         }
     }
     public void UsingPowerup(Button butt)
-    {
+    {         
         currentlyInUse = butt.gameObject.GetComponent<PowerupProperties>();
         UIManager.Instance.ActivateUsingPowerupMessage(true);
 
@@ -547,6 +575,7 @@ public class PowerUpManager : MonoBehaviour
             else
             {
                 but.interactable = false;
+                originalPotionPos = butt.gameObject.transform.position;
                 Vector3 pos = butt.gameObject.transform.position;
                 pos.y += 0.1f;
 
@@ -618,10 +647,10 @@ public class PowerUpManager : MonoBehaviour
             }
         }
 
-        Vector3 pos = prop.gameObject.transform.position;
-        pos.y -= 0.1f;
+        //Vector3 pos = prop.gameObject.transform.position;
+        //pos.y -= 0.1f;
 
-        LeanTween.move(prop.gameObject, pos, 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => ReactivatePowerButtons()); // animate
+        LeanTween.move(prop.gameObject, originalPotionPos, 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => ReactivatePowerButtons()); // animate
     }
 
     public void ReactivatePowerButtons()
@@ -637,6 +666,8 @@ public class PowerUpManager : MonoBehaviour
                 but.interactable = false;
             }
         }
+
+        originalPotionPos = Vector3.zero;
     }
 
     public void CallSpecialPowerUp(InGameSpecialPowerUp IGSP)
