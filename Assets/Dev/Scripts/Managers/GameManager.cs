@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using GameAnalyticsSDK;
+using System.IO;
+using System.Linq;
 
 [Serializable]
 public class NumAnimalTypedOnBoard
@@ -82,10 +85,10 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.TurnOnGameplayUI();
 
         //Camera.main.orthographicSize = 12;
-        Camera.main.orthographic = false;
+        //Camera.main.orthographic = false;
         Camera.main.fieldOfView = 60f;
         Camera.main.transform.position = inGameCamPos;
-        //Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
+        Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
         gameStarted = true;
 
@@ -179,10 +182,10 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.TurnOnGameplayUI();
 
             //Camera.main.orthographicSize = 12;
-            Camera.main.orthographic = false;
+            //Camera.main.orthographic = false;
             Camera.main.fieldOfView = 60f;
             Camera.main.transform.position = inGameCamPos;
-            //Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
+            Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
             gameStarted = true;
 
@@ -305,9 +308,16 @@ public class GameManager : MonoBehaviour
             DestroyImmediate(currentLevel);
         }
 
-        //currentLevel = (LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/Level " + levelNum);
-        Debug.Log("Scriptable Objects/Levels/" + ZoneManagerHelpData.Instance.currentZoneName + "/Level " + levelNum);
         currentLevel = Instantiate((LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/" + ZoneManagerHelpData.Instance.currentZoneName + "/Level " + levelNum));
+    }
+    public void ChooseLevelGrind(int levelNum)
+    {
+        if (currentLevel)
+        {
+            DestroyImmediate(currentLevel);
+        }
+
+        currentLevel = Instantiate((LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/Grind Levels" + "/Level " + levelNum));
     }
 
     public void DestroyAllLevelChildern()
@@ -353,6 +363,18 @@ public class GameManager : MonoBehaviour
                 {
                     LootManager.Instance.giveKey = true;
                 }
+
+                if (ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel)
+                {
+                    if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.grindLevelIndex)
+                    {
+                        ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind = true;
+                        //ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel.GetComponent<Image>().sprite = Resources.Load<Sprite>(ZoneManagerHelpData.Instance.currentZoneCheck.levelDonePath);
+                        //ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel.GetComponent<Button>().interactable = true;
+                        //ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel.GetComponent<Renderer>().material.SetColor("_BaseColor", ZoneManagerHelpData.Instance.currentZoneCheck.levelFirstTimeColor);
+
+                    }
+                }
             }
 
             Debug.Log("YOU WIN");
@@ -360,7 +382,7 @@ public class GameManager : MonoBehaviour
             gameWon = true;
 
             SoundManager.Instance.PlaySound(Sounds.SolvedRing);
-            AnimationManager.instance.StartEndLevelAnimSequence();
+            AnimationManager.instance.StartEndLevelAnimSequence(); ///// loot is given here
 
             PlayerManager.Instance.SavePlayerData();
 
@@ -397,32 +419,49 @@ public class GameManager : MonoBehaviour
     public void WinAfterAnimation()
     {
         Debug.Log("IN HERE");
-        if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+        if (currentLevel.isGrindLevel)
         {
-            ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone++;
             LootManager.Instance.GiveLoot();
-        }
 
-        UIManager.Instance.WinLevel();
+            UIManager.Instance.WinLevel();
 
-        if (currentLevel.levelIndexInZone != ZoneManagerHelpData.Instance.currentZoneCheck.lastLevelNum)
-        {
-
-            UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
+            UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+            UIManager.Instance.restartGrindLevel.gameObject.SetActive(true);
         }
         else
         {
-            UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+
+            if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+            {
+                ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone++;
+                LootManager.Instance.GiveLoot();
+            }
+
+            UIManager.Instance.WinLevel();
+
+            if (currentLevel.levelIndexInZone != ZoneManagerHelpData.Instance.currentZoneCheck.lastLevelNum)
+            {
+
+                UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
+            }
+            else
+            {
+                UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+            }
         }
+
 
     }
 
     public void RestartCurrentLevel()
     {
+        UIManager.isUsingUI = false;
+
         DestroyAllLevelChildern();
         LootManager.Instance.ResetLevelLootData();
         ConnectionManager.Instance.cells.Clear();
         CursorController.Instance.tutorialBadConnection = false;
+        UIManager.Instance.youWinScreen.SetActive(false);
 
         if (!isDisableTutorials && currentLevel.isTutorial)
         {
@@ -433,7 +472,14 @@ public class GameManager : MonoBehaviour
             powerupManager.ClearTutorialPowerups();
         }
 
-        ChooseLevel(currentLevel.levelNum/*, currentLevel.worldName*/);
+        if (currentLevel.isGrindLevel)
+        {
+            ChooseLevelGrind(currentLevel.levelNum);
+        }
+        else
+        {
+            ChooseLevel(currentLevel.levelNum);
+        }
 
         foreach (InGameSpecialPowerUp IGSP in powerupManager.specialPowerupsInGame)
         {
@@ -532,5 +578,18 @@ public class GameManager : MonoBehaviour
                 Debug.LogError("Cell index is either too high or too low - Min 0, Max 7");
             }
         }
+    }
+
+
+    public void ResetAllSaveData()
+    {
+        string[] filePaths = Directory.GetFiles(Application.persistentDataPath);
+
+        foreach (string filePath in filePaths)
+        {
+            File.Delete(filePath);
+        }
+
+        SceneManager.LoadScene(0);
     }
 }

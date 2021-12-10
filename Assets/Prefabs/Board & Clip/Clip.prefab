@@ -766,10 +766,10 @@ MonoBehaviour:
   - {x: 20, y: 3.26, z: 2}
   - {x: 20, y: 3.26, z: 2}
   delayClipMove: 0.1
-  timeToAnimateMove: 0.7
-  WaitTimeBeforeIn: 0.75
-  delayDarkenClip: 0.1
-  timeToDarkenClip: 0.6
+  timeToAnimateMove: 0.5
+  WaitTimeBeforeIn: 0.2
+  delayDarkenClip: 0
+  timeToDarkenClip: 0.5
 --- !u!114 &6078118212519704796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -783,7 +783,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchorType: 4
-  anchorOffset: {x: 0.03, y: 11.83, z: 0}
+  anchorOffset: {x: 0.03, y: 1, z: 0}
   isMovePos: 0
 --- !u!114 &3759112641593240021
 MonoBehaviour:

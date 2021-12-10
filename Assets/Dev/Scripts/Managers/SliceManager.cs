@@ -342,7 +342,7 @@ public class SliceManager : MonoBehaviour
             }
 
 
-            if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+            if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || GameManager.Instance.currentLevel.isGrindLevel)
             {
                 for (int i = 0; i < fullSlices.Count; i++)
                 {
@@ -467,7 +467,7 @@ public class SliceManager : MonoBehaviour
                 fullSlices[k].SetSliceData(fullSlices[k].transform, GameManager.Instance.currentLevel.slicesToSpawn[k], GameManager.Instance.currentLevel.lockSlices[k], GameManager.Instance.currentLevel.lootSlices[k], GameManager.Instance.currentLevel.limiterSlices[k]);
             }
 
-            if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+            if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || GameManager.Instance.currentLevel.isGrindLevel)
             {
                 for (int i = 0; i < fullSlices.Count; i++)
                 {

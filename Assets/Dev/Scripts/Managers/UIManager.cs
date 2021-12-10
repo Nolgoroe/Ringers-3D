@@ -12,13 +12,13 @@ public class ButtonsPerZone
 {
     public Zone theZone;
 
-    public Button[] zoneButtons;
+    public GameObject[] zone3DButtons;
 }
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    public GameObject mainMenu, hudCanvasDisplay, hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasBotom, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
+    public GameObject mainMenu, world3D, hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasBotom, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
     public GameObject InGameUiScreens;
     public GameObject blackLevelBG;
     public GameObject zoomInCorruptedBlack;
@@ -71,6 +71,7 @@ public class UIManager : MonoBehaviour
 
     //public Button commitButton;
     public Button nextLevelFromWinScreen;
+    public Button restartGrindLevel;
     public Button restartButton;
     public Button skipAnimationButton;
 
@@ -84,6 +85,7 @@ public class UIManager : MonoBehaviour
     //public Sprite[] dewDropsSprites;
 
     public Vector3 hubCameraPos;
+    public Vector3 hubCameraRot;
 
 
 
@@ -93,7 +95,7 @@ public class UIManager : MonoBehaviour
         Instance = this;
         mainMenu.SetActive(true); /// ony screen we should see at the start
 
-        hudCanvasDisplay.SetActive(true);
+        world3D.SetActive(true);
         hudCanvasUI.SetActive(false);
         hudCanvasUIBottomZoneMainMap.SetActive(true);
 
@@ -132,7 +134,7 @@ public class UIManager : MonoBehaviour
         tutorialCanvasParent.gameObject.SetActive(false);
         tutorialCanvasSpecific.SetActive(false);
         tutorialCanvasLevels.SetActive(false);
-
+        restartGrindLevel.gameObject.SetActive(false);
 
         dragControlsImage.sprite = toggleOnSprite;
         tapControlsImage.sprite = toggleOffSprite;
@@ -176,12 +178,12 @@ public class UIManager : MonoBehaviour
     public void ActivateGmaeplayCanvas()
     {
         gameplayCanvas.SetActive(true);
-        hudCanvasDisplay.SetActive(false);
+        world3D.SetActive(false);
         hudCanvasUI.SetActive(false);
     }
     public void ToMainMenu()
     {
-        hudCanvasDisplay.SetActive(false);
+        world3D.SetActive(false);
         hudCanvasUI.SetActive(false);
         mainMenu.SetActive(true);
     }
@@ -319,7 +321,15 @@ public class UIManager : MonoBehaviour
     }
     public void ChangeZoneName(string name, int levelID)
     {
-        currentLevelWorldName.text = name;
+        if (GameManager.Instance.currentLevel.isGrindLevel)
+        {
+            currentLevelWorldName.text = name;
+        }
+        else
+        {
+            currentLevelWorldName.text = name;
+        }
+
         currentLevelNumber.text = levelID.ToString();
     }
     public void ToHud(GameObject currentCanvas)
@@ -330,10 +340,19 @@ public class UIManager : MonoBehaviour
         PlayerManager.Instance.SavePlayerData();
         isUsingUI = false;
 
-        Camera.main.orthographic = true;
-        Camera.main.orthographicSize = 9f;
-        Camera.main.transform.position = hubCameraPos;
-        Camera.main.transform.rotation = Quaternion.Euler(Vector3.zero);
+        //Camera.main.orthographic = ;
+        //Camera.main.orthographicSize = 9f;
+        if (ZoneManagerHelpData.Instance.currentZoneCheck)
+        {
+            Vector3 currentZoneTransform = ZoneManagerHelpData.Instance.currentZoneCheck.transform.position;
+            Camera.main.transform.position = new Vector3(currentZoneTransform.x, 50, currentZoneTransform.z - 50);
+        }
+        else
+        {
+            Camera.main.transform.position = hubCameraPos;
+        }
+
+        Camera.main.transform.rotation = Quaternion.Euler(hubCameraRot);
 
         if (currentCanvas == gameplayCanvas)
         {
@@ -354,8 +373,7 @@ public class UIManager : MonoBehaviour
             ZoneManager.Instance.ActivateLevelDisplay();
             LootManager.Instance.DestoryWinScreenDisplyedLoot();
             GameManager.Instance.powerupManager.DestroySpecialPowersObjects();
-
-            Camera.main.transform.position = hubCameraPos;
+            restartGrindLevel.gameObject.SetActive(false);
 
             gameplayCanvas.SetActive(false);
             OptionsScreen.SetActive(false);
@@ -424,7 +442,7 @@ public class UIManager : MonoBehaviour
             Destroy(GameObject.FindWithTag("Key").gameObject);
         }
 
-        hudCanvasDisplay.SetActive(true);
+        world3D.SetActive(true);
         hudCanvasUI.SetActive(true);
     }
     public void OpenItemsAndForgeZone()
@@ -551,7 +569,7 @@ public class UIManager : MonoBehaviour
     {
         ringersHutDisplay.SetActive(true);
         ringersHutUICanvas.SetActive(true);
-        hudCanvasDisplay.SetActive(false);
+        world3D.SetActive(false);
         hudCanvasUI.SetActive(false);
     }
     public void OpenOptions()
@@ -648,26 +666,37 @@ public class UIManager : MonoBehaviour
         {
             ButtonsPerZone BPZ = buttonsPerZone.Where(p => p.theZone == ZoneManagerHelpData.Instance.listOfAllZones[ID]).Single();
 
+            if (BPZ.theZone.hasUnlockedGrind)
+            {
+                //BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconPath);
+                BPZ.theZone.zoneGrindLevel.GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelFirstTimeColor);
+                //BPZ.theZone.zoneGrindLevel.GetComponent<Button>().interactable = true;
+            }
+
             for (int i = 0; i < BPZ.theZone.maxLevelReachedInZone; i++)
             {
-                if (i == BPZ.zoneButtons.Length)
+                if (i == BPZ.zone3DButtons.Length)
                 {
                     break;
                 }
 
                 if (i + 1 != BPZ.theZone.maxLevelReachedInZone)
                 {
-                    BPZ.zoneButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelDonePath);
+                    //BPZ.zone3DButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelDonePath);
+                    //BPZ.zone3DButtons[i].GetComponent<Renderer>().material.color = BPZ.theZone.levelDoneColor;
+                    BPZ.zone3DButtons[i].GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelDoneColor);
                     //BPZ.zoneButtons[i].interactable = false; //// Disable levels that have already been completed
-                    BPZ.zoneButtons[i].interactable = true; /// temp for testing
+                    //BPZ.zone3DButtons[i].interactable = true; /// temp for testing
                 }
                 else
                 {
-                    BPZ.zoneButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconPath);
-                    BPZ.zoneButtons[i].interactable = true;
+                    //BPZ.zone3DButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconPath);
+                    //BPZ.zone3DButtons[i].GetComponent<Renderer>().material.color = BPZ.theZone.levelFirstTimeColor;
+                    BPZ.zone3DButtons[i].GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelFirstTimeColor);
+                    //BPZ.zone3DButtons[i].interactable = true;
                 }
-            }
 
+            }
         }
     }
     //public void UnlockZoneFirstTime(int ID)

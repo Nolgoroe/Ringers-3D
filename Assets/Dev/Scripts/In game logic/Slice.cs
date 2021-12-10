@@ -535,6 +535,7 @@ public class Slice : MonoBehaviour
         isLoot = false;
         isLimiter = false;
         fulfilledCondition = false;
+        hasSlice = false;
     }
 
     public Cell CheckIntRangeSliceCells(int num)

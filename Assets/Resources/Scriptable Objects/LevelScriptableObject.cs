@@ -19,6 +19,7 @@ public class stonePieceDataStruct
 public class LevelScriptableObject : ScriptableObject
 {
     public string worldName;
+    public bool isGrindLevel;
     public bool isDoubleRing;
     public GameObject boardPrefab;
 

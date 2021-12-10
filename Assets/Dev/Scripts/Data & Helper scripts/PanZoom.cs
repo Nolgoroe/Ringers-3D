@@ -9,67 +9,55 @@ public class PanZoom : MonoBehaviour
 
     public float MinZoom = 1;
     public float MaxZoom = 8;
-    public float currentZoom = 0;
-    public float addedOffsetTop = 2, addedOffsetBottom = 2;
 
     Touch touch;
 
-    public Sprite SpriteBounds;
-
     public Camera mainCam;
 
-    Transform Target;
+    public float panSpeed;
+    public float rightBound;
+    public float leftBound;
+    public float topBound;
+    public float bottomBound;
 
-    private float rightBound;
-    private float leftBound;
-    private float topBound;
-    private float bottomBound;
+    //float vertExtent;
+    //float horzExtent;
 
-    float vertExtent;
-    float horzExtent;
+    //float originalOrthofraphicsize;
 
-    float originalOrthofraphicsize;
-
-    Vector3 OriginalCamPos;
+    //Vector3 OriginalCamPos;
 
     bool isZoom;
-    //private void OnDisable()
-    //{
-    //    if (mainCam)
-    //    {
-    //        mainCam.transform.position = new Vector3(0, 0, -20);
-    //    }
-    //}
 
     private void Start()
     {
         mainCam = Camera.main;
 
-        mainCam.orthographic = true;
+        //mainCam.orthographic = true;
 
-        OriginalCamPos = mainCam.transform.position;
-        mainCam.orthographicSize = MaxZoom;
+        //OriginalCamPos = mainCam.transform.position;
+        //mainCam.orthographicSize = MaxZoom;
 
-        originalOrthofraphicsize = mainCam.orthographicSize;
+        //originalOrthofraphicsize = mainCam.orthographicSize;
 
-        mainCam.orthographicSize = originalOrthofraphicsize;
-        mainCam.transform.position = OriginalCamPos;
+        //mainCam.orthographicSize = originalOrthofraphicsize;
+        //mainCam.transform.position = OriginalCamPos;
 
-        vertExtent = MinZoom;
-        horzExtent = vertExtent * Screen.width / Screen.height;
+        //vertExtent = MinZoom;
+        //horzExtent = vertExtent * Screen.width / Screen.height;
 
-        Target = mainCam.transform;
+        //Target = mainCam.transform;
     }
 
     void Update()
     {
         if (!UIManager.isUsingUI)
         {
-            leftBound = (horzExtent - (SpriteBounds.bounds.size.x / 2.0f));
-            rightBound = ((SpriteBounds.bounds.size.x / 2.0f - horzExtent));
+            //leftBound = (horzExtent - (SpriteBounds.bounds.size.x / 2.0f));
+            //rightBound = ((SpriteBounds.bounds.size.x / 2.0f - horzExtent));
 
-            bottomBound = ((vertExtent - SpriteBounds.rect.size.y / 2.0f)) / SpriteBounds.pixelsPerUnit + 2;
-            topBound = ((SpriteBounds.rect.size.y / 2.0f - vertExtent)) / SpriteBounds.pixelsPerUnit + 2;
+            //bottomBound = ((vertExtent - SpriteBounds.rect.size.y / 2.0f)) / SpriteBounds.pixelsPerUnit + 2;
+            //topBound = ((SpriteBounds.rect.size.y / 2.0f - vertExtent)) / SpriteBounds.pixelsPerUnit + 2;
 
             if (Input.touchCount > 0)
             {
@@ -79,21 +67,25 @@ public class PanZoom : MonoBehaviour
                 {
                     if (!isZoom)
                     {
-                        if (touch.phase == TouchPhase.Began)
-                        {
-                            TouchStart = mainCam.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, -18));
-                        }
+                        //if (touch.phase == TouchPhase.Began)
+                        //{
+                        //    TouchStart = mainCam.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, -50));
+                        //}
 
                         if (touch.phase == TouchPhase.Moved)
                         {
-                            Vector3 Direction = TouchStart - mainCam.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, -18));
-                            mainCam.transform.position += Direction;
 
+                            Vector2 touchDeltaPos = touch.deltaPosition;
 
-                            Vector3 pos = new Vector3(Target.position.x, Target.position.y, -18);
-                            pos.x = Mathf.Clamp(pos.x, leftBound, rightBound);
-                            pos.y = Mathf.Clamp(pos.y, bottomBound, topBound);
-                            mainCam.transform.position = pos;
+                            Debug.Log(touchDeltaPos);
+                            float zPos = -touchDeltaPos.y;
+
+                            mainCam.transform.Translate(-touchDeltaPos.x * panSpeed, 0, zPos * panSpeed);
+
+                            mainCam.transform.position = new Vector3(
+                                Mathf.Clamp(mainCam.transform.position.x, leftBound, rightBound),
+                                50,
+                                Mathf.Clamp(mainCam.transform.position.z, bottomBound, topBound));
                         }
                     }
                 }
@@ -114,8 +106,12 @@ public class PanZoom : MonoBehaviour
                     float PrevMagnitude = (FirstFingerPrevPos - SecondFingerPrevPos).magnitude;
                     float CurrentMagnitude = (FirstFinger.position - SecondFinger.position).magnitude;
 
-                    float Difference = CurrentMagnitude - PrevMagnitude;
+                    float Difference = PrevMagnitude - CurrentMagnitude;
 
+                    Camera.main.fieldOfView += Difference * 0.1f;
+                    Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, MinZoom, MaxZoom);
+
+                    Camera.main.GetComponent<HideTiles>().updateMaxDistance(Difference);
                     //Zoom(Difference * 0.01f);
                 }
             }

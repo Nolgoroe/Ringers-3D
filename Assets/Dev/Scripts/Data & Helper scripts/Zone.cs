@@ -11,8 +11,9 @@ public class Zone : MonoBehaviour
 {
     public int id;
     public int keyLevelIndex;
+    public int grindLevelIndex;
     public string zoneName;
-    public bool hasAwardedKey, isUnlocked;
+    public bool hasAwardedKey, isUnlocked, hasUnlockedGrind;
 
     public int maxLevelReachedInZone;
     public int lastLevelNum;
@@ -21,6 +22,9 @@ public class Zone : MonoBehaviour
 
     public string levelDonePath, levelFirstTimeIconPath/*, unlockedZonePath*//*, lockedZonePath*/;
 
+    public Color levelDoneColor, levelFirstTimeColor;
+
+    public GameObject zoneGrindLevel;
 
     [HideInInspector]
     public Image zoneHeader;

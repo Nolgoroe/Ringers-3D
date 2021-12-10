@@ -22,6 +22,8 @@ public class CursorController : MonoBehaviour
     public float radiusCollide;
     public float piecePickupHeight;
 
+    public float pickupSpeed;
+
     Touch touch;
     Ray mouseRay;
 
@@ -55,7 +57,29 @@ public class CursorController : MonoBehaviour
     }
     void Update()
     {
-        if(UIManager.isUsingUI && UIManager.Instance.UnlockedZoneMessageView.activeInHierarchy)
+        if (!GameManager.Instance.gameStarted && !UIManager.isUsingUI)
+        {
+            if (Input.touchCount > 0)
+            {
+                touch = Input.touches[0];
+
+                if(touch.phase == TouchPhase.Began)
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(touch.position);
+                    RaycastHit hit;
+
+                    if(Physics.Raycast(ray, out hit))
+                    {
+                        if (hit.collider.CompareTag("Level Button"))
+                        {
+                            hit.transform.GetComponent<Interactable3D>().ShootEvent();
+                        }
+                    }
+                }
+            }
+        }
+
+        if(!GameManager.Instance.gameStarted && UIManager.isUsingUI && UIManager.Instance.UnlockedZoneMessageView.activeInHierarchy)
         {
             if (Input.touchCount > 0)
             {
@@ -79,7 +103,7 @@ public class CursorController : MonoBehaviour
             }
         }
 
-        if (PowerUpManager.IsUsingPowerUp)
+        if (GameManager.Instance.gameStarted && PowerUpManager.IsUsingPowerUp)
         {
             PowerUpControls();
             return;
@@ -421,16 +445,30 @@ public class CursorController : MonoBehaviour
             {
                 c.RemovePiece(false);
             }
+
+            cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, -0.1f);
+
+            LeanTween.move(followerTarget.gameObject, cursorPos, pickupSpeed); // animate
+            float angle = Mathf.Atan2(gameBoard.transform.position.y - followerTarget.position.y, gameBoard.transform.position.x - followerTarget.position.x) * Mathf.Rad2Deg;
+            followerTarget.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
         }
+
     }
     public void MoveFollower()
     {
+        LeanTween.cancel(followerTarget.gameObject);
+
         followerTarget.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, -0.1f);
         float angle = Mathf.Atan2(gameBoard.transform.position.y - followerTarget.position.y, gameBoard.transform.position.x - followerTarget.position.x) * Mathf.Rad2Deg;
         followerTarget.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
     }
     public void SnapFollower(Transform cellHit)
     {
+        if (followerTarget)
+        {
+            LeanTween.cancel(followerTarget.gameObject);
+        }
+
         if (TutorialSequence.Instacne.duringSequence)
         {
             //if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].isBoardPhase || TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].isClipPhase)
@@ -499,6 +537,11 @@ public class CursorController : MonoBehaviour
     }
     private void SnapFollowerTutorial(Transform cellHit)
     {
+        if (followerTarget)
+        {
+            LeanTween.cancel(followerTarget.gameObject);
+        }
+
         if (cellHit != null)
         {
             if (followerTarget)

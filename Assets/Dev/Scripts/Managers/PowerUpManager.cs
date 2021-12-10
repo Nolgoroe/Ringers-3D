@@ -462,6 +462,7 @@ public class PowerUpManager : MonoBehaviour
                 Debug.Log("Right and Left");
                 Transform p = ConnectionManager.Instance.cells[a].pieceHeld.transform;
                 ConnectionManager.Instance.cells[a].RemovePiece(true);
+                toWorkOn.hasSlice = false;
 
                 yield return new WaitForEndOfFrame();
                 ConnectionManager.Instance.cells[a].AddPiece(p, false);
@@ -473,6 +474,7 @@ public class PowerUpManager : MonoBehaviour
 
                 Transform p = ConnectionManager.Instance.cells[b].pieceHeld.transform;
                 ConnectionManager.Instance.cells[b].RemovePiece(true);
+                toWorkOn.hasSlice = false;
 
                 yield return new WaitForEndOfFrame();
                 ConnectionManager.Instance.cells[b].AddPiece(p, false);
@@ -483,6 +485,7 @@ public class PowerUpManager : MonoBehaviour
 
                 Transform p = ConnectionManager.Instance.cells[a].pieceHeld.transform;
                 ConnectionManager.Instance.cells[a].RemovePiece(true);
+                toWorkOn.hasSlice = false;
 
                 yield return new WaitForEndOfFrame();
                 ConnectionManager.Instance.cells[a].AddPiece(p, false);
@@ -490,6 +493,7 @@ public class PowerUpManager : MonoBehaviour
             else
             {
                 Debug.LogError("No Pieces to check connections");
+                toWorkOn.hasSlice = false;
             }
         }
 

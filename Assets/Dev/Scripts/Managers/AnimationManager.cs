@@ -305,7 +305,7 @@ public class AnimationManager : MonoBehaviour
 
     void FadeInCorruptZone(int ID)
     {
-        UIManager.Instance.hudCanvasDisplay.SetActive(false);
+        UIManager.Instance.world3D.SetActive(false);
         UIManager.Instance.hudCanvasUIBottomZoneMainMap.SetActive(false);
         //UIManager.Instance.hudCanvasUI.SetActive(false);
 
@@ -351,9 +351,9 @@ public class AnimationManager : MonoBehaviour
 
         Transform target = ZoneManagerHelpData.Instance.listOfAllZones[ID].transform;
 
-        LeanTween.move(toMove.gameObject, new Vector3(target.position.x, target.position.y, toMove.transform.position.z), cameraMoveTime).setEase(LeanTweenType.easeInOutQuad); // animate
+        LeanTween.move(toMove.gameObject, new Vector3(target.position.x, 50, toMove.transform.position.z), cameraMoveTime).setEase(LeanTweenType.easeInOutQuad); // animate
 
-        yield return new WaitUntil((() => Vector2.Distance(toMove.gameObject.transform.position, target.position) <= 0.1f));
+        yield return new WaitUntil((() => toMove.transform.position.x - target.position.x <= 0.1f));
         FadeInUnlcokScreen();
     }
 
