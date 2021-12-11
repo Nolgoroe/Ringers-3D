@@ -22,11 +22,15 @@ public class Interactable3D : MonoBehaviour
     {
         ZoneManager.Instance.SetCurrentZone(currentZoneID);
 
-        if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+        if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
         {
-            GameManager.Instance.ChooseLevel(overallLevelNum);
-            UIManager.Instance.ActivateGmaeplayCanvas();
-            GameManager.Instance.StartLevel();
+            if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+            {
+                GameManager.Instance.ChooseLevel(overallLevelNum);
+                UIManager.Instance.ActivateGmaeplayCanvas();
+                GameManager.Instance.StartLevel();
+            }
+
         }
     }
 
@@ -34,24 +38,34 @@ public class Interactable3D : MonoBehaviour
     {
         ZoneManager.Instance.SetCurrentZone(currentZoneID);
 
-        if (ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind)
+        if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
         {
-            GameManager.Instance.ChooseLevelGrind(overallLevelNum);
-            UIManager.Instance.ActivateGmaeplayCanvas();
-            GameManager.Instance.StartLevel();
+            if (ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind)
+            {
+                GameManager.Instance.ChooseLevelGrind(overallLevelNum);
+                UIManager.Instance.ActivateGmaeplayCanvas();
+                GameManager.Instance.StartLevel();
+            }
+
         }
+
     }
 
     public void LaunchTutorialLevel()
     {
         ZoneManager.Instance.SetCurrentZone(currentZoneID);
 
-        if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+        if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
         {
-            GameManager.Instance.ChooseLevel(overallLevelNum);
-            UIManager.Instance.ActivateGmaeplayCanvas();
-            GameManager.Instance.StartTutorialLevel();
+            if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+            {
+                GameManager.Instance.ChooseLevel(overallLevelNum);
+                UIManager.Instance.ActivateGmaeplayCanvas();
+                GameManager.Instance.StartTutorialLevel();
+            }
+
         }
+
     }
 
     public void LaunchKeyLevel()
@@ -59,11 +73,16 @@ public class Interactable3D : MonoBehaviour
         ZoneManager.Instance.CheckZoneAwardedKey(currentZoneID);
         ZoneManager.Instance.SetUnlockZone(NextZoneID);
 
-        if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+        if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
         {
-            GameManager.Instance.ChooseLevel(overallLevelNum);
-            UIManager.Instance.ActivateGmaeplayCanvas();
-            GameManager.Instance.StartLevel();
+            if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+            {
+                GameManager.Instance.ChooseLevel(overallLevelNum);
+                UIManager.Instance.ActivateGmaeplayCanvas();
+                GameManager.Instance.StartLevel();
+            }
+
         }
+
     }
 }
