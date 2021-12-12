@@ -12,7 +12,8 @@ public enum Sounds
     SolvedRing,
     TileMatch,
     TileUnmatch,
-    ButtonPressUI
+    ButtonPressUI,
+    AddTileBoard
     //// Add all sounds here
 }
 

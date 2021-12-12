@@ -19,6 +19,8 @@ public class Cell : MonoBehaviour
 
     public void AddPiece(Transform followerTarget, bool isNew)
     {
+        SoundManager.Instance.PlaySound(Sounds.AddTileBoard);
+
         isFull = true;
         followerTarget.SetParent(transform);
         followerTarget.position = new Vector3(followerTarget.parent.position.x, followerTarget.parent.position.y, followerTarget.parent.position.z);
