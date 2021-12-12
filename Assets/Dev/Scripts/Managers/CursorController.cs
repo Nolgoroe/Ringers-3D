@@ -23,6 +23,7 @@ public class CursorController : MonoBehaviour
     public float piecePickupHeight;
 
     public float pickupSpeed;
+    public float moveSpeed;
 
     Touch touch;
     Ray mouseRay;
@@ -458,9 +459,12 @@ public class CursorController : MonoBehaviour
     {
         LeanTween.cancel(followerTarget.gameObject);
 
-        followerTarget.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, -0.1f);
-        float angle = Mathf.Atan2(gameBoard.transform.position.y - followerTarget.position.y, gameBoard.transform.position.x - followerTarget.position.x) * Mathf.Rad2Deg;
+        //followerTarget.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, -0.1f);
+        float angle = Mathf.Atan2(gameBoard.transform.position.y - cursorPos.position.y, gameBoard.transform.position.x - cursorPos.position.x) * Mathf.Rad2Deg;
         followerTarget.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
+
+        cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, -0.1f);
+        LeanTween.move(followerTarget.gameObject, cursorPos, moveSpeed); // animate
     }
     public void SnapFollower(Transform cellHit)
     {
