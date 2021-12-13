@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 1d37c862afdbb2e499d13832456fbacc
+guid: 6940f1dc887ae804381f6076fd99f3a6
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: Jump
+    second: Take 001
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -35,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Jump
+      name: Take 001
       takeName: Take 001
       internalID: 0
       firstFrame: 1
-      lastFrame: 40
+      lastFrame: 90
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -52,7 +52,7 @@ ModelImporter:
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
+      keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
@@ -62,7 +62,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 1
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -113,11 +113,11 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
-    rootMotionBoneName: Pelvis
+    rootMotionBoneName: FoxRoot
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: e77167d89c2eb1a409bde29135e2c0ec,
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 1d2e05195b163324b8b5bf8621fc3346,
     type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
