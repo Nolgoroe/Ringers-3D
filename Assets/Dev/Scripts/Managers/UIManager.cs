@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject mainMenu, world3D, hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasBotom, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
     public GameObject InGameUiScreens;
-    public GameObject blackLevelBG;
+    //public GameObject blackLevelBG;
     public GameObject zoomInCorruptedBlack;
     public GameObject tutorialCanvasLevels;
     public GameObject tutorialCanvasSpecific;
@@ -122,7 +122,7 @@ public class UIManager : MonoBehaviour
         sureWantToRestartWithLoot.SetActive(false);
         sureWantToRestartNoLoot.SetActive(false);
         loseScreen.SetActive(false);
-        blackLevelBG.SetActive(false);
+        //blackLevelBG.SetActive(false);
         zoomInCorruptedBlack.SetActive(false);
         skipAnimationButton.gameObject.SetActive(false);
         InGameUiScreens.SetActive(false);
@@ -373,6 +373,8 @@ public class UIManager : MonoBehaviour
             ZoneManager.Instance.ActivateLevelDisplay();
             LootManager.Instance.DestoryWinScreenDisplyedLoot();
             GameManager.Instance.powerupManager.DestroySpecialPowersObjects();
+            LightingSettingsManager.instance.ResetLightData();
+
             restartGrindLevel.gameObject.SetActive(false);
 
             gameplayCanvas.SetActive(false);
@@ -381,7 +383,7 @@ public class UIManager : MonoBehaviour
             //youLoseText.SetActive(false);
             loseScreen.SetActive(false);
             tutorialCanvasLevels.SetActive(false);
-            blackLevelBG.SetActive(false);
+            //blackLevelBG.SetActive(false);
 
             foreach (GameObject go in allTutorialScreens)
             {
@@ -608,7 +610,7 @@ public class UIManager : MonoBehaviour
     {
         ClearLootDisplays();
         isUsingUI = true;
-        blackLevelBG.SetActive(false);
+        //blackLevelBG.SetActive(false);
         youWinScreen.SetActive(true);
 
         AnimalPrefabData prefabData = AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
@@ -755,14 +757,14 @@ public class UIManager : MonoBehaviour
     }
     public void TurnOffGameplayUI()
     {
-        blackLevelBG.SetActive(false);
+        //blackLevelBG.SetActive(false);
         gameplayCanvasBotom.SetActive(false);
         gameplayCanvasTop.SetActive(false);
         InGameUiScreens.SetActive(false);
     }
     public void TurnOnGameplayUI()
     {
-        blackLevelBG.SetActive(true);
+        //blackLevelBG.SetActive(true);
         gameplayCanvasBotom.SetActive(true);
         gameplayCanvasTop.SetActive(true);
         InGameUiScreens.SetActive(true);

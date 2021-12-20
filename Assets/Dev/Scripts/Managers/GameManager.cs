@@ -20,7 +20,8 @@ public class GameManager : MonoBehaviour
     public static bool gameWon;
     //public GameObject circleBoardPrefab;
     //public GameObject doubleCircleBoardPrefab;
-    public GameObject levelBGModel;
+    public GameObject[] levelBGModels;
+    public GameObject selectedLevelBG;
     public GameObject clipPrefab;
 
     public GameObject gameBoard;
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     public ClipManager clipManager;
     public SliceManager sliceManager;
     public PowerUpManager powerupManager;
+    //public LightingSettingsManager lightSettingsManager;
 
     public LevelScriptableObject currentLevel;
 
@@ -66,7 +68,12 @@ public class GameManager : MonoBehaviour
         GameAnalytics.Initialize();
         isSecondaryControls = false;
         isDisableTutorials = false;
-        levelBGModel.SetActive(false); /// temp
+
+        foreach (GameObject g in levelBGModels)
+        {
+            g.SetActive(false);
+        }
+
         gameWon = false;
     }
 
@@ -92,6 +99,7 @@ public class GameManager : MonoBehaviour
 
         gameStarted = true;
 
+        LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
         gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
 
         gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
@@ -115,12 +123,14 @@ public class GameManager : MonoBehaviour
         powerupManager.InstantiateSpecialPowers();
 
 
-        if (levelBGModel)
+        if (selectedLevelBG)
         {
             //GameObject go = Instantiate(backGroundPrefab, destroyOutOfLevel);
-            GameObject go = levelBGModel;
-            go.SetActive(true);
-            AnimalPrefabData data = InstantiateAnimals(go);
+            //GameObject go = levelBGModels;
+            //go.SetActive(true);
+            selectedLevelBG.SetActive(true);
+
+            AnimalPrefabData data = InstantiateAnimals(selectedLevelBG);
 
             if (data != null)
             {
@@ -144,6 +154,18 @@ public class GameManager : MonoBehaviour
         }
 
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
+    }
+
+    public void setCurrentLevelBG(int backgroundID)
+    {
+        if (ZoneManagerHelpData.Instance.currentZoneCheck.id == 0)
+        {
+            selectedLevelBG = levelBGModels[0];
+        }
+        else
+        {
+            selectedLevelBG = levelBGModels[backgroundID - 1]; // -1 since FOR NOW we don't have a bg for tutorial zone.. so we skip index 0
+        }
     }
 
     public void StartTutorialLevel()
@@ -208,13 +230,14 @@ public class GameManager : MonoBehaviour
 
             powerupManager.InstantiateSpecialPowers();
 
-            if (levelBGModel)
+            if (selectedLevelBG)
             {
                 //GameObject go = Instantiate(backGroundPrefab, destroyOutOfLevel);
-                GameObject go = levelBGModel;
-                go.SetActive(true);
+                //GameObject go = levelBGModels;
+                //go.SetActive(true);
+                selectedLevelBG.SetActive(true);
 
-                AnimalPrefabData data = InstantiateAnimals(go);
+                AnimalPrefabData data = InstantiateAnimals(selectedLevelBG);
 
                 if (data != null)
                 {
@@ -325,7 +348,7 @@ public class GameManager : MonoBehaviour
         //Debug.Log("Destroying Level");
 
         gameStarted = false;
-        levelBGModel.SetActive(false);
+        selectedLevelBG.SetActive(false);
 
         foreach (Transform child in destroyOutOfLevel)
         {

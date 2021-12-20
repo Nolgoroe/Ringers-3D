@@ -27,6 +27,7 @@ public class Interactable3D : MonoBehaviour
             if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
             {
                 GameManager.Instance.ChooseLevel(overallLevelNum);
+                GameManager.Instance.setCurrentLevelBG(currentZoneID);
                 UIManager.Instance.ActivateGmaeplayCanvas();
                 GameManager.Instance.StartLevel();
             }
@@ -43,6 +44,7 @@ public class Interactable3D : MonoBehaviour
             if (ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind)
             {
                 GameManager.Instance.ChooseLevelGrind(overallLevelNum);
+                GameManager.Instance.setCurrentLevelBG(currentZoneID);
                 UIManager.Instance.ActivateGmaeplayCanvas();
                 GameManager.Instance.StartLevel();
             }
@@ -60,6 +62,7 @@ public class Interactable3D : MonoBehaviour
             if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
             {
                 GameManager.Instance.ChooseLevel(overallLevelNum);
+                GameManager.Instance.setCurrentLevelBG(currentZoneID);
                 UIManager.Instance.ActivateGmaeplayCanvas();
                 GameManager.Instance.StartTutorialLevel();
             }

@@ -26,6 +26,8 @@ public class Zone : MonoBehaviour
 
     public GameObject zoneGrindLevel;
 
+    //public GameObject zoneBackground;
+
     [HideInInspector]
     public Image zoneHeader;
     private void Start()

@@ -77,7 +77,7 @@ public class PanZoom : MonoBehaviour
 
                             Vector2 touchDeltaPos = touch.deltaPosition;
 
-                            Debug.Log(touchDeltaPos);
+                            //Debug.Log(touchDeltaPos);
                             float zPos = -touchDeltaPos.y;
 
                             mainCam.transform.Translate(-touchDeltaPos.x * panSpeed, 0, zPos * panSpeed);
