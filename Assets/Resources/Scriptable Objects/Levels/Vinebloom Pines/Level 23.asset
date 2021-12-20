@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Level 23
   m_EditorClassIdentifier: 
   worldName: Vinebloom Pines
+  isGrindLevel: 0
   isDoubleRing: 0
   boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
     type: 3}
@@ -39,10 +40,10 @@ MonoBehaviour:
     symbolOfPieceRight: 4
     colorOfPieceLeft: 5
     symbolOfPieceLeft: 4
-  slicesToSpawn: 03000000030000000200000002000000
-  lockSlices: 00000000
-  lootSlices: 01010101
-  limiterSlices: 00000101
+  slicesToSpawn: 0100000003000000
+  lockSlices: 0100
+  lootSlices: 0101
+  limiterSlices: 0001
   RewardBags: 080000000900000002000000010000000b0000000a000000
   levelAvailableColors: 04000000010000000200000003000000
   levelAvailablesymbols: 000000000200000003000000
@@ -51,6 +52,6 @@ MonoBehaviour:
   specificTutorialEnum: 0
   isTutorial: 0
   arrayOfPieces: []
-  specificSliceSpots: 01000000030000000500000007000000
+  specificSliceSpots: 0200000006000000
   specificSlicesShapes: 
   specificSlicesColors: 
