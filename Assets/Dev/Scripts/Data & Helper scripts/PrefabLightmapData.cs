@@ -14,13 +14,13 @@ public class PrefabLightmapData : MonoBehaviour
         public int lightmapIndex;
         public Vector4 lightmapOffsetScale;
     }
-    [System.Serializable]
-    struct LightInfo
-    {
-        public Light light;
-        public int lightmapBaketype;
-        public int mixedLightingMode;
-    }
+    //[System.Serializable]
+    //struct LightInfo
+    //{
+    //    public Light light;
+    //    public int lightmapBaketype;
+    //    public int mixedLightingMode;
+    //}
 
     [SerializeField]
     RendererInfo[] m_RendererInfo;
@@ -30,8 +30,8 @@ public class PrefabLightmapData : MonoBehaviour
     Texture2D[] m_LightmapsDir;
     [SerializeField]
     Texture2D[] m_ShadowMasks;
-    [SerializeField]
-    LightInfo[] m_LightInfo;
+    //[SerializeField]
+    //LightInfo[] m_LightInfo;
 
 
     void Awake()
@@ -99,7 +99,7 @@ public class PrefabLightmapData : MonoBehaviour
         }
 
         LightmapSettings.lightmapsMode = (m_LightmapsDir.Length == m_Lightmaps.Length && directional) ? LightmapsMode.CombinedDirectional : LightmapsMode.NonDirectional;
-        ApplyRendererInfo(m_RendererInfo, offsetsindexes, m_LightInfo);
+        ApplyRendererInfo(m_RendererInfo, offsetsindexes/*, m_LightInfo*/);
         LightmapSettings.lightmaps = combinedLightmaps2;
     }
 
@@ -124,7 +124,7 @@ public class PrefabLightmapData : MonoBehaviour
 
 
 
-    static void ApplyRendererInfo(RendererInfo[] infos, int[] lightmapOffsetIndex, LightInfo[] lightsInfo)
+    static void ApplyRendererInfo(RendererInfo[] infos, int[] lightmapOffsetIndex/*, LightInfo[] lightsInfo*/)
     {
         for (int i = 0; i < infos.Length; i++)
         {
@@ -143,16 +143,16 @@ public class PrefabLightmapData : MonoBehaviour
 
         }
 
-        for (int i = 0; i < lightsInfo.Length; i++)
-        {
-            LightBakingOutput bakingOutput = new LightBakingOutput();
-            bakingOutput.isBaked = true;
-            bakingOutput.lightmapBakeType = (LightmapBakeType)lightsInfo[i].lightmapBaketype;
-            bakingOutput.mixedLightingMode = (MixedLightingMode)lightsInfo[i].mixedLightingMode;
+        //for (int i = 0; i < lightsInfo.Length; i++)
+        //{
+        //    LightBakingOutput bakingOutput = new LightBakingOutput();
+        //    bakingOutput.isBaked = true;
+        //    bakingOutput.lightmapBakeType = (LightmapBakeType)lightsInfo[i].lightmapBaketype;
+        //    bakingOutput.mixedLightingMode = (MixedLightingMode)lightsInfo[i].mixedLightingMode;
 
-            lightsInfo[i].light.bakingOutput = bakingOutput;
+        //    lightsInfo[i].light.bakingOutput = bakingOutput;
 
-        }
+        //}
 
 
     }
@@ -177,14 +177,14 @@ public class PrefabLightmapData : MonoBehaviour
             var lightmaps = new List<Texture2D>();
             var lightmapsDir = new List<Texture2D>();
             var shadowMasks = new List<Texture2D>();
-            var lightsInfos = new List<LightInfo>();
+            //var lightsInfos = new List<LightInfo>();
 
-            GenerateLightmapInfo(gameObject, rendererInfos, lightmaps, lightmapsDir, shadowMasks, lightsInfos);
+            GenerateLightmapInfo(gameObject, rendererInfos, lightmaps, lightmapsDir, shadowMasks/*, lightsInfos*/);
 
             instance.m_RendererInfo = rendererInfos.ToArray();
             instance.m_Lightmaps = lightmaps.ToArray();
             instance.m_LightmapsDir = lightmapsDir.ToArray();
-            instance.m_LightInfo = lightsInfos.ToArray();
+            //instance.m_LightInfo = lightsInfos.ToArray();
             instance.m_ShadowMasks = shadowMasks.ToArray();
 #if UNITY_2018_3_OR_NEWER
             var targetPrefab = PrefabUtility.GetCorrespondingObjectFromOriginalSource(instance.gameObject) as GameObject;
@@ -228,7 +228,7 @@ public class PrefabLightmapData : MonoBehaviour
 
     }
 
-    static void GenerateLightmapInfo(GameObject root, List<RendererInfo> rendererInfos, List<Texture2D> lightmaps, List<Texture2D> lightmapsDir, List<Texture2D> shadowMasks, List<LightInfo> lightsInfo)
+    static void GenerateLightmapInfo(GameObject root, List<RendererInfo> rendererInfos, List<Texture2D> lightmaps, List<Texture2D> lightmapsDir, List<Texture2D> shadowMasks/*, List<LightInfo> lightsInfo*/)
     {
         var renderers = root.GetComponentsInChildren<MeshRenderer>();
         foreach (MeshRenderer renderer in renderers)
@@ -263,21 +263,21 @@ public class PrefabLightmapData : MonoBehaviour
 
         var lights = root.GetComponentsInChildren<Light>(true);
 
-        foreach (Light l in lights)
-        {
-            LightInfo lightInfo = new LightInfo();
-            lightInfo.light = l;
-            lightInfo.lightmapBaketype = (int)l.lightmapBakeType;
-#if UNITY_2020_1_OR_NEWER
-            lightInfo.mixedLightingMode = (int)UnityEditor.Lightmapping.lightingSettings.mixedBakeMode;            
-#elif UNITY_2018_1_OR_NEWER
-            lightInfo.mixedLightingMode = (int)UnityEditor.LightmapEditorSettings.mixedBakeMode;
-#else
-            lightInfo.mixedLightingMode = (int)l.bakingOutput.lightmapBakeType;            
-#endif
-            lightsInfo.Add(lightInfo);
+//        foreach (Light l in lights)
+//        {
+//            LightInfo lightInfo = new LightInfo();
+//            lightInfo.light = l;
+//            lightInfo.lightmapBaketype = (int)l.lightmapBakeType;
+//#if UNITY_2020_1_OR_NEWER
+//            lightInfo.mixedLightingMode = (int)UnityEditor.Lightmapping.lightingSettings.mixedBakeMode;            
+//#elif UNITY_2018_1_OR_NEWER
+//            lightInfo.mixedLightingMode = (int)UnityEditor.LightmapEditorSettings.mixedBakeMode;
+//#else
+//            lightInfo.mixedLightingMode = (int)l.bakingOutput.lightmapBakeType;            
+//#endif
+//            lightsInfo.Add(lightInfo);
 
-        }
+//        }
     }
 #endif
 
