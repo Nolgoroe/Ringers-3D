@@ -565,6 +565,7 @@ public class ConnectionManager : MonoBehaviour
                 subPiecesOnBoard[i].subPieceIndex = i;
             }
         }
+
         for (int i = 0; i < subPiecesDoubleRing.Length; i++)
         {
             if (subPiecesDoubleRing[i])

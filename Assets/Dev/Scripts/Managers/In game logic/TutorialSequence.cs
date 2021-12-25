@@ -21,7 +21,7 @@ public class Sequence
 {
     public int levelTutorialIndex;
     public int EndPhaseID;
-    public OutLineData[] cellOutlines;
+    //public OutLineData[] cellOutlines; // old lock system
     public Phase[] phase;
     public GameObject[] screens;
 
@@ -116,7 +116,7 @@ public class TutorialSequence : MonoBehaviour
 
             //DisplayTutorialScreens();
 
-            OutlineInstantiate();
+            //OutlineInstantiate(); // old lock system
             UIManager.Instance.dealButton.interactable = false;
 
             currentPhaseInSequenceLevels = -1; /// it goes up by one in function so it actually starts at 0
@@ -731,20 +731,20 @@ public class TutorialSequence : MonoBehaviour
         DisplayTutorialHandTap(pos,tutorialHandRotationDealButton);
     }
 
-    public void OutlineInstantiate()
-    {
-        foreach (OutLineData old in levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].cellOutlines)
-        {
-            if (old.right)
-            {
-                Instantiate(ConnectionManager.Instance.cells[old.cellIndex].outlinedSpriteRight, ConnectionManager.Instance.cells[old.cellIndex].transform);
-            }
-            else
-            {
-                Instantiate(ConnectionManager.Instance.cells[old.cellIndex].outlinedSpriteLeft, ConnectionManager.Instance.cells[old.cellIndex].transform);
-            }
-        }
-    }
+    //public void OutlineInstantiate() // old lock system
+    //{
+    //    foreach (OutLineData old in levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].cellOutlines)
+    //    {
+    //        if (old.right)
+    //        {
+    //            Instantiate(ConnectionManager.Instance.cells[old.cellIndex].outlinedSpriteRight, ConnectionManager.Instance.cells[old.cellIndex].transform);
+    //        }
+    //        else
+    //        {
+    //            Instantiate(ConnectionManager.Instance.cells[old.cellIndex].outlinedSpriteLeft, ConnectionManager.Instance.cells[old.cellIndex].transform);
+    //        }
+    //    }
+    //}
 
     public void UnlockAll()
     {

@@ -10,8 +10,8 @@ public class Cell : MonoBehaviour
     public Piece pieceHeld;
     //public bool isLimited;
     //public GameObject lockSprite;
-    public GameObject lockSpriteCellRight, lockSpriteCellLeft;
-    public GameObject outlinedSpriteRight, outlinedSpriteLeft;
+    //public GameObject lockSpriteCellRight, lockSpriteCellLeft; // previous lock system
+    //public GameObject outlinedSpriteRight, outlinedSpriteLeft; // previous lock system
     public Transform rightParticleZone, leftParticleZone;
     public Transform interconnectedRightParticleZone, interconnectedLeftParticleZone;
 

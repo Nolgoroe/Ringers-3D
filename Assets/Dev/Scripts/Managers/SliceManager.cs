@@ -41,8 +41,10 @@ public class SliceManager : MonoBehaviour
     public Texture[] sliceColors;
     public Texture[] sliceSymbolsSprites;
 
-    public Texture[] limiterSliceColors;
-    public Texture[] limiterSliceSymbolsSprites;
+    //public Texture[] limiterSliceColors; // this was used for 3D limiters
+    public Sprite[] limiterSliceColors;
+    //public Texture[] limiterSliceSymbolsSprites;
+    public Sprite[] limiterSliceSymbolsSprites;
 
    //public Sprite[] sliceLootIcons;
 
@@ -61,8 +63,10 @@ public class SliceManager : MonoBehaviour
     public Dictionary<PieceSymbol, Texture> sliceSymbolToSprite;
     public Dictionary<PieceColor, Texture> slicecolorToSprite;
 
-    public Dictionary<PieceSymbol, Texture> limiterSliceSymbolToSprite;
-    public Dictionary<PieceColor, Texture> limiterSlicecolorToSprite;
+    //public Dictionary<PieceSymbol, Texture> limiterSliceSymbolToSprite; // this was used for 3D limiters
+    public Dictionary<PieceSymbol, Sprite> limiterSliceSymbolToSprite;
+    //public Dictionary<PieceColor, Texture> limiterSlicecolorToSprite; // this was used for 3D limiters
+    public Dictionary<PieceColor, Sprite> limiterSlicecolorToSprite;
     //public Dictionary<PieceColor, Material> pieceColorToColor;
 
     //public Dictionary<LootPacks, Sprite> lootToIcon;
@@ -84,8 +88,10 @@ public class SliceManager : MonoBehaviour
         sliceSymbolToSprite = new Dictionary<PieceSymbol, Texture>();
         slicecolorToSprite = new Dictionary<PieceColor, Texture>();
 
-        limiterSliceSymbolToSprite = new Dictionary<PieceSymbol, Texture>();
-        limiterSlicecolorToSprite = new Dictionary<PieceColor, Texture>();
+        //limiterSliceSymbolToSprite = new Dictionary<PieceSymbol, Texture>(); // this was used for 3D limiters
+        limiterSliceSymbolToSprite = new Dictionary<PieceSymbol, Sprite>();
+        //limiterSlicecolorToSprite = new Dictionary<PieceColor, Texture>(); // this was used for 3D limiters
+        limiterSlicecolorToSprite = new Dictionary<PieceColor, Sprite>();
 
         //pieceColorToColor = new Dictionary<PieceColor, Material>();
 
@@ -126,9 +132,14 @@ public class SliceManager : MonoBehaviour
 
         for (int i = 0; i < limiterSliceSymbolsSprites.Length; i++)
         {
+            //limiterSliceSymbolToSprite.Add((PieceSymbol)i, limiterSliceSymbolsSprites[i]); // this was used for 3D limiters
             limiterSliceSymbolToSprite.Add((PieceSymbol)i, limiterSliceSymbolsSprites[i]);
         }
 
+        //for (int i = 0; i < limiterSliceColors.Length; i++)
+        //{
+        //    limiterSlicecolorToSprite.Add((PieceColor)i, limiterSliceColors[i]); // this was used for 3D limiters
+        //}
         for (int i = 0; i < limiterSliceColors.Length; i++)
         {
             limiterSlicecolorToSprite.Add((PieceColor)i, limiterSliceColors[i]);
