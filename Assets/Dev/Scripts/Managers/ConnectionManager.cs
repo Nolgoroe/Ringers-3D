@@ -23,8 +23,8 @@ public class ConnectionManager : MonoBehaviour
     public ParticleSystem connectedTilesVFX /*, badConnectionParticle*/;
 
     public GameObject lootEffectPrefab;
-    public GameObject rightPieceLockObject, leftPieceLockObject;
-    public GameObject rightPieceLockLimiterObject, leftPieceLockLimiterObject;
+    //public GameObject rightPieceLockObject, leftPieceLockObject; // old lock system
+    //public GameObject rightPieceLockLimiterObject, leftPieceLockLimiterObject; // old lock system
 
     //public Material rockLIT,rockUnLIT;
 
@@ -707,51 +707,51 @@ public class ConnectionManager : MonoBehaviour
         relevent.lockSpriteHeighlight.SetActive(true);
 
 
-        foreach (Cell c in relevent.connectedCells)
-        {
-            Piece p = c.pieceHeld;
-            //SubPiece rightPiece = c.pieceHeld.rightChild.GetComponent<SubPiece>();
-            //SubPiece leftPiece = c.pieceHeld.leftChild.GetComponent<SubPiece>();
-            if (!isLimiter)
-            {
-                if (c.cellIndex == relevent.sliceIndex)
-                {
-                    if (!p.isLocked)/// IF THERE IS NO LOCK ALREADY ON PIECE
-                    {
-                        GameObject go = Instantiate(leftPieceLockObject, c.pieceHeld.leftChild.transform);
-                        p.isLocked = true;
-                    }
+        //foreach (Cell c in relevent.connectedCells)  // old lock system
+        //{
+        //    Piece p = c.pieceHeld;
+        //    //SubPiece rightPiece = c.pieceHeld.rightChild.GetComponent<SubPiece>();
+        //    //SubPiece leftPiece = c.pieceHeld.leftChild.GetComponent<SubPiece>();
+        //    if (!isLimiter)
+        //    {
+        //        if (c.cellIndex == relevent.sliceIndex)
+        //        {
+        //            if (!p.isLocked)/// IF THERE IS NO LOCK ALREADY ON PIECE
+        //            {
+        //                GameObject go = Instantiate(leftPieceLockObject, c.pieceHeld.leftChild.transform);
+        //                p.isLocked = true;
+        //            }
 
-                }
-                else
-                {
-                    if (!p.isLocked)/// IF THERE IS NO LOCK ALREADY ON PIECE
-                    {
-                        GameObject go = Instantiate(rightPieceLockObject, c.pieceHeld.rightChild.transform);
-                        p.isLocked = true;
-                    }
-                }
-            }
-            else
-            {
-                if (c.cellIndex == relevent.sliceIndex)
-                {
-                    if (!p.isLocked)/// IF THERE IS NO LOCK ALREADY ON PIECE
-                    {
-                        GameObject go = Instantiate(leftPieceLockLimiterObject, c.pieceHeld.leftChild.transform);
-                        p.isLocked = true;
-                    }
-                }
-                else
-                {
-                    if (!p.isLocked)/// IF THERE IS NO LOCK ALREADY ON PIECE
-                    {
-                        GameObject go = Instantiate(rightPieceLockLimiterObject, c.pieceHeld.rightChild.transform);
-                        p.isLocked = true;
-                    }
-                }
-            }
-        }
+        //        }
+        //        else
+        //        {
+        //            if (!p.isLocked)/// IF THERE IS NO LOCK ALREADY ON PIECE
+        //            {
+        //                GameObject go = Instantiate(rightPieceLockObject, c.pieceHeld.rightChild.transform);
+        //                p.isLocked = true;
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (c.cellIndex == relevent.sliceIndex)
+        //        {
+        //            if (!p.isLocked)/// IF THERE IS NO LOCK ALREADY ON PIECE
+        //            {
+        //                GameObject go = Instantiate(leftPieceLockLimiterObject, c.pieceHeld.leftChild.transform);
+        //                p.isLocked = true;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (!p.isLocked)/// IF THERE IS NO LOCK ALREADY ON PIECE
+        //            {
+        //                GameObject go = Instantiate(rightPieceLockLimiterObject, c.pieceHeld.rightChild.transform);
+        //                p.isLocked = true;
+        //            }
+        //        }
+        //    }
+        //}
 
         //relevent.isLock = false;
         //}

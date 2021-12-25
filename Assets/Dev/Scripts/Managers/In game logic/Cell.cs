@@ -318,8 +318,11 @@ public class Cell : MonoBehaviour
                 {
                     SoundManager.Instance.PlaySound(Sounds.RuneLimiterUnMatch);
 
-                    pieceHeld.leftChild.relevantSlice.anim.SetBool("Reverse", true);
-                    pieceHeld.leftChild.relevantSlice.anim.SetBool("Activate", false);
+                    if (pieceHeld.leftChild.relevantSlice.anim)
+                    {
+                        pieceHeld.leftChild.relevantSlice.anim.SetBool("Reverse", true);
+                        pieceHeld.leftChild.relevantSlice.anim.SetBool("Activate", false);
+                    }
                 }
 
                 if (!leftCell.pieceHeld.rightChild.isBadConnection)
@@ -361,8 +364,11 @@ public class Cell : MonoBehaviour
                 {
                     SoundManager.Instance.PlaySound(Sounds.RuneLimiterUnMatch);
 
-                    pieceHeld.rightChild.relevantSlice.anim.SetBool("Reverse", true);
-                    pieceHeld.rightChild.relevantSlice.anim.SetBool("Activate", false);
+                    if (pieceHeld.rightChild.relevantSlice.anim)
+                    {
+                        pieceHeld.rightChild.relevantSlice.anim.SetBool("Reverse", true);
+                        pieceHeld.rightChild.relevantSlice.anim.SetBool("Activate", false);
+                    }
                 }
 
                 if (rightCell.isFull)
