@@ -171,7 +171,7 @@ public class Cell : MonoBehaviour
         }
     }
 
-    public void RemovePiece(bool destoryLock)
+    public void RemovePiece(bool destoryLock, bool fromSlicePower)
     {
         isFull = false;
 
@@ -312,11 +312,15 @@ public class Cell : MonoBehaviour
                 //pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
 
                 SoundManager.Instance.PlaySound(Sounds.TileUnmatch);
-                pieceHeld.leftChild.SetDisconnectedMaterial();
+
+                if (!fromSlicePower)
+                {
+                    pieceHeld.leftChild.SetDisconnectedMaterial();
+                }
 
                 if (pieceHeld.leftChild.relevantSlice.isLimiter && pieceHeld.leftChild.relevantSlice.fulfilledCondition)
                 {
-                    SoundManager.Instance.PlaySound(Sounds.RuneLimiterUnMatch);
+                    //SoundManager.Instance.PlaySound(Sounds.RuneLimiterUnMatch);
 
                     if (pieceHeld.leftChild.relevantSlice.anim)
                     {
@@ -328,7 +332,10 @@ public class Cell : MonoBehaviour
                 if (!leftCell.pieceHeld.rightChild.isBadConnection)
                 {
                     //leftCell.pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
-                    leftCell.pieceHeld.rightChild.SetDisconnectedMaterial();
+                    if (!fromSlicePower)
+                    {
+                        leftCell.pieceHeld.rightChild.SetDisconnectedMaterial();
+                    }
                 }
             }
         }
@@ -358,11 +365,15 @@ public class Cell : MonoBehaviour
                 //pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
 
                 SoundManager.Instance.PlaySound(Sounds.TileUnmatch);
-                pieceHeld.rightChild.SetDisconnectedMaterial();
+
+                if (!fromSlicePower)
+                {
+                    pieceHeld.rightChild.SetDisconnectedMaterial();
+                }
 
                 if (pieceHeld.rightChild.relevantSlice.isLimiter && pieceHeld.rightChild.relevantSlice.fulfilledCondition)
                 {
-                    SoundManager.Instance.PlaySound(Sounds.RuneLimiterUnMatch);
+                    //SoundManager.Instance.PlaySound(Sounds.RuneLimiterUnMatch);
 
                     if (pieceHeld.rightChild.relevantSlice.anim)
                     {
@@ -376,7 +387,11 @@ public class Cell : MonoBehaviour
                     if (!rightCell.pieceHeld.leftChild.isBadConnection)
                     {
                         //rightCell.pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
-                        rightCell.pieceHeld.leftChild.SetDisconnectedMaterial();
+
+                        if (!fromSlicePower)
+                        {
+                            rightCell.pieceHeld.leftChild.SetDisconnectedMaterial();
+                        }
                     }
                 }
             }

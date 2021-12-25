@@ -706,6 +706,11 @@ public class ConnectionManager : MonoBehaviour
 
         relevent.lockSpriteHeighlight.SetActive(true);
 
+        foreach (Cell c in relevent.connectedCells)
+        {
+            Piece p = c.pieceHeld;
+            p.isLocked = true;
+        }
 
         //foreach (Cell c in relevent.connectedCells)  // old lock system
         //{

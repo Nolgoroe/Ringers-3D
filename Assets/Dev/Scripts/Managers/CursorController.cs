@@ -444,7 +444,7 @@ public class CursorController : MonoBehaviour
 
             if (c)
             {
-                c.RemovePiece(false);
+                c.RemovePiece(false, false);
             }
 
             cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, -0.1f);
@@ -581,7 +581,7 @@ public class CursorController : MonoBehaviour
                                 }
                                 else
                                 {
-                                    cell.RemovePiece(false);
+                                    cell.RemovePiece(false, false);
 
                                     if (isFromClip)
                                     {
@@ -646,7 +646,7 @@ public class CursorController : MonoBehaviour
                             }
                             else
                             {
-                                cell.RemovePiece(false);
+                                cell.RemovePiece(false, false);
 
                                 if (isFromClip)
                                 {
