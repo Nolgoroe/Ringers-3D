@@ -453,6 +453,7 @@ public class PowerUpManager : MonoBehaviour
             //toWorkOn.connectedCells[1].lockSpriteCellRight.SetActive(false); // old lock system
 
             toWorkOn.lockSprite.SetActive(false);
+            toWorkOn.lockSpriteHeighlight.SetActive(false);
         }
 
         toWorkOn.isLock = false;

@@ -700,6 +700,13 @@ public class ConnectionManager : MonoBehaviour
 
         //if (!isLimiter)
         //{
+
+        /// TURN ON HEIGHLIGHT ON SLICE HERE
+
+
+        relevent.lockSpriteHeighlight.SetActive(true);
+
+
         foreach (Cell c in relevent.connectedCells)
         {
             Piece p = c.pieceHeld;
