@@ -126,12 +126,13 @@ public class tempMoveScript : MonoBehaviour
             Vector3 pos = RT.anchoredPosition3D;
 
             CorruptedZonesSaveData.Instance.SetNewDeviceToSave(connectedCDD, pos);
-            CorruptedZonesSaveData.Instance.SaveZonesData();
+            //CorruptedZonesSaveData.Instance.SaveZonesData();
 
 
             CorruptedZonesManager.Instance.SetClensingZone(CorruptedZonesManager.Instance.currentActiveZoneData);
 
-            PlayerManager.Instance.SavePlayerData();
+            //PlayerManager.Instance.SavePlayerData();
+            //PlayfabManager.instance.SaveAllGameData();
         }
     }
 

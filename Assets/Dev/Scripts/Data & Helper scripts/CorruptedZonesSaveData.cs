@@ -49,28 +49,36 @@ public class CorruptedZonesSaveData : MonoBehaviour
 
     string savePath;
 
-    void Start()
+    private void Awake()
     {
         Instance = this;
+    }
+
+    public void Init()
+    {
+        Instance = this;
+
         timesPerZones = new List<SavedTimePerZone>();
         devicesToSave = new List<savedDevicesData>();
 
+        UpdateStateInGame();
+
         InvokeRepeating("SaveIteration", 0, 5f);
 
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            savePath = Application.persistentDataPath + "/CorruptZoneSaveData.txt";
-        }
-        else
-        {
-            savePath = Application.dataPath + "/Save Files Folder/CorruptZoneSaveData.txt";
-        }
+        //if (Application.platform == RuntimePlatform.Android)
+        //{
+        //    savePath = Application.persistentDataPath + "/CorruptZoneSaveData.txt";
+        //}
+        //else
+        //{
+        //    savePath = Application.dataPath + "/Save Files Folder/CorruptZoneSaveData.txt";
+        //}
 
 
-        if (File.Exists(savePath))
-        {
-            LoadZonesData();
-        }
+        //if (File.Exists(savePath))
+        //{
+        //    LoadZonesData();
+        //}
     }
 
 
@@ -89,7 +97,7 @@ public class CorruptedZonesSaveData : MonoBehaviour
             }
         }
 
-        SaveZonesData();
+        //SaveZonesData();
     }
 
     //public void RemoveElementFromSaveData(CorruptedZoneViewHelpData CZVHD)
@@ -100,22 +108,22 @@ public class CorruptedZonesSaveData : MonoBehaviour
     //    }
     //}
 
-    public void LoadZonesData()
-    {
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            savePath = Application.persistentDataPath + "/CorruptZoneSaveData.txt";
-        }
-        else
-        {
-            savePath = Application.dataPath + "/Save Files Folder/CorruptZoneSaveData.txt";
-        }
+    //public void LoadZonesData()
+    //{
+    //    if (Application.platform == RuntimePlatform.Android)
+    //    {
+    //        savePath = Application.persistentDataPath + "/CorruptZoneSaveData.txt";
+    //    }
+    //    else
+    //    {
+    //        savePath = Application.dataPath + "/Save Files Folder/CorruptZoneSaveData.txt";
+    //    }
 
-        JsonUtility.FromJsonOverwrite(File.ReadAllText(savePath), this);
+    //    JsonUtility.FromJsonOverwrite(File.ReadAllText(savePath), this);
 
 
-        UpdateStateInGame();
-    }
+    //    UpdateStateInGame();
+    //}
 
     private void UpdateStateInGame()
     {
@@ -238,20 +246,20 @@ public class CorruptedZonesSaveData : MonoBehaviour
         }
     }
 
-    public void SaveZonesData()
-    {
-        string savedData = JsonUtility.ToJson(this);
+    //public void SaveZonesData()
+    //{
+    //    string savedData = JsonUtility.ToJson(this);
 
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            savePath = Application.persistentDataPath + "/CorruptZoneSaveData.txt";
-        }
-        else
-        {
-            savePath = Application.dataPath + "/Save Files Folder/CorruptZoneSaveData.txt";
-        }
-        File.WriteAllText(savePath, savedData);
-    }
+    //    if (Application.platform == RuntimePlatform.Android)
+    //    {
+    //        savePath = Application.persistentDataPath + "/CorruptZoneSaveData.txt";
+    //    }
+    //    else
+    //    {
+    //        savePath = Application.dataPath + "/Save Files Folder/CorruptZoneSaveData.txt";
+    //    }
+    //    File.WriteAllText(savePath, savedData);
+    //}
 
 
     //public void ClearTimesPerZonesListAfterLoad()
@@ -275,7 +283,7 @@ public class CorruptedZonesSaveData : MonoBehaviour
             STPZ.timelastClosed = DateTime.Now.ToLocalTime().ToString();
         }
 
-        SaveZonesData();
+        //SaveZonesData();
     }
 
     public void SetNewDeviceToSave(CorruptedDevicesData CDD, Vector3 position)

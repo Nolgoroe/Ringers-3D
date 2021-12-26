@@ -238,15 +238,16 @@ public class LootManager : MonoBehaviour
                 ZoneManager.Instance.zonesToUnlock.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
 
 
-                ZoneManager.Instance.SaveZoneManager();
-                ZoneManagerHelpData.Instance.currentZoneCheck.SaveZone();
-                ZoneManagerHelpData.Instance.nextZoneCheck.SaveZone();
+                //ZoneManager.Instance.SaveZoneManager();
+                //ZoneManagerHelpData.Instance.currentZoneCheck.SaveZone();
+                //ZoneManagerHelpData.Instance.nextZoneCheck.SaveZone();
             }
 
             giveKey = false;
         }
 
-        PlayerManager.Instance.SavePlayerData();
+        //PlayerManager.Instance.SavePlayerData();
+        //PlayfabManager.instance.SaveAllGameData();
 
     }
     public void RollOnTable(LootPacks lootPack)

@@ -43,7 +43,8 @@ public class GameManager : MonoBehaviour
     public int unsuccessfullConnectionCount;
     public int unsuccessfullSlicesCount;
 
-    public bool gameStarted;
+    public bool levelStarted;
+    public bool allGameStarted;
     public bool isSecondaryControls;
     public bool isDisableTutorials;
 
@@ -57,6 +58,7 @@ public class GameManager : MonoBehaviour
 
     public NumAnimalTypedOnBoard[] numAnimalsOnBoard;
 
+    public LevelScriptableObject[] allLevels;
 
     private void Awake()
     {
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
         GameAnalytics.Initialize();
         isSecondaryControls = false;
         isDisableTutorials = false;
+        allGameStarted = false;
 
         foreach (GameObject g in levelBGModels)
         {
@@ -97,7 +100,7 @@ public class GameManager : MonoBehaviour
         Camera.main.transform.position = inGameCamPos;
         Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
-        gameStarted = true;
+        levelStarted = true;
 
         LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
         gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
@@ -209,7 +212,7 @@ public class GameManager : MonoBehaviour
             Camera.main.transform.position = inGameCamPos;
             Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
-            gameStarted = true;
+            levelStarted = true;
 
             gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
 
@@ -347,7 +350,7 @@ public class GameManager : MonoBehaviour
     {
         //Debug.Log("Destroying Level");
 
-        gameStarted = false;
+        levelStarted = false;
         selectedLevelBG.SetActive(false);
 
         foreach (Transform child in destroyOutOfLevel)
@@ -407,8 +410,8 @@ public class GameManager : MonoBehaviour
             SoundManager.Instance.PlaySound(Sounds.SolvedRing);
             AnimationManager.instance.StartEndLevelAnimSequence(); ///// loot is given here
 
-            PlayerManager.Instance.SavePlayerData();
-
+            //PlayerManager.Instance.SavePlayerData();
+            //PlayfabManager.instance.SaveAllGameData();
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
 
 
@@ -424,7 +427,8 @@ public class GameManager : MonoBehaviour
 
             gameWon = false;
 
-            PlayerManager.Instance.SavePlayerData();
+            //PlayerManager.Instance.SavePlayerData();
+            //PlayfabManager.instance.SaveAllGameData();
 
 
 
@@ -458,6 +462,12 @@ public class GameManager : MonoBehaviour
             {
                 ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone++;
                 LootManager.Instance.GiveLoot();
+
+            }
+
+            if(currentLevel.levelNum > PlayerManager.Instance.highestLevelReached)
+            {
+                PlayerManager.Instance.UpdateMaxLevelReached(currentLevel);
             }
 
             UIManager.Instance.WinLevel();
@@ -554,7 +564,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-        ZoneManagerHelpData.Instance.listOfAllZones[ZoneManagerHelpData.Instance.currentZoneCheck.id].SaveZone();
+       // ZoneManagerHelpData.Instance.listOfAllZones[ZoneManagerHelpData.Instance.currentZoneCheck.id].SaveZone();
 
 
         bool nextIsTutorial = CheckNextLevelIsTutorial(currentLevel.levelNum + 1);

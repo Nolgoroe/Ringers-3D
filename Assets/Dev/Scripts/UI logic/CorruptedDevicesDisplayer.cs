@@ -106,7 +106,8 @@ public class CorruptedDevicesDisplayer : MonoBehaviour
 
         PlayerManager.Instance.ownedCorruptDevices.Add(data);
 
-        PlayerManager.Instance.SavePlayerData();
+        //PlayerManager.Instance.SavePlayerData();
+        //PlayfabManager.instance.SaveAllGameData();
     }
 
     public void CheckIfCanForgeEquipment(List<CraftingMatsNeeded> CMN)

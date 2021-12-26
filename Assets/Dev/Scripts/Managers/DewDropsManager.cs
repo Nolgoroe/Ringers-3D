@@ -17,29 +17,29 @@ public class DewDropsManager : MonoBehaviour
 
     public string path;
 
-    void Start()
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    public void Init()
     {
         Instance = this;
 
         timeLeftToGiveDrop = timeTillGiveDrewDropStatic * 60;
 
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            path = Application.persistentDataPath + "/DewDropInfo.txt";
-        }
-        else
-        {
-            path = Application.dataPath + "/Save Files Folder/DewDropInfo.txt";
-        }
+        //if (Application.platform == RuntimePlatform.Android)
+        //{
+        //    path = Application.persistentDataPath + "/DewDropInfo.txt";
+        //}
+        //else
+        //{
+        //    path = Application.dataPath + "/Save Files Folder/DewDropInfo.txt";
+        //}
 
-        if (File.Exists(path))
-        {
-            LoadDewDropsData();
-        }
-        else
-        {
-            UIManager.Instance.dewDropsText.text = PlayerManager.Instance.collectedDewDrops.ToString();
-        }
+        //LoadDewDropsData();
+
+        UIManager.Instance.dewDropsText.text = PlayerManager.Instance.collectedDewDrops.ToString();
 
         DateTime currentTime = DateTime.Now.ToLocalTime();
         //Debug.Log(currentTime);
@@ -87,7 +87,7 @@ public class DewDropsManager : MonoBehaviour
 
             //UIManager.Instance.RefreshDewDropsDisplay(PlayerManager.Instance.collectedDewDrops);
 
-            PlayerManager.Instance.SavePlayerData();
+            //PlayerManager.Instance.SavePlayerData();
         }
 
         StartCoroutine(DisplayTime());
@@ -99,7 +99,9 @@ public class DewDropsManager : MonoBehaviour
 
         Debug.Log(savedDateTime);
         Debug.Log("Application is Quitting");
-        SaveDewDropsInfo();
+
+        PlayfabManager.instance.SaveAllGameData();
+        //SaveDewDropsInfo();
     }
 
     public void OnApplicationPause(bool pause)
@@ -110,41 +112,34 @@ public class DewDropsManager : MonoBehaviour
 
             Debug.Log(savedDateTime);
             Debug.Log("PAUSED " + pause);
-            SaveDewDropsInfo();
+
+            PlayfabManager.instance.SaveAllGameData();
+            //SaveDewDropsInfo();
         }
     }
 
-    [ContextMenu("Save")]
-    public void SaveDewDropsInfo()
-    {
-        string savedData = JsonUtility.ToJson(this);
+    //[ContextMenu("Save")]
+    //public void SaveDewDropsInfo()
+    //{
+    //    string savedData = JsonUtility.ToJson(this);
 
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            path = Application.persistentDataPath + "/DewDropInfo.txt";
-        }
-        else
-        {
-            path = Application.dataPath + "/Save Files Folder/DewDropInfo.txt";
-        }
-        File.WriteAllText(path, savedData);
-    }
+    //    if (Application.platform == RuntimePlatform.Android)
+    //    {
+    //        path = Application.persistentDataPath + "/DewDropInfo.txt";
+    //    }
+    //    else
+    //    {
+    //        path = Application.dataPath + "/Save Files Folder/DewDropInfo.txt";
+    //    }
+    //    File.WriteAllText(path, savedData);
+    //}
     
-    public void LoadDewDropsData()
-    {
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            path = Application.persistentDataPath + "/DewDropInfo.txt";
-        }
-        else
-        {
-            path = Application.dataPath + "/Save Files Folder/DewDropInfo.txt";
-        }
+    //public void LoadDewDropsData()
+    //{
+    //    JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
 
-        JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
-
-        UIManager.Instance.dewDropsText.text = PlayerManager.Instance.collectedDewDrops.ToString();
-    }
+    //    UIManager.Instance.dewDropsText.text = PlayerManager.Instance.collectedDewDrops.ToString();
+    //}
 
     public IEnumerator DisplayTime()
     {
@@ -198,6 +193,6 @@ public class DewDropsManager : MonoBehaviour
         UIManager.Instance.dewDropsText.text = PlayerManager.Instance.collectedDewDrops.ToString();
         //UIManager.Instance.RefreshDewDropsDisplay(PlayerManager.Instance.collectedDewDrops);
 
-        PlayerManager.Instance.SavePlayerData();
+        //PlayerManager.Instance.SavePlayerData();
     }
 }

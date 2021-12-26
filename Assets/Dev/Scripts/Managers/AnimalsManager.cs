@@ -56,24 +56,14 @@ public class AnimalsManager : MonoBehaviour
 
     string path;
 
-    private void Start()
+    private void Awake()
     {
         Instance = this;
+    }
 
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            path = Application.persistentDataPath + "/AnimalsSaveData.txt";
-        }
-        else
-        {
-            path = Application.dataPath + "/Save Files Folder/AnimalsSaveData.txt";
-        }
-
-        if (File.Exists(path))
-        {
-            LoadAnimalData();
-        }
-
+    public void Init()
+    {
+        Instance = this;
 
         currentLevelAnimal = AnimalsInGame.None;
     }
@@ -85,7 +75,7 @@ public class AnimalsManager : MonoBehaviour
         if (!unlockedAnimals.Contains(currentLevelAnimal))
         {
             unlockedAnimals.Add(toUnclock);
-            SaveAnimalData();
+            //SaveAnimalData();
         }
         else
         {
@@ -93,37 +83,37 @@ public class AnimalsManager : MonoBehaviour
         }
     }
 
-    [ContextMenu("Save")]
-    public void SaveAnimalData()
-    {
-        string savedData = JsonUtility.ToJson(this);
+    //[ContextMenu("Save")]
+    //public void SaveAnimalData()
+    //{
+    //    string savedData = JsonUtility.ToJson(this);
 
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            string path = Application.persistentDataPath + "/AnimalsSaveData.txt";
-        }
-        else
-        {
-            string path = Application.dataPath + "/Save Files Folder/AnimalsSaveData.txt";
-        }
-        File.WriteAllText(path, savedData);
-    }
+    //    if (Application.platform == RuntimePlatform.Android)
+    //    {
+    //        string path = Application.persistentDataPath + "/AnimalsSaveData.txt";
+    //    }
+    //    else
+    //    {
+    //        string path = Application.dataPath + "/Save Files Folder/AnimalsSaveData.txt";
+    //    }
+    //    File.WriteAllText(path, savedData);
+    //}
 
-    [ContextMenu("Load")]
-    public void LoadAnimalData()
-    {
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            string path = Application.persistentDataPath + "/AnimalsSaveData.txt";
-        }
-        else
-        {
-            string path = Application.dataPath + "/Save Files Folder/AnimalsSaveData.txt";
-        }
-        JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
+    //[ContextMenu("Load")]
+    //public void LoadAnimalData()
+    //{
+    //    //if (Application.platform == RuntimePlatform.Android)
+    //    //{
+    //    //    string path = Application.persistentDataPath + "/AnimalsSaveData.txt";
+    //    //}
+    //    //else
+    //    //{
+    //    //    string path = Application.dataPath + "/Save Files Folder/AnimalsSaveData.txt";
+    //    //}
+    //    JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
 
-        Instance = this;
-    }
+    //    Instance = this;
+    //}
 
 
     [ContextMenu("Get Animal")]

@@ -56,9 +56,10 @@ public class CursorController : MonoBehaviour
         gameBoard = GameManager.Instance.gameBoard;
         gameClip = GameManager.Instance.gameClip;
     }
+
     void Update()
     {
-        if (!GameManager.Instance.gameStarted && !UIManager.isUsingUI)
+        if (!GameManager.Instance.levelStarted && !UIManager.isUsingUI && GameManager.Instance.allGameStarted)
         {
             if (Input.touchCount > 0)
             {
@@ -80,7 +81,7 @@ public class CursorController : MonoBehaviour
             }
         }
 
-        if(!GameManager.Instance.gameStarted && UIManager.isUsingUI && UIManager.Instance.UnlockedZoneMessageView.activeInHierarchy)
+        if(!GameManager.Instance.levelStarted && UIManager.isUsingUI && UIManager.Instance.UnlockedZoneMessageView.activeInHierarchy)
         {
             if (Input.touchCount > 0)
             {
@@ -104,19 +105,19 @@ public class CursorController : MonoBehaviour
             }
         }
 
-        if (GameManager.Instance.gameStarted && PowerUpManager.IsUsingPowerUp)
+        if (GameManager.Instance.levelStarted && PowerUpManager.IsUsingPowerUp)
         {
             PowerUpControls();
             return;
         }
 
-        if (GameManager.Instance.gameStarted && !UIManager.isUsingUI && !GameManager.Instance.isSecondaryControls && !PowerUpManager.IsUsingPowerUp)
+        if (GameManager.Instance.levelStarted && !UIManager.isUsingUI && !GameManager.Instance.isSecondaryControls && !PowerUpManager.IsUsingPowerUp)
         {
             NormalControls();
             return;
         }
 
-        if (GameManager.Instance.gameStarted && !UIManager.isUsingUI && GameManager.Instance.isSecondaryControls && !PowerUpManager.IsUsingPowerUp)
+        if (GameManager.Instance.levelStarted && !UIManager.isUsingUI && GameManager.Instance.isSecondaryControls && !PowerUpManager.IsUsingPowerUp)
         {
             SecondaryControls();
         }

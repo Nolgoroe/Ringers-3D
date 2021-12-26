@@ -36,30 +36,43 @@ public class PlayerManager : MonoBehaviour
 
     string path;
 
-    private void Start()
+    public int highestLevelReached;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    public void Init()
     {
         Instance = this;
 
         MaterialsAndForgeManager.Instance.PopulateMaterialBagAll();
 
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            path = Application.persistentDataPath + "/PlayerSaveData.txt";
-        }
-        else
-        {
-            path = Application.dataPath + "/Save Files Folder/PlayerSaveData.txt";
-        }
+        SortMaster.Instance.ClearAllForgeScreens();
+        SortMaster.Instance.RefreshAllScreens();
 
-        if (File.Exists(path))
-        {
-            LoadPlayerData();
+        HandleItemCooldowns();
 
-            SortMaster.Instance.ClearAllForgeScreens();
-            SortMaster.Instance.RefreshAllScreens();
+        GameManager.Instance.powerupManager.ClearTutorialPowerups();
 
-            //UIManager.Instance.RefreshDewDropsDisplay(collectedDewDrops);
-        }
+        //if (Application.platform == RuntimePlatform.Android)
+        //{
+        //    path = Application.persistentDataPath + "/PlayerSaveData.txt";
+        //}
+        //else
+        //{
+        //    path = Application.dataPath + "/Save Files Folder/PlayerSaveData.txt";
+        //}
+
+        //if (File.Exists(path))
+        //{
+
+        //    //UIManager.Instance.RefreshDewDropsDisplay(collectedDewDrops);
+        //}
+
+        //LoadPlayerData();
+
 
         //ownedCorruptDevices.Clear();
         //if (wardrobeEquipment.Count > 0)
@@ -78,7 +91,6 @@ public class PlayerManager : MonoBehaviour
         //    }
         //}
 
-        HandleItemCooldowns();
     }
     public bool CheckIfHasMaterialts(CraftingMatsNeeded CMN)
     {
@@ -169,40 +181,23 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    [ContextMenu("Save")]
-    public void SavePlayerData()
-    {
-        string savedData = JsonUtility.ToJson(this);
+    //[ContextMenu("Save")]
+    //public void SavePlayerData()
+    //{
+    //    //Debug.Log("Saved Player");
+    //    //string savedData = JsonUtility.ToJson(this);
 
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            string path = Application.persistentDataPath + "/PlayerSaveData.txt";
-        }
-        else
-        {
-            string path = Application.dataPath + "/Save Files Folder/PlayerSaveData.txt";
-        }
-        File.WriteAllText(path, savedData);
-    }
+    //    //PlayfabManager.instance.SavePlayerDataJsonServer(savedData);
+    //}
 
-    [ContextMenu("Load")]
-    public void LoadPlayerData()
-    {
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            string path = Application.persistentDataPath + "/PlayerSaveData.txt";
-        }
-        else
-        {
-            string path = Application.dataPath + "/Save Files Folder/PlayerSaveData.txt";
-        }
-        JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
+    //[ContextMenu("Load")]
+    //public void LoadPlayerData()
+    //{
+    //    //PlayfabManager.instance.LoadAllData();
 
-        Instance = this;
+    //    //Instance = this;
 
-
-        GameManager.Instance.powerupManager.ClearTutorialPowerups();
-    }
+    //}
 
     public void HandleItemCooldowns()
     {
@@ -236,8 +231,6 @@ public class PlayerManager : MonoBehaviour
         {
             equipmentInCooldown.Remove(ED);
         }
-
-        SavePlayerData();
     }
 
     [ContextMenu("Reset Player Mats")]
@@ -248,7 +241,7 @@ public class PlayerManager : MonoBehaviour
             CME.amount = 0;
         }
 
-        SavePlayerData();
+        //PlayfabManager.instance.SaveAllGameData();
 
         SortMaster.Instance.ClearAllForgeScreens();
         SortMaster.Instance.RefreshAllScreens();
@@ -262,7 +255,8 @@ public class PlayerManager : MonoBehaviour
             CME.amount += 100;
         }
 
-        SavePlayerData();
+        //SavePlayerData();
+        //PlayfabManager.instance.SaveAllGameData();
 
         //MaterialsAndForgeManager.Instance.RefreshMaterialBag();
         //MaterialsAndForgeManager.Instance.RefreshForge();
@@ -270,6 +264,8 @@ public class PlayerManager : MonoBehaviour
 
         SortMaster.Instance.ClearAllForgeScreens();
         SortMaster.Instance.RefreshAllScreens();
+
+        PlayfabManager.instance.SaveAllGameData();
     }
 
     public bool SearchEquippedItemsForMatch(EquipmentData ED)
@@ -337,7 +333,8 @@ public class PlayerManager : MonoBehaviour
 
         ownedPowerups.Add(data);
 
-        SavePlayerData();
+        //SavePlayerData();
+        //PlayfabManager.instance.SaveAllGameData();
         //}
     }
 
@@ -345,5 +342,15 @@ public class PlayerManager : MonoBehaviour
     {
         data.isTutorialPower = true;
         ownedPowerups.Add(data);
+    }
+
+    public void UpdateMaxLevelReached(LevelScriptableObject level)
+    {
+        highestLevelReached = level.levelNum;
+
+        PlayfabManager.instance.SendLeaderboard(highestLevelReached);
+
+        //SavePlayerData();
+        //PlayfabManager.instance.SaveAllGameData();
     }
 }

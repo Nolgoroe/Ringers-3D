@@ -461,7 +461,7 @@ public class TutorialSequence : MonoBehaviour
         if (currentPhaseInSequenceLevels >= levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].EndPhaseID)
         {
             TutorialSaveData.Instance.completedTutorialLevelId.Add(GameManager.Instance.currentLevel.levelNum);
-            TutorialSaveData.Instance.SaveTutorialSaveData();
+            //TutorialSaveData.Instance.SaveTutorialSaveData();
 
             maskImage.gameObject.SetActive(false);
             duringSequence = false;
@@ -513,7 +513,7 @@ public class TutorialSequence : MonoBehaviour
         {
             TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add((int)GameManager.Instance.currentLevel.specificTutorialEnum);
             //TutorialSaveData.Instance.completedTutorialLevelId.Add(GameManager.Instance.currentLevel.levelNum);
-            TutorialSaveData.Instance.SaveTutorialSaveData();
+            //TutorialSaveData.Instance.SaveTutorialSaveData();
             currentSpecificTutorial = SpecificTutorialsEnum.None;
             maskImage.gameObject.SetActive(false);
             duringSequence = false;

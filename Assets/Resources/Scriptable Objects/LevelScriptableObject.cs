@@ -24,6 +24,7 @@ public class LevelScriptableObject : ScriptableObject
     public GameObject boardPrefab;
 
     public int levelNum;
+    public int worldNum;
     public int levelIndexInZone;
     public int tutorialIndexForList;
     public int cellsCountInLevel;

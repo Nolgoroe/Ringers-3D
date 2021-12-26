@@ -43,6 +43,7 @@ public class UIManager : MonoBehaviour
     public GameObject UnlockedZoneMessageView;
     public GameObject dealButtonHeighlight;
     public GameObject normalBookBG, potionsBookBG;
+    public GameObject leaderboardScreen;
 
     public Image dewDropsImage;
 
@@ -106,6 +107,7 @@ public class UIManager : MonoBehaviour
 
         itemBag.SetActive(true); //// so this will be the first screen displayed, or else everyone will be turned off
 
+        leaderboardScreen.SetActive(false);
         OptionsScreen.SetActive(false);
         ringersHutDisplay.SetActive(false);
         ringersHutUICanvas.SetActive(false);
@@ -174,6 +176,8 @@ public class UIManager : MonoBehaviour
         ToHud(mainMenu);
         ZoneManager.Instance.UnlockLevelViewSequence();
         UnlockLevels();
+
+        GameManager.Instance.allGameStarted = true;
     }
     public void ActivateGmaeplayCanvas()
     {
@@ -337,7 +341,8 @@ public class UIManager : MonoBehaviour
         isUsingUI = false;
         RefreshGoldAndRubyDisplay();
         PlayerManager.Instance.activePowerups.Clear();
-        PlayerManager.Instance.SavePlayerData();
+        //PlayerManager.Instance.SavePlayerData();
+        //PlayfabManager.instance.SaveAllGameData();
         isUsingUI = false;
 
         //Camera.main.orthographic = ;
@@ -397,10 +402,10 @@ public class UIManager : MonoBehaviour
             ZoneManager.Instance.ResetZoneManagerData();
             ConnectionManager.Instance.ResetConnectionData();
 
-            foreach (int ID in ZoneManager.Instance.unlockedZoneID)
-            {
-                ZoneManagerHelpData.Instance.listOfAllZones[ID].SaveZone();
-            }
+            //foreach (int ID in ZoneManager.Instance.unlockedZoneID)
+            //{
+            //    ZoneManagerHelpData.Instance.listOfAllZones[ID].SaveZone();
+            //}
 
 
             ZoneManager.Instance.UnlockLevelViewSequence();
@@ -511,6 +516,11 @@ public class UIManager : MonoBehaviour
             craft.SetActive(true);
             owned.SetActive(false);
             HollowCraftAndOwnedManager.Instance.hollowTypeToFill = ObjectHollowType.All;
+        }
+
+        if(ToClose == leaderboardScreen)
+        {
+            leaderboardScreen.SetActive(false);
         }
     }
     public void ToForge()
@@ -839,5 +849,12 @@ public class UIManager : MonoBehaviour
     public void DisplayUnlockedZoneMessage(int ID)
     {
         StartCoroutine(AnimationManager.instance.AnimateUnlockScreen(ID));
+    }
+
+    public void OpenLeaderboardScreen()
+    {
+        isUsingUI = true;
+
+        PlayfabManager.instance.GetLeaderboard();
     }
 }

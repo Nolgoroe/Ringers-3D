@@ -282,7 +282,7 @@ public class AnimationManager : MonoBehaviour
             StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
             //TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add((int)GameManager.Instance.currentLevel.specificTutorialEnum);
             TutorialSequence.Instacne.currentSpecificTutorial = SpecificTutorialsEnum.lootTutorial;
-            TutorialSaveData.Instance.SaveTutorialSaveData();
+            //TutorialSaveData.Instance.SaveTutorialSaveData();
         }
     }
     public void ZoomIntoCorruptArea(int ID)

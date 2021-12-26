@@ -642,7 +642,8 @@ public class PowerUpManager : MonoBehaviour
                 ED.nextTimeAvailable = System.DateTime.Now.AddSeconds(ED.timeForCooldown).ToString(); ///// change the datetime for equipment on player
 
                 PlayerManager.Instance.equipmentInCooldown.Add(ED);
-                PlayerManager.Instance.SavePlayerData();
+                //PlayerManager.Instance.SavePlayerData();
+                //PlayfabManager.instance.SaveAllGameData();
             }
 
             if (prop.numOfUses == 0 && prop.connectedEquipment.scopeOfUses == 1) //// if the num of uses is 0 and the scope is per match
@@ -650,8 +651,9 @@ public class PowerUpManager : MonoBehaviour
                 EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).First();
 
                 PlayerManager.Instance.activePowerups.Remove(ED.power);
-                PlayerManager.Instance.ownedPowerups.Remove(ED);                
-                PlayerManager.Instance.SavePlayerData();
+                PlayerManager.Instance.ownedPowerups.Remove(ED);
+                //PlayerManager.Instance.SavePlayerData();
+                //PlayfabManager.instance.SaveAllGameData();
 
                 powerupButtons.Remove(prop.GetComponent<Button>());
                 Destroy(prop.gameObject, 1f);
@@ -836,7 +838,8 @@ public class PowerUpManager : MonoBehaviour
             }
         }
 
-        PlayerManager.Instance.SavePlayerData();
+        //PlayerManager.Instance.SavePlayerData();
+        //PlayfabManager.instance.SaveAllGameData();
     }
 
     void ShakePiecePowerUp(GameObject toShake)

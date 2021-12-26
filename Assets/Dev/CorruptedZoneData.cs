@@ -67,7 +67,7 @@ public class CorruptedZoneData : MonoBehaviour
 
                 saveDataZone.corruptionLevel--;
 
-                CorruptedZonesSaveData.Instance.SaveZonesData();
+                //CorruptedZonesSaveData.Instance.SaveZonesData();
 
 
                 if (saveDataZone.corruptionLevel == CorruptionLevel.level0)

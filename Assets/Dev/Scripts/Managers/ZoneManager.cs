@@ -20,24 +20,36 @@ public class ZoneManager : MonoBehaviour
 
     public List<int> unlockedZoneID;
 
-    private void Start()
+    private void Awake()
     {
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            path = Application.persistentDataPath + "/ZoneManager.txt";
-        }
-        else
-        {
-            path = Application.dataPath + "/Save Files Folder/ZoneManager.txt";
-        }
+        Instance = this;
+    }
 
-        if (File.Exists(path))
-        {
-            LoadZoneManager();
-        }
+    public void Init()
+    {
         Instance = this;
 
+        isKeyLevel = false;
+
     }
+
+    //private void Start()
+    //{
+    //    if (Application.platform == RuntimePlatform.Android)
+    //    {
+    //        path = Application.persistentDataPath + "/ZoneManager.txt";
+    //    }
+    //    else
+    //    {
+    //        path = Application.dataPath + "/Save Files Folder/ZoneManager.txt";
+    //    }
+
+    //    if (File.Exists(path))
+    //    {
+    //        LoadZoneManager();
+    //    }
+
+    //}
 
     public void CheckZoneAwardedKey(int current) ////// if zone did not award key yet - the button that has this function connected to it IS the key level
     {
@@ -79,38 +91,37 @@ public class ZoneManager : MonoBehaviour
         isKeyLevel = false;
     }
 
-    [ContextMenu("Save Game Data")]
-    public void SaveZoneManager()
-    {
-        string savedData = JsonUtility.ToJson(this);
+    //[ContextMenu("Save Game Data")]
+    //public void SaveZoneManager()
+    //{
+    //    string savedData = JsonUtility.ToJson(this);
 
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            string path = Application.persistentDataPath + "/ZoneManager.txt";
-        }
-        else
-        {
-            string path = Application.dataPath + "/Save Files Folder/ZoneManager.txt";
-        }
-        File.WriteAllText(path, savedData);
-    }
+    //    if (Application.platform == RuntimePlatform.Android)
+    //    {
+    //        string path = Application.persistentDataPath + "/ZoneManager.txt";
+    //    }
+    //    else
+    //    {
+    //        string path = Application.dataPath + "/Save Files Folder/ZoneManager.txt";
+    //    }
+    //    File.WriteAllText(path, savedData);
+    //}
 
-    [ContextMenu("Game Load Data")]
-    public void LoadZoneManager()
-    {
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            string path = Application.persistentDataPath + "/ZoneManager.txt";
-        }
-        else
-        {
-            string path = Application.dataPath + "/Save Files Folder/ZoneManager.txt";
-        }
-        JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
+    //[ContextMenu("Game Load Data")]
+    //public void LoadZoneManager()
+    //{
+    //    if (Application.platform == RuntimePlatform.Android)
+    //    {
+    //        string path = Application.persistentDataPath + "/ZoneManager.txt";
+    //    }
+    //    else
+    //    {
+    //        string path = Application.dataPath + "/Save Files Folder/ZoneManager.txt";
+    //    }
+    //    JsonUtility.FromJsonOverwrite(File.ReadAllText(path), this);
 
-        Instance = this;
-        isKeyLevel = false;
-    }
+    //    Instance = this;
+    //}
 
     public void DiactiavteLevelDisplay()
     {
@@ -144,7 +155,7 @@ public class ZoneManager : MonoBehaviour
             UIManager.Instance.DisplayUnlockedZoneMessage(num);
             //}
 
-            SaveZoneManager();
+            //SaveZoneManager();
         }
     }
 }
