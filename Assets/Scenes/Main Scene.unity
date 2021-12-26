@@ -33686,6 +33686,7 @@ MonoBehaviour:
   equipmentInCooldown: []
   ownedHollowObjects: []
   ownedCorruptDevices: []
+  highestLevelReached: 0
 --- !u!1 &960785496
 GameObject:
   m_ObjectHideFlags: 0
@@ -36041,6 +36042,51 @@ Transform:
   m_Father: {fileID: 1323445853}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1039950842
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1039950843}
+  - component: {fileID: 1039950844}
+  m_Layer: 0
+  m_Name: Rewards Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1039950843
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039950842}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1323445853}
+  m_RootOrder: 33
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1039950844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039950842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef4fd1a626f5b544a5a1d4733df67ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dailyRewards: []
+  indexDayToGive: 0
 --- !u!1 &1043428618
 GameObject:
   m_ObjectHideFlags: 0
@@ -45293,6 +45339,7 @@ Transform:
   - {fileID: 1240318829}
   - {fileID: 658318441}
   - {fileID: 1660594507}
+  - {fileID: 1039950843}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -70768,8 +70815,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
-  maxLevelReached: 
-  highestLevelReached: 0
   testingContentTabServer: {fileID: 1140813775}
   multiplier: 0
   userNameInput: {fileID: 1373841933}

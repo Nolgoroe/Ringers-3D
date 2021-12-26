@@ -12,7 +12,7 @@ using System.Linq;
 
 public class PlayfabManager : MonoBehaviour
 {
-    public enum SystemsToSave { Player, DewDrops, animalManager, corruptedZonesManager, TutorialSaveData, ZoneManager, ZoneX}
+    public enum SystemsToSave { Player, DewDrops, animalManager, corruptedZonesManager, TutorialSaveData, ZoneManager, ZoneX, RewardsManager}
 
     public static PlayfabManager instance;
 
@@ -65,6 +65,8 @@ public class PlayfabManager : MonoBehaviour
         yield return new WaitUntil(() => doneWithStep == true);
         doneWithStep = false;
         InitAllSystems();
+
+        GetDailRewardsData();
 
         SaveAllGameData();
     }
@@ -152,27 +154,32 @@ public class PlayfabManager : MonoBehaviour
 
 
 
-    [ContextMenu("Get Title Data Server")]
-    void GerTitleData()
+    [ContextMenu("Get Daily Rewards Data from Server")]
+    void GetDailRewardsData()
     {
-        PlayFabClientAPI.GetTitleData(new GetTitleDataRequest(), OnTitleDataRecieved, OnError);
+        PlayFabClientAPI.GetTitleData(new GetTitleDataRequest(), onDailyRewardsDataGet, OnError);
     }
 
-    void OnTitleDataRecieved(GetTitleDataResult result)
+    void onDailyRewardsDataGet(GetTitleDataResult result)
     {
         if(result.Data == null)
         {
             Debug.Log("No Message in title data!");
         }
 
-        testingContentTabServer.text = result.Data["Value To Check"];
-        multiplier = Convert.ToInt16(result.Data["Multiplier"]);
 
-        Debug.Log("Recieved all data!");
+        // Get Daily Rewards
+        RewardsManager.Instance.dailyRewards.Clear();
+        foreach (var pair in result.Data)
+        {
+            string listItem = pair.Key;
+
+            if (listItem.Contains("Daily"))
+            {
+                RewardsManager.Instance.dailyRewards.Add(pair.Value);
+            }
+        }
     }
-
-
-
 
 
     [ContextMenu("Load ALL game data from server - STEP 1")]
@@ -232,6 +239,12 @@ public class PlayfabManager : MonoBehaviour
             }
         }
 
+        // Rewards Manager Data
+        if (result.Data != null && result.Data.ContainsKey("Rewards Manager Data"))
+        {
+            JsonUtility.FromJsonOverwrite(result.Data["Rewards Manager Data"].Value, RewardsManager.Instance);
+        }
+
         doneWithStep = true;
     }
 
@@ -245,6 +258,7 @@ public class PlayfabManager : MonoBehaviour
         CorruptedZonesSaveData.Instance.Init();
         TutorialSaveData.Instance.Init();
         ZoneManager.Instance.Init();
+        RewardsManager.Instance.Init();
 
         UIManager.Instance.PlayButton();
 
@@ -287,6 +301,11 @@ public class PlayfabManager : MonoBehaviour
             savedData = JsonUtility.ToJson(zone);
             SendDataToBeSavedJson(savedData, SystemsToSave.ZoneX, zone.id);
         }
+
+        // Rewards Manager Data
+        savedData = JsonUtility.ToJson(RewardsManager.Instance);
+        SendDataToBeSavedJson(savedData, SystemsToSave.RewardsManager, -1);
+
     }
 
     public void SendDataToBeSavedJson(string saveData, SystemsToSave system, int zoneNumber)
@@ -354,6 +373,15 @@ public class PlayfabManager : MonoBehaviour
                     Data = new Dictionary<string, string>()
                     {
                         { "Zone Data" + zoneNumber, saveData }
+                    }
+                };
+                break;
+            case SystemsToSave.RewardsManager:
+                request = new UpdateUserDataRequest
+                {
+                    Data = new Dictionary<string, string>()
+                    {
+                        { "Rewards Manager Data", saveData }
                     }
                 };
                 break;

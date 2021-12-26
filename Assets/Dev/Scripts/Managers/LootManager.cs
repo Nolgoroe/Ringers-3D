@@ -211,7 +211,7 @@ public class LootManager : MonoBehaviour
         }
 
         craftingMatsLootForLevel.Clear();
-        LootManager.Instance.tempDataList.Clear();
+        tempDataList.Clear();
 
         //foreach (LootPacks LP in currentLevelLootToGive)
         //{
@@ -250,84 +250,84 @@ public class LootManager : MonoBehaviour
         //PlayfabManager.instance.SaveAllGameData();
 
     }
-    public void RollOnTable(LootPacks lootPack)
-    {
-        //if (lootPack == LootPacks.None)
-        //{
-        //    return;
-        //}
+    //public void RollOnTable(LootPacks lootPack)
+    //{
+    //    //if (lootPack == LootPacks.None)
+    //    //{
+    //    //    return;
+    //    //}
 
-        //RewardBag rewardBagByLootPack = new RewardBag();
+    //    //RewardBag rewardBagByLootPack = new RewardBag();
 
-        //rewardBagByLootPack = lootpackEnumToRewardBag[lootPack];
+    //    //rewardBagByLootPack = lootpackEnumToRewardBag[lootPack];
 
-        //if (!rewardBagByLootPack.IsMoneyOrRubies)
-        //{
-            //foreach (CraftingMats CM in craftingMatsLootForLevel)
-            //{
-            //    DisplayLootMaterialsToPlayer(5, CM);
+    //    //if (!rewardBagByLootPack.IsMoneyOrRubies)
+    //    //{
+    //        //foreach (CraftingMats CM in craftingMatsLootForLevel)
+    //        //{
+    //        //    DisplayLootMaterialsToPlayer(5, CM);
 
-            //    PlayerManager.Instance.AddMaterials(CM, 5); //////// Figure out how to get amount from outside dynamically
+    //        //    PlayerManager.Instance.AddMaterials(CM, 5); //////// Figure out how to get amount from outside dynamically
 
-            //}
+    //        //}
 
-            //craftingMatsLootForLevel.Clear();
-            //List<CraftingMats> craftingMatsFromTables = new List<CraftingMats>();
-
-
-            //for (int i = 0; i < rewardBagByLootPack.Pack.Count; i++)
-            //{
-            //    craftingMatsFromTables.AddRange(itemTableToListOfMats[rewardBagByLootPack.Pack[i]]);
-
-            //    int chance = Random.Range(1, 101);
-
-            //    if (chance > rewardBagByLootPack.chancesPerItemTable[i])
-            //    {
-            //        Debug.Log("Youa sucka Fuckkkkaeaeaeaeaeae");
-            //        craftingMatsFromTables.Clear();
-            //    }
-            //    else
-            //    {
-            //        int randomMat = Random.Range(0, craftingMatsFromTables.Count);
-
-            //        Debug.Log(craftingMatsFromTables[randomMat]);
-
-            //        DisplayLootMaterialsToPlayer(5, craftingMatsFromTables[randomMat]);
-
-            //        PlayerManager.Instance.AddMaterials(craftingMatsFromTables[randomMat], 5); //////// Figure out how to get amount from outside dynamically
-
-            //        craftingMatsFromTables.Clear();
-            //    }
-            //}
-        //}
-        //else
-        //{
-            //int[] valuesToRecieve;
-            //valuesToRecieve = rewardBagByLootPack.minMaxValues;
+    //        //craftingMatsLootForLevel.Clear();
+    //        //List<CraftingMats> craftingMatsFromTables = new List<CraftingMats>();
 
 
-            //int randomNum = (Random.Range(valuesToRecieve[0], valuesToRecieve[1] + 1));
+    //        //for (int i = 0; i < rewardBagByLootPack.Pack.Count; i++)
+    //        //{
+    //        //    craftingMatsFromTables.AddRange(itemTableToListOfMats[rewardBagByLootPack.Pack[i]]);
 
-            //if (lootPack.ToString().Contains("M"))
-            //{
-            //    DisplayLootGoldRubyToPlayer(randomNum, goldSprite.texture);
-            //    PlayerManager.Instance.AddGold(randomNum);
-            //}
-            //else
-            //{
-                //DisplayLootGoldRubyToPlayer(randomNum, rubySprite.texture);
-                //PlayerManager.Instance.AddRubies(randomNum);
-            //}
+    //        //    int chance = Random.Range(1, 101);
 
-        //}
-    }
+    //        //    if (chance > rewardBagByLootPack.chancesPerItemTable[i])
+    //        //    {
+    //        //        Debug.Log("Youa sucka Fuckkkkaeaeaeaeaeae");
+    //        //        craftingMatsFromTables.Clear();
+    //        //    }
+    //        //    else
+    //        //    {
+    //        //        int randomMat = Random.Range(0, craftingMatsFromTables.Count);
+
+    //        //        Debug.Log(craftingMatsFromTables[randomMat]);
+
+    //        //        DisplayLootMaterialsToPlayer(5, craftingMatsFromTables[randomMat]);
+
+    //        //        PlayerManager.Instance.AddMaterials(craftingMatsFromTables[randomMat], 5); //////// Figure out how to get amount from outside dynamically
+
+    //        //        craftingMatsFromTables.Clear();
+    //        //    }
+    //        //}
+    //    //}
+    //    //else
+    //    //{
+    //        //int[] valuesToRecieve;
+    //        //valuesToRecieve = rewardBagByLootPack.minMaxValues;
+
+
+    //        //int randomNum = (Random.Range(valuesToRecieve[0], valuesToRecieve[1] + 1));
+
+    //        //if (lootPack.ToString().Contains("M"))
+    //        //{
+    //        //    DisplayLootGoldRubyToPlayer(randomNum, goldSprite.texture);
+    //        //    PlayerManager.Instance.AddGold(randomNum);
+    //        //}
+    //        //else
+    //        //{
+    //            //DisplayLootGoldRubyToPlayer(randomNum, rubySprite.texture);
+    //            //PlayerManager.Instance.AddRubies(randomNum);
+    //        //}
+
+    //    //}
+    //}
 
     public void ResetLevelLootData()
     {
         //currentLevelLootToGive.Clear();
         rubiesToRecieveInLevel = 0;
         craftingMatsLootForLevel.Clear();
-        LootManager.Instance.tempDataList.Clear();
+        tempDataList.Clear();
     }
 
     public void DisplayLootMaterialsToPlayer(int amount, CraftingMats CM)
