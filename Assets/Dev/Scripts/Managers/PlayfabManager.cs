@@ -421,7 +421,7 @@ public class PlayfabManager : MonoBehaviour
             }
         }
 
-
+        SendLeaderboard(0);
 
         yield return new WaitUntil(() => doneWithStep == true);
 

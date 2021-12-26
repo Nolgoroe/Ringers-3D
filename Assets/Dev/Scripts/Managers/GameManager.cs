@@ -93,6 +93,7 @@ public class GameManager : MonoBehaviour
 
         UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
         UIManager.Instance.TurnOnGameplayUI();
+        UIManager.Instance.dealButton.interactable = true;
 
         //Camera.main.orthographicSize = 12;
         //Camera.main.orthographic = false;
@@ -156,6 +157,7 @@ public class GameManager : MonoBehaviour
             TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
         }
 
+
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
     }
 
@@ -205,6 +207,7 @@ public class GameManager : MonoBehaviour
 
             UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
             UIManager.Instance.TurnOnGameplayUI();
+            UIManager.Instance.dealButton.interactable = true;
 
             //Camera.main.orthographicSize = 12;
             //Camera.main.orthographic = false;
@@ -380,6 +383,8 @@ public class GameManager : MonoBehaviour
 
     public bool CheckEndLevel()
     {
+        UIManager.Instance.dealButton.interactable = false;
+
         //UIManager.Instance.DisableCommitButton();
         if (currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0 && unsuccessfullSlicesCount == 0)
         {
