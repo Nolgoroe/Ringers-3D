@@ -27,24 +27,17 @@ MonoBehaviour:
   powerupsForLevel: 
   specificAnimalForLevel: {fileID: 0}
   stoneTiles:
-  - cellIndex: 0
+  - cellIndex: 5
     randomValues: 1
     isNeutral: 1
     colorOfPieceRight: 5
     symbolOfPieceRight: 4
     colorOfPieceLeft: 5
     symbolOfPieceLeft: 4
-  - cellIndex: 4
-    randomValues: 1
-    isNeutral: 1
-    colorOfPieceRight: 5
-    symbolOfPieceRight: 4
-    colorOfPieceLeft: 5
-    symbolOfPieceLeft: 4
-  slicesToSpawn: 0100000001000000
-  lockSlices: 0000
-  lootSlices: 0101
-  limiterSlices: 0101
+  slicesToSpawn: 01000000
+  lockSlices: 00
+  lootSlices: 01
+  limiterSlices: 01
   RewardBags: 0a00000002000000010000000c0000000d0000000b000000
   levelAvailableColors: 00000000010000000200000003000000
   levelAvailablesymbols: 00000000030000000100000002000000
@@ -53,6 +46,6 @@ MonoBehaviour:
   specificTutorialEnum: 0
   isTutorial: 0
   arrayOfPieces: []
-  specificSliceSpots: 0300000007000000
+  specificSliceSpots: 01000000
   specificSlicesShapes: 
   specificSlicesColors: 
