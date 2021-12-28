@@ -149,6 +149,13 @@ public class PlayfabManager : MonoBehaviour
             levelNum--; // cause we start checking a list/arry from 0
         }
 
+        int lastNum = GameManager.Instance.allLevels.Last().levelNum;
+
+        if(levelNum > lastNum)
+        {
+            levelNum = lastNum;
+        }
+
         return (GameManager.Instance.allLevels[levelNum].worldNum + " - " + GameManager.Instance.allLevels[levelNum].levelIndexInZone).ToString();
     }
 
@@ -227,7 +234,7 @@ public class PlayfabManager : MonoBehaviour
         // Zone Manager Data
         if (result.Data != null && result.Data.ContainsKey("Zone Manager Data"))
         {
-            JsonUtility.FromJsonOverwrite(result.Data["Zone Manager Data"].Value, TutorialSaveData.Instance);
+            JsonUtility.FromJsonOverwrite(result.Data["Zone Manager Data"].Value, ZoneManager.Instance);
         }
 
         // Zone X Data
@@ -420,14 +427,16 @@ public class PlayfabManager : MonoBehaviour
         request = new UpdateUserDataRequest
         {
             Data = new Dictionary<string, string>()
-                    {
-                        { "Player Data", "" },
-                        { "Dew Drops Data", "" },
-                         { "Animal Manager Data", "" },
-                         { "corrupted Zones Manager Data", "" },
-                         { "Tutorial Save Data", "" },
-                         { "Zone Manager Data", "" }
-                    }
+            {
+                { "Player Data", "" },
+                { "Dew Drops Data", "" },
+                { "Animal Manager Data", "" },
+                { "corrupted Zones Manager Data", "" },
+                { "Tutorial Save Data", "" },
+                { "Zone Manager Data", "" },
+                {"Rewards Manager Data", ""}
+                
+            }
         };
         if (request != null)
         {

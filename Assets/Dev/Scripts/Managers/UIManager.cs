@@ -44,6 +44,7 @@ public class UIManager : MonoBehaviour
     public GameObject dealButtonHeighlight;
     public GameObject normalBookBG, potionsBookBG;
     public GameObject leaderboardScreen;
+    public GameObject sureWantToResetDataScreen;
 
     public Image dewDropsImage;
 
@@ -137,6 +138,7 @@ public class UIManager : MonoBehaviour
         tutorialCanvasSpecific.SetActive(false);
         tutorialCanvasLevels.SetActive(false);
         restartGrindLevel.gameObject.SetActive(false);
+        sureWantToResetDataScreen.SetActive(false);
 
         dragControlsImage.sprite = toggleOnSprite;
         tapControlsImage.sprite = toggleOffSprite;
@@ -856,5 +858,28 @@ public class UIManager : MonoBehaviour
         isUsingUI = true;
 
         PlayfabManager.instance.GetLeaderboard();
+    }
+
+
+    public void SureWantToResetDataMessage()
+    {
+        // no need to check if using UI since we can only get in here if the options menu is open so UI is used
+        sureWantToResetDataScreen.SetActive(true);
+    }
+
+    public void SureWantToResetDataYes()
+    {
+        isUsingUI = false;
+
+        sureWantToResetDataScreen.SetActive(false);
+
+        PlayfabManager.instance.ResetAllData();
+    }
+
+    public void SureWantToResetDataNo()
+    {
+        isUsingUI = false;
+
+        sureWantToResetDataScreen.SetActive(false);
     }
 }

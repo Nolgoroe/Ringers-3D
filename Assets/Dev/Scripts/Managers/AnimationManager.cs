@@ -351,7 +351,7 @@ public class AnimationManager : MonoBehaviour
 
         Transform target = ZoneManagerHelpData.Instance.listOfAllZones[ID].transform;
 
-        LeanTween.move(toMove.gameObject, new Vector3(target.position.x, 50, toMove.transform.position.z), cameraMoveTime).setEase(LeanTweenType.easeInOutQuad); // animate
+        LeanTween.move(toMove.gameObject, new Vector3(target.position.x, 50, target.transform.position.z - 40), cameraMoveTime).setEase(LeanTweenType.easeInOutQuad); // animate
 
         yield return new WaitUntil((() => toMove.transform.position.x - target.position.x <= 0.1f));
         FadeInUnlcokScreen();

@@ -18,7 +18,7 @@ public class RewardsManager : MonoBehaviour
 
     public void Init()
     {
-
+        Instance = this;
     }
 
     void Start()
