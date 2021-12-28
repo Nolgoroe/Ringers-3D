@@ -341,11 +341,6 @@ public class GameManager : MonoBehaviour
     }
     public void ChooseLevelGrind(int levelNum)
     {
-        if (currentLevel)
-        {
-            DestroyImmediate(currentLevel);
-        }
-
         currentLevel = Instantiate((LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/Grind Levels" + "/Level " + levelNum));
     }
 
