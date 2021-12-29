@@ -167,28 +167,31 @@ public class PowerUpManager : MonoBehaviour
     {
         //CameraShake.ShakeOnce();
 
-        SoundManager.Instance.PlaySound(Sounds.DealButton);
-
-        if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
+        if (!UIManager.isUsingUI)
         {
-            if (TutorialSequence.Instacne.currentPhaseInSequenceLevels < TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Length)
+            SoundManager.Instance.PlaySound(Sounds.DealButton);
+
+            if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
             {
-                if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].dealPhase)
+                if (TutorialSequence.Instacne.currentPhaseInSequenceLevels < TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Length)
                 {
-                    TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
+                    if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].dealPhase)
+                    {
+                        TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
+                    }
                 }
             }
-        }
 
-        if (GameManager.Instance.clipManager.clipCount - 1 == 0)
-        {
-            UIManager.Instance.DisplayClipsAboutToEndMessage();
-        }
-        else
-        {
-            StartCoroutine(GameManager.Instance.clipManager.DealAnimation());
-            //GameManager.Instance.clipManager.clipCount--;
-            //GameManager.Instance.clipManager.RefreshSlots();
+            if (GameManager.Instance.clipManager.clipCount - 1 == 0)
+            {
+                UIManager.Instance.DisplayClipsAboutToEndMessage();
+            }
+            else
+            {
+                StartCoroutine(GameManager.Instance.clipManager.DealAnimation());
+                //GameManager.Instance.clipManager.clipCount--;
+                //GameManager.Instance.clipManager.RefreshSlots();
+            }
         }
     }
     public void ExtraDealPower(PowerupProperties prop)

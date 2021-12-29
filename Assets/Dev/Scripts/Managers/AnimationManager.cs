@@ -90,6 +90,7 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(true);
 
         UIManager.Instance.restartButton.interactable = false;
+        UIManager.Instance.dealButton.interactable = false;
 
         tempSubPieceArray.AddRange(ConnectionManager.Instance.subPiecesOnBoard);
 
@@ -196,6 +197,7 @@ public class AnimationManager : MonoBehaviour
         fadeImageEndLevel.gameObject.SetActive(false);
 
         UIManager.Instance.restartButton.interactable = true;
+        UIManager.Instance.dealButton.interactable = true;
 
         yield return null;
     }

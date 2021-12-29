@@ -45,6 +45,7 @@ public class UIManager : MonoBehaviour
     public GameObject normalBookBG, potionsBookBG;
     public GameObject leaderboardScreen;
     public GameObject sureWantToResetDataScreen;
+    public GameObject bGPanelDisableTouch;
 
     public Image dewDropsImage;
 
@@ -139,6 +140,7 @@ public class UIManager : MonoBehaviour
         tutorialCanvasLevels.SetActive(false);
         restartGrindLevel.gameObject.SetActive(false);
         sureWantToResetDataScreen.SetActive(false);
+        bGPanelDisableTouch.SetActive(false);
 
         dragControlsImage.sprite = toggleOnSprite;
         tapControlsImage.sprite = toggleOffSprite;
@@ -196,13 +198,16 @@ public class UIManager : MonoBehaviour
     public void DisplayEndLevelMessage()
     {
         endLevelSureMessage.SetActive(true);
+        bGPanelDisableTouch.SetActive(true);
         isUsingUI = true;
     }
     public void EndLevelMessageNo()
     {
         endLevelSureMessage.SetActive(false);
+        bGPanelDisableTouch.SetActive(false);
 
         GameManager.Instance.clipManager.RepopulateLatestClip();
+
         isUsingUI = false;
 
     }
@@ -211,6 +216,7 @@ public class UIManager : MonoBehaviour
         isUsingUI = false;
 
         endLevelSureMessage.SetActive(false);
+        bGPanelDisableTouch.SetActive(false);
 
 
         DisplayLoseScreen();
@@ -218,6 +224,8 @@ public class UIManager : MonoBehaviour
     public void DisplayClipsAboutToEndMessage()
     {
         clipsAboutToEndMessage.SetActive(true);
+        bGPanelDisableTouch.SetActive(true);
+
         isUsingUI = true;
     }
     public void ClipsAboutToEndMessageNo()
@@ -225,6 +233,7 @@ public class UIManager : MonoBehaviour
         isUsingUI = false;
 
         clipsAboutToEndMessage.SetActive(false);
+        bGPanelDisableTouch.SetActive(false);
 
     }
     public void ClipsAboutToEndMessageYes()
@@ -232,6 +241,7 @@ public class UIManager : MonoBehaviour
         isUsingUI = false;
 
         clipsAboutToEndMessage.SetActive(false);
+        bGPanelDisableTouch.SetActive(false);
         //LootManager.Instance.currentLevelLootToGive.Clear();
         LootManager.Instance.craftingMatsLootForLevel.Clear();
         LootManager.Instance.tempDataList.Clear();
@@ -242,15 +252,7 @@ public class UIManager : MonoBehaviour
     {
         if (!isUsingUI)
         {
-            isUsingUI = true;
-
-            //if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
-            //{
-            //    foreach (GameObject go in TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].screens)
-            //    {
-            //        go.SetActive(false);
-            //    }
-            //}
+            bGPanelDisableTouch.SetActive(true);
 
             isUsingUI = true;
 
@@ -292,6 +294,7 @@ public class UIManager : MonoBehaviour
     public void SureWantToRestartMessageNo(bool withLoot)
     {
         isUsingUI = false;
+        bGPanelDisableTouch.SetActive(false);
 
         if (withLoot)
         {
@@ -312,6 +315,7 @@ public class UIManager : MonoBehaviour
     {
         isUsingUI = false;
 
+        bGPanelDisableTouch.SetActive(false);
 
         if (withLoot)
         {
@@ -341,11 +345,11 @@ public class UIManager : MonoBehaviour
     public void ToHud(GameObject currentCanvas)
     {
         isUsingUI = false;
+
         RefreshGoldAndRubyDisplay();
         PlayerManager.Instance.activePowerups.Clear();
         //PlayerManager.Instance.SavePlayerData();
         //PlayfabManager.instance.SaveAllGameData();
-        isUsingUI = false;
 
         //Camera.main.orthographic = ;
         //Camera.main.orthographicSize = 9f;
@@ -387,6 +391,8 @@ public class UIManager : MonoBehaviour
             gameplayCanvas.SetActive(false);
             OptionsScreen.SetActive(false);
             youWinScreen.SetActive(false);
+            bGPanelDisableTouch.SetActive(false);
+
             //youLoseText.SetActive(false);
             loseScreen.SetActive(false);
             tutorialCanvasLevels.SetActive(false);
@@ -622,6 +628,7 @@ public class UIManager : MonoBehaviour
     {
         ClearLootDisplays();
         isUsingUI = true;
+        //bGPanelDisableTouch.SetActive(true);
         //blackLevelBG.SetActive(false);
         youWinScreen.SetActive(true);
 
@@ -635,6 +642,7 @@ public class UIManager : MonoBehaviour
 
         ClearLootDisplays();
         isUsingUI = true;
+        bGPanelDisableTouch.SetActive(true);
 
         loseScreen.SetActive(true);
 
@@ -651,6 +659,7 @@ public class UIManager : MonoBehaviour
     {
         isUsingUI = false;
         //gameplayCanvasBotom.SetActive(true);
+        bGPanelDisableTouch.SetActive(false);
 
         loseScreen.SetActive(false);
 

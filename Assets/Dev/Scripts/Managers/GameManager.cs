@@ -378,7 +378,7 @@ public class GameManager : MonoBehaviour
 
     public bool CheckEndLevel()
     {
-        UIManager.Instance.dealButton.interactable = false;
+        //UIManager.Instance.dealButton.interactable = false;
 
         //UIManager.Instance.DisableCommitButton();
         if (currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0 && unsuccessfullSlicesCount == 0)
@@ -495,6 +495,7 @@ public class GameManager : MonoBehaviour
         ConnectionManager.Instance.cells.Clear();
         CursorController.Instance.tutorialBadConnection = false;
         UIManager.Instance.youWinScreen.SetActive(false);
+        UIManager.Instance.bGPanelDisableTouch.SetActive(false);
 
         if (!isDisableTutorials && currentLevel.isTutorial)
         {
@@ -553,7 +554,7 @@ public class GameManager : MonoBehaviour
             ZoneManager.Instance.SetUnlockZone(ZoneManagerHelpData.Instance.currentZoneCheck.id + 1);
         }
 
-
+        UIManager.Instance.bGPanelDisableTouch.SetActive(false);
         UIManager.Instance.youWinScreen.SetActive(false);
         UIManager.Instance.TurnOnGameplayUI();
         UIManager.isUsingUI = false;
