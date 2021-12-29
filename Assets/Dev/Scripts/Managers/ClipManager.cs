@@ -188,13 +188,56 @@ public class ClipManager : MonoBehaviour
 
     public void RepopulateLatestClip() //// In case player clicked the hell no option after placing last piece
     {
-        latestPiece.transform.parent.GetComponent<Cell>().RemovePiece(false, false);
+        if (latestPiece.GetComponent<Piece>())
+        {
+            Piece p = latestPiece.GetComponent<Piece>();
 
-        latestPiece.transform.SetParent(emptyClip);
-        latestPiece.localPosition = originalPiecePos;
-        latestPiece.localRotation = originalPieceRot;
+            if (p.rightChild.relevantSlice)
+            {
+                Slice relevantSlice = p.rightChild.relevantSlice;
 
-        GameManager.Instance.currentFilledCellCount--;
+                if (relevantSlice.isLock)
+                {
+                    relevantSlice.lockSpriteHeighlight.SetActive(false);
+                }
+            }
+
+            if (p.leftChild.relevantSlice)
+            {
+                Slice relevantSlice = p.leftChild.relevantSlice;
+
+                if (relevantSlice.isLock)
+                {
+                    relevantSlice.lockSpriteHeighlight.SetActive(false);
+                }
+            }
+
+            if (p.transform.parent.GetComponent<Cell>())
+            {
+                Cell c = p.transform.parent.GetComponent<Cell>();
+
+                c.RemovePiece(false, false);
+            }
+            else
+            {
+                Debug.LogError("No supposed to be like this - this is supposed to be a cell!");
+            }
+
+            p.transform.SetParent(emptyClip);
+            p.transform.localPosition = originalPiecePos;
+            p.transform.localRotation = originalPieceRot;
+
+            p.partOfBoard = false;
+            p.isLocked = false;
+            p.isTutorialLocked = false;
+
+            GameManager.Instance.currentFilledCellCount--;
+        }
+        else
+        {
+            Debug.LogError("No supposed to be like this - this is supposed to be a piece!");
+        }
+
     }
 
     public IEnumerator DealAnimation()
