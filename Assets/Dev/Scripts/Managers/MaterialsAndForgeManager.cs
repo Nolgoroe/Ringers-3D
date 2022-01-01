@@ -130,7 +130,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
             //}
         }
 
-        //PopulateMaterialBagAll();///// Ask Alon to explain Logic here
+        PopulateMaterialBagAll();
     }
 
     [ContextMenu("Refresh Forge")]
@@ -175,7 +175,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
         //    Destroy(EQ.gameObject);
         //}
 
-        FillForge(GameManager.Instance.csvParser.allEquipmentInGame);
+        FillCorruptionDevices(GameManager.Instance.csvParser.allCorruptedDevicesInGame);
     }
 
 }

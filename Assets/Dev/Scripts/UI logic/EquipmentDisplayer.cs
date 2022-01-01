@@ -135,7 +135,7 @@ public class EquipmentDisplayer : MonoBehaviour
         }
 
         SortMaster.Instance.ClearAllForgeScreens();
-        SortMaster.Instance.RefreshAllScreens();
+        //SortMaster.Instance.RefreshAllScreens();
 
         //PlayerManager.Instance.wardrobeEquipment.Add(data);
         //WardrobeManager.Instance.SpawnWardrobeEquipment(data);

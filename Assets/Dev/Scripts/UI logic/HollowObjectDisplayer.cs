@@ -117,7 +117,7 @@ public class HollowObjectDisplayer : MonoBehaviour
         PlayerManager.Instance.ownedHollowObjects.Add(objectData);
 
         SortMaster.Instance.ClearAllForgeScreens();
-        SortMaster.Instance.RefreshAllScreens();
+        //SortMaster.Instance.RefreshAllScreens();
 
         //PlayerManager.Instance.SavePlayerData();
         //PlayfabManager.instance.SaveAllGameData();

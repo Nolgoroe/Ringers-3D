@@ -139,15 +139,15 @@ public class SortMaster : MonoBehaviour
         MaterialsAndForgeManager.Instance.RefreshMaterialBagSort(matToSort);
     }
 
-    public void RefreshAllScreens()
-    {
-        MaterialsAndForgeManager.Instance.PopulateMaterialBagAll();///// Ask Alon to explain Logic here
-        HollowCraftAndOwnedManager.Instance.FillCraftScreen(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
-        HollowCraftAndOwnedManager.Instance.FillOwnedScreen();
-        MaterialsAndForgeManager.Instance.FillForge(GameManager.Instance.csvParser.allEquipmentInGame);
-        MaterialsAndForgeManager.Instance.FillCorruptionDevices(GameManager.Instance.csvParser.allCorruptedDevicesInGame);
+    //public void RefreshAllScreens()
+    //{
+    //    //MaterialsAndForgeManager.Instance.PopulateMaterialBagAll();
+    //    //HollowCraftAndOwnedManager.Instance.FillCraftScreen(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
+    //    //HollowCraftAndOwnedManager.Instance.FillOwnedScreen();
+    //    //MaterialsAndForgeManager.Instance.FillForge(GameManager.Instance.csvParser.allEquipmentInGame);
+    //    MaterialsAndForgeManager.Instance.FillCorruptionDevices(GameManager.Instance.csvParser.allCorruptedDevicesInGame);
 
-    }
+    //}
 
     public void ClearAllForgeScreens()
     {

@@ -43,7 +43,7 @@ public class RewardsManager : MonoBehaviour
         Debug.Log("Debug 7 " + savedDateTime);
         Debug.Log("Debug 8 " + currentTime);
 
-        if (savedDateTime != "")
+        if (savedDateTime != "" && !canGiveDaily)
         {
             TimeSpan deltaDateTime = Convert.ToDateTime(savedDateTime) - currentTime;
 

@@ -50,7 +50,7 @@ public class PlayerManager : MonoBehaviour
         MaterialsAndForgeManager.Instance.PopulateMaterialBagAll();
 
         SortMaster.Instance.ClearAllForgeScreens();
-        SortMaster.Instance.RefreshAllScreens();
+        //SortMaster.Instance.RefreshAllScreens();
 
         HandleItemCooldowns();
 
@@ -250,7 +250,7 @@ public class PlayerManager : MonoBehaviour
         //PlayfabManager.instance.SaveAllGameData();
 
         SortMaster.Instance.ClearAllForgeScreens();
-        SortMaster.Instance.RefreshAllScreens();
+        //SortMaster.Instance.RefreshAllScreens();
     }
 
     [ContextMenu("Add 100 Player Mats")]
@@ -269,7 +269,7 @@ public class PlayerManager : MonoBehaviour
         //HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
 
         SortMaster.Instance.ClearAllForgeScreens();
-        SortMaster.Instance.RefreshAllScreens();
+        //SortMaster.Instance.RefreshAllScreens();
 
         PlayfabManager.instance.SaveAllGameData();
     }

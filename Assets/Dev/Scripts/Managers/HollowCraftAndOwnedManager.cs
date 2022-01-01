@@ -80,7 +80,7 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
             Destroy(ownedObject.gameObject);
         }
 
-        //FillOwnedScreen();
+        FillOwnedScreen();
     }
 
     [ContextMenu("Refresh Hollow Objects")]
