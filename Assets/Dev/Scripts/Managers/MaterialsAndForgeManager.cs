@@ -143,7 +143,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
             Destroy(EQ.gameObject);
         }
 
-        //FillForge(GameManager.Instance.csvParser.allEquipmentInGame);
+        FillForge(GameManager.Instance.csvParser.allEquipmentInGame);
     }
 
 
@@ -175,7 +175,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
         //    Destroy(EQ.gameObject);
         //}
 
-        //FillForge(GameManager.Instance.csvParser.allEquipmentInGame);
+        FillForge(GameManager.Instance.csvParser.allEquipmentInGame);
     }
 
 }

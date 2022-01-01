@@ -14,7 +14,7 @@ public class DewDropsManager : MonoBehaviour
     public int maxDrops;
 
     public string savedDateTime;
-
+    public DateTime currentTime;
     public string path;
 
     private void Awake()
@@ -26,7 +26,7 @@ public class DewDropsManager : MonoBehaviour
     {
         Instance = this;
 
-        timeLeftToGiveDrop = timeTillGiveDrewDropStatic * 60;
+        //timeLeftToGiveDrop = timeTillGiveDrewDropStatic * 60;
 
         //if (Application.platform == RuntimePlatform.Android)
         //{
@@ -41,13 +41,20 @@ public class DewDropsManager : MonoBehaviour
 
         UIManager.Instance.dewDropsText.text = PlayerManager.Instance.collectedDewDrops.ToString();
 
-        DateTime currentTime = DateTime.Now.ToLocalTime();
+    }
+
+    public void CalculateReturnDeltaTime()
+    {
+        //DateTime currentTime = DateTime.Now.ToLocalTime();
         //Debug.Log(currentTime);
+
+        Debug.Log("Debug 7 " + savedDateTime);
+        Debug.Log("Debug 8 " + currentTime);
 
         if (savedDateTime != "")
         {
             //Debug.Log("has previos save time: " + savedDateTime);
-            TimeSpan deltaDateTime = DateTime.Parse(savedDateTime) - currentTime;
+            TimeSpan deltaDateTime = Convert.ToDateTime(savedDateTime) - currentTime;
 
             //Debug.Log("THIS IS THE DELTA TIME: " + deltaDateTime);
 
@@ -55,29 +62,38 @@ public class DewDropsManager : MonoBehaviour
         }
         else
         {
+            timeLeftToGiveDrop = timeTillGiveDrewDropStatic * 60;
             StartCoroutine(DisplayTime());
         }
 
-        savedDateTime = "";
+        //savedDateTime = "";
     }
 
     private void GiveElapsedTimeDewDrops(TimeSpan elapsedTime)
     {
+        //timeLeftToGiveDrop = timeLeftToGiveDrop - Math.Abs((float)elapsedTime.TotalSeconds);
         timeLeftToGiveDrop -= -((float)elapsedTime.TotalSeconds % (timeTillGiveDrewDropStatic * 60));
+        int absDrops = 0;
 
-        if(timeLeftToGiveDrop < 0)
+        if (Mathf.Abs((float)elapsedTime.TotalMinutes) >= 1)
         {
-            timeLeftToGiveDrop = (timeTillGiveDrewDropStatic * 60) + timeLeftToGiveDrop; /// its plus because if timeLeftToGiveDrop is below zero then if you use - it'll add to the time
-            //Debug.Log("GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
-            GiveDrop(1);
+            float numDropToGive = (float)elapsedTime.TotalMinutes / timeTillGiveDrewDropStatic;
+
+            absDrops = (int)Mathf.Abs(numDropToGive);
         }
         else
         {
-            //Debug.Log("NO GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
+            if (timeLeftToGiveDrop < 0)
+            {
+                timeLeftToGiveDrop = (timeTillGiveDrewDropStatic * 60) + timeLeftToGiveDrop;
+                //Debug.Log("GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
+                GiveDrop(1);
+            }
+            else
+            {
+                //Debug.Log("NO GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
+            }
         }
-        float numDropToGive = (float)elapsedTime.TotalMinutes / timeTillGiveDrewDropStatic;
-
-        int absDrops = (int)Mathf.Abs(numDropToGive);
 
         if (absDrops > 0)
         {
@@ -93,25 +109,25 @@ public class DewDropsManager : MonoBehaviour
         StartCoroutine(DisplayTime());
     }
 
-    public void OnApplicationQuit()
-    {
-        savedDateTime = System.DateTime.Now.ToString();
+    //public void OnApplicationQuit()
+    //{
+    //    savedDateTime = System.DateTime.Now.ToString();
 
-        Debug.Log(savedDateTime);
-        Debug.Log("Application is Quitting");
-
-        PlayfabManager.instance.SaveAllGameData();
-        //SaveDewDropsInfo();
-    }
+    //    Debug.Log(savedDateTime);
+    //    Debug.Log("Application is Quitting");
+    //    RewardsManager.Instance.savedDateTime
+    //    PlayfabManager.instance.SaveAllGameData();
+    //    //SaveDewDropsInfo();
+    //}
 
     public void OnApplicationPause(bool pause)
     {
         if (pause)
         {
-            savedDateTime = System.DateTime.Now.ToString();
+            //savedDateTime = System.DateTime.Now.ToString();
 
-            Debug.Log(savedDateTime);
-            Debug.Log("PAUSED " + pause);
+            //Debug.Log(savedDateTime);
+            //Debug.Log("PAUSED " + pause);
 
             PlayfabManager.instance.SaveAllGameData();
             //SaveDewDropsInfo();
@@ -173,7 +189,7 @@ public class DewDropsManager : MonoBehaviour
         UIManager.Instance.dewDropsTextTime.gameObject.SetActive(false);
     }
 
-    void DisplayTimeNoDelay() ///// This function is only for the star of the game no that players wont see the defult time while the real time is updating
+    void DisplayTimeNoDelay() ///// This function is only for the start of the game so that players wont see the defult time while the real time is updating
     {
         float minutes = Mathf.FloorToInt(timeLeftToGiveDrop / 60);
         float seconds = Mathf.FloorToInt(timeLeftToGiveDrop % 60);
@@ -194,5 +210,19 @@ public class DewDropsManager : MonoBehaviour
         //UIManager.Instance.RefreshDewDropsDisplay(PlayerManager.Instance.collectedDewDrops);
 
         //PlayerManager.Instance.SavePlayerData();
+    }
+
+    public void UpdateCurrentTime(DateTime time)
+    {
+        currentTime = time;
+
+        Debug.Log("Debug 5 " + currentTime);
+    }
+
+    public void UpdateQuitTime(DateTime time)
+    {
+        savedDateTime = time.ToString();
+
+        Debug.Log("Debug 6 " + savedDateTime);
     }
 }

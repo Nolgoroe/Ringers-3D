@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ZoneManagerHelpData : MonoBehaviour
 {
+    public static ZoneManagerHelpData Instance;
+
     public string currentZoneName;
 
     public GameObject[] zoneLevelDisplays;
@@ -11,8 +13,6 @@ public class ZoneManagerHelpData : MonoBehaviour
     public Zone[] listOfAllZones;
 
     public Zone currentZoneCheck, nextZoneCheck;
-
-    public static ZoneManagerHelpData Instance;
 
     public animalsPerZone[] possibleAnimalsPerZone;
 

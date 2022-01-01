@@ -45,7 +45,9 @@ public class UIManager : MonoBehaviour
     public GameObject normalBookBG, potionsBookBG;
     public GameObject leaderboardScreen;
     public GameObject sureWantToResetDataScreen;
+    public GameObject sureWantToLogOutScreen;
     public GameObject bGPanelDisableTouch;
+    public GameObject DailyRewardScreen;
 
     public Image dewDropsImage;
 
@@ -62,6 +64,7 @@ public class UIManager : MonoBehaviour
     public Text deltaWidth, deltaHeight;
     public Text boardScale;
     public TMP_Text dewDropsTextTime;
+    public TMP_Text dailyLootTextTime;
 
     public TMP_Text /*gameplayGoldText,*/ gameplayRubyText/*, gameplayDewDropsText*/;
     public TMP_Text animalNameText;
@@ -77,6 +80,7 @@ public class UIManager : MonoBehaviour
     public Button restartGrindLevel;
     public Button restartButton;
     public Button skipAnimationButton;
+    public Button getDailyLootButton;
 
     public Button dealButton;
 
@@ -141,6 +145,7 @@ public class UIManager : MonoBehaviour
         restartGrindLevel.gameObject.SetActive(false);
         sureWantToResetDataScreen.SetActive(false);
         bGPanelDisableTouch.SetActive(false);
+        DailyRewardScreen.SetActive(false);
 
         dragControlsImage.sprite = toggleOnSprite;
         tapControlsImage.sprite = toggleOffSprite;
@@ -530,6 +535,11 @@ public class UIManager : MonoBehaviour
         {
             leaderboardScreen.SetActive(false);
         }
+
+        if(ToClose == DailyRewardScreen)
+        {
+            DailyRewardScreen.SetActive(false);
+        }
     }
     public void ToForge()
     {
@@ -887,8 +897,44 @@ public class UIManager : MonoBehaviour
 
     public void SureWantToResetDataNo()
     {
-        isUsingUI = false;
+        //isUsingUI = false;
 
         sureWantToResetDataScreen.SetActive(false);
     }
+
+    public void SureWantToLogOutMessage()
+    {
+        // no need to check if using UI since we can only get in here if the options menu is open so UI is used
+        sureWantToLogOutScreen.SetActive(true);
+    }
+
+    public void SureWantToLogOutYes()
+    {
+        isUsingUI = false;
+
+        sureWantToLogOutScreen.SetActive(false);
+
+        PlayfabManager.instance.LogOut();
+    }
+
+    public void SureWantToLogOutNo()
+    {
+        //isUsingUI = false;
+
+        sureWantToLogOutScreen.SetActive(false);
+    }
+
+    public void DisplayDailyRewardsScreen()
+    {
+        isUsingUI = true;
+        DailyRewardScreen.SetActive(true);
+    }
+
+    public void DeactivateDailyRewardScreen()
+    {
+        isUsingUI = false;
+
+        DailyRewardScreen.SetActive(false);
+    }
+
 }

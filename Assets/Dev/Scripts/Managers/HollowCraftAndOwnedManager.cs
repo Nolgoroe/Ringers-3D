@@ -93,7 +93,7 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
             Destroy(HO.gameObject);
         }
 
-        //FillCraftScreen(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
+        FillCraftScreen(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
     }
 
     public void OpenOwnedFurnitureToPlace(int typeOfHollow)

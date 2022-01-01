@@ -496,6 +496,7 @@ public class GameManager : MonoBehaviour
         CursorController.Instance.tutorialBadConnection = false;
         UIManager.Instance.youWinScreen.SetActive(false);
         UIManager.Instance.bGPanelDisableTouch.SetActive(false);
+        LootManager.Instance.DestoryWinScreenDisplyedLoot();
 
         if (!isDisableTutorials && currentLevel.isTutorial)
         {

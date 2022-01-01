@@ -72,7 +72,7 @@ public class CursorController : MonoBehaviour
 
                     if(Physics.Raycast(ray, out hit))
                     {
-                        if (hit.collider.CompareTag("Level Button"))
+                        if (hit.collider.CompareTag("Level Button") || hit.collider.CompareTag("Grind Level Button"))
                         {
                             hit.transform.GetComponent<Interactable3D>().ShootEvent();
                         }

@@ -318,23 +318,33 @@ public class PowerUpManager : MonoBehaviour
                 TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
             }
 
-            if (toWorkOn.partOfBoard/* && !toWorkOn.isLocked*/)
+            if (toWorkOn.partOfBoard)
             {
-                toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(false, false);
+                if (!toWorkOn.isLocked)
+                {
+                    toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(false, false);
 
-                PieceColor tempColor = toWorkOn.leftChild.colorOfPiece;
-                PieceSymbol tempSymbol = toWorkOn.leftChild.symbolOfPiece;
+                    PieceColor tempColor = toWorkOn.leftChild.colorOfPiece;
+                    PieceSymbol tempSymbol = toWorkOn.leftChild.symbolOfPiece;
 
-                toWorkOn.leftChild.colorOfPiece = toWorkOn.rightChild.colorOfPiece;
-                toWorkOn.leftChild.symbolOfPiece = toWorkOn.rightChild.symbolOfPiece;
+                    toWorkOn.leftChild.colorOfPiece = toWorkOn.rightChild.colorOfPiece;
+                    toWorkOn.leftChild.symbolOfPiece = toWorkOn.rightChild.symbolOfPiece;
 
-                toWorkOn.rightChild.colorOfPiece = tempColor;
-                toWorkOn.rightChild.symbolOfPiece = tempSymbol;
+                    toWorkOn.rightChild.colorOfPiece = tempColor;
+                    toWorkOn.rightChild.symbolOfPiece = tempSymbol;
 
-                toWorkOn.leftChild.RefreshPiece();
-                toWorkOn.rightChild.RefreshPiece();
+                    toWorkOn.leftChild.RefreshPiece();
+                    toWorkOn.rightChild.RefreshPiece();
 
-                toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
+                    toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
+
+                    FinishedUsingPowerup(true, prop);
+                    ShakePiecePowerUp(toWorkOn.gameObject);
+                }
+                else
+                {
+                    FinishedUsingPowerup(false, prop);
+                }
             }
             else
             {
@@ -349,11 +359,10 @@ public class PowerUpManager : MonoBehaviour
 
                 toWorkOn.leftChild.RefreshPiece();
                 toWorkOn.rightChild.RefreshPiece();
+                FinishedUsingPowerup(true, prop);
+                ShakePiecePowerUp(toWorkOn.gameObject);
             }
-
-            ShakePiecePowerUp(toWorkOn.gameObject);
-
-            FinishedUsingPowerup(toWorkOn.partOfBoard /*&& !toWorkOn.isLocked*/, prop);
+         
             Debug.Log("Switch");
         }
         else

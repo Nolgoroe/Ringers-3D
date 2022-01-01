@@ -195,7 +195,7 @@ public class LootManager : MonoBehaviour
             DisplayLootGoldRubyToPlayer(rubiesToRecieveInLevel, rubySprite);
             PlayerManager.Instance.AddRubies(rubiesToRecieveInLevel);
 
-            Debug.Log("Rubied to recieve " + rubiesToRecieveInLevel);
+            Debug.Log("Rubies to recieve " + rubiesToRecieveInLevel);
         }
         
         if(craftingMatsLootForLevel.Count > 0)

@@ -31,6 +31,7 @@ public class BreweryDisplayLogic : MonoBehaviour
         brewButton.onClick.RemoveAllListeners();
 
         brewButton.onClick.AddListener(() => ED.ForgeItem());
+        brewButton.onClick.AddListener(() => BreweryPotionDisplay(ED));
         selectedPotion = ED;
         BreweryPotionDisplay(ED);
     }

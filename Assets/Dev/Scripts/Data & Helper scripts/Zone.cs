@@ -31,6 +31,17 @@ public class Zone : MonoBehaviour
     [HideInInspector]
     public Image zoneHeader;
 
+    public void Init()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.CompareTag("Grind Level Button"))
+            {
+                zoneGrindLevel = child.gameObject;
+            }
+        }
+    }
+
     //private void Start()
     //{
     //    //if (Application.platform == RuntimePlatform.Android)

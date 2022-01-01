@@ -113,6 +113,12 @@ public class PlayerManager : MonoBehaviour
             int currentAmountOfDrops = collectedDewDrops;
 
             collectedDewDrops -= CMN.amount;
+
+            if(collectedDewDrops < 0)
+            {
+                Debug.LogError("Something wrong with dew drops counter!");
+            }
+
             UIManager.Instance.dewDropsText.text = collectedDewDrops.ToString();
 
             if(currentAmountOfDrops >= DewDropsManager.Instance.maxDrops)

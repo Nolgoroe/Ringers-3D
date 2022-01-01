@@ -20,7 +20,7 @@ public class PlayfabManager : MonoBehaviour
 
     public TMP_Text testingContentTabServer;
 
-    public int multiplier = 0;
+    public int timeToWaitForDailyRewardSeconds = 0;
 
 
     public TMP_InputField userNameInput;
@@ -30,6 +30,9 @@ public class PlayfabManager : MonoBehaviour
 
     public Transform leaderboardDisplayZone;
     public GameObject leaderboardPersonPrefab;
+    string filePath;
+
+    public DateTime currentTimeReference;
 
     private void Awake()
     {
@@ -39,42 +42,86 @@ public class PlayfabManager : MonoBehaviour
     private void Start()
     {
         displayMessages.text = "";
+
+        string nameInFile = "";
+
+        //// WHAT TO DO WITH IPHONE???
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            filePath = Application.persistentDataPath + "/username.txt";
+        }
+        else
+        {
+            filePath = Application.dataPath + "/Save Files Folder/username.txt";
+        }
+
+        if (File.Exists(filePath))
+        {
+            StreamReader reader = new StreamReader(filePath);
+            nameInFile = reader.ReadLine(); //There is only 1 line here always so we can use read line
+
+            reader.Close();
+
+            if (nameInFile != null)
+            {
+                LoginAutomatically(nameInFile);
+            }
+        }
     }
-    //private void Start()
-    //{
-    //    Login();
-    //}
 
 
-
+    public void LoginAutomatically(string nameInFile)
+    {
+        var request = new LoginWithPlayFabRequest
+        {
+            Username = nameInFile,
+            Password = "123456",
+            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+            {
+                GetPlayerProfile = true
+            },
+        };
+        PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccess, OnError);
+    }
 
     IEnumerator LoginInit()
     {
-        //var request = new LoginWithCustomIDRequest
-        //{
-        //    CustomId = userNameInput.text,
-        //    CreateAccount = true
-        //};
-
-        //PlayFabClientAPI.LoginWithCustomID(request, OnSuccess, OnError);
-
         displayMessages.text = "Logged In!";
 
         LoadupAllGameData();
 
         yield return new WaitUntil(() => doneWithStep == true);
+
+        GetServerCurrentTime();
+
+        yield return new WaitUntil(() => doneWithStep == true);
         doneWithStep = false;
         InitAllSystems();
 
-        GetDailRewardsData();
+
+        // from here on can do actions however we want since we loaded and initted all systems
+
+        Debug.Log("Debug 2 " + currentTimeReference);
+        if(currentTimeReference != DateTime.MinValue)
+        {
+            RewardsManager.Instance.UpdateCurrentTime(currentTimeReference);
+            DewDropsManager.Instance.UpdateCurrentTime(currentTimeReference);
+
+        }
+
+        GetDailyRewardsData();
+
+
+        yield return new WaitUntil(() => doneWithStep == true);
+
+        RewardsManager.Instance.CalculateReturnDeltaTime();
+        DewDropsManager.Instance.CalculateReturnDeltaTime();
 
         SaveAllGameData();
-    }
 
-    //void OnSuccess(LoginResult result)
-    //{
-    //    Debug.Log("Success!!!");
-    //}
+
+        UIManager.Instance.PlayButton();
+    }
 
     void OnError(PlayFabError error)
     {
@@ -82,7 +129,6 @@ public class PlayfabManager : MonoBehaviour
         Debug.Log("Errrrrror!!! " + error.ErrorMessage);
         Debug.Log(error.GenerateErrorReport());
     }
-
 
     public void SendLeaderboard(int highestLevelReached)
     {
@@ -162,8 +208,9 @@ public class PlayfabManager : MonoBehaviour
 
 
     [ContextMenu("Get Daily Rewards Data from Server")]
-    void GetDailRewardsData()
+    void GetDailyRewardsData()
     {
+        doneWithStep = false;
         PlayFabClientAPI.GetTitleData(new GetTitleDataRequest(), onDailyRewardsDataGet, OnError);
     }
 
@@ -174,20 +221,17 @@ public class PlayfabManager : MonoBehaviour
             Debug.Log("No Message in title data!");
         }
 
+        List<DailyRewardsPacks> dailyRewardPacks = PlayFab.PfEditor.Json.JsonWrapper.DeserializeObject<List<DailyRewardsPacks>>(result.Data["dailyRewardPacks"]);
 
-        // Get Daily Rewards
-        RewardsManager.Instance.dailyRewards.Clear();
-        foreach (var pair in result.Data)
-        {
-            string listItem = pair.Key;
+        RewardsManager.Instance.UpdateRewardListServer(dailyRewardPacks);
 
-            if (listItem.Contains("Daily"))
-            {
-                RewardsManager.Instance.dailyRewards.Add(pair.Value);
-            }
-        }
+
+
+        timeToWaitForDailyRewardSeconds = Convert.ToInt32(result.Data["TimeToWaitForDailySeconds"]);
+
+
+        doneWithStep = true;
     }
-
 
     [ContextMenu("Load ALL game data from server - STEP 1")]
     public void LoadupAllGameData()
@@ -267,16 +311,29 @@ public class PlayfabManager : MonoBehaviour
         ZoneManager.Instance.Init();
         RewardsManager.Instance.Init();
 
-        UIManager.Instance.PlayButton();
+        foreach (Zone zone in ZoneManagerHelpData.Instance.listOfAllZones)
+        {
+            zone.Init();
+        }
 
     }
 
     [ContextMenu("Save ALL game data to server - STEP 3")]
     public void SaveAllGameData()
     {
-
-        doneWithStep = false;
         string savedData = " ";
+
+
+        // Player Login Username
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            filePath = Application.persistentDataPath + "/username.txt";
+        }
+        else
+        {
+            filePath = Application.dataPath + "/Save Files Folder/username.txt";
+        }
+        File.WriteAllText(filePath, playerName);
 
         // Player Data
         savedData = JsonUtility.ToJson(PlayerManager.Instance);
@@ -309,15 +366,21 @@ public class PlayfabManager : MonoBehaviour
             SendDataToBeSavedJson(savedData, SystemsToSave.ZoneX, zone.id);
         }
 
+
+        doneWithStep = false;
+
+
         // Rewards Manager Data
         savedData = JsonUtility.ToJson(RewardsManager.Instance);
         SendDataToBeSavedJson(savedData, SystemsToSave.RewardsManager, -1);
+
 
     }
 
     public void SendDataToBeSavedJson(string saveData, SystemsToSave system, int zoneNumber)
     {
         UpdateUserDataRequest request = null;
+
         switch (system)
         {
             case SystemsToSave.Player:
@@ -326,7 +389,7 @@ public class PlayfabManager : MonoBehaviour
                     Data = new Dictionary<string, string>()
                     {
                         { "Player Data", saveData }
-                    }
+                    },
                 };
                 break;
             case SystemsToSave.DewDrops:
@@ -408,6 +471,7 @@ public class PlayfabManager : MonoBehaviour
 
     void OnDataSend(UpdateUserDataResult result)
     {
+        doneWithStep = true;
         Debug.Log("Updated Player Data on Server!");
     }
 
@@ -421,8 +485,6 @@ public class PlayfabManager : MonoBehaviour
     {
         doneWithStep = false;
         UpdateUserDataRequest request = null;
-
-
 
         request = new UpdateUserDataRequest
         {
@@ -438,11 +500,14 @@ public class PlayfabManager : MonoBehaviour
                 
             }
         };
+
         if (request != null)
         {
             PlayFabClientAPI.UpdateUserData(request, OnDataSendReset, OnError);
         }
 
+        /// what to do with DoneWithStep here???
+        
         foreach (Zone zone in ZoneManagerHelpData.Instance.listOfAllZones)
         {
             request = new UpdateUserDataRequest
@@ -452,6 +517,7 @@ public class PlayfabManager : MonoBehaviour
                         { "Zone Data" + zone.id, "" }
                     }
             };
+
             if (request != null)
             {
                 PlayFabClientAPI.UpdateUserData(request, OnDataSendReset, OnError);
@@ -467,6 +533,21 @@ public class PlayfabManager : MonoBehaviour
 
     }
 
+
+    public void LogOut()
+    {
+        playerName = null;
+
+        SaveAllGameData();
+
+        StartCoroutine(logOutAction());
+    }
+
+    IEnumerator logOutAction()
+    {
+        yield return new WaitUntil(() => doneWithStep == true);
+        SceneManager.LoadScene(0);
+    }
     void OnDataSendReset(UpdateUserDataResult result)
     {
         doneWithStep = true;
@@ -516,5 +597,39 @@ public class PlayfabManager : MonoBehaviour
         }
 
         StartCoroutine(LoginInit());
+    }
+
+
+    public void GetServerCurrentTime()
+    {
+        doneWithStep = false;
+        PlayFabClientAPI.GetTime(new GetTimeRequest(), OnGetTimeSuccess, OnError);
+    }
+
+    void OnGetTimeSuccess(GetTimeResult result)
+    {
+        currentTimeReference = result.Time;
+        Debug.Log("Debug 1 " + currentTimeReference);
+
+        doneWithStep = true;
+    }
+
+
+
+    private IEnumerator OnApplicationFocus(bool focus)
+    {
+        Debug.Log("UASFUISAUIASNF");
+        if (!focus)
+        {
+            GetServerCurrentTime();
+            yield return new WaitUntil(() => doneWithStep == true);
+
+
+
+            RewardsManager.Instance.UpdateQuitTime(currentTimeReference);
+            DewDropsManager.Instance.UpdateQuitTime(currentTimeReference);
+
+            SaveAllGameData();
+        }
     }
 }
