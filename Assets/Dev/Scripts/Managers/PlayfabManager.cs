@@ -9,6 +9,7 @@ using PlayFab.ClientModels;
 using System;
 using System.IO;
 using System.Linq;
+using PlayFab.PfEditor;
 
 public class PlayfabManager : MonoBehaviour
 {
