@@ -9,6 +9,7 @@ using PlayFab.ClientModels;
 using System;
 using System.IO;
 using System.Linq;
+using PlayFab.PfEditor;
 
 public class PlayfabManager : MonoBehaviour
 {
@@ -221,7 +222,10 @@ public class PlayfabManager : MonoBehaviour
             Debug.Log("No Message in title data!");
         }
 
-        List<DailyRewardsPacks> dailyRewardPacks = PlayFab.PfEditor.Json.JsonWrapper.DeserializeObject<List<DailyRewardsPacks>>(result.Data["dailyRewardPacks"]);
+        List<DailyRewardsPacks> dailyRewardPacks = PlayFab.PluginManager.GetPlugin<ISerializerPlugin>(PluginContract.PlayFab_Serializer).DeserializeObject<List< DailyRewardsPacks>>(result.Data["dailyRewardPacks"]);
+
+
+        //List<DailyRewardsPacks> dailyRewardPacks = PlayFab.PfEditor.Json.JsonWrapper.DeserializeObject<List<DailyRewardsPacks>>(result.Data["dailyRewardPacks"]);
 
         RewardsManager.Instance.UpdateRewardListServer(dailyRewardPacks);
 
