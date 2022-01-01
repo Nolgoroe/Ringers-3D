@@ -26,6 +26,13 @@ public class RewardScreenDisplayDataHelper : MonoBehaviour
 
     public void DisplayDailyRewards()
     {
+        foreach (Transform child in displayZone)
+        {
+            Destroy(child.gameObject);
+        }
+
+        lootPrefabsInstantiated.Clear();
+
         foreach (string s in RewardsManager.Instance.dailyRewardPacks[RewardsManager.Instance.indexPack].dailyRewards)
         {
             if (s.Contains("-"))
@@ -67,7 +74,20 @@ public class RewardScreenDisplayDataHelper : MonoBehaviour
 
     public void HeighlightSpecificIndex()
     {
-        Image currentImage = lootPrefabsInstantiated[RewardsManager.Instance.indexDayToGive].GetComponent<Image>();
-        currentImage.color = new Color(255, 0, 0, 255);
+        int index = RewardsManager.Instance.indexDayToGive;
+
+        for (int i = 0; i < lootPrefabsInstantiated.Count; i++)
+        {
+            Image currentImage = lootPrefabsInstantiated[i].GetComponent<Image>();
+
+            if (i == index)
+            {
+                currentImage.color = new Color(255, 0, 0, 255);
+            }
+            else
+            {
+                currentImage.color = new Color(255, 255, 255, 255);
+            }
+        }
     }
 }

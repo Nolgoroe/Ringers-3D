@@ -147,14 +147,18 @@ public class RewardsManager : MonoBehaviour
         RewardScreenDisplayDataHelper.Instance.HeighlightSpecificIndex();
     }
 
-    public void FailSafeRewardPacks()
+    public void RealTimeRewardPacks()
     {
         if (indexDayToGive >= 7)
         {
             indexDayToGive = 0;
 
             DecideOnDailyGiftPackIndex();
+
+            RewardScreenDisplayDataHelper.Instance.DisplayDailyRewards();
         }
+
+        RewardScreenDisplayDataHelper.Instance.HeighlightSpecificIndex();
     }
 
     [ContextMenu("give daily rewards")]
@@ -162,7 +166,7 @@ public class RewardsManager : MonoBehaviour
     {
         GiveDailyRewards(indexPack);
 
-        FailSafeRewardPacks();
+        RealTimeRewardPacks();
 
 
         canGiveDaily = false;
