@@ -612,6 +612,19 @@ public class UIManager : MonoBehaviour
     }
     public void CloseGame()
     {
+        DateTime timeToSave = PlayfabManager.instance.currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
+
+
+
+        Debug.Log(timeToSave + "Pause time!");
+
+        RewardsManager.Instance.UpdateQuitTime(timeToSave);
+        DewDropsManager.Instance.UpdateQuitTime(timeToSave);
+
+        PlayfabManager.instance.SaveAllGameData();
+
+        Debug.Log("Saved all data! - close game");
+
         Application.Quit();
     }
     public void OpenWardrobe()
