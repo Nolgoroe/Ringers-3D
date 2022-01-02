@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     public static bool gameWon;
     //public GameObject circleBoardPrefab;
     //public GameObject doubleCircleBoardPrefab;
+
+    //public float secondsFromGameStart;
+
     public GameObject[] levelBGModels;
     public GameObject selectedLevelBG;
     public GameObject clipPrefab;
@@ -64,6 +67,14 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
     }
+
+    //private void Update()
+    //{
+    //    if (PlayfabManager.isLoggedIn)
+    //    {
+    //        secondsFromGameStart += Time.deltaTime;
+    //    }
+    //}
 
     private void Start()
     {

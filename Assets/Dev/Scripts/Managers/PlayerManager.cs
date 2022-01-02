@@ -154,7 +154,7 @@ public class PlayerManager : MonoBehaviour
     public void AddRubies(int amount)
     {
         rubyCount += amount;
-        Debug.Log(amount);
+        //Debug.Log(amount);
         UIManager.Instance.RefreshGoldAndRubyDisplay();
     }
     public void PopulatePowerUps()

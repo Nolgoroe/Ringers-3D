@@ -48,9 +48,9 @@ public class DewDropsManager : MonoBehaviour
         //DateTime currentTime = DateTime.Now.ToLocalTime();
         //Debug.Log(currentTime);
 
-        Debug.Log("Debug 7 " + savedDateTime);
-        Debug.Log("Debug 8 " + currentTime);
-
+        //Debug.Log("Debug 7 " + savedDateTime);
+        //Debug.Log("Debug 8 " + currentTime);
+        StopAllCoroutines();
         if (savedDateTime != "" && PlayerManager.Instance.collectedDewDrops < maxDrops)
         {
             //Debug.Log("has previos save time: " + savedDateTime);
@@ -120,20 +120,6 @@ public class DewDropsManager : MonoBehaviour
     //    //SaveDewDropsInfo();
     //}
 
-    public void OnApplicationPause(bool pause)
-    {
-        if (pause)
-        {
-            //savedDateTime = System.DateTime.Now.ToString();
-
-            //Debug.Log(savedDateTime);
-            //Debug.Log("PAUSED " + pause);
-
-            PlayfabManager.instance.SaveAllGameData();
-            //SaveDewDropsInfo();
-        }
-    }
-
     //[ContextMenu("Save")]
     //public void SaveDewDropsInfo()
     //{
@@ -165,7 +151,7 @@ public class DewDropsManager : MonoBehaviour
             UIManager.Instance.dewDropsTextTime.gameObject.SetActive(true);
 
             yield return new WaitForSecondsRealtime(1);
-            Debug.Log("Inside Coroutine!");
+            //Debug.Log("Inside Coroutine!");
 
             timeLeftToGiveDrop--;
 
@@ -216,13 +202,13 @@ public class DewDropsManager : MonoBehaviour
     {
         currentTime = time;
 
-        Debug.Log("Debug 5 " + currentTime);
+        //Debug.Log("Debug 5 " + currentTime);
     }
 
     public void UpdateQuitTime(DateTime time)
     {
         savedDateTime = time.ToString();
 
-        Debug.Log("Debug 6 " + savedDateTime);
+        //Debug.Log("Debug 6 " + savedDateTime);
     }
 }

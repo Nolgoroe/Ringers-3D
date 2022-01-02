@@ -12,6 +12,8 @@ using System.Linq;
 
 public class PlayfabManager : MonoBehaviour
 {
+    public static bool isLoggedIn = false;
+
     public enum SystemsToSave { Player, DewDrops, animalManager, corruptedZonesManager, TutorialSaveData, ZoneManager, ZoneX, RewardsManager}
 
     public static PlayfabManager instance;
@@ -101,7 +103,7 @@ public class PlayfabManager : MonoBehaviour
 
         // from here on can do actions however we want since we loaded and initted all systems
 
-        Debug.Log("Debug 2 " + currentTimeReference);
+        //Debug.Log("Debug 2 " + currentTimeReference);
         if(currentTimeReference != DateTime.MinValue)
         {
             RewardsManager.Instance.UpdateCurrentTime(currentTimeReference);
@@ -121,6 +123,9 @@ public class PlayfabManager : MonoBehaviour
 
 
         UIManager.Instance.PlayButton();
+
+        isLoggedIn = true;
+        TimeReferenceDataScript.Start();
     }
 
     void OnError(PlayFabError error)
@@ -246,7 +251,7 @@ public class PlayfabManager : MonoBehaviour
 
     void OnDataRecieved(GetUserDataResult result)
     {
-        Debug.Log("Recieved Character Data");
+        //Debug.Log("Recieved Character Data");
 
         // Player Data
         if (result.Data != null && result.Data.ContainsKey("Player Data"))
@@ -376,8 +381,6 @@ public class PlayfabManager : MonoBehaviour
         // Rewards Manager Data
         savedData = JsonUtility.ToJson(RewardsManager.Instance);
         SendDataToBeSavedJson(savedData, SystemsToSave.RewardsManager, -1);
-
-
     }
 
     public void SendDataToBeSavedJson(string saveData, SystemsToSave system, int zoneNumber)
@@ -475,7 +478,7 @@ public class PlayfabManager : MonoBehaviour
     void OnDataSend(UpdateUserDataResult result)
     {
         doneWithStep = true;
-        Debug.Log("Updated Player Data on Server!");
+        //Debug.Log("Updated Player Data on Server!");
     }
 
     [ContextMenu("Reset All Data")]
@@ -528,7 +531,7 @@ public class PlayfabManager : MonoBehaviour
         }
 
         SendLeaderboard(0);
-
+        TimeReferenceDataScript.Reset();
         yield return new WaitUntil(() => doneWithStep == true);
 
         SceneManager.LoadScene(0);
@@ -612,27 +615,82 @@ public class PlayfabManager : MonoBehaviour
     void OnGetTimeSuccess(GetTimeResult result)
     {
         currentTimeReference = result.Time;
-        Debug.Log("Debug 1 " + currentTimeReference);
+        Debug.Log(result.Time + " what?");
+        //Debug.Log("Debug 1 " + currentTimeReference);
 
         doneWithStep = true;
     }
 
-
-
-    private IEnumerator OnApplicationFocus(bool focus)
+    // check if need this AND Focus
+    private void OnApplicationPause(bool pause)
     {
-        Debug.Log("UASFUISAUIASNF");
-        if (!focus)
+        Debug.Log("Pause is: " + pause);
+        Debug.Log("is Logged In is: " + isLoggedIn);
+
+        if (pause && isLoggedIn)
         {
-            GetServerCurrentTime();
-            yield return new WaitUntil(() => doneWithStep == true);
+            Debug.Log("On Application Pause");
+            //GetServerCurrentTime();
+            //yield return new WaitUntil(() => doneWithStep == true);
+
+            //DateTime timeSpanSinceStart = Convert.ToDateTime();
+
+
+            DateTime timeToSave = currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
 
 
 
-            RewardsManager.Instance.UpdateQuitTime(currentTimeReference);
-            DewDropsManager.Instance.UpdateQuitTime(currentTimeReference);
+            Debug.Log(timeToSave + "Pause time!");
+
+            RewardsManager.Instance.UpdateQuitTime(timeToSave);
+            DewDropsManager.Instance.UpdateQuitTime(timeToSave);
 
             SaveAllGameData();
+
+            Debug.Log("Saved all data! - pause");
+        }
+        else if(!pause && isLoggedIn)
+        {
+            DewDropsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
+            DewDropsManager.Instance.CalculateReturnDeltaTime();
+
+            RewardsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
+            RewardsManager.Instance.CalculateReturnDeltaTime();
         }
     }
+
+    //// check if need this AND Pause 
+    //private void OnApplicationFocus(bool focus)
+    //{
+    //    Debug.Log("focus is: " + focus);
+    //    Debug.Log("is Logged In is: " + isLoggedIn);
+
+    //    if (!focus && isLoggedIn)
+    //    {
+    //        Debug.Log("On Application Focus");
+    //        //GetServerCurrentTime();
+    //        //yield return new WaitUntil(() => doneWithStep == true);
+
+    //        DateTime timeToSave = currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
+
+
+    //        Debug.Log(timeToSave + "Focus time!");
+
+
+    //        RewardsManager.Instance.UpdateQuitTime(timeToSave);
+    //        DewDropsManager.Instance.UpdateQuitTime(timeToSave);
+
+    //        SaveAllGameData();
+
+    //        Debug.Log("Saved all data! - focus");
+    //    }
+    //    else if (focus && isLoggedIn)
+    //    {
+    //        DewDropsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
+    //        DewDropsManager.Instance.CalculateReturnDeltaTime();
+
+    //        RewardsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
+    //        RewardsManager.Instance.CalculateReturnDeltaTime();
+    //    }
+    //}
 }

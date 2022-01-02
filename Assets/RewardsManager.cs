@@ -40,8 +40,9 @@ public class RewardsManager : MonoBehaviour
     {
         //DateTime currentTime = (PlayfabManager.instance.GetCurrentTime();
 
-        Debug.Log("Debug 7 " + savedDateTime);
-        Debug.Log("Debug 8 " + currentTime);
+        //Debug.Log("Debug 7 " + savedDateTime);
+        //Debug.Log("Debug 8 " + currentTime);
+        StopAllCoroutines();
 
         if (savedDateTime != "" && !canGiveDaily)
         {
@@ -88,7 +89,7 @@ public class RewardsManager : MonoBehaviour
             UIManager.Instance.dailyLootTextTime.gameObject.SetActive(true);
 
             yield return new WaitForSecondsRealtime(1);
-            Debug.Log("Inside daily loot Coroutine!");
+            //Debug.Log("Inside daily loot Coroutine!");
 
             timeLeftToGiveDailyLoot--;
 
@@ -223,13 +224,13 @@ public class RewardsManager : MonoBehaviour
     {
         currentTime = time;
 
-        Debug.Log("Debug 3 " + currentTime);
+        //Debug.Log("Debug 3 " + currentTime);
     }
 
     public void UpdateQuitTime(DateTime time)
     {
         savedDateTime = time.ToString();
 
-        Debug.Log("Debug 4 " + savedDateTime);
+        //Debug.Log("Debug 4 " + savedDateTime);
     }
 }
