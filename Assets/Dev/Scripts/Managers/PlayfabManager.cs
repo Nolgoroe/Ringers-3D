@@ -659,38 +659,42 @@ public class PlayfabManager : MonoBehaviour
         }
     }
 
-    //// check if need this AND Pause 
-    //private void OnApplicationFocus(bool focus)
-    //{
-    //    Debug.Log("focus is: " + focus);
-    //    Debug.Log("is Logged In is: " + isLoggedIn);
 
-    //    if (!focus && isLoggedIn)
-    //    {
-    //        Debug.Log("On Application Focus");
-    //        //GetServerCurrentTime();
-    //        //yield return new WaitUntil(() => doneWithStep == true);
+    // check if need this AND Pause 
+    private void OnApplicationFocus(bool focus)
+    {
+        if (Application.isEditor)
+        {
+            Debug.Log("focus is: " + focus);
+            Debug.Log("is Logged In is: " + isLoggedIn);
 
-    //        DateTime timeToSave = currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
+            if (!focus && isLoggedIn)
+            {
+                Debug.Log("On Application Focus");
+                //GetServerCurrentTime();
+                //yield return new WaitUntil(() => doneWithStep == true);
+
+                DateTime timeToSave = currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
 
 
-    //        Debug.Log(timeToSave + "Focus time!");
+                Debug.Log(timeToSave + "Focus time!");
 
 
-    //        RewardsManager.Instance.UpdateQuitTime(timeToSave);
-    //        DewDropsManager.Instance.UpdateQuitTime(timeToSave);
+                RewardsManager.Instance.UpdateQuitTime(timeToSave);
+                DewDropsManager.Instance.UpdateQuitTime(timeToSave);
 
-    //        SaveAllGameData();
+                SaveAllGameData();
 
-    //        Debug.Log("Saved all data! - focus");
-    //    }
-    //    else if (focus && isLoggedIn)
-    //    {
-    //        DewDropsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
-    //        DewDropsManager.Instance.CalculateReturnDeltaTime();
+                Debug.Log("Saved all data! - focus");
+            }
+            else if (focus && isLoggedIn)
+            {
+                DewDropsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
+                DewDropsManager.Instance.CalculateReturnDeltaTime();
 
-    //        RewardsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
-    //        RewardsManager.Instance.CalculateReturnDeltaTime();
-    //    }
-    //}
+                RewardsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
+                RewardsManager.Instance.CalculateReturnDeltaTime();
+            }
+        }
+    }
 }

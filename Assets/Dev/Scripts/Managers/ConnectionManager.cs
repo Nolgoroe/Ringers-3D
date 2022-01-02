@@ -666,7 +666,7 @@ public class ConnectionManager : MonoBehaviour
                     break;
 
                 case 'I':
-                    if (relevent.lootPack != LootPacks.None)
+                    if (relevent.lootPack != LootPacks.None) //// this should not be here - check this before we even enter this area
                     {
                         AddMaterialsToLootList(relevent);
                         //StartCoroutine(InstantiateLootEffectMaterials(relevent, relevent.lootIcon.transform, LootTargetsData.instance.materialsTargetLoot));
