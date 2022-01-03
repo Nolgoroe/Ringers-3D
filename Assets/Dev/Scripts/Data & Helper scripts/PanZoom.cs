@@ -28,6 +28,7 @@ public class PanZoom : MonoBehaviour
     //Vector3 OriginalCamPos;
 
     bool isZoom;
+    public bool canZoom;
 
     private void Start()
     {
@@ -59,7 +60,7 @@ public class PanZoom : MonoBehaviour
             //bottomBound = ((vertExtent - SpriteBounds.rect.size.y / 2.0f)) / SpriteBounds.pixelsPerUnit + 2;
             //topBound = ((SpriteBounds.rect.size.y / 2.0f - vertExtent)) / SpriteBounds.pixelsPerUnit + 2;
 
-            if (Input.touchCount > 0)
+            if (Input.touchCount > 0 && !GameManager.Instance.levelStarted)
             {
                 touch = Input.GetTouch(0);
 
@@ -78,14 +79,23 @@ public class PanZoom : MonoBehaviour
                             Vector2 touchDeltaPos = touch.deltaPosition;
 
                             //Debug.Log(touchDeltaPos);
-                            float zPos = -touchDeltaPos.y;
+                            //float zPos = -touchDeltaPos.y; // for 3D map
 
-                            mainCam.transform.Translate(-touchDeltaPos.x * panSpeed, 0, zPos * panSpeed);
+                            mainCam.transform.Translate(-touchDeltaPos.x * panSpeed, -touchDeltaPos.y * panSpeed, 0);
 
                             mainCam.transform.position = new Vector3(
                                 Mathf.Clamp(mainCam.transform.position.x, leftBound, rightBound),
-                                50,
-                                Mathf.Clamp(mainCam.transform.position.z, bottomBound, topBound));
+                                Mathf.Clamp(mainCam.transform.position.y, bottomBound, topBound),
+                                -50f);
+
+                            //float zPos = -touchDeltaPos.y;
+
+                            //mainCam.transform.Translate(-touchDeltaPos.x * panSpeed, 0, zPos * panSpeed);
+
+                            //mainCam.transform.position = new Vector3(
+                            //    Mathf.Clamp(mainCam.transform.position.x, leftBound, rightBound),
+                            //    50,
+                            //    Mathf.Clamp(mainCam.transform.position.z, bottomBound, topBound));
                         }
                     }
                 }
@@ -95,7 +105,7 @@ public class PanZoom : MonoBehaviour
                     isZoom = false;
                 }
 
-                if (Input.touchCount == 2)
+                if (Input.touchCount == 2 && canZoom)
                 {
                     Touch FirstFinger = Input.GetTouch(0);
                     Touch SecondFinger = Input.GetTouch(1);

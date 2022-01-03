@@ -12,13 +12,14 @@ public class ButtonsPerZone
 {
     public Zone theZone;
 
-    public GameObject[] zone3DButtons;
+    public GameObject[] zone3DButtons; //3D Map
+    //public Button[] zoneButtons;
 }
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    public GameObject mainMenu, world3D, hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasBotom, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
+    public GameObject mainMenu, worldGameObject, hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasBotom, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
     public GameObject InGameUiScreens;
     //public GameObject blackLevelBG;
     public GameObject zoomInCorruptedBlack;
@@ -102,7 +103,7 @@ public class UIManager : MonoBehaviour
         Instance = this;
         mainMenu.SetActive(true); /// ony screen we should see at the start
 
-        world3D.SetActive(true);
+        worldGameObject.SetActive(true);
         hudCanvasUI.SetActive(false);
         hudCanvasUIBottomZoneMainMap.SetActive(true);
 
@@ -191,12 +192,12 @@ public class UIManager : MonoBehaviour
     public void ActivateGmaeplayCanvas()
     {
         gameplayCanvas.SetActive(true);
-        world3D.SetActive(false);
+        worldGameObject.SetActive(false);
         hudCanvasUI.SetActive(false);
     }
     public void ToMainMenu()
     {
-        world3D.SetActive(false);
+        worldGameObject.SetActive(false);
         hudCanvasUI.SetActive(false);
         mainMenu.SetActive(true);
     }
@@ -356,19 +357,25 @@ public class UIManager : MonoBehaviour
         //PlayerManager.Instance.SavePlayerData();
         //PlayfabManager.instance.SaveAllGameData();
 
-        //Camera.main.orthographic = ;
-        //Camera.main.orthographicSize = 9f;
+        Camera.main.orthographic = true;
+        Camera.main.orthographicSize = 9f;
+
+        Camera.main.transform.rotation = Quaternion.Euler(hubCameraRot);
+
         if (ZoneManagerHelpData.Instance.currentZoneCheck)
         {
             Vector3 currentZoneTransform = ZoneManagerHelpData.Instance.currentZoneCheck.transform.position;
-            Camera.main.transform.position = new Vector3(currentZoneTransform.x, 50, currentZoneTransform.z - 50);
+            
+            Vector3 tempForClamp = new Vector3(0.5f, currentZoneTransform.y, -50f);
+            tempForClamp.y = Mathf.Clamp(tempForClamp.y, 40f, 60f);
+
+            Camera.main.transform.position = tempForClamp;
         }
         else
         {
             Camera.main.transform.position = hubCameraPos;
         }
 
-        Camera.main.transform.rotation = Quaternion.Euler(hubCameraRot);
 
         if (currentCanvas == gameplayCanvas)
         {
@@ -462,7 +469,7 @@ public class UIManager : MonoBehaviour
             Destroy(GameObject.FindWithTag("Key").gameObject);
         }
 
-        world3D.SetActive(true);
+        worldGameObject.SetActive(true);
         hudCanvasUI.SetActive(true);
     }
     public void OpenItemsAndForgeZone()
@@ -599,7 +606,7 @@ public class UIManager : MonoBehaviour
     {
         ringersHutDisplay.SetActive(true);
         ringersHutUICanvas.SetActive(true);
-        world3D.SetActive(false);
+        worldGameObject.SetActive(false);
         hudCanvasUI.SetActive(false);
     }
     public void OpenOptions()
@@ -714,9 +721,10 @@ public class UIManager : MonoBehaviour
 
             if (BPZ.theZone.hasUnlockedGrind)
             {
-                //BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconPath);
-                BPZ.theZone.zoneGrindLevel.GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelFirstTimeColor);
-                //BPZ.theZone.zoneGrindLevel.GetComponent<Button>().interactable = true;
+                //BPZ.theZone.zoneGrindLevel.GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelFirstTimeColor); // 3D map
+
+                BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconPath);
+                BPZ.theZone.zoneGrindLevel.GetComponent<Button>().interactable = true;
             }
 
             for (int i = 0; i < BPZ.theZone.maxLevelReachedInZone; i++)
@@ -728,18 +736,19 @@ public class UIManager : MonoBehaviour
 
                 if (i + 1 != BPZ.theZone.maxLevelReachedInZone)
                 {
-                    //BPZ.zone3DButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelDonePath);
+                    //BPZ.zone3DButtons[i].GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelDoneColor); //3D map
+
+                    BPZ.zone3DButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelDonePath);
                     //BPZ.zone3DButtons[i].GetComponent<Renderer>().material.color = BPZ.theZone.levelDoneColor;
-                    BPZ.zone3DButtons[i].GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelDoneColor);
                     //BPZ.zoneButtons[i].interactable = false; //// Disable levels that have already been completed
-                    //BPZ.zone3DButtons[i].interactable = true; /// temp for testing
+                    //BPZ.zone3DButtons[i].interactable = true; /// temp for testing - isn't button anymore
                 }
                 else
                 {
-                    //BPZ.zone3DButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconPath);
-                    //BPZ.zone3DButtons[i].GetComponent<Renderer>().material.color = BPZ.theZone.levelFirstTimeColor;
-                    BPZ.zone3DButtons[i].GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelFirstTimeColor);
-                    //BPZ.zone3DButtons[i].interactable = true;
+                    //BPZ.zone3DButtons[i].GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelFirstTimeColor); 3D map
+
+                    BPZ.zone3DButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconPath);
+                    //BPZ.zone3DButtons[i].interactable = true; // isn't button anymore
                 }
 
             }

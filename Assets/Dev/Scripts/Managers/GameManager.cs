@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.dealButton.interactable = true;
 
         //Camera.main.orthographicSize = 12;
-        //Camera.main.orthographic = false;
+        Camera.main.orthographic = false;
         Camera.main.fieldOfView = 60f;
         Camera.main.transform.position = inGameCamPos;
         Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
@@ -221,7 +221,7 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.dealButton.interactable = true;
 
             //Camera.main.orthographicSize = 12;
-            //Camera.main.orthographic = false;
+            Camera.main.orthographic = false;
             Camera.main.fieldOfView = 60f;
             Camera.main.transform.position = inGameCamPos;
             Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
