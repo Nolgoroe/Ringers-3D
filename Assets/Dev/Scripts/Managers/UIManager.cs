@@ -546,6 +546,7 @@ public class UIManager : MonoBehaviour
         if(ToClose == DailyRewardScreen)
         {
             DailyRewardScreen.SetActive(false);
+            PlayfabManager.instance.UpdateAndSaveTimeSensitiveData(); //// could be that we need to send to save here
         }
     }
     public void ToForge()
@@ -628,7 +629,7 @@ public class UIManager : MonoBehaviour
         RewardsManager.Instance.UpdateQuitTime(timeToSave);
         DewDropsManager.Instance.UpdateQuitTime(timeToSave);
 
-        PlayfabManager.instance.SaveAllGameData();
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
 
         Debug.Log("Saved all data! - close game");
 

@@ -10,11 +10,11 @@ using System;
 using System.IO;
 using System.Linq;
 
+public enum SystemsToSave { Player, DewDrops, animalManager, corruptedZonesManager, TutorialSaveData, ZoneManager, ZoneX, RewardsManager, LoginData, ALL }
+
 public class PlayfabManager : MonoBehaviour
 {
     public static bool isLoggedIn = false;
-
-    public enum SystemsToSave { Player, DewDrops, animalManager, corruptedZonesManager, TutorialSaveData, ZoneManager, ZoneX, RewardsManager}
 
     public static PlayfabManager instance;
 
@@ -119,13 +119,16 @@ public class PlayfabManager : MonoBehaviour
         RewardsManager.Instance.CalculateReturnDeltaTime();
         DewDropsManager.Instance.CalculateReturnDeltaTime();
 
-        SaveAllGameData();
-
-
         UIManager.Instance.PlayButton();
+        
 
         isLoggedIn = true;
         TimeReferenceDataScript.Start();
+
+        SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.RewardsManager, SystemsToSave.DewDrops, SystemsToSave.LoginData });
+
+
+        InvokeRepeating("UpdateAndSaveTimeSensitiveData", 1, 10);
     }
 
     void OnError(PlayFabError error)
@@ -326,11 +329,124 @@ public class PlayfabManager : MonoBehaviour
 
     }
 
+    public void SaveGameData(SystemsToSave[] systemsToSave)
+    {
+        Debug.Log("Inside Save all game data script");
+        string savedData = " ";
+
+        UpdateAndSaveTimeSensitiveData();
+
+        foreach (SystemsToSave STS in systemsToSave)
+        {
+            switch (STS)
+            {
+                case SystemsToSave.Player:
+                    savedData = JsonUtility.ToJson(PlayerManager.Instance);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.Player, -1);
+                    break;
+                case SystemsToSave.DewDrops:
+                    // Dew Drops Data
+                    savedData = JsonUtility.ToJson(DewDropsManager.Instance);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.DewDrops, -1);
+                    break;
+                case SystemsToSave.animalManager:
+                    // Animal Manager Data
+                    savedData = JsonUtility.ToJson(AnimalsManager.Instance);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.animalManager, -1);
+                    break;
+                case SystemsToSave.corruptedZonesManager:
+                    // Corrupted Zones Data
+                    savedData = JsonUtility.ToJson(CorruptedZonesSaveData.Instance);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.corruptedZonesManager, -1);
+                    break;
+                case SystemsToSave.TutorialSaveData:
+                    // Tutorial Save Data
+                    savedData = JsonUtility.ToJson(TutorialSaveData.Instance);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.TutorialSaveData, -1);
+                    break;
+                case SystemsToSave.ZoneManager:
+                    // Zone Manager Data
+                    savedData = JsonUtility.ToJson(ZoneManager.Instance);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.ZoneManager, -1);
+                    break;
+                case SystemsToSave.ZoneX:
+                    // Zone X Data
+                    foreach (int zoneindex in ZoneManager.Instance.unlockedZoneID)
+                    {
+                        Zone zone = ZoneManagerHelpData.Instance.listOfAllZones[zoneindex];
+
+                        savedData = JsonUtility.ToJson(zone);
+                        SendDataToBeSavedJson(savedData, SystemsToSave.ZoneX, zone.id);
+                    }
+                    break;
+                case SystemsToSave.RewardsManager:
+                    // Rewards Manager Data
+                    savedData = JsonUtility.ToJson(RewardsManager.Instance);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.RewardsManager, -1);
+                    break;
+                case SystemsToSave.LoginData:
+                    if (Application.platform == RuntimePlatform.Android)
+                    {
+                        filePath = Application.persistentDataPath + "/username.txt";
+                    }
+                    else
+                    {
+                        filePath = Application.dataPath + "/Save Files Folder/username.txt";
+                    }
+                    File.WriteAllText(filePath, playerName);
+                    break;
+                case SystemsToSave.ALL:
+                    SaveAllGameData();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        doneWithStep = true;
+    }
+
+
+    public void UpdateAndSaveTimeSensitiveData()
+    {
+        DateTime timeToSave = currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
+        RewardsManager.Instance.UpdateQuitTime(timeToSave);
+        DewDropsManager.Instance.UpdateQuitTime(timeToSave);
+
+        UpdateUserDataRequest request = null;
+        string saveDataDrop = " ";
+        string savedDataRewards = " ";
+
+        saveDataDrop = JsonUtility.ToJson(DewDropsManager.Instance);
+
+        savedDataRewards = JsonUtility.ToJson(RewardsManager.Instance);
+
+        request = new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string>()
+                    {
+                        { "Dew Drops Data", saveDataDrop },
+                        { "Rewards Manager Data", savedDataRewards },
+                    },
+        };
+
+        if (request != null)
+        {
+            PlayFabClientAPI.UpdateUserData(request, OnDataSend, OnError);
+        }
+        else
+        {
+            Debug.LogError("Something went horribly wrong!");
+        }
+    }
+
+
     [ContextMenu("Save ALL game data to server - STEP 3")]
     public void SaveAllGameData()
     {
         string savedData = " ";
 
+        UpdateAndSaveTimeSensitiveData();
 
         // Player Login Username
         if (Application.platform == RuntimePlatform.Android)
@@ -374,18 +490,36 @@ public class PlayfabManager : MonoBehaviour
             SendDataToBeSavedJson(savedData, SystemsToSave.ZoneX, zone.id);
         }
 
-
-        doneWithStep = false;
-
+        doneWithStep = false; //// set it back to false so last action will reset it
 
         // Rewards Manager Data
         savedData = JsonUtility.ToJson(RewardsManager.Instance);
         SendDataToBeSavedJson(savedData, SystemsToSave.RewardsManager, -1);
+
+
     }
 
     public void SendDataToBeSavedJson(string saveData, SystemsToSave system, int zoneNumber)
     {
         UpdateUserDataRequest request = null;
+
+        //request = new UpdateUserDataRequest
+        //{
+        //    Data = new Dictionary<string, string>()
+        //            {
+        //                { "Player Data", saveData },
+        //                { "Dew Drops Data", saveData },
+        //                { "Animal Manager Data", saveData },
+        //                { "corrupted Zones Manager Data", saveData },
+        //                { "Tutorial Save Data", saveData },
+        //                { "Zone Manager Data", saveData },
+        //                { "Rewards Manager Data", saveData },
+        //            },
+        //};
+
+        //foreach (Zone zone in ZoneManagerHelpData.Instance.listOfAllZones)
+        //{
+        //}
 
         switch (system)
         {
@@ -394,7 +528,7 @@ public class PlayfabManager : MonoBehaviour
                 {
                     Data = new Dictionary<string, string>()
                     {
-                        { "Player Data", saveData }
+                        { "Player Data", saveData },
                     },
                 };
                 break;
@@ -448,6 +582,7 @@ public class PlayfabManager : MonoBehaviour
                 {
                     Data = new Dictionary<string, string>()
                     {
+
                         { "Zone Data" + zoneNumber, saveData }
                     }
                 };
@@ -544,7 +679,7 @@ public class PlayfabManager : MonoBehaviour
     {
         playerName = null;
 
-        SaveAllGameData();
+        SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
 
         StartCoroutine(logOutAction());
     }
@@ -645,9 +780,9 @@ public class PlayfabManager : MonoBehaviour
             RewardsManager.Instance.UpdateQuitTime(timeToSave);
             DewDropsManager.Instance.UpdateQuitTime(timeToSave);
 
-            SaveAllGameData();
+            SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
 
-            Debug.Log("Saved all data! - pause");
+            Debug.Log("Saved all data! - PAUSE");
         }
         else if(!pause && isLoggedIn)
         {
@@ -683,7 +818,7 @@ public class PlayfabManager : MonoBehaviour
                 RewardsManager.Instance.UpdateQuitTime(timeToSave);
                 DewDropsManager.Instance.UpdateQuitTime(timeToSave);
 
-                SaveAllGameData();
+                SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
 
                 Debug.Log("Saved all data! - focus");
             }

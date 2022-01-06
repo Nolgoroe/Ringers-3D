@@ -144,6 +144,9 @@ public class EquipmentDisplayer : MonoBehaviour
                                                   data.timeForCooldown, data.nextTimeAvailable, data.Description, data.isTutorialPower, data.mats, data.spritePath);
 
         PlayerManager.Instance.EquipMe(newData);
+
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
     }
 
     public void CheckIfCanForgeEquipment(List<CraftingMatsNeeded> CMN)

@@ -199,6 +199,7 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.restartButton.interactable = true;
         UIManager.Instance.dealButton.interactable = true;
 
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
         yield return null;
     }
 
@@ -273,6 +274,9 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.InGameUiScreens.SetActive(true);
         AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
 
+
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
     }
 
     private void CheckShowLootTutorial()
@@ -357,6 +361,8 @@ public class AnimationManager : MonoBehaviour
 
         yield return new WaitUntil((() => toMove.transform.position.x - target.position.x <= 0.1f));
         FadeInUnlcokScreen();
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] {SystemsToSave.ZoneManager, SystemsToSave.ZoneX});
     }
 
     internal void CheckContinuedTutorials()

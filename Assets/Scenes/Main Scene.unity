@@ -3399,7 +3399,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -20678,9 +20678,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948f2100c49204b4984dd9595cea8e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anchorType: 4
-  anchorOffset: {x: 0, y: -49.42, z: 0}
-  isMovePos: 0
 --- !u!114 &506894764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20693,13 +20690,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e1c03e2e62dbf4c92a92193e075920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalWidth: 1080
-  originalHeight: 1920
-  buffer: 0
-  doUpdate: 1
-  originalScale: {x: 0, y: 0, z: 0}
-  CA: {fileID: 0}
-  dobuffer: 0
 --- !u!1 &509731936
 GameObject:
   m_ObjectHideFlags: 0
@@ -25833,9 +25823,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948f2100c49204b4984dd9595cea8e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anchorType: 4
-  anchorOffset: {x: 0, y: -49.84, z: 0}
-  isMovePos: 0
 --- !u!114 &656761290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25848,13 +25835,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e1c03e2e62dbf4c92a92193e075920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalWidth: 1080
-  originalHeight: 1920
-  buffer: 0
-  doUpdate: 1
-  originalScale: {x: 0, y: 0, z: 0}
-  CA: {fileID: 0}
-  dobuffer: 0
 --- !u!1 &657640662
 GameObject:
   m_ObjectHideFlags: 0
@@ -67423,7 +67403,6 @@ GameObject:
   - component: {fileID: 1687258585}
   - component: {fileID: 1687258584}
   - component: {fileID: 1687258582}
-  - component: {fileID: 1687258583}
   - component: {fileID: 1687258586}
   - component: {fileID: 1687258587}
   - component: {fileID: 1687258588}
@@ -67442,28 +67421,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
   m_Enabled: 1
---- !u!114 &1687258583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1687258581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ebdb9c5e3d6f044782bf2a7b1a6cdcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _ct: 1
-  _adjustMode: 0
-  _verticalSnapMode: 1
-  _horizontalSnapMode: 1
-  _mainAreaWidth: 1
-  _mainAreaHeight: 2
-  _verticalFOV: 60
-  _horizontalFOV: 35.9834
-  _verticalSize: 9
-  _horizontalSize: 4.5
 --- !u!20 &1687258584
 Camera:
   m_ObjectHideFlags: 0
@@ -67489,9 +67446,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 54.33381
   orthographic: 0
-  orthographic size: 9
+  orthographic size: 8
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -76478,7 +76435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -81364,7 +81321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -85749,9 +85706,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948f2100c49204b4984dd9595cea8e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anchorType: 4
-  anchorOffset: {x: 0, y: -49.75, z: 0}
-  isMovePos: 0
 --- !u!114 &2136243416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85764,13 +85718,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e1c03e2e62dbf4c92a92193e075920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  originalWidth: 1080
-  originalHeight: 1920
-  buffer: 0
-  doUpdate: 1
-  originalScale: {x: 0, y: 0, z: 0}
-  CA: {fileID: 0}
-  dobuffer: 0
 --- !u!1 &2137641457
 GameObject:
   m_ObjectHideFlags: 0

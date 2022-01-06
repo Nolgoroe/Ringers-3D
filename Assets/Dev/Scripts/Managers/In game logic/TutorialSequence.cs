@@ -477,6 +477,8 @@ public class TutorialSequence : MonoBehaviour
             //Invoke("DeactivateTutorialScreens", 0.1f);
             StartCoroutine(DeactivateTutorialScreens(levelSequences, GameManager.Instance.currentLevel.tutorialIndexForList));
 
+
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData});
             return;
         }
         else
@@ -527,6 +529,9 @@ public class TutorialSequence : MonoBehaviour
 
 
             //Invoke("DeactivateTutorialScreens", 0.1f);
+
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+
             StartCoroutine(DeactivateTutorialScreens(specificTutorials, (int)GameManager.Instance.currentLevel.specificTutorialEnum - 1));
 
             return;

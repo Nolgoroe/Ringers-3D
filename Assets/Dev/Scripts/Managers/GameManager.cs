@@ -423,6 +423,8 @@ public class GameManager : MonoBehaviour
 
             //PlayerManager.Instance.SavePlayerData();
             //PlayfabManager.instance.SaveAllGameData();
+
+
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
 
 
@@ -442,6 +444,7 @@ public class GameManager : MonoBehaviour
             //PlayfabManager.instance.SaveAllGameData();
 
 
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
 
             return false;
         }

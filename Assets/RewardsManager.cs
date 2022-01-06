@@ -173,6 +173,8 @@ public class RewardsManager : MonoBehaviour
         canGiveDaily = false;
         UIManager.Instance.getDailyLootButton.interactable = false;
 
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.RewardsManager});
+
         StartCoroutine(DisplayTimeTillDaily());
     }
 

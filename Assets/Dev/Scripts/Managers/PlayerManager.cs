@@ -271,7 +271,7 @@ public class PlayerManager : MonoBehaviour
         SortMaster.Instance.ClearAllForgeScreens();
         //SortMaster.Instance.RefreshAllScreens();
 
-        PlayfabManager.instance.SaveAllGameData();
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
     }
 
     public bool SearchEquippedItemsForMatch(EquipmentData ED)
