@@ -19234,7 +19234,7 @@ MonoBehaviour:
   currentZoneCheck: {fileID: 0}
   nextZoneCheck: {fileID: 0}
   possibleAnimalsPerZone:
-  - theZone: {fileID: 23430373}
+  - theZone: {fileID: 1698035922}
     animalsData:
     - animalEnum: 0
       animalPrefab: {fileID: 6115078496944762639, guid: d1a8291b0c507914395923b514ec9c1e,
@@ -20697,6 +20697,8 @@ MonoBehaviour:
   originalHeight: 1920
   buffer: 0
   doUpdate: 1
+  originalScale: {x: 0, y: 0, z: 0}
+  CA: {fileID: 0}
   dobuffer: 0
 --- !u!1 &509731936
 GameObject:
@@ -25850,6 +25852,8 @@ MonoBehaviour:
   originalHeight: 1920
   buffer: 0
   doUpdate: 1
+  originalScale: {x: 0, y: 0, z: 0}
+  CA: {fileID: 0}
   dobuffer: 0
 --- !u!1 &657640662
 GameObject:
@@ -51313,7 +51317,7 @@ MonoBehaviour:
   - {fileID: 1376208567}
   - {fileID: 432097514}
   - {fileID: 2127877951}
-  hubCameraPos: {x: 0, y: 40, z: -50}
+  hubCameraPos: {x: 0.5, y: 40, z: -50}
   hubCameraRot: {x: 0, y: 0, z: 0}
 --- !u!1 &1327907682
 GameObject:
@@ -60021,7 +60025,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1547406648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67419,8 +67423,8 @@ GameObject:
   - component: {fileID: 1687258585}
   - component: {fileID: 1687258584}
   - component: {fileID: 1687258582}
-  - component: {fileID: 1687258586}
   - component: {fileID: 1687258583}
+  - component: {fileID: 1687258586}
   - component: {fileID: 1687258587}
   - component: {fileID: 1687258588}
   m_Layer: 0
@@ -67445,15 +67449,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 263123b99875dba459b8857d283e4c2f, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ebdb9c5e3d6f044782bf2a7b1a6cdcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wireColor: {r: 1, g: 1, b: 1, a: 1}
-  UnitsSize: 1
-  constraint: 1
-  camera: {fileID: 1687258584}
+  _ct: 1
+  _adjustMode: 0
+  _verticalSnapMode: 1
+  _horizontalSnapMode: 1
+  _mainAreaWidth: 1
+  _mainAreaHeight: 2
+  _verticalFOV: 60
+  _horizontalFOV: 35.9834
+  _verticalSize: 9
+  _horizontalSize: 4.5
 --- !u!20 &1687258584
 Camera:
   m_ObjectHideFlags: 0
@@ -67480,8 +67490,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
-  orthographic size: 0.5
+  orthographic: 0
+  orthographic size: 9
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -67573,8 +67583,8 @@ MonoBehaviour:
   MaxZoom: 8
   mainCam: {fileID: 0}
   panSpeed: 0.008
-  rightBound: 0
-  leftBound: 0
+  rightBound: 0.5
+  leftBound: 0.5
   topBound: 60
   bottomBound: 40
   canZoom: 0
@@ -85758,6 +85768,8 @@ MonoBehaviour:
   originalHeight: 1920
   buffer: 0
   doUpdate: 1
+  originalScale: {x: 0, y: 0, z: 0}
+  CA: {fileID: 0}
   dobuffer: 0
 --- !u!1 &2137641457
 GameObject:

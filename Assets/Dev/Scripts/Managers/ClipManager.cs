@@ -28,7 +28,7 @@ public class ClipManager : MonoBehaviour
     public Vector3[] piecesDealPositionsOut;
     public float delayClipMove, timeToAnimateMove, WaitTimeBeforeIn, delayDarkenClip, timeToDarkenClip;
 
-
+    public Vector3 pieceScaleOnBoard;
     [Serializable]
     public class ColorsAndMats
     {

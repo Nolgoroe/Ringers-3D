@@ -27,7 +27,7 @@ public class Cell : MonoBehaviour
         followerTarget.rotation = followerTarget.parent.rotation;
         pieceHeld = followerTarget.GetComponent<Piece>();
         pieceHeld.partOfBoard = true;
-        pieceHeld.transform.localScale = new Vector3(1.15f,1.15f,1f);
+        pieceHeld.transform.localScale = GameManager.Instance.clipManager.pieceScaleOnBoard;
 
         if (!isOuter)
         {
@@ -111,7 +111,7 @@ public class Cell : MonoBehaviour
             p.transform.rotation = p.transform.parent.rotation;
 
             p.partOfBoard = true;
-            p.transform.localScale = new Vector3(1.15f, 1.15f, 1f);
+            p.transform.localScale = GameManager.Instance.clipManager.pieceScaleOnBoard;
 
             if (!isOuter)
             {
