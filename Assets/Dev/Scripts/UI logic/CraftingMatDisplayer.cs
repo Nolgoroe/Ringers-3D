@@ -11,6 +11,8 @@ public class CraftingMatDisplayer : MonoBehaviour
     //public Image textBG;
     public TMP_Text materialCount;
 
+    public GameObject parentObject;
+
     public void SetImageAndMaterialCount(Sprite icon, CraftingMats matEnum,string amountNeeded)
     {
         string amountHas = null;
@@ -27,6 +29,8 @@ public class CraftingMatDisplayer : MonoBehaviour
 
         materialImage.sprite = icon;
         materialCount.text = amountHas + "/" + amountNeeded;
+
+        parentObject = transform.parent.gameObject;
     }
 
     public void CheckIfHasEnough(CraftingMats matEnum, int amountRequired)
@@ -34,22 +38,68 @@ public class CraftingMatDisplayer : MonoBehaviour
         if(matEnum == CraftingMats.DewDrops)
         {
             int hasAmount = PlayerManager.Instance.collectedDewDrops;
+
+            if (hasAmount >= amountRequired)
+            {
+                materialCount.color = UIManager.Instance.gameTextColor;
+
+                if (parentObject)
+                {
+                    if (parentObject.GetComponent<SpecificBrewMatZonePrompts>())
+                    {
+                        SpecificBrewMatZonePrompts prompts = parentObject.GetComponent<SpecificBrewMatZonePrompts>();
+                        prompts.exclimationMark.SetActive(false);
+                    }
+                }
+            }
+            else
+            {
+                materialCount.color = Color.red;
+
+                if (parentObject)
+                {
+                    if (parentObject.GetComponent<SpecificBrewMatZonePrompts>())
+                    {
+                        SpecificBrewMatZonePrompts prompts = parentObject.GetComponent<SpecificBrewMatZonePrompts>();
+                        prompts.exclimationMark.SetActive(true);
+                    }
+                }
+            }
         }
         else
         {
             CraftingMatEntry CME = PlayerManager.Instance.craftingMatsInInventory.Where(p => p.mat == matEnum).Single();
+
+            if (CME.amount >= amountRequired)
+            {
+                materialCount.color = UIManager.Instance.gameTextColor;
+
+                if (parentObject)
+                {
+                    if (parentObject.GetComponent<SpecificBrewMatZonePrompts>())
+                    {
+                        SpecificBrewMatZonePrompts prompts = parentObject.GetComponent<SpecificBrewMatZonePrompts>();
+                        prompts.exclimationMark.SetActive(false);
+                    }
+                }
+            }
+            else
+            {
+                materialCount.color = Color.red;
+
+                if (parentObject)
+                {
+                    if (parentObject.GetComponent<SpecificBrewMatZonePrompts>())
+                    {
+                        SpecificBrewMatZonePrompts prompts = parentObject.GetComponent<SpecificBrewMatZonePrompts>();
+                        prompts.exclimationMark.SetActive(true);
+                    }
+                }
+            }
         }
 
         //CMN.indexMatInPlayerInventory = i; //// Nice trick - ask Alon what he thinks
 
-        //if (CME.amount >= amountRequired)
-        //{
-        //    textBG.color = Color.white;
-        //}
-        //else
-        //{
-        //    textBG.color = Color.red;
-        //}
 
         //textBG.color = new Color(textBG.color.r, textBG.color.g, textBG.color.b,1);
     }

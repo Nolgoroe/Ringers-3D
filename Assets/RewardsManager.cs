@@ -141,10 +141,6 @@ public class RewardsManager : MonoBehaviour
 
         RewardScreenDisplayDataHelper.Instance.DisplayDailyRewards();
 
-
-        UIManager.Instance.DisplayDailyRewardsScreen();
-
-
         RewardScreenDisplayDataHelper.Instance.HeighlightSpecificIndex();
     }
 

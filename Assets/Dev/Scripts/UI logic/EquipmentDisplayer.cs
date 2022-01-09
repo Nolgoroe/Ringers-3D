@@ -36,9 +36,13 @@ public class EquipmentDisplayer : MonoBehaviour
 
     public BreweryDisplayLogic BDL;
 
+    TMP_Text buttonText;
+
     private void Awake()
     {
         BDL = GetComponentInParent<BreweryDisplayLogic>();
+
+        buttonText = BDL.brewButton.transform.GetChild(0).GetComponent<TMP_Text>();
     }
     private void Start()
     {
@@ -59,6 +63,7 @@ public class EquipmentDisplayer : MonoBehaviour
             }
 
         }
+
         craftingMatsForEquipment.Clear();
 
         materialCountPairs = new List<string>();
@@ -170,14 +175,18 @@ public class EquipmentDisplayer : MonoBehaviour
         if (canCraft)
         {
             BDL.brewButton.interactable = true;
-            BDL.brewButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Brew";
+
+            buttonText.text = "Brew";
+            buttonText.color = UIManager.Instance.gameTextColor;
             //craftButton.interactable = true;
             //forgeButton.gameObject.SetActive(true);
         }
         else
         {
             BDL.brewButton.interactable = false;
-            BDL.brewButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "No mats!";
+
+            buttonText.text = "Brew!"; /// might not need this line of code...
+            buttonText.color = Color.red;
             //craftButton.interactable = false;
 
             //forgeButton.gameObject.SetActive(false);

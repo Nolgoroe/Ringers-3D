@@ -96,7 +96,7 @@ public class UIManager : MonoBehaviour
     public Vector3 hubCameraRot;
 
 
-
+    public Color gameTextColor;
     public static bool isUsingUI;
     private void Start()
     {
@@ -725,7 +725,7 @@ public class UIManager : MonoBehaviour
                 //BPZ.theZone.zoneGrindLevel.GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelFirstTimeColor); // 3D map
 
                 BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconPath);
-                BPZ.theZone.zoneGrindLevel.GetComponent<Button>().interactable = true;
+                //BPZ.theZone.zoneGrindLevel.GetComponent<Button>().interactable = true;
             }
 
             for (int i = 0; i < BPZ.theZone.maxLevelReachedInZone; i++)

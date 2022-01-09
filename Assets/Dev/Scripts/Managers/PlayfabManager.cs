@@ -120,7 +120,8 @@ public class PlayfabManager : MonoBehaviour
         DewDropsManager.Instance.CalculateReturnDeltaTime();
 
         UIManager.Instance.PlayButton();
-        
+        UIManager.Instance.DisplayDailyRewardsScreen();
+
 
         isLoggedIn = true;
         TimeReferenceDataScript.Start();
