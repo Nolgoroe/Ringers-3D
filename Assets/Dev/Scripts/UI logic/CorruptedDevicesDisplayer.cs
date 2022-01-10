@@ -116,7 +116,7 @@ public class CorruptedDevicesDisplayer : MonoBehaviour
 
         foreach (CraftingMatsNeeded CM in CMN)
         {
-            if (!PlayerManager.Instance.CheckIfHasMaterialts(CM))
+            if (PlayerManager.Instance.CheckIfHasMaterialts(CM, out int neededAmount) > 0)
             {
                 canCraft = false;
                 break;

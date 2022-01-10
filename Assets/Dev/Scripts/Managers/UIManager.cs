@@ -49,6 +49,8 @@ public class UIManager : MonoBehaviour
     public GameObject sureWantToLogOutScreen;
     public GameObject bGPanelDisableTouch;
     public GameObject DailyRewardScreen;
+    public GameObject MissingMaterialsPotionCraftScreen;
+    public GameObject cantBuyPotionCraftScreen;
 
     public Image dewDropsImage;
 
@@ -58,6 +60,7 @@ public class UIManager : MonoBehaviour
     public Sprite toggleOffSprite, toggleOnSprite;
 
     public Transform sureLevelRestartLootDislpay;
+    public Transform buyPotionLootDisplay;
     public Transform ownedCorruptDevicesZone;
 
     public Text /*hubGoldText,*/ hubRubyText, dewDropsText;
@@ -75,6 +78,8 @@ public class UIManager : MonoBehaviour
     public TMP_Text corruptedZoneSureMessageText;
     public TMP_Text zoneToUnlcokNameText;
     public TMP_Text versionText;
+    public TMP_Text buyPotionRubieCoseText;
+    public TMP_Text cantBuyPotionText;
 
     //public Button commitButton;
     public Button nextLevelFromWinScreen;
@@ -147,6 +152,8 @@ public class UIManager : MonoBehaviour
         sureWantToResetDataScreen.SetActive(false);
         bGPanelDisableTouch.SetActive(false);
         DailyRewardScreen.SetActive(false);
+        MissingMaterialsPotionCraftScreen.SetActive(false);
+        cantBuyPotionCraftScreen.SetActive(false);
 
         dragControlsImage.sprite = toggleOnSprite;
         tapControlsImage.sprite = toggleOffSprite;
@@ -352,7 +359,7 @@ public class UIManager : MonoBehaviour
     {
         isUsingUI = false;
 
-        RefreshGoldAndRubyDisplay();
+        updateRubyAndDewDropsCount();
         PlayerManager.Instance.activePowerups.Clear();
         //PlayerManager.Instance.SavePlayerData();
         //PlayfabManager.instance.SaveAllGameData();
@@ -686,6 +693,13 @@ public class UIManager : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
+    private void ClearBuyPotionLootDisplay()
+    {
+        foreach (Transform child in buyPotionLootDisplay)
+        {
+            Destroy(child.gameObject);
+        }
+    }
     public void RestartLevelFromLoseScreenUI()
     {
         isUsingUI = false;
@@ -769,13 +783,13 @@ public class UIManager : MonoBehaviour
     //        BPZ.zoneButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconPath);
     //    }
     //}
-    public void RefreshGoldAndRubyDisplay()
-    {
-        //hubGoldText.text = PlayerManager.Instance.goldCount.ToString();
-        hubRubyText.text = PlayerManager.Instance.rubyCount.ToString();
-        //gameplayGoldText.text = PlayerManager.Instance.goldCount.ToString();
-        gameplayRubyText.text = PlayerManager.Instance.rubyCount.ToString();
-    }
+    //public void RefreshGoldAndRubyDisplay()
+    //{
+    //    //hubGoldText.text = PlayerManager.Instance.goldCount.ToString();
+    //    hubRubyText.text = PlayerManager.Instance.rubyCount.ToString();
+    //    //gameplayGoldText.text = PlayerManager.Instance.goldCount.ToString();
+    //    gameplayRubyText.text = PlayerManager.Instance.rubyCount.ToString();
+    //}
     public void ToggleAnimalAlbum(bool Open)
     {
         if (Open)
@@ -960,4 +974,71 @@ public class UIManager : MonoBehaviour
         DailyRewardScreen.SetActive(false);
     }
 
+
+    public void DisplayCantBuyPotionScreen()
+    {
+        cantBuyPotionCraftScreen.SetActive(true);
+    }
+
+    public void DisplayCantBuyPotionText(int amount)
+    {
+        cantBuyPotionText.text = "Rubies needed: " + PlayerManager.Instance.rubyCount + "/" + amount;
+    }
+
+    public void CantBuyPotionScreenOK()
+    {
+        cantBuyPotionCraftScreen.SetActive(false);
+    }
+
+    public void DisplayBuyPotionScreen()
+    {
+        MissingMaterialsPotionCraftScreen.SetActive(true);
+    }
+
+    public void DisplayBuyPotionScreenRubyCostText(int amount)
+    {
+        buyPotionRubieCoseText.text = "Cost: " + amount + " " + "Rubies";
+    }
+
+    public void BuyPotionScreenYes()
+    {
+        MissingMaterialsPotionCraftScreen.SetActive(false);
+        ClearBuyPotionLootDisplay();
+    }
+
+    public void BuyPotionScreenNo()
+    {
+        MissingMaterialsPotionCraftScreen.SetActive(false);
+        ClearBuyPotionLootDisplay();
+    }
+
+    public void DisplayBuyPotionLootNeeded(List<CraftingMatsNeededToRubies> INmaterialsNeedToBuyPotion)
+    {
+        foreach (CraftingMatsNeededToRubies CMNTR in INmaterialsNeedToBuyPotion)
+        {
+            GameObject go = Instantiate(LootManager.Instance.lootDisplayPrefab, buyPotionLootDisplay);
+
+            CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
+
+            if (CMNTR.mat == CraftingMats.DewDrops)
+            {
+                CMD.materialImage.sprite = LootManager.Instance.dewDropsSprite;
+                CMD.materialCount.text = CMNTR.amountMissing.ToString();
+            }
+            else
+            {
+                CMD.materialImage.sprite = LootManager.Instance.allMaterialSprites[(int)CMNTR.mat];
+
+                CMD.materialCount.text = CMNTR.amountMissing.ToString();
+            }
+        }
+    }
+
+
+    public void updateRubyAndDewDropsCount()
+    {
+        gameplayRubyText.text = PlayerManager.Instance.rubyCount.ToString();
+        hubRubyText.text = PlayerManager.Instance.rubyCount.ToString();
+        dewDropsText.text = PlayerManager.Instance.collectedDewDrops.ToString();
+    }
 }

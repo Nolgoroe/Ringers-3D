@@ -20,6 +20,7 @@ public class PlayerManager : MonoBehaviour
 
     public int /*goldCount,*/ rubyCount;
     public int collectedDewDrops;
+    public int priceInGemsDewDrops;
 
     public List<PowerUp> activePowerups;
 
@@ -92,17 +93,31 @@ public class PlayerManager : MonoBehaviour
         //}
 
     }
-    public bool CheckIfHasMaterialts(CraftingMatsNeeded CMN)
+    public int CheckIfHasMaterialts(CraftingMatsNeeded CMN, out int neededAmount)
     {
-        if(CMN.mat == CraftingMats.DewDrops)
+        neededAmount = -1;
+
+        if (CMN.mat == CraftingMats.DewDrops)
         {
-            int amount = collectedDewDrops;
-            return amount >= CMN.amount;
+            int amountHas = collectedDewDrops;
+
+            if(CMN.amount > amountHas)
+            {
+                neededAmount = CMN.amount - amountHas;
+            }
+
+            return neededAmount;
         }
         else
         {
             CraftingMatEntry CME = craftingMatsInInventory.Where(p => p.mat == CMN.mat).Single();
-            return CME.amount >= CMN.amount;
+
+            if (CMN.amount > CME.amount)
+            {
+                neededAmount = CMN.amount - CME.amount;
+            }
+
+            return neededAmount;
         }
 
     }
@@ -155,7 +170,7 @@ public class PlayerManager : MonoBehaviour
     {
         rubyCount += amount;
         //Debug.Log(amount);
-        UIManager.Instance.RefreshGoldAndRubyDisplay();
+        UIManager.Instance.updateRubyAndDewDropsCount();
     }
     public void PopulatePowerUps()
     {

@@ -129,32 +129,57 @@ public class EquipmentDisplayer : MonoBehaviour
         CMD.CheckIfHasEnough(parsed_enum, amountOfMat);
     }
 
-    public void ForgeItem() ///// Here because the forge button and resources data are local
+    public void ForgeItem(bool canForgePotion, bool isFree) ///// Here because the forge button and resources data are local
     {
-        foreach (CraftingMatsNeeded CMN in craftingMatsForEquipment)
+        if (canForgePotion)
         {
-            Debug.Log(CMN.mat.ToString());
-            Debug.Log(CMN.amount);
+            Debug.Log("Crafted potion!!");
 
-            PlayerManager.Instance.DecreaseNumOfMats(CMN);
+            if (!isFree)
+            {
+                foreach (CraftingMatsNeeded CMN in craftingMatsForEquipment)
+                {
+                    Debug.Log(CMN.mat.ToString());
+                    Debug.Log(CMN.amount);
+
+                    PlayerManager.Instance.DecreaseNumOfMats(CMN);
+                }
+
+                SortMaster.Instance.ClearAllForgeScreens();
+            }
+
+            //SortMaster.Instance.RefreshAllScreens();
+
+            //PlayerManager.Instance.wardrobeEquipment.Add(data);
+            //WardrobeManager.Instance.SpawnWardrobeEquipment(data);
+
+            EquipmentData newData = new EquipmentData(data.name, data.power, data.specificSymbol, data.specificColor, data.numOfUses, data.scopeOfUses,
+                                                      data.timeForCooldown, data.nextTimeAvailable, data.Description, data.isTutorialPower, data.mats, data.spritePath);
+
+            PlayerManager.Instance.EquipMe(newData);
+
+
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
         }
+        else
+        {
+            Debug.Log("CAN'T craft potion!!");
 
-        SortMaster.Instance.ClearAllForgeScreens();
-        //SortMaster.Instance.RefreshAllScreens();
-
-        //PlayerManager.Instance.wardrobeEquipment.Add(data);
-        //WardrobeManager.Instance.SpawnWardrobeEquipment(data);
-
-        EquipmentData newData = new EquipmentData(data.name, data.power, data.specificSymbol, data.specificColor, data.numOfUses, data.scopeOfUses,
-                                                  data.timeForCooldown, data.nextTimeAvailable, data.Description, data.isTutorialPower, data.mats, data.spritePath);
-
-        PlayerManager.Instance.EquipMe(newData);
-
-
-        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+            if (PlayerManager.Instance.rubyCount >= BDL.rubiesNeededToBuyPotion)
+            {
+                UIManager.Instance.DisplayBuyPotionScreenRubyCostText(BDL.rubiesNeededToBuyPotion);
+                UIManager.Instance.DisplayBuyPotionLootNeeded(BDL.materialsNeedToBuyPotion);
+                UIManager.Instance.DisplayBuyPotionScreen();
+            }
+            else
+            {
+                UIManager.Instance.DisplayCantBuyPotionText(BDL.rubiesNeededToBuyPotion);
+                UIManager.Instance.DisplayCantBuyPotionScreen();
+            }
+        }
     }
 
-    public void CheckIfCanForgeEquipment(List<CraftingMatsNeeded> CMN)
+    public bool CheckIfCanForgeEquipment(List<CraftingMatsNeeded> CMN)
     {
         if (!BDL)
         {
@@ -165,16 +190,19 @@ public class EquipmentDisplayer : MonoBehaviour
 
         foreach (CraftingMatsNeeded CM in CMN)
         {
-            if (!PlayerManager.Instance.CheckIfHasMaterialts(CM))
+            if (PlayerManager.Instance.CheckIfHasMaterialts(CM, out int neededAmount) > 0) /// checks if there are materials needed/missing for potion - if there are more than 0 materials needed, we are missing materials
             {
                 canCraft = false;
-                break;
+                BDL.AddNeededCraftingMatsToRubiesItem(CM.mat, neededAmount);
+                //break;
             }
         }
 
+        BDL.CalculateNeededRubiesToBuyPotion();
+
         if (canCraft)
         {
-            BDL.brewButton.interactable = true;
+            //BDL.brewButton.interactable = true;
 
             buttonText.text = "Brew";
             buttonText.color = UIManager.Instance.gameTextColor;
@@ -183,7 +211,7 @@ public class EquipmentDisplayer : MonoBehaviour
         }
         else
         {
-            BDL.brewButton.interactable = false;
+            //BDL.brewButton.interactable = false;
 
             buttonText.text = "Brew!"; /// might not need this line of code...
             buttonText.color = Color.red;
@@ -191,5 +219,7 @@ public class EquipmentDisplayer : MonoBehaviour
 
             //forgeButton.gameObject.SetActive(false);
         }
+
+        return canCraft;
     }
 }
