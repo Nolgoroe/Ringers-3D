@@ -213,8 +213,8 @@ public class EquipmentDisplayer : MonoBehaviour
         {
             //BDL.brewButton.interactable = false;
 
-            buttonText.text = "Brew!"; /// might not need this line of code...
-            buttonText.color = Color.red;
+            buttonText.text = "Brew"; /// might not need this line of code...
+            buttonText.color = UIManager.Instance.gameTextColor;
             //craftButton.interactable = false;
 
             //forgeButton.gameObject.SetActive(false);
