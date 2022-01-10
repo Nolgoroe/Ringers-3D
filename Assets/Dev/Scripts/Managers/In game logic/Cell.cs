@@ -89,7 +89,7 @@ public class Cell : MonoBehaviour
     {
         if (!isFull)
         {
-            GameObject go = Instantiate(GameManager.Instance.clipManager.piece, transform);
+            GameObject go = Instantiate(GameManager.Instance.clipManager.corruptedPiece, transform);
 
             Piece p = null;
             if (go)

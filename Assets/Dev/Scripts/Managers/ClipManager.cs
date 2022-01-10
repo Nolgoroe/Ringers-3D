@@ -7,6 +7,7 @@ public class ClipManager : MonoBehaviour
 {
     public Transform[] slots;
     public GameObject piece;
+    public GameObject corruptedPiece;
     public Transform emptyClip;
     public Transform latestPiece;
 
@@ -17,7 +18,12 @@ public class ClipManager : MonoBehaviour
     //public Texture2D[] gameSymbols;
 
     public ColorsAndMats[] colorsToMats;
+    public Texture[] corruptedColorsToMatsLeft;
+    public Texture[] corruptedColorsToMatsRight;
     public SymbolToMat[] symbolToMat;
+
+    //public ColorsAndMats[] corruptedColorsToMats;
+    //public SymbolToMat[] corruptedSymbolToMat;
 
     public int clipCount;
 

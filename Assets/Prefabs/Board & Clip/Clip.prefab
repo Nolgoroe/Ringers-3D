@@ -705,6 +705,8 @@ MonoBehaviour:
   - {fileID: 4740064827136713617}
   - {fileID: 4740064826544045363}
   piece: {fileID: 1645121695642233041, guid: 6b184118881871341aae387bbfbdd34c, type: 3}
+  corruptedPiece: {fileID: 935213622196544231, guid: 24ce61192a7afe54f8c41807caebebc2,
+    type: 3}
   emptyClip: {fileID: 0}
   latestPiece: {fileID: 0}
   originalPiecePos: {x: 0, y: 0, z: 0}
@@ -740,12 +742,16 @@ MonoBehaviour:
     - {fileID: 2800000, guid: c893b9a663b6e874a914d6f2b7448304, type: 3}
     - {fileID: 2800000, guid: 900b69a625656a8469157515652a2729, type: 3}
     - {fileID: 2800000, guid: 31940e05c0ca20042a5615dbefb43c8c, type: 3}
-  - matColor: 5
-    colorTex:
-    - {fileID: 2800000, guid: 243844b9aab64524093f2d74afdee032, type: 3}
-    - {fileID: 2800000, guid: ca007063240c92243baa2cecaed720fd, type: 3}
-    - {fileID: 2800000, guid: 247640094ba84d643b8a1564e9ce910e, type: 3}
-    - {fileID: 2800000, guid: 2db020d85ba46a04ca846d39c67d88ba, type: 3}
+  corruptedColorsToMatsLeft:
+  - {fileID: 2800000, guid: ed6c16bd1f7372d41ab2d92f8ba341bf, type: 3}
+  - {fileID: 2800000, guid: b39d63c7ed471ff4eb2060758767e0c4, type: 3}
+  - {fileID: 2800000, guid: e2ab5bd68e770de4cbd10351a4521bbd, type: 3}
+  - {fileID: 2800000, guid: 9292b8623d9241b48a048be28a6dc132, type: 3}
+  corruptedColorsToMatsRight:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   symbolToMat:
   - mat: 0
     symbolTex: {fileID: 2800000, guid: 4f70e889035fea0488caef79463dbb46, type: 3}

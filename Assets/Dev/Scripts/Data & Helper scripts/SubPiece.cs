@@ -21,6 +21,13 @@ public class SubPiece : MonoBehaviour
     int randomColor;
     int randomSymbol;
 
+    Piece parentPiece;
+
+    private void Awake()
+    {
+        parentPiece = transform.GetComponentInParent<Piece>();
+    }
+
     public void SetPiece()
     {
         if(GameManager.Instance.currentLevel.levelAvailableColors.Length > 0 || GameManager.Instance.currentLevel.levelAvailablesymbols.Length > 0)
@@ -105,7 +112,7 @@ public class SubPiece : MonoBehaviour
             }
             else
             {
-                randomSymbol = Random.Range(0, GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex.Length);
+                randomSymbol = Random.Range(0, GameManager.Instance.clipManager.colorsToMats[0].colorTex.Length); // we just put 0 since the length is always the same between all colors - safe to assume we'll have the same length of shapes in all colors
                 symbolOfPiece = GameManager.Instance.currentLevel.levelAvailablesymbols[randomSymbol];
                 indexcSymbol = (int)symbolOfPiece;
             }
@@ -118,8 +125,17 @@ public class SubPiece : MonoBehaviour
             //r.SetPropertyBlock(mpb);
 
             //rend.material = GameManager.Instance.clipManager.colorsToMats[(int)PieceColor.None].colorMats[indexcSymbol];
-            rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[(int)PieceColor.None].colorTex[indexcSymbol]);
-            rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[indexcSymbol].symbolTex);
+
+            if (isRight)
+            {
+                rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.corruptedColorsToMatsRight[indexcSymbol]);
+                rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[indexcSymbol].symbolTex);
+            }
+            else
+            {
+                rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.corruptedColorsToMatsLeft[indexcSymbol]);
+                rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[indexcSymbol].symbolTex);
+            }
         }
         else
         {
@@ -137,7 +153,15 @@ public class SubPiece : MonoBehaviour
                 //r.SetPropertyBlock(mpb);
 
                 //rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
-                rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
+                if(colorOfPiece == PieceColor.None)
+                {
+                    rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.corruptedColorsToMatsRight[(int)symbolOfPiece]);
+                }
+                else
+                {
+                    rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
+                }
+
                 rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[(int)symbolOfPiece].symbolTex);
             }
             else
@@ -154,7 +178,16 @@ public class SubPiece : MonoBehaviour
                 //r.SetPropertyBlock(mpb);
 
                 //rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
-                rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
+                
+                if(colorOfPiece == PieceColor.None)
+                {
+                    rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.corruptedColorsToMatsLeft[(int)symbolOfPiece]);
+                }
+                else
+                {
+                    rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorTex[(int)symbolOfPiece]);
+                }
+
                 rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[(int)symbolOfPiece].symbolTex);
             }
         }
