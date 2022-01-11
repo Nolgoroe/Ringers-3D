@@ -191,7 +191,7 @@ public class ConnectionManager : MonoBehaviour
 
                             if (supPieceArray[currentLeft].relevantSlice.isLock)
                             {
-                                LockCell(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
+                               StartCoroutine(LockCell(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter));
                             }
                         }
                         //}
@@ -229,7 +229,7 @@ public class ConnectionManager : MonoBehaviour
 
                             if (supPieceArray[currentLeft].relevantSlice.isLock)
                             {
-                                LockCell(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
+                                StartCoroutine(LockCell(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter));
                             }
                         }
 
@@ -387,7 +387,7 @@ public class ConnectionManager : MonoBehaviour
 
                         if (supPieceArray[currentRight].relevantSlice.isLock)
                         {
-                            LockCell(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
+                           StartCoroutine(LockCell(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter));
                         }
                     }
 
@@ -680,7 +680,7 @@ public class ConnectionManager : MonoBehaviour
             relevent.isLoot = false;
         }
     }
-    public void LockCell(Slice relevent, bool isLimiter)
+    public IEnumerator LockCell(Slice relevent, bool isLimiter)
     {
         //Debug.Log("Lock");
 
@@ -704,7 +704,7 @@ public class ConnectionManager : MonoBehaviour
         /// TURN ON HEIGHLIGHT ON SLICE HERE
 
 
-        relevent.lockSpriteHeighlight.SetActive(true);
+        relevent.lockSpriteHeighlightAnim.gameObject.SetActive(true);
 
         foreach (Cell c in relevent.connectedCells)
         {
@@ -712,6 +712,10 @@ public class ConnectionManager : MonoBehaviour
             p.isLocked = true;
         }
 
+        relevent.lockSpriteHeighlightAnim.SetBool("Lock", true);
+
+        yield return new WaitForSeconds(0.15f);
+        relevent.lockSpriteAnim.SetBool("Lock", true);
         //foreach (Cell c in relevent.connectedCells)  // old lock system
         //{
         //    Piece p = c.pieceHeld;

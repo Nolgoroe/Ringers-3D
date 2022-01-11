@@ -23,8 +23,10 @@ public class Slice : MonoBehaviour
 
     public Animator anim;
     public List<Cell> connectedCells;
-    public GameObject lockSprite;
-    public GameObject lockSpriteHeighlight;
+    public Animator lockSpriteAnim;
+    public Animator lockSpriteHeighlightAnim;
+
+
     public void SetSliceData(Transform parent, SliceCatagory sc, bool islocking, bool isLooting, bool isLimiting)
     {
         hasSlice = true;
@@ -57,11 +59,11 @@ public class Slice : MonoBehaviour
             //    }
             //}
 
-            lockSprite.SetActive(true);
+            lockSpriteAnim.gameObject.SetActive(true);
         }
         else
         {
-            lockSprite.SetActive(false);
+            lockSpriteAnim.gameObject.SetActive(false);
         }
         //if (!isLock && !isLimiter)
         //{

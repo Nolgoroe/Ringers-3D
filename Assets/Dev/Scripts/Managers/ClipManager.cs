@@ -204,7 +204,7 @@ public class ClipManager : MonoBehaviour
 
                 if (relevantSlice.isLock)
                 {
-                    relevantSlice.lockSpriteHeighlight.SetActive(false);
+                    relevantSlice.lockSpriteHeighlightAnim.gameObject.SetActive(false);
                 }
             }
 
@@ -214,7 +214,7 @@ public class ClipManager : MonoBehaviour
 
                 if (relevantSlice.isLock)
                 {
-                    relevantSlice.lockSpriteHeighlight.SetActive(false);
+                    relevantSlice.lockSpriteHeighlightAnim.gameObject.SetActive(false);
                 }
             }
 
