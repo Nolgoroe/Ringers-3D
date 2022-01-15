@@ -14018,11 +14018,11 @@ MonoBehaviour:
   listOfRewardBags:
   - IsMoneyOrRubies: 1
     Pack: 
-    minMaxValues: 0100000002000000
+    minMaxValues: 0100000003000000
     chancesPerItemTable: 
   - IsMoneyOrRubies: 1
     Pack: 
-    minMaxValues: 0300000004000000
+    minMaxValues: 0200000005000000
     chancesPerItemTable: 
   - IsMoneyOrRubies: 1
     Pack: 
@@ -14030,52 +14030,92 @@ MonoBehaviour:
     chancesPerItemTable: 
   - IsMoneyOrRubies: 1
     Pack: 
-    minMaxValues: 080000000a000000
+    minMaxValues: 070000000a000000
     chancesPerItemTable: 
   - IsMoneyOrRubies: 1
     Pack: 
-    minMaxValues: 0c0000000f000000
+    minMaxValues: 0a0000000d000000
     chancesPerItemTable: 
   - IsMoneyOrRubies: 0
     Pack: 0100000001000000
     minMaxValues: 
-    chancesPerItemTable: 6400000050000000
-  - IsMoneyOrRubies: 0
-    Pack: 0100000002000000
-    minMaxValues: 
-    chancesPerItemTable: 6400000028000000
+    chancesPerItemTable: 6400000046000000
   - IsMoneyOrRubies: 0
     Pack: 010000000100000002000000
     minMaxValues: 
-    chancesPerItemTable: 640000001e00000028000000
+    chancesPerItemTable: 640000003200000014000000
   - IsMoneyOrRubies: 0
-    Pack: 010000000200000001000000
+    Pack: 0200000002000000
     minMaxValues: 
-    chancesPerItemTable: 500000006400000028000000
+    chancesPerItemTable: 6400000046000000
   - IsMoneyOrRubies: 0
-    Pack: 010000000200000002000000
+    Pack: 020000000200000003000000
     minMaxValues: 
-    chancesPerItemTable: 640000004600000014000000
+    chancesPerItemTable: 640000003200000014000000
   - IsMoneyOrRubies: 0
-    Pack: 02000000010000000100000002000000
+    Pack: 0300000003000000
     minMaxValues: 
-    chancesPerItemTable: 5000000064000000640000000a000000
+    chancesPerItemTable: 6400000046000000
   - IsMoneyOrRubies: 0
-    Pack: 01000000010000000200000002000000
+    Pack: 030000000300000004000000
     minMaxValues: 
-    chancesPerItemTable: 64000000640000005000000050000000
+    chancesPerItemTable: 640000003200000014000000
   - IsMoneyOrRubies: 0
-    Pack: 020000000300000003000000
+    Pack: 0400000004000000
     minMaxValues: 
-    chancesPerItemTable: 3c000000640000001e000000
+    chancesPerItemTable: 6400000046000000
   - IsMoneyOrRubies: 0
-    Pack: 030000000200000001000000
+    Pack: 040000000400000005000000
     minMaxValues: 
-    chancesPerItemTable: 640000006400000064000000
+    chancesPerItemTable: 640000003200000014000000
   - IsMoneyOrRubies: 0
-    Pack: 030000000300000002000000
+    Pack: 0500000005000000
     minMaxValues: 
-    chancesPerItemTable: 640000006400000050000000
+    chancesPerItemTable: 6400000046000000
+  - IsMoneyOrRubies: 0
+    Pack: 050000000500000006000000
+    minMaxValues: 
+    chancesPerItemTable: 640000003200000014000000
+  - IsMoneyOrRubies: 0
+    Pack: 0600000006000000
+    minMaxValues: 
+    chancesPerItemTable: 6400000046000000
+  - IsMoneyOrRubies: 0
+    Pack: 060000000600000007000000
+    minMaxValues: 
+    chancesPerItemTable: 640000003200000014000000
+  - IsMoneyOrRubies: 0
+    Pack: 0700000007000000
+    minMaxValues: 
+    chancesPerItemTable: 6400000046000000
+  - IsMoneyOrRubies: 0
+    Pack: 070000000700000008000000
+    minMaxValues: 
+    chancesPerItemTable: 640000003200000014000000
+  - IsMoneyOrRubies: 0
+    Pack: 0800000008000000
+    minMaxValues: 
+    chancesPerItemTable: 6400000046000000
+  - IsMoneyOrRubies: 0
+    Pack: 080000000800000009000000
+    minMaxValues: 
+    chancesPerItemTable: 640000003200000014000000
+  - IsMoneyOrRubies: 0
+    Pack: 0900000009000000
+    minMaxValues: 
+    chancesPerItemTable: 6400000046000000
+  - IsMoneyOrRubies: 0
+    Pack: 09000000090000000a000000
+    minMaxValues: 
+    chancesPerItemTable: 640000003200000014000000
+  - IsMoneyOrRubies: 0
+    Pack: 0a0000000a000000
+    minMaxValues: 
+    chancesPerItemTable: 6400000046000000
+  - IsMoneyOrRubies: 0
+    Pack: 0a0000000a0000000b000000
+    minMaxValues: 
+    chancesPerItemTable: 640000003200000014000000
   craftingMatsLootForLevel: []
   tempDataList: 
   rubiesToRecieveInLevel: 0
@@ -21104,7 +21144,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 506894760}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0017, y: 0.615, z: 0}
+  m_LocalPosition: {x: 0.0017, y: 0.63, z: 0}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children:
   - {fileID: 979742717}
@@ -38316,7 +38356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &965599396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38365,7 +38405,7 @@ Canvas:
   m_GameObject: {fileID: 965599395}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 1687258584}
   m_PlaneDistance: 3
   m_PixelPerfect: 0
@@ -45592,7 +45632,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173226881}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
   m_Name: 

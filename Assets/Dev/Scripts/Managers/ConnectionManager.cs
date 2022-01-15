@@ -638,7 +638,7 @@ public class ConnectionManager : MonoBehaviour
                     AddRubiesToLoot(relevent);
                     break;
 
-                case 'I':
+                case 'L':
                     if (relevent.lootPack != LootPacks.None)
                     {
                         AddMaterialsToLootList(relevent);
@@ -654,7 +654,7 @@ public class ConnectionManager : MonoBehaviour
         }
         else
         {
-            switch (relevent.lootPack.ToString()[0])
+            switch (relevent.lootPack.ToString()[0])// TAKE CARE OF THIS IMMIDIETLY
             {
                 //case 'M':
                 //    StartCoroutine(InstantiateLootEffect(relevent, relevent.lootIcon.transform, relevent.lootIcon.GetComponent<SpriteRenderer>().sprite, LootTargetsData.instance.goldTargetLoot));
@@ -665,7 +665,7 @@ public class ConnectionManager : MonoBehaviour
                     AddRubiesToLoot(relevent);
                     break;
 
-                case 'I':
+                case 'L':
                     if (relevent.lootPack != LootPacks.None) //// this should not be here - check this before we even enter this area
                     {
                         AddMaterialsToLootList(relevent);
