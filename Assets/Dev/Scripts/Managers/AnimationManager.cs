@@ -183,6 +183,7 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
         UIManager.Instance.TurnOffGameplayUI();
         UIManager.Instance.InGameUiScreens.SetActive(true);
+        GameManager.Instance.selectedLevelBG.transform.Find("color mask").gameObject.SetActive(false);
 
         if (!noWaitAnimal)
         {
@@ -255,6 +256,8 @@ public class AnimationManager : MonoBehaviour
         {
             GO.SetActive(false);
         }
+
+        GameManager.Instance.selectedLevelBG.transform.Find("color mask").gameObject.SetActive(false);
 
         fadeImageEndLevel.gameObject.SetActive(false);
 

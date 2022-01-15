@@ -182,6 +182,9 @@ public class GameManager : MonoBehaviour
         {
             selectedLevelBG = levelBGModels[backgroundID - 1]; // -1 since FOR NOW we don't have a bg for tutorial zone.. so we skip index 0
         }
+
+
+        selectedLevelBG.transform.Find("color mask").gameObject.SetActive(true); //// put this someplace better in the future
     }
 
     public void StartTutorialLevel()
@@ -227,6 +230,8 @@ public class GameManager : MonoBehaviour
             Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
             levelStarted = true;
+
+            LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
 
             gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
 
