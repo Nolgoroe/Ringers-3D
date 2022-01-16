@@ -129,13 +129,22 @@ public class EquipmentDisplayer : MonoBehaviour
         CMD.CheckIfHasEnough(parsed_enum, amountOfMat);
     }
 
-    public void ForgeItem(bool canForgePotion, bool isFree) ///// Here because the forge button and resources data are local
+    public void ForgeItem(bool canForgePotion, bool isBought) ///// Here because the forge button and resources data are local
     {
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (!TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isBrewPhase)
+            {
+                return;
+            }
+        }
+
+
         if (canForgePotion)
         {
             Debug.Log("Crafted potion!!");
 
-            if (!isFree)
+            if (!isBought)
             {
                 foreach (CraftingMatsNeeded CMN in craftingMatsForEquipment)
                 {
@@ -159,23 +168,35 @@ public class EquipmentDisplayer : MonoBehaviour
             PlayerManager.Instance.EquipMe(newData);
 
 
+            if (TutorialSequence.Instacne.duringSequence)
+            {
+                if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isBrewPhase)
+                {
+                    TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                }
+            }
+
+
+            UIManager.Instance.brewedPotionScreen.SetActive(true);
+
+
+            AnimationManager.instance.AnimateBrewScreen(BDL.potionName.text, data.spritePath);
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
         }
         else
         {
             Debug.Log("CAN'T craft potion!!");
 
+            bool canBuy = false;
+
             if (PlayerManager.Instance.rubyCount >= BDL.rubiesNeededToBuyPotion)
             {
-                UIManager.Instance.DisplayBuyPotionScreenRubyCostText(BDL.rubiesNeededToBuyPotion);
-                UIManager.Instance.DisplayBuyPotionLootNeeded(BDL.materialsNeedToBuyPotion);
-                UIManager.Instance.DisplayBuyPotionScreen();
+                canBuy = true;
             }
-            else
-            {
-                UIManager.Instance.DisplayCantBuyPotionText(BDL.rubiesNeededToBuyPotion);
-                UIManager.Instance.DisplayCantBuyPotionScreen();
-            }
+
+            UIManager.Instance.DisplayBuyPotionScreenRubyCostText(BDL.rubiesNeededToBuyPotion, canBuy);
+            UIManager.Instance.DisplayBuyPotionLootNeeded(BDL.materialsNeedToBuyPotion);
+            UIManager.Instance.DisplayBuyPotionScreen();
         }
     }
 

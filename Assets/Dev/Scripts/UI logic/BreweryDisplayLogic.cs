@@ -55,6 +55,18 @@ public class BreweryDisplayLogic : MonoBehaviour
 
 
         canForgePotion = ED.CheckIfCanForgeEquipment(ED.craftingMatsForEquipment);
+
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (!canForgePotion)
+            {
+                if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPotionTabPhase)
+                {
+                    TutorialSequence.Instacne.AddToPlayerMatsForPotion(materialsNeedToBuyPotion);
+                    BreweryPotionDisplay(selectedPotion);
+                }
+            }
+        }
     }
 
     public void SetSelectedPotion(EquipmentDisplayer ED)
@@ -62,8 +74,8 @@ public class BreweryDisplayLogic : MonoBehaviour
         brewButton.onClick.RemoveAllListeners();
 
 
-        brewButton.onClick.AddListener(() => BreweryPotionDisplay(ED));
         brewButton.onClick.AddListener(() => ED.ForgeItem(canForgePotion, false));
+        brewButton.onClick.AddListener(() => BreweryPotionDisplay(ED));
 
         selectedPotion = ED;
         BreweryPotionDisplay(ED);
@@ -103,13 +115,16 @@ public class BreweryDisplayLogic : MonoBehaviour
 
     public void BuyPotionAction()
     {
-        PlayerManager.Instance.rubyCount -= rubiesNeededToBuyPotion;
+        if(PlayerManager.Instance.rubyCount >= rubiesNeededToBuyPotion)
+        {
+            PlayerManager.Instance.rubyCount -= rubiesNeededToBuyPotion;
 
-        selectedPotion.ForgeItem(true, true);
+            selectedPotion.ForgeItem(true, true);
 
-        UIManager.Instance.updateRubyAndDewDropsCount();
+            UIManager.Instance.updateRubyAndDewDropsCount();
 
 
-        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+        }
     }
 }

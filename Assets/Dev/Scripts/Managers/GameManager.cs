@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour
 
     public LevelScriptableObject[] allLevels;
 
+    public Camera secondCam;
     private void Awake()
     {
         Instance = this;
@@ -108,7 +109,12 @@ public class GameManager : MonoBehaviour
 
         //Camera.main.orthographicSize = 12;
         Camera.main.orthographic = false;
+        secondCam.orthographic = false;
+
         Camera.main.fieldOfView = 60f;
+        secondCam.fieldOfView = 60f;
+
+
         Camera.main.transform.position = inGameCamPos;
         Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
@@ -163,9 +169,12 @@ public class GameManager : MonoBehaviour
 
         if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)currentLevel.specificTutorialEnum))
         {
-            //TutorialSequence.Instacne.DisplaySpecificTutorialSequence();
-            StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
-            TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
+            if(currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft)
+            {
+                //TutorialSequence.Instacne.DisplaySpecificTutorialSequence();
+                StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
+                TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
+            }
         }
 
 
@@ -225,7 +234,10 @@ public class GameManager : MonoBehaviour
 
             //Camera.main.orthographicSize = 12;
             Camera.main.orthographic = false;
+            secondCam.orthographic = false;
             Camera.main.fieldOfView = 60f;
+            secondCam.fieldOfView = 60f;
+
             Camera.main.transform.position = inGameCamPos;
             Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
@@ -392,66 +404,77 @@ public class GameManager : MonoBehaviour
         unsuccessfullSlicesCount = 0;
     }
 
-    public bool CheckEndLevel()
+    public bool CheckEndLevel(bool cheat)
     {
-        //UIManager.Instance.dealButton.interactable = false;
-
-        //UIManager.Instance.DisableCommitButton();
-        if (currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0 && unsuccessfullSlicesCount == 0)
+        if (cheat)
         {
-            if (ZoneManagerHelpData.Instance.currentZoneCheck)
-            {
-                if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex && !ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey)
-                {
-                    LootManager.Instance.giveKey = true;
-                }
-
-                if (ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel)
-                {
-                    if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.grindLevelIndex)
-                    {
-                        ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind = true;
-                        //ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel.GetComponent<Image>().sprite = Resources.Load<Sprite>(ZoneManagerHelpData.Instance.currentZoneCheck.levelDonePath);
-                        //ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel.GetComponent<Button>().interactable = true;
-                        //ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel.GetComponent<Renderer>().material.SetColor("_BaseColor", ZoneManagerHelpData.Instance.currentZoneCheck.levelFirstTimeColor);
-
-                    }
-                }
-            }
-
-            Debug.Log("YOU WIN");
-
             gameWon = true;
 
-            SoundManager.Instance.PlaySound(Sounds.SolvedRing);
-            AnimationManager.instance.StartEndLevelAnimSequence(); ///// loot is given here
+            AnimationManager.instance.StartEndLevelAnimSequence(true); ///// loot is given here
 
-            //PlayerManager.Instance.SavePlayerData();
-            //PlayfabManager.instance.SaveAllGameData();
-
-
-            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
-
-
-            //TutorialSequence.Instacne.CheckContinuedTutorials();
             return true;
         }
         else
         {
-            UIManager.Instance.DisplayEndLevelMessage();
+            //UIManager.Instance.dealButton.interactable = false;
 
-            //UIManager.Instance.LoseLevel();
-            Debug.Log("You Lose");
+            //UIManager.Instance.DisableCommitButton();
+            if (currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0 && unsuccessfullSlicesCount == 0)
+            {
+                if (ZoneManagerHelpData.Instance.currentZoneCheck)
+                {
+                    if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex && !ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey)
+                    {
+                        LootManager.Instance.giveKey = true;
+                    }
 
-            gameWon = false;
+                    if (ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel)
+                    {
+                        if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.grindLevelIndex)
+                        {
+                            ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind = true;
+                            //ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel.GetComponent<Image>().sprite = Resources.Load<Sprite>(ZoneManagerHelpData.Instance.currentZoneCheck.levelDonePath);
+                            //ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel.GetComponent<Button>().interactable = true;
+                            //ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel.GetComponent<Renderer>().material.SetColor("_BaseColor", ZoneManagerHelpData.Instance.currentZoneCheck.levelFirstTimeColor);
 
-            //PlayerManager.Instance.SavePlayerData();
-            //PlayfabManager.instance.SaveAllGameData();
+                        }
+                    }
+                }
+
+                Debug.Log("YOU WIN");
+
+                gameWon = true;
+
+                SoundManager.Instance.PlaySound(Sounds.SolvedRing);
+                AnimationManager.instance.StartEndLevelAnimSequence(false); ///// loot is given here
+
+                //PlayerManager.Instance.SavePlayerData();
+                //PlayfabManager.instance.SaveAllGameData();
 
 
-            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
+                GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
 
-            return false;
+
+                //TutorialSequence.Instacne.CheckContinuedTutorials();
+                return true;
+            }
+            else
+            {
+                UIManager.Instance.DisplayEndLevelMessage();
+
+                //UIManager.Instance.LoseLevel();
+                Debug.Log("You Lose");
+
+                gameWon = false;
+
+                //PlayerManager.Instance.SavePlayerData();
+                //PlayfabManager.instance.SaveAllGameData();
+
+
+                PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
+
+                return false;
+            }
         }
     }
 
@@ -645,5 +668,12 @@ public class GameManager : MonoBehaviour
         }
 
         SceneManager.LoadScene(0);
+    }
+
+
+    [ContextMenu("Cheat win")]
+    public void WinLevelCheat()
+    {
+        CheckEndLevel(true);
     }
 }

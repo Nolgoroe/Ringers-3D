@@ -59,6 +59,37 @@ public class CursorController : MonoBehaviour
 
     void Update()
     {
+
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (Input.touchCount > 0)
+            {
+                touch = Input.touches[0];
+
+                if (touch.phase == TouchPhase.Began)
+                {
+                    if (GameManager.Instance.currentLevel)
+                    {
+                        if (GameManager.Instance.currentLevel.isSpecificTutorial)
+                        {
+                            if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isEmptyTouchPhase)
+                            {
+                                TutorialSequence.Instacne.CheckEmptyTouchIncrementPhase(true);
+                            }
+                        }
+
+                        if (GameManager.Instance.currentLevel.isTutorial)
+                        {
+                            if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].isEmptyTouchPhase)
+                            {
+                                TutorialSequence.Instacne.CheckEmptyTouchIncrementPhase(false);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         if (!GameManager.Instance.levelStarted && !UIManager.isUsingUI && GameManager.Instance.allGameStarted)
         {
             if (Input.touchCount > 0)
@@ -101,6 +132,23 @@ public class CursorController : MonoBehaviour
                     {
                         ZoneManager.Instance.UnlockLevelViewSequence();
                     }
+                }
+            }
+        }
+
+        if(!GameManager.Instance.levelStarted && UIManager.isUsingUI && UIManager.Instance.brewedPotionScreen.activeInHierarchy)
+        {
+            if (Input.touchCount > 0)
+            {
+                touch = Input.touches[0];
+
+                if (touch.phase == TouchPhase.Began)
+                {
+                    SoundManager.Instance.audioSource.Stop();
+                    UIManager.Instance.brewedPotionScreen.SetActive(false);
+                    Debug.Log("THIS IS HOW MANY TIMES");
+
+                    //UIManager.isUsingUI = false;
                 }
             }
         }

@@ -417,7 +417,7 @@ public class ConnectionManager : MonoBehaviour
 
         if (lastPiece)
         {
-            GameManager.Instance.CheckEndLevel();
+            GameManager.Instance.CheckEndLevel(false);
         }
     }
     public bool CheckSubPieceConnection(SubPiece currentSide, SubPiece contestedSide, out bool conditionMet, out bool isGoodConnect)

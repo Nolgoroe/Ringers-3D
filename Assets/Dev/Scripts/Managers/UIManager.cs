@@ -43,6 +43,11 @@ public class UIManager : MonoBehaviour
     public GameObject hudCanvasUIBottomZoneCorruption;
     public GameObject UnlockedZoneMessageView;
     public GameObject dealButtonHeighlight;
+    public GameObject openInventoryButtonHeighlight;
+    public GameObject potionTabHeighlight;
+    public GameObject toHubButtonHeighlight;
+    public GameObject brewButtonHeighlight;
+    public GameObject[] brewMaterialZonesHeighlights;
     public GameObject normalBookBG, potionsBookBG;
     public GameObject leaderboardScreen;
     public GameObject sureWantToResetDataScreen;
@@ -50,7 +55,11 @@ public class UIManager : MonoBehaviour
     public GameObject bGPanelDisableTouch;
     public GameObject DailyRewardScreen;
     public GameObject MissingMaterialsPotionCraftScreen;
-    public GameObject cantBuyPotionCraftScreen;
+   // public GameObject cantBuyPotionCraftScreen;
+    public GameObject gameplayCanvasScreensUIHEIGHLIGHTS;
+    public GameObject HudCanvasUIHEIGHLIGHTS;
+    public GameObject ItemAndForgeBagHEIGHLIGHTS;
+    public GameObject brewedPotionScreen;
 
     public Image dewDropsImage;
 
@@ -79,7 +88,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text zoneToUnlcokNameText;
     public TMP_Text versionText;
     public TMP_Text buyPotionRubieCoseText;
-    public TMP_Text cantBuyPotionText;
+    //public TMP_Text cantBuyPotionText;
 
     //public Button commitButton;
     public Button nextLevelFromWinScreen;
@@ -87,8 +96,8 @@ public class UIManager : MonoBehaviour
     public Button restartButton;
     public Button skipAnimationButton;
     public Button getDailyLootButton;
-
     public Button dealButton;
+    public Button backToHubButton;
 
     //public Button[] levelButtons;
 
@@ -153,7 +162,11 @@ public class UIManager : MonoBehaviour
         bGPanelDisableTouch.SetActive(false);
         DailyRewardScreen.SetActive(false);
         MissingMaterialsPotionCraftScreen.SetActive(false);
-        cantBuyPotionCraftScreen.SetActive(false);
+        //cantBuyPotionCraftScreen.SetActive(false);
+        gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(false);
+        HudCanvasUIHEIGHLIGHTS.SetActive(false);
+        ItemAndForgeBagHEIGHLIGHTS.SetActive(false);
+        brewedPotionScreen.SetActive(false);
 
         dragControlsImage.sprite = toggleOnSprite;
         tapControlsImage.sprite = toggleOffSprite;
@@ -365,7 +378,9 @@ public class UIManager : MonoBehaviour
         //PlayfabManager.instance.SaveAllGameData();
 
         Camera.main.orthographic = true;
+        GameManager.Instance.secondCam.orthographic = true;
         Camera.main.orthographicSize = 9f;
+        GameManager.Instance.secondCam.orthographicSize = 9f;
 
         Camera.main.transform.rotation = Quaternion.Euler(hubCameraRot);
 
@@ -390,11 +405,8 @@ public class UIManager : MonoBehaviour
             {
                 TutorialSequence.Instacne.currentPhaseInSequenceLevels = 0;
                 TutorialSequence.Instacne.currentPhaseInSequenceSpecific = 0;
-                TutorialSequence.Instacne.duringSequence = false;
                 TutorialSequence.Instacne.DeactivateAllTutorialScreens();
 
-                TutorialSequence.Instacne.activatedHeighlights.Clear();
-                TutorialSequence.Instacne.activatedBoardParticles.Clear();
 
                 GameManager.Instance.powerupManager.ClearTutorialPowerups();
             }
@@ -438,6 +450,29 @@ public class UIManager : MonoBehaviour
             ZoneManager.Instance.UnlockLevelViewSequence();
             UnlockLevels();
 
+
+            if (TutorialSequence.Instacne.duringSequence)
+            {
+                if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
+                {
+                    gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(false);
+                    HudCanvasUIHEIGHLIGHTS.SetActive(true);
+                    isUsingUI = true;
+
+                    TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                }
+                else
+                {
+                    TutorialSequence.Instacne.activatedHeighlights.Clear();
+                    TutorialSequence.Instacne.activatedBoardParticles.Clear();
+
+                    GameManager.Instance.currentLevel = null;
+                }
+            }
+            else
+            {
+                GameManager.Instance.currentLevel = null;
+            }
             //// SAVE ZONE MANAGER HERE???
         }
 
@@ -481,18 +516,34 @@ public class UIManager : MonoBehaviour
     }
     public void OpenItemsAndForgeZone()
     {
-        itemForgeCanvas.SetActive(true);
+        if (!itemForgeCanvas.activeInHierarchy)
+        {
+            SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
 
-        isUsingUI = true;
+            itemForgeCanvas.SetActive(true);
 
-        ChangeInventorySortButtonSprites((int)CraftingMatType.Build);
+            isUsingUI = true;
 
-        matsInventoryButton.enabled = false;
-        forgeInventoryButton.enabled = true;
-        potionInventoryButton.enabled = true;
+            openInventoryTab();
 
-        normalBookBG.SetActive(true);
-        potionsBookBG.SetActive(false);
+            matsInventoryButton.enabled = false;
+            forgeInventoryButton.enabled = true;
+            potionInventoryButton.enabled = true;
+
+            normalBookBG.SetActive(true);
+            potionsBookBG.SetActive(false);
+
+            if (TutorialSequence.Instacne.duringSequence)
+            {
+                if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
+                {
+                    HudCanvasUIHEIGHLIGHTS.SetActive(false);
+                    ItemAndForgeBagHEIGHLIGHTS.SetActive(true);
+
+                    TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                }
+            }
+        }
 
         //SortMaster.Instance.SortMatInventory(CraftingMatType.Build); //// For now we always open the inventory sorted on gems
     }
@@ -516,7 +567,16 @@ public class UIManager : MonoBehaviour
     }
     public void closeWindow(GameObject ToClose)
     {
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
+            {
+                return;
+            }
+        }
+
         isUsingUI = false;
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
 
         if (ToClose == itemForgeCanvas)
         {
@@ -525,6 +585,7 @@ public class UIManager : MonoBehaviour
             Brewery.SetActive(false);
 
             itemBag.SetActive(true);
+
         }
 
         if (ToClose == OptionsScreen)
@@ -558,6 +619,15 @@ public class UIManager : MonoBehaviour
     }
     public void ToForge()
     {
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
+            {
+                return;
+            }
+        }
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         itemBag.SetActive(false);
         Brewery.SetActive(false);
         forge.SetActive(true);
@@ -566,10 +636,21 @@ public class UIManager : MonoBehaviour
         potionInventoryButton.enabled = true;
         normalBookBG.SetActive(true);
         potionsBookBG.SetActive(false);
-
     }
     public void ToItemsBag()
     {
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
+            {
+                return;
+            }
+        }
+
+        openInventoryTab();
+
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         itemBag.SetActive(true);
         forge.SetActive(false);
         Brewery.SetActive(false);
@@ -580,10 +661,13 @@ public class UIManager : MonoBehaviour
 
         normalBookBG.SetActive(true);
         potionsBookBG.SetActive(false);
+        potionsBookBG.SetActive(false);
 
     }
     public void ToBrewery()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         itemBag.SetActive(false);
         forge.SetActive(false);
         Brewery.SetActive(true);
@@ -597,6 +681,15 @@ public class UIManager : MonoBehaviour
 
         
         Brewery.GetComponent<BreweryDisplayLogic>().SetSelectedPotion(MaterialsAndForgeManager.Instance.equipmentInForge[0]);
+
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
+            {
+                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            }
+        }
+
     }
     public void ToCraft()
     {
@@ -803,8 +896,40 @@ public class UIManager : MonoBehaviour
             animalAlbum.SetActive(false);
         }
     }
+
+    public void openInventoryTab()
+    {
+        foreach (InventorySortButtonData ISBD in inventorySortButtons)
+        {
+            if (ISBD.id != 1)
+            {
+                Color c = new Color(ISBD.transformImage.color.r, ISBD.transformImage.color.g, ISBD.transformImage.color.b, 0);
+                ISBD.transformImage.color = c;
+                ISBD.transformImage.sprite = null;
+            }
+            else
+            {
+                Color c = new Color(ISBD.transformImage.color.r, ISBD.transformImage.color.g, ISBD.transformImage.color.b, 255);
+                ISBD.transformImage.color = c;
+                ISBD.transformImage.sprite = ISBD.selectedSprite;
+            }
+        }
+
+        SortMaster.Instance.SortMatInventory(CraftingMatType.Build);
+    }
+
     public void ChangeInventorySortButtonSprites(int buttonID)
     {
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
+            {
+                return;
+            }
+        }
+
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         foreach (InventorySortButtonData ISBD in inventorySortButtons)
         {
             if (ISBD.id != buttonID)
@@ -975,29 +1100,38 @@ public class UIManager : MonoBehaviour
     }
 
 
-    public void DisplayCantBuyPotionScreen()
-    {
-        cantBuyPotionCraftScreen.SetActive(true);
-    }
+    //public void DisplayCantBuyPotionScreen()
+    //{
+    //    cantBuyPotionCraftScreen.SetActive(true);
+    //}
 
-    public void DisplayCantBuyPotionText(int amount)
-    {
-        cantBuyPotionText.text = "Rubies needed: " + PlayerManager.Instance.rubyCount + "/" + amount;
-    }
+    //public void DisplayCantBuyPotionText(int amount)
+    //{
+    //    cantBuyPotionText.text = "Rubies needed: " + PlayerManager.Instance.rubyCount + "/" + amount;
+    //}
 
-    public void CantBuyPotionScreenOK()
-    {
-        cantBuyPotionCraftScreen.SetActive(false);
-    }
+    //public void CantBuyPotionScreenOK()
+    //{
+    //    cantBuyPotionCraftScreen.SetActive(false);
+    //}
 
     public void DisplayBuyPotionScreen()
     {
         MissingMaterialsPotionCraftScreen.SetActive(true);
     }
 
-    public void DisplayBuyPotionScreenRubyCostText(int amount)
+    public void DisplayBuyPotionScreenRubyCostText(int amount, bool canbuy)
     {
-        buyPotionRubieCoseText.text = "Cost: " + amount + " " + "Rubies";
+        if (canbuy)
+        {
+            buyPotionRubieCoseText.color = Color.white;
+        }
+        else
+        {
+            buyPotionRubieCoseText.color = Color.red;
+        }
+
+        buyPotionRubieCoseText.text = amount.ToString();
     }
 
     public void BuyPotionScreenYes()

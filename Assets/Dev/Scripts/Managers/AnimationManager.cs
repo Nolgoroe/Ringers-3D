@@ -53,6 +53,17 @@ public class AnimationManager : MonoBehaviour
     public TMP_Text zoneToUnlcokNameText;
     public TMP_Text tapToContinueText;
 
+    [Header("Brew Potion Settings")]
+    public float brewCameraMoveTime;
+    public float brewfadingTime;
+
+    public Image brewbgFadeImage;
+    public SpriteRenderer potionIcon;
+    public ParticleSystem brewparticleFade;
+    public TMP_Text brewHeaderText;
+    public TMP_Text brewNameText;
+    public TMP_Text brewtapToContinueText;
+
     [Header("Enter Corrupt Zone")]
     [Space(30)]
     public float zoomSpeed = 0;
@@ -76,9 +87,16 @@ public class AnimationManager : MonoBehaviour
     {
         public float a, b;
     }
-    public void StartEndLevelAnimSequence()
+    public void StartEndLevelAnimSequence(bool cheat)
     {
-        endAnim = StartCoroutine(StartEndLevelAnim());
+        if (cheat)
+        {
+            SkipEndLevelAnimation();
+        }
+        else
+        {
+            endAnim = StartCoroutine(StartEndLevelAnim());
+        }
     }
     public void StartZoomIntoCorruptArea(int ID)
     {
@@ -169,6 +187,7 @@ public class AnimationManager : MonoBehaviour
         Destroy(GameManager.Instance.gameBoard.gameObject);
         Destroy(GameManager.Instance.gameClip.gameObject);
 
+        TutorialSequence.Instacne.CheckDoPotionTutorial();
 
         yield return new WaitForSeconds(waitTimeFadeOut);
 
@@ -244,7 +263,10 @@ public class AnimationManager : MonoBehaviour
     {
         SoundManager.Instance.audioSource.Stop();
 
-        StopCoroutine(endAnim);
+        if (endAnim != null)
+        {
+            StopCoroutine(endAnim);
+        }
 
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
 
@@ -278,6 +300,7 @@ public class AnimationManager : MonoBehaviour
         AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
 
 
+        TutorialSequence.Instacne.CheckDoPotionTutorial();
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
     }
@@ -368,6 +391,17 @@ public class AnimationManager : MonoBehaviour
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] {SystemsToSave.ZoneManager, SystemsToSave.ZoneX});
     }
 
+    public void AnimateBrewScreen(string PotionName, string PotionSpritePath)
+    {
+        SoundManager.Instance.PlaySound(Sounds.UnlockZone);
+        UIManager.isUsingUI = true;
+
+        brewNameText.text = PotionName;
+        potionIcon.sprite = Resources.Load<Sprite>(PotionSpritePath);
+
+        FadeInBrewedScreen();
+    }
+
     internal void CheckContinuedTutorials()
     {
         throw new System.NotImplementedException();
@@ -398,7 +432,7 @@ public class AnimationManager : MonoBehaviour
             image.color = newColor;
         });
 
-        LeanTween.value(particleFade.gameObject, 0f, 0.68f, fadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        LeanTween.value(particleFade.gameObject, 0f, 1f, fadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
         {
             //ParticleSystemRenderer r = particleFade.GetComponent<ParticleSystemRenderer>();
 
@@ -430,6 +464,76 @@ public class AnimationManager : MonoBehaviour
             Color newColor = text.color;
             newColor.a = val;
             text.color = newColor;
+        });
+
+    }
+
+
+    void FadeInBrewedScreen()
+    {
+        brewbgFadeImage.color = new Color(brewbgFadeImage.color.r, brewbgFadeImage.color.g, brewbgFadeImage.color.b, 0);
+        brewHeaderText.color = new Color(brewHeaderText.color.r, brewHeaderText.color.g, brewHeaderText.color.b, 0);
+        brewNameText.color = new Color(brewNameText.color.r, brewNameText.color.g, brewNameText.color.b, 0);
+        brewtapToContinueText.color = new Color(brewtapToContinueText.color.r, brewtapToContinueText.color.g, brewtapToContinueText.color.b, 0);
+        potionIcon.color = new Color(potionIcon.color.r, potionIcon.color.g, potionIcon.color.b, 0);
+
+        ParticleSystemRenderer r = brewparticleFade.GetComponent<ParticleSystemRenderer>();
+        //r.material.color = new Color(r.material.color.r, r.material.color.g, r.material.color.b, 0);
+
+        Color c = Color.white;
+        r.sharedMaterial.SetColor("_BaseColor", new Color(c.r, c.g, c.b, 0));
+
+        UIManager.Instance.brewedPotionScreen.SetActive(true);
+
+
+        LeanTween.value(brewbgFadeImage.gameObject, 0f, 0.65f, brewfadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            Image image = brewbgFadeImage;
+            Color newColor = image.color;
+            newColor.a = val;
+            image.color = newColor;
+        });
+
+        LeanTween.value(brewparticleFade.gameObject, 0f, 1f, brewfadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            //ParticleSystemRenderer r = particleFade.GetComponent<ParticleSystemRenderer>();
+
+            Color newColor = Color.white;
+            newColor.a = val;
+            //r.material.color = newColor;
+            r.sharedMaterial.SetColor("_BaseColor", newColor);
+        });
+
+        LeanTween.value(brewHeaderText.gameObject, 0f, 1f, brewfadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            TMP_Text text = brewHeaderText;
+            Color newColor = text.color;
+            newColor.a = val;
+            text.color = newColor;
+        });
+
+        LeanTween.value(brewNameText.gameObject, 0f, 1, brewfadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            TMP_Text text = brewNameText;
+            Color newColor = text.color;
+            newColor.a = val;
+            text.color = newColor;
+        });
+
+        LeanTween.value(brewtapToContinueText.gameObject, 0f, 1, brewfadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            TMP_Text text = brewtapToContinueText;
+            Color newColor = text.color;
+            newColor.a = val;
+            text.color = newColor;
+        });
+
+        LeanTween.value(potionIcon.gameObject, 0f, 1, brewfadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            SpriteRenderer sprite = potionIcon;
+            Color newColor = sprite.color;
+            newColor.a = val;
+            sprite.color = newColor;
         });
 
     }

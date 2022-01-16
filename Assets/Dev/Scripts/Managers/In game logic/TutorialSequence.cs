@@ -23,6 +23,7 @@ public class Sequence
     public int EndPhaseID;
     //public OutLineData[] cellOutlines; // old lock system
     public Phase[] phase;
+    public float waitTimeEndPhase;
     public GameObject[] screens;
 
     //public Sprite[] sprites;
@@ -33,7 +34,7 @@ public class Sequence
 public class Phase
 {
     public int phaseID;
-    public bool isClipPhase, isBoardPhase, isPowerupPhase, isSingleCellPhase;
+    public bool isClipPhase, isBoardPhase, isPowerupPhase, isSingleCellPhase, isHubButtonPhase, isOpenInventoryPhase, isPotionTabPhase ,isEmptyTouchPhase, isBrewPhase, isBrewDisplayMaterials;
     public bool dealPhase;
 
     public int[] unlockedPowerups;
@@ -55,10 +56,12 @@ public enum SpecificTutorialsEnum
 {
     None,
     lootTutorial,
-    JokerTutorial,
+    SwapSidesTutorial,
     TileBombTutorial,
     SliceBombTutorial,
-    SwapSidesTutorial
+    JokerTutorial,
+    PotionCraft,
+
 
 }
 public class TutorialSequence : MonoBehaviour
@@ -95,6 +98,8 @@ public class TutorialSequence : MonoBehaviour
 
     public SpecificTutorialsEnum currentSpecificTutorial;
 
+
+    public Transform handPosToHub, handPosOpenInventory, handPosChangeTab, handPosBrewButton;
     private void Start()
     {
         Instacne = this;
@@ -143,7 +148,7 @@ public class TutorialSequence : MonoBehaviour
         }
     }
 
-    public IEnumerator DisplaySpecificTutorialSequence() /// for anything not levels - like loot tutorial or crafting tutorial
+    public IEnumerator DisplaySpecificTutorialSequence() /// for anything not levels - like loot tutorial, crafting tutorial or powerups
     {
         yield return new WaitForEndOfFrame();
 
@@ -350,6 +355,42 @@ public class TutorialSequence : MonoBehaviour
                 }
             }
 
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isHubButtonPhase)
+            {
+                UIManager.Instance.toHubButtonHeighlight.SetActive(true);
+                activatedHeighlights.Add(UIManager.Instance.toHubButtonHeighlight.gameObject);
+                DisplayTutorialHandTapQuaternion(handPosToHub.position, handPosToHub.rotation, handPosToHub.localScale);
+            }
+
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isOpenInventoryPhase)
+            {
+                UIManager.Instance.openInventoryButtonHeighlight.SetActive(true);
+                activatedHeighlights.Add(UIManager.Instance.openInventoryButtonHeighlight.gameObject);
+                DisplayTutorialHandTapQuaternion(handPosOpenInventory.position, handPosOpenInventory.rotation, handPosOpenInventory.localScale);
+            }
+
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isPotionTabPhase)
+            {
+                UIManager.Instance.potionTabHeighlight.SetActive(true);
+                activatedHeighlights.Add(UIManager.Instance.potionTabHeighlight.gameObject);
+                DisplayTutorialHandTapQuaternion(handPosChangeTab.position, handPosChangeTab.rotation, handPosChangeTab.localScale);
+            }
+
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isBrewPhase)
+            {
+                UIManager.Instance.brewButtonHeighlight.SetActive(true);
+                activatedHeighlights.Add(UIManager.Instance.brewButtonHeighlight.gameObject);
+                DisplayTutorialHandTapQuaternion(handPosBrewButton.position, handPosBrewButton.rotation, handPosBrewButton.localScale);
+            }
+
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isBrewDisplayMaterials)
+            {
+                foreach (GameObject g in UIManager.Instance.brewMaterialZonesHeighlights)
+                {
+                    g.SetActive(true);
+                    activatedHeighlights.Add(g);
+                }
+            }
         }
 
         if (!isSpecific)
@@ -475,7 +516,7 @@ public class TutorialSequence : MonoBehaviour
 
 
             //Invoke("DeactivateTutorialScreens", 0.1f);
-            StartCoroutine(DeactivateTutorialScreens(levelSequences, GameManager.Instance.currentLevel.tutorialIndexForList));
+            StartCoroutine(DeactivateTutorialScreens(levelSequences, GameManager.Instance.currentLevel.tutorialIndexForList, levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].waitTimeEndPhase));
 
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData});
@@ -513,6 +554,11 @@ public class TutorialSequence : MonoBehaviour
 
         if (currentPhaseInSequenceSpecific >= specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].EndPhaseID)
         {
+            if(currentSpecificTutorial == SpecificTutorialsEnum.PotionCraft)
+            {
+                UIManager.Instance.ItemAndForgeBagHEIGHLIGHTS.SetActive(false);
+            }
+
             TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add((int)GameManager.Instance.currentLevel.specificTutorialEnum);
             //TutorialSaveData.Instance.completedTutorialLevelId.Add(GameManager.Instance.currentLevel.levelNum);
             //TutorialSaveData.Instance.SaveTutorialSaveData();
@@ -521,6 +567,8 @@ public class TutorialSequence : MonoBehaviour
             duringSequence = false;
             //Debug.Log("Phases are done!");
             //Invoke("UnlockAll", 2);
+            activatedHeighlights.Clear();
+            activatedBoardParticles.Clear();
 
             if (!GameManager.gameWon)
             {
@@ -532,7 +580,7 @@ public class TutorialSequence : MonoBehaviour
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
 
-            StartCoroutine(DeactivateTutorialScreens(specificTutorials, (int)GameManager.Instance.currentLevel.specificTutorialEnum - 1));
+            StartCoroutine(DeactivateTutorialScreens(specificTutorials, (int)GameManager.Instance.currentLevel.specificTutorialEnum - 1, specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].waitTimeEndPhase));
 
             return;
         }
@@ -680,7 +728,7 @@ public class TutorialSequence : MonoBehaviour
             }
         }
 
-        DisplayTutorialHandTap(tutorialHandPosDealButton, tutorialHandRotationDealButton);
+        DisplayTutorialHandTap(tutorialHandPosDealButton, tutorialHandRotationDealButton, Vector3.one);
     }
 
     public void PowerUpPhase(Sequence[] tutorialArray, int TutorialIndex, int phaseIndex)
@@ -708,7 +756,7 @@ public class TutorialSequence : MonoBehaviour
 
         Debug.Log(handPosPowerup);
 
-        DisplayTutorialHandTap(handPosPowerup + tutorialHandPosPowerupOffset, tutorialHandRotationDealButton);
+        DisplayTutorialHandTap(handPosPowerup + tutorialHandPosPowerupOffset, tutorialHandRotationDealButton, Vector3.one);
     }
 
     public void SingleCellChosenPhase(Sequence[] tutorialArray, int TutorialIndex, int phaseIndex)
@@ -733,7 +781,7 @@ public class TutorialSequence : MonoBehaviour
         int cellID = tutorialArray[TutorialIndex].phase[phaseIndex].unlockedBoardCells;
         Vector3 pos = ConnectionManager.Instance.cells[cellID].transform.position;
 
-        DisplayTutorialHandTap(pos,tutorialHandRotationDealButton);
+        DisplayTutorialHandTap(pos,tutorialHandRotationDealButton, Vector3.one);
     }
 
     //public void OutlineInstantiate() // old lock system
@@ -788,9 +836,9 @@ public class TutorialSequence : MonoBehaviour
         GameManager.Instance.powerupManager.PowerupButtonsActivation(true);
     }
 
-    public IEnumerator DeactivateTutorialScreens(Sequence[] tutorialArray, int index)
+    public IEnumerator DeactivateTutorialScreens(Sequence[] tutorialArray, int index, float timeToWaitTillFade)
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(timeToWaitTillFade);
         foreach (GameObject go in tutorialArray[index].screens)
         {
             if (go.activeInHierarchy)
@@ -893,7 +941,7 @@ public class TutorialSequence : MonoBehaviour
         LeanTween.move(go, targetPos, tutorialHandMoveSpeed).setEase(LeanTweenType.easeInOutQuad).setLoopClamp(); // animate
     }
 
-    public void DisplayTutorialHandTap(Vector3 position, Vector3 rotation)
+    public void DisplayTutorialHandTap(Vector3 position, Vector3 rotation, Vector3 scale)
     {
         Vector3 pos = position;
         pos.z = -0.3f;
@@ -901,9 +949,26 @@ public class TutorialSequence : MonoBehaviour
         GameObject go = Instantiate(tutorialHandPrefabTap, pos, Quaternion.Euler(rotation));
         currentlyActiveTutorialHand = go;
 
+        go.transform.localScale = scale;
+
         LeanTween.rotate(go, new Vector3(rotation.x, rotation.y, rotation.z + 5), tutorialHandTapSpeed).setEase(LeanTweenType.linear).setLoopPingPong();
+    }
 
+    public void DisplayTutorialHandTapQuaternion(Vector3 position, Quaternion rotation, Vector3 scale)
+    {
+        Vector3 pos = position;
+        pos.z = -0.3f;
 
+        GameObject go = Instantiate(tutorialHandPrefabTap, pos, Quaternion.identity);
+        currentlyActiveTutorialHand = go;
+
+        go.transform.localScale = scale;
+
+        Transform child = go.transform.GetChild(0);
+
+        child.transform.rotation = rotation;
+
+        LeanTween.rotate(go, new Vector3(0, 0, 5), tutorialHandTapSpeed).setEase(LeanTweenType.linear).setLoopPingPong();
     }
 
     public void DeactivateAllTutorialScreens()
@@ -929,5 +994,44 @@ public class TutorialSequence : MonoBehaviour
         maskImage.gameObject.SetActive(false);
     }
 
+    public void CheckDoPotionTutorial()
+    {
+        if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)GameManager.Instance.currentLevel.specificTutorialEnum))
+        {
+            if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
+            {
+                UIManager.Instance.gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(true);
+                UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+                //TutorialSequence.Instacne.DisplaySpecificTutorialSequence();
+                currentSpecificTutorial = GameManager.Instance.currentLevel.specificTutorialEnum;
+                StartCoroutine(DisplaySpecificTutorialSequence());
+            }
+        }
+    }
+
+    public void AddToPlayerMatsForPotion(List<CraftingMatsNeededToRubies> CMNTR)
+    {
+        foreach (CraftingMatsNeededToRubies mat in CMNTR)
+        {
+            CraftingMatEntry CME = PlayerManager.Instance.craftingMatsInInventory.Where(p => p.mat == mat.mat).Single();
+
+            CME.amount += mat.amountMissing;
+        }
+
+        Debug.Log("Added missing ingredients!");
+    }
+
+    public void CheckEmptyTouchIncrementPhase(bool isSpecificTutorial)
+    {
+        if (isSpecificTutorial)
+        {
+            IncrementPhaseInSpecificTutorial();
+        }
+        else
+        {
+            IncrementCurrentPhaseInSequence();
+        }
+
+    }
 }
 

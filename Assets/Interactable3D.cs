@@ -89,4 +89,22 @@ public class Interactable3D : MonoBehaviour
         }
 
     }
+
+    public void LaunchKeyAndTutorialLevel()
+    {
+        ZoneManager.Instance.CheckZoneAwardedKey(currentZoneID);
+        ZoneManager.Instance.SetUnlockZone(NextZoneID);
+
+        if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
+        {
+            if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+            {
+                GameManager.Instance.ChooseLevel(overallLevelNum);
+                GameManager.Instance.setCurrentLevelBG(currentZoneID);
+                UIManager.Instance.ActivateGmaeplayCanvas();
+                GameManager.Instance.StartTutorialLevel();
+            }
+
+        }
+    }
 }
