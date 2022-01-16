@@ -446,6 +446,7 @@ public class GameManager : MonoBehaviour
                 gameWon = true;
 
                 SoundManager.Instance.PlaySound(Sounds.SolvedRing);
+                GameManager.Instance.powerupManager.CheckTurnTempPowerToPermaPower();
                 AnimationManager.instance.StartEndLevelAnimSequence(false); ///// loot is given here
 
                 //PlayerManager.Instance.SavePlayerData();

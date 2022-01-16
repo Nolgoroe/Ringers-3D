@@ -14,6 +14,7 @@ public class PowerupProperties : MonoBehaviour
     public PieceColor transformColor;
     public PieceSymbol transformSymbol;
     public EquipmentData connectedEquipment;
+    public TMP_Text numOfUsesText;
 
     public void SetProperties(PowerUp type)
     {
@@ -38,5 +39,10 @@ public class PowerupProperties : MonoBehaviour
         //{
         //    //nameOfPowerup.text = powerupText;
         //}
+    }
+
+    public void UpdateNumOfUsesText()
+    {
+        numOfUsesText.text = numOfUses.ToString();
     }
 }

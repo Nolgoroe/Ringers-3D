@@ -462,12 +462,53 @@ public class CursorController : MonoBehaviour
 
                     if (Physics.Raycast(mouseRay, out hit, rayLength, GameManager.Instance.powerupManager.layerToHit))
                     {
-                        PowerUpManager.IsUsingPowerUp = false;
-                        PowerUpManager.HasUsedPowerUp = true;
-                        PowerUpManager.ObjectToUsePowerUpOn = hit.transform.gameObject;
+                        if(TutorialSequence.Instacne.duringSequence)
+                        {
+                            if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Length > 0)
+                            {
+                                if (hit.transform.parent.GetComponent<Cell>())
+                                {
+                                    if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Contains(hit.transform.parent.GetComponent<Cell>().cellIndex))
+                                    {
+                                        PowerUpManager.IsUsingPowerUp = false;
+                                        PowerUpManager.HasUsedPowerUp = true;
+                                        PowerUpManager.ObjectToUsePowerUpOn = hit.transform.gameObject;
+                                    }
+                                }
+                            }
+
+
+                            if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetSlices.Length > 0)
+                            {
+                                if (hit.transform.parent.GetComponent<Slice>())
+                                {
+                                    if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetSlices.Contains(hit.transform.parent.GetComponent<Slice>().sliceIndex))
+                                    {
+                                        PowerUpManager.IsUsingPowerUp = false;
+                                        PowerUpManager.HasUsedPowerUp = true;
+                                        PowerUpManager.ObjectToUsePowerUpOn = hit.transform.gameObject;
+                                    }
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            PowerUpManager.IsUsingPowerUp = false;
+                            PowerUpManager.HasUsedPowerUp = true;
+                            PowerUpManager.ObjectToUsePowerUpOn = hit.transform.gameObject;
+                        }
                     }
                     else
                     {
+                        if (TutorialSequence.Instacne.duringSequence)
+                        {
+                            if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isSingleCellPhase)
+                            {
+                                return;
+                            }
+                        }
+
                         if (GameManager.Instance.powerupManager.currentlyInUse)
                         {
                             GameManager.Instance.powerupManager.FinishedUsingPowerup(false, GameManager.Instance.powerupManager.currentlyInUse);

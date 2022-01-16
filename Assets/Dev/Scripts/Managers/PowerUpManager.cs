@@ -142,6 +142,8 @@ public class PowerUpManager : MonoBehaviour
 
         prop.numOfUses = data.numOfUses;
 
+        prop.UpdateNumOfUsesText();
+
         //if (current == PowerUp.FourColorTransform)
         //{
         //    prop.transformColor = data.specificColor;
@@ -211,39 +213,63 @@ public class PowerUpManager : MonoBehaviour
     }
     public void CallJokerCoroutine(PowerupProperties prop)
     {
-        if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.JokerTutorial)
+        if (TutorialSequence.Instacne.duringSequence)
         {
-            TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.JokerTutorial && TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPowerupPhase)
+            {
+                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                StartCoroutine(JokerPower(prop));
+            }
         }
-
-        StartCoroutine(JokerPower(prop));
+        else
+        {
+            StartCoroutine(JokerPower(prop));
+        }
     }
     public void CallSwitchPowerCoroutine(PowerupProperties prop)
     {
-        if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SwapSidesTutorial)
+        if (TutorialSequence.Instacne.duringSequence)
         {
-            TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SwapSidesTutorial && TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPowerupPhase)
+            {
+                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                StartCoroutine(SwitchPower(prop));
+            }
         }
-
-        StartCoroutine(SwitchPower(prop));
+        else
+        {
+            StartCoroutine(SwitchPower(prop));
+        }
     }
     public void CallPieceBombPowerCoroutine(PowerupProperties prop)
     {
-        if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.TileBombTutorial)
+        if (TutorialSequence.Instacne.duringSequence)
         {
-            TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.TileBombTutorial && TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPowerupPhase)
+            {
+                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                StartCoroutine(PieceBombPower(prop));
+            }
         }
-
-        StartCoroutine(PieceBombPower(prop));
+        else
+        {
+            StartCoroutine(PieceBombPower(prop));
+        }
     }
     public void CallSliceBombPowerCoroutine(PowerupProperties prop)
     {
-        if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SliceBombTutorial)
+        if (TutorialSequence.Instacne.duringSequence)
         {
-            TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SliceBombTutorial && TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPowerupPhase)
+            {
+                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                StartCoroutine(SliceBombPower(prop));
+            }
         }
-
-        StartCoroutine(SliceBombPower(prop));
+        else
+        {
+            StartCoroutine(SliceBombPower(prop));
+        }
     }
     public void CallFourColorPowerCoroutine(PowerupProperties prop)
     {
@@ -585,29 +611,60 @@ public class PowerUpManager : MonoBehaviour
         }
     }
     public void UsingPowerup(Button butt)
-    {         
-        currentlyInUse = butt.gameObject.GetComponent<PowerupProperties>();
-        UIManager.Instance.ActivateUsingPowerupMessage(true);
-
-        foreach (Button but in powerupButtons)
+    {
+        if (TutorialSequence.Instacne.duringSequence)
         {
-            if (but != butt)
+            if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPowerupPhase)
             {
-                but.interactable = false;
-            }
-            else
-            {
-                but.interactable = false;
-                originalPotionPos = butt.gameObject.transform.position;
-                Vector3 pos = butt.gameObject.transform.position;
-                pos.y += 0.1f;
+                currentlyInUse = butt.gameObject.GetComponent<PowerupProperties>();
+                UIManager.Instance.ActivateUsingPowerupMessage(true);
 
-                LeanTween.move(butt.gameObject, pos, 0.5f).setEase(LeanTweenType.easeInOutQuad); // animate
-                Instantiate(selectedPowerupVFX, but.transform);
+                foreach (Button but in powerupButtons)
+                {
+                    if (but != butt)
+                    {
+                        but.interactable = false;
+                    }
+                    else
+                    {
+                        but.interactable = false;
+                        originalPotionPos = butt.gameObject.transform.position;
+                        Vector3 pos = butt.gameObject.transform.position;
+                        pos.y += 0.1f;
+
+                        LeanTween.move(butt.gameObject, pos, 0.5f).setEase(LeanTweenType.easeInOutQuad); // animate
+                        Instantiate(selectedPowerupVFX, but.transform);
+                    }
+                }
+
+                StartCoroutine(WaitForEndFrame());
             }
         }
+        else
+        {
+            currentlyInUse = butt.gameObject.GetComponent<PowerupProperties>();
+            UIManager.Instance.ActivateUsingPowerupMessage(true);
 
-        StartCoroutine(WaitForEndFrame());
+            foreach (Button but in powerupButtons)
+            {
+                if (but != butt)
+                {
+                    but.interactable = false;
+                }
+                else
+                {
+                    but.interactable = false;
+                    originalPotionPos = butt.gameObject.transform.position;
+                    Vector3 pos = butt.gameObject.transform.position;
+                    pos.y += 0.1f;
+
+                    LeanTween.move(butt.gameObject, pos, 0.5f).setEase(LeanTweenType.easeInOutQuad); // animate
+                    Instantiate(selectedPowerupVFX, but.transform);
+                }
+            }
+
+            StartCoroutine(WaitForEndFrame());
+        }
     }
     public IEnumerator WaitForEndFrame()
     {
@@ -633,7 +690,12 @@ public class PowerUpManager : MonoBehaviour
 
         if (successfull)
         {
+            EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).First();
+            ED.numOfUses--;
+
             prop.numOfUses--;
+
+            prop.UpdateNumOfUsesText();
         }
 
         if (prop.connectedEquipment.isTutorialPower)
@@ -669,11 +731,14 @@ public class PowerUpManager : MonoBehaviour
 
                 powerupButtons.Remove(prop.GetComponent<Button>());
                 Destroy(prop.gameObject, 1f);
+
+                PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
             }
         }
 
         //Vector3 pos = prop.gameObject.transform.position;
         //pos.y -= 0.1f;
+
 
         LeanTween.move(prop.gameObject, originalPotionPos, 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => ReactivatePowerButtons()); // animate
     }
@@ -692,7 +757,7 @@ public class PowerUpManager : MonoBehaviour
             }
         }
 
-        originalPotionPos = Vector3.zero;
+        //originalPotionPos = Vector3.zero;
     }
 
     public void CallSpecialPowerUp(InGameSpecialPowerUp IGSP)
@@ -852,6 +917,17 @@ public class PowerUpManager : MonoBehaviour
 
         //PlayerManager.Instance.SavePlayerData();
         //PlayfabManager.instance.SaveAllGameData();
+    }
+
+    public void CheckTurnTempPowerToPermaPower()
+    {
+        foreach (EquipmentData ED in PlayerManager.Instance.ownedPowerups)
+        {
+            if (ED.isTutorialPower)
+            {
+                ED.isTutorialPower = false;
+            }
+        }
     }
 
     void ShakePiecePowerUp(GameObject toShake)
