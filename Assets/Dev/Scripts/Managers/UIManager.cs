@@ -679,7 +679,8 @@ public class UIManager : MonoBehaviour
         normalBookBG.SetActive(false);
         potionsBookBG.SetActive(true);
 
-        
+
+        Brewery.GetComponent<BreweryDisplayLogic>().GetAllAnchorPositions();
         Brewery.GetComponent<BreweryDisplayLogic>().SetSelectedPotion(MaterialsAndForgeManager.Instance.equipmentInForge[0]);
 
         if (TutorialSequence.Instacne.duringSequence)

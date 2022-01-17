@@ -142,8 +142,9 @@ public class PowerUpManager : MonoBehaviour
 
         prop.numOfUses = data.numOfUses;
 
-        prop.UpdateNumOfUsesText();
+        prop.FindNumOfUsesTextObject();
 
+        prop.UpdateNumOfUsesText();
         //if (current == PowerUp.FourColorTransform)
         //{
         //    prop.transformColor = data.specificColor;

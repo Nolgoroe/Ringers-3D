@@ -34,7 +34,6 @@ public class BreweryDisplayLogic : MonoBehaviour
 
     public bool canForgePotion;
 
-
     private void Awake()
     {
         materialsNeedToBuyPotion = new List<CraftingMatsNeededToRubies>();
@@ -79,6 +78,41 @@ public class BreweryDisplayLogic : MonoBehaviour
 
         selectedPotion = ED;
         BreweryPotionDisplay(ED);
+
+        StartCoroutine(MovepPotions(ED));
+    }
+
+    IEnumerator MovepPotions(EquipmentDisplayer ED)
+    {
+        yield return new WaitForEndOfFrame();
+
+        foreach (EquipmentDisplayer equipment in MaterialsAndForgeManager.Instance.equipmentInForge)
+        {
+            if (equipment != ED)
+            {
+                RectTransform rect = equipment.GetComponent<RectTransform>();
+
+                LeanTween.move(rect, equipment.originalPotionPosForSelection, 0.5f).setEase(LeanTweenType.easeInOutQuad); // animate
+            }
+            else
+            {
+                RectTransform rect = ED.GetComponent<RectTransform>();
+
+                Debug.Log(rect.anchoredPosition.y + 50);
+                Debug.Log(rect.anchoredPosition.x);
+
+                LeanTween.move(rect, new Vector3(rect.anchoredPosition.x, rect.anchoredPosition.y + 50, 0) , 0.5f).setEase(LeanTweenType.easeInOutQuad); // animate
+            }
+        }
+    }
+
+    public void GetAllAnchorPositions()
+    {
+        Debug.Log("amount of calls");
+        foreach (EquipmentDisplayer equipment in MaterialsAndForgeManager.Instance.equipmentInForge)
+        {
+            StartCoroutine(equipment.GetAnchoredPosition());
+        }
     }
 
     public void AddNeededCraftingMatsToRubiesItem(CraftingMats _mat, int _amount)

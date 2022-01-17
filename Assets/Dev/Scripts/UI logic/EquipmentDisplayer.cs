@@ -38,15 +38,19 @@ public class EquipmentDisplayer : MonoBehaviour
 
     TMP_Text buttonText;
 
+    public Vector2 originalPotionPosForSelection;
+
     private void Awake()
     {
         BDL = GetComponentInParent<BreweryDisplayLogic>();
 
         buttonText = BDL.brewButton.transform.GetChild(0).GetComponent<TMP_Text>();
+
     }
     private void Start()
     {
-        craftButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(Sounds.ButtonPressUI));
+
+        //craftButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(Sounds.ButtonPressUI));
 
 
         selectPotionButton.onClick.AddListener(() => BDL.SetSelectedPotion(this));
@@ -179,8 +183,10 @@ public class EquipmentDisplayer : MonoBehaviour
 
             UIManager.Instance.brewedPotionScreen.SetActive(true);
 
+            //UIManager.Instance.Brewery.GetComponent<BreweryDisplayLogic>().GetAllAnchorPositions();
 
             AnimationManager.instance.AnimateBrewScreen(BDL.potionName.text, data.spritePath);
+
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
         }
         else
@@ -198,6 +204,7 @@ public class EquipmentDisplayer : MonoBehaviour
             UIManager.Instance.DisplayBuyPotionLootNeeded(BDL.materialsNeedToBuyPotion);
             UIManager.Instance.DisplayBuyPotionScreen();
         }
+
     }
 
     public bool CheckIfCanForgeEquipment(List<CraftingMatsNeeded> CMN)
@@ -242,5 +249,11 @@ public class EquipmentDisplayer : MonoBehaviour
         }
 
         return canCraft;
+    }
+
+    public IEnumerator GetAnchoredPosition()
+    {
+        yield return new WaitForEndOfFrame();
+        originalPotionPosForSelection = transform.GetComponent<RectTransform>().anchoredPosition;
     }
 }
