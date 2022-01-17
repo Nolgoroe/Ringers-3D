@@ -107,7 +107,7 @@ public class Cell : MonoBehaviour
 
             isFull = true;
             p.transform.SetParent(transform);
-            p.transform.position = new Vector3(p.transform.parent.position.x, p.transform.parent.position.y, p.transform.parent.position.z);
+            p.transform.localPosition = new Vector3(0, 0, -0.2f);
             p.transform.rotation = p.transform.parent.rotation;
 
             p.partOfBoard = true;
