@@ -152,7 +152,7 @@ public class SortMaster : MonoBehaviour
     public void ClearAllForgeScreens()
     {
         MaterialsAndForgeManager.Instance.RefreshMaterialBag();
-        MaterialsAndForgeManager.Instance.RefreshForge();
+        //MaterialsAndForgeManager.Instance.RefreshForge();
         MaterialsAndForgeManager.Instance.RefreshCorruptionDevices();
 
         HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();

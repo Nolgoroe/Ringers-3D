@@ -41,6 +41,15 @@ public class PowerupProperties : MonoBehaviour
         //}
     }
 
+    public void FindNumOfUsesTextObject()
+    {
+        TMP_Text text = transform.parent.GetComponentInChildren<TMP_Text>();
+        numOfUsesText = text;
+
+
+        numOfUsesText.transform.parent.SetAsLastSibling();
+    }
+
     public void UpdateNumOfUsesText()
     {
         numOfUsesText.text = numOfUses.ToString();
