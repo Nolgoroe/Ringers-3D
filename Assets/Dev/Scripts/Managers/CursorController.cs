@@ -59,6 +59,19 @@ public class CursorController : MonoBehaviour
 
     void Update()
     {
+        if (TutorialSequence.Instacne.screensDeactivateOnTouch.Count > 0)
+        {
+            if (Input.touchCount > 0)
+            {
+                touch = Input.touches[0];
+
+                if (touch.phase == TouchPhase.Began)
+                {
+                    TutorialSequence.Instacne.screensDeactivateOnTouch[0].SetActive(false);
+                    TutorialSequence.Instacne.screensDeactivateOnTouch.Remove(TutorialSequence.Instacne.screensDeactivateOnTouch[0]);
+                }
+            }
+        } // deactiavte screens on touch from that list
 
         if (TutorialSequence.Instacne.duringSequence)
         {
@@ -88,7 +101,7 @@ public class CursorController : MonoBehaviour
                     }
                 }
             }
-        }
+        } /// detect empty touch phase in tutorial sequence
 
         if (!GameManager.Instance.levelStarted && !UIManager.isUsingUI && GameManager.Instance.allGameStarted)
         {
@@ -96,12 +109,12 @@ public class CursorController : MonoBehaviour
             {
                 touch = Input.touches[0];
 
-                if(touch.phase == TouchPhase.Began)
+                if (touch.phase == TouchPhase.Began)
                 {
                     Ray ray = Camera.main.ScreenPointToRay(touch.position);
                     RaycastHit hit;
 
-                    if(Physics.Raycast(ray, out hit))
+                    if (Physics.Raycast(ray, out hit))
                     {
                         if (hit.collider.CompareTag("Level Button") || hit.collider.CompareTag("Grind Level Button"))
                         {
@@ -110,9 +123,9 @@ public class CursorController : MonoBehaviour
                     }
                 }
             }
-        }
+        } // detect touch on level prefab
 
-        if(!GameManager.Instance.levelStarted && UIManager.isUsingUI && UIManager.Instance.UnlockedZoneMessageView.activeInHierarchy)
+        if (!GameManager.Instance.levelStarted && UIManager.isUsingUI && UIManager.Instance.UnlockedZoneMessageView.activeInHierarchy)
         {
             if (Input.touchCount > 0)
             {
@@ -134,9 +147,9 @@ public class CursorController : MonoBehaviour
                     }
                 }
             }
-        }
+        } // detect deactivate unlocked level vfx
 
-        if(!GameManager.Instance.levelStarted && UIManager.isUsingUI && UIManager.Instance.brewedPotionScreen.activeInHierarchy)
+        if (!GameManager.Instance.levelStarted && UIManager.isUsingUI && UIManager.Instance.brewedPotionScreen.activeInHierarchy)
         {
             if (Input.touchCount > 0)
             {
@@ -151,24 +164,24 @@ public class CursorController : MonoBehaviour
                     //UIManager.isUsingUI = false;
                 }
             }
-        }
+        } // detect deactivate brewed potion vfx
 
         if (GameManager.Instance.levelStarted && PowerUpManager.IsUsingPowerUp)
         {
             PowerUpControls();
             return;
-        }
+        } // powerup controls
 
         if (GameManager.Instance.levelStarted && !UIManager.isUsingUI && !GameManager.Instance.isSecondaryControls && !PowerUpManager.IsUsingPowerUp)
         {
             NormalControls();
             return;
-        }
+        } // normal controls
 
         if (GameManager.Instance.levelStarted && !UIManager.isUsingUI && GameManager.Instance.isSecondaryControls && !PowerUpManager.IsUsingPowerUp)
         {
             SecondaryControls();
-        }
+        } // secondary controls
     }
     public void SecondaryControls()
     {
@@ -462,7 +475,7 @@ public class CursorController : MonoBehaviour
 
                     if (Physics.Raycast(mouseRay, out hit, rayLength, GameManager.Instance.powerupManager.layerToHit))
                     {
-                        if(TutorialSequence.Instacne.duringSequence)
+                        if (TutorialSequence.Instacne.duringSequence)
                         {
                             if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Length > 0)
                             {
@@ -642,7 +655,7 @@ public class CursorController : MonoBehaviour
             {
                 if (GameManager.Instance.currentLevel.isSpecificTutorial)
                 {
-                    if(TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Length > 0)
+                    if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Length > 0)
                     {
                         if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Contains(cellHit.GetComponent<Cell>().cellIndex))
                         {

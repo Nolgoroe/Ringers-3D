@@ -204,7 +204,7 @@ public class UIManager : MonoBehaviour
     public void PlayButton()
     {
         ToHud(mainMenu);
-        ZoneManager.Instance.UnlockLevelViewSequence();
+        //ZoneManager.Instance.UnlockLevelViewSequence();
         UnlockLevels();
 
         GameManager.Instance.allGameStarted = true;
@@ -434,6 +434,11 @@ public class UIManager : MonoBehaviour
                 go.SetActive(false);
             }
 
+            foreach (getChildrenHelpData GCHD in GameManager.Instance.powerupManager.instnatiateZones)
+            {
+                GCHD.referenceNumUsesText.gameObject.SetActive(false);
+            }
+
             GameManager.Instance.DestroyAllLevelChildern();
 
             LootManager.Instance.ResetLevelLootData();
@@ -615,6 +620,8 @@ public class UIManager : MonoBehaviour
         {
             DailyRewardScreen.SetActive(false);
             PlayfabManager.instance.UpdateAndSaveTimeSensitiveData(); //// could be that we need to send to save here
+
+            ZoneManager.Instance.UnlockLevelViewSequence();
         }
     }
     public void ToForge()

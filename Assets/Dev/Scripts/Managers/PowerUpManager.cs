@@ -35,7 +35,7 @@ public class SpecialPowerData
 
 public class PowerUpManager : MonoBehaviour
 {
-    public Transform[] instnatiateZones;
+    public getChildrenHelpData[] instnatiateZones;
     public GameObject powerupButtonPreab;
     public GameObject specialPowerPrefabLeft, specialPowerPrefabRight;
     public GameObject selectedPowerupVFX;
@@ -49,7 +49,7 @@ public class PowerUpManager : MonoBehaviour
     public Sprite[] specialPowerupSprites;
 
 
-    public List<Button> powerupButtons;
+    public List<PowerupProperties> powerupButtons;
 
     public static bool IsUsingPowerUp;
     public static bool HasUsedPowerUp;
@@ -89,27 +89,27 @@ public class PowerUpManager : MonoBehaviour
         }
 
     }
-    public void AssignPowerUp(PowerUp ThePower, Button theButton)
+    public void AssignPowerUp(PowerUp ThePower, PowerupProperties theButton)
     {
         //if (ThePower != PowerUp.ExtraDeal)
         //{
-            theButton.onClick.AddListener(() => UsingPowerup(theButton));
+            theButton.interactEvent.AddListener(() => UsingPowerup(theButton));
         //}
 
         PowerupProperties prop = theButton.gameObject.GetComponent<PowerupProperties>();
         switch (ThePower)
         {
             case PowerUp.Joker:
-                theButton.onClick.AddListener(() => CallJokerCoroutine(prop));
+                theButton.interactEvent.AddListener(() => CallJokerCoroutine(prop));
                 break;
             case PowerUp.Switch:
-                theButton.onClick.AddListener(() => CallSwitchPowerCoroutine(prop));
+                theButton.interactEvent.AddListener(() => CallSwitchPowerCoroutine(prop));
                 break;
             case PowerUp.PieceBomb:
-                theButton.onClick.AddListener(() => CallPieceBombPowerCoroutine(prop));
+                theButton.interactEvent.AddListener(() => CallPieceBombPowerCoroutine(prop));
                 break;
             case PowerUp.SliceBomb:
-                theButton.onClick.AddListener(() => CallSliceBombPowerCoroutine(prop));
+                theButton.interactEvent.AddListener(() => CallSliceBombPowerCoroutine(prop));
                 break;
             //case PowerUp.ExtraDeal:
             //    theButton.onClick.AddListener(() => ExtraDealPower(prop));
@@ -126,7 +126,7 @@ public class PowerUpManager : MonoBehaviour
     }
     public void InstantiatePowerUps(EquipmentData data)
     {
-        GameObject go = Instantiate(powerupButtonPreab, instnatiateZones[instnatiatedZonesCounter]);
+        GameObject go = Instantiate(powerupButtonPreab, instnatiateZones[instnatiatedZonesCounter].transform);
 
         instnatiatedZonesCounter++;
 
@@ -156,15 +156,15 @@ public class PowerUpManager : MonoBehaviour
 
         if (prop.connectedEquipment.scopeOfUses == 0) /// 0 = daily 1 = per patch
         {
-            go.GetComponent<Button>().interactable = prop.connectedEquipment.nextTimeAvailable == null || prop.connectedEquipment.nextTimeAvailable == "";
+            go.GetComponent<PowerupProperties>().canBeSelected = prop.connectedEquipment.nextTimeAvailable == null || prop.connectedEquipment.nextTimeAvailable == "";
         }
         else
         {
-            go.GetComponent<Button>().interactable = true;
+            go.GetComponent<PowerupProperties>().canBeSelected = true;
         }
-        AssignPowerUp(current, go.GetComponent<Button>());
+        AssignPowerUp(current, go.GetComponent<PowerupProperties>());
 
-        powerupButtons.Add(go.GetComponent<Button>());
+        powerupButtons.Add(go.GetComponent<PowerupProperties>());
     }
     public void Deal()
     {
@@ -285,6 +285,8 @@ public class PowerUpManager : MonoBehaviour
         layerToHit = LayerMask.GetMask("Piece Parent");
         yield return new WaitUntil(() => HasUsedPowerUp == true);
 
+        bool successfulUse = false;
+
         Piece toWorkOn = ObjectToUsePowerUpOn.GetComponent<Piece>();
 
         if(toWorkOn.leftChild.symbolOfPiece != PieceSymbol.Joker) ///// If 1 of the sub pieces is a joker - so is the other. If the symbol is a joker then the color is awell
@@ -308,6 +310,8 @@ public class PowerUpManager : MonoBehaviour
                 toWorkOn.rightChild.SetPieceAsJoker();
 
                 toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
+
+                successfulUse = true;
             }
             else
             {
@@ -319,11 +323,13 @@ public class PowerUpManager : MonoBehaviour
 
                 toWorkOn.leftChild.SetPieceAsJoker();
                 toWorkOn.rightChild.SetPieceAsJoker();
+
+                successfulUse = true;
             }
 
             ShakePiecePowerUp(toWorkOn.gameObject);
 
-            FinishedUsingPowerup(toWorkOn.partOfBoard /*&& !toWorkOn.isLocked*/, prop);
+            FinishedUsingPowerup(successfulUse /*&& !toWorkOn.isLocked*/, prop);
 
             Debug.Log("Joker");
         }
@@ -611,7 +617,7 @@ public class PowerUpManager : MonoBehaviour
             FinishedUsingPowerup(false, prop);
         }
     }
-    public void UsingPowerup(Button butt)
+    public void UsingPowerup(PowerupProperties butt)
     {
         if (TutorialSequence.Instacne.duringSequence)
         {
@@ -620,15 +626,15 @@ public class PowerUpManager : MonoBehaviour
                 currentlyInUse = butt.gameObject.GetComponent<PowerupProperties>();
                 UIManager.Instance.ActivateUsingPowerupMessage(true);
 
-                foreach (Button but in powerupButtons)
+                foreach (PowerupProperties but in powerupButtons)
                 {
-                    if (but != butt)
+                    if (but.interactEvent != butt.interactEvent)
                     {
-                        but.interactable = false;
+                        but.canBeSelected = false;
                     }
                     else
                     {
-                        but.interactable = false;
+                        but.canBeSelected = false;
                         originalPotionPos = butt.gameObject.transform.position;
                         Vector3 pos = butt.gameObject.transform.position;
                         pos.y += 0.1f;
@@ -646,15 +652,15 @@ public class PowerUpManager : MonoBehaviour
             currentlyInUse = butt.gameObject.GetComponent<PowerupProperties>();
             UIManager.Instance.ActivateUsingPowerupMessage(true);
 
-            foreach (Button but in powerupButtons)
+            foreach (PowerupProperties but in powerupButtons)
             {
                 if (but != butt)
                 {
-                    but.interactable = false;
+                    but.canBeSelected = false;
                 }
                 else
                 {
-                    but.interactable = false;
+                    but.canBeSelected = false;
                     originalPotionPos = butt.gameObject.transform.position;
                     Vector3 pos = butt.gameObject.transform.position;
                     pos.y += 0.1f;
@@ -699,17 +705,17 @@ public class PowerUpManager : MonoBehaviour
             prop.UpdateNumOfUsesText();
         }
 
-        if (prop.connectedEquipment.isTutorialPower)
-        {
-            if (prop.numOfUses == 0)
-            {
-                ReactivatePowerButtons();
-                powerupButtons.Remove(prop.GetComponent<Button>());
-                Destroy(prop.gameObject, 0.55f);
-            }
-        }
-        else
-        {
+        //if (prop.connectedEquipment.isTutorialPower)
+        //{
+        //    if (prop.numOfUses == 0)
+        //    {
+        //        ReactivatePowerButtons();
+        //        powerupButtons.Remove(prop.GetComponent<Button>());
+        //        Destroy(prop.gameObject, 0.55f);
+        //    }
+        //}
+        //else
+        //{
             if (prop.numOfUses == 0 && prop.connectedEquipment.scopeOfUses == 0) //// if the num of uses is 0 and the scope is cooldown and not per match
             {
                 EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).First();
@@ -730,12 +736,12 @@ public class PowerUpManager : MonoBehaviour
                 //PlayerManager.Instance.SavePlayerData();
                 //PlayfabManager.instance.SaveAllGameData();
 
-                powerupButtons.Remove(prop.GetComponent<Button>());
+                powerupButtons.Remove(prop.GetComponent<PowerupProperties>());
                 Destroy(prop.gameObject, 1f);
 
                 PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
             }
-        }
+        //}
 
         //Vector3 pos = prop.gameObject.transform.position;
         //pos.y -= 0.1f;
@@ -746,15 +752,15 @@ public class PowerUpManager : MonoBehaviour
 
     public void ReactivatePowerButtons()
     {
-        foreach (Button but in powerupButtons)
+        foreach (PowerupProperties but in powerupButtons)
         {
             if (but.gameObject.GetComponent<PowerupProperties>().numOfUses > 0)
             {
-                but.interactable = true;
+                but.canBeSelected = true;
             }
             else
             {
-                but.interactable = false;
+                but.canBeSelected = false;
             }
         }
 
@@ -897,9 +903,9 @@ public class PowerUpManager : MonoBehaviour
 
     public void PowerupButtonsActivation(bool activate)
     {
-        foreach (Button b in powerupButtons)
+        foreach (PowerupProperties b in powerupButtons)
         {
-            b.interactable = activate;
+            b.canBeSelected = activate;
         }
     }
 

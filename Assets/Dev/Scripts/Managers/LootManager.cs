@@ -246,6 +246,7 @@ public class LootManager : MonoBehaviour
             {
                 ZoneManagerHelpData.Instance.nextZoneCheck.isUnlocked = true;
                 ZoneManagerHelpData.Instance.nextZoneCheck.maxLevelReachedInZone = 1;
+                ZoneManager.Instance.unlockedZoneID.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
 
                 //ZoneManagerHelpData.Instance.nextZoneCheck.zoneHeader.sprite = Resources.Load<Sprite>(ZoneManagerHelpData.Instance.nextZoneCheck.unlockedZonePath);
 

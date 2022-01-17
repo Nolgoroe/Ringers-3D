@@ -19,6 +19,7 @@ public class pieceDataStruct
 [System.Serializable]
 public class Sequence
 {
+    public bool doFadeInEnd;
     public int levelTutorialIndex;
     public int EndPhaseID;
     //public OutLineData[] cellOutlines; // old lock system
@@ -98,6 +99,7 @@ public class TutorialSequence : MonoBehaviour
 
     public SpecificTutorialsEnum currentSpecificTutorial;
 
+    public List<GameObject> screensDeactivateOnTouch;
 
     public Transform handPosToHub, handPosOpenInventory, handPosChangeTab, handPosBrewButton;
     private void Start()
@@ -287,13 +289,13 @@ public class TutorialSequence : MonoBehaviour
             {
                 foreach (int i in specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].unlockedPowerups)
                 {
-                    for (int k = 0; k < GameManager.Instance.powerupManager.instnatiateZones[i].childCount; k++)
+                    for (int k = 0; k < GameManager.Instance.powerupManager.instnatiateZones[i].transform.childCount; k++)
                     {
-                        if (GameManager.Instance.powerupManager.instnatiateZones[i].GetChild(k).CompareTag("Tile Hole"))
+                        if (GameManager.Instance.powerupManager.instnatiateZones[i].transform.GetChild(k).CompareTag("Tile Hole"))
                         {
-                            GameManager.Instance.powerupManager.instnatiateZones[i].GetChild(k).gameObject.SetActive(true);
+                            GameManager.Instance.powerupManager.instnatiateZones[i].transform.GetChild(k).gameObject.SetActive(true);
 
-                            activatedHeighlights.Add(GameManager.Instance.powerupManager.instnatiateZones[i].GetChild(k).gameObject);
+                            activatedHeighlights.Add(GameManager.Instance.powerupManager.instnatiateZones[i].transform.GetChild(k).gameObject);
                         }
                     }
                 }
@@ -516,8 +518,15 @@ public class TutorialSequence : MonoBehaviour
 
 
             //Invoke("DeactivateTutorialScreens", 0.1f);
-            StartCoroutine(DeactivateTutorialScreens(levelSequences, GameManager.Instance.currentLevel.tutorialIndexForList, levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].waitTimeEndPhase));
 
+            if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].doFadeInEnd)
+            {
+                StartCoroutine(DeactivateTutorialScreens(levelSequences, GameManager.Instance.currentLevel.tutorialIndexForList, levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].waitTimeEndPhase));
+            }
+            else
+            {
+                screensDeactivateOnTouch.Add(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[currentPhaseInSequenceLevels]);
+            }
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData});
             return;
@@ -580,7 +589,14 @@ public class TutorialSequence : MonoBehaviour
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
 
-            StartCoroutine(DeactivateTutorialScreens(specificTutorials, (int)GameManager.Instance.currentLevel.specificTutorialEnum - 1, specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].waitTimeEndPhase));
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].doFadeInEnd)
+            {
+                StartCoroutine(DeactivateTutorialScreens(specificTutorials, (int)GameManager.Instance.currentLevel.specificTutorialEnum - 1, specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].waitTimeEndPhase));
+            }
+            else
+            {
+                screensDeactivateOnTouch.Add(specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific]);
+            }
 
             return;
         }

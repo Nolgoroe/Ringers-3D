@@ -150,7 +150,7 @@ public class ZoneManager : MonoBehaviour
 
             //foreach (int num in temp)
             //{
-            unlockedZoneID.Add(num);
+            //unlockedZoneID.Add(num);
             zonesToUnlock.Remove(num);
             UIManager.Instance.DisplayUnlockedZoneMessage(num);
             //}

@@ -92,14 +92,14 @@ public class BreweryDisplayLogic : MonoBehaviour
             {
                 RectTransform rect = equipment.GetComponent<RectTransform>();
 
+                equipment.transform.GetComponent<Button>().interactable = true;
                 LeanTween.move(rect, equipment.originalPotionPosForSelection, 0.5f).setEase(LeanTweenType.easeInOutQuad); // animate
             }
             else
             {
                 RectTransform rect = ED.GetComponent<RectTransform>();
 
-                Debug.Log(rect.anchoredPosition.y + 50);
-                Debug.Log(rect.anchoredPosition.x);
+                equipment.transform.GetComponent<Button>().interactable = false;
 
                 LeanTween.move(rect, new Vector3(rect.anchoredPosition.x, rect.anchoredPosition.y + 50, 0) , 0.5f).setEase(LeanTweenType.easeInOutQuad); // animate
             }

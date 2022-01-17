@@ -384,7 +384,7 @@ public class GameManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (Button butt in powerupManager.powerupButtons)
+        foreach (PowerupProperties butt in powerupManager.powerupButtons)
         {
             Destroy(butt.gameObject);
         }
@@ -446,7 +446,7 @@ public class GameManager : MonoBehaviour
                 gameWon = true;
 
                 SoundManager.Instance.PlaySound(Sounds.SolvedRing);
-                GameManager.Instance.powerupManager.CheckTurnTempPowerToPermaPower();
+                powerupManager.CheckTurnTempPowerToPermaPower();
                 AnimationManager.instance.StartEndLevelAnimSequence(false); ///// loot is given here
 
                 //PlayerManager.Instance.SavePlayerData();
@@ -470,9 +470,6 @@ public class GameManager : MonoBehaviour
 
                 //PlayerManager.Instance.SavePlayerData();
                 //PlayfabManager.instance.SaveAllGameData();
-
-
-                PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
 
                 return false;
             }
@@ -526,7 +523,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
     }
 
     public void RestartCurrentLevel()
@@ -608,8 +605,12 @@ public class GameManager : MonoBehaviour
             go.SetActive(false);
         }
 
+        foreach (getChildrenHelpData GCHD in  powerupManager.instnatiateZones)
+        {
+            GCHD.referenceNumUsesText.gameObject.SetActive(false);
+        }
 
-       // ZoneManagerHelpData.Instance.listOfAllZones[ZoneManagerHelpData.Instance.currentZoneCheck.id].SaveZone();
+        // ZoneManagerHelpData.Instance.listOfAllZones[ZoneManagerHelpData.Instance.currentZoneCheck.id].SaveZone();
 
 
         bool nextIsTutorial = CheckNextLevelIsTutorial(currentLevel.levelNum + 1);
