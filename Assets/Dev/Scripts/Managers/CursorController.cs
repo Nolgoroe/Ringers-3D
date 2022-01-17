@@ -306,7 +306,7 @@ public class CursorController : MonoBehaviour
     {
         Piece p = piece.GetComponent<Piece>();
 
-        tempTileHighlight = Instantiate(secondaryControlsTileHighlightChosenPrefab, p.transform);
+        //tempTileHighlight = Instantiate(secondaryControlsTileHighlightChosenPrefab, p.transform);
         Renderer rightWing = p.rightChild.GetComponent<Renderer>();
         Renderer LeftWing = p.leftChild.GetComponent<Renderer>();
 
@@ -344,7 +344,7 @@ public class CursorController : MonoBehaviour
         rightWing.materials = matArrayRight.ToArray();
         LeftWing.materials = matArrayLeft.ToArray();
 
-        Destroy(tempTileHighlight.gameObject);
+        //Destroy(tempTileHighlight.gameObject);
         //rightWing.material.SetColor("_BaseColor", color);
         //LeftWing.material.SetColor("_BaseColor", color);
     }

@@ -439,6 +439,11 @@ public class UIManager : MonoBehaviour
                 GCHD.referenceNumUsesText.gameObject.SetActive(false);
             }
 
+            foreach (GameObject go in TutorialSequence.Instacne.activatedHeighlights)
+            {
+                go.SetActive(false);
+            }
+
             GameManager.Instance.DestroyAllLevelChildern();
 
             LootManager.Instance.ResetLevelLootData();
@@ -1044,9 +1049,12 @@ public class UIManager : MonoBehaviour
 
     public void OpenLeaderboardScreen()
     {
-        isUsingUI = true;
+        if (!isUsingUI)
+        {
+            isUsingUI = true;
 
-        PlayfabManager.instance.GetLeaderboard();
+            PlayfabManager.instance.GetLeaderboard();
+        }
     }
 
 

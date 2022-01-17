@@ -194,14 +194,30 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
-        foreach (EquipmentData ED in ownedPowerups)
+        EquipmentData[] EDTutorial = ownedPowerups.Where(p => p.isTutorialPower == true).ToArray();
+
+        foreach (EquipmentData ED in EDTutorial)
         {
-            if(instantiatedCount < GameManager.Instance.powerupManager.instnatiateZones.Length)
+            if (instantiatedCount < GameManager.Instance.powerupManager.instnatiateZones.Length)
             {
                 instantiatedCount++;
                 activePowerups.Add(ED.power);
 
                 GameManager.Instance.powerupManager.InstantiatePowerUps(ED);
+            }
+        }
+
+        foreach (EquipmentData ED in ownedPowerups)
+        {
+            if (!ED.isTutorialPower)
+            {
+                if (instantiatedCount < GameManager.Instance.powerupManager.instnatiateZones.Length)
+                {
+                    instantiatedCount++;
+                    activePowerups.Add(ED.power);
+
+                    GameManager.Instance.powerupManager.InstantiatePowerUps(ED);
+                }
             }
         }
     }
