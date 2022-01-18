@@ -282,6 +282,7 @@ public class TutorialSequence : MonoBehaviour
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].dealPhase)
             {
                 UIManager.Instance.dealButtonHeighlight.SetActive(true);
+                //UIManager.Instance.dealButtonHeighlight.GetComponent<testScreenResolutionFix>().DoMove();
                 activatedHeighlights.Add(UIManager.Instance.dealButtonHeighlight.gameObject);
             }
 
@@ -414,6 +415,7 @@ public class TutorialSequence : MonoBehaviour
                 //}
 
                 UIManager.Instance.dealButtonHeighlight.SetActive(true);
+                //UIManager.Instance.dealButtonHeighlight.GetComponent<testScreenResolutionFix>().DoMove();
                 activatedHeighlights.Add(UIManager.Instance.dealButtonHeighlight.gameObject);
             }
 

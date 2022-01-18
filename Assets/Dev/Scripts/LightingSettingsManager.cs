@@ -40,6 +40,7 @@ public class LightingSettingsManager : MonoBehaviour
 
 
             RenderSettings.subtractiveShadowColor = allLightingSO[zoneID].realtimeShadowColor;
+            RenderSettings.fogColor = allLightingSO[zoneID].fogColor;
         }
     }
 

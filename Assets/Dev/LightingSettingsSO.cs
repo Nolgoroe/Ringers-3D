@@ -14,4 +14,6 @@ public class LightingSettingsSO : ScriptableObject
     public Color skyColor, equatorColor, groundColor;
 
     public Color realtimeShadowColor;
+
+    public Color fogColor;
 }

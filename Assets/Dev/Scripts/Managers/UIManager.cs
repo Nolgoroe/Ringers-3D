@@ -98,6 +98,7 @@ public class UIManager : MonoBehaviour
     public Button getDailyLootButton;
     public Button dealButton;
     public Button backToHubButton;
+    public Button buyPotionYesButton;
 
     //public Button[] levelButtons;
 
@@ -579,9 +580,12 @@ public class UIManager : MonoBehaviour
     {
         if (TutorialSequence.Instacne.duringSequence)
         {
-            if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
+            if (GameManager.Instance.currentLevel)
             {
-                return;
+                if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
+                {
+                    return;
+                }
             }
         }
 
@@ -1140,10 +1144,12 @@ public class UIManager : MonoBehaviour
     {
         if (canbuy)
         {
+            buyPotionYesButton.interactable = true;
             buyPotionRubieCoseText.color = Color.white;
         }
         else
         {
+            buyPotionYesButton.interactable = false;
             buyPotionRubieCoseText.color = Color.red;
         }
 

@@ -53,6 +53,7 @@ public class DewDropsManager : MonoBehaviour
         StopAllCoroutines();
         if (savedDateTime != "" && PlayerManager.Instance.collectedDewDrops < maxDrops)
         {
+            
             //Debug.Log("has previos save time: " + savedDateTime);
             TimeSpan deltaDateTime = Convert.ToDateTime(savedDateTime) - currentTime;
 
