@@ -388,7 +388,10 @@ public class CursorController : MonoBehaviour
                 mouseRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 0));
                 //transform.position = mouseRay.origin;
                 cursorPos.position = mouseRay.origin + mouseRay.direction * distanceFromBoard;
-                cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y, gameBoard.transform.position.z);
+                if (gameBoard)
+                {
+                    cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y, gameBoard.transform.position.z);
+                }
 
                 if (followerTarget)
                 {

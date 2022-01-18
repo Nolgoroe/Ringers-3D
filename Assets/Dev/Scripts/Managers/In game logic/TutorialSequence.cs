@@ -119,6 +119,7 @@ public class TutorialSequence : MonoBehaviour
             GameManager.Instance.powerupManager.PowerupButtonsActivation(false);
 
             UIManager.Instance.tutorialCanvasParent.SetActive(true);
+            UIManager.Instance.tutorialCanvasHolesParent.SetActive(true);
             UIManager.Instance.tutorialCanvasLevels.SetActive(true);
 
             //DisplayTutorialScreens();
@@ -162,6 +163,7 @@ public class TutorialSequence : MonoBehaviour
             //GameManager.Instance.powerupManager.PowerupButtonsActivation(false);
 
             UIManager.Instance.tutorialCanvasParent.SetActive(true);
+            UIManager.Instance.tutorialCanvasHolesParent.SetActive(true);
             UIManager.Instance.tutorialCanvasSpecific.SetActive(true);
             UIManager.Instance.dealButton.interactable = false;
 
@@ -565,10 +567,10 @@ public class TutorialSequence : MonoBehaviour
 
         if (currentPhaseInSequenceSpecific >= specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].EndPhaseID)
         {
-            if(currentSpecificTutorial == SpecificTutorialsEnum.PotionCraft)
-            {
-                UIManager.Instance.ItemAndForgeBagHEIGHLIGHTS.SetActive(false);
-            }
+            //if(currentSpecificTutorial == SpecificTutorialsEnum.PotionCraft)
+            //{
+            //    UIManager.Instance.ItemAndForgeBagHEIGHLIGHTS.SetActive(false);
+            //}
 
             TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add((int)GameManager.Instance.currentLevel.specificTutorialEnum);
             //TutorialSaveData.Instance.completedTutorialLevelId.Add(GameManager.Instance.currentLevel.levelNum);
@@ -1018,7 +1020,7 @@ public class TutorialSequence : MonoBehaviour
         {
             if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
             {
-                UIManager.Instance.gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(true);
+                //UIManager.Instance.gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(true);
                 UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
                 //TutorialSequence.Instacne.DisplaySpecificTutorialSequence();
                 currentSpecificTutorial = GameManager.Instance.currentLevel.specificTutorialEnum;
@@ -1031,9 +1033,16 @@ public class TutorialSequence : MonoBehaviour
     {
         foreach (CraftingMatsNeededToRubies mat in CMNTR)
         {
-            CraftingMatEntry CME = PlayerManager.Instance.craftingMatsInInventory.Where(p => p.mat == mat.mat).Single();
+            if(mat.mat == CraftingMats.DewDrops)
+            {
+                PlayerManager.Instance.collectedDewDrops += mat.amountMissing;
+            }
+            else
+            {
+                CraftingMatEntry CME = PlayerManager.Instance.craftingMatsInInventory.Where(p => p.mat == mat.mat).Single();
 
-            CME.amount += mat.amountMissing;
+                CME.amount += mat.amountMissing;
+            }
         }
 
         Debug.Log("Added missing ingredients!");

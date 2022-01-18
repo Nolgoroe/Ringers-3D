@@ -941,4 +941,14 @@ public class PowerUpManager : MonoBehaviour
     {
         toShake.GetComponent<CameraShake>().ShakeOnce();
     }
+
+
+    public void ResetData()
+    {
+        IsUsingPowerUp = false;
+        HasUsedPowerUp = false;
+
+        layerToHit = LayerMask.GetMask("Nothing");
+
+    }
 }

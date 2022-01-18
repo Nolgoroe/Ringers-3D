@@ -538,10 +538,17 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.bGPanelDisableTouch.SetActive(false);
         LootManager.Instance.DestoryWinScreenDisplyedLoot();
 
-        if (!isDisableTutorials && currentLevel.isTutorial)
+        powerupManager.ResetData();
+
+        if (!isDisableTutorials && (currentLevel.isTutorial || currentLevel.isSpecificTutorial))
         {
             TutorialSequence.Instacne.currentPhaseInSequenceLevels = 0;
             TutorialSequence.Instacne.duringSequence = false;
+
+            TutorialSequence.Instacne.currentPhaseInSequenceSpecific = 0;
+
+            TutorialSequence.Instacne.activatedHeighlights.Clear();
+            TutorialSequence.Instacne.activatedBoardParticles.Clear();
             //TutorialSequence.Instacne.maskImage.gameObject.SetActive(true);
 
             powerupManager.ClearTutorialPowerups();

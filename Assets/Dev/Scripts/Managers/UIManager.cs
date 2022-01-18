@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     public GameObject tutorialCanvasLevels;
     public GameObject tutorialCanvasSpecific;
     public GameObject tutorialCanvasParent;
+    public GameObject tutorialCanvasHolesParent;
     public GameObject forge, itemBag, Brewery;
     public GameObject craft, owned;
     public GameObject animalAlbum;
@@ -55,10 +56,10 @@ public class UIManager : MonoBehaviour
     public GameObject bGPanelDisableTouch;
     public GameObject DailyRewardScreen;
     public GameObject MissingMaterialsPotionCraftScreen;
-   // public GameObject cantBuyPotionCraftScreen;
-    public GameObject gameplayCanvasScreensUIHEIGHLIGHTS;
-    public GameObject HudCanvasUIHEIGHLIGHTS;
-    public GameObject ItemAndForgeBagHEIGHLIGHTS;
+    //public GameObject cantBuyPotionCraftScreen;
+    //public GameObject gameplayCanvasScreensUIHEIGHLIGHTS;
+    //public GameObject HudCanvasUIHEIGHLIGHTS;
+    //public GameObject ItemAndForgeBagHEIGHLIGHTS;
     public GameObject brewedPotionScreen;
 
     public Image dewDropsImage;
@@ -156,6 +157,7 @@ public class UIManager : MonoBehaviour
         ownedCorruptDevicesZone.gameObject.SetActive(false);
         UnlockedZoneMessageView.gameObject.SetActive(false);
         tutorialCanvasParent.gameObject.SetActive(false);
+        tutorialCanvasHolesParent.gameObject.SetActive(false);
         tutorialCanvasSpecific.SetActive(false);
         tutorialCanvasLevels.SetActive(false);
         restartGrindLevel.gameObject.SetActive(false);
@@ -164,9 +166,9 @@ public class UIManager : MonoBehaviour
         DailyRewardScreen.SetActive(false);
         MissingMaterialsPotionCraftScreen.SetActive(false);
         //cantBuyPotionCraftScreen.SetActive(false);
-        gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(false);
-        HudCanvasUIHEIGHLIGHTS.SetActive(false);
-        ItemAndForgeBagHEIGHLIGHTS.SetActive(false);
+        //gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(false);
+        //HudCanvasUIHEIGHLIGHTS.SetActive(false);
+        //ItemAndForgeBagHEIGHLIGHTS.SetActive(false);
         brewedPotionScreen.SetActive(false);
 
         dragControlsImage.sprite = toggleOnSprite;
@@ -466,8 +468,8 @@ public class UIManager : MonoBehaviour
             {
                 if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
                 {
-                    gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(false);
-                    HudCanvasUIHEIGHLIGHTS.SetActive(true);
+                    //gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(false);
+                    //HudCanvasUIHEIGHLIGHTS.SetActive(true);
                     isUsingUI = true;
 
                     TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
@@ -548,8 +550,8 @@ public class UIManager : MonoBehaviour
             {
                 if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
                 {
-                    HudCanvasUIHEIGHLIGHTS.SetActive(false);
-                    ItemAndForgeBagHEIGHLIGHTS.SetActive(true);
+                    //HudCanvasUIHEIGHLIGHTS.SetActive(false);
+                    //ItemAndForgeBagHEIGHLIGHTS.SetActive(true);
 
                     TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
                 }
