@@ -158,7 +158,7 @@ public class BreweryDisplayLogic : MonoBehaviour
             UIManager.Instance.updateRubyAndDewDropsCount();
 
 
-            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+            //PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
         }
     }
 }

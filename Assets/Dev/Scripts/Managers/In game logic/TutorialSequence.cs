@@ -35,7 +35,7 @@ public class Sequence
 public class Phase
 {
     public int phaseID;
-    public bool isClipPhase, isBoardPhase, isPowerupPhase, isSingleCellPhase, isHubButtonPhase, isOpenInventoryPhase, isPotionTabPhase ,isEmptyTouchPhase, isBrewPhase, isBrewDisplayMaterials;
+    public bool isClipPhase, isBoardPhase, isPowerupPhase, isSingleCellPhase, isSingleSlice, isHubButtonPhase, isOpenInventoryPhase, isPotionTabPhase ,isEmptyTouchPhase, isBrewPhase, isBrewDisplayMaterials;
     public bool dealPhase;
 
     public int[] unlockedPowerups;
@@ -505,7 +505,7 @@ public class TutorialSequence : MonoBehaviour
         }
 
 
-        if (currentPhaseInSequenceLevels >= levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].EndPhaseID)
+        if (currentPhaseInSequenceLevels + 1 > levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].EndPhaseID)
         {
             TutorialSaveData.Instance.completedTutorialLevelId.Add(GameManager.Instance.currentLevel.levelNum);
             //TutorialSaveData.Instance.SaveTutorialSaveData();
@@ -565,7 +565,7 @@ public class TutorialSequence : MonoBehaviour
             specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific].transform.GetChild(0).gameObject.SetActive(true);
         }
 
-        if (currentPhaseInSequenceSpecific >= specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].EndPhaseID)
+        if (currentPhaseInSequenceSpecific + 1 > specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].EndPhaseID)
         {
             //if(currentSpecificTutorial == SpecificTutorialsEnum.PotionCraft)
             //{
@@ -588,7 +588,7 @@ public class TutorialSequence : MonoBehaviour
                 UnlockAll();
             }
 
-
+            PlayerManager.Instance.checkDoAddPotionsToInventory();
             //Invoke("DeactivateTutorialScreens", 0.1f);
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
@@ -644,6 +644,11 @@ public class TutorialSequence : MonoBehaviour
         if (tutorialArray[TutorialIndex].phase[phaseIndex].isSingleCellPhase)
         {
             SingleCellChosenPhase(tutorialArray, TutorialIndex, phaseIndex);
+        }
+
+        if (tutorialArray[TutorialIndex].phase[phaseIndex].isSingleSlice)
+        {
+            SingleSliceChosenPhase(tutorialArray, TutorialIndex, phaseIndex);
         }
     }
 
@@ -800,6 +805,31 @@ public class TutorialSequence : MonoBehaviour
 
         int cellID = tutorialArray[TutorialIndex].phase[phaseIndex].unlockedBoardCells;
         Vector3 pos = ConnectionManager.Instance.cells[cellID].transform.position;
+
+        DisplayTutorialHandTap(pos,tutorialHandRotationDealButton, Vector3.one);
+    }
+
+    public void SingleSliceChosenPhase(Sequence[] tutorialArray, int TutorialIndex, int phaseIndex)
+    {
+        UIManager.Instance.dealButton.interactable = false;
+
+        for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
+        {
+            Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
+
+            p.isTutorialLocked = true;
+        }
+
+        foreach (Cell c in ConnectionManager.Instance.cells)
+        {
+            if (c.isFull)
+            {
+                c.pieceHeld.isTutorialLocked = true;
+            }
+        }
+
+        int SliceID = tutorialArray[TutorialIndex].phase[phaseIndex].targetSlices[0];
+        Vector3 pos = GameManager.Instance.sliceManager.sliceSlots[SliceID].transform.position;
 
         DisplayTutorialHandTap(pos,tutorialHandRotationDealButton, Vector3.one);
     }

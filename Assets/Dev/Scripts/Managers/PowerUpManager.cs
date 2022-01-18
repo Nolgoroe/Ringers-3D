@@ -161,6 +161,7 @@ public class PowerUpManager : MonoBehaviour
         else
         {
             go.GetComponent<PowerupProperties>().canBeSelected = true;
+            Debug.Log("Can be selected");
         }
         AssignPowerUp(current, go.GetComponent<PowerupProperties>());
 
@@ -244,6 +245,7 @@ public class PowerUpManager : MonoBehaviour
     }
     public void CallPieceBombPowerCoroutine(PowerupProperties prop)
     {
+        //Debug.LogError("TIMES CALLED HERE NOW");
         if (TutorialSequence.Instacne.duringSequence)
         {
             if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.TileBombTutorial && TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPowerupPhase)
@@ -344,7 +346,7 @@ public class PowerUpManager : MonoBehaviour
         yield return new WaitUntil(() => HasUsedPowerUp == true);
         Piece toWorkOn = ObjectToUsePowerUpOn.GetComponent<Piece>();
 
-        if(toWorkOn.leftChild.symbolOfPiece != toWorkOn.rightChild.symbolOfPiece || toWorkOn.leftChild.colorOfPiece != toWorkOn.rightChild.colorOfPiece)
+        if((toWorkOn.leftChild.symbolOfPiece != toWorkOn.rightChild.symbolOfPiece || toWorkOn.leftChild.colorOfPiece != toWorkOn.rightChild.colorOfPiece) && !toWorkOn.isStone)
         {
             if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SwapSidesTutorial)
             {
@@ -416,7 +418,7 @@ public class PowerUpManager : MonoBehaviour
             {
                 TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
             }
-
+            //Debug.LogError("Times called");
             toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(true, false);
 
             if (toWorkOn.isLocked)
@@ -680,6 +682,7 @@ public class PowerUpManager : MonoBehaviour
     }
     public void FinishedUsingPowerup(bool successfull, PowerupProperties prop)
     {
+        StopAllCoroutines();
         UIManager.Instance.ActivateUsingPowerupMessage(false);
 
         IsUsingPowerUp = false;
@@ -716,38 +719,38 @@ public class PowerUpManager : MonoBehaviour
         //}
         //else
         //{
-            if (prop.numOfUses == 0 && prop.connectedEquipment.scopeOfUses == 0) //// if the num of uses is 0 and the scope is cooldown and not per match
-            {
-                EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).First();
+        if (prop.numOfUses == 0 && prop.connectedEquipment.scopeOfUses == 0) //// if the num of uses is 0 and the scope is cooldown and not per match
+        {
+            EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).First();
 
-                ED.nextTimeAvailable = System.DateTime.Now.AddSeconds(ED.timeForCooldown).ToString(); ///// change the datetime for equipment on player
+            ED.nextTimeAvailable = System.DateTime.Now.AddSeconds(ED.timeForCooldown).ToString(); ///// change the datetime for equipment on player
 
-                PlayerManager.Instance.equipmentInCooldown.Add(ED);
-                //PlayerManager.Instance.SavePlayerData();
-                //PlayfabManager.instance.SaveAllGameData();
-            }
+            PlayerManager.Instance.equipmentInCooldown.Add(ED);
+            //PlayerManager.Instance.SavePlayerData();
+            //PlayfabManager.instance.SaveAllGameData();
+        }
 
-            if (prop.numOfUses == 0 && prop.connectedEquipment.scopeOfUses == 1) //// if the num of uses is 0 and the scope is per match
-            {
-                EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).First();
+        if (prop.numOfUses == 0 && prop.connectedEquipment.scopeOfUses == 1) //// if the num of uses is 0 and the scope is per match
+        {
+            EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).First();
 
-                PlayerManager.Instance.activePowerups.Remove(ED.power);
-                PlayerManager.Instance.ownedPowerups.Remove(ED);
-                //PlayerManager.Instance.SavePlayerData();
-                //PlayfabManager.instance.SaveAllGameData();
+            PlayerManager.Instance.activePowerups.Remove(ED.power);
+            PlayerManager.Instance.ownedPowerups.Remove(ED);
+            //PlayerManager.Instance.SavePlayerData();
+            //PlayfabManager.instance.SaveAllGameData();
 
-                powerupButtons.Remove(prop.GetComponent<PowerupProperties>());
-                Destroy(prop.gameObject, 1f);
+            powerupButtons.Remove(prop.GetComponent<PowerupProperties>());
+            Destroy(prop.gameObject, 0.45f);            
 
-                PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
-            }
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+        }
         //}
 
         //Vector3 pos = prop.gameObject.transform.position;
         //pos.y -= 0.1f;
 
 
-        LeanTween.move(prop.gameObject, originalPotionPos, 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => ReactivatePowerButtons()); // animate
+        LeanTween.move(prop.gameObject, originalPotionPos, 0.4f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => ReactivatePowerButtons()); // animate
     }
 
     public void ReactivatePowerButtons()
@@ -947,7 +950,7 @@ public class PowerUpManager : MonoBehaviour
     {
         IsUsingPowerUp = false;
         HasUsedPowerUp = false;
-
+        instnatiatedZonesCounter = 0;
         layerToHit = LayerMask.GetMask("Nothing");
 
     }

@@ -417,6 +417,7 @@ public class UIManager : MonoBehaviour
             GameManager.Instance.copyOfArrayOfPiecesTutorial.Clear();
             ZoneManager.Instance.ActivateLevelDisplay();
             LootManager.Instance.DestoryWinScreenDisplyedLoot();
+            GameManager.Instance.powerupManager.ResetData();
             GameManager.Instance.powerupManager.DestroySpecialPowersObjects();
             LightingSettingsManager.instance.ResetLightData();
 

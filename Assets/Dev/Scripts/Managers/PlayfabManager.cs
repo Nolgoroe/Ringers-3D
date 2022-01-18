@@ -135,8 +135,8 @@ public class PlayfabManager : MonoBehaviour
     void OnError(PlayFabError error)
     {
         displayMessages.text = error.ErrorMessage;
-        Debug.Log("Errrrrror!!! " + error.ErrorMessage);
-        Debug.Log(error.GenerateErrorReport());
+        Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
+        Debug.LogError(error.GenerateErrorReport());
     }
 
     public void SendLeaderboard(int highestLevelReached)

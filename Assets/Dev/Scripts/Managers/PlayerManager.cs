@@ -222,6 +222,78 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+
+    public IEnumerator PopulatePowerUps(float delayTime)
+    {
+        yield return new WaitForSeconds(delayTime);
+
+        foreach (PowerupProperties butt in GameManager.Instance.powerupManager.powerupButtons)
+        {
+            Destroy(butt.gameObject);
+        }
+        GameManager.Instance.powerupManager.powerupButtons.Clear();
+
+        int instantiatedCount = 0;
+        activePowerups.Clear();
+
+        if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(GameManager.Instance.currentLevel.levelNum) && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)GameManager.Instance.currentLevel.specificTutorialEnum))
+        {
+            if (/*(GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial) && */GameManager.Instance.currentLevel.powerupsForLevel.Length > 0)
+            {
+                foreach (PowerUp PU in GameManager.Instance.currentLevel.powerupsForLevel)
+                {
+                    EquipmentData ED = GameManager.Instance.csvParser.allEquipmentInGame.Where(p => p.power == PU).Single();
+
+                    EquipmentData newData = new EquipmentData(ED.name, ED.power, ED.specificSymbol, ED.specificColor, ED.numOfUses, ED.scopeOfUses,
+                                              ED.timeForCooldown, ED.nextTimeAvailable, ED.Description, ED.isTutorialPower, ED.mats, ED.spritePath);
+
+                    EquipMeTutorial(newData);
+                }
+            }
+        }
+
+        EquipmentData[] EDTutorial = ownedPowerups.Where(p => p.isTutorialPower == true).ToArray();
+
+        foreach (EquipmentData ED in EDTutorial)
+        {
+            if (instantiatedCount < GameManager.Instance.powerupManager.instnatiateZones.Length)
+            {
+                instantiatedCount++;
+                activePowerups.Add(ED.power);
+
+                GameManager.Instance.powerupManager.InstantiatePowerUps(ED);
+            }
+        }
+
+        foreach (EquipmentData ED in ownedPowerups)// first summon level specific powerups
+        {
+            if (!ED.isTutorialPower && GameManager.Instance.currentLevel.powerupsForLevel.Contains(ED.power))
+            {
+                if (instantiatedCount < GameManager.Instance.powerupManager.instnatiateZones.Length)
+                {
+                    instantiatedCount++;
+                    activePowerups.Add(ED.power);
+
+                    GameManager.Instance.powerupManager.InstantiatePowerUps(ED);
+                }
+            }
+        }
+
+        foreach (EquipmentData ED in ownedPowerups) // if have anymore powerups, summon them
+        {
+            if (!ED.isTutorialPower && !GameManager.Instance.currentLevel.powerupsForLevel.Contains(ED.power))
+            {
+                if (instantiatedCount < GameManager.Instance.powerupManager.instnatiateZones.Length)
+                {
+                    instantiatedCount++;
+                    activePowerups.Add(ED.power);
+
+                    GameManager.Instance.powerupManager.InstantiatePowerUps(ED);
+                }
+            }
+        }
+    }
+
     //[ContextMenu("Save")]
     //public void SavePlayerData()
     //{
@@ -393,5 +465,30 @@ public class PlayerManager : MonoBehaviour
 
         //SavePlayerData();
         //PlayfabManager.instance.SaveAllGameData();
+    }
+
+    public void checkDoAddPotionsToInventory()
+    {
+        //Debug.Log("CHECKING HERE NOW");
+        if (GameManager.Instance.currentLevel.powerupsForLevel.Count() > 0)
+        {
+            foreach (PowerUp PU in GameManager.Instance.currentLevel.powerupsForLevel)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    EquipmentData ED = GameManager.Instance.csvParser.allEquipmentInGame.Where(p => p.power == PU).Single();
+
+                    EquipmentData newData = new EquipmentData(ED.name, ED.power, ED.specificSymbol, ED.specificColor, ED.numOfUses, ED.scopeOfUses,
+                                              ED.timeForCooldown, ED.nextTimeAvailable, ED.Description, ED.isTutorialPower, ED.mats, ED.spritePath);
+
+                    EquipMe(newData);
+                }
+            }
+
+            //PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+        }
+
+
+        StartCoroutine(PopulatePowerUps(0.55f));
     }
 }
