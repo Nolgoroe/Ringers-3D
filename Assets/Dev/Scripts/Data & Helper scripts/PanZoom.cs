@@ -30,10 +30,11 @@ public class PanZoom : MonoBehaviour
     bool isZoom;
     public bool canZoom;
 
+    public Text fovText;
+
     private void Start()
     {
         mainCam = Camera.main;
-
         //mainCam.orthographic = true;
 
         //OriginalCamPos = mainCam.transform.position;
@@ -52,6 +53,27 @@ public class PanZoom : MonoBehaviour
 
     void Update()
     {
+        float aspectRatio = (float)Screen.width / Screen.height;
+
+        if (aspectRatio >= (9 / 16f))
+            {
+            mainCam.fieldOfView = 60;
+        }
+        else if (aspectRatio >= 3 / 4f)
+        {
+            mainCam.fieldOfView = 55;
+        }
+        else
+        {
+            mainCam.fieldOfView = 58;
+        }
+
+        Debug.Log("Aspect " + aspectRatio);
+        //mainCam.fieldOfView = aspectRatio * 60;
+        Debug.Log("Aspect calc" + aspectRatio * 60);
+
+        fovText.text = mainCam.fieldOfView.ToString();
+
         if (!UIManager.isUsingUI)
         {
             //leftBound = (horzExtent - (SpriteBounds.bounds.size.x / 2.0f));
@@ -86,7 +108,7 @@ public class PanZoom : MonoBehaviour
                             mainCam.transform.position = new Vector3(
                                 Mathf.Clamp(mainCam.transform.position.x, leftBound, rightBound),
                                 Mathf.Clamp(mainCam.transform.position.y, bottomBound, topBound),
-                                -50f);
+                                -3f);
 
                             //float zPos = -touchDeltaPos.y;
 

@@ -28,8 +28,7 @@ public class Interactable3D : MonoBehaviour
             {
                 GameManager.Instance.ChooseLevel(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
-                UIManager.Instance.ActivateGmaeplayCanvas();
-                GameManager.Instance.StartLevel();
+                GameManager.Instance.CallStartLevel(false);
             }
 
         }
@@ -45,8 +44,7 @@ public class Interactable3D : MonoBehaviour
             {
                 GameManager.Instance.ChooseLevelGrind(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
-                UIManager.Instance.ActivateGmaeplayCanvas();
-                GameManager.Instance.StartLevel();
+                GameManager.Instance.CallStartLevel(false);
             }
 
         }
@@ -63,8 +61,7 @@ public class Interactable3D : MonoBehaviour
             {
                 GameManager.Instance.ChooseLevel(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
-                UIManager.Instance.ActivateGmaeplayCanvas();
-                GameManager.Instance.StartTutorialLevel();
+                GameManager.Instance.CallStartLevel(true);
             }
 
         }
@@ -82,8 +79,7 @@ public class Interactable3D : MonoBehaviour
             {
                 GameManager.Instance.ChooseLevel(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
-                UIManager.Instance.ActivateGmaeplayCanvas();
-                GameManager.Instance.StartLevel();
+                GameManager.Instance.CallStartLevel(false);
             }
 
         }
@@ -101,8 +97,7 @@ public class Interactable3D : MonoBehaviour
             {
                 GameManager.Instance.ChooseLevel(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
-                UIManager.Instance.ActivateGmaeplayCanvas();
-                GameManager.Instance.StartTutorialLevel();
+                GameManager.Instance.CallStartLevel(true);
             }
 
         }

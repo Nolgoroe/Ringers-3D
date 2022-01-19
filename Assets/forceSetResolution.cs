@@ -19,11 +19,17 @@ public class forceSetResolution : MonoBehaviour
 
        // RectTransform parentRect = parentCanvas.GetComponent<RectTransform>();
 
-        rect.sizeDelta = new Vector2(Screen.width, Screen.height);
 
 
         //posX.text = "rect width: " + rect.rect.width.ToString();
         //posY.text = "rect height: " + rect.rect.height.ToString();
+
+    }
+
+
+    private void Update()
+    {
+        rect.sizeDelta = new Vector2(Screen.width, Screen.height);
 
     }
 }

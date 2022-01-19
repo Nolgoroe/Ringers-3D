@@ -84,7 +84,7 @@ public class TutorialSequence : MonoBehaviour
 
     public bool duringSequence;
 
-    public RawImage maskImage;
+    public SpriteMask maskImage;
 
     //public RenderTexture tempToWorkOn;
 
@@ -119,7 +119,7 @@ public class TutorialSequence : MonoBehaviour
             GameManager.Instance.powerupManager.PowerupButtonsActivation(false);
 
             UIManager.Instance.tutorialCanvasParent.SetActive(true);
-            UIManager.Instance.tutorialCanvasHolesParent.SetActive(true);
+            //UIManager.Instance.tutorialCanvasHolesParent.SetActive(true);
             UIManager.Instance.tutorialCanvasLevels.SetActive(true);
 
             //DisplayTutorialScreens();
@@ -163,7 +163,7 @@ public class TutorialSequence : MonoBehaviour
             //GameManager.Instance.powerupManager.PowerupButtonsActivation(false);
 
             UIManager.Instance.tutorialCanvasParent.SetActive(true);
-            UIManager.Instance.tutorialCanvasHolesParent.SetActive(true);
+            //UIManager.Instance.tutorialCanvasHolesParent.SetActive(true);
             UIManager.Instance.tutorialCanvasSpecific.SetActive(true);
             UIManager.Instance.dealButton.interactable = false;
 
@@ -229,10 +229,11 @@ public class TutorialSequence : MonoBehaviour
         else
         {
             Texture2D texture = new Texture2D(Display.main.systemWidth, Display.main.systemHeight, TextureFormat.ARGB32, false);
+            Sprite sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
 
             Graphics.CopyTexture(secondCam.targetTexture, texture);
             
-            maskImage.texture = texture;
+            maskImage.sprite = sprite;
 
             maskImage.gameObject.SetActive(true);
         }

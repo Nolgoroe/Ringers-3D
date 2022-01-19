@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
     public GameObject tutorialCanvasLevels;
     public GameObject tutorialCanvasSpecific;
     public GameObject tutorialCanvasParent;
-    public GameObject tutorialCanvasHolesParent;
+    //public GameObject tutorialCanvasHolesParent;
     public GameObject forge, itemBag, Brewery;
     public GameObject craft, owned;
     public GameObject animalAlbum;
@@ -61,11 +61,14 @@ public class UIManager : MonoBehaviour
     //public GameObject HudCanvasUIHEIGHLIGHTS;
     //public GameObject ItemAndForgeBagHEIGHLIGHTS;
     public GameObject brewedPotionScreen;
+    public GameObject fadeIntoLevel;
 
     public Image dewDropsImage;
 
     public Image tapControlsImage, dragControlsImage, tutorialDisableImage;
     public Image matsInventoryButton, forgeInventoryButton, potionInventoryButton;
+    public float fadeIntoLevelSpeed;
+    public float fadeIntoLevelDelay;
 
     public Sprite toggleOffSprite, toggleOnSprite;
 
@@ -157,7 +160,7 @@ public class UIManager : MonoBehaviour
         ownedCorruptDevicesZone.gameObject.SetActive(false);
         UnlockedZoneMessageView.gameObject.SetActive(false);
         tutorialCanvasParent.gameObject.SetActive(false);
-        tutorialCanvasHolesParent.gameObject.SetActive(false);
+        //tutorialCanvasHolesParent.gameObject.SetActive(false);
         tutorialCanvasSpecific.SetActive(false);
         tutorialCanvasLevels.SetActive(false);
         restartGrindLevel.gameObject.SetActive(false);
@@ -170,6 +173,7 @@ public class UIManager : MonoBehaviour
         //HudCanvasUIHEIGHLIGHTS.SetActive(false);
         //ItemAndForgeBagHEIGHLIGHTS.SetActive(false);
         brewedPotionScreen.SetActive(false);
+        fadeIntoLevel.SetActive(false);
 
         dragControlsImage.sprite = toggleOnSprite;
         tapControlsImage.sprite = toggleOffSprite;
@@ -380,10 +384,10 @@ public class UIManager : MonoBehaviour
         //PlayerManager.Instance.SavePlayerData();
         //PlayfabManager.instance.SaveAllGameData();
 
-        Camera.main.orthographic = true;
-        GameManager.Instance.secondCam.orthographic = true;
-        Camera.main.orthographicSize = 9f;
-        GameManager.Instance.secondCam.orthographicSize = 9f;
+        //Camera.main.orthographic = true;
+        //GameManager.Instance.secondCam.orthographic = true;
+        //Camera.main.orthographicSize = 9f;
+        //GameManager.Instance.secondCam.orthographicSize = 9f;
 
         Camera.main.transform.rotation = Quaternion.Euler(hubCameraRot);
 
@@ -391,14 +395,18 @@ public class UIManager : MonoBehaviour
         {
             Vector3 currentZoneTransform = ZoneManagerHelpData.Instance.currentZoneCheck.transform.position;
             
-            Vector3 tempForClamp = new Vector3(0.5f, currentZoneTransform.y, -50f);
-            tempForClamp.y = Mathf.Clamp(tempForClamp.y, 40f, 60f);
+            Vector3 tempForClamp = new Vector3(0f, currentZoneTransform.y, -3f);
+            PanZoom pz = Camera.main.GetComponent<PanZoom>();
+            tempForClamp.y = Mathf.Clamp(tempForClamp.y, pz.bottomBound, pz.topBound);
 
             Camera.main.transform.position = tempForClamp;
+
+            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, tempForClamp.y, TutorialSequence.Instacne.maskImage.transform.position.z);
         }
         else
         {
             Camera.main.transform.position = hubCameraPos;
+            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, hubCameraPos.y, TutorialSequence.Instacne.maskImage.transform.position.z);
         }
 
 
@@ -481,6 +489,7 @@ public class UIManager : MonoBehaviour
                     TutorialSequence.Instacne.activatedBoardParticles.Clear();
 
                     GameManager.Instance.currentLevel = null;
+                    TutorialSequence.Instacne.duringSequence = false;
                 }
             }
             else
@@ -1199,5 +1208,34 @@ public class UIManager : MonoBehaviour
         gameplayRubyText.text = PlayerManager.Instance.rubyCount.ToString();
         hubRubyText.text = PlayerManager.Instance.rubyCount.ToString();
         dewDropsText.text = PlayerManager.Instance.collectedDewDrops.ToString();
+    }
+
+
+    public IEnumerator FadeIntoLevel()
+    {
+        fadeIntoLevel.SetActive(true);
+
+        LeanTween.value(fadeIntoLevel, 0, 1, fadeIntoLevelSpeed).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        {
+            Image sr = fadeIntoLevel.GetComponent<Image>();
+            Color newColor = sr.color;
+            newColor.a = val;
+            sr.color = newColor;
+        });
+
+        yield return new WaitForSeconds(fadeIntoLevelDelay);
+        ActivateGmaeplayCanvas();
+
+
+        LeanTween.value(fadeIntoLevel, 1, 0, fadeIntoLevelSpeed).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        {
+            Image sr = fadeIntoLevel.GetComponent<Image>();
+            Color newColor = sr.color;
+            newColor.a = val;
+            sr.color = newColor;
+        });
+
+        yield return new WaitForSeconds(fadeIntoLevelSpeed + 0.1f);
+        fadeIntoLevel.SetActive(false);
     }
 }

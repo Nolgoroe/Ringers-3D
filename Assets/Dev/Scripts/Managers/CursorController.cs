@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 public class CursorController : MonoBehaviour
 {
@@ -113,6 +114,12 @@ public class CursorController : MonoBehaviour
                 {
                     Ray ray = Camera.main.ScreenPointToRay(touch.position);
                     RaycastHit hit;
+
+                    if (EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
+                    {
+                        Debug.Log("Over UI");
+                        return;
+                    }
 
                     if (Physics.Raycast(ray, out hit))
                     {

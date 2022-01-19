@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
     public LevelScriptableObject[] allLevels;
 
     public Camera secondCam;
+
     private void Awake()
     {
         Instance = this;
@@ -92,8 +93,27 @@ public class GameManager : MonoBehaviour
         gameWon = false;
     }
 
-    public void StartLevel()
+    public void CallStartLevel(bool isTutorial)
     {
+        if (isTutorial)
+        {
+            StartCoroutine(StartTutorialLevel(true));
+        }
+        else
+        {
+            StartCoroutine(StartLevel(true));
+        }
+    }
+
+    public IEnumerator StartLevel(bool DoFade)
+    {
+        if (DoFade)
+        {
+            StartCoroutine(UIManager.Instance.FadeIntoLevel());
+
+            yield return new WaitForSeconds(UIManager.Instance.fadeIntoLevelSpeed + 0.1f);
+        }
+
         gameWon = false;
         TutorialSequence.Instacne.DisableTutorialSequence(); //// Make sure tutorial is disabled
         powerupManager.ClearTutorialPowerups(); /// Make sure there are no leftover powerups
@@ -108,14 +128,15 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.dealButton.interactable = true;
 
         //Camera.main.orthographicSize = 12;
-        Camera.main.orthographic = false;
-        secondCam.orthographic = false;
+        //Camera.main.orthographic = false;
+        //secondCam.orthographic = false;
 
-        Camera.main.fieldOfView = 60f;
-        secondCam.fieldOfView = 60f;
+        //Camera.main.fieldOfView = 60f;
+        //secondCam.fieldOfView = 60f;
 
 
         Camera.main.transform.position = inGameCamPos;
+        TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, TutorialSequence.Instacne.maskImage.transform.position.z);
         Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
         levelStarted = true;
@@ -177,7 +198,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
     }
 
@@ -196,8 +216,14 @@ public class GameManager : MonoBehaviour
         selectedLevelBG.transform.Find("color mask").gameObject.SetActive(true); //// put this someplace better in the future
     }
 
-    public void StartTutorialLevel()
+    public IEnumerator StartTutorialLevel(bool DoFade)
     {
+        if (DoFade)
+        {
+            StartCoroutine(UIManager.Instance.FadeIntoLevel());
+            yield return new WaitForSeconds(UIManager.Instance.fadeIntoLevelSpeed + 0.1f);
+        }
+
         gameWon = false;
 
         if (!isDisableTutorials)
@@ -233,12 +259,13 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.dealButton.interactable = true;
 
             //Camera.main.orthographicSize = 12;
-            Camera.main.orthographic = false;
-            secondCam.orthographic = false;
-            Camera.main.fieldOfView = 60f;
-            secondCam.fieldOfView = 60f;
+            //Camera.main.orthographic = false;
+            //secondCam.orthographic = false;
+            //Camera.main.fieldOfView = 60f;
+            //secondCam.fieldOfView = 60f;
 
             Camera.main.transform.position = inGameCamPos;
+            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, TutorialSequence.Instacne.maskImage.transform.position.z);
             Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
             levelStarted = true;
@@ -297,11 +324,12 @@ public class GameManager : MonoBehaviour
                 TutorialSequence.Instacne.StartTutorialLevelSequence();
             }
 
+
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
         }
         else
         {
-            StartLevel();
+            StartCoroutine(StartLevel(DoFade));
         }
     }
 
@@ -570,16 +598,23 @@ public class GameManager : MonoBehaviour
 
         if (!isDisableTutorials && currentLevel.isTutorial )
         {
-            StartTutorialLevel();
+            StartCoroutine(StartTutorialLevel(false));
         }
         else
         {
-            StartLevel();
+            StartCoroutine(StartLevel(false));
         }
     }
 
-    public void NextLevelFromWinScreen()
+    public void callNextLevelFromWinScreen()
     {
+        StartCoroutine(NextLevelFromWinScreen());
+    }
+
+    public IEnumerator NextLevelFromWinScreen()
+    {
+        StartCoroutine(UIManager.Instance.FadeIntoLevel());
+        yield return new WaitForSeconds(UIManager.Instance.fadeIntoLevelSpeed + 0.1f);
 
         LootManager.Instance.rubiesToRecieveInLevel = 0;
 
@@ -607,6 +642,8 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.TurnOnGameplayUI();
         UIManager.isUsingUI = false;
 
+        powerupManager.ResetData();
+
         foreach (GameObject go in UIManager.Instance.allTutorialScreens)
         {
             go.SetActive(false);
@@ -628,11 +665,11 @@ public class GameManager : MonoBehaviour
         {
             TutorialSequence.Instacne.currentPhaseInSequenceLevels = 0;
 
-            StartTutorialLevel();
+            StartCoroutine(StartTutorialLevel(false));
         }
         else
         {
-            StartLevel();
+            StartCoroutine(StartLevel(false));
         }
     }
 
@@ -685,4 +722,5 @@ public class GameManager : MonoBehaviour
     {
         CheckEndLevel(true);
     }
+
 }
