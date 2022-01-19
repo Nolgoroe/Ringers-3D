@@ -485,10 +485,11 @@ public class PlayerManager : MonoBehaviour
                 }
             }
 
+            StartCoroutine(PopulatePowerUps(0.55f));
+
             //PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
         }
 
 
-        StartCoroutine(PopulatePowerUps(0.55f));
     }
 }
