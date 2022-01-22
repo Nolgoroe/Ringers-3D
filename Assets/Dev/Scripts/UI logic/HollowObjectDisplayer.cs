@@ -23,10 +23,19 @@ public class HollowObjectDisplayer : MonoBehaviour
     public HollowCraftObjectData objectData;
 
     public List<CraftingMatsNeeded> craftingMatsForEquipment;
+    public List<CraftingMatsNeededToRubies> craftingMatsToRubiesHollow;
 
+    public int rubiesNeededToBuyHollow;
+
+    public bool canCraft;
     private void Start()
     {
         craftButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(Sounds.ButtonPressUI));
+        craftButton.onClick.AddListener(() => CraftHollowObject(false));
+
+        //craftingMatsToRubiesHollow = new List<CraftingMatsNeededToRubies>();
+
+        Debug.Log("Start");
     }
 
     public void SpawnMaterialsNeeded(string matList)
@@ -81,49 +90,110 @@ public class HollowObjectDisplayer : MonoBehaviour
 
     public void CheckIfCanCraftHollowObject(List<CraftingMatsNeeded> CMN)
     {
-        bool canCraft = true;
+        canCraft = true;
 
         foreach (CraftingMatsNeeded CM in CMN)
         {
             if (PlayerManager.Instance.CheckIfHasMaterialts(CM, out int neededAmount) > 0)
             {
                 canCraft = false;
-                break;
+                AddNeededCraftingMatsToRubiesHollowItem(CM.mat, neededAmount);
+                //break;
             }
         }
 
-        if (canCraft)
+        if (!canCraft)
         {
-            craftButton.interactable = true;
-            //craftButton.gameObject.SetActive(true);
-        }
-        else
-        {
-            craftButton.interactable = false;
-            //craftButton.gameObject.SetActive(false);
+            CalculateNeededRubiesToBuyHollow();
         }
     }
 
-    public void CraftHollowObject() ///// Here because the forge button and resources data are local
+    public void AddNeededCraftingMatsToRubiesHollowItem(CraftingMats _mat, int _amount)
     {
-        foreach (CraftingMatsNeeded CMN in craftingMatsForEquipment)
-        {
-            Debug.Log(CMN.mat.ToString());
-            Debug.Log(CMN.amount);
+        CraftingMatsNeededToRubies CMNTR = new CraftingMatsNeededToRubies(_mat, _amount);
 
-            PlayerManager.Instance.DecreaseNumOfMats(CMN);
+        craftingMatsToRubiesHollow.Add(CMNTR);
+    }
+
+    public void CalculateNeededRubiesToBuyHollow()
+    {
+        rubiesNeededToBuyHollow = 0;
+
+        foreach (CraftingMatsNeededToRubies CMNTR in craftingMatsToRubiesHollow)
+        {
+            if (CMNTR.mat == CraftingMats.DewDrops)
+            {
+                for (int i = 0; i < CMNTR.amountMissing; i++)
+                {
+                    rubiesNeededToBuyHollow += PlayerManager.Instance.priceInGemsDewDrops;
+                }
+            }
+            else
+            {
+                CraftingMatEntry CME = PlayerManager.Instance.craftingMatsInInventory.Where(p => p.mat == CMNTR.mat).Single();
+
+                for (int i = 0; i < CMNTR.amountMissing; i++)
+                {
+                    rubiesNeededToBuyHollow += CME.amountPerPurchaseGems;
+                }
+            }
+        }
+    }
+
+    public void CraftHollowObject(bool isBought) ///// Here because the forge button and resources data are local
+    {
+        if (isBought)
+        {
+            PlayerManager.Instance.ownedHollowObjects.Add(objectData);
+
+            HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
+
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+
+            return;
         }
 
-        PlayerManager.Instance.ownedHollowObjects.Add(objectData);
 
-        SortMaster.Instance.ClearAllForgeScreens();
+        if (canCraft)
+        {
+            if (!isBought)
+            {
+                foreach (CraftingMatsNeeded CMN in craftingMatsForEquipment)
+                {
+                    Debug.Log(CMN.mat.ToString());
+                    Debug.Log(CMN.amount);
+
+                    PlayerManager.Instance.DecreaseNumOfMats(CMN);
+                }
+            }
+
+            PlayerManager.Instance.ownedHollowObjects.Add(objectData);
+
+            HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
 
 
-        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player});
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+        }
+        else
+        {
+            HollowCraftAndOwnedManager.Instance.currentlyToCraft = this;
+
+            bool canBuy = false;
+
+            if (PlayerManager.Instance.rubyCount >= rubiesNeededToBuyHollow)
+            {
+                canBuy = true;
+            }
+
+            UIManager.Instance.DisplayHollowScreenRubyCostText(rubiesNeededToBuyHollow, canBuy);
+            UIManager.Instance.DisplayBuyHollowItemNeeded(craftingMatsToRubiesHollow);
+            UIManager.Instance.DisplayBuyHollowScreen();
+        }
         //SortMaster.Instance.RefreshAllScreens();
 
         //PlayerManager.Instance.SavePlayerData();
         //PlayfabManager.instance.SaveAllGameData();
 
     }
+
 }

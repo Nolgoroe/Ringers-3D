@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.70162106, g: 0.9395633, b: 0.6904351, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: c6a928e1b4fa8db4cb37be3e5d0c729c,
+    type: 2}
   m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
@@ -2286,10 +2287,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faef05cab4b90d14580c23bd213648e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RendererInfo: []
-  m_Lightmaps: []
-  m_LightmapsDir: []
-  m_ShadowMasks: []
+  m_RendererInfo:
+  - renderer: {fileID: 7392466765706850088}
+    lightmapIndex: 0
+    lightmapOffsetScale: {x: 2.0052483, y: 2.0052483, z: -1.0052483, w: 0}
+  m_Lightmaps:
+  - {fileID: 2800000, guid: b1f17465fa8b03044af51ed26b2c128e, type: 3}
+  m_LightmapsDir:
+  - {fileID: 2800000, guid: 6f39bab9282b8fe4d895c7a5a38d9a5a, type: 3}
+  m_ShadowMasks:
+  - {fileID: 0}
 --- !u!4 &1180964785
 Transform:
   m_ObjectHideFlags: 0
@@ -3223,13 +3230,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1585141966}
-  m_LocalRotation: {x: -0.05505287, y: -0, z: -0, w: 0.9984834}
-  m_LocalPosition: {x: 0.21, y: 7.8, z: -3}
+  m_LocalRotation: {x: -0.05495013, y: 0, z: 0, w: 0.99848914}
+  m_LocalPosition: {x: 0, y: 8, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -6.3120003, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -6.3, y: 0, z: 0}
 --- !u!1 &1600914547
 GameObject:
   m_ObjectHideFlags: 0

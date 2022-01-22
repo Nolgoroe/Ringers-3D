@@ -209,7 +209,7 @@ public class CSVParser : MonoBehaviour
         }
 
 
-        MaterialsAndForgeManager.Instance.FillForge(allEquipmentInGame);
+        MaterialsAndForgeManager.Instance.FillBrewScreen(allEquipmentInGame);
     }
     public void TranslateToHollowObjects(List<string[]> parsedList)
     {
@@ -249,7 +249,7 @@ public class CSVParser : MonoBehaviour
         }
 
 
-        HollowCraftAndOwnedManager.Instance.FillCraftScreen(allHollowCraftObjectsInGame); /// Fill The Craft screen
+        //HollowCraftAndOwnedManager.Instance.FillCraftScreen(allHollowCraftObjectsInGame); /// Fill The Craft screen
     }
 
     public void TranslateToCorruptedDevices(List<string[]> parsedList)

@@ -42,6 +42,7 @@ public class UIManager : MonoBehaviour
     public GameObject corruptedZoneSureMessage;
     public GameObject hudCanvasUIBottomZoneMainMap;
     public GameObject hudCanvasUIBottomZoneCorruption;
+    public GameObject hudCanvasUIBottomZoneDenScreen;
     public GameObject UnlockedZoneMessageView;
     public GameObject dealButtonHeighlight;
     public GameObject openInventoryButtonHeighlight;
@@ -56,6 +57,7 @@ public class UIManager : MonoBehaviour
     public GameObject bGPanelDisableTouch;
     public GameObject DailyRewardScreen;
     public GameObject MissingMaterialsPotionCraftScreen;
+    public GameObject MissingMaterialsHollowCraftScreen;
     //public GameObject cantBuyPotionCraftScreen;
     //public GameObject gameplayCanvasScreensUIHEIGHLIGHTS;
     //public GameObject HudCanvasUIHEIGHLIGHTS;
@@ -74,6 +76,7 @@ public class UIManager : MonoBehaviour
 
     public Transform sureLevelRestartLootDislpay;
     public Transform buyPotionLootDisplay;
+    public Transform buyHollowItemDisplay;
     public Transform ownedCorruptDevicesZone;
 
     public Text /*hubGoldText,*/ hubRubyText, dewDropsText;
@@ -92,6 +95,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text zoneToUnlcokNameText;
     public TMP_Text versionText;
     public TMP_Text buyPotionRubieCoseText;
+    public TMP_Text buyHollowItemRubieCostText;
     //public TMP_Text cantBuyPotionText;
 
     //public Button commitButton;
@@ -103,6 +107,7 @@ public class UIManager : MonoBehaviour
     public Button dealButton;
     public Button backToHubButton;
     public Button buyPotionYesButton;
+    public Button buyHollowItemYesButton;
 
     //public Button[] levelButtons;
 
@@ -113,10 +118,15 @@ public class UIManager : MonoBehaviour
 
     public Vector3 hubCameraPos;
     public Vector3 hubCameraRot;
+    public Vector3 denCameraPos;
+    public Vector3 denCameraRot;
 
 
     public Color gameTextColor;
     public static bool isUsingUI;
+
+    PanZoom PZ;
+
     private void Start()
     {
         Instance = this;
@@ -157,6 +167,7 @@ public class UIManager : MonoBehaviour
         corruptedZoneScreen.SetActive(false);
         corruptedZoneSureMessage.SetActive(false);
         hudCanvasUIBottomZoneCorruption.SetActive(false);
+        hudCanvasUIBottomZoneDenScreen.SetActive(false);
         ownedCorruptDevicesZone.gameObject.SetActive(false);
         UnlockedZoneMessageView.gameObject.SetActive(false);
         tutorialCanvasParent.gameObject.SetActive(false);
@@ -168,6 +179,7 @@ public class UIManager : MonoBehaviour
         bGPanelDisableTouch.SetActive(false);
         DailyRewardScreen.SetActive(false);
         MissingMaterialsPotionCraftScreen.SetActive(false);
+        MissingMaterialsHollowCraftScreen.SetActive(false);
         //cantBuyPotionCraftScreen.SetActive(false);
         //gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(false);
         //HudCanvasUIHEIGHLIGHTS.SetActive(false);
@@ -187,6 +199,8 @@ public class UIManager : MonoBehaviour
         }
 
         versionText.text = Application.version;
+
+        PZ = Camera.main.GetComponent<PanZoom>();
     }
 
     private void Update()
@@ -391,6 +405,11 @@ public class UIManager : MonoBehaviour
 
         Camera.main.transform.rotation = Quaternion.Euler(hubCameraRot);
 
+        PZ.SetFieldOfView();
+        hudCanvasUIBottomZoneMainMap.SetActive(true);
+
+        SortMaster.Instance.ClearAllForgeScreens();
+
         if (ZoneManagerHelpData.Instance.currentZoneCheck)
         {
             Vector3 currentZoneTransform = ZoneManagerHelpData.Instance.currentZoneCheck.transform.position;
@@ -503,8 +522,10 @@ public class UIManager : MonoBehaviour
         {
             ringersHutDisplay.SetActive(false);
             ringersHutUICanvas.SetActive(false);
+            hudCanvasUIBottomZoneDenScreen.SetActive(false);
 
             ZoneManager.Instance.ActivateLevelDisplay();
+            PZ.isInDenScreen = false;
         }
 
         if (currentCanvas == mainMenu)
@@ -519,7 +540,6 @@ public class UIManager : MonoBehaviour
             CorruptedZonesManager.Instance.currentActiveZoneData = null;
             CorruptedZonesManager.Instance.currentActiveZoneView = null;
 
-            hudCanvasUIBottomZoneMainMap.SetActive(true);
             hudCanvasUIBottomZoneCorruption.SetActive(false);
             corruptedZoneScreen.SetActive(false);
 
@@ -709,7 +729,7 @@ public class UIManager : MonoBehaviour
 
 
         Brewery.GetComponent<BreweryDisplayLogic>().GetAllAnchorPositions();
-        Brewery.GetComponent<BreweryDisplayLogic>().SetSelectedPotion(MaterialsAndForgeManager.Instance.equipmentInForge[0]);
+        Brewery.GetComponent<BreweryDisplayLogic>().SetSelectedPotion(MaterialsAndForgeManager.Instance.equipmentInBrewScreen[0]);
 
         if (TutorialSequence.Instacne.duringSequence)
         {
@@ -732,12 +752,34 @@ public class UIManager : MonoBehaviour
 
         SortMaster.Instance.FilterHollowOwnedScreenByEnum(ObjectHollowType.All);
     }
-    public void ToRingersHut()
+    public void ToDenScreen(bool returningToHud)
     {
+        if (isUsingUI)
+        {
+            return;
+        }
+
+        if (returningToHud)
+        {
+            ToHud(ringersHutDisplay);
+            return;
+        }
+        
         ringersHutDisplay.SetActive(true);
         ringersHutUICanvas.SetActive(true);
+        hudCanvasUIBottomZoneDenScreen.SetActive(true);
+
         worldGameObject.SetActive(false);
-        hudCanvasUI.SetActive(false);
+        hudCanvasUIBottomZoneMainMap.SetActive(false);
+        //hudCanvasUI.SetActive(false);
+
+        Camera.main.transform.position = denCameraPos;
+        Camera.main.transform.rotation = Quaternion.Euler(denCameraRot);
+
+        LightingSettingsManager.instance.SetdenLight();
+
+        PZ.isInDenScreen = true;
+
     }
     public void OpenOptions()
     {
@@ -822,6 +864,17 @@ public class UIManager : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
+
+    private void ClearBuyHollowDisplay()
+    {
+        foreach (Transform child in buyHollowItemDisplay)
+        {
+            Destroy(child.gameObject);
+        }
+
+        HollowCraftAndOwnedManager.Instance.currentlyToCraft = null;
+    }
+
     public void RestartLevelFromLoseScreenUI()
     {
         isUsingUI = false;
@@ -1185,6 +1238,62 @@ public class UIManager : MonoBehaviour
         foreach (CraftingMatsNeededToRubies CMNTR in INmaterialsNeedToBuyPotion)
         {
             GameObject go = Instantiate(LootManager.Instance.lootDisplayPrefab, buyPotionLootDisplay);
+
+            CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
+
+            if (CMNTR.mat == CraftingMats.DewDrops)
+            {
+                CMD.materialImage.sprite = LootManager.Instance.dewDropsSprite;
+                CMD.materialCount.text = CMNTR.amountMissing.ToString();
+            }
+            else
+            {
+                CMD.materialImage.sprite = LootManager.Instance.allMaterialSprites[(int)CMNTR.mat];
+
+                CMD.materialCount.text = CMNTR.amountMissing.ToString();
+            }
+        }
+    }
+
+
+    public void DisplayBuyHollowScreen()
+    {
+        MissingMaterialsHollowCraftScreen.SetActive(true);
+    }
+
+    public void DisplayHollowScreenRubyCostText(int amount, bool canbuy)
+    {
+        if (canbuy)
+        {
+            buyHollowItemYesButton.interactable = true;
+            buyHollowItemRubieCostText.color = Color.white;
+        }
+        else
+        {
+            buyHollowItemYesButton.interactable = false;
+            buyHollowItemRubieCostText.color = Color.red;
+        }
+
+        buyHollowItemRubieCostText.text = amount.ToString();
+    }
+
+    public void BuyHollowItemScreenYes()
+    {
+        MissingMaterialsHollowCraftScreen.SetActive(false);
+        ClearBuyHollowDisplay();
+    }
+
+    public void BuyHollowItemScreenNo()
+    {
+        MissingMaterialsHollowCraftScreen.SetActive(false);
+        ClearBuyHollowDisplay();
+    }
+
+    public void DisplayBuyHollowItemNeeded(List<CraftingMatsNeededToRubies> INmaterialsNeedToBuyHollow)
+    {
+        foreach (CraftingMatsNeededToRubies CMNTR in INmaterialsNeedToBuyHollow)
+        {
+            GameObject go = Instantiate(LootManager.Instance.lootDisplayPrefab, buyHollowItemDisplay);
 
             CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
 

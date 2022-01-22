@@ -86,7 +86,7 @@ public class BreweryDisplayLogic : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
 
-        foreach (EquipmentDisplayer equipment in MaterialsAndForgeManager.Instance.equipmentInForge)
+        foreach (EquipmentDisplayer equipment in MaterialsAndForgeManager.Instance.equipmentInBrewScreen)
         {
             if (equipment != ED)
             {
@@ -109,7 +109,7 @@ public class BreweryDisplayLogic : MonoBehaviour
     public void GetAllAnchorPositions()
     {
         Debug.Log("amount of calls");
-        foreach (EquipmentDisplayer equipment in MaterialsAndForgeManager.Instance.equipmentInForge)
+        foreach (EquipmentDisplayer equipment in MaterialsAndForgeManager.Instance.equipmentInBrewScreen)
         {
             StartCoroutine(equipment.GetAnchoredPosition());
         }

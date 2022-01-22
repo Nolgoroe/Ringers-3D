@@ -5,14 +5,20 @@ using UnityEngine.UI;
 
 public class PanZoom : MonoBehaviour
 {
+    bool isZoom;
+    public bool canZoom;
+
     Vector3 TouchStart;
+    Touch touch;
+    public Camera mainCam;
+
+
+    [Header("Data for world map")]
 
     public float MinZoom = 1;
     public float MaxZoom = 8;
 
-    Touch touch;
 
-    public Camera mainCam;
 
     public float panSpeed;
     public float rightBound;
@@ -20,17 +26,24 @@ public class PanZoom : MonoBehaviour
     public float topBound;
     public float bottomBound;
 
-    //float vertExtent;
-    //float horzExtent;
 
-    //float originalOrthofraphicsize;
+    [Header("Data for Den screen")]
 
-    //Vector3 OriginalCamPos;
+    public bool isInDenScreen = false;
+    public float MinZoomDen = 1;
+    public float MaxZoomDen = 8;
 
-    bool isZoom;
-    public bool canZoom;
+    public float panSpeedDen;
+    public float panSpeedDenMinSpeed = 1;
+    public float panSpeedDenMaxSpeed = 8;
 
-    public Text fovText;
+    public float rightBoundDen;
+    public float leftBoundDen;
+    public float topBoundDen;
+    public float bottomBoundDen;
+
+    //public Text fovText;
+
 
     private void Start()
     {
@@ -49,14 +62,16 @@ public class PanZoom : MonoBehaviour
         //horzExtent = vertExtent * Screen.width / Screen.height;
 
         //Target = mainCam.transform;
+
+        SetFieldOfView();
     }
 
-    void Update()
+    public void SetFieldOfView()
     {
         float aspectRatio = (float)Screen.width / Screen.height;
 
         if (aspectRatio >= (9 / 16f))
-            {
+        {
             mainCam.fieldOfView = 60;
         }
         else if (aspectRatio >= 3 / 4f)
@@ -71,8 +86,12 @@ public class PanZoom : MonoBehaviour
         Debug.Log("Aspect " + aspectRatio);
         //mainCam.fieldOfView = aspectRatio * 60;
         Debug.Log("Aspect calc" + aspectRatio * 60);
+    }
 
-        fovText.text = mainCam.fieldOfView.ToString();
+    void Update()
+    {
+
+        //fovText.text = mainCam.fieldOfView.ToString();
 
         if (!UIManager.isUsingUI)
         {
@@ -86,65 +105,13 @@ public class PanZoom : MonoBehaviour
             {
                 touch = Input.GetTouch(0);
 
-                if (Input.touchCount < 2)
+                if (isInDenScreen)
                 {
-                    if (!isZoom)
-                    {
-                        //if (touch.phase == TouchPhase.Began)
-                        //{
-                        //    TouchStart = mainCam.ScreenToWorldPoint(new Vector3(touch.position.x, touch.position.y, -50));
-                        //}
-
-                        if (touch.phase == TouchPhase.Moved)
-                        {
-
-                            Vector2 touchDeltaPos = touch.deltaPosition;
-
-                            //Debug.Log(touchDeltaPos);
-                            //float zPos = -touchDeltaPos.y; // for 3D map
-
-                            mainCam.transform.Translate(-touchDeltaPos.x * panSpeed, -touchDeltaPos.y * panSpeed, 0);
-
-                            mainCam.transform.position = new Vector3(
-                                Mathf.Clamp(mainCam.transform.position.x, leftBound, rightBound),
-                                Mathf.Clamp(mainCam.transform.position.y, bottomBound, topBound),
-                                -3f);
-
-                            //float zPos = -touchDeltaPos.y;
-
-                            //mainCam.transform.Translate(-touchDeltaPos.x * panSpeed, 0, zPos * panSpeed);
-
-                            //mainCam.transform.position = new Vector3(
-                            //    Mathf.Clamp(mainCam.transform.position.x, leftBound, rightBound),
-                            //    50,
-                            //    Mathf.Clamp(mainCam.transform.position.z, bottomBound, topBound));
-                        }
-                    }
+                    DenScreenControls();
                 }
-
-                if (touch.phase == TouchPhase.Ended)
+                else
                 {
-                    isZoom = false;
-                }
-
-                if (Input.touchCount == 2 && canZoom)
-                {
-                    Touch FirstFinger = Input.GetTouch(0);
-                    Touch SecondFinger = Input.GetTouch(1);
-
-                    Vector2 FirstFingerPrevPos = FirstFinger.position - FirstFinger.deltaPosition;
-                    Vector2 SecondFingerPrevPos = SecondFinger.position - SecondFinger.deltaPosition;
-
-                    float PrevMagnitude = (FirstFingerPrevPos - SecondFingerPrevPos).magnitude;
-                    float CurrentMagnitude = (FirstFinger.position - SecondFinger.position).magnitude;
-
-                    float Difference = PrevMagnitude - CurrentMagnitude;
-
-                    Camera.main.fieldOfView += Difference * 0.1f;
-                    Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, MinZoom, MaxZoom);
-
-                    Camera.main.GetComponent<HideTiles>().updateMaxDistance(Difference);
-                    //Zoom(Difference * 0.01f);
+                    WorldMapControls();
                 }
             }
             else
@@ -154,29 +121,98 @@ public class PanZoom : MonoBehaviour
         }
     }
 
-    //public void Zoom(float Increment)
-    //{
-    //    isZoom = true;
-    //    mainCam.orthographicSize = Mathf.Clamp(mainCam.orthographicSize - Increment, MinZoom, MaxZoom);
 
-    //    currentZoom = mainCam.orthographicSize;
+    void WorldMapControls()
+    {
+        if (Input.touchCount < 2)
+        {
+            if (!isZoom)
+            {
+                if (touch.phase == TouchPhase.Moved)
+                {
 
-    //    if(currentZoom >= MinZoom + 1)
-    //    {
-    //        ZoneManager.Instance.DiactiavteLevelDisplay();
-    //    }
-    //    else
-    //    {
-    //        ZoneManager.Instance.ActivateLevelDisplay();
-    //    }
+                    Vector2 touchDeltaPos = touch.deltaPosition;
 
-    //    vertExtent = mainCam.orthographicSize;
-    //    horzExtent = vertExtent * Screen.width / Screen.height;
+                    mainCam.transform.Translate(-touchDeltaPos.x * panSpeed, -touchDeltaPos.y * panSpeed, 0);
+
+                    mainCam.transform.position = new Vector3(
+                        Mathf.Clamp(mainCam.transform.position.x, leftBound, rightBound),
+                        Mathf.Clamp(mainCam.transform.position.y, bottomBound, topBound),
+                        -3f);
+                }
+            }
+        }
+
+        if (touch.phase == TouchPhase.Ended)
+        {
+            isZoom = false;
+        }
+
+        //if (Input.touchCount == 2 && canZoom)
+        //{
+        //    Touch FirstFinger = Input.GetTouch(0);
+        //    Touch SecondFinger = Input.GetTouch(1);
+
+        //    Vector2 FirstFingerPrevPos = FirstFinger.position - FirstFinger.deltaPosition;
+        //    Vector2 SecondFingerPrevPos = SecondFinger.position - SecondFinger.deltaPosition;
+
+        //    float PrevMagnitude = (FirstFingerPrevPos - SecondFingerPrevPos).magnitude;
+        //    float CurrentMagnitude = (FirstFinger.position - SecondFinger.position).magnitude;
+
+        //    float Difference = PrevMagnitude - CurrentMagnitude;
+
+        //    Camera.main.fieldOfView += Difference * 0.1f;
+        //    Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, MinZoom, MaxZoom);
+
+        //    Camera.main.GetComponent<HideTiles>().updateMaxDistance(Difference);
+        //}
+    }
+
+    void DenScreenControls()
+    {
+        if (Input.touchCount < 2)
+        {
+            if (!isZoom)
+            {
+                if (touch.phase == TouchPhase.Moved)
+                {
+
+                    Vector2 touchDeltaPos = touch.deltaPosition;
 
 
-    //    Vector3 pos = new Vector3(Target.position.x, Target.position.y, -18);
-    //    pos.x = Mathf.Clamp(pos.x, leftBound, rightBound);
-    //    pos.y = Mathf.Clamp(pos.y, bottomBound, topBound);
-    //    mainCam.transform.position = pos;
-    //}
+                    mainCam.transform.Translate(-touchDeltaPos.x * panSpeedDen, -touchDeltaPos.y * panSpeedDen, 0);
+
+                    mainCam.transform.position = new Vector3(
+                        Mathf.Clamp(mainCam.transform.position.x, leftBoundDen, rightBoundDen),
+                        Mathf.Clamp(mainCam.transform.position.y, bottomBoundDen, topBoundDen),
+                        -3f);
+                }
+            }
+        }
+
+        if (touch.phase == TouchPhase.Ended)
+        {
+            isZoom = false;
+        }
+
+        if (Input.touchCount == 2 && canZoom)
+        {
+            Touch FirstFinger = Input.GetTouch(0);
+            Touch SecondFinger = Input.GetTouch(1);
+
+            Vector2 FirstFingerPrevPos = FirstFinger.position - FirstFinger.deltaPosition;
+            Vector2 SecondFingerPrevPos = SecondFinger.position - SecondFinger.deltaPosition;
+
+            float PrevMagnitude = (FirstFingerPrevPos - SecondFingerPrevPos).magnitude;
+            float CurrentMagnitude = (FirstFinger.position - SecondFinger.position).magnitude;
+
+            float Difference = PrevMagnitude - CurrentMagnitude;
+
+            Camera.main.fieldOfView += Difference * 0.1f;
+            Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, MinZoomDen, MaxZoomDen);
+            panSpeedDen += Difference * 0.1f;
+            panSpeedDen = Mathf.Clamp(panSpeedDen, panSpeedDenMinSpeed, panSpeedDenMaxSpeed);
+            Camera.main.GetComponent<HideTiles>().updateMaxDistance(Difference);
+        }
+    }
 }

@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -2, y: -97.6}
-  m_SizeDelta: {x: 51.2, y: 51.2}
+  m_AnchoredPosition: {x: -0.2, y: -26}
+  m_SizeDelta: {x: 51.19, y: 33.79}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &9034230963184954552
 CanvasRenderer:
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100
+  m_text: 50
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -133505132751289448, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -92,12 +92,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 33.35
+  m_fontSize: 30
   m_fontSizeBase: 25.5
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 150
+  m_fontSizeMax: 30
   m_fontStyle: 1
   m_textAlignment: 514
   m_characterSpacing: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 9034230963184954559}
-    characterCount: 3
+    characterCount: 2
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -167,9 +167,9 @@ GameObject:
   - component: {fileID: 9034230963978331937}
   - component: {fileID: 9034230963978331939}
   - component: {fileID: 9034230963978331938}
-  - component: {fileID: 729920038146141216}
+  - component: {fileID: 5396438538065745607}
   m_Layer: 5
-  m_Name: Material Prefab Daily Reward
+  m_Name: Material Prefab Forge Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -231,7 +231,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &729920038146141216
+--- !u!114 &5396438538065745607
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -240,11 +240,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 9034230963978331936}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51c3c023d8a65434684d600450ca54d5, type: 3}
+  m_Script: {fileID: 11500000, guid: e814342679ffbca4eb8875b089c359a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   materialImage: {fileID: 6436721215072999109}
   materialCount: {fileID: 9034230963184954559}
+  parentObject: {fileID: 0}
 --- !u!1 &9034230964589661044
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,8 +281,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 109.7, y: 109.7}
+  m_AnchoredPosition: {x: 0, y: 11.5}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9034230964589661047
 CanvasRenderer:

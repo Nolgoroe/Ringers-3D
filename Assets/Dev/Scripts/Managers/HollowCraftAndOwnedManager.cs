@@ -23,6 +23,9 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
 
     public bool isPlaceThroughHollow; /// Either place through hollow or thorugh normal open bag
 
+
+    public HollowObjectDisplayer currentlyToCraft;
+
     private void Start()
     {
         Instance = this;
@@ -117,5 +120,24 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
         OHODToRemove.objectData = new HollowCraftObjectData();
         OHODToRemove.gameObject.GetComponent<HollowZone>().isEmpty = true;
 
+    }
+
+
+    public void BuyHollowAction()
+    {
+        if (PlayerManager.Instance.rubyCount >= currentlyToCraft.rubiesNeededToBuyHollow)
+        {
+            PlayerManager.Instance.rubyCount -= currentlyToCraft.rubiesNeededToBuyHollow;
+
+            currentlyToCraft.CraftHollowObject(true);
+
+            UIManager.Instance.updateRubyAndDewDropsCount();
+
+
+            //PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+        }
+
+
+        currentlyToCraft = null;
     }
 }

@@ -16,4 +16,6 @@ public class LightingSettingsSO : ScriptableObject
     public Color realtimeShadowColor;
 
     public Color fogColor;
+
+    public float fogDensity;
 }

@@ -7,6 +7,7 @@ public class LightingSettingsManager : MonoBehaviour
     public static LightingSettingsManager instance;
 
     public LightingSettingsSO[] allLightingSO;
+    public LightingSettingsSO DenLight;
 
     private void Awake()
     {
@@ -26,6 +27,10 @@ public class LightingSettingsManager : MonoBehaviour
 
 
             RenderSettings.subtractiveShadowColor = allLightingSO[0].realtimeShadowColor;
+            RenderSettings.fogColor = allLightingSO[0].fogColor;
+            RenderSettings.fogDensity = allLightingSO[0].fogDensity;
+
+
         }
         else
         {
@@ -41,7 +46,25 @@ public class LightingSettingsManager : MonoBehaviour
 
             RenderSettings.subtractiveShadowColor = allLightingSO[zoneID].realtimeShadowColor;
             RenderSettings.fogColor = allLightingSO[zoneID].fogColor;
+            RenderSettings.fogDensity = allLightingSO[zoneID].fogDensity;
+
         }
+    }
+
+    public void SetdenLight()
+    {
+        RenderSettings.skybox = DenLight.skyBox;
+        RenderSettings.sun = DenLight.mainLight;
+
+        RenderSettings.ambientSkyColor = DenLight.skyColor;
+        RenderSettings.ambientEquatorColor = DenLight.equatorColor;
+        RenderSettings.ambientGroundColor = DenLight.groundColor;
+
+
+        RenderSettings.subtractiveShadowColor = DenLight.realtimeShadowColor;
+        RenderSettings.fogColor = DenLight.fogColor;
+        RenderSettings.fogDensity = DenLight.fogDensity;
+
     }
 
     public void ResetLightData()
@@ -55,5 +78,8 @@ public class LightingSettingsManager : MonoBehaviour
 
 
         RenderSettings.subtractiveShadowColor = Color.white;
+        RenderSettings.fogColor = Color.white;
+        RenderSettings.fogDensity = 0;
+
     }
 }

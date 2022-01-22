@@ -316,6 +316,7 @@ public class GameManager : MonoBehaviour
 
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
         }
+
     }
 
     public void setCurrentLevelBG(int backgroundID)

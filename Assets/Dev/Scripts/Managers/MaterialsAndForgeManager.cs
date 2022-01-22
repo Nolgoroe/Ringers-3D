@@ -7,17 +7,18 @@ public class MaterialsAndForgeManager : MonoBehaviour
 {
     public static MaterialsAndForgeManager Instance;
 
-    public GameObject equipmentForgeDisplayerPrefab;
+    //public GameObject equipmentForgeDisplayerPrefab;
+    public GameObject brewScreeneDisplayerPrefab;
     public GameObject corruptedDeviceDisplayerPrefab;
     public GameObject crafingMatPrefab;
-    public Transform brewMatZones; 
+    public Transform brewScreenPotionContentZone; 
     public Transform matInventoryContent;
     public Transform ForgeContent;
 
     //public Dictionary<CraftingMats, string> materialSpriteByName;
     //public Dictionary<CraftingMatType, Transform> matTypeToParent;
 
-    public List<EquipmentDisplayer> equipmentInForge; /// Equipment that the player does not have / has not created yet
+    public List<EquipmentDisplayer> equipmentInBrewScreen; /// Equipment that the player does not have / has not created yet
     public List<CorruptedDevicesDisplayer> corruptedDevicesInForge; /// Equipment that the player does not have / has not created yet
 
     //public string[] materialPaths;
@@ -40,11 +41,11 @@ public class MaterialsAndForgeManager : MonoBehaviour
         //}
     }
 
-    public void FillForge(List<EquipmentData> equipment)
+    public void FillBrewScreen(List<EquipmentData> equipment)
     {
         foreach (EquipmentData EQ in equipment)
         {
-            GameObject go = Instantiate(equipmentForgeDisplayerPrefab, brewMatZones);
+            GameObject go = Instantiate(brewScreeneDisplayerPrefab, brewScreenPotionContentZone);
             EquipmentDisplayer ED = go.GetComponent<EquipmentDisplayer>();
 
             ED.itemName.text = EQ.name;
@@ -73,7 +74,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
             ED.name = ED.itemName.text;
 
 
-            equipmentInForge.Add(ED);
+            equipmentInBrewScreen.Add(ED);
             //ED.SpawnMaterialsNeeded(EQ.mats);
         }
     }
@@ -136,14 +137,14 @@ public class MaterialsAndForgeManager : MonoBehaviour
     [ContextMenu("Refresh Forge")]
     public void RefreshForge()
     {
-        equipmentInForge.Clear();
+        equipmentInBrewScreen.Clear();
 
-        foreach (Transform EQ in brewMatZones)
+        foreach (Transform EQ in brewScreenPotionContentZone)
         {
             Destroy(EQ.gameObject);
         }
 
-        FillForge(GameManager.Instance.csvParser.allEquipmentInGame);
+        FillBrewScreen(GameManager.Instance.csvParser.allEquipmentInGame);
     }
 
 

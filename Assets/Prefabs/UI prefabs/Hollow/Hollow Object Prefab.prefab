@@ -173,10 +173,10 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 1}
-    m_PressedColor: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -194,18 +194,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1930694634892588985}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2518758114645246793}
-        m_MethodName: CraftHollowObject
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1930694635132414256
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,7 +673,7 @@ MonoBehaviour:
   craftButton: {fileID: 1930694634892588984}
   itemImage: {fileID: 286250198003679498}
   ingrediantContentParent: {fileID: 1930694636548318023}
-  ingrediantDisplayerPrefab: {fileID: 9034230963978331936, guid: 221f93ae6df30cb4bb5011c961339dd3,
+  ingrediantDisplayerPrefab: {fileID: 9034230963978331936, guid: 3b88e0426d071cd4799509f1a5efa091,
     type: 3}
   materialCountPairs: []
   objectData:
@@ -693,6 +682,9 @@ MonoBehaviour:
     mats: 
     spritePath: 
   craftingMatsForEquipment: []
+  craftingMatsToRubiesHollow: []
+  rubiesNeededToBuyHollow: 0
+  canCraft: 0
 --- !u!1 &1930694635276725123
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,8 +758,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 346, y: 1.67}
-  m_SizeDelta: {x: 456.3, y: 154.09}
+  m_AnchoredPosition: {x: 346, y: -40.4}
+  m_SizeDelta: {x: 456.3, y: 238.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1930694635824551268
 CanvasRenderer:
@@ -1047,12 +1039,12 @@ MonoBehaviour:
   m_Padding:
     m_Left: 12
     m_Right: 0
-    m_Top: -39
+    m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 3
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 95, y: 95}
-  m_Spacing: {x: 15, y: 0}
+  m_CellSize: {x: 175, y: 175}
+  m_Spacing: {x: 5, y: 0}
   m_Constraint: 2
   m_ConstraintCount: 1
