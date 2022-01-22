@@ -148,6 +148,8 @@ public class EquipmentDisplayer : MonoBehaviour
         {
             Debug.Log("Crafted potion!!");
 
+            EquipmentData TempED = null;
+
             if (!isBought)
             {
                 foreach (CraftingMatsNeeded CMN in craftingMatsForEquipment)
@@ -169,7 +171,19 @@ public class EquipmentDisplayer : MonoBehaviour
             EquipmentData newData = new EquipmentData(data.name, data.power, data.specificSymbol, data.specificColor, data.numOfUses, data.scopeOfUses,
                                                       data.timeForCooldown, data.nextTimeAvailable, data.Description, data.isTutorialPower, data.mats, data.spritePath);
 
-            PlayerManager.Instance.EquipMe(newData);
+            if (PlayerManager.Instance.ownedPowerups.Count > 0)
+            {
+                TempED = PlayerManager.Instance.ownedPowerups.Where(equip => equip.power == newData.power).FirstOrDefault();
+            }
+
+            if(TempED != null)
+            {
+                TempED.numOfUses += newData.numOfUses;
+            }
+            else
+            {
+                PlayerManager.Instance.EquipMe(newData);
+            }
 
 
             if (TutorialSequence.Instacne.duringSequence)

@@ -93,176 +93,163 @@ public class GameManager : MonoBehaviour
         gameWon = false;
     }
 
-    public void CallStartLevel(bool isTutorial)
+    //public void CallStartLevel(bool isTutorial)
+    //{
+    //    if (isTutorial)
+    //    {
+    //        //StartCoroutine(StartTutorialLevel(true));
+    //        StartTutorialLevel(true);
+    //    }
+    //    else
+    //    {
+    //        //StartCoroutine(StartLevel(true));
+    //        StartLevel(true);
+    //    }
+    //}
+
+    public void StartLevel(bool DoFade)
+    {
+        if (DoFade)
+        {
+            StartCoroutine(UIManager.Instance.FadeIntoLevel(false));
+
+            //yield return new WaitForSeconds(UIManager.Instance.fadeIntoLevelSpeed + 0.1f);
+        }
+        else
+        {
+            ResetDataStartLevel(false);
+        }
+
+    }
+
+    public void ResetDataStartLevel(bool isTutorial)
     {
         if (isTutorial)
         {
-            StartCoroutine(StartTutorialLevel(true));
-        }
-        else
-        {
-            StartCoroutine(StartLevel(true));
-        }
-    }
+            gameWon = false;
 
-    public IEnumerator StartLevel(bool DoFade)
-    {
-        if (DoFade)
-        {
-            StartCoroutine(UIManager.Instance.FadeIntoLevel());
-
-            yield return new WaitForSeconds(UIManager.Instance.fadeIntoLevelSpeed + 0.1f);
-        }
-
-        gameWon = false;
-        TutorialSequence.Instacne.DisableTutorialSequence(); //// Make sure tutorial is disabled
-        powerupManager.ClearTutorialPowerups(); /// Make sure there are no leftover powerups
-
-        for (int i = 0; i < numAnimalsOnBoard.Length; i++)
-        {
-            numAnimalsOnBoard[i].amount = 0;
-        }
-
-        UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
-        UIManager.Instance.TurnOnGameplayUI();
-        UIManager.Instance.dealButton.interactable = true;
-
-        //Camera.main.orthographicSize = 12;
-        //Camera.main.orthographic = false;
-        //secondCam.orthographic = false;
-
-        //Camera.main.fieldOfView = 60f;
-        //secondCam.fieldOfView = 60f;
-
-
-        Camera.main.transform.position = inGameCamPos;
-        TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, TutorialSequence.Instacne.maskImage.transform.position.z);
-        Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
-
-        levelStarted = true;
-
-        LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
-        gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
-
-        gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
-
-        //UIManager.Instance.GetCommitButton(gameBoard); 
-        clipManager.Init();
-        sliceManager.Init();
-        cursorControl.Init();
-
-
-        ConnectionManager.Instance.GrabCellList(gameBoard.transform);
-        ConnectionManager.Instance.SetLevelConnectionData();
-
-
-        sliceManager.SpawnSlices(currentLevel.slicesToSpawn.Length);
-
-        PlayerManager.Instance.HandleItemCooldowns();
-
-        PlayerManager.Instance.PopulatePowerUps();
-
-        powerupManager.InstantiateSpecialPowers();
-
-
-        if (selectedLevelBG)
-        {
-            //GameObject go = Instantiate(backGroundPrefab, destroyOutOfLevel);
-            //GameObject go = levelBGModels;
-            //go.SetActive(true);
-            selectedLevelBG.SetActive(true);
-
-            AnimalPrefabData data = InstantiateAnimals(selectedLevelBG);
-
-            if (data != null)
+            if (!isDisableTutorials)
             {
-                AnimalsManager.Instance.currentLevelAnimal = data.animalType;
+                powerupManager.ClearTutorialPowerups();// Make sure there are no leftoever tutorial powerups
+
+                for (int i = 0; i < numAnimalsOnBoard.Length; i++)
+                {
+                    numAnimalsOnBoard[i].amount = 0;
+                }
+
+                if (copyOfArrayOfPiecesTutorial == null)
+                {
+                    copyOfArrayOfPiecesTutorial = new List<pieceDataStruct>();
+                }
+                else
+                {
+                    copyOfArrayOfPiecesTutorial.Clear();
+                }
+
+                copyOfArrayOfPiecesTutorial.AddRange(currentLevel.arrayOfPieces);
+
+                copyOfSpecificSliceSpotsTutorial = new List<int>();
+                copyOfSpecificSliceColorsTutorial = new List<PieceColor>();
+                copyOfSpecificSliceSymbolsTutorial = new List<PieceSymbol>();
+
+                copyOfSpecificSliceSpotsTutorial.AddRange(currentLevel.specificSliceSpots);
+                copyOfSpecificSliceColorsTutorial.AddRange(currentLevel.specificSlicesColors);
+                copyOfSpecificSliceSymbolsTutorial.AddRange(currentLevel.specificSlicesShapes);
+
+                UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
+                UIManager.Instance.TurnOnGameplayUI();
+                UIManager.Instance.dealButton.interactable = true;
+                UIManager.Instance.ActivateGmaeplayCanvas();
+
+                //Camera.main.orthographicSize = 12;
+                //Camera.main.orthographic = false;
+                //secondCam.orthographic = false;
+                //Camera.main.fieldOfView = 60f;
+                //secondCam.fieldOfView = 60f;
+
+                Camera.main.transform.position = inGameCamPos;
+                TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, TutorialSequence.Instacne.maskImage.transform.position.z);
+                Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
+
+                levelStarted = true;
+
+                LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
+
+                gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
+
+                gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
+
+                //UIManager.Instance.GetCommitButton(gameBoard); 
+                clipManager.Init();
+                sliceManager.Init();
+                cursorControl.Init();
+
+
+                ConnectionManager.Instance.GrabCellList(gameBoard.transform);
+                ConnectionManager.Instance.SetLevelConnectionData(currentLevel.is12PieceRing);
+
+                sliceManager.SpawnSlicesTutorial(currentLevel.slicesToSpawn.Length);
+
+                PlayerManager.Instance.HandleItemCooldowns();
+
+                powerupManager.InstantiateSpecialPowers();
+
+                if (selectedLevelBG)
+                {
+                    //GameObject go = Instantiate(backGroundPrefab, destroyOutOfLevel);
+                    //GameObject go = levelBGModels;
+                    //go.SetActive(true);
+                    selectedLevelBG.SetActive(true);
+
+                    AnimalPrefabData data = InstantiateAnimals(selectedLevelBG);
+
+                    if (data != null)
+                    {
+                        AnimalsManager.Instance.currentLevelAnimal = data.animalType;
+                    }
+                    else
+                    {
+                        Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
+                    }
+                }
+
+                InstantiateStonePieces();
+
+                TutorialSequence.Instacne.activatedHeighlights.Clear();
+                TutorialSequence.Instacne.activatedBoardParticles.Clear();
+
+
+                PlayerManager.Instance.PopulatePowerUps();
+                powerupManager.instnatiatedZonesCounter = 0;
+
+                if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.levelNum))
+                {
+                    TutorialSequence.Instacne.StartTutorialLevelSequence();
+                }
+
+
+                GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
             }
             else
             {
-                Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
+                ResetDataStartLevel(false);
             }
-        }
-
-        InstantiateStonePieces();
-
-        powerupManager.instnatiatedZonesCounter = 0;
-
-        if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)currentLevel.specificTutorialEnum))
-        {
-            if(currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft)
-            {
-                //TutorialSequence.Instacne.DisplaySpecificTutorialSequence();
-                StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
-                TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
-            }
-        }
-
-        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
-    }
-
-    public void setCurrentLevelBG(int backgroundID)
-    {
-        if (ZoneManagerHelpData.Instance.currentZoneCheck.id == 0)
-        {
-            selectedLevelBG = levelBGModels[0];
         }
         else
         {
-            selectedLevelBG = levelBGModels[backgroundID - 1]; // -1 since FOR NOW we don't have a bg for tutorial zone.. so we skip index 0
-        }
-
-
-        selectedLevelBG.transform.Find("color mask").gameObject.SetActive(true); //// put this someplace better in the future
-    }
-
-    public IEnumerator StartTutorialLevel(bool DoFade)
-    {
-        if (DoFade)
-        {
-            StartCoroutine(UIManager.Instance.FadeIntoLevel());
-            yield return new WaitForSeconds(UIManager.Instance.fadeIntoLevelSpeed + 0.1f);
-        }
-
-        gameWon = false;
-
-        if (!isDisableTutorials)
-        {
-            powerupManager.ClearTutorialPowerups();// Make sure there are no leftoever tutorial powerups
+            gameWon = false;
+            TutorialSequence.Instacne.DisableTutorialSequence(); //// Make sure tutorial is disabled
+            powerupManager.ClearTutorialPowerups(); /// Make sure there are no leftover powerups
 
             for (int i = 0; i < numAnimalsOnBoard.Length; i++)
             {
                 numAnimalsOnBoard[i].amount = 0;
             }
 
-            if (copyOfArrayOfPiecesTutorial == null)
-            {
-                copyOfArrayOfPiecesTutorial = new List<pieceDataStruct>();
-            }
-            else
-            {
-                copyOfArrayOfPiecesTutorial.Clear();
-            }
-
-            copyOfArrayOfPiecesTutorial.AddRange(currentLevel.arrayOfPieces);
-
-            copyOfSpecificSliceSpotsTutorial = new List<int>();
-            copyOfSpecificSliceColorsTutorial = new List<PieceColor>();
-            copyOfSpecificSliceSymbolsTutorial = new List<PieceSymbol>();
-
-            copyOfSpecificSliceSpotsTutorial.AddRange(currentLevel.specificSliceSpots);
-            copyOfSpecificSliceColorsTutorial.AddRange(currentLevel.specificSlicesColors);
-            copyOfSpecificSliceSymbolsTutorial.AddRange(currentLevel.specificSlicesShapes);
-
             UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
             UIManager.Instance.TurnOnGameplayUI();
             UIManager.Instance.dealButton.interactable = true;
-
-            //Camera.main.orthographicSize = 12;
-            //Camera.main.orthographic = false;
-            //secondCam.orthographic = false;
-            //Camera.main.fieldOfView = 60f;
-            //secondCam.fieldOfView = 60f;
+            UIManager.Instance.ActivateGmaeplayCanvas();
 
             Camera.main.transform.position = inGameCamPos;
             TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, TutorialSequence.Instacne.maskImage.transform.position.z);
@@ -271,7 +258,6 @@ public class GameManager : MonoBehaviour
             levelStarted = true;
 
             LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
-
             gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
 
             gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
@@ -283,13 +269,17 @@ public class GameManager : MonoBehaviour
 
 
             ConnectionManager.Instance.GrabCellList(gameBoard.transform);
-            ConnectionManager.Instance.SetLevelConnectionData();
+            ConnectionManager.Instance.SetLevelConnectionData(currentLevel.is12PieceRing);
 
-            sliceManager.SpawnSlicesTutorial(currentLevel.slicesToSpawn.Length);
+
+            sliceManager.SpawnSlices(currentLevel.slicesToSpawn.Length);
 
             PlayerManager.Instance.HandleItemCooldowns();
 
+            PlayerManager.Instance.PopulatePowerUps();
+
             powerupManager.InstantiateSpecialPowers();
+
 
             if (selectedLevelBG)
             {
@@ -312,25 +302,49 @@ public class GameManager : MonoBehaviour
 
             InstantiateStonePieces();
 
-            TutorialSequence.Instacne.activatedHeighlights.Clear();
-            TutorialSequence.Instacne.activatedBoardParticles.Clear();
-
-
-            PlayerManager.Instance.PopulatePowerUps();
             powerupManager.instnatiatedZonesCounter = 0;
 
-            if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.levelNum))
+            if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)currentLevel.specificTutorialEnum))
             {
-                TutorialSequence.Instacne.StartTutorialLevelSequence();
+                if (currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft)
+                {
+                    //TutorialSequence.Instacne.DisplaySpecificTutorialSequence();
+                    StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
+                    TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
+                }
             }
-
 
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
         }
+    }
+
+    public void setCurrentLevelBG(int backgroundID)
+    {
+        if (ZoneManagerHelpData.Instance.currentZoneCheck.id == 0)
+        {
+            selectedLevelBG = levelBGModels[0];
+        }
         else
         {
-            StartCoroutine(StartLevel(DoFade));
+            selectedLevelBG = levelBGModels[backgroundID - 1]; // -1 since FOR NOW we don't have a bg for tutorial zone.. so we skip index 0
         }
+
+
+        selectedLevelBG.transform.Find("color mask").gameObject.SetActive(true); //// put this someplace better in the future
+    }
+
+    public void StartTutorialLevel(bool DoFade)
+    {
+        if (DoFade)
+        {
+            StartCoroutine(UIManager.Instance.FadeIntoLevel(true));
+            //yield return new WaitForSeconds(UIManager.Instance.fadeIntoLevelSpeed + 0.1f);
+        }
+        else
+        {
+            ResetDataStartLevel(true);
+        }
+
     }
 
     AnimalPrefabData InstantiateAnimals(GameObject parent)
@@ -598,23 +612,20 @@ public class GameManager : MonoBehaviour
 
         if (!isDisableTutorials && currentLevel.isTutorial )
         {
-            StartCoroutine(StartTutorialLevel(false));
+            //StartCoroutine(StartTutorialLevel(false));
+            StartTutorialLevel(false);
         }
         else
         {
-            StartCoroutine(StartLevel(false));
+            //StartCoroutine(StartLevel(false));
+            StartLevel(false);
         }
     }
 
-    public void callNextLevelFromWinScreen()
+    public void NextLevelFromWinScreen()
     {
-        StartCoroutine(NextLevelFromWinScreen());
-    }
-
-    public IEnumerator NextLevelFromWinScreen()
-    {
-        StartCoroutine(UIManager.Instance.FadeIntoLevel());
-        yield return new WaitForSeconds(UIManager.Instance.fadeIntoLevelSpeed + 0.1f);
+        //StartCoroutine(UIManager.Instance.FadeIntoLevel(nextIsTutorial));
+        //yield return new WaitForSeconds(UIManager.Instance.fadeIntoLevelSpeed + 0.1f);
 
         LootManager.Instance.rubiesToRecieveInLevel = 0;
 
@@ -657,19 +668,22 @@ public class GameManager : MonoBehaviour
         // ZoneManagerHelpData.Instance.listOfAllZones[ZoneManagerHelpData.Instance.currentZoneCheck.id].SaveZone();
 
 
-        bool nextIsTutorial = CheckNextLevelIsTutorial(currentLevel.levelNum + 1);
 
         ChooseLevel(currentLevel.levelNum + 1/*, currentLevel.worldName*/);
+
+        bool nextIsTutorial = CheckNextLevelIsTutorial(currentLevel.levelNum + 1);
 
         if (nextIsTutorial)
         {
             TutorialSequence.Instacne.currentPhaseInSequenceLevels = 0;
 
-            StartCoroutine(StartTutorialLevel(false));
+            //StartCoroutine(StartTutorialLevel(false));
+            StartTutorialLevel(false);
         }
         else
-        {
-            StartCoroutine(StartLevel(false));
+        { 
+            //StartCoroutine(StartLevel(false));
+            StartLevel(false);
         }
     }
 

@@ -1211,11 +1211,11 @@ public class UIManager : MonoBehaviour
     }
 
 
-    public IEnumerator FadeIntoLevel()
+    public IEnumerator FadeIntoLevel(bool isTutorialLevel)
     {
         fadeIntoLevel.SetActive(true);
 
-        LeanTween.value(fadeIntoLevel, 0, 1, fadeIntoLevelSpeed).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        LeanTween.value(fadeIntoLevel, 0, 1, fadeIntoLevelSpeed).setEase(LeanTweenType.linear).setOnComplete(() => GameManager.Instance.ResetDataStartLevel(isTutorialLevel)).setOnUpdate((float val) =>
         {
             Image sr = fadeIntoLevel.GetComponent<Image>();
             Color newColor = sr.color;
@@ -1224,7 +1224,6 @@ public class UIManager : MonoBehaviour
         });
 
         yield return new WaitForSeconds(fadeIntoLevelDelay);
-        ActivateGmaeplayCanvas();
 
 
         LeanTween.value(fadeIntoLevel, 1, 0, fadeIntoLevelSpeed).setEase(LeanTweenType.linear).setOnUpdate((float val) =>

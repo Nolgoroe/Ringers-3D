@@ -187,7 +187,7 @@ public class PlayfabManager : MonoBehaviour
 
             PersonLeaderboardData PLD = go.GetComponent<PersonLeaderboardData>();
 
-            PLD.positionText.text = item.Position.ToString();
+            PLD.positionText.text = (item.Position + 1).ToString();
             PLD.nameText.text = item.DisplayName;
             PLD.maxLevelText.text = findWorldAndLevelByScriptableObject(item.StatValue);
 

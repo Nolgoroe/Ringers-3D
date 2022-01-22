@@ -20,6 +20,7 @@ public class LevelScriptableObject : ScriptableObject
 {
     public string worldName;
     public bool isGrindLevel;
+    public bool is12PieceRing;
     public bool isDoubleRing;
     public GameObject boardPrefab;
 

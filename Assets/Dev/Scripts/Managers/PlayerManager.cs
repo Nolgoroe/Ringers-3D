@@ -177,9 +177,14 @@ public class PlayerManager : MonoBehaviour
         int instantiatedCount = 0;
         activePowerups.Clear();
 
-        if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(GameManager.Instance.currentLevel.levelNum) && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)GameManager.Instance.currentLevel.specificTutorialEnum)
-)
+        foreach (getChildrenHelpData GCHD in GameManager.Instance.powerupManager.instnatiateZones)
         {
+            GCHD.referenceNumUsesText.SetActive(false);
+        }
+
+        if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(GameManager.Instance.currentLevel.levelNum) && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)GameManager.Instance.currentLevel.specificTutorialEnum))
+        {
+            //EquipmentData TempED = null;
             if (/*(GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial) && */GameManager.Instance.currentLevel.powerupsForLevel.Length > 0)
             {
                 foreach (PowerUp PU in GameManager.Instance.currentLevel.powerupsForLevel)
@@ -188,6 +193,20 @@ public class PlayerManager : MonoBehaviour
 
                     EquipmentData newData = new EquipmentData(ED.name, ED.power, ED.specificSymbol, ED.specificColor, ED.numOfUses, ED.scopeOfUses,
                                               ED.timeForCooldown, ED.nextTimeAvailable, ED.Description, ED.isTutorialPower, ED.mats, ED.spritePath);
+
+                    //if (ownedPowerups.Count > 0)
+                    //{
+                    //    TempED = ownedPowerups.Where(equip => equip.power == newData.power).FirstOrDefault();
+                    //}
+
+                    //if (TempED != null)
+                    //{
+                    //    TempED.numOfUses += newData.numOfUses;
+                    //}
+                    //else
+                    //{
+                    //    EquipMe(newData);
+                    //}
 
                     EquipMeTutorial(newData);
                 }
@@ -231,39 +250,45 @@ public class PlayerManager : MonoBehaviour
         {
             Destroy(butt.gameObject);
         }
+
+        foreach (getChildrenHelpData GCHD in GameManager.Instance.powerupManager.instnatiateZones)
+        {
+            GCHD.referenceNumUsesText.SetActive(false);
+        }
+
         GameManager.Instance.powerupManager.powerupButtons.Clear();
 
         int instantiatedCount = 0;
         activePowerups.Clear();
 
-        if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(GameManager.Instance.currentLevel.levelNum) && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)GameManager.Instance.currentLevel.specificTutorialEnum))
-        {
-            if (/*(GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial) && */GameManager.Instance.currentLevel.powerupsForLevel.Length > 0)
-            {
-                foreach (PowerUp PU in GameManager.Instance.currentLevel.powerupsForLevel)
-                {
-                    EquipmentData ED = GameManager.Instance.csvParser.allEquipmentInGame.Where(p => p.power == PU).Single();
+        //if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(GameManager.Instance.currentLevel.levelNum) && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)GameManager.Instance.currentLevel.specificTutorialEnum))
+        //{
+        //    if (/*(GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial) && */GameManager.Instance.currentLevel.powerupsForLevel.Length > 0)
+        //    {
+        //        foreach (PowerUp PU in GameManager.Instance.currentLevel.powerupsForLevel)
+        //        {
+        //            EquipmentData ED = GameManager.Instance.csvParser.allEquipmentInGame.Where(p => p.power == PU).Single();
 
-                    EquipmentData newData = new EquipmentData(ED.name, ED.power, ED.specificSymbol, ED.specificColor, ED.numOfUses, ED.scopeOfUses,
-                                              ED.timeForCooldown, ED.nextTimeAvailable, ED.Description, ED.isTutorialPower, ED.mats, ED.spritePath);
+        //            EquipmentData newData = new EquipmentData(ED.name, ED.power, ED.specificSymbol, ED.specificColor, ED.numOfUses, ED.scopeOfUses,
+        //                                      ED.timeForCooldown, ED.nextTimeAvailable, ED.Description, ED.isTutorialPower, ED.mats, ED.spritePath);
 
-                    EquipMeTutorial(newData);
-                }
-            }
-        }
+        //            EquipMeTutorial(newData);
+        //        }
+        //    }
+        //}
 
-        EquipmentData[] EDTutorial = ownedPowerups.Where(p => p.isTutorialPower == true).ToArray();
+        //EquipmentData[] EDTutorial = ownedPowerups.Where(p => p.isTutorialPower == true).ToArray();
 
-        foreach (EquipmentData ED in EDTutorial)
-        {
-            if (instantiatedCount < GameManager.Instance.powerupManager.instnatiateZones.Length)
-            {
-                instantiatedCount++;
-                activePowerups.Add(ED.power);
+        //foreach (EquipmentData ED in EDTutorial)
+        //{
+        //    if (instantiatedCount < GameManager.Instance.powerupManager.instnatiateZones.Length)
+        //    {
+        //        instantiatedCount++;
+        //        activePowerups.Add(ED.power);
 
-                GameManager.Instance.powerupManager.InstantiatePowerUps(ED);
-            }
-        }
+        //        GameManager.Instance.powerupManager.InstantiatePowerUps(ED);
+        //    }
+        //}
 
         foreach (EquipmentData ED in ownedPowerups)// first summon level specific powerups
         {
@@ -472,6 +497,8 @@ public class PlayerManager : MonoBehaviour
         //Debug.Log("CHECKING HERE NOW");
         if (GameManager.Instance.currentLevel.powerupsForLevel.Count() > 0)
         {
+            EquipmentData TempED = null;
+
             foreach (PowerUp PU in GameManager.Instance.currentLevel.powerupsForLevel)
             {
                 for (int i = 0; i < 2; i++)
@@ -481,12 +508,26 @@ public class PlayerManager : MonoBehaviour
                     EquipmentData newData = new EquipmentData(ED.name, ED.power, ED.specificSymbol, ED.specificColor, ED.numOfUses, ED.scopeOfUses,
                                               ED.timeForCooldown, ED.nextTimeAvailable, ED.Description, ED.isTutorialPower, ED.mats, ED.spritePath);
 
-                    EquipMe(newData);
+                    if (ownedPowerups.Count > 0)
+                    {
+                        TempED = ownedPowerups.Where(equip => equip.power == newData.power).FirstOrDefault();
+                    }
+
+                    if (TempED != null)
+                    {
+                        TempED.numOfUses += newData.numOfUses;
+                    }
+                    else
+                    {
+                        EquipMe(newData);
+                    }
                 }
             }
 
-            StartCoroutine(PopulatePowerUps(0.55f));
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
 
+            StartCoroutine(PopulatePowerUps(0f));
+            //PopulatePowerUps();
             //PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
         }
 

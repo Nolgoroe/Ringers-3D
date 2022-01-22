@@ -17,6 +17,7 @@ public class ConnectionManager : MonoBehaviour
     public Slice[] slicesOnBoard;
 
     public int lengthOfSubPiecesRegular;
+    public int lengthOfSubPieces12Pieces;
     public int lengthOfSubPiecesOuter;
     public float timeToLerpConnectionEmission;
 
@@ -33,9 +34,17 @@ public class ConnectionManager : MonoBehaviour
         Instance = this;
     }
 
-    public void SetLevelConnectionData()
+    public void SetLevelConnectionData(bool is12Pieces)
     {
-        subPiecesOnBoard = new SubPiece[lengthOfSubPiecesRegular];
+        if (is12Pieces)
+        {
+            subPiecesOnBoard = new SubPiece[lengthOfSubPieces12Pieces];
+        }
+        else
+        {
+            subPiecesOnBoard = new SubPiece[lengthOfSubPiecesRegular];
+        }
+
         subPiecesDoubleRing = new SubPiece[lengthOfSubPiecesOuter];
     }
 
@@ -531,10 +540,10 @@ public class ConnectionManager : MonoBehaviour
     {
         if (num <= 0)
         {
-            return lengthOfSubPiecesRegular - 1;
+            return subPiecesOnBoard.Length - 1;
         }
 
-        if (num >= lengthOfSubPiecesRegular)
+        if (num >= subPiecesOnBoard.Length)
         {
             return 0;
         }

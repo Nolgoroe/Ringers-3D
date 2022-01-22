@@ -126,6 +126,7 @@ public class PowerUpManager : MonoBehaviour
     }
     public void InstantiatePowerUps(EquipmentData data)
     {
+
         GameObject go = Instantiate(powerupButtonPreab, instnatiateZones[instnatiatedZonesCounter].transform);
 
         instnatiatedZonesCounter++;
@@ -293,10 +294,6 @@ public class PowerUpManager : MonoBehaviour
 
         if(toWorkOn.leftChild.symbolOfPiece != PieceSymbol.Joker) ///// If 1 of the sub pieces is a joker - so is the other. If the symbol is a joker then the color is awell
         {
-            if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.JokerTutorial)
-            {
-                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
-            }
 
             if (toWorkOn.partOfBoard /*&& !toWorkOn.isLocked*/)
             {
@@ -329,10 +326,16 @@ public class PowerUpManager : MonoBehaviour
                 successfulUse = true;
             }
 
+
             ShakePiecePowerUp(toWorkOn.gameObject);
 
-            FinishedUsingPowerup(successfulUse /*&& !toWorkOn.isLocked*/, prop);
+            FinishedUsingPowerup(successfulUse, prop);
 
+
+            if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.JokerTutorial)
+            {
+                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            }
             Debug.Log("Joker");
         }
         else
@@ -346,13 +349,8 @@ public class PowerUpManager : MonoBehaviour
         yield return new WaitUntil(() => HasUsedPowerUp == true);
         Piece toWorkOn = ObjectToUsePowerUpOn.GetComponent<Piece>();
 
-        if((toWorkOn.leftChild.symbolOfPiece != toWorkOn.rightChild.symbolOfPiece || toWorkOn.leftChild.colorOfPiece != toWorkOn.rightChild.colorOfPiece) && !toWorkOn.isStone)
+        if ((toWorkOn.leftChild.symbolOfPiece != toWorkOn.rightChild.symbolOfPiece || toWorkOn.leftChild.colorOfPiece != toWorkOn.rightChild.colorOfPiece) && !toWorkOn.isStone)
         {
-            if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SwapSidesTutorial)
-            {
-                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
-            }
-
             if (toWorkOn.partOfBoard)
             {
                 if (!toWorkOn.isLocked)
@@ -397,7 +395,12 @@ public class PowerUpManager : MonoBehaviour
                 FinishedUsingPowerup(true, prop);
                 ShakePiecePowerUp(toWorkOn.gameObject);
             }
-         
+
+            if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SwapSidesTutorial)
+            {
+                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            }
+
             Debug.Log("Switch");
         }
         else
@@ -414,10 +417,6 @@ public class PowerUpManager : MonoBehaviour
 
         if (toWorkOn.partOfBoard)
         {
-            if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.TileBombTutorial)
-            {
-                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
-            }
             //Debug.LogError("Times called");
             toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(true, false);
 
@@ -433,9 +432,17 @@ public class PowerUpManager : MonoBehaviour
 
             Destroy(toWorkOn.gameObject, 0.5f);
 
-        }
+            FinishedUsingPowerup(true, prop);
 
-        FinishedUsingPowerup(toWorkOn.partOfBoard, prop);
+            if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.TileBombTutorial)
+            {
+                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            }
+        }
+        else
+        {
+            FinishedUsingPowerup(false, prop);
+        }
 
         Debug.Log("Piece Bomb");
 
@@ -445,10 +452,6 @@ public class PowerUpManager : MonoBehaviour
         layerToHit = LayerMask.GetMask("Slice");
         yield return new WaitUntil(() => HasUsedPowerUp == true);
 
-        if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SliceBombTutorial)
-        {
-            TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
-        }
 
         Slice toWorkOn = ObjectToUsePowerUpOn.transform.parent.GetComponent<Slice>();
 
@@ -560,6 +563,10 @@ public class PowerUpManager : MonoBehaviour
 
         FinishedUsingPowerup(true, prop);
 
+        if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SliceBombTutorial)
+        {
+            TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+        }
         Debug.Log("Slice Bomb");
 
     }
@@ -690,6 +697,10 @@ public class PowerUpManager : MonoBehaviour
         HasUsedPowerUp = false;
         layerToHit = new LayerMask();
 
+
+
+        EquipmentData ED = null;
+
         for (int i = 0; i < prop.transform.childCount; i++)
         {
             if (prop.transform.GetChild(i).CompareTag("DestroyVFX"))
@@ -700,12 +711,36 @@ public class PowerUpManager : MonoBehaviour
 
         if (successfull)
         {
-            EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).First();
-            ED.numOfUses--;
 
-            prop.numOfUses--;
+            if (TutorialSequence.Instacne.duringSequence)
+            {
+                bool singleCellPhase = TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isSingleCellPhase;
+                bool singleSlicePhase = TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isSingleSlice;
 
-            prop.UpdateNumOfUsesText();
+                if (singleCellPhase || singleSlicePhase)
+                {
+                    ED = PlayerManager.Instance.ownedPowerups.Where(p => (p.power == prop.connectedEquipment.power && p.isTutorialPower == prop.connectedEquipment.isTutorialPower)).First();
+
+                }
+            }
+            else
+            {
+                ED = PlayerManager.Instance.ownedPowerups.Where(p => p.power == prop.connectedEquipment.power).First();
+            }
+
+            if (ED != null)
+            {
+                ED.numOfUses--;
+
+                prop.numOfUses--;
+
+                prop.UpdateNumOfUsesText();
+            }
+            else
+            {
+                Debug.LogError("Something very wrong happened here - stop the finished using power coroutine");
+                return;
+            }
         }
 
         //if (prop.connectedEquipment.isTutorialPower)
@@ -719,9 +754,12 @@ public class PowerUpManager : MonoBehaviour
         //}
         //else
         //{
+
+        LeanTween.move(prop.gameObject, originalPotionPos, 0.4f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => ReactivatePowerButtons()); // animate
+
         if (prop.numOfUses == 0 && prop.connectedEquipment.scopeOfUses == 0) //// if the num of uses is 0 and the scope is cooldown and not per match
         {
-            EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).First();
+            //EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).First();
 
             ED.nextTimeAvailable = System.DateTime.Now.AddSeconds(ED.timeForCooldown).ToString(); ///// change the datetime for equipment on player
 
@@ -732,7 +770,7 @@ public class PowerUpManager : MonoBehaviour
 
         if (prop.numOfUses == 0 && prop.connectedEquipment.scopeOfUses == 1) //// if the num of uses is 0 and the scope is per match
         {
-            EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).First();
+            //EquipmentData ED = PlayerManager.Instance.ownedPowerups.Where(p => p.name == prop.connectedEquipment.name).First();
 
             PlayerManager.Instance.activePowerups.Remove(ED.power);
             PlayerManager.Instance.ownedPowerups.Remove(ED);
@@ -740,21 +778,28 @@ public class PowerUpManager : MonoBehaviour
             //PlayfabManager.instance.SaveAllGameData();
 
             powerupButtons.Remove(prop.GetComponent<PowerupProperties>());
-            Destroy(prop.gameObject, 0.45f);            
+            //Destroy(prop.gameObject, 0.45f);            
+            Destroy(prop.gameObject);
 
+            ReactivatePowerButtons();
+        }
+
+        if (successfull)
+        {
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
         }
+
         //}
 
         //Vector3 pos = prop.gameObject.transform.position;
         //pos.y -= 0.1f;
 
 
-        LeanTween.move(prop.gameObject, originalPotionPos, 0.4f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => ReactivatePowerButtons()); // animate
     }
 
     public void ReactivatePowerButtons()
     {
+        Debug.LogError("reactivating");
         foreach (PowerupProperties but in powerupButtons)
         {
             if (but.gameObject.GetComponent<PowerupProperties>().numOfUses > 0)
@@ -953,5 +998,9 @@ public class PowerUpManager : MonoBehaviour
         instnatiatedZonesCounter = 0;
         layerToHit = LayerMask.GetMask("Nothing");
 
+        foreach (getChildrenHelpData GCHD in instnatiateZones)
+        {
+            GCHD.referenceNumUsesText.SetActive(false);
+        }
     }
 }

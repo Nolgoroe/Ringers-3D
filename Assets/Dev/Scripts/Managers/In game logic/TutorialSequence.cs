@@ -224,10 +224,13 @@ public class TutorialSequence : MonoBehaviour
     {
         if(secondCam.targetTexture.width != Display.main.systemWidth || secondCam.targetTexture.height != Display.main.systemHeight)
         {
-            StartCoroutine(RecreateRenderTexture());
+            //StartCoroutine(RecreateRenderTexture());
+            RecreateRenderTexture();
         }
         else
         {
+            //secondCam.Render();
+
             Texture2D texture = new Texture2D(Display.main.systemWidth, Display.main.systemHeight, TextureFormat.ARGB32, false);
             Sprite sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
 
@@ -239,10 +242,11 @@ public class TutorialSequence : MonoBehaviour
         }
     }
 
-    public IEnumerator RecreateRenderTexture()
+    public void RecreateRenderTexture()
     {
-        secondCam.targetTexture.Release();
-        yield return null;
+        Debug.LogError("IN HERE NOW");
+        //secondCam.targetTexture.Release();
+        //yield return new WaitForEndOfFrame();
 
         //tempToWorkOn.width = Screen.width;
         //tempToWorkOn.height = Screen.height;
@@ -252,12 +256,9 @@ public class TutorialSequence : MonoBehaviour
         secondCam.targetTexture = new RenderTexture(Display.main.systemWidth, Display.main.systemHeight, 24);
         secondCam.Render();
 
-        yield return null;
-
         //ScalableBufferManager.ResizeBuffers(deltaW, deltaH);
         //tempToWorkOn.Create();
-        yield return null;
-        yield return null;
+        //yield return new WaitForEndOfFrame();
         toTexture();
     }
     public IEnumerator SelectReleventHeighlights(int index, bool isSpecific) //// PASS LIST AND INDEX INTO FUNCTION TO MAKE THIS SHIT CODE BETTER

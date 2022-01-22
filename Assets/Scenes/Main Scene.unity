@@ -7798,7 +7798,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &87651845
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11838,7 +11838,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &170480563
 RectTransform:
   m_ObjectHideFlags: 0
@@ -27118,7 +27118,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1887064404}
-        m_MethodName: callNextLevelFromWinScreen
+        m_MethodName: NextLevelFromWinScreen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -36715,7 +36715,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &603705723
 RectTransform:
   m_ObjectHideFlags: 0
@@ -70947,7 +70947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rubyCount: 50000
-  collectedDewDrops: 0
+  collectedDewDrops: 50000
   priceInGemsDewDrops: 2
   activePowerups: 
   craftingMatsInInventory:
@@ -71711,7 +71711,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &973384144
 RectTransform:
   m_ObjectHideFlags: 0
@@ -73597,7 +73597,7 @@ MonoBehaviour:
   gameBoard: {fileID: 0}
   gameClip: {fileID: 0}
   gameplayDepth: 0
-  distanceFromBoard: 2.983
+  distanceFromBoard: 3
   rayLength: 25
   radiusCollide: 0.15
   piecePickupHeight: -2
@@ -81440,7 +81440,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1211873657
 RectTransform:
   m_ObjectHideFlags: 0
@@ -87557,8 +87557,8 @@ MonoBehaviour:
   matsInventoryButton: {fileID: 2108232925}
   forgeInventoryButton: {fileID: 1539041394}
   potionInventoryButton: {fileID: 1406721822}
-  fadeIntoLevelSpeed: 1
-  fadeIntoLevelDelay: 1.2
+  fadeIntoLevelSpeed: 0.5
+  fadeIntoLevelDelay: 0.7
   toggleOffSprite: {fileID: 21300000, guid: ac073e36526b7a442aec3e65f0040a8c, type: 3}
   toggleOnSprite: {fileID: 21300000, guid: aa5d415981de45f46b618df11c2bb157, type: 3}
   sureLevelRestartLootDislpay: {fileID: 1665998844}
@@ -90936,7 +90936,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1394117997
 RectTransform:
   m_ObjectHideFlags: 0
@@ -92429,7 +92429,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1428138104
 RectTransform:
   m_ObjectHideFlags: 0
@@ -101414,7 +101414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1592084048
 RectTransform:
   m_ObjectHideFlags: 0
@@ -102146,7 +102146,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1600258998
 RectTransform:
   m_ObjectHideFlags: 0
@@ -102308,7 +102308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1615806746
 RectTransform:
   m_ObjectHideFlags: 0
@@ -102975,7 +102975,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -68, y: 0}
+  m_AnchoredPosition: {x: -68, y: -14}
   m_SizeDelta: {x: 498.94, y: 58.5}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1628803161
@@ -104211,7 +104211,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1651078736
 RectTransform:
   m_ObjectHideFlags: 0
@@ -108144,7 +108144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1745085580
 RectTransform:
   m_ObjectHideFlags: 0
@@ -110045,7 +110045,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1785091515
 RectTransform:
   m_ObjectHideFlags: 0
@@ -112340,7 +112340,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1826978105
 RectTransform:
   m_ObjectHideFlags: 0
@@ -117865,7 +117865,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1937381859
 RectTransform:
   m_ObjectHideFlags: 0
@@ -120176,7 +120176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1980683632
 RectTransform:
   m_ObjectHideFlags: 0

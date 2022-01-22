@@ -561,9 +561,15 @@ public class CursorController : MonoBehaviour
                 c.RemovePiece(false, false);
             }
 
-            cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, -0.1f);
+            cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, 0f);
 
             LeanTween.move(followerTarget.gameObject, cursorPos, pickupSpeed); // animate
+
+            if (GameManager.Instance.currentLevel.is12PieceRing)
+            {
+                LeanTween.scale(followerTarget.gameObject, Vector3.one, pickupSpeed - 0.3f); // animate
+            }
+
             float angle = Mathf.Atan2(gameBoard.transform.position.y - followerTarget.position.y, gameBoard.transform.position.x - followerTarget.position.x) * Mathf.Rad2Deg;
             followerTarget.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
         }
@@ -577,7 +583,7 @@ public class CursorController : MonoBehaviour
         float angle = Mathf.Atan2(gameBoard.transform.position.y - cursorPos.position.y, gameBoard.transform.position.x - cursorPos.position.x) * Mathf.Rad2Deg;
         followerTarget.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
 
-        cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, -0.1f);
+        cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, 0);
         LeanTween.move(followerTarget.gameObject, cursorPos, moveSpeed); // animate
     }
     public void SnapFollower(Transform cellHit)
@@ -809,6 +815,7 @@ public class CursorController : MonoBehaviour
         Vector3 home = GameManager.Instance.clipManager.piece.transform.position;
         followerTarget.localPosition = home;
         followerTarget.localRotation = Quaternion.Euler(0, 180, 67); ///// reset piece rotation to it's original local rotation
+        followerTarget.localScale = new Vector3(1.45f, 1.45f, 1);
 
         if (followerTarget.transform.parent.GetComponent<Cell>())
         {

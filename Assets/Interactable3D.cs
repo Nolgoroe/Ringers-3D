@@ -28,7 +28,8 @@ public class Interactable3D : MonoBehaviour
             {
                 GameManager.Instance.ChooseLevel(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
-                GameManager.Instance.CallStartLevel(false);
+                //GameManager.Instance.CallStartLevel(false);
+                GameManager.Instance.StartLevel(true);
             }
 
         }
@@ -44,7 +45,8 @@ public class Interactable3D : MonoBehaviour
             {
                 GameManager.Instance.ChooseLevelGrind(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
-                GameManager.Instance.CallStartLevel(false);
+                //GameManager.Instance.CallStartLevel(false);
+                GameManager.Instance.StartLevel(true);
             }
 
         }
@@ -61,7 +63,9 @@ public class Interactable3D : MonoBehaviour
             {
                 GameManager.Instance.ChooseLevel(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
-                GameManager.Instance.CallStartLevel(true);
+                //GameManager.Instance.CallStartLevel(true);
+                GameManager.Instance.StartTutorialLevel(true);
+
             }
 
         }
@@ -79,7 +83,9 @@ public class Interactable3D : MonoBehaviour
             {
                 GameManager.Instance.ChooseLevel(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
-                GameManager.Instance.CallStartLevel(false);
+                //GameManager.Instance.CallStartLevel(false);
+                GameManager.Instance.StartLevel(true);
+
             }
 
         }
@@ -97,7 +103,9 @@ public class Interactable3D : MonoBehaviour
             {
                 GameManager.Instance.ChooseLevel(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
-                GameManager.Instance.CallStartLevel(true);
+                //GameManager.Instance.CallStartLevel(true);
+                GameManager.Instance.StartTutorialLevel(true);
+
             }
 
         }
