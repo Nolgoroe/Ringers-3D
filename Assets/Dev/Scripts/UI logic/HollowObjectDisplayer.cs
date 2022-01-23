@@ -142,11 +142,35 @@ public class HollowObjectDisplayer : MonoBehaviour
 
     public void CraftHollowObject(bool isBought) ///// Here because the forge button and resources data are local
     {
+        if(PlayerManager.Instance.ownedHollowObjects.Count > 0)
+        {
+            HollowCraftObjectData HCOD = PlayerManager.Instance.ownedHollowObjects.Where(p => p.objectname == objectData.objectname).SingleOrDefault();
+
+            if(HCOD != null)
+            {
+                Debug.LogError("Already OWN this hollow item!");
+                return;
+            }
+        }
+
+        if(HollowManagerSaveData.Instance.filledHollowItemsToIndex.Count > 0)
+        {
+            FilledItemAndZoneIndex FIAZI = HollowManagerSaveData.Instance.filledHollowItemsToIndex.Where(p => p.hollowItem == objectData.hollowItemEnum).SingleOrDefault();
+
+            if (FIAZI != null)
+            {
+                Debug.LogError("Already PLACED this hollow item!");
+                return;
+            }
+        }
+
         if (isBought)
         {
             PlayerManager.Instance.ownedHollowObjects.Add(objectData);
 
             HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
+            HollowCraftAndOwnedManager.Instance.RefreshOwnedScreen();
+
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
 
@@ -170,24 +194,29 @@ public class HollowObjectDisplayer : MonoBehaviour
             PlayerManager.Instance.ownedHollowObjects.Add(objectData);
 
             HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
+            HollowCraftAndOwnedManager.Instance.RefreshOwnedScreen();
 
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
         }
         else
         {
-            HollowCraftAndOwnedManager.Instance.currentlyToCraft = this;
-
-            bool canBuy = false;
-
-            if (PlayerManager.Instance.rubyCount >= rubiesNeededToBuyHollow)
+            if (!UIManager.Instance.buyHollowItemDisplay.gameObject.activeInHierarchy) /////// Find a way to do this better
             {
-                canBuy = true;
+                HollowCraftAndOwnedManager.Instance.currentlyToCraft = this;
+
+                bool canBuy = false;
+
+                if (PlayerManager.Instance.rubyCount >= rubiesNeededToBuyHollow)
+                {
+                    canBuy = true;
+                }
+
+                UIManager.Instance.DisplayHollowScreenRubyCostText(rubiesNeededToBuyHollow, canBuy);
+                UIManager.Instance.DisplayBuyHollowItemNeeded(craftingMatsToRubiesHollow);
+                UIManager.Instance.DisplayBuyHollowScreen();
             }
 
-            UIManager.Instance.DisplayHollowScreenRubyCostText(rubiesNeededToBuyHollow, canBuy);
-            UIManager.Instance.DisplayBuyHollowItemNeeded(craftingMatsToRubiesHollow);
-            UIManager.Instance.DisplayBuyHollowScreen();
         }
         //SortMaster.Instance.RefreshAllScreens();
 

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.EventSystems;
 
@@ -42,6 +43,9 @@ public class CursorController : MonoBehaviour
 
     [HideInInspector]
     public bool tutorialBadConnection = false;
+
+    public static bool OverUI;
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(mouseRay.origin, mouseRay.origin + rayLength * mouseRay.direction);
@@ -104,7 +108,7 @@ public class CursorController : MonoBehaviour
             }
         } /// detect empty touch phase in tutorial sequence
 
-        if (!GameManager.Instance.levelStarted && !UIManager.isUsingUI && GameManager.Instance.allGameStarted)
+        if (!GameManager.Instance.levelStarted && !UIManager.isUsingUI && GameManager.Instance.clickedPlayButton)
         {
             if (Input.touchCount > 0)
             {
@@ -117,8 +121,18 @@ public class CursorController : MonoBehaviour
 
                     if (EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
                     {
-                        Debug.Log("Over UI");
-                        return;
+                        if (EventSystem.current.currentSelectedGameObject)
+                        {
+                            Debug.Log("Selected UI element: " + EventSystem.current.currentSelectedGameObject.name);
+
+                            Debug.Log("Over UI");
+                            OverUI = true;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        OverUI = false;
                     }
 
                     if (Physics.Raycast(ray, out hit))
@@ -129,6 +143,10 @@ public class CursorController : MonoBehaviour
                         }
                     }
                 }
+            }
+            else
+            {
+                OverUI = false;
             }
         } // detect touch on level prefab
 

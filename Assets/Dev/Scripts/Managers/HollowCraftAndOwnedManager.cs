@@ -3,6 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum ObjectHollowType
+{
+    All,
+    H1,
+    H2,
+    H3,
+    H4,
+    H5,
+    H6
+}
+
+public enum HollowItems
+{
+    Cot,
+    Fireplace,
+    Bowls,
+    WaterThrought,
+    CloverPatch,
+}
+
 public class HollowCraftAndOwnedManager : MonoBehaviour
 {
     public static HollowCraftAndOwnedManager Instance;
@@ -13,30 +33,41 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
     public GameObject HollowObjectOwnedPrefab;
     public Transform HollowObjectOwnedContent; /// Parent
 
-    public List<HollowObjectDisplayer> objectInHollow; /// Equipment that the player does not have / has not created yet
-    public List<OwnedHollowObjectData> objectsInOwned; /// Equipment that the player does not have / has not created yet
+    //public List<HollowObjectDisplayer> objectInHollow; /// Equipment that the player does not have / has not created yet
+    //public List<OwnedHollowObjectData> objectsInOwned; /// Equipment that the player does not have / has not created yet
 
-    public ObjectHollowType hollowTypeToFill;
+    //public ObjectHollowType hollowTypeToFill;
 
-    public HollowZone[] hollowZones;
-    public Dictionary<ObjectHollowType, OwnedHollowObjectData> hollowTypeToGameobject;
+    public List<HollowZoneSlot> hollowZones;
+    //public Dictionary<ObjectHollowType, OwnedHollowObjectData> hollowTypeToGameobject;
 
-    public bool isPlaceThroughHollow; /// Either place through hollow or thorugh normal open bag
-
+    //public bool isPlaceThroughHollow; /// Either place through hollow or thorugh normal open bag
 
     public HollowObjectDisplayer currentlyToCraft;
 
-    private void Start()
+    private void Awake()
     {
         Instance = this;
+    }
 
-        hollowTypeToGameobject = new Dictionary<ObjectHollowType, OwnedHollowObjectData>();
+    private void Start()
+    {
+        //hollowTypeToGameobject = new Dictionary<ObjectHollowType, OwnedHollowObjectData>();
 
-        for (int i = 1; i < System.Enum.GetValues(typeof(ObjectHollowType)).Length; i++)
+        //for (int i = 1; i < System.Enum.GetValues(typeof(ObjectHollowType)).Length; i++)
+        //{
+        //    hollowTypeToGameobject.Add((ObjectHollowType)i, hollowZones[i - 1].gameObject.GetComponent<OwnedHollowObjectData>());
+        //}
+        //filledHollowItems = new List<string>();
+
+
+        foreach (HollowZoneSlot HZS in hollowZones)
         {
-            hollowTypeToGameobject.Add((ObjectHollowType)i, hollowZones[i - 1].gameObject.GetComponent<OwnedHollowObjectData>());
+            for (int i = 0; i < HZS.objectsInZone.Length; i++)
+            {
+                HZS.objectsInZone[i].gameObject.SetActive(false);
+            }
         }
-
     }
 
     public void FillCraftScreen(List<HollowCraftObjectData> HollowCraftObjects)
@@ -52,7 +83,7 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
             HOD.itemImage.texture = Resources.Load(HCOD.spritePath) as Texture2D;
 
             HOD.name = HCOD.objectname;
-            objectInHollow.Add(HOD);
+            //objectInHollow.Add(HOD);
             HOD.SpawnMaterialsNeeded(HCOD.mats);
         }
     }
@@ -67,7 +98,7 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
             OHOD.objectData = HCOD;
             OHOD.name = HCOD.objectname;
             OHOD.requiredHollowType = HCOD.objectHollowType;
-            objectsInOwned.Add(OHOD);
+            //objectsInOwned.Add(OHOD);
 
             go.GetComponentInChildren<RawImage>().texture = Resources.Load(HCOD.spritePath) as Texture2D;
         }
@@ -76,7 +107,7 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
     [ContextMenu("Refresh Owned Screen")]
     public void RefreshOwnedScreen()
     {
-        objectsInOwned.Clear();
+        //objectsInOwned.Clear();
 
         foreach (Transform ownedObject in HollowObjectOwnedContent)
         {
@@ -89,7 +120,7 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
     [ContextMenu("Refresh Hollow Objects")]
     public void RefreshHollowObjects()
     {
-        objectInHollow.Clear();
+        //objectInHollow.Clear();
 
         foreach (Transform HO in HollowObjectContent)
         {
@@ -99,28 +130,28 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
         FillCraftScreen(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
     }
 
-    public void OpenOwnedFurnitureToPlace(int typeOfHollow)
-    {
-        hollowTypeToFill = (ObjectHollowType)typeOfHollow;
+    //public void OpenOwnedFurnitureToPlace(int typeOfHollow)
+    //{
+    //    hollowTypeToFill = (ObjectHollowType)typeOfHollow;
 
-        SortMaster.Instance.FilterHollowOwnedScreenByEnum((ObjectHollowType)typeOfHollow);
-    }
+    //    SortMaster.Instance.FilterHollowOwnedScreenByEnum((ObjectHollowType)typeOfHollow);
+    //}
 
 
-    public void RemoveFurniture(GameObject ToRemove)
-    {
-        OwnedHollowObjectData OHODToRemove = ToRemove.GetComponent<OwnedHollowObjectData>();
+    //public void RemoveFurniture(GameObject ToRemove)
+    //{
+    //    OwnedHollowObjectData OHODToRemove = ToRemove.GetComponent<OwnedHollowObjectData>();
 
-        PlayerManager.Instance.ownedHollowObjects.Add(OHODToRemove.objectData);
-        RefreshOwnedScreen();
+    //    PlayerManager.Instance.ownedHollowObjects.Add(OHODToRemove.objectData);
+    //    RefreshOwnedScreen();
 
-        OHODToRemove.GetComponent<RawImage>().texture = null;
-        OHODToRemove.GetComponent<RawImage>().color = new Color(1, 1, 1, 0);
-        OHODToRemove.transform.GetChild(0).gameObject.SetActive(false);
-        OHODToRemove.objectData = new HollowCraftObjectData();
-        OHODToRemove.gameObject.GetComponent<HollowZone>().isEmpty = true;
+    //    OHODToRemove.GetComponent<RawImage>().texture = null;
+    //    OHODToRemove.GetComponent<RawImage>().color = new Color(1, 1, 1, 0);
+    //    OHODToRemove.transform.GetChild(0).gameObject.SetActive(false);
+    //    OHODToRemove.objectData = new HollowCraftObjectData();
+    //    OHODToRemove.gameObject.GetComponent<HollowZone>().isEmpty = true;
 
-    }
+    //}
 
 
     public void BuyHollowAction()
@@ -139,5 +170,13 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
 
 
         currentlyToCraft = null;
+    }
+
+    public void DisplayLoadedHollowItems()
+    {
+        foreach (FilledItemAndZoneIndex FIAZI in HollowManagerSaveData.Instance.filledHollowItemsToIndex)
+        {
+            hollowZones[FIAZI.zoneIndex].objectsInZone[FIAZI.indexInZone].gameObject.SetActive(true);
+        }
     }
 }

@@ -10,7 +10,7 @@ using System;
 using System.IO;
 using System.Linq;
 
-public enum SystemsToSave { Player, DewDrops, animalManager, corruptedZonesManager, TutorialSaveData, ZoneManager, ZoneX, RewardsManager, LoginData, ALL }
+public enum SystemsToSave { Player, DewDrops, animalManager, corruptedZonesManager, TutorialSaveData, ZoneManager, ZoneX, RewardsManager, LoginData, HollowManager, ALL }
 
 public class PlayfabManager : MonoBehaviour
 {
@@ -308,6 +308,12 @@ public class PlayfabManager : MonoBehaviour
             JsonUtility.FromJsonOverwrite(result.Data["Rewards Manager Data"].Value, RewardsManager.Instance);
         }
 
+        // Hollow Manager Data
+        if (result.Data != null && result.Data.ContainsKey("Hollow Manager Data"))
+        {
+            JsonUtility.FromJsonOverwrite(result.Data["Hollow Manager Data"].Value, HollowManagerSaveData.Instance);
+        }
+
         doneWithStep = true;
     }
 
@@ -322,11 +328,14 @@ public class PlayfabManager : MonoBehaviour
         TutorialSaveData.Instance.Init();
         ZoneManager.Instance.Init();
         RewardsManager.Instance.Init();
+        HollowManagerSaveData.Instance.Init();
 
         foreach (Zone zone in ZoneManagerHelpData.Instance.listOfAllZones)
         {
             zone.Init();
         }
+
+        SortMaster.Instance.ClearAllForgeScreens();
 
     }
 
@@ -395,6 +404,11 @@ public class PlayfabManager : MonoBehaviour
                         filePath = Application.dataPath + "/Save Files Folder/username.txt";
                     }
                     File.WriteAllText(filePath, playerName);
+                    break;
+                case SystemsToSave.HollowManager:
+                    //Hollow manager
+                    savedData = JsonUtility.ToJson(HollowManagerSaveData.Instance);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.HollowManager, -1);
                     break;
                 case SystemsToSave.ALL:
                     SaveAllGameData();
@@ -497,6 +511,9 @@ public class PlayfabManager : MonoBehaviour
         savedData = JsonUtility.ToJson(RewardsManager.Instance);
         SendDataToBeSavedJson(savedData, SystemsToSave.RewardsManager, -1);
 
+        //Hollow manager
+        savedData = JsonUtility.ToJson(HollowManagerSaveData.Instance);
+        SendDataToBeSavedJson(savedData, SystemsToSave.HollowManager, -1);
 
     }
 
@@ -597,6 +614,15 @@ public class PlayfabManager : MonoBehaviour
                     }
                 };
                 break;
+            case SystemsToSave.HollowManager:
+                request = new UpdateUserDataRequest
+                {
+                    Data = new Dictionary<string, string>()
+                    {
+                        { "Hollow Manager Data", saveData }
+                    }
+                };
+                break;
             default:
                 break;
         }
@@ -638,7 +664,8 @@ public class PlayfabManager : MonoBehaviour
                 { "corrupted Zones Manager Data", "" },
                 { "Tutorial Save Data", "" },
                 { "Zone Manager Data", "" },
-                {"Rewards Manager Data", ""}
+                {"Rewards Manager Data", ""},
+                {"Hollow Manager Data", ""}
                 
             }
         };
@@ -751,7 +778,7 @@ public class PlayfabManager : MonoBehaviour
     void OnGetTimeSuccess(GetTimeResult result)
     {
         currentTimeReference = result.Time;
-        Debug.Log(result.Time + " what?");
+        //Debug.Log(result.Time + " what?");
         //Debug.Log("Debug 1 " + currentTimeReference);
 
         doneWithStep = true;
@@ -760,12 +787,12 @@ public class PlayfabManager : MonoBehaviour
     // check if need this AND Focus
     private void OnApplicationPause(bool pause)
     {
-        Debug.Log("Pause is: " + pause);
-        Debug.Log("is Logged In is: " + isLoggedIn);
+        //Debug.Log("Pause is: " + pause);
+       // Debug.Log("is Logged In is: " + isLoggedIn);
 
         if (pause && isLoggedIn)
         {
-            Debug.Log("On Application Pause");
+            //Debug.Log("On Application Pause");
             //GetServerCurrentTime();
             //yield return new WaitUntil(() => doneWithStep == true);
 
@@ -776,14 +803,14 @@ public class PlayfabManager : MonoBehaviour
 
 
 
-            Debug.Log(timeToSave + "Pause time!");
+           // Debug.Log(timeToSave + "Pause time!");
 
             RewardsManager.Instance.UpdateQuitTime(timeToSave);
             DewDropsManager.Instance.UpdateQuitTime(timeToSave);
 
             SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
 
-            Debug.Log("Saved all data! - PAUSE");
+            //Debug.Log("Saved all data! - PAUSE");
         }
         else if(!pause && isLoggedIn)
         {
@@ -801,12 +828,12 @@ public class PlayfabManager : MonoBehaviour
     {
         if (Application.isEditor)
         {
-            Debug.Log("focus is: " + focus);
-            Debug.Log("is Logged In is: " + isLoggedIn);
+            //Debug.Log("focus is: " + focus);
+            //Debug.Log("is Logged In is: " + isLoggedIn);
 
             if (!focus && isLoggedIn)
             {
-                Debug.Log("On Application Focus");
+                //Debug.Log("On Application Focus");
                 //GetServerCurrentTime();
                 //yield return new WaitUntil(() => doneWithStep == true);
 
@@ -821,7 +848,7 @@ public class PlayfabManager : MonoBehaviour
 
                 SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
 
-                Debug.Log("Saved all data! - focus");
+                //Debug.Log("Saved all data! - focus");
             }
             else if (focus && isLoggedIn)
             {

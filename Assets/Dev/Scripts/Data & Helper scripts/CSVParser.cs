@@ -222,9 +222,13 @@ public class CSVParser : MonoBehaviour
 
             HCOD.objectname = parsedList[i][0].ToString();
 
+            HCOD.indexInHollow = Convert.ToInt32(parsedList[i][1]);
+
+            HCOD.hollowItemEnum = (HollowItems)Convert.ToInt32(parsedList[i][2]);
+
             //if (parsedList[i][1].ToString().Contains("-"))
             //{
-                string[] temp = parsedList[i][1].ToString().Split('-');
+            string[] temp = parsedList[i][3].ToString().Split('-');
 
                 for (int j = 0; j < temp.Length; j++)
                 {
@@ -241,9 +245,9 @@ public class CSVParser : MonoBehaviour
 
             //}
 
-            HCOD.mats = parsedList[i][2].ToString();
+            HCOD.mats = parsedList[i][4].ToString();
 
-            HCOD.spritePath = parsedList[i][3].ToString();
+            HCOD.spritePath = parsedList[i][5].ToString();
 
             allHollowCraftObjectsInGame.Add(HCOD);
         }

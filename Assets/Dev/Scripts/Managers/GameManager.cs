@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     public int unsuccessfullSlicesCount;
 
     public bool levelStarted;
-    public bool allGameStarted;
+    public bool clickedPlayButton; /// why do I need this?
     public bool isSecondaryControls;
     public bool isDisableTutorials;
 
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
         GameAnalytics.Initialize();
         isSecondaryControls = false;
         isDisableTutorials = false;
-        allGameStarted = false;
+        clickedPlayButton = false;
 
         foreach (GameObject g in levelBGModels)
         {

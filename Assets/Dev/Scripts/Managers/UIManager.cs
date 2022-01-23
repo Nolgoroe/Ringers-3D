@@ -205,6 +205,7 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("IS USING UI? " + isUsingUI);
         width.text = "Width: " + Display.main.systemWidth;
         height.text = "Height: " + Display.main.systemHeight;
 
@@ -228,7 +229,7 @@ public class UIManager : MonoBehaviour
         //ZoneManager.Instance.UnlockLevelViewSequence();
         UnlockLevels();
 
-        GameManager.Instance.allGameStarted = true;
+        GameManager.Instance.clickedPlayButton = true;
     }
     public void ActivateGmaeplayCanvas()
     {
@@ -596,7 +597,7 @@ public class UIManager : MonoBehaviour
         owned.SetActive(false);
         craft.SetActive(true);
 
-        HollowCraftAndOwnedManager.Instance.isPlaceThroughHollow = false;
+        //HollowCraftAndOwnedManager.Instance.isPlaceThroughHollow = false;
         isUsingUI = true;
     }
     public void OpenHollowOwnedObjectsToPlace()
@@ -604,7 +605,7 @@ public class UIManager : MonoBehaviour
         hollowCraftAndOwned.SetActive(true);
         owned.SetActive(true);
         craft.SetActive(false);
-        HollowCraftAndOwnedManager.Instance.isPlaceThroughHollow = true;
+        //HollowCraftAndOwnedManager.Instance.isPlaceThroughHollow = true;
 
         isUsingUI = true;
     }
@@ -649,7 +650,7 @@ public class UIManager : MonoBehaviour
             hollowCraftAndOwned.SetActive(false);
             craft.SetActive(true);
             owned.SetActive(false);
-            HollowCraftAndOwnedManager.Instance.hollowTypeToFill = ObjectHollowType.All;
+            //HollowCraftAndOwnedManager.Instance.hollowTypeToFill = ObjectHollowType.All;
         }
 
         if(ToClose == leaderboardScreen)
@@ -750,7 +751,7 @@ public class UIManager : MonoBehaviour
         owned.SetActive(true);
         craft.SetActive(false);
 
-        SortMaster.Instance.FilterHollowOwnedScreenByEnum(ObjectHollowType.All);
+        //SortMaster.Instance.FilterHollowOwnedScreenByEnum(ObjectHollowType.All);
     }
     public void ToDenScreen(bool returningToHud)
     {
@@ -779,6 +780,8 @@ public class UIManager : MonoBehaviour
         LightingSettingsManager.instance.SetdenLight();
 
         PZ.isInDenScreen = true;
+
+        HollowCraftAndOwnedManager.Instance.RefreshOwnedScreen();
 
     }
     public void OpenOptions()

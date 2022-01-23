@@ -50,7 +50,6 @@ public class PlayerManager : MonoBehaviour
 
         //MaterialsAndForgeManager.Instance.PopulateMaterialBagAll();
 
-        SortMaster.Instance.ClearAllForgeScreens();
         //SortMaster.Instance.RefreshAllScreens();
 
         HandleItemCooldowns();

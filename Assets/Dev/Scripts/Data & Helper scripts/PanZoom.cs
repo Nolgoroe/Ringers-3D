@@ -83,9 +83,9 @@ public class PanZoom : MonoBehaviour
             mainCam.fieldOfView = 58;
         }
 
-        Debug.Log("Aspect " + aspectRatio);
+        //Debug.Log("Aspect " + aspectRatio);
         //mainCam.fieldOfView = aspectRatio * 60;
-        Debug.Log("Aspect calc" + aspectRatio * 60);
+        //Debug.Log("Aspect calc" + aspectRatio * 60);
     }
 
     void Update()
@@ -93,7 +93,7 @@ public class PanZoom : MonoBehaviour
 
         //fovText.text = mainCam.fieldOfView.ToString();
 
-        if (!UIManager.isUsingUI)
+        if (!UIManager.isUsingUI && !CursorController.OverUI)
         {
             //leftBound = (horzExtent - (SpriteBounds.bounds.size.x / 2.0f));
             //rightBound = ((SpriteBounds.bounds.size.x / 2.0f - horzExtent));
@@ -170,6 +170,7 @@ public class PanZoom : MonoBehaviour
 
     void DenScreenControls()
     {
+
         if (Input.touchCount < 2)
         {
             if (!isZoom)
