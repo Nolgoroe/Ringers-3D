@@ -160,7 +160,7 @@ public class EquipmentDisplayer : MonoBehaviour
                     PlayerManager.Instance.DecreaseNumOfMats(CMN);
                 }
 
-                SortMaster.Instance.ClearAllForgeScreens();
+                //SortMaster.Instance.RefreshAllForgeScreens();
             }
 
             //SortMaster.Instance.RefreshAllScreens();
@@ -247,7 +247,7 @@ public class EquipmentDisplayer : MonoBehaviour
             //BDL.brewButton.interactable = true;
 
             buttonText.text = "Brew";
-            buttonText.color = UIManager.Instance.gameTextColor;
+            //buttonText.color = UIManager.Instance.gameTextColor;
             //craftButton.interactable = true;
             //forgeButton.gameObject.SetActive(true);
         }
@@ -256,7 +256,7 @@ public class EquipmentDisplayer : MonoBehaviour
             //BDL.brewButton.interactable = false;
 
             buttonText.text = "Brew"; /// might not need this line of code...
-            buttonText.color = UIManager.Instance.gameTextColor;
+            //buttonText.color = UIManager.Instance.gameTextColor;
             //craftButton.interactable = false;
 
             //forgeButton.gameObject.SetActive(false);

@@ -11,13 +11,14 @@ public class InGameSpecialPowerUp : MonoBehaviour
 
     public Slider slider;
 
-    [HideInInspector]
     public Button button;
+
+    public Image icon;
 
     public int amountNeededToActivate = 0;
     private void Awake()
     {
-        button = GetComponent<Button>();
+        //button = GetComponent<Button>();
 
         slider.value = 0;
         button.interactable = false;

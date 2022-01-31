@@ -335,7 +335,11 @@ public class PlayfabManager : MonoBehaviour
             zone.Init();
         }
 
-        SortMaster.Instance.ClearAllForgeScreens();
+        //SortMaster.Instance.ClearAllForgeScreens();
+
+        //StartCoroutine(HollowCraftAndOwnedManager.Instance.FillHollowScreenCraft(GameManager.Instance.csvParser.allHollowCraftObjectsInGame));
+
+        //MaterialsAndForgeManager.Instance.FillCorruptionDevices(GameManager.Instance.csvParser.allCorruptedDevicesInGame);
 
     }
 

@@ -58,6 +58,7 @@ public class UIManager : MonoBehaviour
     public GameObject DailyRewardScreen;
     public GameObject MissingMaterialsPotionCraftScreen;
     public GameObject MissingMaterialsHollowCraftScreen;
+    public GameObject MissingMaterialsHollowObjectScreen;
     //public GameObject cantBuyPotionCraftScreen;
     //public GameObject gameplayCanvasScreensUIHEIGHLIGHTS;
     //public GameObject HudCanvasUIHEIGHLIGHTS;
@@ -77,6 +78,7 @@ public class UIManager : MonoBehaviour
     public Transform sureLevelRestartLootDislpay;
     public Transform buyPotionLootDisplay;
     public Transform buyHollowItemDisplay;
+    public Transform buyHollowItemSecondaryDisplay;
     public Transform ownedCorruptDevicesZone;
 
     public Text /*hubGoldText,*/ hubRubyText, dewDropsText;
@@ -96,6 +98,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text versionText;
     public TMP_Text buyPotionRubieCoseText;
     public TMP_Text buyHollowItemRubieCostText;
+    public TMP_Text buyHollowItemSecondaryRubieCostText;
     //public TMP_Text cantBuyPotionText;
 
     //public Button commitButton;
@@ -108,6 +111,7 @@ public class UIManager : MonoBehaviour
     public Button backToHubButton;
     public Button buyPotionYesButton;
     public Button buyHollowItemYesButton;
+    public Button buyHollowItemSecondaryYesButton;
 
     //public Button[] levelButtons;
 
@@ -122,7 +126,7 @@ public class UIManager : MonoBehaviour
     public Vector3 denCameraRot;
 
 
-    public Color gameTextColor;
+    //public Color gameTextColor;
     public static bool isUsingUI;
 
     PanZoom PZ;
@@ -180,6 +184,7 @@ public class UIManager : MonoBehaviour
         DailyRewardScreen.SetActive(false);
         MissingMaterialsPotionCraftScreen.SetActive(false);
         MissingMaterialsHollowCraftScreen.SetActive(false);
+        MissingMaterialsHollowObjectScreen.SetActive(false);
         //cantBuyPotionCraftScreen.SetActive(false);
         //gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(false);
         //HudCanvasUIHEIGHLIGHTS.SetActive(false);
@@ -409,7 +414,7 @@ public class UIManager : MonoBehaviour
         PZ.SetFieldOfView();
         hudCanvasUIBottomZoneMainMap.SetActive(true);
 
-        SortMaster.Instance.ClearAllForgeScreens();
+        SortMaster.Instance.RefreshAllForgeScreens();
 
         if (ZoneManagerHelpData.Instance.currentZoneCheck)
         {
@@ -765,7 +770,10 @@ public class UIManager : MonoBehaviour
             ToHud(ringersHutDisplay);
             return;
         }
-        
+
+        //StartCoroutine(HollowCraftAndOwnedManager.Instance.FillHollowScreenCraft(GameManager.Instance.csvParser.allHollowCraftObjectsInGame));
+       HollowCraftAndOwnedManager.Instance.FillHollowScreenCraft(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
+
         ringersHutDisplay.SetActive(true);
         ringersHutUICanvas.SetActive(true);
         hudCanvasUIBottomZoneDenScreen.SetActive(true);
@@ -875,7 +883,19 @@ public class UIManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        HollowCraftAndOwnedManager.Instance.currentlyToCraft = null;
+        HollowCraftAndOwnedManager.Instance.currentlyToCraftNoramlMehtod = null;
+        HollowCraftAndOwnedManager.Instance.currentlyToCraftSecondMethod = null;
+    }
+
+    private void ClearBuyHollowSecondaryDisplay()
+    {
+        foreach (Transform child in buyHollowItemSecondaryDisplay)
+        {
+            Destroy(child.gameObject);
+        }
+
+        HollowCraftAndOwnedManager.Instance.currentlyToCraftNoramlMehtod = null;
+        HollowCraftAndOwnedManager.Instance.currentlyToCraftSecondMethod = null;
     }
 
     public void RestartLevelFromLoseScreenUI()
@@ -1264,6 +1284,12 @@ public class UIManager : MonoBehaviour
         MissingMaterialsHollowCraftScreen.SetActive(true);
     }
 
+    public void DisplayBuyHollowSecondaryScreen()
+    {
+        MissingMaterialsHollowObjectScreen.SetActive(true);
+        isUsingUI = true;
+    }
+
     public void DisplayHollowScreenRubyCostText(int amount, bool canbuy)
     {
         if (canbuy)
@@ -1280,6 +1306,22 @@ public class UIManager : MonoBehaviour
         buyHollowItemRubieCostText.text = amount.ToString();
     }
 
+    public void DisplayHollowScreenSecondaryRubyCostText(int amount, bool canbuy)
+    {
+        if (canbuy)
+        {
+            buyHollowItemSecondaryYesButton.interactable = true;
+            buyHollowItemSecondaryRubieCostText.color = Color.white;
+        }
+        else
+        {
+            buyHollowItemSecondaryYesButton.interactable = false;
+            buyHollowItemSecondaryRubieCostText.color = Color.red;
+        }
+
+        buyHollowItemSecondaryRubieCostText.text = amount.ToString();
+    }
+
     public void BuyHollowItemScreenYes()
     {
         MissingMaterialsHollowCraftScreen.SetActive(false);
@@ -1290,6 +1332,20 @@ public class UIManager : MonoBehaviour
     {
         MissingMaterialsHollowCraftScreen.SetActive(false);
         ClearBuyHollowDisplay();
+    }
+
+    public void BuyHollowItemSecondaryScreenYes()
+    {
+        MissingMaterialsHollowObjectScreen.SetActive(false);
+        ClearBuyHollowSecondaryDisplay();
+        isUsingUI = false;
+    }
+
+    public void BuyHollowItemSecondaryScreenNo()
+    {
+        MissingMaterialsHollowObjectScreen.SetActive(false);
+        ClearBuyHollowSecondaryDisplay();
+        isUsingUI = false;
     }
 
     public void DisplayBuyHollowItemNeeded(List<CraftingMatsNeededToRubies> INmaterialsNeedToBuyHollow)
@@ -1314,6 +1370,28 @@ public class UIManager : MonoBehaviour
         }
     }
 
+
+    public void DisplayBuySecondaryHollowItemNeeded(List<CraftingMatsNeededToRubies> INmaterialsNeedToBuyHollow)
+    {
+        foreach (CraftingMatsNeededToRubies CMNTR in INmaterialsNeedToBuyHollow)
+        {
+            GameObject go = Instantiate(LootManager.Instance.lootDisplayPrefab, buyHollowItemSecondaryDisplay);
+
+            CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
+
+            if (CMNTR.mat == CraftingMats.DewDrops)
+            {
+                CMD.materialImage.sprite = LootManager.Instance.dewDropsSprite;
+                CMD.materialCount.text = CMNTR.amountMissing.ToString();
+            }
+            else
+            {
+                CMD.materialImage.sprite = LootManager.Instance.allMaterialSprites[(int)CMNTR.mat];
+
+                CMD.materialCount.text = CMNTR.amountMissing.ToString();
+            }
+        }
+    }
 
     public void updateRubyAndDewDropsCount()
     {

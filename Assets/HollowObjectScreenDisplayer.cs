@@ -2,40 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System.IO;
 using System;
 using System.Linq;
 
-
-public class HollowObjectDisplayer : MonoBehaviour
+public class HollowObjectScreenDisplayer : MonoBehaviour
 {
-    public Button craftButton;
-
-    //public TMP_Text itemName;
-    public RawImage itemImage;
-
-    public Transform ingrediantContentParent;
-    public GameObject ingrediantDisplayerPrefab;
-
-    public List<string> materialCountPairs;
-
+    public Transform craftingMatZone;
+    public GameObject materialPrefabHollowScreen;
+    public RawImage objectIcon;
     public HollowCraftObjectData objectData;
 
+    public List<string> materialCountPairs;
     public List<CraftingMatsNeeded> craftingMatsForEquipment;
+
+    public bool canCraft;
+
     public List<CraftingMatsNeededToRubies> craftingMatsToRubiesHollow;
 
     public int rubiesNeededToBuyHollow;
 
-    public bool canCraft;
+    public Button craftButton;
+
+    public HollowZoneSlot connectedZoneSlot;
+
     private void Start()
     {
         craftButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(Sounds.ButtonPressUI));
         craftButton.onClick.AddListener(() => CraftHollowObject(false));
-
-        //craftingMatsToRubiesHollow = new List<CraftingMatsNeededToRubies>();
-
-        Debug.Log("Start");
     }
 
     public void SpawnMaterialsNeeded(string matList)
@@ -52,7 +45,7 @@ public class HollowObjectDisplayer : MonoBehaviour
 
         foreach (string item in materialCountPairs)
         {
-            GameObject go = Instantiate(ingrediantDisplayerPrefab, ingrediantContentParent);
+            GameObject go = Instantiate(materialPrefabHollowScreen, craftingMatZone);
 
             CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
 
@@ -75,6 +68,7 @@ public class HollowObjectDisplayer : MonoBehaviour
 
         CheckIfCanCraftHollowObject(craftingMatsForEquipment);
     }
+
 
     public void SetDataMatsNeeded(string nameOfMat, int amountOfMat, CraftingMatDisplayer CMD, CraftingMats parsed_enum)
     {
@@ -108,6 +102,7 @@ public class HollowObjectDisplayer : MonoBehaviour
         }
     }
 
+
     public void AddNeededCraftingMatsToRubiesHollowItem(CraftingMats _mat, int _amount)
     {
         CraftingMatsNeededToRubies CMNTR = new CraftingMatsNeededToRubies(_mat, _amount);
@@ -140,20 +135,21 @@ public class HollowObjectDisplayer : MonoBehaviour
         }
     }
 
+
     public void CraftHollowObject(bool isBought) ///// Here because the forge button and resources data are local
     {
-        if(PlayerManager.Instance.ownedHollowObjects.Count > 0)
+        if (PlayerManager.Instance.ownedHollowObjects.Count > 0)
         {
             HollowCraftObjectData HCOD = PlayerManager.Instance.ownedHollowObjects.Where(p => p.hollowItemEnum == objectData.hollowItemEnum).SingleOrDefault();
 
-            if(HCOD != null)
+            if (HCOD != null)
             {
                 Debug.LogError("Already OWN this hollow item!");
                 return;
             }
         }
 
-        if(HollowManagerSaveData.Instance.filledHollowItemsToIndex.Count > 0)
+        if (HollowManagerSaveData.Instance.filledHollowItemsToIndex.Count > 0)
         {
             FilledItemAndZoneIndex FIAZI = HollowManagerSaveData.Instance.filledHollowItemsToIndex.Where(p => p.hollowItem == objectData.hollowItemEnum).SingleOrDefault();
 
@@ -166,17 +162,14 @@ public class HollowObjectDisplayer : MonoBehaviour
 
         if (isBought)
         {
-            PlayerManager.Instance.ownedHollowObjects.Add(objectData);
+            //PlayerManager.Instance.ownedHollowObjects.Add(objectData);
 
-            HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
-            HollowCraftAndOwnedManager.Instance.RefreshOwnedScreen();
+            //HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
+            //HollowCraftAndOwnedManager.Instance.RefreshOwnedScreen();
 
-            if (UIManager.Instance.ringersHutDisplay.gameObject.activeInHierarchy) /////// Find a way to do this better
-            {
-                HollowCraftAndOwnedManager.Instance.FillHollowScreenCraft(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
-            }
+            PlaceCraftedItemImmidietly();
 
-            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.HollowManager});
 
             return;
         }
@@ -195,23 +188,21 @@ public class HollowObjectDisplayer : MonoBehaviour
                 }
             }
 
-            PlayerManager.Instance.ownedHollowObjects.Add(objectData);
+            //PlayerManager.Instance.ownedHollowObjects.Add(objectData);
 
-            HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
-            HollowCraftAndOwnedManager.Instance.RefreshOwnedScreen();
+            PlaceCraftedItemImmidietly();
 
-            if (UIManager.Instance.ringersHutDisplay.gameObject.activeInHierarchy) /////// Find a way to do this better
-            {
-                HollowCraftAndOwnedManager.Instance.FillHollowScreenCraft(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
-            }
+            //HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
+            //HollowCraftAndOwnedManager.Instance.RefreshOwnedScreen();
 
-            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.HollowManager });
         }
         else
         {
-            if (!UIManager.Instance.buyHollowItemDisplay.gameObject.activeInHierarchy) /////// Find a way to do this better
+            if (!UIManager.Instance.buyHollowItemSecondaryDisplay.gameObject.activeInHierarchy) /////// Find a way to do this better
             {
-                HollowCraftAndOwnedManager.Instance.currentlyToCraftNoramlMehtod = this;
+                HollowCraftAndOwnedManager.Instance.currentlyToCraftSecondMethod = this;
 
                 bool canBuy = false;
 
@@ -220,9 +211,9 @@ public class HollowObjectDisplayer : MonoBehaviour
                     canBuy = true;
                 }
 
-                UIManager.Instance.DisplayHollowScreenRubyCostText(rubiesNeededToBuyHollow, canBuy);
-                UIManager.Instance.DisplayBuyHollowItemNeeded(craftingMatsToRubiesHollow);
-                UIManager.Instance.DisplayBuyHollowScreen();
+                UIManager.Instance.DisplayHollowScreenSecondaryRubyCostText(rubiesNeededToBuyHollow, canBuy);
+                UIManager.Instance.DisplayBuySecondaryHollowItemNeeded(craftingMatsToRubiesHollow);
+                UIManager.Instance.DisplayBuyHollowSecondaryScreen();
             }
 
         }
@@ -233,4 +224,11 @@ public class HollowObjectDisplayer : MonoBehaviour
 
     }
 
+    public void PlaceCraftedItemImmidietly()
+    {
+        connectedZoneSlot.PlaceHollowObject(objectData.indexInHollow, objectData.hollowItemEnum);
+
+
+        HollowCraftAndOwnedManager.Instance.FillHollowScreenCraft(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
+    }
 }

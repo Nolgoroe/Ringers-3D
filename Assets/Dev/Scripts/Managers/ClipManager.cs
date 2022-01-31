@@ -32,7 +32,7 @@ public class ClipManager : MonoBehaviour
     public Color darkTintedColor;
 
     public Vector3[] piecesDealPositionsOut;
-    public float delayClipMove, timeToAnimateMove, WaitTimeBeforeIn, delayDarkenClip, timeToDarkenClip;
+    public float delayClipMove, timeToAnimateMove, WaitTimeBeforeIn, delayDarkenClip, delayBrightenClip, timeToDarkenClip, timeToBrightenClip;
 
     public Vector3 pieceScaleOnBoard;
     [Serializable]
@@ -124,6 +124,7 @@ public class ClipManager : MonoBehaviour
         if(clipCount < 4)
         {
             PopulateSlot(slots[clipCount], clipCount);
+            StartCoroutine(ActivateClip(clipCount));
             clipCount++;
             IGSP.ResetValues();
         }
@@ -139,7 +140,7 @@ public class ClipManager : MonoBehaviour
 
             for (int i = 0; i < clipCount; i++)
             {
-                Piece p = slots[i].transform.GetChild(0).GetComponent<Piece>();
+                Piece p = slots[i].transform.GetComponentInChildren<Piece>();
 
                 if (up) 
                 {
@@ -167,7 +168,7 @@ public class ClipManager : MonoBehaviour
 
             for (int i = 0; i < clipCount; i++)
             {
-                Piece p = slots[i].transform.GetChild(0).GetComponent<Piece>();
+                Piece p = slots[i].transform.GetComponentInChildren<Piece>();
 
                 if (up)
                 {
@@ -287,6 +288,22 @@ public class ClipManager : MonoBehaviour
         Color toColor = darkTintedColor;
 
         LeanTween.value(slots[index].gameObject, fromColor, toColor, timeToDarkenClip).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        {
+            SpriteRenderer sr = slots[index].gameObject.GetComponent<SpriteRenderer>();
+            Color newColor = sr.color;
+            newColor = Color.Lerp(fromColor, toColor, val);
+            sr.color = newColor;
+        });
+    }
+
+    public IEnumerator ActivateClip(int index)
+    {
+        yield return new WaitForSeconds(delayBrightenClip);
+
+        Color fromColor = slots[index].GetComponent<SpriteRenderer>().color;
+        Color toColor = Color.white;
+
+        LeanTween.value(slots[index].gameObject, fromColor, toColor, timeToBrightenClip).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
         {
             SpriteRenderer sr = slots[index].gameObject.GetComponent<SpriteRenderer>();
             Color newColor = sr.color;

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using System.Linq;
 
 public enum ObjectHollowType
 {
@@ -23,11 +25,19 @@ public enum HollowItems
     CloverPatch,
 }
 
+[Serializable]
+public class zoneSlotAndType
+{
+    public HollowZoneSlot zoneSlot;
+    public List<ObjectHollowType> acceptedHollowTypes;
+}
+
 public class HollowCraftAndOwnedManager : MonoBehaviour
 {
     public static HollowCraftAndOwnedManager Instance;
 
     public GameObject HollowObjectPrefab;
+    public GameObject HollowScreenCraftPrefab;
     public Transform HollowObjectContent; /// Parent
 
     public GameObject HollowObjectOwnedPrefab;
@@ -38,12 +48,13 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
 
     //public ObjectHollowType hollowTypeToFill;
 
-    public List<HollowZoneSlot> hollowZones;
+    public List<zoneSlotAndType> hollowZones;
     //public Dictionary<ObjectHollowType, OwnedHollowObjectData> hollowTypeToGameobject;
 
     //public bool isPlaceThroughHollow; /// Either place through hollow or thorugh normal open bag
 
-    public HollowObjectDisplayer currentlyToCraft;
+    public HollowObjectDisplayer currentlyToCraftNoramlMehtod;
+    public HollowObjectScreenDisplayer currentlyToCraftSecondMethod;
 
     private void Awake()
     {
@@ -60,12 +71,11 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
         //}
         //filledHollowItems = new List<string>();
 
-
-        foreach (HollowZoneSlot HZS in hollowZones)
+        foreach (zoneSlotAndType HZS in hollowZones)
         {
-            for (int i = 0; i < HZS.objectsInZone.Length; i++)
+            for (int i = 0; i < HZS.zoneSlot.objectsInZone.Length; i++)
             {
-                HZS.objectsInZone[i].gameObject.SetActive(false);
+                HZS.zoneSlot.objectsInZone[i].gameObject.SetActive(false);
             }
         }
     }
@@ -85,6 +95,67 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
             HOD.name = HCOD.objectname;
             //objectInHollow.Add(HOD);
             HOD.SpawnMaterialsNeeded(HCOD.mats);
+        }
+    }
+
+
+    public void FillHollowScreenCraft(List<HollowCraftObjectData> HollowCraftObjects)
+    {
+        RefreshHollowScreenObjects();
+
+        foreach (HollowCraftObjectData HCOD in HollowCraftObjects)
+        {
+            foreach (ObjectHollowType type in HCOD.objectHollowType)
+            {
+                zoneSlotAndType[] releventZones = hollowZones.Where(p => p.acceptedHollowTypes.Contains(type)).ToArray();
+
+                foreach (zoneSlotAndType ZSAT in releventZones)
+                {
+                    if (HollowManagerSaveData.Instance.filledHollowItemsToIndex.Count > 0)
+                    {
+                        FilledItemAndZoneIndex FIAZI = HollowManagerSaveData.Instance.filledHollowItemsToIndex.Where(p => p.hollowItem == HCOD.hollowItemEnum).SingleOrDefault();
+
+                        if (FIAZI == null)
+                        {
+                            ZSAT.zoneSlot.InstantiateObject(HCOD);
+                        }
+                        else
+                        {
+                            Debug.LogError("SKIPPED cause placed");
+                        }
+                    }
+                    else if(PlayerManager.Instance.ownedHollowObjects.Count > 0)
+                    {
+                        HollowCraftObjectData owned = PlayerManager.Instance.ownedHollowObjects.Where(p => p.hollowItemEnum == HCOD.hollowItemEnum).SingleOrDefault();
+
+                        if (owned == null)
+                        {
+                            ZSAT.zoneSlot.InstantiateObject(HCOD);
+                        }
+                        else
+                        {
+                            Debug.LogError("SKIPPED cause owned");
+                        }
+
+                    }
+                    else
+                    {
+                        ZSAT.zoneSlot.InstantiateObject(HCOD);
+                    }
+                }
+            }
+
+            //GameObject go = Instantiate(HollowObjectPrefab, HollowObjectContent);
+            //HollowObjectDisplayer HOD = go.GetComponent<HollowObjectDisplayer>();
+
+            ////HOD.itemName.text = HCOD.objectname;
+            //HOD.objectData = HCOD;
+
+            //HOD.itemImage.texture = Resources.Load(HCOD.spritePath) as Texture2D;
+
+            //HOD.name = HCOD.objectname;
+            ////objectInHollow.Add(HOD);
+            //HOD.SpawnMaterialsNeeded(HCOD.mats);
         }
     }
 
@@ -127,7 +198,22 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
             Destroy(HO.gameObject);
         }
 
+
         FillCraftScreen(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
+    }
+
+    [ContextMenu("Refresh Hollow Objects")]
+    public void RefreshHollowScreenObjects()
+    {
+        //objectInHollow.Clear();
+
+        foreach (zoneSlotAndType ZSAT in hollowZones)
+        {
+            for (int i = 0; i < ZSAT.zoneSlot.hollowObjectZones.Count(); i++)
+            {
+                GameManager.Instance.DestroyChildrenOfTransform(ZSAT.zoneSlot.hollowObjectZones[i]);
+            }
+        }
     }
 
     //public void OpenOwnedFurnitureToPlace(int typeOfHollow)
@@ -156,11 +242,11 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
 
     public void BuyHollowAction()
     {
-        if (PlayerManager.Instance.rubyCount >= currentlyToCraft.rubiesNeededToBuyHollow)
+        if (PlayerManager.Instance.rubyCount >= currentlyToCraftNoramlMehtod.rubiesNeededToBuyHollow)
         {
-            PlayerManager.Instance.rubyCount -= currentlyToCraft.rubiesNeededToBuyHollow;
+            PlayerManager.Instance.rubyCount -= currentlyToCraftNoramlMehtod.rubiesNeededToBuyHollow;
 
-            currentlyToCraft.CraftHollowObject(true);
+            currentlyToCraftNoramlMehtod.CraftHollowObject(true);
 
             UIManager.Instance.updateRubyAndDewDropsCount();
 
@@ -169,14 +255,32 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
         }
 
 
-        currentlyToCraft = null;
+        currentlyToCraftNoramlMehtod = null;
+    }
+
+    public void BuyHollowActionSecondary()
+    {
+        if (PlayerManager.Instance.rubyCount >= currentlyToCraftSecondMethod.rubiesNeededToBuyHollow)
+        {
+            PlayerManager.Instance.rubyCount -= currentlyToCraftSecondMethod.rubiesNeededToBuyHollow;
+
+            currentlyToCraftSecondMethod.CraftHollowObject(true);
+
+            UIManager.Instance.updateRubyAndDewDropsCount();
+
+
+            //PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+        }
+
+
+        currentlyToCraftSecondMethod = null;
     }
 
     public void DisplayLoadedHollowItems()
     {
         foreach (FilledItemAndZoneIndex FIAZI in HollowManagerSaveData.Instance.filledHollowItemsToIndex)
         {
-            hollowZones[FIAZI.zoneIndex].objectsInZone[FIAZI.indexInZone].gameObject.SetActive(true);
+            hollowZones[FIAZI.zoneIndex].zoneSlot.objectsInZone[FIAZI.indexInZone].gameObject.SetActive(true);
         }
     }
 }

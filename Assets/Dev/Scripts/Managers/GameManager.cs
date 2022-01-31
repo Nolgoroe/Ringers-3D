@@ -580,6 +580,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.youWinScreen.SetActive(false);
         UIManager.Instance.bGPanelDisableTouch.SetActive(false);
         LootManager.Instance.DestoryWinScreenDisplyedLoot();
+        powerupManager.DestroySpecialPowersObjects();
 
         powerupManager.ResetData();
 
@@ -738,4 +739,11 @@ public class GameManager : MonoBehaviour
         CheckEndLevel(true);
     }
 
+    public void DestroyChildrenOfTransform(Transform inObejct)
+    {
+        foreach (Transform child in inObejct)
+        {
+            Destroy(child.gameObject);
+        }
+    }
 }
