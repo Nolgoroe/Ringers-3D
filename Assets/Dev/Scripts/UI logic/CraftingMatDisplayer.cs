@@ -28,7 +28,7 @@ public class CraftingMatDisplayer : MonoBehaviour
         }
 
         materialImage.sprite = icon;
-        materialCount.text =/* amountHas + "/" + */amountNeeded;
+        materialCount.text = amountHas + "/" + amountNeeded;
 
         parentObject = transform.parent.gameObject;
     }

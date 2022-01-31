@@ -111,32 +111,33 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
 
                 foreach (zoneSlotAndType ZSAT in releventZones)
                 {
-                    if (HollowManagerSaveData.Instance.filledHollowItemsToIndex.Count > 0)
+                    if (HollowManagerSaveData.Instance.filledHollowItemsToIndex.Count > 0 || PlayerManager.Instance.ownedHollowObjects.Count > 0)
                     {
                         FilledItemAndZoneIndex FIAZI = HollowManagerSaveData.Instance.filledHollowItemsToIndex.Where(p => p.hollowItem == HCOD.hollowItemEnum).SingleOrDefault();
 
-                        if (FIAZI == null)
-                        {
-                            ZSAT.zoneSlot.InstantiateObject(HCOD);
-                        }
-                        else
-                        {
-                            Debug.LogError("SKIPPED cause placed");
-                        }
-                    }
-                    else if(PlayerManager.Instance.ownedHollowObjects.Count > 0)
-                    {
                         HollowCraftObjectData owned = PlayerManager.Instance.ownedHollowObjects.Where(p => p.hollowItemEnum == HCOD.hollowItemEnum).SingleOrDefault();
 
-                        if (owned == null)
+                        if (FIAZI == null && owned == null)
                         {
                             ZSAT.zoneSlot.InstantiateObject(HCOD);
                         }
                         else
                         {
-                            Debug.LogError("SKIPPED cause owned");
-                        }
+                            if (owned != null && FIAZI == null)
+                            {
+                                Debug.LogError("skipped cause OWNED");
+                            }
 
+                            if(FIAZI != null && owned == null)
+                            {
+                                Debug.LogError("skipped cause PLACED");
+                            }
+
+                            if(FIAZI != null && owned != null)
+                            {
+                                Debug.LogError("skipped cause PLACED & OWNED");
+                            }
+                        }
                     }
                     else
                     {

@@ -35,6 +35,8 @@ public class ClipManager : MonoBehaviour
     public float delayClipMove, timeToAnimateMove, WaitTimeBeforeIn, delayDarkenClip, delayBrightenClip, timeToDarkenClip, timeToBrightenClip;
 
     public Vector3 pieceScaleOnBoard;
+
+    public float delaySpecialPowerFirefly;
     [Serializable]
     public class ColorsAndMats
     {
@@ -159,7 +161,7 @@ public class ClipManager : MonoBehaviour
                 p.leftChild.RefreshPiece();
                 p.rightChild.RefreshPiece();
 
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(delaySpecialPowerFirefly);
             }
         }
         else
@@ -186,7 +188,7 @@ public class ClipManager : MonoBehaviour
                 p.leftChild.RefreshPiece();
                 p.rightChild.RefreshPiece();
 
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(delaySpecialPowerFirefly);
             }
         }
 
