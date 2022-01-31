@@ -37,7 +37,7 @@ public class PowerUpManager : MonoBehaviour
 {
     public getChildrenHelpData[] instnatiateZones;
     public GameObject powerupButtonPreab;
-    public GameObject specialPowerPrefabLeft, specialPowerPrefabRight;
+    public GameObject specialPowerPrefabLeft/*, specialPowerPrefabRight*/;
     public GameObject selectedPowerupVFX;
     public Transform specialPowerPrefabParent;
     public Dictionary<PowerUp, string> spriteByType;
@@ -63,7 +63,7 @@ public class PowerUpManager : MonoBehaviour
 
     public List<InGameSpecialPowerUp> specialPowerupsInGame;
 
-    public float offsetYSpecialPowers = 100;
+    //public float offsetYSpecialPowers = 100;
 
     public Material jokerMat;
 
@@ -847,47 +847,47 @@ public class PowerUpManager : MonoBehaviour
     {
         if(GameManager.Instance.currentLevel.symbolsNeededForSpecialPowers.Length > 0)
         {
-            bool leftSide = true;
-            bool up = false;
+            //bool leftSide = true;
+            //bool up = false;
             GameObject go = null;
 
             foreach (SpecialPowerData SPD in GameManager.Instance.currentLevel.symbolsNeededForSpecialPowers)
             {
-                if (up)
-                {
-                    if (!leftSide)
-                    {
-                        go = Instantiate(specialPowerPrefabRight, specialPowerPrefabParent);
+                //if (up)
+                //{
+                    //if (!leftSide)
+                   // {
+                        //go = Instantiate(specialPowerPrefabRight, specialPowerPrefabParent);
 
-                        Transform pos = go.transform;
+                        //Transform pos = go.transform;
 
-                        go.transform.localPosition = new Vector3(-pos.localPosition.x, pos.localPosition.y + offsetYSpecialPowers, pos.localPosition.z);
-                    }
-                    else
-                    {
+                        //go.transform.localPosition = new Vector3(-pos.localPosition.x, pos.localPosition.y + offsetYSpecialPowers, pos.localPosition.z);
+                    //}
+                    //else
+                    //{
                         go = Instantiate(specialPowerPrefabLeft, specialPowerPrefabParent);
 
                         Transform pos = go.transform;
 
-                        go.transform.localPosition = new Vector3(pos.localPosition.x, pos.localPosition.y + offsetYSpecialPowers, pos.localPosition.z);
-                    }
-                }
-                else
-                {
-                    if (!leftSide)
-                    {
-                        go = Instantiate(specialPowerPrefabRight, specialPowerPrefabParent);
+                        go.transform.localPosition = new Vector3(pos.localPosition.x, pos.localPosition.y/* + offsetYSpecialPowers*/, pos.localPosition.z);
+                    //}
+                //}
+                //else
+                //{
+                //    if (!leftSide)
+                //    {
+                //        go = Instantiate(specialPowerPrefabRight, specialPowerPrefabParent);
 
-                        Transform pos = go.transform;
+                //        Transform pos = go.transform;
 
-                        go.transform.position = new Vector3(-pos.position.x, pos.position.y, pos.position.z);
-                        up = true;
-                    }
-                    else
-                    {
-                        go = Instantiate(specialPowerPrefabLeft, specialPowerPrefabParent);
-                    }
-                }
+                //        go.transform.position = new Vector3(-pos.position.x, pos.position.y, pos.position.z);
+                //        up = true;
+                //    }
+                //    else
+                //    {
+                //        go = Instantiate(specialPowerPrefabLeft, specialPowerPrefabParent);
+                //    }
+                //}
 
                 InGameSpecialPowerUp IGSP = null;
 
@@ -895,7 +895,7 @@ public class PowerUpManager : MonoBehaviour
                 {
                     IGSP = go.GetComponent<InGameSpecialPowerUp>();
 
-                    go.GetComponent<Button>().onClick.AddListener(() => CallSpecialPowerUp(IGSP));
+                    IGSP.button.onClick.AddListener(() => CallSpecialPowerUp(IGSP));
                     specialPowerupsInGame.Add(IGSP);
                 }
 
@@ -906,25 +906,25 @@ public class PowerUpManager : MonoBehaviour
                         IGSP.type = SpecialPowerUp.DragonflyCross;
                         IGSP.SymbolNeeded = PieceSymbol.FireFly;
                         IGSP.amountNeededToActivate = SPD.amount;
-                        go.GetComponent<Image>().sprite = specialPowerUpSpriteByType[IGSP.type];
+                        IGSP.icon.sprite = specialPowerUpSpriteByType[IGSP.type];
                         break;
                     case PieceSymbol.Badger:
                         IGSP.type = SpecialPowerUp.BadgerExtraDeal;
                         IGSP.SymbolNeeded = PieceSymbol.Badger;
                         IGSP.amountNeededToActivate = SPD.amount;
-                        go.GetComponent<Image>().sprite = specialPowerUpSpriteByType[IGSP.type];
+                        IGSP.icon.sprite = specialPowerUpSpriteByType[IGSP.type];
                         break;
                     case PieceSymbol.Goat:
                         IGSP.type = SpecialPowerUp.GoatWhatever;
                         IGSP.SymbolNeeded = PieceSymbol.Goat;
                         IGSP.amountNeededToActivate = SPD.amount;
-                        go.GetComponent<Image>().sprite = specialPowerUpSpriteByType[IGSP.type];
+                        IGSP.icon.sprite = specialPowerUpSpriteByType[IGSP.type];
                         break;
                     case PieceSymbol.Turtle:
                         IGSP.type = SpecialPowerUp.TurtleWhatever;
                         IGSP.SymbolNeeded = PieceSymbol.Turtle;
                         IGSP.amountNeededToActivate = SPD.amount;
-                        go.GetComponent<Image>().sprite = specialPowerUpSpriteByType[IGSP.type];
+                        IGSP.icon.sprite = specialPowerUpSpriteByType[IGSP.type];
                         break;
                     case PieceSymbol.Joker:
                         break;
@@ -934,7 +934,7 @@ public class PowerUpManager : MonoBehaviour
                         break;
                 }
 
-                leftSide = !leftSide;
+                //leftSide = !leftSide;
             }
         }
     }

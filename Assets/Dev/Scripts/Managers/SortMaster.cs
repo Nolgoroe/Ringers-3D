@@ -149,7 +149,7 @@ public class SortMaster : MonoBehaviour
 
     //}
 
-    public void ClearAllForgeScreens()
+    public void RefreshAllForgeScreens()
     {
         MaterialsAndForgeManager.Instance.RefreshMaterialBag();
         //MaterialsAndForgeManager.Instance.RefreshForge();

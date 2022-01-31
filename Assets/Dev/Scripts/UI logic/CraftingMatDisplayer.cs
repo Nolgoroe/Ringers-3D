@@ -28,7 +28,7 @@ public class CraftingMatDisplayer : MonoBehaviour
         }
 
         materialImage.sprite = icon;
-        materialCount.text = amountHas + "/" + amountNeeded;
+        materialCount.text =/* amountHas + "/" + */amountNeeded;
 
         parentObject = transform.parent.gameObject;
     }
@@ -41,7 +41,7 @@ public class CraftingMatDisplayer : MonoBehaviour
 
             if (hasAmount >= amountRequired)
             {
-                materialCount.color = UIManager.Instance.gameTextColor;
+                //materialCount.color = UIManager.Instance.gameTextColor;
 
                 if (parentObject)
                 {
@@ -72,7 +72,7 @@ public class CraftingMatDisplayer : MonoBehaviour
 
             if (CME.amount >= amountRequired)
             {
-                materialCount.color = UIManager.Instance.gameTextColor;
+                //materialCount.color = UIManager.Instance.gameTextColor;
 
                 if (parentObject)
                 {

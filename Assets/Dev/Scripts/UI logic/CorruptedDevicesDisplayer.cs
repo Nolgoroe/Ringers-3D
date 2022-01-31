@@ -98,7 +98,7 @@ public class CorruptedDevicesDisplayer : MonoBehaviour
             PlayerManager.Instance.DecreaseNumOfMats(CMN);
         }
 
-        SortMaster.Instance.ClearAllForgeScreens();
+        //SortMaster.Instance.RefreshAllForgeScreens();
         //SortMaster.Instance.RefreshAllScreens();
 
         //PlayerManager.Instance.wardrobeEquipment.Add(data);

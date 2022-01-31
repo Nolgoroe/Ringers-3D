@@ -380,7 +380,7 @@ public class PlayerManager : MonoBehaviour
 
         //PlayfabManager.instance.SaveAllGameData();
 
-        SortMaster.Instance.ClearAllForgeScreens();
+        SortMaster.Instance.RefreshAllForgeScreens();
         //SortMaster.Instance.RefreshAllScreens();
     }
 
@@ -399,7 +399,7 @@ public class PlayerManager : MonoBehaviour
         //MaterialsAndForgeManager.Instance.RefreshForge();
         //HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
 
-        SortMaster.Instance.ClearAllForgeScreens();
+        SortMaster.Instance.RefreshAllForgeScreens();
         //SortMaster.Instance.RefreshAllScreens();
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });

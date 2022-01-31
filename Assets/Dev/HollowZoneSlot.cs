@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+//using System.Linq;
 
 public class HollowZoneSlot : MonoBehaviour
 {
@@ -10,13 +12,14 @@ public class HollowZoneSlot : MonoBehaviour
     public List<ObjectHollowType> acceptedHollowItemTypes;
 
     public GameObject[] objectsInZone;
+    public Transform[] hollowObjectZones;
 
     public void CheckWork(ObjectHollowType typeWorked)
     {
         Debug.Log("Is this detectiong the hollow zone? " + typeWorked);
     }
 
-    public void PlaceHollowOnject(int indexInZone, HollowItems itemEnum)
+    public void PlaceHollowObject(int indexInZone, HollowItems itemEnum)
     {
         objectsInZone[indexInZone].SetActive(true);
         FilledItemAndZoneIndex FITZI = new FilledItemAndZoneIndex();
@@ -25,6 +28,21 @@ public class HollowZoneSlot : MonoBehaviour
         FITZI.indexInZone = indexInZone;
 
         HollowManagerSaveData.Instance.filledHollowItemsToIndex.Add(FITZI);
+    }
+
+    public void InstantiateObject(HollowCraftObjectData HCOD)
+    {
+            GameObject go = Instantiate(HollowCraftAndOwnedManager.Instance.HollowScreenCraftPrefab, hollowObjectZones[HCOD.indexInHollow]);
+            HollowObjectScreenDisplayer HOZD = go.GetComponent<HollowObjectScreenDisplayer>();
+
+            HOZD.objectIcon.texture = Resources.Load(HCOD.spritePath) as Texture2D;
+
+            HOZD.objectData = HCOD;
+
+            HOZD.SpawnMaterialsNeeded(HCOD.mats);
+
+            HOZD.connectedZoneSlot = this;
+
     }
 
 }

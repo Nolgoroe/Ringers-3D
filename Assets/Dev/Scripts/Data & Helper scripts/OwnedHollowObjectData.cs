@@ -60,10 +60,11 @@ public class OwnedHollowObjectData : MonoBehaviour, IPointerDownHandler, IDragHa
                 {
                     if (HZS.acceptedHollowItemTypes.Contains(OHT) || HZS.acceptedHollowItemTypes.Contains(ObjectHollowType.All))
                     {
-                        HZS.PlaceHollowOnject(objectData.indexInHollow, objectData.hollowItemEnum);
+                        HZS.PlaceHollowObject(objectData.indexInHollow, objectData.hollowItemEnum);
                         PlayerManager.Instance.ownedHollowObjects.Remove(objectData);
 
                         HollowCraftAndOwnedManager.Instance.RefreshOwnedScreen();
+                        HollowCraftAndOwnedManager.Instance.FillHollowScreenCraft(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
 
                         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.HollowManager, SystemsToSave.Player });
                         break;
