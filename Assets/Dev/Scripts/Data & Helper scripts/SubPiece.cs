@@ -23,6 +23,8 @@ public class SubPiece : MonoBehaviour
 
     Piece parentPiece;
 
+    public bool isRightSubPiece;
+
     private void Awake()
     {
         parentPiece = transform.GetComponentInParent<Piece>();
@@ -92,7 +94,7 @@ public class SubPiece : MonoBehaviour
         }
     }
 
-    public void SetStonePiece(stonePieceDataStruct SPDS, bool isRight)
+    public void SetStonePiece(stonePieceDataStruct SPDS)
     {
         if (SPDS.randomValues && !SPDS.isNeutral)
         {
@@ -126,7 +128,7 @@ public class SubPiece : MonoBehaviour
 
             //rend.material = GameManager.Instance.clipManager.colorsToMats[(int)PieceColor.None].colorMats[indexcSymbol];
 
-            if (isRight)
+            if (isRightSubPiece)
             {
                 rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.corruptedColorsToMatsRight[indexcSymbol]);
                 rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[indexcSymbol].symbolTex);
@@ -139,7 +141,7 @@ public class SubPiece : MonoBehaviour
         }
         else
         {
-            if (isRight)
+            if (isRightSubPiece)
             {
                 colorOfPiece = SPDS.colorOfPieceRight;
 
@@ -350,8 +352,20 @@ public class SubPiece : MonoBehaviour
     {
         int indexcSymbol = (int)symbol;
         symbolOfPiece = symbol;
-        rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[(int)PieceColor.None].colorTex[indexcSymbol]);
-        rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[(int)symbolOfPiece].symbolTex);
+
+        if (isRightSubPiece)
+        {
+            rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.corruptedColorsToMatsRight[indexcSymbol]);
+            rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[indexcSymbol].symbolTex);
+        }
+        else
+        {
+            rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.corruptedColorsToMatsLeft[indexcSymbol]);
+            rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[indexcSymbol].symbolTex);
+        }
+
+        //rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[(int)PieceColor.None].colorTex[indexcSymbol]);
+        //rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[(int)symbolOfPiece].symbolTex);
 
     }
 

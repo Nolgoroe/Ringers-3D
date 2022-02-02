@@ -283,25 +283,28 @@ public class SliceManager : MonoBehaviour
                 {
                     possibleSlotsTemp.Remove(randomPos);
 
-                    for (int i = 1; i < sliceSlots.Length / 2; i++)
+                    if(fullSlices.Count < 6)
                     {
-                        randomPos += 2;
-
-                        if (randomPos >= sliceSlots.Length)
+                        for (int i = 1; i < numOfSlices; i++)
                         {
-                            randomPos -= sliceSlots.Length;
+                            randomPos += 2;
+
+                            if (randomPos >= sliceSlots.Length)
+                            {
+                                randomPos -= sliceSlots.Length;
+                            }
+
+                            //randomPrefab = Random.Range(0, slicePrefabs.Length);
+
+                            //go = Instantiate(slicePrefabs, sliceSlots[randomPos]);
+                            //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
+                            fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
+                            //go.transform.parent.GetComponent<Slice>().child = go;
+                            possibleSlotsTemp.Remove(randomPos);
                         }
-
-                        //randomPrefab = Random.Range(0, slicePrefabs.Length);
-
-                        //go = Instantiate(slicePrefabs, sliceSlots[randomPos]);
-                        //fullSlices.Add(go.transform.parent.GetComponent<Slice>());
-                        fullSlices.Add(sliceSlots[randomPos].transform.GetComponent<Slice>());
-                        //go.transform.parent.GetComponent<Slice>().child = go;
-                        possibleSlotsTemp.Remove(randomPos);
                     }
 
-                    for (int i = 0; i < numOfSlices - sliceSlots.Length / 2; i++)
+                    for (int i = 0; i < numOfSlices - fullSlices.Count; i++)
                     {
                         randomPos = Random.Range(0, possibleSlotsTemp.Count);
                         //randomPrefab = Random.Range(0, slicePrefabs.Length);

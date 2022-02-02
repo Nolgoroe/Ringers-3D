@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldName: Walnut Grove
   isGrindLevel: 0
-  is12PieceRing: 1
+  is12PieceRing: 0
   isDoubleRing: 0
-  boardPrefab: {fileID: 6382559071292991177, guid: 9fa6c7e47566ca141a795f93ffbccf9b,
+  boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
     type: 3}
   levelNum: 8
   worldNum: 1
   levelIndexInZone: 1
   tutorialIndexForList: 0
-  cellsCountInLevel: 12
+  cellsCountInLevel: 8
   RandomSlicePositions: 1
   allowRepeatSlices: 0
   powerupsForLevel: 
@@ -35,9 +35,7 @@ MonoBehaviour:
   RewardBags: 08000000010000000200000007000000
   levelAvailableColors: 000000000100000004000000
   levelAvailablesymbols: 000000000300000001000000
-  symbolsNeededForSpecialPowers:
-  - symbol: 0
-    amount: 4
+  symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
   specificTutorialEnum: 0
   isTutorial: 0

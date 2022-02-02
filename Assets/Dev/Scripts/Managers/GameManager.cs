@@ -330,8 +330,10 @@ public class GameManager : MonoBehaviour
             selectedLevelBG = levelBGModels[backgroundID - 1]; // -1 since FOR NOW we don't have a bg for tutorial zone.. so we skip index 0
         }
 
-
-        selectedLevelBG.transform.Find("color mask").gameObject.SetActive(true); //// put this someplace better in the future
+        if(selectedLevelBG.transform.Find("color mask"))
+        {
+            selectedLevelBG.transform.Find("color mask").gameObject.SetActive(true); //// put this someplace better in the future
+        }
     }
 
     public void StartTutorialLevel(bool DoFade)
@@ -670,10 +672,10 @@ public class GameManager : MonoBehaviour
         // ZoneManagerHelpData.Instance.listOfAllZones[ZoneManagerHelpData.Instance.currentZoneCheck.id].SaveZone();
 
 
+        bool nextIsTutorial = CheckNextLevelIsTutorial(currentLevel.levelNum + 1);
 
         ChooseLevel(currentLevel.levelNum + 1/*, currentLevel.worldName*/);
 
-        bool nextIsTutorial = CheckNextLevelIsTutorial(currentLevel.levelNum + 1);
 
         if (nextIsTutorial)
         {
@@ -708,13 +710,27 @@ public class GameManager : MonoBehaviour
     {
         foreach (stonePieceDataStruct SPDS in currentLevel.stoneTiles)
         {
-            if(SPDS.cellIndex >= 0 && SPDS.cellIndex <= 7)
+            if (currentLevel.is12PieceRing)
             {
-                ConnectionManager.Instance.cells[SPDS.cellIndex].AddStonePieceToBoard(SPDS);
+                if (SPDS.cellIndex >= 0 && SPDS.cellIndex <= 11)
+                {
+                    ConnectionManager.Instance.cells[SPDS.cellIndex].AddStonePieceToBoard(SPDS);
+                }
+                else
+                {
+                    Debug.LogError("Cell index is either too high or too low - Min 0, Max 7");
+                }
             }
             else
             {
-                Debug.LogError("Cell index is either too high or too low - Min 0, Max 7");
+                if (SPDS.cellIndex >= 0 && SPDS.cellIndex <= 7)
+                {
+                    ConnectionManager.Instance.cells[SPDS.cellIndex].AddStonePieceToBoard(SPDS);
+                }
+                else
+                {
+                    Debug.LogError("Cell index is either too high or too low - Min 0, Max 7");
+                }
             }
         }
     }

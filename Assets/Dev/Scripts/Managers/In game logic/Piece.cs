@@ -166,15 +166,15 @@ public class Piece : MonoBehaviour
         bool isRepeatPieceSides = true;
         int repeatIndicator = 0;
 
-        rightChild.SetStonePiece(SPDS, true);
-        leftChild.SetStonePiece(SPDS, false);
+        rightChild.SetStonePiece(SPDS);
+        leftChild.SetStonePiece(SPDS);
 
         while (isRepeatPieceSides)
         {
             if (repeatIndicator > 0)
             {
-                rightChild.SetStonePiece(SPDS, true);
-                leftChild.SetStonePiece(SPDS, false);
+                rightChild.SetStonePiece(SPDS);
+                leftChild.SetStonePiece(SPDS);
 
                 repeatIndicator = 0;
             }
