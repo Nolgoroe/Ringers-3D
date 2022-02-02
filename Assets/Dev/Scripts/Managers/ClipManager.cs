@@ -147,19 +147,22 @@ public class ClipManager : MonoBehaviour
                 if (up) 
                 {
                     //left wing
-                    p.leftChild.symbolOfPiece = IGSP.SymbolNeeded;
+                    p.leftChild.symbolOfPiece = PieceSymbol.Joker;
+                    p.leftChild.colorOfPiece = PieceColor.Joker;
+                    p.leftChild.SetPieceAsJoker();
                 }
                 else
                 {
                     //right wing
 
-                    p.rightChild.symbolOfPiece = IGSP.SymbolNeeded;
+                    p.rightChild.symbolOfPiece = PieceSymbol.Joker;
+                    p.rightChild.colorOfPiece = PieceColor.Joker;
+                    p.rightChild.SetPieceAsJoker();
+
                 }
 
                 up = !up;
 
-                p.leftChild.RefreshPiece();
-                p.rightChild.RefreshPiece();
 
                 yield return new WaitForSeconds(delaySpecialPowerFirefly);
             }
@@ -175,18 +178,22 @@ public class ClipManager : MonoBehaviour
                 if (up)
                 {
                     //left wing
-                    p.leftChild.symbolOfPiece = IGSP.SymbolNeeded;
+                    p.leftChild.symbolOfPiece = PieceSymbol.Joker;
+                    p.leftChild.colorOfPiece = PieceColor.Joker;
+                    p.leftChild.SetPieceAsJoker();
+
                 }
                 else
                 {
                     //right wing
 
-                    p.rightChild.symbolOfPiece = IGSP.SymbolNeeded;
+                    p.rightChild.symbolOfPiece = PieceSymbol.Joker;
+                    p.rightChild.colorOfPiece = PieceColor.Joker;
+                    p.rightChild.SetPieceAsJoker();
                 }
 
                 up = !up;
-                p.leftChild.RefreshPiece();
-                p.rightChild.RefreshPiece();
+
 
                 yield return new WaitForSeconds(delaySpecialPowerFirefly);
             }
