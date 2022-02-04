@@ -393,7 +393,7 @@ public class AnimationManager : MonoBehaviour
 
     public void AnimateBrewScreen(string PotionName, string PotionSpritePath)
     {
-        SoundManager.Instance.PlaySound(Sounds.UnlockZone);
+        SoundManager.Instance.PlaySound(Sounds.ElementCrafted);
         UIManager.isUsingUI = true;
 
         brewNameText.text = PotionName;

@@ -19,8 +19,6 @@ public class Cell : MonoBehaviour
 
     public void AddPiece(Transform followerTarget, bool isNew)
     {
-        SoundManager.Instance.PlaySound(Sounds.AddTileBoard);
-
         isFull = true;
         followerTarget.SetParent(transform);
         followerTarget.position = new Vector3(followerTarget.parent.position.x, followerTarget.parent.position.y, followerTarget.parent.position.z);
@@ -311,7 +309,7 @@ public class Cell : MonoBehaviour
 
                 //pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
 
-                SoundManager.Instance.PlaySound(Sounds.TileUnmatch);
+                SoundManager.Instance.PlaySoundChangeVolume(Sounds.TileUnmatch, 0.1f);
 
                 if (!fromSlicePower)
                 {
@@ -364,7 +362,7 @@ public class Cell : MonoBehaviour
 
                 //pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
 
-                SoundManager.Instance.PlaySound(Sounds.TileUnmatch);
+                SoundManager.Instance.PlaySoundChangeVolume(Sounds.TileUnmatch, 0.1f);
 
                 if (!fromSlicePower)
                 {

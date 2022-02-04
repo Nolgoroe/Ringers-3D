@@ -13,7 +13,15 @@ public enum Sounds
     TileMatch,
     TileUnmatch,
     ButtonPressUI,
-    AddTileBoard
+    AddTileBoard,
+    DealAnimOnePiece,
+    DealAnimTwoPieces,
+    DealAnimThreePieces,
+    DealAnimFourPieces,
+    ElementCrafted,
+    NegativeSound,
+    PageFlip,
+    TileLock
     //// Add all sounds here
 }
 
@@ -51,6 +59,33 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(Sounds soundEnum)
     {
+        audioSource.volume = 0.5f;
+
         audioSource.PlayOneShot(enumToSound[soundEnum]);
     }
+
+    public void PlaySoundChangeVolume(Sounds soundEnum, float Volume)
+    {
+        audioSource.volume = Volume;
+
+        audioSource.PlayOneShot(enumToSound[soundEnum]);
+    }
+
+    public IEnumerator PlaySoundDelay(Sounds soundEnum, float Delay)
+    {
+        yield return new WaitForSeconds(Delay);
+        audioSource.volume = 0.5f;
+
+        audioSource.PlayOneShot(enumToSound[soundEnum]);
+    }
+
+    public IEnumerator PlaySoundChangeVolumeAndDelay(Sounds soundEnum, float Volume, float Delay)
+    {
+        yield return new WaitForSeconds(Delay);
+
+        audioSource.volume = Volume;
+
+        audioSource.PlayOneShot(enumToSound[soundEnum]);
+    }
+
 }

@@ -590,7 +590,7 @@ public class PowerUpManager : MonoBehaviour
 
             ShakePiecePowerUp(par.gameObject);
 
-            FinishedUsingPowerup(par.partOfBoard, prop);
+            FinishedUsingPowerup(true, prop);
 
             Debug.Log("Four Color");
         }
@@ -617,7 +617,7 @@ public class PowerUpManager : MonoBehaviour
 
             par.transform.parent.GetComponent<Cell>().AddPiece(par.transform, false);
 
-            FinishedUsingPowerup(par.partOfBoard, prop);
+            FinishedUsingPowerup(true, prop);
 
             Debug.Log("Four Symbol");
         }
@@ -687,6 +687,30 @@ public class PowerUpManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
         IsUsingPowerUp = true;
     }
+
+    public void CancelPowerup(PowerupProperties prop)
+    {
+        StopAllCoroutines();
+        UIManager.Instance.ActivateUsingPowerupMessage(false);
+
+        IsUsingPowerUp = false;
+        currentlyInUse = null;
+        HasUsedPowerUp = false;
+        layerToHit = new LayerMask();
+        EquipmentData ED = null;
+
+        for (int i = 0; i < prop.transform.childCount; i++)
+        {
+            if (prop.transform.GetChild(i).CompareTag("DestroyVFX"))
+            {
+                Destroy(prop.transform.GetChild(i).gameObject);
+            }
+        }
+
+
+        LeanTween.move(prop.gameObject, originalPotionPos, 0.4f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => ReactivatePowerButtons()); // animate
+    }
+
     public void FinishedUsingPowerup(bool successfull, PowerupProperties prop)
     {
         StopAllCoroutines();
@@ -742,7 +766,10 @@ public class PowerUpManager : MonoBehaviour
                 return;
             }
         }
-
+        else
+        {
+            SoundManager.Instance.PlaySound(Sounds.NegativeSound);
+        }
         //if (prop.connectedEquipment.isTutorialPower)
         //{
         //    if (prop.numOfUses == 0)

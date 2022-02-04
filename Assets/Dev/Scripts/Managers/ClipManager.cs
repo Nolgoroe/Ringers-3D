@@ -261,6 +261,26 @@ public class ClipManager : MonoBehaviour
         UIManager.Instance.dealButton.interactable = false;
         StartCoroutine(DeactivateClip(clipCount - 1));
 
+        switch (clipCount)
+        {
+            case 4:
+                SoundManager.Instance.PlaySound(Sounds.DealAnimFourPieces);
+                break;
+            case 3:
+                SoundManager.Instance.PlaySound(Sounds.DealAnimThreePieces);
+                break;
+            case 2:
+                SoundManager.Instance.PlaySound(Sounds.DealAnimTwoPieces);
+                break;
+            case 1:
+                SoundManager.Instance.PlaySound(Sounds.DealAnimOnePiece);
+                break;
+            default:
+                break;
+        }
+
+        yield return new WaitForSeconds(1f); /// TEMPORARY
+
         for (int i = 0; i < clipCount; i++)
         {
             GameObject toMove = slots[i].GetChild(1).gameObject;
@@ -271,9 +291,33 @@ public class ClipManager : MonoBehaviour
             yield return new WaitForSeconds(delayClipMove);
         }
 
+
         yield return new WaitForSeconds(WaitTimeBeforeIn);
         DealAnimClipLogic();
+
         clipCount--;
+
+
+        switch (clipCount)
+        {
+            case 4:
+                SoundManager.Instance.PlaySound(Sounds.DealAnimFourPieces);
+                break;
+            case 3:
+                SoundManager.Instance.PlaySound(Sounds.DealAnimThreePieces);
+                break;
+            case 2:
+                SoundManager.Instance.PlaySound(Sounds.DealAnimTwoPieces);
+                break;
+            case 1:
+                SoundManager.Instance.PlaySound(Sounds.DealAnimOnePiece);
+                break;
+            default:
+                break;
+        }
+
+        yield return new WaitForSeconds(0.8f); /// TEMPORARY
+
 
         for (int i = clipCount -1; i > -1; i--)
         {

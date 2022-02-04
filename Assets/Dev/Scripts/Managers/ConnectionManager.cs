@@ -29,6 +29,9 @@ public class ConnectionManager : MonoBehaviour
 
     //public Material rockLIT,rockUnLIT;
 
+    bool playedConnectedSound = false;
+    bool nextToOtherpiece = false;
+
     private void Start()
     {
         Instance = this;
@@ -66,6 +69,9 @@ public class ConnectionManager : MonoBehaviour
 
     public void CallConnection(int cellIndex, bool isOuterCell, bool lastPiece)
     {
+        playedConnectedSound = false;
+        nextToOtherpiece = false;
+
         if (!isOuterCell)
         {
             CheckConnections(subPiecesOnBoard, cells, cellIndex, isOuterCell, lastPiece);
@@ -94,10 +100,15 @@ public class ConnectionManager : MonoBehaviour
 
         if (supPieceArray[leftContested])
         {
+            nextToOtherpiece = true;
+
             if (supPieceArray[currentLeft])
             {
                 if (!CheckSubPieceConnection(supPieceArray[currentLeft], supPieceArray[leftContested], out bool conditionmet, out bool isGoodConnect))
                 {
+                    SoundManager.Instance.PlaySoundChangeVolume(Sounds.AddTileBoard, 0.1f);
+
+
                     if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
                     {
                         CursorController.Instance.tutorialBadConnection = true;
@@ -159,7 +170,8 @@ public class ConnectionManager : MonoBehaviour
                     supPieceArray[currentLeft].SetConnectedMaterial();
                     supPieceArray[leftContested].SetConnectedMaterial();
 
-                    SoundManager.Instance.PlaySound(Sounds.TileMatch);
+                    StartCoroutine(SoundManager.Instance.PlaySoundChangeVolumeAndDelay(Sounds.TileMatch, 0.1f, 0.1f));
+                    playedConnectedSound = true;
 
                     //Debug.Log("Emission is happening");
                     //supPieceArray[currentLeft].gameObject.GetComponent<Renderer>().material.EnableKeyword ("_EMISSION");
@@ -285,10 +297,14 @@ public class ConnectionManager : MonoBehaviour
 
         if (supPieceArray[rightContested])
         {
+            nextToOtherpiece = true;
+
             if (supPieceArray[currentRight])
             {
                 if (!CheckSubPieceConnection(supPieceArray[currentRight], supPieceArray[rightContested], out bool conditionmet, out bool isGoodConnect))
                 {
+                    SoundManager.Instance.PlaySoundChangeVolume(Sounds.AddTileBoard, 0.1f);
+
                     if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
                     {
                         CursorController.Instance.tutorialBadConnection = true;
@@ -362,7 +378,10 @@ public class ConnectionManager : MonoBehaviour
                     supPieceArray[rightContested].SetConnectedMaterial();
                     //Debug.Log("Emission is happening");
 
-                    SoundManager.Instance.PlaySound(Sounds.TileMatch);
+                    if (!playedConnectedSound)
+                    {
+                        StartCoroutine(SoundManager.Instance.PlaySoundChangeVolumeAndDelay(Sounds.TileMatch,0.1f ,0.1f));
+                    }
 
                     //supPieceArray[currentRight].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
                     //supPieceArray[rightContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
@@ -422,6 +441,11 @@ public class ConnectionManager : MonoBehaviour
                     //supPieceArray[currentRight].relevantSlice.fulfilledCondition = false;
                 }
             }
+        }
+
+        if (!nextToOtherpiece)
+        {
+            SoundManager.Instance.PlaySoundChangeVolume(Sounds.AddTileBoard, 0.1f);
         }
 
         if (lastPiece)
@@ -712,6 +736,7 @@ public class ConnectionManager : MonoBehaviour
 
         /// TURN ON HEIGHLIGHT ON SLICE HERE
 
+        SoundManager.Instance.PlaySound(Sounds.TileLock);
 
         relevent.lockSpriteHeighlightAnim.gameObject.SetActive(true);
 

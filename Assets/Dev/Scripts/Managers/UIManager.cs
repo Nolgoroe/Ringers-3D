@@ -15,6 +15,16 @@ public class ButtonsPerZone
     public GameObject[] zone3DButtons; //3D Map
     //public Button[] zoneButtons;
 }
+
+[System.Serializable]
+public class ImageTextCombo
+{
+    public GameObject imageObject;
+
+    public GameObject[] textObjects;
+    //public Button[] zoneButtons;
+}
+
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
@@ -65,13 +75,19 @@ public class UIManager : MonoBehaviour
     //public GameObject ItemAndForgeBagHEIGHLIGHTS;
     public GameObject brewedPotionScreen;
     public GameObject fadeIntoLevel;
+    public GameObject introScreenParent;
+    public GameObject TEMPBgIntro;
 
     public Image dewDropsImage;
 
     public Image tapControlsImage, dragControlsImage, tutorialDisableImage;
     public Image matsInventoryButton, forgeInventoryButton, potionInventoryButton;
+
     public float fadeIntoLevelSpeed;
     public float fadeIntoLevelDelay;
+
+    public float speedFadeInIntro;
+    public float speedFadeOutIntro;
 
     public Sprite toggleOffSprite, toggleOnSprite;
 
@@ -86,6 +102,7 @@ public class UIManager : MonoBehaviour
     public Text deltaWidth, deltaHeight;
     public Text boardScale;
     public TMP_Text dewDropsTextTime;
+
     public TMP_Text dailyLootTextTime;
 
     public TMP_Text /*gameplayGoldText,*/ gameplayRubyText/*, gameplayDewDropsText*/;
@@ -118,6 +135,7 @@ public class UIManager : MonoBehaviour
     public ButtonsPerZone[] buttonsPerZone;
     public InventorySortButtonData[] inventorySortButtons;
     public GameObject[] allTutorialScreens;
+    public ImageTextCombo[] introImages;
     //public Sprite[] dewDropsSprites;
 
     public Vector3 hubCameraPos;
@@ -128,12 +146,20 @@ public class UIManager : MonoBehaviour
 
     //public Color gameTextColor;
     public static bool isUsingUI;
+    public static bool isDuringIntro;
+    public static bool canAdvanceIntro;
 
     PanZoom PZ;
+
+    int introImageIndex = 0;
 
     private void Start()
     {
         Instance = this;
+
+        isDuringIntro = false;
+        canAdvanceIntro = true;
+
         mainMenu.SetActive(true); /// ony screen we should see at the start
 
         worldGameObject.SetActive(true);
@@ -191,6 +217,7 @@ public class UIManager : MonoBehaviour
         //ItemAndForgeBagHEIGHLIGHTS.SetActive(false);
         brewedPotionScreen.SetActive(false);
         fadeIntoLevel.SetActive(false);
+        introScreenParent.SetActive(false);
 
         dragControlsImage.sprite = toggleOnSprite;
         tapControlsImage.sprite = toggleOffSprite;
@@ -202,6 +229,12 @@ public class UIManager : MonoBehaviour
         {
             go.SetActive(false);
         }
+
+        //foreach (ImageTextCombo imageTextCombo in introImages)
+        //{
+        //    imageTextCombo.imageObject.gameObject.SetActive(false);
+        //    imageTextCombo.textObject.gameObject.SetActive(false);
+        //}
 
         versionText.text = Application.version;
 
@@ -227,6 +260,7 @@ public class UIManager : MonoBehaviour
         {
             boardScale.text = "No board";
         }
+        
     }
     public void PlayButton()
     {
@@ -681,6 +715,7 @@ public class UIManager : MonoBehaviour
             }
         }
         SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+        SoundManager.Instance.PlaySound(Sounds.PageFlip);
 
         itemBag.SetActive(false);
         Brewery.SetActive(false);
@@ -704,6 +739,7 @@ public class UIManager : MonoBehaviour
         openInventoryTab();
 
         SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+        SoundManager.Instance.PlaySound(Sounds.PageFlip);
 
         itemBag.SetActive(true);
         forge.SetActive(false);
@@ -721,6 +757,7 @@ public class UIManager : MonoBehaviour
     public void ToBrewery()
     {
         SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+        SoundManager.Instance.PlaySound(Sounds.PageFlip);
 
         itemBag.SetActive(false);
         forge.SetActive(false);
@@ -1426,5 +1463,161 @@ public class UIManager : MonoBehaviour
 
         yield return new WaitForSeconds(fadeIntoLevelSpeed + 0.1f);
         fadeIntoLevel.SetActive(false);
+    }
+
+
+    public IEnumerator DisplayIntro()
+    {
+        isDuringIntro = true;
+        canAdvanceIntro = false;
+
+        introScreenParent.SetActive(true);
+
+        LeanTween.value(TEMPBgIntro, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            Image sr = TEMPBgIntro.GetComponent<Image>();
+            Color newColor = sr.color;
+            newColor.a = val;
+            sr.color = newColor;
+        });
+
+        LeanTween.value(introImages[0].imageObject, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            Image sr = introImages[0].imageObject.GetComponent<Image>();
+            Color newColor = sr.color;
+            newColor.a = val;
+            sr.color = newColor;
+        });
+
+
+        foreach (GameObject go in introImages[0].textObjects)
+        {
+            LeanTween.value(go, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+            {
+                TMP_Text sr = go.GetComponent<TMP_Text>();
+                Color newColor = sr.color;
+                newColor.a = val;
+                sr.color = newColor;
+            });
+        }
+
+        yield return new WaitForSeconds(speedFadeInIntro + 0.1f);
+
+        canAdvanceIntro = true;
+    }
+
+
+    public IEnumerator AdvanceIntroScreen()
+    {
+        SoundManager.Instance.PlaySound(Sounds.PageFlip);
+        canAdvanceIntro = false;
+
+        LeanTween.value(introImages[introImageIndex].imageObject, 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            Image sr = introImages[introImageIndex].imageObject.GetComponent<Image>();
+            Color newColor = sr.color;
+            newColor.a = val;
+            sr.color = newColor;
+        });
+
+        foreach (GameObject go in introImages[introImageIndex].textObjects)
+        {
+            LeanTween.value(go, 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+            {
+                TMP_Text sr = go.GetComponent<TMP_Text>();
+                Color newColor = sr.color;
+                newColor.a = val;
+                sr.color = newColor;
+            });
+
+        }
+
+
+        yield return new WaitForSeconds(speedFadeOutIntro + 0.1f);
+        introImageIndex++;
+
+        if (introImageIndex >= introImages.Count())
+        {
+            isDuringIntro = false;
+            canAdvanceIntro = false;
+
+            TutorialSaveData.Instance.hasFinishedIntro = true;
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+
+            PlayButton();
+            DisplayDailyRewardsScreen();
+
+            LeanTween.value(TEMPBgIntro, 1, 0, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+            {
+                Image sr = TEMPBgIntro.GetComponent<Image>();
+                Color newColor = sr.color;
+                newColor.a = val;
+                sr.color = newColor;
+            });
+
+            yield return new WaitForSeconds(speedFadeOutIntro + 0.1f);
+
+            introScreenParent.SetActive(false);
+            yield break;
+        }
+        else
+        {
+            LeanTween.value(introImages[introImageIndex].imageObject, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+            {
+                Image sr = introImages[introImageIndex].imageObject.GetComponent<Image>();
+                Color newColor = sr.color;
+                newColor.a = val;
+                sr.color = newColor;
+            });
+
+            foreach (GameObject go in introImages[introImageIndex].textObjects)
+            {
+                LeanTween.value(go, 0, 1, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+                {
+                    TMP_Text sr = go.GetComponent<TMP_Text>();
+                    Color newColor = sr.color;
+                    newColor.a = val;
+                    sr.color = newColor;
+                });
+
+            }
+        }
+
+        yield return new WaitForSeconds(speedFadeInIntro + 0.1f);
+        canAdvanceIntro = true;
+    }
+
+
+    public void SkipIntroScreens()
+    {
+        isDuringIntro = false;
+        canAdvanceIntro = false;
+
+        TutorialSaveData.Instance.hasFinishedIntro = true;
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+
+        PlayButton();
+        DisplayDailyRewardsScreen();
+
+        StartCoroutine(SkipIntroFade());
+    }
+
+    public IEnumerator SkipIntroFade()
+    {
+        if (introImageIndex != introImages.Count() - 1)
+        {
+            LeanTween.value(TEMPBgIntro, 1, 0, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+            {
+                Image sr = TEMPBgIntro.GetComponent<Image>();
+                Color newColor = sr.color;
+                newColor.a = val;
+                sr.color = newColor;
+            });
+        }
+
+        yield return new WaitForSeconds(speedFadeOutIntro + 0.1f);
+
+        introScreenParent.SetActive(false);
+
     }
 }

@@ -102,6 +102,7 @@ public class TutorialSequence : MonoBehaviour
     public List<GameObject> screensDeactivateOnTouch;
 
     public Transform handPosToHub, handPosOpenInventory, handPosChangeTab, handPosBrewButton;
+
     private void Start()
     {
         Instacne = this;

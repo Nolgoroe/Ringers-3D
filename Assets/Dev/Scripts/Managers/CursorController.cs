@@ -64,6 +64,21 @@ public class CursorController : MonoBehaviour
 
     void Update()
     {
+
+        if (UIManager.isDuringIntro && UIManager.canAdvanceIntro)
+        {
+            if (Input.touchCount > 0)
+            {
+                touch = Input.touches[0];
+
+                if (touch.phase == TouchPhase.Began)
+                {
+                    Debug.Log("ADVANCING");
+                   StartCoroutine(UIManager.Instance.AdvanceIntroScreen());
+                }
+            }
+        }
+
         if (TutorialSequence.Instacne.screensDeactivateOnTouch.Count > 0)
         {
             if (Input.touchCount > 0)
@@ -107,6 +122,8 @@ public class CursorController : MonoBehaviour
                 }
             }
         } /// detect empty touch phase in tutorial sequence
+
+
 
         if (!GameManager.Instance.levelStarted && !UIManager.isUsingUI && GameManager.Instance.clickedPlayButton)
         {
@@ -191,6 +208,8 @@ public class CursorController : MonoBehaviour
             }
         } // detect deactivate brewed potion vfx
 
+
+
         if (GameManager.Instance.levelStarted && PowerUpManager.IsUsingPowerUp)
         {
             PowerUpControls();
@@ -208,6 +227,8 @@ public class CursorController : MonoBehaviour
             SecondaryControls();
         } // secondary controls
     }
+
+
     public void SecondaryControls()
     {
 
@@ -553,7 +574,7 @@ public class CursorController : MonoBehaviour
 
                         if (GameManager.Instance.powerupManager.currentlyInUse)
                         {
-                            GameManager.Instance.powerupManager.FinishedUsingPowerup(false, GameManager.Instance.powerupManager.currentlyInUse);
+                            GameManager.Instance.powerupManager.CancelPowerup(GameManager.Instance.powerupManager.currentlyInUse);
                         }
                     }
                 }
