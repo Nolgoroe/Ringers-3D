@@ -21,7 +21,7 @@ public class SubPiece : MonoBehaviour
     int randomColor;
     int randomSymbol;
 
-    Piece parentPiece;
+    public Piece parentPiece;
 
     public bool isRightSubPiece;
 

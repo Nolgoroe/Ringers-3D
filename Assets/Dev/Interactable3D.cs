@@ -110,4 +110,19 @@ public class Interactable3D : MonoBehaviour
 
         }
     }
+
+
+    public void LaunchBossLevel(LevelScriptableObject bossLevel)
+    {
+        if(PlayerManager.Instance.bossTicketCount > 0)
+        {
+            PlayerManager.Instance.bossTicketCount--;
+            ZoneManager.Instance.SetCurrentZone(0);
+
+            BossBattleManager.instance.bossLevelSO = bossLevel;
+            GameManager.Instance.currentLevel = bossLevel;
+            GameManager.Instance.setCurrentLevelBG(0);
+            GameManager.Instance.startBossLevel(true);
+        }
+    }
 }

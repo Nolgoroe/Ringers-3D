@@ -90,6 +90,11 @@ public class ConnectionManager : MonoBehaviour
                                                                                     ///// This function works like this to accomodate the last piece logic. 
                                                                                     //When the last piece is placed on the board we HAVE TO check connections before activating slice animations and logic.
                                                                                     //If one of the sides of the LAST PIECE are wrong then we don't activate any slices even if condition is met
+
+        if (GameManager.Instance.currentLevel.isBoss)
+        {
+            StartCoroutine(BossBattleManager.instance.DamageBoss());
+        }
     }
 
 
@@ -106,7 +111,7 @@ public class ConnectionManager : MonoBehaviour
             {
                 if (!CheckSubPieceConnection(supPieceArray[currentLeft], supPieceArray[leftContested], out bool conditionmet, out bool isGoodConnect))
                 {
-                    SoundManager.Instance.PlaySoundChangeVolume(Sounds.AddTileBoard, 0.1f);
+                    SoundManager.Instance.PlaySoundChangeVolume(Sounds.AddTileBoard, 0.5f);
 
 
                     if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
@@ -170,14 +175,15 @@ public class ConnectionManager : MonoBehaviour
                     supPieceArray[currentLeft].SetConnectedMaterial();
                     supPieceArray[leftContested].SetConnectedMaterial();
 
-                    StartCoroutine(SoundManager.Instance.PlaySoundChangeVolumeAndDelay(Sounds.TileMatch, 0.1f, 0.1f));
+
+                    StartCoroutine(SoundManager.Instance.PlaySoundChangeVolumeAndDelay(Sounds.TileMatch, 0.5f, 0.1f));
                     playedConnectedSound = true;
 
                     //Debug.Log("Emission is happening");
                     //supPieceArray[currentLeft].gameObject.GetComponent<Renderer>().material.EnableKeyword ("_EMISSION");
                     //supPieceArray[leftContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
 
-                    if (lastPiece)
+                    if (lastPiece && !GameManager.Instance.currentLevel.isBoss)
                     {
                         CheckRight(supPieceArray, cellList, cellIndex, isOuterCell, lastPiece);
 
@@ -254,8 +260,19 @@ public class ConnectionManager : MonoBehaviour
                             }
                         }
 
+
+                        BossBattleManager.instance.piecesToRemove.Add(supPieceArray[currentLeft].parentPiece); /// middle piece
+                        BossBattleManager.instance.piecesToRemove.Add(supPieceArray[leftContested].parentPiece); /// left piece
+
                         CheckRight(supPieceArray, cellList, cellIndex, isOuterCell, lastPiece);
                     }
+
+
+                    //supPieceArray[currentLeft].parentPiece.GetComponentInParent<Cell>().RemovePiece(true, false);
+                    //supPieceArray[leftContested].parentPiece.GetComponentInParent<Cell>().RemovePiece(true, false);
+
+                    //Destroy(supPieceArray[currentLeft].parentPiece.gameObject);
+                    //Destroy(supPieceArray[leftContested].parentPiece.gameObject);
                 }
             }
             else
@@ -303,7 +320,7 @@ public class ConnectionManager : MonoBehaviour
             {
                 if (!CheckSubPieceConnection(supPieceArray[currentRight], supPieceArray[rightContested], out bool conditionmet, out bool isGoodConnect))
                 {
-                    SoundManager.Instance.PlaySoundChangeVolume(Sounds.AddTileBoard, 0.1f);
+                    SoundManager.Instance.PlaySoundChangeVolume(Sounds.AddTileBoard, 0.5f);
 
                     if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
                     {
@@ -380,7 +397,7 @@ public class ConnectionManager : MonoBehaviour
 
                     if (!playedConnectedSound)
                     {
-                        StartCoroutine(SoundManager.Instance.PlaySoundChangeVolumeAndDelay(Sounds.TileMatch,0.1f ,0.1f));
+                        StartCoroutine(SoundManager.Instance.PlaySoundChangeVolumeAndDelay(Sounds.TileMatch,0.5f ,0.1f));
                     }
 
                     //supPieceArray[currentRight].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
@@ -419,6 +436,20 @@ public class ConnectionManager : MonoBehaviour
                         }
                     }
 
+                    if (!BossBattleManager.instance.piecesToRemove.Contains(supPieceArray[currentRight].parentPiece))
+                    {
+                        BossBattleManager.instance.piecesToRemove.Add(supPieceArray[currentRight].parentPiece); // middle pice - if we already have this piece - we do not need it again!!
+                    }
+
+                    BossBattleManager.instance.piecesToRemove.Add(supPieceArray[rightContested].parentPiece); // right piece
+
+
+                    //supPieceArray[currentRight].parentPiece.GetComponentInParent<Cell>().RemovePiece(true, false);
+                    //supPieceArray[rightContested].parentPiece.GetComponentInParent<Cell>().RemovePiece(true, false);
+
+                    //Destroy(supPieceArray[currentRight].parentPiece.gameObject);
+                    //Destroy(supPieceArray[rightContested].parentPiece.gameObject);
+
                 }
             }
             else
@@ -443,12 +474,12 @@ public class ConnectionManager : MonoBehaviour
             }
         }
 
-        if (!nextToOtherpiece)
+        if (!nextToOtherpiece && !supPieceArray[currentRight].GetComponentInParent<Piece>().isStone)
         {
-            SoundManager.Instance.PlaySoundChangeVolume(Sounds.AddTileBoard, 0.1f);
+            SoundManager.Instance.PlaySoundChangeVolume(Sounds.AddTileBoard, 0.5f);
         }
 
-        if (lastPiece)
+        if (lastPiece && !GameManager.Instance.currentLevel.isBoss)
         {
             GameManager.Instance.CheckEndLevel(false);
         }

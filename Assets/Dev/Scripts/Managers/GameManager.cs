@@ -17,7 +17,7 @@ public class NumAnimalTypedOnBoard
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public static bool gameWon;
+    public static bool LevelEnded;
     //public GameObject circleBoardPrefab;
     //public GameObject doubleCircleBoardPrefab;
 
@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
             g.SetActive(false);
         }
 
-        gameWon = false;
+        LevelEnded = false;
     }
 
     //public void CallStartLevel(bool isTutorial)
@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
     {
         if (DoFade)
         {
-            StartCoroutine(UIManager.Instance.FadeIntoLevel(false));
+            StartCoroutine(UIManager.Instance.FadeIntoLevel(false, false));
 
             //yield return new WaitForSeconds(UIManager.Instance.fadeIntoLevelSpeed + 0.1f);
         }
@@ -122,11 +122,23 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void startBossLevel(bool DoFade)
+    {
+        if (DoFade)
+        {
+            StartCoroutine(UIManager.Instance.FadeIntoLevel(false, true));
+        }
+        else
+        {
+            ResetDataStartBossLevel();
+        }
+    }
+
     public void ResetDataStartLevel(bool isTutorial)
     {
         if (isTutorial)
         {
-            gameWon = false;
+            LevelEnded = false;
 
             if (!isDisableTutorials)
             {
@@ -237,7 +249,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            gameWon = false;
+            LevelEnded = false;
             TutorialSequence.Instacne.DisableTutorialSequence(); //// Make sure tutorial is disabled
             powerupManager.ClearTutorialPowerups(); /// Make sure there are no leftover powerups
 
@@ -319,6 +331,82 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void ResetDataStartBossLevel()
+    {
+        BossBattleManager.instance.ResetData();
+
+        LevelEnded = false;
+        TutorialSequence.Instacne.DisableTutorialSequence(); //// Make sure tutorial is disabled
+        powerupManager.ClearTutorialPowerups(); /// Make sure there are no leftover powerups
+
+        for (int i = 0; i < numAnimalsOnBoard.Length; i++)
+        {
+            numAnimalsOnBoard[i].amount = 0;
+        }
+
+        UIManager.Instance.ChangeZoneName(BossBattleManager.instance.bossLevelSO.worldName, BossBattleManager.instance.bossLevelSO.levelIndexInZone);
+        UIManager.Instance.TurnOnGameplayUI();
+        UIManager.Instance.dealButton.interactable = true;
+        UIManager.Instance.ActivateGmaeplayCanvas();
+
+        Camera.main.transform.position = inGameCamPos;
+        TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, TutorialSequence.Instacne.maskImage.transform.position.z);
+        Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
+
+        levelStarted = true;
+
+        LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
+        gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
+
+        gameBoard = Instantiate(BossBattleManager.instance.bossLevelSO.boardPrefab, destroyOutOfLevel);
+
+        //UIManager.Instance.GetCommitButton(gameBoard); 
+        clipManager.Init();
+        sliceManager.Init();
+        cursorControl.Init();
+
+
+        ConnectionManager.Instance.GrabCellList(gameBoard.transform);
+        ConnectionManager.Instance.SetLevelConnectionData(BossBattleManager.instance.bossLevelSO.is12PieceRing);
+
+
+        sliceManager.SpawnSlices(BossBattleManager.instance.bossLevelSO.slicesToSpawn.Length);
+
+        PlayerManager.Instance.HandleItemCooldowns();
+
+        PlayerManager.Instance.PopulatePowerUps();
+
+        powerupManager.InstantiateSpecialPowers();
+
+
+        if (selectedLevelBG)
+        {
+            selectedLevelBG.SetActive(true);
+
+            //AnimalPrefabData data = InstantiateAnimals(selectedLevelBG);
+
+            //if (data != null)
+            //{
+            //    AnimalsManager.Instance.currentLevelAnimal = data.animalType;
+            //}
+            //else
+            //{
+            //    Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
+            //}
+        }
+
+        InstantiateStonePieces();
+        InstantiatePrePiecesOnBoard();
+
+        powerupManager.instnatiatedZonesCounter = 0;
+
+
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
+
+        StartCoroutine(BossBattleManager.instance.delayStartBossActions());
+    }
+
+
     public void setCurrentLevelBG(int backgroundID)
     {
         if (ZoneManagerHelpData.Instance.currentZoneCheck.id == 0)
@@ -340,7 +428,7 @@ public class GameManager : MonoBehaviour
     {
         if (DoFade)
         {
-            StartCoroutine(UIManager.Instance.FadeIntoLevel(true));
+            StartCoroutine(UIManager.Instance.FadeIntoLevel(true, false));
             //yield return new WaitForSeconds(UIManager.Instance.fadeIntoLevelSpeed + 0.1f);
         }
         else
@@ -417,6 +505,7 @@ public class GameManager : MonoBehaviour
         currentLevel = Instantiate((LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/Grind Levels" + "/Level " + levelNum));
     }
 
+
     public void DestroyAllLevelChildern()
     {
         //Debug.Log("Destroying Level");
@@ -453,7 +542,7 @@ public class GameManager : MonoBehaviour
     {
         if (cheat)
         {
-            gameWon = true;
+            LevelEnded = true;
 
             AnimationManager.instance.StartEndLevelAnimSequence(true); ///// loot is given here
 
@@ -488,7 +577,7 @@ public class GameManager : MonoBehaviour
 
                 Debug.Log("YOU WIN");
 
-                gameWon = true;
+                LevelEnded = true;
 
                 SoundManager.Instance.PlaySound(Sounds.SolvedRing);
                 powerupManager.CheckTurnTempPowerToPermaPower();
@@ -511,7 +600,7 @@ public class GameManager : MonoBehaviour
                 //UIManager.Instance.LoseLevel();
                 Debug.Log("You Lose");
 
-                gameWon = false;
+                LevelEnded = false;
 
                 //PlayerManager.Instance.SavePlayerData();
                 //PlayfabManager.instance.SaveAllGameData();
@@ -600,28 +689,30 @@ public class GameManager : MonoBehaviour
             powerupManager.ClearTutorialPowerups();
         }
 
-        if (currentLevel.isGrindLevel)
-        {
-            ChooseLevelGrind(currentLevel.levelNum);
-        }
-        else
-        {
-            ChooseLevel(currentLevel.levelNum);
-        }
+        //if (currentLevel.isGrindLevel)
+        //{
+        //    ChooseLevelGrind(currentLevel.levelNum);
+        //}
+        //else
+        //{
+        //    ChooseLevel(currentLevel.levelNum);
+        //}
 
         foreach (InGameSpecialPowerUp IGSP in powerupManager.specialPowerupsInGame)
         {
             IGSP.ResetValues();
         }
 
-        if (!isDisableTutorials && currentLevel.isTutorial )
+        if (!isDisableTutorials && currentLevel.isTutorial)
         {
-            //StartCoroutine(StartTutorialLevel(false));
             StartTutorialLevel(false);
+        }
+        else if(currentLevel.isBoss)
+        {
+            startBossLevel(false);
         }
         else
         {
-            //StartCoroutine(StartLevel(false));
             StartLevel(false);
         }
     }
@@ -735,6 +826,135 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void InstantiatePrePiecesOnBoard()
+    {
+        List<Cell> fullCells = new List<Cell>();
+
+        List<int> possibleSlotsTemp = new List<int>();
+
+        for (int i = 0; i < ConnectionManager.Instance.cells.Count; i++)
+        {
+            possibleSlotsTemp.Add(i);
+        }
+
+        if (currentLevel.isRandomPieces)
+        {
+            int randomPos = UnityEngine.Random.Range(0, ConnectionManager.Instance.cells.Count);
+
+            fullCells.Add(ConnectionManager.Instance.cells[randomPos].transform.GetComponent<Cell>());
+
+            possibleSlotsTemp = removeNearCellsFromPossible(possibleSlotsTemp, randomPos);
+
+            if(currentLevel.specificPiecesIndex.Count() == 4)
+            {
+                for (int i = 1; i < currentLevel.specificPiecesIndex.Count(); i++)
+                {
+
+                    randomPos += 2;
+
+
+                    if (randomPos >= ConnectionManager.Instance.cells.Count())
+                    {
+                        randomPos -= ConnectionManager.Instance.cells.Count();
+                    }
+
+                    fullCells.Add(ConnectionManager.Instance.cells[randomPos].transform.GetComponent<Cell>());
+                }
+            }
+            else
+            {
+                if (currentLevel.is12PieceRing)
+                {
+                    if (currentLevel.specificPiecesIndex.Count() <= currentLevel.cellsCountInLevel / 2)
+                    {
+                        for (int i = 1; i < currentLevel.specificPiecesIndex.Count(); i++)
+                        {
+
+                            randomPos = UnityEngine.Random.Range(0, possibleSlotsTemp.Count());
+
+                            fullCells.Add(ConnectionManager.Instance.cells[possibleSlotsTemp[randomPos]].transform.GetComponent<Cell>());
+
+                            possibleSlotsTemp = removeNearCellsFromPossible(possibleSlotsTemp, possibleSlotsTemp[randomPos]);
+
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("Not possible to summon pieces with 1 space between them");
+                        return;
+                    }
+                }
+                else
+                {
+                    if (currentLevel.specificPiecesIndex.Count() <= currentLevel.cellsCountInLevel / 2)
+                    {
+                        for (int i = 1; i < currentLevel.specificPiecesIndex.Count(); i++)
+                        {
+                            randomPos = UnityEngine.Random.Range(0, possibleSlotsTemp.Count());
+
+                            fullCells.Add(ConnectionManager.Instance.cells[possibleSlotsTemp[randomPos]].transform.GetComponent<Cell>());
+
+                            possibleSlotsTemp = removeNearCellsFromPossible(possibleSlotsTemp, possibleSlotsTemp[randomPos]);
+
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("Not possible to summon pieces with 1 space between them");
+                        return;
+                    }
+
+                }
+            }
+
+            for (int i = 0; i < fullCells.Count; i++)
+            {
+                fullCells[i].AddPieceRandom();
+            }
+        }
+        else
+        {
+            for (int i = 0; i < currentLevel.specificPiecesIndex.Count(); i++)
+            {
+                fullCells.Add(ConnectionManager.Instance.cells[currentLevel.specificPiecesIndex[i]].transform.GetComponent<Cell>());
+            }
+
+
+            for (int i = 0; i < fullCells.Count; i++)
+            {
+                fullCells[i].AddPieceRandom();
+            }
+        }
+    }
+
+    private List<int> removeNearCellsFromPossible(List<int> possibleSlotsTemp, int index)
+    {
+        possibleSlotsTemp.Remove(index);
+
+
+        if (index - 1 < 0)
+        {
+            int newIndex = ConnectionManager.Instance.cells.Count() - 1;
+            possibleSlotsTemp.Remove(newIndex);
+        }
+        else
+        {
+            possibleSlotsTemp.Remove(index - 1);
+        }
+
+        if (index + 1 >= ConnectionManager.Instance.cells.Count())
+        {
+            int newIndex = 0;
+            possibleSlotsTemp.Remove(newIndex);
+        }
+        else
+        {
+            possibleSlotsTemp.Remove(index + 1);
+
+        }
+
+        return possibleSlotsTemp;
+    }
 
     public void ResetAllSaveData()
     {

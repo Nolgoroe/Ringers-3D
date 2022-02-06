@@ -123,8 +123,18 @@ public class Slice : MonoBehaviour
             {
                 bool repetingSlices = CheckRepeatingSlices(this);
 
+                int tries = 0;
+
                 while (repetingSlices)
                 {
+                    tries++;
+
+                    if(tries == 1000)
+                    {
+                        Debug.LogError("There are repeat slices but code won't allow");
+                        break;
+                    }
+
                     SetRendereDataLimiter(rend, pieceSymbolEnumCount, pieceColorEnumCount);
                     repetingSlices = CheckRepeatingSlices(this);
                 }
@@ -339,8 +349,19 @@ public class Slice : MonoBehaviour
             {
                 bool repetingSlices = CheckRepeatingSlices(this);
 
+                int tries = 0;
+
                 while (repetingSlices)
                 {
+
+                    tries++;
+
+                    if (tries == 1000)
+                    {
+                        Debug.LogError("There are repeat slices but code won't allow");
+                        break;
+                    }
+
                     SetRendererDataNonLimiter(mat, pieceSymbolEnumCount, pieceColorEnumCount);
                     repetingSlices = CheckRepeatingSlices(this);
                 }

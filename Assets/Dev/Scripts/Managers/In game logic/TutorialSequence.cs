@@ -518,7 +518,7 @@ public class TutorialSequence : MonoBehaviour
             Debug.Log("Phases are done!");
             //Invoke("UnlockAll", 2);
 
-            if (!GameManager.gameWon)
+            if (!GameManager.LevelEnded)
             {
                 UnlockAll();
             }
@@ -586,7 +586,7 @@ public class TutorialSequence : MonoBehaviour
             activatedHeighlights.Clear();
             activatedBoardParticles.Clear();
 
-            if (!GameManager.gameWon)
+            if (!GameManager.LevelEnded)
             {
                 UnlockAll();
             }

@@ -77,6 +77,7 @@ public class UIManager : MonoBehaviour
     public GameObject fadeIntoLevel;
     public GameObject introScreenParent;
     public GameObject TEMPBgIntro;
+    public GameObject bossBattleUIScreen;
 
     public Image dewDropsImage;
 
@@ -131,6 +132,7 @@ public class UIManager : MonoBehaviour
     public Button buyHollowItemSecondaryYesButton;
 
     //public Button[] levelButtons;
+    public Slider bossHealthSlider;
 
     public ButtonsPerZone[] buttonsPerZone;
     public InventorySortButtonData[] inventorySortButtons;
@@ -148,6 +150,9 @@ public class UIManager : MonoBehaviour
     public static bool isUsingUI;
     public static bool isDuringIntro;
     public static bool canAdvanceIntro;
+
+
+
 
     PanZoom PZ;
 
@@ -218,6 +223,7 @@ public class UIManager : MonoBehaviour
         brewedPotionScreen.SetActive(false);
         fadeIntoLevel.SetActive(false);
         introScreenParent.SetActive(false);
+        bossBattleUIScreen.SetActive(false);
 
         dragControlsImage.sprite = toggleOnSprite;
         tapControlsImage.sprite = toggleOffSprite;
@@ -418,14 +424,7 @@ public class UIManager : MonoBehaviour
     }
     public void ChangeZoneName(string name, int levelID)
     {
-        if (GameManager.Instance.currentLevel.isGrindLevel)
-        {
-            currentLevelWorldName.text = name;
-        }
-        else
-        {
-            currentLevelWorldName.text = name;
-        }
+        currentLevelWorldName.text = name;
 
         currentLevelNumber.text = levelID.ToString();
     }
@@ -547,12 +546,29 @@ public class UIManager : MonoBehaviour
                     TutorialSequence.Instacne.activatedHeighlights.Clear();
                     TutorialSequence.Instacne.activatedBoardParticles.Clear();
 
+                    BossBattleManager.instance.ResetData();
+
+                    if (GameManager.Instance.currentLevel.isBoss)
+                    {
+                        DeactivateBossBattleUIScreen();
+                        BossBattleManager.instance.bossLevelSO = null;
+                    }
+
                     GameManager.Instance.currentLevel = null;
+
                     TutorialSequence.Instacne.duringSequence = false;
                 }
             }
             else
             {
+                BossBattleManager.instance.ResetData();
+
+                if (GameManager.Instance.currentLevel.isBoss)
+                {
+                    DeactivateBossBattleUIScreen();
+                    BossBattleManager.instance.bossLevelSO = null;
+                }
+
                 GameManager.Instance.currentLevel = null;
             }
             //// SAVE ZONE MANAGER HERE???
@@ -1438,18 +1454,30 @@ public class UIManager : MonoBehaviour
     }
 
 
-    public IEnumerator FadeIntoLevel(bool isTutorialLevel)
+    public IEnumerator FadeIntoLevel(bool isTutorialLevel, bool isBossLevel)
     {
         fadeIntoLevel.SetActive(true);
 
-        LeanTween.value(fadeIntoLevel, 0, 1, fadeIntoLevelSpeed).setEase(LeanTweenType.linear).setOnComplete(() => GameManager.Instance.ResetDataStartLevel(isTutorialLevel)).setOnUpdate((float val) =>
+        if (!isBossLevel)
         {
-            Image sr = fadeIntoLevel.GetComponent<Image>();
-            Color newColor = sr.color;
-            newColor.a = val;
-            sr.color = newColor;
-        });
-
+            LeanTween.value(fadeIntoLevel, 0, 1, fadeIntoLevelSpeed).setEase(LeanTweenType.linear).setOnComplete(() => GameManager.Instance.ResetDataStartLevel(isTutorialLevel)).setOnUpdate((float val) =>
+            {
+                Image sr = fadeIntoLevel.GetComponent<Image>();
+                Color newColor = sr.color;
+                newColor.a = val;
+                sr.color = newColor;
+            });
+        }
+        else
+        {
+            LeanTween.value(fadeIntoLevel, 0, 1, fadeIntoLevelSpeed).setEase(LeanTweenType.linear).setOnComplete(() => GameManager.Instance.ResetDataStartBossLevel()).setOnUpdate((float val) =>
+            {
+                Image sr = fadeIntoLevel.GetComponent<Image>();
+                Color newColor = sr.color;
+                newColor.a = val;
+                sr.color = newColor;
+            });
+        }
         yield return new WaitForSeconds(fadeIntoLevelDelay);
 
 
@@ -1619,5 +1647,23 @@ public class UIManager : MonoBehaviour
 
         introScreenParent.SetActive(false);
 
+    }
+
+
+    public void DisplayBossBattleUIScreen()
+    {
+        bossBattleUIScreen.SetActive(true);
+
+        bossHealthSlider.value = (float)BossBattleManager.instance.currentBossHealth / (float)BossBattleManager.instance.bossLevelSO.BossHealth;
+    }
+
+    public void DeactivateBossBattleUIScreen()
+    {
+        bossBattleUIScreen.SetActive(false);
+    }
+
+    public void UpdateBossHealth()
+    {
+        bossHealthSlider.value = (float)BossBattleManager.instance.currentBossHealth / (float)BossBattleManager.instance.bossLevelSO.BossHealth;
     }
 }

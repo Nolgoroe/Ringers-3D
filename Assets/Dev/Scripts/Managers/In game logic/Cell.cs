@@ -5,6 +5,7 @@ using UnityEngine;
 public class Cell : MonoBehaviour
 {
     public bool isFull;
+
     public bool isOuter;
     public int cellIndex;
     public Piece pieceHeld;
@@ -70,14 +71,21 @@ public class Cell : MonoBehaviour
         {
             GameManager.Instance.currentFilledCellCount++;
 
-            if(GameManager.Instance.currentFilledCellCount == GameManager.Instance.currentLevel.cellsCountInLevel)
+            if (GameManager.Instance.currentLevel.isBoss)
             {
-                ConnectionManager.Instance.CallConnection(cellIndex, isOuter, true);
+                BossBattleManager.instance.CheckEndLevelBoss();
+            }
+            else
+            {
+                if (GameManager.Instance.currentFilledCellCount == GameManager.Instance.currentLevel.cellsCountInLevel)
+                {
+                    ConnectionManager.Instance.CallConnection(cellIndex, isOuter, true);
 
-                //bool gameWon = GameManager.Instance.CheckEndLevel();
+                    //bool gameWon = GameManager.Instance.CheckEndLevel();
 
-                return;
-                //UIManager.Instance.ActivateCommitButton();
+                    return;
+                    //UIManager.Instance.ActivateCommitButton();
+                }
             }
         }
 
@@ -309,7 +317,7 @@ public class Cell : MonoBehaviour
 
                 //pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
 
-                SoundManager.Instance.PlaySoundChangeVolume(Sounds.TileUnmatch, 0.1f);
+                SoundManager.Instance.PlaySoundChangeVolume(Sounds.TileUnmatch, 0.5f);
 
                 if (!fromSlicePower)
                 {
@@ -362,7 +370,7 @@ public class Cell : MonoBehaviour
 
                 //pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
 
-                SoundManager.Instance.PlaySoundChangeVolume(Sounds.TileUnmatch, 0.1f);
+                SoundManager.Instance.PlaySoundChangeVolume(Sounds.TileUnmatch, 0.5f);
 
                 if (!fromSlicePower)
                 {
@@ -412,5 +420,65 @@ public class Cell : MonoBehaviour
 
         ConnectionManager.Instance.RemoveSubPieceIndex(pieceHeld.leftChild.subPieceIndex, isOuter);
         ConnectionManager.Instance.RemoveSubPieceIndex(pieceHeld.rightChild.subPieceIndex, isOuter);
+    }
+
+
+    [ContextMenu("add piece random to cell")]
+    public void AddPieceRandom()
+    {
+        GameObject go = Instantiate(GameManager.Instance.clipManager.piece, transform);
+        Piece p = go.GetComponent<Piece>();
+        p.SetPieces();
+
+        isFull = true;
+
+
+        //followerTarget.SetParent(transform);
+        p.transform.localPosition = Vector3.zero;
+        p.transform.rotation = transform.rotation;
+
+        pieceHeld = p;
+        pieceHeld.partOfBoard = true;
+        pieceHeld.transform.localScale = GameManager.Instance.clipManager.pieceScaleOnBoard;
+
+
+        if (!isOuter)
+        {
+            ConnectionManager.Instance.subPiecesOnBoard[cellIndex * 2] = pieceHeld.leftChild;
+            ConnectionManager.Instance.subPiecesOnBoard[cellIndex * 2 + 1] = pieceHeld.rightChild;
+            ConnectionManager.Instance.FillSubPieceIndex();
+        }
+        else
+        {
+            ConnectionManager.Instance.subPiecesDoubleRing[cellIndex * 2] = pieceHeld.leftChild;
+            ConnectionManager.Instance.subPiecesDoubleRing[cellIndex * 2 + 1] = pieceHeld.rightChild;
+            ConnectionManager.Instance.FillSubPieceIndex();
+        }
+
+        if (!isOuter)
+        {
+            pieceHeld.leftChild.relevantSlice = ConnectionManager.Instance.slicesOnBoard[Mathf.CeilToInt((float)pieceHeld.leftChild.subPieceIndex / 2)];
+
+
+            if (pieceHeld.rightChild.subPieceIndex >= ConnectionManager.Instance.subPiecesOnBoard.Length - 1)
+            {
+                pieceHeld.rightChild.relevantSlice = ConnectionManager.Instance.slicesOnBoard[0];
+            }
+            else
+            {
+                pieceHeld.rightChild.relevantSlice = ConnectionManager.Instance.slicesOnBoard[Mathf.CeilToInt((float)pieceHeld.rightChild.subPieceIndex / 2)];
+            }
+
+        }
+
+
+        GameManager.Instance.currentFilledCellCount++;
+
+        if (GameManager.Instance.currentFilledCellCount == GameManager.Instance.currentLevel.cellsCountInLevel)
+        {
+
+            Debug.LogError("LOSE BOSS BATTLE");
+            return;
+        }
     }
 }

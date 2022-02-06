@@ -21,6 +21,7 @@ public class PlayerManager : MonoBehaviour
     public int /*goldCount,*/ rubyCount;
     public int collectedDewDrops;
     public int priceInGemsDewDrops;
+    public int bossTicketCount;
 
     public List<PowerUp> activePowerups;
 

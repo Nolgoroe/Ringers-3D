@@ -279,7 +279,7 @@ public class ClipManager : MonoBehaviour
                 break;
         }
 
-        yield return new WaitForSeconds(1f); /// TEMPORARY
+        //yield return new WaitForSeconds(1f); /// TEMPORARY
 
         for (int i = 0; i < clipCount; i++)
         {
@@ -316,7 +316,7 @@ public class ClipManager : MonoBehaviour
                 break;
         }
 
-        yield return new WaitForSeconds(0.8f); /// TEMPORARY
+        //yield return new WaitForSeconds(0.8f); /// TEMPORARY
 
 
         for (int i = clipCount -1; i > -1; i--)

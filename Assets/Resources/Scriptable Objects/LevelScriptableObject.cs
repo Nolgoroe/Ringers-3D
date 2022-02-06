@@ -22,6 +22,7 @@ public class LevelScriptableObject : ScriptableObject
     public bool isGrindLevel;
     public bool is12PieceRing;
     public bool isDoubleRing;
+    public bool isBoss;
     public GameObject boardPrefab;
 
     public int levelNum;
@@ -37,7 +38,6 @@ public class LevelScriptableObject : ScriptableObject
 
     public stonePieceDataStruct[] stoneTiles;
     public SliceCatagory[] slicesToSpawn;
-    //public int[] sliceCellIndexes;
     public bool[] lockSlices;
     public bool[] lootSlices;
     public bool[] limiterSlices;
@@ -48,13 +48,21 @@ public class LevelScriptableObject : ScriptableObject
     public PieceSymbol[] levelAvailablesymbols;
     public SpecialPowerData[] symbolsNeededForSpecialPowers;
 
-
+    [Header("Tutorial Settings")]
     public bool isSpecificTutorial;
-    //public int specificTutorialIndex;
-    public SpecificTutorialsEnum specificTutorialEnum;
     public bool isTutorial;
+    public SpecificTutorialsEnum specificTutorialEnum;
+
+    [Header("Specific Slice Settings")]
     public List<pieceDataStruct> arrayOfPieces;
     public int[] specificSliceSpots;
     public PieceSymbol[] specificSlicesShapes;
     public PieceColor[] specificSlicesColors;
+
+
+    [Header("Boss Settings")]
+    public int BossHealth;
+    public bool isRandomPieces;
+    public int[] specificPiecesIndex;
+    
 }
