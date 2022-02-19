@@ -39,6 +39,7 @@ public class PowerUpManager : MonoBehaviour
     public GameObject powerupButtonPreab;
     public GameObject specialPowerPrefabLeft/*, specialPowerPrefabRight*/;
     public GameObject selectedPowerupVFX;
+    public GameObject[] potionAnimationObjects;
     public Transform specialPowerPrefabParent;
     public Dictionary<PowerUp, string> spriteByType;
     public Dictionary<PowerUp, string> nameTextByType;
@@ -297,6 +298,8 @@ public class PowerUpManager : MonoBehaviour
 
             if (toWorkOn.partOfBoard /*&& !toWorkOn.isLocked*/)
             {
+                InstantiatePotionAnimObject((int)prop.powerupType);
+
                 toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(false, false);
 
                 toWorkOn.leftChild.symbolOfPiece = PieceSymbol.Joker;
@@ -311,9 +314,12 @@ public class PowerUpManager : MonoBehaviour
                 toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
 
                 successfulUse = true;
+
             }
             else
             {
+                InstantiatePotionAnimObject((int)prop.powerupType);
+
                 toWorkOn.leftChild.symbolOfPiece = PieceSymbol.Joker;
                 toWorkOn.leftChild.colorOfPiece = PieceColor.Joker;
 
@@ -355,6 +361,8 @@ public class PowerUpManager : MonoBehaviour
             {
                 if (!toWorkOn.isLocked)
                 {
+                    InstantiatePotionAnimObject((int)prop.powerupType);
+
                     toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(false, false);
 
                     PieceColor tempColor = toWorkOn.leftChild.colorOfPiece;
@@ -381,6 +389,8 @@ public class PowerUpManager : MonoBehaviour
             }
             else
             {
+                InstantiatePotionAnimObject((int)prop.powerupType);
+
                 PieceColor tempColor = toWorkOn.leftChild.colorOfPiece;
                 PieceSymbol tempSymbol = toWorkOn.leftChild.symbolOfPiece;
 
@@ -417,6 +427,8 @@ public class PowerUpManager : MonoBehaviour
 
         if (toWorkOn.partOfBoard)
         {
+            InstantiatePotionAnimObject((int)prop.powerupType);
+
             //Debug.LogError("Times called");
             toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(true, false);
 
@@ -452,6 +464,7 @@ public class PowerUpManager : MonoBehaviour
         layerToHit = LayerMask.GetMask("Slice");
         yield return new WaitUntil(() => HasUsedPowerUp == true);
 
+        InstantiatePotionAnimObject((int)prop.powerupType);
 
         Slice toWorkOn = ObjectToUsePowerUpOn.transform.parent.GetComponent<Slice>();
 
@@ -644,11 +657,13 @@ public class PowerUpManager : MonoBehaviour
                     else
                     {
                         but.canBeSelected = false;
-                        originalPotionPos = butt.gameObject.transform.position;
-                        Vector3 pos = butt.gameObject.transform.position;
-                        pos.y += 0.1f;
+                        //originalPotionPos = butt.gameObject.transform.position;
+                        //Vector3 pos = butt.gameObject.transform.position;
+                        //pos.y += 0.1f;
 
-                        LeanTween.move(butt.gameObject, pos, 0.5f).setEase(LeanTweenType.easeInOutQuad); // animate
+                        //LeanTween.move(butt.gameObject, pos, 0.5f).setEase(LeanTweenType.easeInOutQuad); // animate
+
+                        LeanTween.scale(but.gameObject, new Vector3(but.transform.localScale.x - 8, but.transform.localScale.y - 8, 1), 0.1f).setOnComplete(() => ScalePotionBack(but.gameObject));
                         Instantiate(selectedPowerupVFX, but.transform);
                     }
                 }
@@ -670,17 +685,23 @@ public class PowerUpManager : MonoBehaviour
                 else
                 {
                     but.canBeSelected = false;
-                    originalPotionPos = butt.gameObject.transform.position;
-                    Vector3 pos = butt.gameObject.transform.position;
-                    pos.y += 0.1f;
+                    //originalPotionPos = butt.gameObject.transform.position;
+                    //Vector3 pos = butt.gameObject.transform.position;
+                    //pos.y += 0.1f;
 
-                    LeanTween.move(butt.gameObject, pos, 0.5f).setEase(LeanTweenType.easeInOutQuad); // animate
+                    //LeanTween.move(butt.gameObject, pos, 0.5f).setEase(LeanTweenType.easeInOutQuad); // animate
+                    LeanTween.scale(but.gameObject, new Vector3(but.transform.localScale.x - 8, but.transform.localScale.y - 8, 1), 0.1f).setOnComplete(() => ScalePotionBack(but.gameObject));
                     Instantiate(selectedPowerupVFX, but.transform);
                 }
             }
 
             StartCoroutine(WaitForEndFrame());
         }
+    }
+
+    public void ScalePotionBack(GameObject toScale)
+    {
+        LeanTween.scale(toScale, new Vector3(toScale.transform.localScale.x + 8, toScale.transform.localScale.y + 8, 1), 0.1f);
     }
     public IEnumerator WaitForEndFrame()
     {
@@ -707,8 +728,8 @@ public class PowerUpManager : MonoBehaviour
             }
         }
 
-
-        LeanTween.move(prop.gameObject, originalPotionPos, 0.4f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => ReactivatePowerButtons()); // animate
+        ReactivatePowerButtons();
+        //LeanTween.move(prop.gameObject, originalPotionPos, 0.4f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => ReactivatePowerButtons()); // animate
     }
 
     public void FinishedUsingPowerup(bool successfull, PowerupProperties prop)
@@ -781,8 +802,8 @@ public class PowerUpManager : MonoBehaviour
         //}
         //else
         //{
-
-        LeanTween.move(prop.gameObject, originalPotionPos, 0.4f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => ReactivatePowerButtons()); // animate
+        ReactivatePowerButtons();
+        //LeanTween.move(prop.gameObject, originalPotionPos, 0.4f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => ReactivatePowerButtons()); // animate
 
         if (prop.numOfUses == 0 && prop.connectedEquipment.scopeOfUses == 0) //// if the num of uses is 0 and the scope is cooldown and not per match
         {
@@ -1029,5 +1050,10 @@ public class PowerUpManager : MonoBehaviour
         {
             GCHD.referenceNumUsesText.SetActive(false);
         }
+    }
+
+    public void InstantiatePotionAnimObject(int index)
+    {
+        GameObject go = Instantiate(potionAnimationObjects[index]);
     }
 }

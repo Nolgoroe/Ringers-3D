@@ -1,20 +1,17 @@
 fileFormatVersion: 2
-guid: 43b09fd56c1d38749bac1e660f68a15f
+guid: 3b505b8b89b3b434fb99601c7e2ed152
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
+    second: Fly Away
+  - first:
+      74: -3100369314251171874
     second: Idle
   - first:
-      74: 4890784638699532896
-    second: Fly forward
-  - first:
-      74: 4890784638699532896
-    second: Idle short + fly away animation
-  - first:
-      74: -3689787670516291985
-    second: Fly forward
+      74: -998496362607748373
+    second: Transition to fly
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -44,13 +41,13 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle
+      name: Fly Away
       takeName: Take 001
       internalID: 0
-      firstFrame: 1
-      lastFrame: 269
+      firstFrame: 372
+      lastFrame: 426
       wrapMode: 0
-      orientationOffsetY: 0
+      orientationOffsetY: 50
       level: 0
       cycleOffset: 0
       loop: 0
@@ -60,7 +57,7 @@ ModelImporter:
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
@@ -71,13 +68,13 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 1
     - serializedVersion: 16
-      name: Idle short + fly away animation
+      name: Idle
       takeName: Take 001
       internalID: 0
-      firstFrame: 150
-      lastFrame: 356
+      firstFrame: 90
+      lastFrame: 150
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -102,11 +99,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 1
     - serializedVersion: 16
-      name: Fly forward
+      name: Transition to fly
       takeName: Take 001
       internalID: 0
-      firstFrame: 372
-      lastFrame: 426
+      firstFrame: 200
+      lastFrame: 356
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -125,7 +122,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0
+        functionName: closedWingsOn
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.62991387
+        functionName: openWingsOn
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -184,7 +195,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: f2904451b8e188a41a7334d72479efc1,
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: a6724c2dabc500f4492fa9eaac552913,
     type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2

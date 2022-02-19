@@ -535,6 +535,8 @@ public class CursorController : MonoBehaviour
                                         PowerUpManager.IsUsingPowerUp = false;
                                         PowerUpManager.HasUsedPowerUp = true;
                                         PowerUpManager.ObjectToUsePowerUpOn = hit.transform.gameObject;
+                                        LeanTween.scale(hit.transform.gameObject, new Vector3(hit.transform.localScale.x - 0.2f, hit.transform.localScale.y - 0.2f, 1), 0.1f).setOnComplete(() => ScaleGameObjectBack(hit.transform.gameObject));
+
                                     }
                                 }
                             }
@@ -549,6 +551,7 @@ public class CursorController : MonoBehaviour
                                         PowerUpManager.IsUsingPowerUp = false;
                                         PowerUpManager.HasUsedPowerUp = true;
                                         PowerUpManager.ObjectToUsePowerUpOn = hit.transform.gameObject;
+                                        LeanTween.scale(hit.transform.gameObject, new Vector3(hit.transform.localScale.x - 0.2f, hit.transform.localScale.y - 0.2f, 1), 0.1f).setOnComplete(() => ScaleGameObjectBack(hit.transform.gameObject));
                                     }
                                 }
                             }
@@ -559,6 +562,7 @@ public class CursorController : MonoBehaviour
                             PowerUpManager.IsUsingPowerUp = false;
                             PowerUpManager.HasUsedPowerUp = true;
                             PowerUpManager.ObjectToUsePowerUpOn = hit.transform.gameObject;
+                            LeanTween.scale(hit.transform.gameObject, new Vector3(hit.transform.localScale.x - 0.2f, hit.transform.localScale.y - 0.2f, 1), 0.1f).setOnComplete(() => ScaleGameObjectBack(hit.transform.gameObject));
                         }
                     }
                     else
@@ -931,5 +935,10 @@ public class CursorController : MonoBehaviour
             followerTarget = null;
             cellhitSecondaryControls = null;
         }
+    }
+
+    void ScaleGameObjectBack(GameObject toScale)
+    {
+        LeanTween.scale(toScale, new Vector3(toScale.transform.localScale.x + 0.2f, toScale.transform.localScale.y + 0.2f, 1), 0.1f);
     }
 }
