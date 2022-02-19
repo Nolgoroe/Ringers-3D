@@ -182,7 +182,7 @@ public class PowerUpManager : MonoBehaviour
                 {
                     if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].dealPhase)
                     {
-                        TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
+                       StartCoroutine(TutorialSequence.Instacne.IncrementCurrentPhaseInSequence());
                     }
                 }
             }
@@ -628,7 +628,7 @@ public class PowerUpManager : MonoBehaviour
     }
     public void UsingPowerup(PowerupProperties butt)
     {
-        if (TutorialSequence.Instacne.duringSequence)
+        if (TutorialSequence.Instacne.duringSequence) /// this if statemene does exactly the same as the else??????
         {
             if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPowerupPhase)
             {

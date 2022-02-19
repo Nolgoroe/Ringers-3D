@@ -35,7 +35,9 @@ public class Sequence
 public class Phase
 {
     public int phaseID;
-    public bool isClipPhase, isBoardPhase, isPowerupPhase, isSingleCellPhase, isSingleSlice, isHubButtonPhase, isOpenInventoryPhase, isPotionTabPhase ,isEmptyTouchPhase, isBrewPhase, isBrewDisplayMaterials;
+    public bool isClipPhase, isBoardPhase, isPowerupPhase, isSingleCellPhase, isSingleSlice, isHubButtonPhase;
+    public bool isOpenInventoryPhase, isPotionTabPhase, isEmptyTouchPhase, isBrewPhase, isBrewDisplayMaterials;
+    public bool isAnimalSymbolCollectionPhase, hasDelay, isAllLocked, isClearScreen;
     public bool dealPhase;
 
     public int[] unlockedPowerups;
@@ -45,6 +47,8 @@ public class Phase
     public int[] targetCells;
 
     public int[] targetSlices;
+
+    public float delayAmount;
 }
 [System.Serializable]
 public class OutLineData
@@ -62,7 +66,6 @@ public enum SpecificTutorialsEnum
     SliceBombTutorial,
     JokerTutorial,
     PotionCraft,
-
 
 }
 public class TutorialSequence : MonoBehaviour
@@ -130,7 +133,7 @@ public class TutorialSequence : MonoBehaviour
 
             currentPhaseInSequenceLevels = -1; /// it goes up by one in function so it actually starts at 0
             duringSequence = true;
-            IncrementCurrentPhaseInSequence();
+            StartCoroutine(IncrementCurrentPhaseInSequence());
 
             //for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
             //{
@@ -481,22 +484,81 @@ public class TutorialSequence : MonoBehaviour
                     }
                 }
             }
+
+
+            
+            if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[index].isAnimalSymbolCollectionPhase)
+            {
+                Transform t = GameManager.Instance.powerupManager.specialPowerupsInGame[0].transform;
+
+                for (int i = 0; i < t.childCount; i++)
+                {
+                    if (t.GetChild(i).CompareTag("Tile Hole"))
+                    {
+                        t.GetChild(i).gameObject.SetActive(true);
+
+                        activatedHeighlights.Add(t.GetChild(i).gameObject);
+                    }
+
+                    if (t.GetChild(i).transform.childCount > 0)
+                    {
+                        for (int k = 0; k < t.GetChild(i).childCount; k++)
+                        {
+                            if (t.GetChild(i).GetChild(k).CompareTag("Tile Hole"))
+                            {
+                                t.GetChild(i).GetChild(k).gameObject.SetActive(true);
+
+                                activatedHeighlights.Add(t.GetChild(i).GetChild(k).gameObject);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
 
         yield return new WaitForEndOfFrame();
         toTexture();
     }
-    public void IncrementCurrentPhaseInSequence()
+    public IEnumerator IncrementCurrentPhaseInSequence()
     {
         if (currentlyActiveTutorialHand)
         {
             Destroy(currentlyActiveTutorialHand.gameObject);
         }
 
+
         currentPhaseInSequenceLevels++;
 
-        if(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[currentPhaseInSequenceLevels])
+        //clear screen to show it better
+        if (currentPhaseInSequenceLevels < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Count())
+        {
+            if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].isClearScreen)
+            {
+                maskImage.gameObject.SetActive(false);
+                UIManager.Instance.tutorialCanvasParent.SetActive(false);
+            }
+        }
+
+        if (currentPhaseInSequenceLevels < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Count())
+        {
+            if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].hasDelay)
+            {
+                yield return new WaitForSeconds(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].delayAmount);
+            }
+        }
+
+        //return screens after clear
+        if (currentPhaseInSequenceLevels < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Count())
+        {
+            if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].isClearScreen)
+            {
+                maskImage.gameObject.SetActive(true);
+                UIManager.Instance.tutorialCanvasParent.SetActive(true);
+            }
+        }
+
+        if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[currentPhaseInSequenceLevels])
         {
             if(currentPhaseInSequenceLevels > 0)
             {
@@ -536,7 +598,7 @@ public class TutorialSequence : MonoBehaviour
             }
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData});
-            return;
+            yield break;
         }
         else
         {
@@ -544,6 +606,8 @@ public class TutorialSequence : MonoBehaviour
             ChangePhase(levelSequences, GameManager.Instance.currentLevel.tutorialIndexForList, currentPhaseInSequenceLevels);
         }
 
+
+        yield return null;
         ///maskImage.sprite = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].sprites[currentPhaseInSequence]; /// NEW
 
     }
@@ -653,6 +717,16 @@ public class TutorialSequence : MonoBehaviour
         {
             SingleSliceChosenPhase(tutorialArray, TutorialIndex, phaseIndex);
         }
+
+        if (tutorialArray[TutorialIndex].phase[phaseIndex].isAnimalSymbolCollectionPhase)
+        {
+            AnimalCollectPhaseLogic(tutorialArray, TutorialIndex, phaseIndex);
+        }
+
+        if (tutorialArray[TutorialIndex].phase[phaseIndex].isAllLocked)
+        {
+            AllLockedLogic(tutorialArray, TutorialIndex, phaseIndex);
+        }
     }
 
     public void ClipPhaseLogic(Sequence[] tutorialArray, int TutorialIndex, int phaseIndex)
@@ -758,7 +832,6 @@ public class TutorialSequence : MonoBehaviour
 
         DisplayTutorialHandTap(tutorialHandPosDealButton, tutorialHandRotationDealButton, Vector3.one);
     }
-
     public void PowerUpPhase(Sequence[] tutorialArray, int TutorialIndex, int phaseIndex)
     {
         UIManager.Instance.dealButton.interactable = false;
@@ -786,7 +859,6 @@ public class TutorialSequence : MonoBehaviour
 
         DisplayTutorialHandTap(handPosPowerup + tutorialHandPosPowerupOffset, tutorialHandRotationDealButton, Vector3.one);
     }
-
     public void SingleCellChosenPhase(Sequence[] tutorialArray, int TutorialIndex, int phaseIndex)
     {
         UIManager.Instance.dealButton.interactable = false;
@@ -811,7 +883,6 @@ public class TutorialSequence : MonoBehaviour
 
         DisplayTutorialHandTap(pos,tutorialHandRotationDealButton, Vector3.one);
     }
-
     public void SingleSliceChosenPhase(Sequence[] tutorialArray, int TutorialIndex, int phaseIndex)
     {
         UIManager.Instance.dealButton.interactable = false;
@@ -835,6 +906,42 @@ public class TutorialSequence : MonoBehaviour
         Vector3 pos = GameManager.Instance.sliceManager.sliceSlots[SliceID].transform.position;
 
         DisplayTutorialHandTap(pos,tutorialHandRotationDealButton, Vector3.one);
+    }
+    public void AnimalCollectPhaseLogic(Sequence[] tutorialArray, int TutorialIndex, int phaseIndex)
+    {
+        UIManager.Instance.dealButton.interactable = false;
+
+        foreach (Cell c in ConnectionManager.Instance.cells)
+        {
+            if (c.isFull)
+            {
+                c.pieceHeld.isTutorialLocked = true;
+            }
+        }
+
+        for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
+        {
+            Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
+            p.isTutorialLocked = true;
+        }
+    }
+    public void AllLockedLogic(Sequence[] tutorialArray, int TutorialIndex, int phaseIndex)
+    {
+        UIManager.Instance.dealButton.interactable = false;
+
+        foreach (Cell c in ConnectionManager.Instance.cells)
+        {
+            if (c.isFull)
+            {
+                c.pieceHeld.isTutorialLocked = true;
+            }
+        }
+
+        for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
+        {
+            Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
+            p.isTutorialLocked = true;
+        }
     }
 
     //public void OutlineInstantiate() // old lock system
@@ -1089,7 +1196,7 @@ public class TutorialSequence : MonoBehaviour
         }
         else
         {
-            IncrementCurrentPhaseInSequence();
+            StartCoroutine(IncrementCurrentPhaseInSequence());
         }
 
     }

@@ -662,7 +662,7 @@ public class CursorController : MonoBehaviour
                     {
                         GameManager.Instance.clipManager.emptyClip = followerTarget.transform.parent;
                         GameManager.Instance.clipManager.latestPiece = followerTarget;
-                        AddNumAnimalsToBoard(followerTarget);
+                        //AddNumAnimalsToBoard(followerTarget);
                     }
 
 
@@ -799,9 +799,11 @@ public class CursorController : MonoBehaviour
                                 if (isFromClip/* && !cell.isFull*/)
                                 {
                                     GameManager.Instance.clipManager.PopulateSlot(clipParent, 10);
+                                    AddNumAnimalsToBoard(followerTarget);
+
                                 }
 
-                                TutorialSequence.Instacne.IncrementCurrentPhaseInSequence();
+                                StartCoroutine(TutorialSequence.Instacne.IncrementCurrentPhaseInSequence());
                             }
                             else
                             {

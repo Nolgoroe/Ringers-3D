@@ -493,10 +493,10 @@ public class GameManager : MonoBehaviour
     }
     public void ChooseLevel(int levelNum/*, string zoneName*/)
     {
-        if (currentLevel)
-        {
-            DestroyImmediate(currentLevel);
-        }
+        //if (currentLevel)
+        //{
+        //    DestroyImmediate(currentLevel);
+        //}
 
         currentLevel = Instantiate((LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/" + ZoneManagerHelpData.Instance.currentZoneName + "/Level " + levelNum));
     }
@@ -668,8 +668,11 @@ public class GameManager : MonoBehaviour
         LootManager.Instance.ResetLevelLootData();
         ConnectionManager.Instance.cells.Clear();
         CursorController.Instance.tutorialBadConnection = false;
+
         UIManager.Instance.youWinScreen.SetActive(false);
         UIManager.Instance.bGPanelDisableTouch.SetActive(false);
+        UIManager.Instance.ResetTopAndBottomPos();
+
         LootManager.Instance.DestoryWinScreenDisplyedLoot();
         powerupManager.DestroySpecialPowersObjects();
 
@@ -746,6 +749,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.bGPanelDisableTouch.SetActive(false);
         UIManager.Instance.youWinScreen.SetActive(false);
         UIManager.Instance.TurnOnGameplayUI();
+        UIManager.Instance.ResetTopAndBottomPos();
         UIManager.isUsingUI = false;
 
         powerupManager.ResetData();

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using TMPro;
-
+using System;
 
 public class AnimationManager : MonoBehaviour
 {
@@ -12,6 +12,7 @@ public class AnimationManager : MonoBehaviour
 
     public float waitBetweenPieceMove;
     public float speedPieceMove;
+    public float speedOutTopBottom;
 
     public float waitBetweenPiecePullIn;
     public float speedPiecePullIn;
@@ -19,6 +20,7 @@ public class AnimationManager : MonoBehaviour
 
     //public float paceFade;
 
+    public float waitTimeMoveTopBottomTime;
     public float waitTimeParticlesStart;
     public float waitTimeMidParticleAppear;
     public float waitTimeDissolveTiles;
@@ -42,6 +44,8 @@ public class AnimationManager : MonoBehaviour
     public List<SubPiece> tempSubPieceArray;
 
     public timeWaitPull minMaxWaitPullInPieces;
+
+    private GameObject boardScreenshot;
 
     [Header("Unlcok Zone Settings")]
     public float cameraMoveTime;
@@ -72,8 +76,7 @@ public class AnimationManager : MonoBehaviour
     public float cameraOrthoSizeTarget;
     public Image fadeIntoLevel;
 
-    [HideInInspector]
-    public Coroutine endAnim = null;
+    private Coroutine endAnim = null;
 
     void Start()
     {
@@ -119,6 +122,14 @@ public class AnimationManager : MonoBehaviour
             GO.SetActive(false);
         }
 
+
+
+        MoveTopButtonAnim();
+
+
+        yield return new WaitForSeconds(waitTimeMoveTopBottomTime);
+
+
         foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
         {
             MoveSubPiece(SP);
@@ -129,6 +140,10 @@ public class AnimationManager : MonoBehaviour
             }
         }
 
+
+        boardScreenshot = Instantiate(GameManager.Instance.gameBoard, new Vector3(100, 0, 0), Quaternion.identity);
+        boardScreenshot.transform.SetParent(GameManager.Instance.destroyOutOfLevel);
+        yield return new WaitForSeconds(0.1f);
         //yield return new WaitForSeconds(waitTimeParticlesStart);
 
         //foreach (Cell C in ConnectionManager.Instance.cells)
@@ -154,7 +169,7 @@ public class AnimationManager : MonoBehaviour
         for (int i = 0; i < ConnectionManager.Instance.subPiecesOnBoard.Length; i++)
         {
 
-            int rand = Random.Range(0, tempSubPieceArray.Count);
+            int rand = UnityEngine.Random.Range(0, tempSubPieceArray.Count);
 
             PullIn(tempSubPieceArray[rand]);
 
@@ -162,7 +177,7 @@ public class AnimationManager : MonoBehaviour
 
             if (!noWaitPullIn)
             {
-                yield return new WaitForSeconds(Random.Range(minMaxWaitPullInPieces.a, minMaxWaitPullInPieces.b));
+                yield return new WaitForSeconds(UnityEngine.Random.Range(minMaxWaitPullInPieces.a, minMaxWaitPullInPieces.b));
             }
         }
 
@@ -182,10 +197,14 @@ public class AnimationManager : MonoBehaviour
 
         CheckShowLootTutorial();
 
-        GameManager.Instance.WinAfterAnimation();
 
-        Destroy(GameManager.Instance.gameBoard.gameObject);
+        //Destroy(GameManager.Instance.gameBoard.gameObject);
+        GameManager.Instance.gameBoard.gameObject.transform.position = new Vector3(100, 0, 0);
         Destroy(GameManager.Instance.gameClip.gameObject);
+
+        //GameManager.Instance.WinAfterAnimation();
+        //MoveBoardScreenshotToPosition(boardScreenshot);
+        //UnDissolveTiles();
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
 
@@ -220,7 +239,26 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.dealButton.interactable = true;
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
-        yield return null;
+
+        yield return new WaitForSeconds(4f);
+
+        UnDissolveTiles(false);
+        yield return new WaitForSeconds(0.1f); //unDissolve time
+        MoveBoardScreenshotToPosition(boardScreenshot);
+        GameManager.Instance.WinAfterAnimation();
+    }
+
+    private void MoveTopButtonAnim()
+    {
+        GameObject clip = GameManager.Instance.gameClip;
+        GameObject topZone = UIManager.Instance.gameplayCanvasTop;
+        GameObject bottomeZone = UIManager.Instance.gameplayCanvasBotom;
+
+        LeanTween.move(clip, new Vector3(clip.transform.position.x, clip.transform.position.y + 2.2f, clip.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
+
+        LeanTween.move(topZone, new Vector3(topZone.transform.position.x, topZone.transform.position.y + 1f, topZone.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
+
+        LeanTween.move(bottomeZone, new Vector3(bottomeZone.transform.position.x, bottomeZone.transform.position.y - 1f, bottomeZone.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
     }
 
     public void MoveSubPiece(SubPiece toMove)
@@ -233,6 +271,14 @@ public class AnimationManager : MonoBehaviour
         {
             LeanTween.move(toMove.gameObject, new Vector3(toMove.transform.localPosition.x, toMove.transform.localPosition.y + 0.85f, toMove.transform.localPosition.z), speedPieceMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
         }
+    }
+
+    public void MoveBoardScreenshotToPosition(GameObject board)
+    {
+        board.transform.position = new Vector3(-0.002f, 1.636f, 0.055f);
+
+        board.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+
     }
 
     //public void ActivateParticleEffectsMiddle(GameObject midPiece)
@@ -252,10 +298,34 @@ public class AnimationManager : MonoBehaviour
         {
             Material mat = SP.GetComponent<Renderer>().material;
 
-            LeanTween.value(mat.GetFloat("Dissolve_Amount"), 0.5f, dissolveSpeed).setOnUpdate((float val) =>
+            LeanTween.value(mat.GetFloat("Dissolve_Amount"), 0.28f, dissolveSpeed).setOnUpdate((float val) =>
             {
                 mat.SetFloat("Dissolve_Amount", val);
             });
+        }
+    }
+
+    public void UnDissolveTiles(bool isImmidiate)
+    {
+        if (isImmidiate)
+        {
+            foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
+            {
+                Material mat = SP.GetComponent<Renderer>().material;
+                mat.SetFloat("Dissolve_Amount", 0.24f);
+            }
+        }
+        else
+        {
+            foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
+            {
+                Material mat = SP.GetComponent<Renderer>().material;
+
+                LeanTween.value(mat.GetFloat("Dissolve_Amount"), 0.24f, 0.1f).setOnUpdate((float val) =>
+                {
+                    mat.SetFloat("Dissolve_Amount", val);
+                });
+            }
         }
     }
 
@@ -266,7 +336,14 @@ public class AnimationManager : MonoBehaviour
         if (endAnim != null)
         {
             StopCoroutine(endAnim);
+            LeanTween.cancelAll();
         }
+
+        GameManager.Instance.gameBoard.gameObject.transform.position = new Vector3(100, 0, 0);
+
+        UnDissolveTiles(true);
+
+        MoveBoardScreenshotToPosition(boardScreenshot);
 
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
 
@@ -289,9 +366,10 @@ public class AnimationManager : MonoBehaviour
 
         if (GameManager.Instance.gameBoard.gameObject)
         {
-            Destroy(GameManager.Instance.gameBoard.gameObject);
+            //Destroy(GameManager.Instance.gameBoard.gameObject);
             Destroy(GameManager.Instance.gameClip.gameObject);
         }
+
         UIManager.Instance.restartButton.interactable = true;
 
         UIManager.Instance.TurnOffGameplayUI();

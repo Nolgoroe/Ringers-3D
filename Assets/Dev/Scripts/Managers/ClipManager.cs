@@ -133,6 +133,14 @@ public class ClipManager : MonoBehaviour
     }
     public IEnumerator DragonflyCrossSpecial(InGameSpecialPowerUp IGSP)
     {
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].isAnimalSymbolCollectionPhase)
+            {
+                StartCoroutine(TutorialSequence.Instacne.IncrementCurrentPhaseInSequence());
+            }
+        }
+
         int topOrBottom = UnityEngine.Random.Range(1, 3);
         IGSP.ResetValues();
 

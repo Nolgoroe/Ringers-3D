@@ -498,6 +498,7 @@ public class UIManager : MonoBehaviour
             loseScreen.SetActive(false);
             tutorialCanvasLevels.SetActive(false);
             //blackLevelBG.SetActive(false);
+            ResetTopAndBottomPos();
 
             foreach (GameObject go in allTutorialScreens)
             {
@@ -898,9 +899,9 @@ public class UIManager : MonoBehaviour
         //blackLevelBG.SetActive(false);
         youWinScreen.SetActive(true);
 
-        AnimalPrefabData prefabData = AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
+        //AnimalPrefabData prefabData = AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
 
-        animalNameText.text = "You have released the " + prefabData.animalSO.animalName;
+        animalNameText.text = "You have released the " + AnimalsManager.Instance.currentLevelAnimal;
     }
     public void DisplayLoseScreen()
     {
@@ -1665,5 +1666,14 @@ public class UIManager : MonoBehaviour
     public void UpdateBossHealth()
     {
         bossHealthSlider.value = (float)BossBattleManager.instance.currentBossHealth / (float)BossBattleManager.instance.bossLevelSO.BossHealth;
+    }
+
+    public void ResetTopAndBottomPos()
+    {
+        RectTransform top = gameplayCanvasTop.GetComponent<RectTransform>();
+        RectTransform bottom = gameplayCanvasBotom.GetComponent<RectTransform>();
+
+        top.anchoredPosition = new Vector2(0, 0);
+        bottom.anchoredPosition = new Vector2(0, 0);
     }
 }

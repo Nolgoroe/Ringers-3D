@@ -22,7 +22,7 @@ MonoBehaviour:
   levelNum: 42
   worldNum: 4
   levelIndexInZone: 1
-  tutorialIndexForList: 0
+  tutorialIndexForList: 6
   cellsCountInLevel: 8
   RandomSlicePositions: 1
   allowRepeatSlices: 0
@@ -38,11 +38,19 @@ MonoBehaviour:
   levelAvailablesymbols: 00000000010000000200000003000000
   symbolsNeededForSpecialPowers:
   - symbol: 0
-    amount: 3
+    amount: 4
   isSpecificTutorial: 0
-  isTutorial: 0
+  isTutorial: 1
   specificTutorialEnum: 0
-  arrayOfPieces: []
+  arrayOfPieces:
+  - colorOfPieceRight: 0
+    symbolOfPieceRight: 0
+    colorOfPieceLeft: 0
+    symbolOfPieceLeft: 0
+  - colorOfPieceRight: 1
+    symbolOfPieceRight: 0
+    colorOfPieceLeft: 1
+    symbolOfPieceLeft: 0
   specificSliceSpots: 
   specificSlicesShapes: 
   specificSlicesColors: 
