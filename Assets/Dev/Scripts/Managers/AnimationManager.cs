@@ -94,7 +94,7 @@ public class AnimationManager : MonoBehaviour
     {
         if (cheat)
         {
-            SkipEndLevelAnimation();
+            SkipEndLevelAnimation(true);
         }
         else
         {
@@ -329,7 +329,7 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
-    public void SkipEndLevelAnimation()
+    public void SkipEndLevelAnimation(bool isCheat)
     {
         SoundManager.Instance.audioSource.Stop();
 
@@ -341,9 +341,12 @@ public class AnimationManager : MonoBehaviour
 
         GameManager.Instance.gameBoard.gameObject.transform.position = new Vector3(100, 0, 0);
 
-        UnDissolveTiles(true);
+        if (!isCheat)
+        {
+            UnDissolveTiles(true);
 
-        MoveBoardScreenshotToPosition(boardScreenshot);
+            MoveBoardScreenshotToPosition(boardScreenshot);
+        }
 
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
 
