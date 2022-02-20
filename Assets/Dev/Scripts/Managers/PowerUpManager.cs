@@ -176,6 +176,7 @@ public class PowerUpManager : MonoBehaviour
         if (!UIManager.isUsingUI)
         {
             SoundManager.Instance.PlaySound(Sounds.DealButton);
+            UIManager.Instance.turnOnDealVFX();
 
             if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
             {

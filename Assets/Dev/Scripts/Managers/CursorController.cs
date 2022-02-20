@@ -594,6 +594,14 @@ public class CursorController : MonoBehaviour
     }
     public void GrabPiece(Piece p)
     {
+        for (int i = 0; i < p.transform.childCount; i++)
+        {
+            if (p.transform.GetChild(i).CompareTag("DestroyVFX"))
+            {
+                Destroy(p.transform.GetChild(i).gameObject);
+            }
+        }
+
         if (!p.isLocked && !p.isTutorialLocked && !p.isStone)
         {
             followerTarget = p.transform;

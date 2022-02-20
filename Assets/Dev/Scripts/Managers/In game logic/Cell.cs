@@ -89,6 +89,11 @@ public class Cell : MonoBehaviour
             }
         }
 
+
+        GameObject go = Instantiate(UIManager.Instance.placePieceVFX, followerTarget);
+
+        ConnectionManager.Instance.JumpPiecesEffect(pieceHeld);
+
         ConnectionManager.Instance.CallConnection(cellIndex, isOuter, false);
     }
     public void AddStonePieceToBoard(stonePieceDataStruct SPDS)
@@ -420,6 +425,9 @@ public class Cell : MonoBehaviour
 
         ConnectionManager.Instance.RemoveSubPieceIndex(pieceHeld.leftChild.subPieceIndex, isOuter);
         ConnectionManager.Instance.RemoveSubPieceIndex(pieceHeld.rightChild.subPieceIndex, isOuter);
+
+
+        pieceHeld = null;
     }
 
 

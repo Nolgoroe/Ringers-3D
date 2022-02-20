@@ -32,6 +32,9 @@ public class ConnectionManager : MonoBehaviour
     bool playedConnectedSound = false;
     bool nextToOtherpiece = false;
 
+    public float upAmountPieceEffectMax, upAmountPieceEffectMin;
+    public float speedUpPieceEffect;
+
     private void Start()
     {
         Instance = this;
@@ -1113,4 +1116,30 @@ public class ConnectionManager : MonoBehaviour
     //    }
     //    Destroy(relevent.lootIcon.gameObject);
     //}
+
+    public void JumpPiecesEffect(Piece p)
+    {
+        foreach (Cell c in cells)
+        {
+            if(c.pieceHeld != null && c.pieceHeld != p && !c.pieceHeld.isLocked)
+            {
+                float toMoveZRight = Random.Range(upAmountPieceEffectMax, upAmountPieceEffectMin);
+                float toMoveZLeft = Random.Range(upAmountPieceEffectMax, upAmountPieceEffectMin);
+
+                Vector3 targetPosRight = new Vector3(c.pieceHeld.rightChild.transform.localPosition.x, c.pieceHeld.rightChild.transform.localPosition.y, c.pieceHeld.rightChild.transform.localPosition.z - toMoveZRight);
+                Vector3 targetPosLeft = new Vector3(c.pieceHeld.leftChild.transform.localPosition.x, c.pieceHeld.leftChild.transform.localPosition.y, c.pieceHeld.leftChild.transform.localPosition.z - toMoveZLeft);
+
+
+                LeanTween.moveLocal(c.pieceHeld.rightChild.gameObject, targetPosRight, speedUpPieceEffect).setEaseOutBack().setOnComplete(() => returnPieceToOriginPosUpEffect(c.pieceHeld.rightChild)); // animate
+                LeanTween.moveLocal(c.pieceHeld.leftChild.gameObject, targetPosLeft, speedUpPieceEffect).setEaseOutBack().setOnComplete(() => returnPieceToOriginPosUpEffect(c.pieceHeld.leftChild)); // animate
+            }
+        }
+    }
+
+    public void returnPieceToOriginPosUpEffect(SubPiece p)
+    {
+        Vector3 targetPos = new Vector3(p.transform.localPosition.x, p.transform.localPosition.y, 0);
+
+        LeanTween.moveLocal(p.gameObject, targetPos, speedUpPieceEffect); // animate
+    }
 }

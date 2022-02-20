@@ -78,6 +78,8 @@ public class UIManager : MonoBehaviour
     public GameObject introScreenParent;
     public GameObject TEMPBgIntro;
     public GameObject bossBattleUIScreen;
+    public GameObject placePieceVFX;
+    public GameObject dealButtonVFX;
 
     public Image dewDropsImage;
 
@@ -1675,5 +1677,10 @@ public class UIManager : MonoBehaviour
 
         top.anchoredPosition = new Vector2(0, 0);
         bottom.anchoredPosition = new Vector2(0, 0);
+    }
+
+    public void turnOnDealVFX()
+    {
+        GameObject go = Instantiate(dealButtonVFX, dealButton.transform);
     }
 }
