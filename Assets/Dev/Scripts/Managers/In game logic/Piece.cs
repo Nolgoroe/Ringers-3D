@@ -38,6 +38,8 @@ public class Piece : MonoBehaviour
     {
         bool isSamePiece = true;
         int repeatIndicator = 0;
+        rightChild.isRightSubPiece = true; // this needs to be better
+
 
         while (isSamePiece)
         {

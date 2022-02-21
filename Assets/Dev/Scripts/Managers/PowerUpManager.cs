@@ -300,6 +300,7 @@ public class PowerUpManager : MonoBehaviour
             if (toWorkOn.partOfBoard /*&& !toWorkOn.isLocked*/)
             {
                 InstantiatePotionAnimObject((int)prop.powerupType);
+                yield return new WaitForSeconds(2.5f);
 
                 toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(false, false);
 
@@ -320,6 +321,7 @@ public class PowerUpManager : MonoBehaviour
             else
             {
                 InstantiatePotionAnimObject((int)prop.powerupType);
+                yield return new WaitForSeconds(2.5f);
 
                 toWorkOn.leftChild.symbolOfPiece = PieceSymbol.Joker;
                 toWorkOn.leftChild.colorOfPiece = PieceColor.Joker;
@@ -364,6 +366,7 @@ public class PowerUpManager : MonoBehaviour
                 {
                     InstantiatePotionAnimObject((int)prop.powerupType);
 
+                    yield return new WaitForSeconds(2.5f);
                     toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(false, false);
 
                     PieceColor tempColor = toWorkOn.leftChild.colorOfPiece;
@@ -391,6 +394,7 @@ public class PowerUpManager : MonoBehaviour
             else
             {
                 InstantiatePotionAnimObject((int)prop.powerupType);
+                yield return new WaitForSeconds(2.5f);
 
                 PieceColor tempColor = toWorkOn.leftChild.colorOfPiece;
                 PieceSymbol tempSymbol = toWorkOn.leftChild.symbolOfPiece;
@@ -429,6 +433,7 @@ public class PowerUpManager : MonoBehaviour
         if (toWorkOn.partOfBoard)
         {
             InstantiatePotionAnimObject((int)prop.powerupType);
+            yield return new WaitForSeconds(2.5f);
 
             //Debug.LogError("Times called");
             toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(true, false);
@@ -466,6 +471,7 @@ public class PowerUpManager : MonoBehaviour
         yield return new WaitUntil(() => HasUsedPowerUp == true);
 
         InstantiatePotionAnimObject((int)prop.powerupType);
+        yield return new WaitForSeconds(2.5f);
 
         Slice toWorkOn = ObjectToUsePowerUpOn.transform.parent.GetComponent<Slice>();
 

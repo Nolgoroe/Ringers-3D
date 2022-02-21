@@ -188,12 +188,14 @@ public class Cell : MonoBehaviour
 
         if (rightParticleZone.childCount > 0)
         {
-            Destroy(rightParticleZone.GetChild(0).gameObject);
+            //Destroy(rightParticleZone.GetChild(0).gameObject);
+            rightParticleZone.GetChild(0).gameObject.SetActive(false);
         }
 
         if (leftParticleZone.childCount > 0)
         {
-            Destroy(leftParticleZone.GetChild(0).gameObject);
+            //Destroy(leftParticleZone.GetChild(0).gameObject);
+            leftParticleZone.GetChild(0).gameObject.SetActive(false);
         }
 
         //if (GameManager.Instance.currentLevel.isDoubleRing)
@@ -229,67 +231,73 @@ public class Cell : MonoBehaviour
         Cell leftCell = ConnectionManager.Instance.cells[ConnectionManager.Instance.CheckIntRangeCells(cellIndex - 1)];
         Cell rightCell = ConnectionManager.Instance.cells[ConnectionManager.Instance.CheckIntRangeCells(cellIndex + 1)];
 
-        if (pieceHeld.leftChild.relevantSlice.hasSlice)
+        if (pieceHeld.leftChild.relevantSlice)
         {
-            if (pieceHeld.leftChild.relevantSlice.isLimiter)
+            if (pieceHeld.leftChild.relevantSlice.hasSlice)
             {
-                if (pieceHeld.leftChild.relevantSlice.fulfilledCondition)
+                if (pieceHeld.leftChild.relevantSlice.isLimiter)
                 {
-                    GameManager.Instance.unsuccessfullSlicesCount++;
+                    if (pieceHeld.leftChild.relevantSlice.fulfilledCondition)
+                    {
+                        GameManager.Instance.unsuccessfullSlicesCount++;
+                    }
+                    else
+                    {
+                        GameManager.Instance.unsuccessfullSlicesCount--;
+                    }
                 }
-                else
-                {
-                    GameManager.Instance.unsuccessfullSlicesCount--;
-                }
+                //else
+                //{
+                //    if (!pieceHeld.leftChild.relevantSlice.fulfilledCondition)
+                //    {
+                //        GameManager.Instance.unsuccessfullSlicesCount--;
+                //    }
+                //}
+
+                //if (!leftCell.isFull)
+                //{
+
+                //    GameManager.Instance.unsuccessfullSlicesCount--;
+                //}
+                //else
+                //{
+                //    GameManager.Instance.unsuccessfullSlicesCount++;
+                //}
             }
-            //else
-            //{
-            //    if (!pieceHeld.leftChild.relevantSlice.fulfilledCondition)
-            //    {
-            //        GameManager.Instance.unsuccessfullSlicesCount--;
-            //    }
-            //}
-
-            //if (!leftCell.isFull)
-            //{
-
-            //    GameManager.Instance.unsuccessfullSlicesCount--;
-            //}
-            //else
-            //{
-            //    GameManager.Instance.unsuccessfullSlicesCount++;
-            //}
         }
 
-        if (pieceHeld.rightChild.relevantSlice.hasSlice)
+        if (pieceHeld.rightChild.relevantSlice)
         {
-            if(pieceHeld.rightChild.relevantSlice.isLimiter)
+            if (pieceHeld.rightChild.relevantSlice.hasSlice)
             {
-                if (pieceHeld.rightChild.relevantSlice.fulfilledCondition)
+                if (pieceHeld.rightChild.relevantSlice.isLimiter)
                 {
-                    GameManager.Instance.unsuccessfullSlicesCount++;
+                    if (pieceHeld.rightChild.relevantSlice.fulfilledCondition)
+                    {
+                        GameManager.Instance.unsuccessfullSlicesCount++;
+                    }
+                    else
+                    {
+                        GameManager.Instance.unsuccessfullSlicesCount--;
+                    }
                 }
-                else
-                {
-                    GameManager.Instance.unsuccessfullSlicesCount--;
-                }
-            }
-            //else
-            //{
-            //    if (!pieceHeld.rightChild.relevantSlice.fulfilledCondition)
-            //    {
-            //        GameManager.Instance.unsuccessfullSlicesCount--;
-            //    }
-            //}
+                //else
+                //{
+                //    if (!pieceHeld.rightChild.relevantSlice.fulfilledCondition)
+                //    {
+                //        GameManager.Instance.unsuccessfullSlicesCount--;
+                //    }
+                //}
 
-            //if (!rightCell.isFull)
-            //{
-            //    GameManager.Instance.unsuccessfullSlicesCount--;
-            //}
-            //else
-            //{
-            //    GameManager.Instance.unsuccessfullSlicesCount++;
-            //}
+                //if (!rightCell.isFull)
+                //{
+                //    GameManager.Instance.unsuccessfullSlicesCount--;
+                //}
+                //else
+                //{
+                //    GameManager.Instance.unsuccessfullSlicesCount++;
+                //}
+            }
         }
 
 
@@ -488,5 +496,36 @@ public class Cell : MonoBehaviour
             Debug.LogError("LOSE BOSS BATTLE");
             return;
         }
+    }
+ 
+
+    public void TurnOnHighlightParticle()
+    {
+        highlightParticle.gameObject.SetActive(true);
+    }
+
+    public void TurnOffHighlighParticle()
+    {
+        highlightParticle.gameObject.SetActive(false);
+    }
+
+
+    public void AddToSubPiecesOnBoardTemp()
+    {
+        ConnectionManager.Instance.subPiecesOnBoard[cellIndex * 2] = CursorController.Instance.followerTarget.GetComponent<Piece>().leftChild;
+        ConnectionManager.Instance.subPiecesOnBoard[cellIndex * 2 + 1] = CursorController.Instance.followerTarget.GetComponent<Piece>().rightChild;
+
+
+        CursorController.Instance.followerTarget.GetComponent<Piece>().leftChild.subPieceIndex = cellIndex * 2;
+        CursorController.Instance.followerTarget.GetComponent<Piece>().rightChild.subPieceIndex = cellIndex * 2 + 1;
+
+    }
+    public void RemoveToSubPiecesOnBoardTemp()
+    {
+        ConnectionManager.Instance.subPiecesOnBoard[cellIndex * 2] = null;
+        ConnectionManager.Instance.subPiecesOnBoard[cellIndex * 2 + 1] = null;
+
+        CursorController.Instance.followerTarget.GetComponent<Piece>().leftChild.subPieceIndex = -1;
+        CursorController.Instance.followerTarget.GetComponent<Piece>().rightChild.subPieceIndex = -1;
     }
 }

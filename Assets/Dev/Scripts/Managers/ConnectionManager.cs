@@ -21,7 +21,8 @@ public class ConnectionManager : MonoBehaviour
     public int lengthOfSubPiecesOuter;
     public float timeToLerpConnectionEmission;
 
-    public ParticleSystem connectedTilesVFX /*, badConnectionParticle*/;
+    //public ParticleSystem connectedTilesVFX /*, badConnectionParticle*/;
+    public GameObject connectedTilesVFX;
 
     public GameObject lootEffectPrefab;
     //public GameObject rightPieceLockObject, leftPieceLockObject; // old lock system
@@ -32,9 +33,13 @@ public class ConnectionManager : MonoBehaviour
     bool playedConnectedSound = false;
     bool nextToOtherpiece = false;
 
-    public float upAmountPieceEffectMax, upAmountPieceEffectMin;
+    public float upAmountPieceEffectMaxX, upAmountPieceEffectMinX;
+    public float upAmountPieceEffectMaxY, upAmountPieceEffectMinY;
+    public float upAmountPieceEffectMaxZ, upAmountPieceEffectMinZ;
     public float speedUpPieceEffect;
 
+
+    public float speedPieceConnectAnim;
     private void Start()
     {
         Instance = this;
@@ -122,7 +127,7 @@ public class ConnectionManager : MonoBehaviour
                         CursorController.Instance.tutorialBadConnection = true;
                     }
 
-                    Debug.Log("Bad Connection Right Conetsted");
+                    //Debug.Log("Bad Connection Right Conetsted");
                     GameManager.Instance.unsuccessfullConnectionCount++;
 
                     if (supPieceArray[currentLeft].relevantSlice.hasSlice)
@@ -177,6 +182,8 @@ public class ConnectionManager : MonoBehaviour
                     //Instantiate(goodConnectionParticle, cellList[cellIndex].rightParticleZone);
                     supPieceArray[currentLeft].SetConnectedMaterial();
                     supPieceArray[leftContested].SetConnectedMaterial();
+                    //Instantiate(connectedTilesVFX, cellList[cellIndex].rightParticleZone);
+                    cellList[cellIndex].leftParticleZone.GetChild(0).gameObject.SetActive(true);
 
 
                     StartCoroutine(SoundManager.Instance.PlaySoundChangeVolumeAndDelay(Sounds.TileMatch, 0.5f, 0.1f));
@@ -329,7 +336,7 @@ public class ConnectionManager : MonoBehaviour
                     {
                         CursorController.Instance.tutorialBadConnection = true;
                     }
-                    Debug.Log("Bad Connection Left Conetsted");
+                    //Debug.Log("Bad Connection Left Conetsted");
                     GameManager.Instance.unsuccessfullConnectionCount++;
 
                     if (supPieceArray[currentRight].relevantSlice.hasSlice)
@@ -396,6 +403,9 @@ public class ConnectionManager : MonoBehaviour
 
                     supPieceArray[currentRight].SetConnectedMaterial();
                     supPieceArray[rightContested].SetConnectedMaterial();
+                    //Instantiate(connectedTilesVFX, cellList[cellIndex].leftParticleZone);
+                    cellList[cellIndex].rightParticleZone.GetChild(0).gameObject.SetActive(true);
+
                     //Debug.Log("Emission is happening");
 
                     if (!playedConnectedSound)
@@ -487,9 +497,149 @@ public class ConnectionManager : MonoBehaviour
             GameManager.Instance.CheckEndLevel(false);
         }
     }
+
+
+    public void ConnectionManagerAnim(int cellIndex, bool isOuterCell)
+    {
+        StartCheckLeftConnectAnim(cellIndex, isOuterCell);
+
+    }
+
+    public void StartCheckLeftConnectAnim(int cellIndex, bool isOuterCell)
+    {
+        int leftContested = CheckIntRange((cellIndex * 2) - 1);
+        int currentLeft = cellIndex * 2;
+
+        bool isGoodConnectLeft = false;
+
+        if (subPiecesOnBoard[leftContested])
+        {
+            nextToOtherpiece = true;
+
+            if (subPiecesOnBoard[currentLeft])
+            {
+                if (CheckSubPieceConnection(subPiecesOnBoard[currentLeft], subPiecesOnBoard[leftContested], out bool conditionmet, out bool isGoodConnect))
+                {
+                    Debug.Log("Good Connect Anim Left");
+                    if (conditionmet)
+                    {
+                        isGoodConnectLeft = true;
+                    }
+
+                    StartCheckRightConnectAnim(cellIndex, isOuterCell, isGoodConnectLeft);
+                }
+                else
+                {
+                    StartCheckRightConnectAnim(cellIndex, isOuterCell, false);
+                }
+            }
+        }
+        else
+        {
+            StartCheckRightConnectAnim(cellIndex, isOuterCell, false); //// if there is no piece connected to left - check right side
+        }
+    }
+
+    public void StartCheckRightConnectAnim(int cellIndex, bool isOuterCell, bool isGoodConnectLeft)
+    {
+        int rightContested = CheckIntRange((cellIndex * 2) + 2);
+
+        int currentRight = cellIndex * 2 + 1;
+
+        bool isGoodConnectRight = false;
+
+
+        if (subPiecesOnBoard[rightContested])
+        {
+            nextToOtherpiece = true;
+
+            if (subPiecesOnBoard[currentRight])
+            {
+                if (CheckSubPieceConnection(subPiecesOnBoard[currentRight], subPiecesOnBoard[rightContested], out bool conditionmet, out bool isGoodConnect))
+                {
+                    if (conditionmet)
+                    {
+                        isGoodConnectRight = true;
+                    }
+
+                    Debug.Log("Good Connect Anim Right");
+
+                }
+            }
+        }
+
+
+
+        StartCoroutine(DoConnectAnim(cellIndex, isGoodConnectLeft, isGoodConnectRight));
+    }
+
+    public IEnumerator DoConnectAnim(int cellIndex, bool isGoodConnectLeft, bool isGoodConnectRight)
+    {
+        int leftContested = CheckIntRange((cellIndex * 2) - 1);
+        int currentLeft = cellIndex * 2;
+
+        int rightContested = CheckIntRange((cellIndex * 2) + 2);
+        int currentRight = cellIndex * 2 + 1;
+
+        if (isGoodConnectLeft)
+        {
+            subPiecesOnBoard[leftContested].GetComponent<CameraShake>().ShakeOnce();
+            subPiecesOnBoard[currentLeft].GetComponent<CameraShake>().ShakeOnce();
+
+            Transform parentCell = cells[cellIndex].transform;
+            LeanTween.move(subPiecesOnBoard[currentLeft].transform.parent.gameObject, new Vector3(parentCell.position.x, parentCell.position.y, parentCell.position.z), speedPieceConnectAnim).setEaseInExpo(); // animate
+        }
+
+        if (isGoodConnectRight)
+        {
+            subPiecesOnBoard[rightContested].GetComponent<CameraShake>().ShakeOnce();
+            subPiecesOnBoard[currentRight].GetComponent<CameraShake>().ShakeOnce();
+
+            Transform parentCell = cells[cellIndex].transform;
+            LeanTween.move(subPiecesOnBoard[currentRight].transform.parent.gameObject, new Vector3(parentCell.position.x, parentCell.position.y, parentCell.position.z), speedPieceConnectAnim).setEaseInExpo(); // animate
+        }
+
+
+        cells[cellIndex].GetComponent<Cell>().RemoveToSubPiecesOnBoardTemp();
+
+        if (!isGoodConnectLeft && !isGoodConnectRight)
+        {
+            CursorController.Instance.SnapFollower(cells[cellIndex].transform);
+
+            yield break;
+        }
+
+        yield return new WaitForSeconds(speedPieceConnectAnim + 0.1f);
+        Debug.LogError("I AM CONNMECTEDDDDD");
+        CursorController.Instance.SnapFollower(cells[cellIndex].transform);
+
+    }
+
+
+    public void UpdateReleventSliceConnectAnim(Piece p)
+    {
+        p.leftChild.relevantSlice = slicesOnBoard[Mathf.CeilToInt((float)p.leftChild.subPieceIndex / 2)];
+
+
+        if (p.rightChild.subPieceIndex >= subPiecesOnBoard.Length - 1)
+        {
+            p.rightChild.relevantSlice = slicesOnBoard[0];
+        }
+        else
+        {
+            p.rightChild.relevantSlice = slicesOnBoard[Mathf.CeilToInt((float)p.rightChild.subPieceIndex / 2)];
+        }
+    }
+
+    public void NullifyReleventSliceAnim(Piece p)
+    {
+        p.leftChild.relevantSlice = null;
+        p.rightChild.relevantSlice = null;
+    }
+
     public bool CheckSubPieceConnection(SubPiece currentSide, SubPiece contestedSide, out bool conditionMet, out bool isGoodConnect)
     {
-        conditionMet = false;
+        conditionMet = true;
         isGoodConnect = false;
 
         if (currentSide.relevantSlice)
@@ -1121,13 +1271,20 @@ public class ConnectionManager : MonoBehaviour
     {
         foreach (Cell c in cells)
         {
-            if(c.pieceHeld != null && c.pieceHeld != p && !c.pieceHeld.isLocked)
+            if(c.pieceHeld != null && c.pieceHeld != p && !c.pieceHeld.isLocked && !c.pieceHeld.isStone)
             {
-                float toMoveZRight = Random.Range(upAmountPieceEffectMax, upAmountPieceEffectMin);
-                float toMoveZLeft = Random.Range(upAmountPieceEffectMax, upAmountPieceEffectMin);
+                float toMoveZRight = Random.Range(upAmountPieceEffectMinZ, upAmountPieceEffectMaxZ);
+                float toMoveZLeft = Random.Range(upAmountPieceEffectMinZ, upAmountPieceEffectMaxZ);
 
-                Vector3 targetPosRight = new Vector3(c.pieceHeld.rightChild.transform.localPosition.x, c.pieceHeld.rightChild.transform.localPosition.y, c.pieceHeld.rightChild.transform.localPosition.z - toMoveZRight);
-                Vector3 targetPosLeft = new Vector3(c.pieceHeld.leftChild.transform.localPosition.x, c.pieceHeld.leftChild.transform.localPosition.y, c.pieceHeld.leftChild.transform.localPosition.z - toMoveZLeft);
+                float toMoveXRight = Random.Range(upAmountPieceEffectMinX, upAmountPieceEffectMaxX);
+                float toMoveXLeft = Random.Range(upAmountPieceEffectMinX, upAmountPieceEffectMaxX);
+
+                float toMoveYRight = Random.Range(upAmountPieceEffectMinY, upAmountPieceEffectMaxY);
+                float toMoveYLeft = Random.Range(upAmountPieceEffectMinY, upAmountPieceEffectMaxY);
+
+
+                Vector3 targetPosRight = new Vector3(c.pieceHeld.rightChild.transform.localPosition.x + toMoveXRight, c.pieceHeld.rightChild.transform.localPosition.y + toMoveYRight, c.pieceHeld.rightChild.transform.localPosition.z - toMoveZRight);
+                Vector3 targetPosLeft = new Vector3(c.pieceHeld.leftChild.transform.localPosition.x + toMoveXLeft, c.pieceHeld.leftChild.transform.localPosition.y + toMoveYLeft, c.pieceHeld.leftChild.transform.localPosition.z - toMoveZLeft);
 
 
                 LeanTween.moveLocal(c.pieceHeld.rightChild.gameObject, targetPosRight, speedUpPieceEffect).setEaseOutBack().setOnComplete(() => returnPieceToOriginPosUpEffect(c.pieceHeld.rightChild)); // animate
@@ -1138,8 +1295,20 @@ public class ConnectionManager : MonoBehaviour
 
     public void returnPieceToOriginPosUpEffect(SubPiece p)
     {
-        Vector3 targetPos = new Vector3(p.transform.localPosition.x, p.transform.localPosition.y, 0);
+        Vector3 targetPos = Vector3.zero;
+
+        if (p.isRightSubPiece)
+        {
+            targetPos = new Vector3(0.7826648f, 0, 0);
+        }
+        else
+        {
+            targetPos = new Vector3(-0.7826648f, 0, 0);
+        }
 
         LeanTween.moveLocal(p.gameObject, targetPos, speedUpPieceEffect); // animate
     }
+
+
+
 }

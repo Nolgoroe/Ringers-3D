@@ -41,6 +41,8 @@ public class CursorController : MonoBehaviour
     private Cell cellhitSecondaryControls;
     private GameObject tempTileHighlight;
 
+    public GameObject previousHeighlightChosen;
+
     [HideInInspector]
     public bool tutorialBadConnection = false;
 
@@ -74,7 +76,7 @@ public class CursorController : MonoBehaviour
                 if (touch.phase == TouchPhase.Began)
                 {
                     Debug.Log("ADVANCING");
-                   StartCoroutine(UIManager.Instance.AdvanceIntroScreen());
+                    StartCoroutine(UIManager.Instance.AdvanceIntroScreen());
                 }
             }
         }
@@ -227,7 +229,6 @@ public class CursorController : MonoBehaviour
             SecondaryControls();
         } // secondary controls
     }
-
 
     public void SecondaryControls()
     {
@@ -447,14 +448,24 @@ public class CursorController : MonoBehaviour
 
             if (touch.phase == TouchPhase.Ended)
             {
+                if (previousHeighlightChosen)
+                {
+                    previousHeighlightChosen.GetComponent<Cell>().TurnOffHighlighParticle();
+
+                    previousHeighlightChosen = null;
+                }
+
                 RaycastHit hit;
 
                 if (Physics.Raycast(mouseRay, out hit, rayLength, boardCellLayer))
                 {
                     if (followerTarget)
                     {
+                        Debug.Log("In first");
+                        Debug.Log(hit.transform.name + "UAHSIUASUBFS");
+                        ConnectionManager.Instance.ConnectionManagerAnim(hit.transform.GetComponent<Cell>().cellIndex, hit.transform.GetComponent<Cell>().isOuter);
 
-                        SnapFollower(hit.transform);
+                        //SnapFollower(hit.transform);
                     }
 
                 }
@@ -483,7 +494,10 @@ public class CursorController : MonoBehaviour
                     {
                         if (followerTarget)
                         {
-                            SnapFollower(closest.transform);
+                            ConnectionManager.Instance.ConnectionManagerAnim(closest.GetComponent<Cell>().cellIndex, closest.GetComponent<Cell>().isOuter);
+                            Debug.Log("In Second");
+
+                            //SnapFollower(closest.transform);
                         }
                     }
                     else
@@ -636,6 +650,122 @@ public class CursorController : MonoBehaviour
 
         cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, 0);
         LeanTween.move(followerTarget.gameObject, cursorPos, moveSpeed); // animate
+
+
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(mouseRay, out hit, rayLength, boardCellLayer))
+        {
+            if (followerTarget)
+            {
+                Debug.Log("In first");
+                Debug.Log(hit.transform.name + "UAHSIUASUBFS");
+
+                if (!hit.transform.GetComponent<Cell>().isFull)
+                {
+                    if (previousHeighlightChosen != hit.transform.gameObject)
+                    {
+                        if (previousHeighlightChosen != null)
+                        {
+                            previousHeighlightChosen.GetComponent<Cell>().TurnOffHighlighParticle();
+                            previousHeighlightChosen.GetComponent<Cell>().RemoveToSubPiecesOnBoardTemp();
+                        }
+
+                        hit.transform.GetComponent<Cell>().TurnOnHighlightParticle();
+
+                        previousHeighlightChosen = hit.transform.gameObject;
+
+                        hit.transform.GetComponent<Cell>().AddToSubPiecesOnBoardTemp();
+
+
+
+                        ConnectionManager.Instance.UpdateReleventSliceConnectAnim(followerTarget.GetComponent<Piece>());
+                    }
+                }
+                else
+                {
+                    if (previousHeighlightChosen != null)
+                    {
+                        previousHeighlightChosen.GetComponent<Cell>().TurnOffHighlighParticle();
+                        previousHeighlightChosen.GetComponent<Cell>().RemoveToSubPiecesOnBoardTemp();
+                        ConnectionManager.Instance.NullifyReleventSliceAnim(followerTarget.GetComponent<Piece>());
+
+                        previousHeighlightChosen = null;
+                    }
+                }
+            }
+
+        }
+        else
+        {
+            Debug.Log("AUISBFIASBFAF");
+            float minDist = 1000;
+
+            Collider closest = null;
+
+            Collider[] hitColliders = Physics.OverlapSphere(cursorPos.position, radiusCollide, boardCellLayer);
+
+            if (hitColliders.Length != 0)
+            {
+                foreach (Collider col in hitColliders)
+                {
+                    if (Vector3.Distance(col.transform.position, cursorPos.transform.position) < minDist)
+                    {
+                        minDist = Vector3.Distance(col.transform.position, cursorPos.transform.position);
+                        closest = col;
+                    }
+
+                }
+
+
+                if (!closest.GetComponent<Cell>().isFull)
+                {
+                    if (previousHeighlightChosen != closest.gameObject)
+                    {
+                        Debug.Log(closest.gameObject.name);
+
+                        if (previousHeighlightChosen != null)
+                        {
+                            previousHeighlightChosen.GetComponent<Cell>().TurnOffHighlighParticle();
+                            previousHeighlightChosen.GetComponent<Cell>().RemoveToSubPiecesOnBoardTemp();
+                        }
+
+                        closest.GetComponent<Cell>().TurnOnHighlightParticle();
+
+                        previousHeighlightChosen = closest.gameObject;
+
+                        closest.GetComponent<Cell>().AddToSubPiecesOnBoardTemp();
+
+
+
+                        ConnectionManager.Instance.UpdateReleventSliceConnectAnim(followerTarget.GetComponent<Piece>());
+                    }
+                }
+                else
+                {
+                    if (previousHeighlightChosen != null)
+                    {
+                        previousHeighlightChosen.GetComponent<Cell>().TurnOffHighlighParticle();
+                        previousHeighlightChosen.GetComponent<Cell>().RemoveToSubPiecesOnBoardTemp();
+                        ConnectionManager.Instance.NullifyReleventSliceAnim(followerTarget.GetComponent<Piece>());
+
+                        previousHeighlightChosen = null;
+                    }
+                }
+            }
+            else
+            {
+                if (previousHeighlightChosen != null)
+                {
+                    previousHeighlightChosen.GetComponent<Cell>().TurnOffHighlighParticle();
+                    previousHeighlightChosen.GetComponent<Cell>().RemoveToSubPiecesOnBoardTemp();
+                    ConnectionManager.Instance.NullifyReleventSliceAnim(followerTarget.GetComponent<Piece>());
+
+                    previousHeighlightChosen = null;
+                }
+            }
+        }
     }
     public void SnapFollower(Transform cellHit)
     {

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3608196929416577028}
   - component: {fileID: 4764239165698675282}
   - component: {fileID: 2761754088569961456}
+  - component: {fileID: 8920212215316814738}
   m_Layer: 8
   m_Name: Right_Wing_Tile
   m_TagString: Untagged
@@ -114,6 +115,24 @@ MonoBehaviour:
   isBadConnection: 0
   subPieceIndex: 0
   relevantSlice: {fileID: 0}
+  parentPiece: {fileID: 0}
+  isRightSubPiece: 0
+--- !u!114 &8920212215316814738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772844705618137394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7536f5480f8cb2541a8e756e7c770003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Amount: {x: 0.03, y: 0.03, z: 0}
+  Duration: 0.3
+  Speed: 7
+  ResetPosition: 1
 --- !u!1 &1645121695642233041
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,6 +228,7 @@ GameObject:
   - component: {fileID: 3120019251313842015}
   - component: {fileID: 1366526319158492904}
   - component: {fileID: 4087056887105063248}
+  - component: {fileID: 4370489997454094907}
   m_Layer: 8
   m_Name: Left_Wing_Tile
   m_TagString: Untagged
@@ -310,3 +330,21 @@ MonoBehaviour:
   isBadConnection: 0
   subPieceIndex: 0
   relevantSlice: {fileID: 0}
+  parentPiece: {fileID: 0}
+  isRightSubPiece: 0
+--- !u!114 &4370489997454094907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3511628377651697941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7536f5480f8cb2541a8e756e7c770003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Amount: {x: 0.03, y: 0.03, z: 0}
+  Duration: 0.3
+  Speed: 7
+  ResetPosition: 1
