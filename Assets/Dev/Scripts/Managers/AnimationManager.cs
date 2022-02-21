@@ -10,24 +10,29 @@ public class AnimationManager : MonoBehaviour
 {
     public static AnimationManager instance;
 
-    public float waitBetweenPieceMove;
+    //public float waitBetweenPieceMove;
     public float speedPieceMove;
     public float speedOutTopBottom;
 
     public float waitBetweenPiecePullIn;
     public float speedPiecePullIn;
-    public float dissolveSpeed = 5;
+    public float dissolveSpeedMaskCrack = 5;
+    public float fillGlowSpeed = 5;
+    public float finalGlowSpeed = 5;
 
     //public float paceFade;
 
-    public float waitTimeMoveTopBottomTime;
+    //public float waitTimeMoveTopBottomTime;
     public float waitTimeParticlesStart;
     public float waitTimeMidParticleAppear;
     public float waitTimeDissolveTiles;
-    public float waitTimePullIn;
+    //public float waitTimePullIn;
+    public float waitTimeBeforeFillGlow;
+    public float waitTimeBeforeFinalGlow;
     public float waitTimeFadeIn;
     public float waitTimeFadeOut;
     public float waitTimeWinScreen;
+    public float completeDissolveAnimTime;
 
     public float fadingSpeedGameplay;
 
@@ -78,6 +83,7 @@ public class AnimationManager : MonoBehaviour
 
     private Coroutine endAnim = null;
 
+    bool dissolveStart = false;
     void Start()
     {
         instance = this;
@@ -127,20 +133,20 @@ public class AnimationManager : MonoBehaviour
         MoveTopButtonAnim();
 
 
-        yield return new WaitForSeconds(waitTimeMoveTopBottomTime);
+        //yield return new WaitForSeconds(waitTimeMoveTopBottomTime);
 
 
-        foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
-        {
-            MoveSubPiece(SP);
+        //foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
+        //{
+        //    MoveSubPiece(SP);
 
-            if (!noWaitPieces)
-            {
-                yield return new WaitForSeconds(waitBetweenPieceMove);
-            }
-        }
+        //    if (!noWaitPieces)
+        //    {
+        //        yield return new WaitForSeconds(waitBetweenPieceMove);
+        //    }
+        //}
 
-
+        yield return new WaitForSeconds(speedOutTopBottom + 0.1f);
         boardScreenshot = Instantiate(GameManager.Instance.gameBoard, new Vector3(100, 0, 0), Quaternion.identity);
         boardScreenshot.transform.SetParent(GameManager.Instance.destroyOutOfLevel);
         yield return new WaitForSeconds(0.1f);
@@ -161,25 +167,27 @@ public class AnimationManager : MonoBehaviour
         }
 
         //// Dissolve Tiles Here
-        DissolveTiles();
+        StartCoroutine(DissolveTiles());
 
-        yield return new WaitForSeconds(waitTimePullIn);
+        yield return new WaitUntil(() => dissolveStart == true);
+
+        //yield return new WaitForSeconds(waitTimePullIn);
 
 
-        for (int i = 0; i < ConnectionManager.Instance.subPiecesOnBoard.Length; i++)
-        {
+        //for (int i = 0; i < ConnectionManager.Instance.subPiecesOnBoard.Length; i++)
+        //{
 
-            int rand = UnityEngine.Random.Range(0, tempSubPieceArray.Count);
+        //    int rand = UnityEngine.Random.Range(0, tempSubPieceArray.Count);
 
-            PullIn(tempSubPieceArray[rand]);
+        //    PullIn(tempSubPieceArray[rand]);
 
-            tempSubPieceArray.RemoveAt(rand);
+        //    tempSubPieceArray.RemoveAt(rand);
 
-            if (!noWaitPullIn)
-            {
-                yield return new WaitForSeconds(UnityEngine.Random.Range(minMaxWaitPullInPieces.a, minMaxWaitPullInPieces.b));
-            }
-        }
+        //    if (!noWaitPullIn)
+        //    {
+        //        yield return new WaitForSeconds(UnityEngine.Random.Range(minMaxWaitPullInPieces.a, minMaxWaitPullInPieces.b));
+        //    }
+        //}
 
         yield return new WaitForSeconds(waitTimeFadeIn);
         fadeImageEndLevel.gameObject.SetActive(true);
@@ -292,17 +300,17 @@ public class AnimationManager : MonoBehaviour
     }
 
     [ContextMenu("Disslove Tiles")]
-    public void DissolveTiles()
+    public IEnumerator DissolveTiles()
     {
+        dissolveStart = false;
+
         foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
         {
-            Material mat = SP.GetComponent<Renderer>().material;
-
-            LeanTween.value(mat.GetFloat("Dissolve_Amount"), 0.28f, dissolveSpeed).setOnUpdate((float val) =>
-            {
-                mat.SetFloat("Dissolve_Amount", val);
-            });
+            StartCoroutine(SP.DissolveSubPiece(dissolveSpeedMaskCrack, waitTimeBeforeFillGlow,fillGlowSpeed, waitTimeBeforeFinalGlow, finalGlowSpeed));
         }
+
+        yield return new WaitForSeconds(completeDissolveAnimTime);
+        dissolveStart = true;
     }
 
     public void UnDissolveTiles(bool isImmidiate)
@@ -311,20 +319,18 @@ public class AnimationManager : MonoBehaviour
         {
             foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
             {
-                Material mat = SP.GetComponent<Renderer>().material;
-                mat.SetFloat("Dissolve_Amount", 0.24f);
+                //Material mat = SP.GetComponent<Renderer>().material;
+                //mat.SetFloat("Dissolve_Amount", 0.24f);
+
+                SP.UnDissolveSubPiece();
+
             }
         }
         else
         {
             foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
             {
-                Material mat = SP.GetComponent<Renderer>().material;
-
-                LeanTween.value(mat.GetFloat("Dissolve_Amount"), 0.24f, 0.1f).setOnUpdate((float val) =>
-                {
-                    mat.SetFloat("Dissolve_Amount", val);
-                });
+                SP.UnDissolveSubPiece();
             }
         }
     }

@@ -374,4 +374,67 @@ public class SubPiece : MonoBehaviour
         rend.material = GameManager.Instance.powerupManager.jokerMat;
     }
 
+
+    public IEnumerator DissolveSubPiece(float dissolveSpeedMaskCrack, float waitTimeBeforeFillGlow, float fillGlowSpeed, float waitTimeBeforeFinalGlow, float finalGlowSpeed)
+    {
+        Debug.Log("Dissolving now");
+
+        Material mat = GetComponent<Renderer>().material;
+
+        mat.SetInt("Is_Piece_Dissolve", 1);
+
+
+        LeanTween.value(mat.GetFloat("Glow_Mask"), 1, dissolveSpeedMaskCrack).setOnUpdate((float val) =>
+        {
+            mat.SetFloat("Glow_Mask", val);
+        });
+
+        LeanTween.value(mat.GetFloat("Crak_Intensity"), 10, dissolveSpeedMaskCrack).setOnUpdate((float val) =>
+        {
+            mat.SetFloat("Crak_Intensity", val);
+        });
+
+        yield return new WaitForSeconds(waitTimeBeforeFillGlow);
+
+        LeanTween.value(mat.GetFloat("Filling_Glow"), 1, fillGlowSpeed).setOnUpdate((float val) =>
+        {
+            mat.SetFloat("Filling_Glow", val);
+        });
+
+        yield return new WaitForSeconds(waitTimeBeforeFinalGlow);
+
+        LeanTween.value(mat.GetFloat("Final_Glow"), 1, finalGlowSpeed).setOnUpdate((float val) =>
+        {
+            mat.SetFloat("Final_Glow", val);
+        });
+    }
+
+    public void UnDissolveSubPiece()
+    {
+        Material mat = GetComponent<Renderer>().material;
+
+        LeanTween.value(mat.GetFloat("Glow_Mask"), 1, 0.1f).setOnUpdate((float val) =>
+        {
+            mat.SetFloat("Glow_Mask", val);
+        });
+
+        LeanTween.value(mat.GetFloat("Crak_Intensity"), 10, 0.1f).setOnUpdate((float val) =>
+        {
+            mat.SetFloat("Crak_Intensity", val);
+        });
+
+        LeanTween.value(mat.GetFloat("Filling_Glow"), 1, 0.1f).setOnUpdate((float val) =>
+        {
+            mat.SetFloat("Filling_Glow", val);
+        });
+
+        LeanTween.value(mat.GetFloat("Final_Glow"), 1, 0.1f).setOnUpdate((float val) =>
+        {
+            mat.SetFloat("Final_Glow", val);
+        });
+
+
+        mat.SetInt("Is_Piece_Dissolve", 0);
+    }
+
 }
