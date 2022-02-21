@@ -6,6 +6,6 @@ public class PotionAnimLogic : MonoBehaviour
 {
     void DestroyMe()
     {
-        Destroy(gameObject);
+        Destroy(transform.parent.gameObject);
     }
 }

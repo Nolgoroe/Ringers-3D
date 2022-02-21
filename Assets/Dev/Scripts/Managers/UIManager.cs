@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Linq;
 using System;
 using GameAnalyticsSDK;
+using System.Text.RegularExpressions;
 
 [System.Serializable]
 public class ButtonsPerZone
@@ -77,6 +78,8 @@ public class UIManager : MonoBehaviour
     public GameObject fadeIntoLevel;
     public GameObject introScreenParent;
     public GameObject TEMPBgIntro;
+    public GameObject IntroSkipButton;
+    public GameObject IntroTapToContinue;
     public GameObject bossBattleUIScreen;
     public GameObject placePieceVFX;
     public GameObject dealButtonVFX;
@@ -158,7 +161,8 @@ public class UIManager : MonoBehaviour
 
     PanZoom PZ;
 
-    int introImageIndex = 0;
+    public int introImageIndex = 0;
+    public int introImageTextIndex = 0;
 
     private void Start()
     {
@@ -903,7 +907,9 @@ public class UIManager : MonoBehaviour
 
         //AnimalPrefabData prefabData = AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
 
-        animalNameText.text = "You have released the " + AnimalsManager.Instance.currentLevelAnimal;
+        string animalName = Regex.Replace(AnimalsManager.Instance.currentLevelAnimal.ToString(), "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
+
+        animalNameText.text = "You have released the " + animalName;
     }
     public void DisplayLoseScreen()
     {
@@ -1498,8 +1504,7 @@ public class UIManager : MonoBehaviour
 
 
     public IEnumerator DisplayIntro()
-    {
-        isDuringIntro = true;
+    {   isDuringIntro = true;
         canAdvanceIntro = false;
 
         introScreenParent.SetActive(true);
@@ -1507,6 +1512,22 @@ public class UIManager : MonoBehaviour
         LeanTween.value(TEMPBgIntro, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
         {
             Image sr = TEMPBgIntro.GetComponent<Image>();
+            Color newColor = sr.color;
+            newColor.a = val;
+            sr.color = newColor;
+        });
+
+        LeanTween.value(IntroSkipButton, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            Image sr = IntroSkipButton.GetComponent<Image>();
+            Color newColor = sr.color;
+            newColor.a = val;
+            sr.color = newColor;
+        });
+
+        LeanTween.value(IntroTapToContinue, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            TMP_Text sr = IntroTapToContinue.GetComponent<TMP_Text>();
             Color newColor = sr.color;
             newColor.a = val;
             sr.color = newColor;
@@ -1520,80 +1541,31 @@ public class UIManager : MonoBehaviour
             sr.color = newColor;
         });
 
-
-        foreach (GameObject go in introImages[0].textObjects)
+        LeanTween.value(introImages[0].textObjects[0], 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
         {
-            LeanTween.value(go, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-            {
-                TMP_Text sr = go.GetComponent<TMP_Text>();
-                Color newColor = sr.color;
-                newColor.a = val;
-                sr.color = newColor;
-            });
-        }
-
-        yield return new WaitForSeconds(speedFadeInIntro + 0.1f);
-
-        canAdvanceIntro = true;
-    }
-
-
-    public IEnumerator AdvanceIntroScreen()
-    {
-        SoundManager.Instance.PlaySound(Sounds.PageFlip);
-        canAdvanceIntro = false;
-
-        LeanTween.value(introImages[introImageIndex].imageObject, 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-        {
-            Image sr = introImages[introImageIndex].imageObject.GetComponent<Image>();
+            TMP_Text sr = introImages[0].textObjects[0].GetComponent<TMP_Text>();
             Color newColor = sr.color;
             newColor.a = val;
             sr.color = newColor;
         });
 
-        foreach (GameObject go in introImages[introImageIndex].textObjects)
+        yield return new WaitForSeconds(speedFadeInIntro + 0.1f);
+
+        canAdvanceIntro = true;
+        introImageTextIndex++;
+    }
+
+
+    public IEnumerator AdvanceIntroScreen()
+    {
+        bool pageFlipped = false;
+
+        if(introImageTextIndex >= introImages[introImageIndex].textObjects.Count())
         {
-            LeanTween.value(go, 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-            {
-                TMP_Text sr = go.GetComponent<TMP_Text>();
-                Color newColor = sr.color;
-                newColor.a = val;
-                sr.color = newColor;
-            });
-
-        }
-
-
-        yield return new WaitForSeconds(speedFadeOutIntro + 0.1f);
-        introImageIndex++;
-
-        if (introImageIndex >= introImages.Count())
-        {
-            isDuringIntro = false;
+            SoundManager.Instance.PlaySound(Sounds.PageFlip);
             canAdvanceIntro = false;
 
-            TutorialSaveData.Instance.hasFinishedIntro = true;
-            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
-
-            PlayButton();
-            DisplayDailyRewardsScreen();
-
-            LeanTween.value(TEMPBgIntro, 1, 0, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-            {
-                Image sr = TEMPBgIntro.GetComponent<Image>();
-                Color newColor = sr.color;
-                newColor.a = val;
-                sr.color = newColor;
-            });
-
-            yield return new WaitForSeconds(speedFadeOutIntro + 0.1f);
-
-            introScreenParent.SetActive(false);
-            yield break;
-        }
-        else
-        {
-            LeanTween.value(introImages[introImageIndex].imageObject, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+            LeanTween.value(introImages[introImageIndex].imageObject, 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
             {
                 Image sr = introImages[introImageIndex].imageObject.GetComponent<Image>();
                 Color newColor = sr.color;
@@ -1601,11 +1573,130 @@ public class UIManager : MonoBehaviour
                 sr.color = newColor;
             });
 
-            foreach (GameObject go in introImages[introImageIndex].textObjects)
+            LeanTween.value(IntroSkipButton, 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
             {
-                LeanTween.value(go, 0, 1, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+                Image sr = IntroSkipButton.GetComponent<Image>();
+                Color newColor = sr.color;
+                newColor.a = val;
+                sr.color = newColor;
+            });
+
+            LeanTween.value(IntroTapToContinue, 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+            {
+                TMP_Text sr = IntroTapToContinue.GetComponent<TMP_Text>();
+                Color newColor = sr.color;
+                newColor.a = val;
+                sr.color = newColor;
+            });
+
+            //foreach (GameObject go in introImages[introImageIndex].textObjects)
+            //{
+
+            LeanTween.value(introImages[introImageIndex].textObjects[introImages[introImageIndex].textObjects.Count() - 1], 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+            {
+                TMP_Text sr = introImages[introImageIndex].textObjects[introImages[introImageIndex].textObjects.Count() - 1].GetComponent<TMP_Text>();
+                Color newColor = sr.color;
+                newColor.a = val;
+                sr.color = newColor;
+            });
+
+            //}
+            pageFlipped = true;
+            introImageTextIndex = 0;
+        }
+        else
+        {
+            if(introImageTextIndex > 0)
+            {
+                LeanTween.value(introImages[introImageIndex].textObjects[introImageTextIndex - 1], 1, 0, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
                 {
-                    TMP_Text sr = go.GetComponent<TMP_Text>();
+                    TMP_Text sr = introImages[introImageIndex].textObjects[introImageTextIndex - 1].GetComponent<TMP_Text>();
+                    Color newColor = sr.color;
+                    newColor.a = val;
+                    sr.color = newColor;
+                });
+            }
+            else
+            {
+                LeanTween.value(introImages[introImageIndex].textObjects[0], 1, 0, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+                {
+                    TMP_Text sr = introImages[introImageIndex].textObjects[0].GetComponent<TMP_Text>();
+                    Color newColor = sr.color;
+                    newColor.a = val;
+                    sr.color = newColor;
+                });
+            }
+
+            LeanTween.value(introImages[introImageIndex].textObjects[introImageTextIndex], 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+            {
+                TMP_Text sr = introImages[introImageIndex].textObjects[introImageTextIndex].GetComponent<TMP_Text>();
+                Color newColor = sr.color;
+                newColor.a = val;
+                sr.color = newColor;
+            });
+        }
+
+
+
+
+        if (pageFlipped)
+        {
+            yield return new WaitForSeconds(speedFadeOutIntro + 0.1f);
+            introImageIndex++;
+
+            if (introImageIndex >= introImages.Count())
+            {
+                isDuringIntro = false;
+                canAdvanceIntro = false;
+
+                TutorialSaveData.Instance.hasFinishedIntro = true;
+                PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+
+                PlayButton();
+                DisplayDailyRewardsScreen();
+
+                LeanTween.value(TEMPBgIntro, 1, 0, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+                {
+                    Image sr = TEMPBgIntro.GetComponent<Image>();
+                    Color newColor = sr.color;
+                    newColor.a = val;
+                    sr.color = newColor;
+                });
+
+                yield return new WaitForSeconds(speedFadeOutIntro + 0.1f);
+
+                introScreenParent.SetActive(false);
+                yield break;
+            }
+            else
+            {
+                LeanTween.value(introImages[introImageIndex].imageObject, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+                {
+                    Image sr = introImages[introImageIndex].imageObject.GetComponent<Image>();
+                    Color newColor = sr.color;
+                    newColor.a = val;
+                    sr.color = newColor;
+                });
+
+                LeanTween.value(IntroSkipButton, 0, 1, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+                {
+                    Image sr = IntroSkipButton.GetComponent<Image>();
+                    Color newColor = sr.color;
+                    newColor.a = val;
+                    sr.color = newColor;
+                });
+
+                LeanTween.value(IntroTapToContinue, 0, 1, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+                {
+                    TMP_Text sr = IntroTapToContinue.GetComponent<TMP_Text>();
+                    Color newColor = sr.color;
+                    newColor.a = val;
+                    sr.color = newColor;
+                });
+
+                LeanTween.value(introImages[introImageIndex].textObjects[introImageTextIndex], 0, 1, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+                {
+                    TMP_Text sr = introImages[introImageIndex].textObjects[introImageTextIndex].GetComponent<TMP_Text>();
                     Color newColor = sr.color;
                     newColor.a = val;
                     sr.color = newColor;
@@ -1616,6 +1707,7 @@ public class UIManager : MonoBehaviour
 
         yield return new WaitForSeconds(speedFadeInIntro + 0.1f);
         canAdvanceIntro = true;
+        introImageTextIndex++;
     }
 
 

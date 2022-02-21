@@ -10,13 +10,13 @@ using System.IO;
 public enum AnimalsInGame
 {
     RedFox,
-    BrownFox,
+    SandFox,
     BlueFox,
-    CelestialFox,
-    Stag,
+    BrownStag,
+    RedStag,
     LegendaryStag,
-    Owl,
-    LegendaryMarmot,
+    BrownOwl,
+    YellowOwl,
     SimpleHawk,
     Sheep,
     Bull,
