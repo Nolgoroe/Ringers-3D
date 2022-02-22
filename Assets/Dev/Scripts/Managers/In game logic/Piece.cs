@@ -32,6 +32,7 @@ public class Piece : MonoBehaviour
     public bool isLocked;
     public bool isStone;
     public bool isTutorialLocked;
+    public bool isDuringConnectionAnim;
     public bool partOfBoard;
 
     public void SetPieces()

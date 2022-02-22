@@ -111,7 +111,7 @@ public class ConnectionManager : MonoBehaviour
         int leftContested = CheckIntRange((cellIndex * 2) - 1);
         int currentLeft = cellIndex * 2;
 
-        if (supPieceArray[leftContested])
+        if (supPieceArray[leftContested] && subPiecesOnBoard[leftContested].parentPiece.partOfBoard)
         {
             nextToOtherpiece = true;
 
@@ -322,7 +322,7 @@ public class ConnectionManager : MonoBehaviour
         //int currentRight = cellIndex * 2 + 1;
         //int currentLeft = cellIndex * 2;
 
-        if (supPieceArray[rightContested])
+        if (supPieceArray[rightContested] && subPiecesOnBoard[rightContested].parentPiece.partOfBoard)
         {
             nextToOtherpiece = true;
 
@@ -512,7 +512,7 @@ public class ConnectionManager : MonoBehaviour
 
         bool isGoodConnectLeft = false;
 
-        if (subPiecesOnBoard[leftContested])
+        if (subPiecesOnBoard[leftContested] && subPiecesOnBoard[leftContested].parentPiece.partOfBoard)
         {
             nextToOtherpiece = true;
 
@@ -549,7 +549,7 @@ public class ConnectionManager : MonoBehaviour
         bool isGoodConnectRight = false;
 
 
-        if (subPiecesOnBoard[rightContested])
+        if (subPiecesOnBoard[rightContested] && subPiecesOnBoard[rightContested].parentPiece.partOfBoard)
         {
             nextToOtherpiece = true;
 
@@ -585,7 +585,9 @@ public class ConnectionManager : MonoBehaviour
         {
             subPiecesOnBoard[leftContested].GetComponent<CameraShake>().ShakeOnce();
             subPiecesOnBoard[currentLeft].GetComponent<CameraShake>().ShakeOnce();
-
+            subPiecesOnBoard[currentLeft].parentPiece.isDuringConnectionAnim = true;
+            subPiecesOnBoard[leftContested].parentPiece.isDuringConnectionAnim = true;
+            cells[cellIndex].isDuringConnectionAnim = true;
             Transform parentCell = cells[cellIndex].transform;
             LeanTween.move(subPiecesOnBoard[currentLeft].transform.parent.gameObject, new Vector3(parentCell.position.x, parentCell.position.y, parentCell.position.z), speedPieceConnectAnim).setEaseInExpo(); // animate
         }
@@ -594,24 +596,46 @@ public class ConnectionManager : MonoBehaviour
         {
             subPiecesOnBoard[rightContested].GetComponent<CameraShake>().ShakeOnce();
             subPiecesOnBoard[currentRight].GetComponent<CameraShake>().ShakeOnce();
+            subPiecesOnBoard[currentRight].parentPiece.isDuringConnectionAnim = true;
+            subPiecesOnBoard[rightContested].parentPiece.isDuringConnectionAnim = true;
+            cells[cellIndex].isDuringConnectionAnim = true;
 
             Transform parentCell = cells[cellIndex].transform;
             LeanTween.move(subPiecesOnBoard[currentRight].transform.parent.gameObject, new Vector3(parentCell.position.x, parentCell.position.y, parentCell.position.z), speedPieceConnectAnim).setEaseInExpo(); // animate
         }
 
-
-        cells[cellIndex].GetComponent<Cell>().RemoveToSubPiecesOnBoardTemp();
-
         if (!isGoodConnectLeft && !isGoodConnectRight)
         {
-            CursorController.Instance.SnapFollower(cells[cellIndex].transform);
+            CursorController.Instance.SnapFollower(cells[cellIndex].transform, subPiecesOnBoard[currentLeft].transform.parent);
 
             yield break;
         }
 
-        yield return new WaitForSeconds(speedPieceConnectAnim + 0.1f);
+        //if (!cells[cellIndex].isFull)
+        //{
+        //    cells[cellIndex].GetComponent<Cell>().RemoveToSubPiecesOnBoardTemp();
+        //}
+
+
+        yield return new WaitForSeconds(speedPieceConnectAnim);
         Debug.LogError("I AM CONNMECTEDDDDD");
-        CursorController.Instance.SnapFollower(cells[cellIndex].transform);
+
+        if (subPiecesOnBoard[currentLeft].parentPiece.isDuringConnectionAnim)
+        {
+            CursorController.Instance.SnapFollower(cells[cellIndex].transform, subPiecesOnBoard[currentLeft].transform.parent);
+
+            if (isGoodConnectLeft)
+            {
+                subPiecesOnBoard[currentLeft].parentPiece.isDuringConnectionAnim = false;
+                subPiecesOnBoard[leftContested].parentPiece.isDuringConnectionAnim = false;
+            }
+
+            if (isGoodConnectRight)
+            {
+                subPiecesOnBoard[currentRight].parentPiece.isDuringConnectionAnim = false;
+                subPiecesOnBoard[rightContested].parentPiece.isDuringConnectionAnim = false;
+            }
+        }
 
     }
 
@@ -1267,7 +1291,7 @@ public class ConnectionManager : MonoBehaviour
     //    Destroy(relevent.lootIcon.gameObject);
     //}
 
-    public void JumpPiecesEffect(Piece p)
+    public IEnumerator JumpPiecesEffect(Piece p)
     {
         foreach (Cell c in cells)
         {
@@ -1286,9 +1310,15 @@ public class ConnectionManager : MonoBehaviour
                 Vector3 targetPosRight = new Vector3(c.pieceHeld.rightChild.transform.localPosition.x + toMoveXRight, c.pieceHeld.rightChild.transform.localPosition.y + toMoveYRight, c.pieceHeld.rightChild.transform.localPosition.z - toMoveZRight);
                 Vector3 targetPosLeft = new Vector3(c.pieceHeld.leftChild.transform.localPosition.x + toMoveXLeft, c.pieceHeld.leftChild.transform.localPosition.y + toMoveYLeft, c.pieceHeld.leftChild.transform.localPosition.z - toMoveZLeft);
 
+                Debug.Log(c);
+                Debug.Log(c.pieceHeld);
 
-                LeanTween.moveLocal(c.pieceHeld.rightChild.gameObject, targetPosRight, speedUpPieceEffect).setEaseOutBack().setOnComplete(() => returnPieceToOriginPosUpEffect(c.pieceHeld.rightChild)); // animate
-                LeanTween.moveLocal(c.pieceHeld.leftChild.gameObject, targetPosLeft, speedUpPieceEffect).setEaseOutBack().setOnComplete(() => returnPieceToOriginPosUpEffect(c.pieceHeld.leftChild)); // animate
+                LeanTween.moveLocal(c.pieceHeld.rightChild.gameObject, targetPosRight, speedUpPieceEffect).setEaseOutBack(); // animate
+                LeanTween.moveLocal(c.pieceHeld.leftChild.gameObject, targetPosLeft, speedUpPieceEffect).setEaseOutBack(); // animate
+
+                yield return new WaitForSeconds(speedUpPieceEffect);
+                returnPieceToOriginPosUpEffect(c.pieceHeld.leftChild);
+                returnPieceToOriginPosUpEffect(c.pieceHeld.rightChild);
             }
         }
     }
@@ -1310,5 +1340,13 @@ public class ConnectionManager : MonoBehaviour
     }
 
 
+    public void TurnOffAllConnectedVFX()
+    {
+        foreach (Cell c in cells)
+        {
+            c.rightParticleZone.GetChild(0).gameObject.SetActive(false);
+            c.leftParticleZone.GetChild(0).gameObject.SetActive(false);
+        }
+    }
 
 }

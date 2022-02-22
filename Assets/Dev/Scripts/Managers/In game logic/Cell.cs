@@ -5,6 +5,7 @@ using UnityEngine;
 public class Cell : MonoBehaviour
 {
     public bool isFull;
+    public bool isDuringConnectionAnim;
 
     public bool isOuter;
     public int cellIndex;
@@ -92,7 +93,7 @@ public class Cell : MonoBehaviour
 
         GameObject go = Instantiate(UIManager.Instance.placePieceVFX, followerTarget);
 
-        ConnectionManager.Instance.JumpPiecesEffect(pieceHeld);
+        StartCoroutine(ConnectionManager.Instance.JumpPiecesEffect(pieceHeld));
 
         ConnectionManager.Instance.CallConnection(cellIndex, isOuter, false);
     }

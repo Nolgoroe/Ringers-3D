@@ -146,6 +146,8 @@ public class AnimationManager : MonoBehaviour
         //    }
         //}
 
+        ConnectionManager.Instance.TurnOffAllConnectedVFX();
+
         yield return new WaitForSeconds(speedOutTopBottom + 0.1f);
         boardScreenshot = Instantiate(GameManager.Instance.gameBoard, new Vector3(100, 0, 0), Quaternion.identity);
         boardScreenshot.transform.SetParent(GameManager.Instance.destroyOutOfLevel);
@@ -251,6 +253,7 @@ public class AnimationManager : MonoBehaviour
         yield return new WaitForSeconds(4f);
 
         UnDissolveTiles(false);
+
         yield return new WaitForSeconds(0.1f); //unDissolve time
         MoveBoardScreenshotToPosition(boardScreenshot);
         GameManager.Instance.WinAfterAnimation();
@@ -285,7 +288,7 @@ public class AnimationManager : MonoBehaviour
     {
         board.transform.position = new Vector3(-0.002f, 1.636f, 0.055f);
 
-        board.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+        board.transform.localScale = new Vector3(0.07f, 0.07f, 0.07f);
 
     }
 
@@ -350,6 +353,14 @@ public class AnimationManager : MonoBehaviour
         if (!isCheat)
         {
             UnDissolveTiles(true);
+            ConnectionManager.Instance.TurnOffAllConnectedVFX();
+
+            if(boardScreenshot == null)
+            {
+                boardScreenshot = Instantiate(GameManager.Instance.gameBoard, new Vector3(100, 0, 0), Quaternion.identity);
+                boardScreenshot.transform.SetParent(GameManager.Instance.destroyOutOfLevel);
+            }
+
 
             MoveBoardScreenshotToPosition(boardScreenshot);
         }

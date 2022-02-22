@@ -291,7 +291,7 @@ public class CursorController : MonoBehaviour
 
                             DestroySecondaryControlsPrefabCell(true);
 
-                            SnapFollower(cellhitSecondaryControls.transform);
+                            SnapFollower(cellhitSecondaryControls.transform, followerTarget);
                         }
                         else
                         {
@@ -305,7 +305,7 @@ public class CursorController : MonoBehaviour
                             if (followerTarget)
                             {
                                 ResetSecondaryControlsPieceColor(followerTarget);
-                                SnapFollower(hit.transform);
+                                SnapFollower(hit.transform, followerTarget);
                             }
                         }
                         else
@@ -334,14 +334,14 @@ public class CursorController : MonoBehaviour
                                 {
                                     ResetSecondaryControlsPieceColor(followerTarget);
 
-                                    SnapFollower(closest.transform);
+                                    SnapFollower(closest.transform, followerTarget);
                                 }
                             }
                             else
                             {
                                 ResetSecondaryControlsPieceColor(followerTarget);
 
-                                SnapFollower(null);
+                                SnapFollower(null, followerTarget);
                             }
                         }
                     }
@@ -421,7 +421,10 @@ public class CursorController : MonoBehaviour
                 {
                     Piece p = hit.transform.parent.GetComponent<Piece>();
                     //Debug.Log(hit.transform.name);
-                    GrabPiece(p);
+                    if (!p.isDuringConnectionAnim)
+                    {
+                        GrabPiece(p);
+                    }
                 }
 
                 //// Shoot ray
@@ -440,7 +443,7 @@ public class CursorController : MonoBehaviour
                     cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y, gameBoard.transform.position.z);
                 }
 
-                if (followerTarget)
+                if (followerTarget && !followerTarget.GetComponent<Piece>().isDuringConnectionAnim)
                 {
                     MoveFollower();
                 }
@@ -448,25 +451,26 @@ public class CursorController : MonoBehaviour
 
             if (touch.phase == TouchPhase.Ended)
             {
-                if (previousHeighlightChosen)
-                {
-                    previousHeighlightChosen.GetComponent<Cell>().TurnOffHighlighParticle();
-
-                    previousHeighlightChosen = null;
-                }
-
                 RaycastHit hit;
 
                 if (Physics.Raycast(mouseRay, out hit, rayLength, boardCellLayer))
                 {
-                    if (followerTarget)
+                    if (followerTarget && !followerTarget.GetComponent<Piece>().isDuringConnectionAnim)
                     {
-                        Debug.Log("In first");
-                        Debug.Log(hit.transform.name + "UAHSIUASUBFS");
-                        ConnectionManager.Instance.ConnectionManagerAnim(hit.transform.GetComponent<Cell>().cellIndex, hit.transform.GetComponent<Cell>().isOuter);
+                        if (!hit.transform.GetComponent<Cell>().isFull && !hit.transform.GetComponent<Cell>().isDuringConnectionAnim)
+                        {
+                            Debug.Log("In first");
+                            Debug.Log(hit.transform.name + "UAHSIUASUBFS");
+                            ConnectionManager.Instance.ConnectionManagerAnim(hit.transform.GetComponent<Cell>().cellIndex, hit.transform.GetComponent<Cell>().isOuter);
+                        }
+                        else
+                        {
+                            SnapFollower(null, followerTarget);
+                        }
 
                         //SnapFollower(hit.transform);
                     }
+
 
                 }
                 else
@@ -492,20 +496,37 @@ public class CursorController : MonoBehaviour
 
                     if (closest != null)
                     {
-                        if (followerTarget)
+                        if (followerTarget && !followerTarget.GetComponent<Piece>().isDuringConnectionAnim)
                         {
-                            ConnectionManager.Instance.ConnectionManagerAnim(closest.GetComponent<Cell>().cellIndex, closest.GetComponent<Cell>().isOuter);
-                            Debug.Log("In Second");
-
-                            //SnapFollower(closest.transform);
+                            if (!closest.transform.GetComponent<Cell>().isFull && !closest.transform.GetComponent<Cell>().isDuringConnectionAnim)
+                            {
+                                ConnectionManager.Instance.ConnectionManagerAnim(closest.GetComponent<Cell>().cellIndex, closest.GetComponent<Cell>().isOuter);
+                                Debug.Log("In Second");
+                            }
+                            else
+                            {
+                                SnapFollower(null, followerTarget);
+                            }
                         }
                     }
                     else
                     {
-                        SnapFollower(null);
+                        if (followerTarget)
+                        {
+                            if (!followerTarget.GetComponent<Piece>().isDuringConnectionAnim)
+                            {
+                                SnapFollower(null, followerTarget);
+                            }
+                        }
                     }
                 }
 
+                if (previousHeighlightChosen)
+                {
+                    previousHeighlightChosen.GetComponent<Cell>().TurnOffHighlighParticle();
+
+                    previousHeighlightChosen = null;
+                }
 
                 ///If we have a piece - drop it
                 ///If its in the board - snap
@@ -616,8 +637,13 @@ public class CursorController : MonoBehaviour
             }
         }
 
-        if (!p.isLocked && !p.isTutorialLocked && !p.isStone)
+        if (!p.isLocked && !p.isTutorialLocked && !p.isStone && !p.isDuringConnectionAnim)
         {
+            if (p.partOfBoard)
+            {
+                p.partOfBoard = false;
+            }
+
             followerTarget = p.transform;
             Cell c = p.transform.parent.GetComponent<Cell>();
 
@@ -639,6 +665,8 @@ public class CursorController : MonoBehaviour
             followerTarget.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
         }
 
+
+        MoveFollower();
     }
     public void MoveFollower()
     {
@@ -662,7 +690,8 @@ public class CursorController : MonoBehaviour
                 Debug.Log("In first");
                 Debug.Log(hit.transform.name + "UAHSIUASUBFS");
 
-                if (!hit.transform.GetComponent<Cell>().isFull)
+                Cell c = hit.transform.GetComponent<Cell>();
+                if (!c.isFull && !c.isDuringConnectionAnim)
                 {
                     if (previousHeighlightChosen != hit.transform.gameObject)
                     {
@@ -672,11 +701,11 @@ public class CursorController : MonoBehaviour
                             previousHeighlightChosen.GetComponent<Cell>().RemoveToSubPiecesOnBoardTemp();
                         }
 
-                        hit.transform.GetComponent<Cell>().TurnOnHighlightParticle();
+                        c.TurnOnHighlightParticle();
 
                         previousHeighlightChosen = hit.transform.gameObject;
 
-                        hit.transform.GetComponent<Cell>().AddToSubPiecesOnBoardTemp();
+                        c.AddToSubPiecesOnBoardTemp();
 
 
 
@@ -718,8 +747,9 @@ public class CursorController : MonoBehaviour
 
                 }
 
+                Cell c = closest.GetComponent<Cell>();
 
-                if (!closest.GetComponent<Cell>().isFull)
+                if (!c.isFull && !c.isDuringConnectionAnim)
                 {
                     if (previousHeighlightChosen != closest.gameObject)
                     {
@@ -731,11 +761,11 @@ public class CursorController : MonoBehaviour
                             previousHeighlightChosen.GetComponent<Cell>().RemoveToSubPiecesOnBoardTemp();
                         }
 
-                        closest.GetComponent<Cell>().TurnOnHighlightParticle();
+                        c.TurnOnHighlightParticle();
 
                         previousHeighlightChosen = closest.gameObject;
 
-                        closest.GetComponent<Cell>().AddToSubPiecesOnBoardTemp();
+                        c.AddToSubPiecesOnBoardTemp();
 
 
 
@@ -767,11 +797,18 @@ public class CursorController : MonoBehaviour
             }
         }
     }
-    public void SnapFollower(Transform cellHit)
+    public void SnapFollower(Transform cellHit, Transform toMove)
     {
-        if (followerTarget)
+        if (toMove)
         {
-            LeanTween.cancel(followerTarget.gameObject);
+            //toMove.GetComponent<Piece>().isDuringConnectionAnim = false;
+
+            if (cellHit)
+            {
+                cellHit.GetComponent<Cell>().isDuringConnectionAnim = false;
+            }
+
+            LeanTween.cancel(toMove.gameObject);
         }
 
         if (TutorialSequence.Instacne.duringSequence)
@@ -785,43 +822,43 @@ public class CursorController : MonoBehaviour
         {
             if (cellHit != null)
             {
-                if (followerTarget)
+                Cell cell = cellHit.GetComponent<Cell>();
+                Cell previousCell = toMove.parent.GetComponent<Cell>(); //// Only relevant if piece is moved from cell to cell
+
+                bool newPiece = toMove.transform.parent.CompareTag("Clip");
+
+                if (GameManager.Instance.currentFilledCellCount + 1 != GameManager.Instance.currentLevel.cellsCountInLevel)
                 {
-                    Cell cell = cellHit.GetComponent<Cell>();
-                    Cell previousCell = followerTarget.parent.GetComponent<Cell>(); //// Only relevant if piece is moved from cell to cell
-
-                    bool newPiece = followerTarget.transform.parent.CompareTag("Clip");
-
-                    if (GameManager.Instance.currentFilledCellCount + 1 != GameManager.Instance.currentLevel.cellsCountInLevel)
+                    if (newPiece && !cell.isFull)
                     {
-                        if (newPiece && !cell.isFull)
-                        {
-                            GameManager.Instance.clipManager.PopulateSlot(followerTarget.transform.parent, 10);
-                            AddNumAnimalsToBoard(followerTarget);
-                        }
+                        GameManager.Instance.clipManager.PopulateSlot(toMove.transform.parent, 10);
+                        AddNumAnimalsToBoard(toMove);
                     }
-                    else
+                }
+                else
+                {
+                    GameManager.Instance.clipManager.emptyClip = toMove.transform.parent;
+                    GameManager.Instance.clipManager.latestPiece = toMove;
+                    //AddNumAnimalsToBoard(followerTarget);
+                }
+
+
+                if (!cell.isFull)
+                {
+                    cell.AddPiece(toMove, newPiece);
+
+                    if (!newPiece && cell != previousCell)
                     {
-                        GameManager.Instance.clipManager.emptyClip = followerTarget.transform.parent;
-                        GameManager.Instance.clipManager.latestPiece = followerTarget;
-                        //AddNumAnimalsToBoard(followerTarget);
+                        previousCell.isFull = false;
                     }
+                }
+                else
+                {
+                    ReturnHome();
+                }
 
-
-                    if (!cell.isFull)
-                    {
-                        cell.AddPiece(followerTarget, newPiece);
-
-                        if (!newPiece && cell != previousCell)
-                        {
-                            previousCell.isFull = false;
-                        }
-                    }
-                    else
-                    {
-                        ReturnHome();
-                    }
-
+                if(followerTarget == toMove)
+                {
                     followerTarget = null;
                 }
             }
@@ -835,7 +872,11 @@ public class CursorController : MonoBehaviour
 
             if (GameManager.Instance.isSecondaryControls)
             {
-                followerTarget = null;
+                if (followerTarget == toMove)
+                {
+                    followerTarget = null;
+                }
+
                 cellhitSecondaryControls = null;
             }
         }
@@ -1004,6 +1045,10 @@ public class CursorController : MonoBehaviour
         {
             followerTarget.transform.parent.GetComponent<Cell>().AddPiece(followerTarget, false);
         }
+        //else
+        //{
+        //    previousHeighlightChosen.GetComponent<Cell>().RemoveToSubPiecesOnBoardTemp();
+        //}
 
         followerTarget = null;
     }
