@@ -694,7 +694,7 @@ public class CursorController : MonoBehaviour
                 c.RemovePiece(false, false);
             }
 
-            cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, 0f);
+            cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, -0.05f);
 
             LeanTween.move(followerTarget.gameObject, cursorPos, pickupSpeed); // animate
 
@@ -720,7 +720,7 @@ public class CursorController : MonoBehaviour
         float angle = Mathf.Atan2(gameBoard.transform.position.y - cursorPos.position.y, gameBoard.transform.position.x - cursorPos.position.x) * Mathf.Rad2Deg;
         followerTarget.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
 
-        cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, 0);
+        cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, -0.05f);
         LeanTween.move(followerTarget.gameObject, cursorPos, moveSpeed); // animate
 
 

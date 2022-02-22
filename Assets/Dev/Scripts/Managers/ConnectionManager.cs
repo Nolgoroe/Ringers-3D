@@ -617,7 +617,7 @@ public class ConnectionManager : MonoBehaviour
         //}
 
 
-        yield return new WaitForSeconds(speedPieceConnectAnim);
+        yield return new WaitForSeconds(speedPieceConnectAnim - 0.05f);
         Debug.LogError("I AM CONNMECTEDDDDD");
 
         if (subPiecesOnBoard[currentLeft].parentPiece.isDuringConnectionAnim)
