@@ -52,6 +52,7 @@ MonoBehaviour:
   isLocked: 0
   isStone: 0
   isTutorialLocked: 0
+  isDuringConnectionAnim: 0
   partOfBoard: 0
 --- !u!65 &4821654569466740894
 BoxCollider:
@@ -94,6 +95,7 @@ GameObject:
   - component: {fileID: 980864266901892666}
   - component: {fileID: 2899418069445986866}
   - component: {fileID: 3468024876750569583}
+  - component: {fileID: 4615568642636295180}
   m_Layer: 8
   m_Name: Right_Wing_Tile
   m_TagString: Untagged
@@ -181,7 +183,24 @@ MonoBehaviour:
   isBadConnection: 0
   subPieceIndex: 0
   relevantSlice: {fileID: 0}
+  parentPiece: {fileID: 0}
   isRightSubPiece: 1
+--- !u!114 &4615568642636295180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195596336532265732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7536f5480f8cb2541a8e756e7c770003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Amount: {x: 0.03, y: 0.03, z: 0}
+  Duration: 0.3
+  Speed: 7
+  ResetPosition: 1
 --- !u!1 &3068606960102724387
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,6 +213,7 @@ GameObject:
   - component: {fileID: 8729720682799889530}
   - component: {fileID: 3558589555346742633}
   - component: {fileID: 7826278899879025292}
+  - component: {fileID: 6792694086947790925}
   m_Layer: 8
   m_Name: Left_Wing_Tile
   m_TagString: Untagged
@@ -281,4 +301,21 @@ MonoBehaviour:
   isBadConnection: 0
   subPieceIndex: 0
   relevantSlice: {fileID: 0}
+  parentPiece: {fileID: 0}
   isRightSubPiece: 0
+--- !u!114 &6792694086947790925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068606960102724387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7536f5480f8cb2541a8e756e7c770003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Amount: {x: 0.03, y: 0.03, z: 0}
+  Duration: 0.3
+  Speed: 7
+  ResetPosition: 1

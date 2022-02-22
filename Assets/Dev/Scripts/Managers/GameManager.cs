@@ -190,6 +190,7 @@ public class GameManager : MonoBehaviour
                 gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
 
                 gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
+                sliceManager = gameBoard.GetComponent<SliceManager>();
 
                 //UIManager.Instance.GetCommitButton(gameBoard); 
                 clipManager.Init();
@@ -273,6 +274,7 @@ public class GameManager : MonoBehaviour
             gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
 
             gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
+            sliceManager = gameBoard.GetComponent<SliceManager>();
 
             //UIManager.Instance.GetCommitButton(gameBoard); 
             clipManager.Init();
@@ -359,6 +361,7 @@ public class GameManager : MonoBehaviour
         gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
 
         gameBoard = Instantiate(BossBattleManager.instance.bossLevelSO.boardPrefab, destroyOutOfLevel);
+        sliceManager = gameBoard.GetComponent<SliceManager>();
 
         //UIManager.Instance.GetCommitButton(gameBoard); 
         clipManager.Init();

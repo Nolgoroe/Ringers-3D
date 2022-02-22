@@ -93,7 +93,8 @@ public class Cell : MonoBehaviour
 
         GameObject go = Instantiate(UIManager.Instance.placePieceVFX, followerTarget);
 
-        StartCoroutine(ConnectionManager.Instance.JumpPiecesEffect(pieceHeld));
+        //StartCoroutine(ConnectionManager.Instance.JumpPiecesEffect(pieceHeld));
+        ConnectionManager.Instance.JumpPiecesEffect(pieceHeld);
 
         ConnectionManager.Instance.CallConnection(cellIndex, isOuter, false);
     }

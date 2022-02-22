@@ -1291,7 +1291,7 @@ public class ConnectionManager : MonoBehaviour
     //    Destroy(relevent.lootIcon.gameObject);
     //}
 
-    public IEnumerator JumpPiecesEffect(Piece p)
+    public void JumpPiecesEffect(Piece p)
     {
         foreach (Cell c in cells)
         {
@@ -1316,7 +1316,7 @@ public class ConnectionManager : MonoBehaviour
                 LeanTween.moveLocal(c.pieceHeld.rightChild.gameObject, targetPosRight, speedUpPieceEffect).setEaseOutBack(); // animate
                 LeanTween.moveLocal(c.pieceHeld.leftChild.gameObject, targetPosLeft, speedUpPieceEffect).setEaseOutBack(); // animate
 
-                yield return new WaitForSeconds(speedUpPieceEffect);
+                //yield return new WaitForSeconds(speedUpPieceEffect);
                 returnPieceToOriginPosUpEffect(c.pieceHeld.leftChild);
                 returnPieceToOriginPosUpEffect(c.pieceHeld.rightChild);
             }
@@ -1336,7 +1336,7 @@ public class ConnectionManager : MonoBehaviour
             targetPos = new Vector3(-0.7826648f, 0, 0);
         }
 
-        LeanTween.moveLocal(p.gameObject, targetPos, speedUpPieceEffect); // animate
+        LeanTween.moveLocal(p.gameObject, targetPos, speedUpPieceEffect).setDelay(speedUpPieceEffect); // animate
     }
 
 

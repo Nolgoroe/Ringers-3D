@@ -121,13 +121,7 @@ public class AnimationManager : MonoBehaviour
 
         tempSubPieceArray.AddRange(ConnectionManager.Instance.subPiecesOnBoard);
 
-        GameObject[] turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
-
-        foreach (GameObject GO in turnOff)
-        {
-            GO.SetActive(false);
-        }
-
+  
 
 
         MoveTopButtonAnim();
@@ -152,6 +146,21 @@ public class AnimationManager : MonoBehaviour
         boardScreenshot = Instantiate(GameManager.Instance.gameBoard, new Vector3(100, 0, 0), Quaternion.identity);
         boardScreenshot.transform.SetParent(GameManager.Instance.destroyOutOfLevel);
         yield return new WaitForSeconds(0.1f);
+
+        GameManager.Instance.sliceManager.endLevelAnimVFX.SetActive(true);
+
+        GameObject[] turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
+
+        
+        foreach (GameObject GO in turnOff)
+        {
+            GO.SetActive(false);
+        }
+
+        GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>().enabled = false;
+
+
+
         //yield return new WaitForSeconds(waitTimeParticlesStart);
 
         //foreach (Cell C in ConnectionManager.Instance.cells)

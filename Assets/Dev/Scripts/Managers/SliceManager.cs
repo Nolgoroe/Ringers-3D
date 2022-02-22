@@ -17,6 +17,7 @@ public class SliceManager : MonoBehaviour
     //public GameObject lootSlicePrefab;
     //public GameObject lootLockSlicePrefab;
     //public GameObject lootLockLimiterSlicePrefab;
+    public GameObject endLevelAnimVFX;
     public GameObject slicePrefab;
     public GameObject slicePrefabLimiter;
 
@@ -78,13 +79,12 @@ public class SliceManager : MonoBehaviour
 
     private int fourRandomSlicePos;
 
-    private void Awake()
-    {
-        GameManager.Instance.sliceManager = this;
-    }
-
     public void Init()
     {
+        GameManager.Instance.sliceManager = this;
+
+        endLevelAnimVFX.SetActive(false);
+
         sliceSymbolToSprite = new Dictionary<PieceSymbol, Texture>();
         slicecolorToSprite = new Dictionary<PieceColor, Texture>();
 
