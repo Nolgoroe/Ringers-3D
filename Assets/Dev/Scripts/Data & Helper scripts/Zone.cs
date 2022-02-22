@@ -20,7 +20,8 @@ public class Zone : MonoBehaviour
 
     string path;
 
-    public string levelDonePath, levelFirstTimeIconPath/*, unlockedZonePath*//*, lockedZonePath*/;
+    //public string levelDonePath, levelFirstTimeIconPath/*, unlockedZonePath*//*, lockedZonePath*/;
+    public Sprite levelDoneSprite, levelFirstTimeIconSprite/*, unlockedZonePath*//*, lockedZonePath*/;
 
     public Color levelDoneColor, levelFirstTimeColor;
 

@@ -158,7 +158,7 @@ public class UIManager : MonoBehaviour
 
 
 
-
+    public Sprite tutorialLevelIconNotDone, tutorialLevelIconDone;
     PanZoom PZ;
 
     public int introImageIndex = 0;
@@ -998,7 +998,8 @@ public class UIManager : MonoBehaviour
             {
                 //BPZ.theZone.zoneGrindLevel.GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelFirstTimeColor); // 3D map
 
-                BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconPath);
+                //BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconSprite);
+                BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIconSprite;
                 //BPZ.theZone.zoneGrindLevel.GetComponent<Button>().interactable = true;
             }
 
@@ -1013,7 +1014,15 @@ public class UIManager : MonoBehaviour
                 {
                     //BPZ.zone3DButtons[i].GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelDoneColor); //3D map
 
-                    BPZ.zone3DButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelDonePath);
+                    //BPZ.zone3DButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelDoneSprite);
+                    if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isTutorialLevel)
+                    {
+                        BPZ.zone3DButtons[i].GetComponent<Image>().sprite = tutorialLevelIconDone;
+                    }
+                    else
+                    {
+                        BPZ.zone3DButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelDoneSprite;
+                    }
                     //BPZ.zone3DButtons[i].GetComponent<Renderer>().material.color = BPZ.theZone.levelDoneColor;
                     //BPZ.zoneButtons[i].interactable = false; //// Disable levels that have already been completed
                     //BPZ.zone3DButtons[i].interactable = true; /// temp for testing - isn't button anymore
@@ -1022,7 +1031,15 @@ public class UIManager : MonoBehaviour
                 {
                     //BPZ.zone3DButtons[i].GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelFirstTimeColor); 3D map
 
-                    BPZ.zone3DButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconPath);
+                    //BPZ.zone3DButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconSprite);
+                    if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isTutorialLevel)
+                    {
+                        BPZ.zone3DButtons[i].GetComponent<Image>().sprite = tutorialLevelIconNotDone;
+                    }
+                    else
+                    {
+                        BPZ.zone3DButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIconSprite;
+                    }
                     //BPZ.zone3DButtons[i].interactable = true; // isn't button anymore
                 }
 

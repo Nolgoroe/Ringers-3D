@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class Interactable3D : MonoBehaviour
 {
+    public bool isTutorialLevel;
     public int currentZoneID;
     public int NextZoneID;///only if key level
     public int overallLevelNum;
