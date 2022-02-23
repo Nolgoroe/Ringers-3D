@@ -13,6 +13,12 @@ public class Interactable3D : MonoBehaviour
 
     public UnityEvent interactEvent;
 
+    public GameObject NextLevelVFX;
+
+    private void Start()
+    {
+        NextLevelVFX.SetActive(false);
+    }
     public void ShootEvent()
     {
         interactEvent.Invoke();
@@ -30,6 +36,9 @@ public class Interactable3D : MonoBehaviour
                 GameManager.Instance.ChooseLevel(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
                 //GameManager.Instance.CallStartLevel(false);
+
+                TurnOffVFX();
+
                 GameManager.Instance.StartLevel(true);
             }
 
@@ -47,6 +56,9 @@ public class Interactable3D : MonoBehaviour
                 GameManager.Instance.ChooseLevelGrind(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
                 //GameManager.Instance.CallStartLevel(false);
+
+                TurnOffVFX();
+
                 GameManager.Instance.StartLevel(true);
             }
 
@@ -65,6 +77,9 @@ public class Interactable3D : MonoBehaviour
                 GameManager.Instance.ChooseLevel(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
                 //GameManager.Instance.CallStartLevel(true);
+
+                TurnOffVFX();
+
                 GameManager.Instance.StartTutorialLevel(true);
 
             }
@@ -85,6 +100,9 @@ public class Interactable3D : MonoBehaviour
                 GameManager.Instance.ChooseLevel(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
                 //GameManager.Instance.CallStartLevel(false);
+
+                TurnOffVFX();
+
                 GameManager.Instance.StartLevel(true);
 
             }
@@ -105,6 +123,9 @@ public class Interactable3D : MonoBehaviour
                 GameManager.Instance.ChooseLevel(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
                 //GameManager.Instance.CallStartLevel(true);
+
+                TurnOffVFX();
+
                 GameManager.Instance.StartTutorialLevel(true);
 
             }
@@ -125,5 +146,16 @@ public class Interactable3D : MonoBehaviour
             GameManager.Instance.setCurrentLevelBG(0);
             GameManager.Instance.startBossLevel(true);
         }
+    }
+
+
+    public void TurnOnVFX()
+    {
+        NextLevelVFX.SetActive(true);
+    }
+
+    public void TurnOffVFX()
+    {
+        NextLevelVFX.SetActive(false);
     }
 }

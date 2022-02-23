@@ -1004,6 +1004,18 @@ public class UIManager : MonoBehaviour
                 //BPZ.theZone.zoneGrindLevel.GetComponent<Button>().interactable = true;
             }
 
+            for (int i = 0; i < BPZ.zone3DButtons.Length; i++)
+            {
+                if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isTutorialLevel)
+                {
+                    BPZ.zone3DButtons[i].GetComponent<Image>().sprite = tutorialLevelIconNotDone;
+                }
+                else
+                {
+                    BPZ.zone3DButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIconSprite;
+                }
+            }
+
             for (int i = 0; i < BPZ.theZone.maxLevelReachedInZone; i++)
             {
                 if (i == BPZ.zone3DButtons.Length)
@@ -1033,6 +1045,9 @@ public class UIManager : MonoBehaviour
                     //BPZ.zone3DButtons[i].GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelFirstTimeColor); 3D map
 
                     //BPZ.zone3DButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconSprite);
+
+                    BPZ.zone3DButtons[i].GetComponent<Interactable3D>().TurnOnVFX();
+
                     if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isTutorialLevel)
                     {
                         BPZ.zone3DButtons[i].GetComponent<Image>().sprite = tutorialLevelIconNotDone;
@@ -1040,6 +1055,7 @@ public class UIManager : MonoBehaviour
                     else
                     {
                         BPZ.zone3DButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIconSprite;
+
                     }
                     //BPZ.zone3DButtons[i].interactable = true; // isn't button anymore
                 }

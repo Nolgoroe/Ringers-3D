@@ -213,11 +213,6 @@ public class CursorController : MonoBehaviour
 
 
 
-        if (GameManager.Instance.levelStarted && PowerUpManager.IsUsingPowerUp)
-        {
-            PowerUpControls();
-            return;
-        } // powerup controls
 
         if (GameManager.Instance.levelStarted && !UIManager.isUsingUI && !GameManager.Instance.isSecondaryControls && !PowerUpManager.IsUsingPowerUp)
         {
@@ -229,6 +224,12 @@ public class CursorController : MonoBehaviour
         {
             SecondaryControls();
         } // secondary controls
+
+        if (GameManager.Instance.levelStarted && PowerUpManager.IsUsingPowerUp)
+        {
+            PowerUpControls();
+            return;
+        } // powerup controls
     }
 
     public void SecondaryControls()
@@ -458,11 +459,18 @@ public class CursorController : MonoBehaviour
                 {
                     if (TutorialSequence.Instacne.duringSequence)
                     {
-                        if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Length > 0)
+                        if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.lootTutorial )
                         {
-                            if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Contains(hit.transform.GetComponent<Cell>().cellIndex))
+                            if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Length > 0)
                             {
-                                ConnectionManager.Instance.ConnectionManagerAnim(hit.transform.GetComponent<Cell>().cellIndex, hit.transform.GetComponent<Cell>().isOuter);
+                                if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Contains(hit.transform.GetComponent<Cell>().cellIndex))
+                                {
+                                    ConnectionManager.Instance.ConnectionManagerAnim(hit.transform.GetComponent<Cell>().cellIndex, hit.transform.GetComponent<Cell>().isOuter);
+                                }
+                                else
+                                {
+                                    SnapFollower(null, followerTarget);
+                                }
                             }
                             else
                             {
@@ -471,9 +479,22 @@ public class CursorController : MonoBehaviour
                         }
                         else
                         {
-                            SnapFollower(null, followerTarget);
+                            if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Length > 0)
+                            {
+                                if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Contains(hit.transform.GetComponent<Cell>().cellIndex))
+                                {
+                                    ConnectionManager.Instance.ConnectionManagerAnim(hit.transform.GetComponent<Cell>().cellIndex, hit.transform.GetComponent<Cell>().isOuter);
+                                }
+                                else
+                                {
+                                    SnapFollower(null, followerTarget);
+                                }
+                            }
+                            else
+                            {
+                                SnapFollower(null, followerTarget);
+                            }
                         }
-
                     }
                     else
                     {

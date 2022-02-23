@@ -16,11 +16,11 @@ public class SafeArea : MonoBehaviour
         minAnchor = safeArea.position;
         maxAnchor = minAnchor + safeArea.size;
 
-        minAnchor.x /= Display.main.systemWidth;
-        minAnchor.y /= Display.main.systemHeight;
+        minAnchor.x /= Screen.width;
+        minAnchor.y /= Screen.height;
 
-        maxAnchor.x /= Display.main.systemWidth;
-        maxAnchor.y /= Display.main.systemHeight;
+        maxAnchor.x /= Screen.width;
+        maxAnchor.y /= Screen.height;
 
         rectTransform.anchorMin = minAnchor;
         rectTransform.anchorMax = maxAnchor;
