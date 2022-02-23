@@ -214,8 +214,6 @@ public class AnimationManager : MonoBehaviour
 
         yield return new WaitForSeconds(waitTimeWinScreen);
 
-        CheckShowLootTutorial();
-
 
         //Destroy(GameManager.Instance.gameBoard.gameObject);
         GameManager.Instance.gameBoard.gameObject.transform.position = new Vector3(100, 0, 0);
@@ -225,7 +223,6 @@ public class AnimationManager : MonoBehaviour
         //MoveBoardScreenshotToPosition(boardScreenshot);
         //UnDissolveTiles();
 
-        TutorialSequence.Instacne.CheckDoPotionTutorial();
 
         yield return new WaitForSeconds(waitTimeFadeOut);
 
@@ -266,6 +263,8 @@ public class AnimationManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f); //unDissolve time
         MoveBoardScreenshotToPosition(boardScreenshot);
         GameManager.Instance.WinAfterAnimation();
+        CheckShowLootTutorial();
+        TutorialSequence.Instacne.CheckDoPotionTutorial();
     }
 
     private void MoveTopButtonAnim()

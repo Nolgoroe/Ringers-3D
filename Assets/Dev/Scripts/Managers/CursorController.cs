@@ -193,6 +193,7 @@ public class CursorController : MonoBehaviour
             }
         } // detect deactivate unlocked level vfx
 
+
         if (!GameManager.Instance.levelStarted && UIManager.isUsingUI && UIManager.Instance.brewedPotionScreen.activeInHierarchy)
         {
             if (Input.touchCount > 0)

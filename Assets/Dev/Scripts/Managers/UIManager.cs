@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject mainMenu, worldGameObject, hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasBotom, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
     public GameObject InGameUiScreens;
-    //public GameObject blackLevelBG;
+    public GameObject blackBagBG;
     public GameObject zoomInCorruptedBlack;
     public GameObject tutorialCanvasLevels;
     public GameObject tutorialCanvasSpecific;
@@ -255,9 +255,10 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("Using UI? " + UIManager.isUsingUI);
         Debug.Log("IS USING UI? " + isUsingUI);
-        width.text = "Width: " + Display.main.systemWidth;
-        height.text = "Height: " + Display.main.systemHeight;
+        //width.text = "Width: " + Display.main.systemWidth;
+        //height.text = "Height: " + Display.main.systemHeight;
 
         float a = (float)1080 / (float)Display.main.systemWidth;
         float b = (float)1920 / (float)Display.main.systemHeight;
@@ -1275,8 +1276,11 @@ public class UIManager : MonoBehaviour
 
     public void DisplayDailyRewardsScreen()
     {
-        isUsingUI = true;
-        DailyRewardScreen.SetActive(true);
+        if (!isUsingUI)
+        {
+            isUsingUI = true;
+            DailyRewardScreen.SetActive(true);
+        }
     }
 
     public void DeactivateDailyRewardScreen()
@@ -1576,8 +1580,9 @@ public class UIManager : MonoBehaviour
     public IEnumerator AdvanceIntroScreen()
     {
         bool pageFlipped = false;
+        canAdvanceIntro = false;
 
-        if(introImageTextIndex >= introImages[introImageIndex].textObjects.Count())
+        if (introImageTextIndex >= introImages[introImageIndex].textObjects.Count())
         {
             SoundManager.Instance.PlaySound(Sounds.PageFlip);
             canAdvanceIntro = false;
