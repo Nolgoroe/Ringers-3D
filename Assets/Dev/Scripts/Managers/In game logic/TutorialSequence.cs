@@ -1200,5 +1200,73 @@ public class TutorialSequence : MonoBehaviour
         }
 
     }
+
+    public void CheatTutorialClearNormal()
+    {
+        if (currentlyActiveTutorialHand)
+        {
+            Destroy(currentlyActiveTutorialHand.gameObject);
+        }
+
+        TutorialSaveData.Instance.completedTutorialLevelId.Add(GameManager.Instance.currentLevel.levelNum);
+        //TutorialSaveData.Instance.SaveTutorialSaveData();
+
+        maskImage.gameObject.SetActive(false);
+        duringSequence = false;
+        Debug.Log("Phases are done!");
+        //Invoke("UnlockAll", 2);
+
+        if (!GameManager.LevelEnded)
+        {
+            UnlockAll();
+        }
+
+
+        //Invoke("DeactivateTutorialScreens", 0.1f);
+
+        if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].doFadeInEnd)
+        {
+            StartCoroutine(DeactivateTutorialScreens(levelSequences, GameManager.Instance.currentLevel.tutorialIndexForList, levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].waitTimeEndPhase));
+        }
+        else
+        {
+            screensDeactivateOnTouch.Add(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[currentPhaseInSequenceLevels]);
+        }
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+    }
+
+    public void CheatTutorialClearSpecific()
+    {
+        if (currentlyActiveTutorialHand)
+        {
+            Destroy(currentlyActiveTutorialHand.gameObject);
+        }
+
+        TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add((int)GameManager.Instance.currentLevel.specificTutorialEnum);
+        currentSpecificTutorial = SpecificTutorialsEnum.None;
+        maskImage.gameObject.SetActive(false);
+        duringSequence = false;
+        activatedHeighlights.Clear();
+        activatedBoardParticles.Clear();
+
+        if (!GameManager.LevelEnded)
+        {
+            UnlockAll();
+        }
+
+        PlayerManager.Instance.checkDoAddPotionsToInventory();
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+
+        if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].doFadeInEnd)
+        {
+            StartCoroutine(DeactivateTutorialScreens(specificTutorials, (int)GameManager.Instance.currentLevel.specificTutorialEnum - 1, specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].waitTimeEndPhase));
+        }
+        else
+        {
+            screensDeactivateOnTouch.Add(specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific]);
+        }
+    }
 }
 

@@ -547,6 +547,30 @@ public class GameManager : MonoBehaviour
         {
             LevelEnded = true;
 
+            if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex && !ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey)
+            {
+                LootManager.Instance.giveKey = true;
+            }
+
+            if (currentLevel.isTutorial)
+            {
+                TutorialSequence.Instacne.CheatTutorialClearNormal();
+            }
+
+            if (currentLevel.isSpecificTutorial)
+            {
+                TutorialSequence.Instacne.CheatTutorialClearSpecific();
+            }
+
+            foreach (GameObject go in TutorialSequence.Instacne.activatedHeighlights)
+            {
+                if (go)
+                {
+                    go.SetActive(false);
+                }
+            }
+            TutorialSequence.Instacne.activatedHeighlights.Clear();
+
             AnimationManager.instance.StartEndLevelAnimSequence(true); ///// loot is given here
 
             return true;
@@ -736,6 +760,15 @@ public class GameManager : MonoBehaviour
         {
             Destroy(GO.gameObject);
         }
+
+        foreach (GameObject go in TutorialSequence.Instacne.activatedHeighlights)
+        {
+            if (go)
+            {
+                go.SetActive(false);
+            }
+        }
+        TutorialSequence.Instacne.activatedHeighlights.Clear();
 
         DestroyAllLevelChildern();
         LootManager.Instance.DestoryWinScreenDisplyedLoot();

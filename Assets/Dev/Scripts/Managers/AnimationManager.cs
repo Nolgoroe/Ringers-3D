@@ -219,6 +219,11 @@ public class AnimationManager : MonoBehaviour
         GameManager.Instance.gameBoard.gameObject.transform.position = new Vector3(100, 0, 0);
         Destroy(GameManager.Instance.gameClip.gameObject);
 
+        foreach (GameObject GO in turnOff)
+        {
+            GO.SetActive(true);
+        }
+
         //GameManager.Instance.WinAfterAnimation();
         //MoveBoardScreenshotToPosition(boardScreenshot);
         //UnDissolveTiles();
@@ -381,7 +386,7 @@ public class AnimationManager : MonoBehaviour
 
         foreach (GameObject GO in turnOff)
         {
-            GO.SetActive(false);
+            GO.SetActive(true);
         }
 
         GameManager.Instance.selectedLevelBG.transform.Find("color mask").gameObject.SetActive(false);

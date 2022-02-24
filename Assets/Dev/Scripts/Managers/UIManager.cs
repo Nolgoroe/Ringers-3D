@@ -519,7 +519,10 @@ public class UIManager : MonoBehaviour
 
             foreach (GameObject go in TutorialSequence.Instacne.activatedHeighlights)
             {
-                go.SetActive(false);
+                if (go)
+                {
+                    go.SetActive(false);
+                }
             }
 
             GameManager.Instance.DestroyAllLevelChildern();
