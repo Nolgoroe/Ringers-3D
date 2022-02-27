@@ -1243,7 +1243,7 @@ public class TutorialSequence : MonoBehaviour
             Destroy(currentlyActiveTutorialHand.gameObject);
         }
 
-        TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add((int)GameManager.Instance.currentLevel.specificTutorialEnum);
+        //TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add((int)GameManager.Instance.currentLevel.specificTutorialEnum);
         currentSpecificTutorial = SpecificTutorialsEnum.None;
         maskImage.gameObject.SetActive(false);
         duringSequence = false;

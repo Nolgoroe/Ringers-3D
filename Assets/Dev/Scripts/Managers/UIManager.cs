@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject mainMenu, worldGameObject, hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasBotom, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
     public GameObject InGameUiScreens;
-    public GameObject blackBagBG;
+    //public GameObject blackBagBG;
     public GameObject zoomInCorruptedBlack;
     public GameObject tutorialCanvasLevels;
     public GameObject tutorialCanvasSpecific;

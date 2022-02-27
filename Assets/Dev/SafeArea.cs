@@ -6,23 +6,22 @@ public class SafeArea : MonoBehaviour
 {
     RectTransform rectTransform;
     Rect safeArea;
-    Vector2 minAnchor;
-    Vector2 maxAnchor;
+    Vector2 anchorMin;
+    Vector2 anchorMax;
 
-    //private void Awake()
-    //{
-    //    rectTransform = GetComponent<RectTransform>();
-    //    safeArea = Screen.safeArea;
-    //    minAnchor = safeArea.position;
-    //    maxAnchor = minAnchor + safeArea.size;
+    private void Start()
+    {
+        var rectTransform = GetComponent<RectTransform>();
+        var safeArea = Screen.safeArea;
+        var anchorMin = safeArea.position;
+        var anchorMax = anchorMin + safeArea.size;
+        anchorMin.x /= Screen.width;
+        anchorMin.y /= Screen.height;
+        anchorMax.x /= Screen.width;
+        anchorMax.y /= Screen.height;
 
-    //    minAnchor.x /= Screen.width;
-    //    minAnchor.y /= Screen.height;
+        rectTransform.anchorMin = anchorMin;
+        rectTransform.anchorMax = anchorMax;
 
-    //    maxAnchor.x /= Screen.width;
-    //    maxAnchor.y /= Screen.height;
-
-    //    rectTransform.anchorMin = minAnchor;
-    //    rectTransform.anchorMax = maxAnchor;
-    //}
+    }
 }
