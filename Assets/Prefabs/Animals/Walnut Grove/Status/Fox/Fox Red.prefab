@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8810846715764849281}
   - component: {fileID: 7404851880119950977}
   - component: {fileID: 41614334336650320}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: stone_platfor_p2_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 5828808390810001136}
   - component: {fileID: 7563841060464696194}
   - component: {fileID: 1837184633638027377}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: stone_platfor_p1_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9088843478083639599}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: StonePlatform_Fox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 6115078496944762636}
   - component: {fileID: 8719032320675942601}
   m_Layer: 0
-  m_Name: Fox
+  m_Name: Fox Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -335,6 +335,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 6d06c2549eb95af468e8a0ff20422d16,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d06c2549eb95af468e8a0ff20422d16, type: 3}

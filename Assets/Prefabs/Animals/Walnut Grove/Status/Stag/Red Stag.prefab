@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 1551197849528191382}
   - component: {fileID: 1551197849528191380}
   - component: {fileID: 1551197849528191383}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: stone_platfor_p2_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 1551197849810510103}
   - component: {fileID: 1551197849810510101}
   - component: {fileID: 1551197849810510100}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: stone_platfor_p1_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1551197850025665714}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: StonePlatform_Stag (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,6 +325,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: deer_stone
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: e650ae45c0a81a847ad70aefbb9aa6dd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e650ae45c0a81a847ad70aefbb9aa6dd, type: 3}
