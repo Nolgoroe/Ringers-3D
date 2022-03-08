@@ -48,6 +48,8 @@ public class CursorController : MonoBehaviour
 
     public static bool OverUI;
 
+    PanZoom pz = null;
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(mouseRay.origin, mouseRay.origin + rayLength * mouseRay.direction);
@@ -57,6 +59,8 @@ public class CursorController : MonoBehaviour
     private void Start()
     {
         Instance = this;
+
+        pz = Camera.main.GetComponent<PanZoom>();
     }
     public void Init()
     {
@@ -127,13 +131,13 @@ public class CursorController : MonoBehaviour
 
 
 
-        if (!GameManager.Instance.levelStarted && !UIManager.isUsingUI && GameManager.Instance.clickedPlayButton)
+        if (!GameManager.Instance.levelStarted && !UIManager.isUsingUI && GameManager.Instance.clickedPlayButton && !pz.isDragging)
         {
             if (Input.touchCount > 0)
             {
                 touch = Input.touches[0];
 
-                if (touch.phase == TouchPhase.Began)
+                if (touch.phase == TouchPhase.Ended)
                 {
                     Ray ray = Camera.main.ScreenPointToRay(touch.position);
                     RaycastHit hit;
@@ -713,7 +717,7 @@ public class CursorController : MonoBehaviour
 
             if (c)
             {
-                c.RemovePiece(false, false);
+                c.RemovePiece(false);
             }
 
             cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, -0.05f);
@@ -1022,7 +1026,7 @@ public class CursorController : MonoBehaviour
                                 }
                                 else
                                 {
-                                    cell.RemovePiece(false, false);
+                                    cell.RemovePiece(false);
 
                                     if (isFromClip)
                                     {
@@ -1089,7 +1093,7 @@ public class CursorController : MonoBehaviour
                             }
                             else
                             {
-                                cell.RemovePiece(false, false);
+                                cell.RemovePiece(false);
 
                                 if (isFromClip)
                                 {

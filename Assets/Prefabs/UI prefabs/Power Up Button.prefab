@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 16}
-  m_SizeDelta: {x: 140, y: 140}
+  m_SizeDelta: {x: 16, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &232999335631620007
 CanvasRenderer:
@@ -114,12 +114,12 @@ MonoBehaviour:
   powerupType: 7
   numOfUses: 0
   transformColor: 5
-  transformSymbol: 5
+  transformSymbol: 4
   connectedEquipment:
     name: 
-    power: 0
-    specificSymbol: 0
-    specificColor: 0
+    power: 4
+    specificSymbol: 4
+    specificColor: 5
     numOfUses: 0
     scopeOfUses: 0
     timeForCooldown: 0
@@ -144,5 +144,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.7681767, y: 2.525936, z: 0.2}
-  m_Center: {x: 0.0051784264, y: -0.017032064, z: 0}
+  m_Size: {x: 2.100671, y: 2.8290167, z: 0.2}
+  m_Center: {x: 0.0051784264, y: -0.017032063, z: 0}

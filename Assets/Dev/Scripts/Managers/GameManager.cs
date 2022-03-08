@@ -712,6 +712,14 @@ public class GameManager : MonoBehaviour
 
             TutorialSequence.Instacne.currentPhaseInSequenceSpecific = 0;
 
+            foreach (GameObject go in TutorialSequence.Instacne.activatedHeighlights)
+            {
+                if (go)
+                {
+                    go.SetActive(false);
+                }
+            }
+
             TutorialSequence.Instacne.activatedHeighlights.Clear();
             TutorialSequence.Instacne.activatedBoardParticles.Clear();
             //TutorialSequence.Instacne.maskImage.gameObject.SetActive(true);

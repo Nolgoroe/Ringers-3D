@@ -108,7 +108,7 @@ public class BreweryDisplayLogic : MonoBehaviour
 
     public void GetAllAnchorPositions()
     {
-        Debug.Log("amount of calls");
+        //Debug.Log("amount of calls");
         foreach (EquipmentDisplayer equipment in MaterialsAndForgeManager.Instance.equipmentInBrewScreen)
         {
             StartCoroutine(equipment.GetAnchoredPosition());

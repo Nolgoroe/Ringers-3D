@@ -135,7 +135,7 @@ public class SortMaster : MonoBehaviour
 
     public void SortMatInventory(CraftingMatType matToSort)
     {
-        Debug.Log(matToSort);
+        //Debug.Log(matToSort);
         MaterialsAndForgeManager.Instance.RefreshMaterialBagSort(matToSort);
     }
 

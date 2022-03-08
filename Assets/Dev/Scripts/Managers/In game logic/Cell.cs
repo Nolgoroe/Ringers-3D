@@ -184,7 +184,7 @@ public class Cell : MonoBehaviour
         }
     }
 
-    public void RemovePiece(bool destoryLock, bool fromSlicePower)
+    public void RemovePiece(/*bool destoryLock,*/ bool fromSlicePower)
     {
         isFull = false;
 
@@ -237,6 +237,8 @@ public class Cell : MonoBehaviour
         {
             if (pieceHeld.leftChild.relevantSlice.hasSlice)
             {
+                GameManager.Instance.sliceManager.SetSliceNotSolvedSprite(pieceHeld.leftChild.relevantSlice);
+
                 if (pieceHeld.leftChild.relevantSlice.isLimiter)
                 {
                     if (pieceHeld.leftChild.relevantSlice.fulfilledCondition)
@@ -272,6 +274,8 @@ public class Cell : MonoBehaviour
         {
             if (pieceHeld.rightChild.relevantSlice.hasSlice)
             {
+                GameManager.Instance.sliceManager.SetSliceNotSolvedSprite(pieceHeld.rightChild.relevantSlice);
+
                 if (pieceHeld.rightChild.relevantSlice.isLimiter)
                 {
                     if (pieceHeld.rightChild.relevantSlice.fulfilledCondition)
@@ -305,7 +309,7 @@ public class Cell : MonoBehaviour
 
         if (ConnectionManager.Instance.cells[cellIndex].pieceHeld.isLocked)
         {
-            ConnectionManager.Instance.UnlockPieces(ConnectionManager.Instance.cells[cellIndex], leftCell, rightCell, destoryLock);
+            ConnectionManager.Instance.UnlockPieces(ConnectionManager.Instance.cells[cellIndex], leftCell, rightCell/*, destoryLock*/);
         }
 
         if (leftCell.isFull)

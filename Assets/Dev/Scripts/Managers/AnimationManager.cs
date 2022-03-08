@@ -84,6 +84,9 @@ public class AnimationManager : MonoBehaviour
     private Coroutine endAnim = null;
 
     bool dissolveStart = false;
+
+    public GameObject[] turnOff;
+
     void Start()
     {
         instance = this;
@@ -114,6 +117,8 @@ public class AnimationManager : MonoBehaviour
 
     public IEnumerator StartEndLevelAnim()
     {
+        turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
+
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(true);
 
         UIManager.Instance.restartButton.interactable = false;
@@ -149,7 +154,6 @@ public class AnimationManager : MonoBehaviour
 
         GameManager.Instance.sliceManager.endLevelAnimVFX.SetActive(true);
 
-        GameObject[] turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
 
         
         foreach (GameObject GO in turnOff)
@@ -223,6 +227,8 @@ public class AnimationManager : MonoBehaviour
         {
             GO.SetActive(true);
         }
+
+        turnOff = null;
 
         //GameManager.Instance.WinAfterAnimation();
         //MoveBoardScreenshotToPosition(boardScreenshot);
@@ -382,12 +388,12 @@ public class AnimationManager : MonoBehaviour
 
         tempSubPieceArray.Clear();
 
-        GameObject[] turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
-
         foreach (GameObject GO in turnOff)
         {
             GO.SetActive(true);
         }
+
+        turnOff = null;
 
         GameManager.Instance.selectedLevelBG.transform.Find("color mask").gameObject.SetActive(false);
 

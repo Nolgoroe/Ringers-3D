@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PanZoom : MonoBehaviour
 {
     bool isZoom;
+    public bool isDragging;
     public bool canZoom;
 
     Vector3 TouchStart;
@@ -130,7 +131,7 @@ public class PanZoom : MonoBehaviour
             {
                 if (touch.phase == TouchPhase.Moved)
                 {
-
+                    isDragging = true;
                     Vector2 touchDeltaPos = touch.deltaPosition;
 
                     mainCam.transform.Translate(-touchDeltaPos.x * panSpeed, -touchDeltaPos.y * panSpeed, 0);
@@ -146,6 +147,7 @@ public class PanZoom : MonoBehaviour
         if (touch.phase == TouchPhase.Ended)
         {
             isZoom = false;
+            isDragging = false;
         }
 
         //if (Input.touchCount == 2 && canZoom)

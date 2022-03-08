@@ -237,6 +237,8 @@ public class ConnectionManager : MonoBehaviour
                     {
                         if (conditionmet)
                         {
+                            GameManager.Instance.sliceManager.SetSliceSolvedSprite(supPieceArray[currentLeft].relevantSlice);
+
                             if (supPieceArray[currentLeft].relevantSlice.anim)
                             {
 
@@ -418,6 +420,8 @@ public class ConnectionManager : MonoBehaviour
 
                     if (conditionmet)
                     {
+                        GameManager.Instance.sliceManager.SetSliceSolvedSprite(supPieceArray[currentRight].relevantSlice);
+
                         if (supPieceArray[currentRight].relevantSlice.anim)
                         {
                             supPieceArray[currentRight].relevantSlice.anim.SetBool("Activate", true);
@@ -1023,20 +1027,20 @@ public class ConnectionManager : MonoBehaviour
         //}
     }
 
-    public void UnlockPieces(Cell currentCell, Cell left, Cell right, bool destoryLock)
+    public void UnlockPieces(Cell currentCell, Cell left, Cell right/*, bool destoryLock*/)
     {
-        if (destoryLock)
-        {
-            foreach (Transform t in currentCell.pieceHeld.transform)
-            {
-                if (t.childCount > 0)
-                {
-                    Destroy(t.GetChild(0).gameObject);
-                }
-            }
+        //if (destoryLock)
+        //{
+        //    foreach (Transform t in currentCell.pieceHeld.transform)
+        //    {
+        //        if (t.childCount > 0)
+        //        {
+        //            Destroy(t.GetChild(0).gameObject);
+        //        }
+        //    }
 
-            currentCell.pieceHeld.isLocked = false;
-        }
+        //    currentCell.pieceHeld.isLocked = false;
+        //}
 
         //if (currentCell.pieceHeld.leftChild.transform.childCount > 0)
         //{
@@ -1052,10 +1056,10 @@ public class ConnectionManager : MonoBehaviour
         {
             if (left.pieceHeld.rightChild.transform.childCount > 0)
             {
-                if (destoryLock)
-                {
-                    Destroy(left.pieceHeld.rightChild.transform.GetChild(0).gameObject);
-                }
+                //if (destoryLock)
+                //{
+                //    Destroy(left.pieceHeld.rightChild.transform.GetChild(0).gameObject);
+                //}
 
                 StartCoroutine(CheckAreCellsLocked(left));
             }
@@ -1065,10 +1069,10 @@ public class ConnectionManager : MonoBehaviour
         {
             if (right.pieceHeld.leftChild.transform.childCount > 0)
             {
-                if (destoryLock)
-                {
-                    Destroy(right.pieceHeld.leftChild.transform.GetChild(0).gameObject);
-                }
+                //if (destoryLock)
+                //{
+                //    Destroy(right.pieceHeld.leftChild.transform.GetChild(0).gameObject);
+                //}
 
                 StartCoroutine(CheckAreCellsLocked(right));
             }

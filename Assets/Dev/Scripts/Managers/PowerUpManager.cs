@@ -302,7 +302,7 @@ public class PowerUpManager : MonoBehaviour
                 InstantiatePotionAnimObject((int)prop.powerupType);
                 yield return new WaitForSeconds(2.5f);
 
-                toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(false, false);
+                toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(false);
 
                 toWorkOn.leftChild.symbolOfPiece = PieceSymbol.Joker;
                 toWorkOn.leftChild.colorOfPiece = PieceColor.Joker;
@@ -367,7 +367,7 @@ public class PowerUpManager : MonoBehaviour
                     InstantiatePotionAnimObject((int)prop.powerupType);
 
                     yield return new WaitForSeconds(2.5f);
-                    toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(false, false);
+                    toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(false);
 
                     PieceColor tempColor = toWorkOn.leftChild.colorOfPiece;
                     PieceSymbol tempSymbol = toWorkOn.leftChild.symbolOfPiece;
@@ -436,12 +436,12 @@ public class PowerUpManager : MonoBehaviour
             yield return new WaitForSeconds(2.5f);
 
             //Debug.LogError("Times called");
-            toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(true, false);
+            toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(false);
 
             if (toWorkOn.isLocked)
             {
                 //toWorkOn.transform.parent.GetComponent<Cell>().lockSprite.SetActive(false);
-                Destroy(toWorkOn.transform.GetChild(0).gameObject); ///WIP
+                //Destroy(toWorkOn.transform.GetChild(0).gameObject); ///WIP
             }
             yield return new WaitForEndOfFrame();
             GameManager.Instance.currentFilledCellCount--;
@@ -536,8 +536,8 @@ public class PowerUpManager : MonoBehaviour
                 Transform pa = ConnectionManager.Instance.cells[a].pieceHeld.transform;
                 Transform pb = ConnectionManager.Instance.cells[b].pieceHeld.transform;
 
-                ConnectionManager.Instance.cells[a].RemovePiece(true, true);
-                ConnectionManager.Instance.cells[b].RemovePiece(true, true);
+                ConnectionManager.Instance.cells[a].RemovePiece(true);
+                ConnectionManager.Instance.cells[b].RemovePiece(true);
                 toWorkOn.hasSlice = false;
 
                 yield return new WaitForEndOfFrame();
@@ -550,7 +550,7 @@ public class PowerUpManager : MonoBehaviour
                 Debug.Log("Left Only");
 
                 Transform p = ConnectionManager.Instance.cells[b].pieceHeld.transform;
-                ConnectionManager.Instance.cells[b].RemovePiece(true, true);
+                ConnectionManager.Instance.cells[b].RemovePiece(true);
                 toWorkOn.hasSlice = false;
 
                 yield return new WaitForEndOfFrame();
@@ -561,7 +561,7 @@ public class PowerUpManager : MonoBehaviour
                 Debug.Log("Right Only");
 
                 Transform p = ConnectionManager.Instance.cells[a].pieceHeld.transform;
-                ConnectionManager.Instance.cells[a].RemovePiece(true, true);
+                ConnectionManager.Instance.cells[a].RemovePiece(true);
                 toWorkOn.hasSlice = false;
 
                 yield return new WaitForEndOfFrame();
@@ -600,7 +600,7 @@ public class PowerUpManager : MonoBehaviour
 
         if(toWorkOn.colorOfPiece != prop.transformColor /*&& !par.isLocked*/ && par.partOfBoard)
         {
-            par.transform.parent.GetComponent<Cell>().RemovePiece(false, false);
+            par.transform.parent.GetComponent<Cell>().RemovePiece(false);
 
             toWorkOn.colorOfPiece = prop.transformColor;
 
@@ -629,7 +629,7 @@ public class PowerUpManager : MonoBehaviour
 
         if(toWorkOn.symbolOfPiece != prop.transformSymbol && par.partOfBoard /*&& !par.isLocked*/)
         {
-            par.transform.parent.GetComponent<Cell>().RemovePiece(false, false);
+            par.transform.parent.GetComponent<Cell>().RemovePiece(false);
 
             toWorkOn.symbolOfPiece = prop.transformSymbol;
 
@@ -718,7 +718,7 @@ public class PowerUpManager : MonoBehaviour
 
     public void CancelPowerup(PowerupProperties prop)
     {
-        StopAllCoroutines();
+        //StopAllCoroutines();
         UIManager.Instance.ActivateUsingPowerupMessage(false);
 
         IsUsingPowerUp = false;

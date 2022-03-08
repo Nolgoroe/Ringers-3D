@@ -136,7 +136,7 @@ public class BossBattleManager : MonoBehaviour
 
         foreach (Piece p in piecesToRemove)
         {
-            p.GetComponentInParent<Cell>().RemovePiece(true, false);
+            p.GetComponentInParent<Cell>().RemovePiece(false);
             //yield return new WaitForEndOfFrame();
             Destroy(p.gameObject);
         }

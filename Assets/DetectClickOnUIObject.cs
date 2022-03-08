@@ -16,5 +16,6 @@ public class DetectClickOnUIObject : MonoBehaviour, IPointerClickHandler
     void CloseWindow()
     {
         UIManager.Instance.closeWindow(toClose);
+        //UIManager.isUsingUI = false;
     }
 }

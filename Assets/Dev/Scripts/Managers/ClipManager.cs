@@ -240,7 +240,7 @@ public class ClipManager : MonoBehaviour
             {
                 Cell c = p.transform.parent.GetComponent<Cell>();
 
-                c.RemovePiece(false, false);
+                c.RemovePiece(false);
             }
             else
             {

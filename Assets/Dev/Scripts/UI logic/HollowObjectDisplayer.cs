@@ -35,7 +35,7 @@ public class HollowObjectDisplayer : MonoBehaviour
 
         //craftingMatsToRubiesHollow = new List<CraftingMatsNeededToRubies>();
 
-        Debug.Log("Start");
+        //Debug.Log("Start");
     }
 
     public void SpawnMaterialsNeeded(string matList)

@@ -42,6 +42,9 @@ public class SliceManager : MonoBehaviour
     public Texture[] sliceColors;
     public Texture[] sliceSymbolsSprites;
 
+    public Sprite[] sliceCompletedSpritesColor;
+    public Sprite[] sliceCompletedSpritesShapes;
+
     //public Texture[] limiterSliceColors; // this was used for 3D limiters
     public Sprite[] limiterSliceColors;
     //public Texture[] limiterSliceSymbolsSprites;
@@ -615,5 +618,40 @@ public class SliceManager : MonoBehaviour
     public void GetPrefabSliceToInstantiate()
     {
 
+    }
+
+    public void SetSliceSolvedSprite(Slice slice)
+    {
+        if (slice.isLimiter)
+        {
+            SpriteRenderer sr = slice.child.GetComponent<SpriteRenderer>();
+            
+            if(slice.sliceCatagory == SliceCatagory.Color || slice.sliceCatagory == SliceCatagory.SpecificColor)
+            {
+                sr.sprite = sliceCompletedSpritesColor[(int)slice.sliceColor];
+            }
+
+            if(slice.sliceCatagory == SliceCatagory.Shape || slice.sliceCatagory == SliceCatagory.SpecificShape)
+            {
+                sr.sprite = sliceCompletedSpritesShapes[(int)slice.sliceSymbol];
+            }
+        }
+    }
+    public void SetSliceNotSolvedSprite(Slice slice)
+    {
+        if (slice.isLimiter)
+        {
+            SpriteRenderer sr = slice.child.GetComponent<SpriteRenderer>();
+            
+            if(slice.sliceCatagory == SliceCatagory.Color || slice.sliceCatagory == SliceCatagory.SpecificColor)
+            {
+                sr.sprite = limiterSliceColors[(int)slice.sliceColor];
+            }
+
+            if(slice.sliceCatagory == SliceCatagory.Shape || slice.sliceCatagory == SliceCatagory.SpecificShape)
+            {
+                sr.sprite = limiterSliceSymbolsSprites[(int)slice.sliceSymbol];
+            }
+        }
     }
 }

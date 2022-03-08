@@ -114,6 +114,7 @@ public class Slice : MonoBehaviour
         //Renderer[] rend = go.transform.GetComponentsInChildren<Renderer>();
         SpriteRenderer[] rend = go.transform.GetComponentsInChildren<SpriteRenderer>();
         //anim = go.GetComponent<Animator>();
+        child = go;
 
         SetRendereDataLimiter(rend, pieceSymbolEnumCount, pieceColorEnumCount);
 

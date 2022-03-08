@@ -164,6 +164,8 @@ public class UIManager : MonoBehaviour
     public int introImageIndex = 0;
     public int introImageTextIndex = 0;
 
+    public GameObject activeScreen;
+
     private void Start()
     {
         Instance = this;
@@ -230,6 +232,7 @@ public class UIManager : MonoBehaviour
         fadeIntoLevel.SetActive(false);
         introScreenParent.SetActive(false);
         bossBattleUIScreen.SetActive(false);
+        activeScreen = null;
 
         dragControlsImage.sprite = toggleOnSprite;
         tapControlsImage.sprite = toggleOffSprite;
@@ -255,8 +258,7 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Using UI? " + UIManager.isUsingUI);
-        Debug.Log("IS USING UI? " + isUsingUI);
+        Debug.Log("Using UI? " + isUsingUI);
         //width.text = "Width: " + Display.main.systemWidth;
         //height.text = "Height: " + Display.main.systemHeight;
 
@@ -437,7 +439,11 @@ public class UIManager : MonoBehaviour
     }
     public void ToHud(GameObject currentCanvas)
     {
-        isUsingUI = false;
+        if (!itemForgeCanvas.activeInHierarchy && !leaderboardScreen.activeInHierarchy && !DailyRewardScreen.activeInHierarchy)
+        {
+            Debug.Log("Here");
+            StartCoroutine(SetIsUsingUI(false));
+        }
 
         updateRubyAndDewDropsCount();
         PlayerManager.Instance.activePowerups.Clear();
@@ -493,6 +499,8 @@ public class UIManager : MonoBehaviour
             GameManager.Instance.powerupManager.ResetData();
             GameManager.Instance.powerupManager.DestroySpecialPowersObjects();
             LightingSettingsManager.instance.ResetLightData();
+
+            AnimationManager.instance.turnOff = null;
 
             restartGrindLevel.gameObject.SetActive(false);
 
@@ -628,6 +636,13 @@ public class UIManager : MonoBehaviour
     {
         if (!itemForgeCanvas.activeInHierarchy)
         {
+            if (activeScreen)
+            {
+                activeScreen.SetActive(false);
+            }
+
+            activeScreen = itemForgeCanvas;
+
             SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
 
             itemForgeCanvas.SetActive(true);
@@ -654,7 +669,12 @@ public class UIManager : MonoBehaviour
                 }
             }
         }
-
+        else
+        {
+            itemForgeCanvas.SetActive(false);
+            isUsingUI = false;
+            activeScreen = null;
+        }
         //SortMaster.Instance.SortMatInventory(CraftingMatType.Build); //// For now we always open the inventory sorted on gems
     }
     public void OpenHollowCraftAndOwnedZone()
@@ -688,7 +708,6 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        isUsingUI = false;
         SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
 
         if (ToClose == itemForgeCanvas)
@@ -730,6 +749,13 @@ public class UIManager : MonoBehaviour
             PlayfabManager.instance.UpdateAndSaveTimeSensitiveData(); //// could be that we need to send to save here
 
             ZoneManager.Instance.UnlockLevelViewSequence();
+        }
+
+        if (!itemForgeCanvas.activeInHierarchy && !leaderboardScreen.activeInHierarchy && !DailyRewardScreen.activeInHierarchy)
+        {
+            Debug.Log("Here");
+
+            StartCoroutine(SetIsUsingUI(false));
         }
     }
     public void ToForge()
@@ -858,11 +884,8 @@ public class UIManager : MonoBehaviour
     }
     public void OpenOptions()
     {
-        if (!isUsingUI)
-        {
-            OptionsScreen.SetActive(true);
-            isUsingUI = true;
-        }
+        OptionsScreen.SetActive(true);
+        isUsingUI = true;
     }
     public void CloseGame()
     {
@@ -1240,11 +1263,23 @@ public class UIManager : MonoBehaviour
 
     public void OpenLeaderboardScreen()
     {
-        if (!isUsingUI)
+        if (!leaderboardScreen.activeInHierarchy)
         {
+            if (activeScreen)
+            {
+                activeScreen.SetActive(false);
+            }
+
+            activeScreen = leaderboardScreen;
             isUsingUI = true;
 
             PlayfabManager.instance.GetLeaderboard();
+        }
+        else
+        {
+            leaderboardScreen.SetActive(false);
+            activeScreen = null;
+            isUsingUI = false;
         }
     }
 
@@ -1299,6 +1334,8 @@ public class UIManager : MonoBehaviour
         {
             isUsingUI = true;
             DailyRewardScreen.SetActive(true);
+
+            activeScreen = DailyRewardScreen;
         }
     }
 
@@ -1815,5 +1852,12 @@ public class UIManager : MonoBehaviour
     public void turnOnDealVFX()
     {
         GameObject go = Instantiate(dealButtonVFX, dealButton.transform);
+    }
+
+    public IEnumerator SetIsUsingUI(bool isTrue)
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        isUsingUI = isTrue;
     }
 }

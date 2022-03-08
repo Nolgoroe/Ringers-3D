@@ -122,8 +122,9 @@ public class PlayfabManager : MonoBehaviour
 
         if (TutorialSaveData.Instance.hasFinishedIntro)
         {
-            UIManager.Instance.PlayButton();
             UIManager.Instance.DisplayDailyRewardsScreen();
+
+            UIManager.Instance.PlayButton();
         }
         else
         {
