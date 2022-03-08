@@ -470,7 +470,8 @@ public class UIManager : MonoBehaviour
             PanZoom pz = Camera.main.GetComponent<PanZoom>();
             tempForClamp.y = Mathf.Clamp(tempForClamp.y, pz.bottomBound, pz.topBound);
 
-            Camera.main.transform.position = tempForClamp;
+            //Camera.main.transform.position = tempForClamp;
+            Camera.main.transform.position = new Vector3(0,-1.6f, -3f);
 
             TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, tempForClamp.y, TutorialSequence.Instacne.maskImage.transform.position.z);
         }

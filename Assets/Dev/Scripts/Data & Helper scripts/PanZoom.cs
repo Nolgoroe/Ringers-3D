@@ -132,14 +132,22 @@ public class PanZoom : MonoBehaviour
                 if (touch.phase == TouchPhase.Moved)
                 {
                     isDragging = true;
-                    Vector2 touchDeltaPos = touch.deltaPosition;
+                    //Vector2 touchDeltaPos = touch.deltaPosition;
 
-                    mainCam.transform.Translate(-touchDeltaPos.x * panSpeed, -touchDeltaPos.y * panSpeed, 0);
+                    //Vector3 newPos = new Vector3(mainCam.transform.position.x - touchDeltaPos.x, mainCam.transform.position.y - touchDeltaPos.y, 0);
 
-                    mainCam.transform.position = new Vector3(
-                        Mathf.Clamp(mainCam.transform.position.x, leftBound, rightBound),
-                        Mathf.Clamp(mainCam.transform.position.y, bottomBound, topBound),
-                        -3f);
+                    //mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, newPos, panSpeed * Time.deltaTime);
+
+                    //mainCam.transform.Translate(-touchDeltaPos.x * panSpeed, -touchDeltaPos.y * panSpeed, 0);
+
+
+
+
+
+                    //mainCam.transform.position = new Vector3(
+                    //    Mathf.Clamp(mainCam.transform.position.x, leftBound, rightBound),
+                    //    Mathf.Clamp(mainCam.transform.position.y, bottomBound, topBound),
+                    //    -3f);
                 }
             }
         }
