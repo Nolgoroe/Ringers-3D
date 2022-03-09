@@ -84,7 +84,10 @@ public class AnimationManager : MonoBehaviour
     public float cameraOrthoSizeTarget;
     public Image fadeIntoLevel;
 
-    private Coroutine endAnim = null;
+    private Coroutine endAnimToAnimal = null;
+
+    [HideInInspector]
+    public Coroutine endAnimToWinScreen = null;
 
     bool dissolveStart = false;
 
@@ -110,7 +113,7 @@ public class AnimationManager : MonoBehaviour
         }
         else
         {
-            endAnim = StartCoroutine(StartEndLevelAnim());
+            endAnimToAnimal = StartCoroutine(StartEndLevelAnim());
         }
     }
     public void StartZoomIntoCorruptArea(int ID)
@@ -366,21 +369,23 @@ public class AnimationManager : MonoBehaviour
     {
         if (hasSkippedToAnimalAnim)
         {
-            StartCoroutine(AfterAnimalAnimation(true));
+            StopCoroutine(endAnimToWinScreen);
+
+            endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation(true));
             return;
         }
         else
         {
             hasSkippedToAnimalAnim = true;
             UIManager.Instance.skipAnimationButton.gameObject.SetActive(true);
-            StartCoroutine(AfterAnimalAnimation(false));
+            endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation(false));
         }
 
         SoundManager.Instance.audioSource.Stop();
 
-        if (endAnim != null)
+        if (endAnimToAnimal != null)
         {
-            StopCoroutine(endAnim);
+            StopCoroutine(endAnimToAnimal);
             LeanTween.cancelAll();
         }
 
@@ -414,9 +419,6 @@ public class AnimationManager : MonoBehaviour
 
         fadeImageEndLevel.gameObject.SetActive(false);
 
-        CheckShowLootTutorial();
-
-        GameManager.Instance.WinAfterAnimation();
 
         if (GameManager.Instance.gameBoard.gameObject)
         {
@@ -453,6 +455,7 @@ public class AnimationManager : MonoBehaviour
             boardScreenshot.transform.SetParent(GameManager.Instance.destroyOutOfLevel);
         }
 
+        CheckShowLootTutorial();
 
         MoveBoardScreenshotToPosition(boardScreenshot);
 
@@ -461,6 +464,8 @@ public class AnimationManager : MonoBehaviour
         Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
 
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
+
+        GameManager.Instance.WinAfterAnimation();
     }
     private void CheckShowLootTutorial()
     {
@@ -540,7 +545,7 @@ public class AnimationManager : MonoBehaviour
 
         Transform target = ZoneManagerHelpData.Instance.listOfAllZones[ID].transform;
 
-        LeanTween.move(toMove.gameObject, new Vector3(target.position.x, target.transform.position.y, -3), cameraMoveTime).setEase(LeanTweenType.easeInOutQuad); // animate
+        LeanTween.move(toMove.gameObject, new Vector3(toMove.transform.position.x, target.transform.position.y, -3), cameraMoveTime).setEase(LeanTweenType.easeInOutQuad); // animate
 
         yield return new WaitUntil((() => toMove.transform.position.x - target.position.x <= 0.1f));
         FadeInUnlcokScreen();

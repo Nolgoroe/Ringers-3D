@@ -485,6 +485,13 @@ public class UIManager : MonoBehaviour
 
         if (currentCanvas == gameplayCanvas)
         {
+
+            if (AnimationManager.instance.endAnimToWinScreen != null)
+            {
+                StopCoroutine(AnimationManager.instance.endAnimToWinScreen);
+                AnimationManager.instance.endAnimToWinScreen = null;
+            }
+
             if (GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial)
             {
                 TutorialSequence.Instacne.currentPhaseInSequenceLevels = 0;
