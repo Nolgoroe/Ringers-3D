@@ -45,6 +45,9 @@ public class AnimationManager : MonoBehaviour
     public bool noWaitDissolve;
     public bool noWaitPullIn;
     public bool noWaitAnimal;
+
+    public bool hasSkippedToAnimalAnim;
+
     //public ParticleSystem midPieceParticle;
     public List<SubPiece> tempSubPieceArray;
 
@@ -245,7 +248,6 @@ public class AnimationManager : MonoBehaviour
             sr.color = newColor;
         });
 
-        UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
         UIManager.Instance.TurnOffGameplayUI();
         UIManager.Instance.InGameUiScreens.SetActive(true);
         GameManager.Instance.selectedLevelBG.transform.Find("color mask").gameObject.SetActive(false);
@@ -273,6 +275,7 @@ public class AnimationManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f); //unDissolve time
         MoveBoardScreenshotToPosition(boardScreenshot);
+        UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
         GameManager.Instance.WinAfterAnimation();
         CheckShowLootTutorial();
         TutorialSequence.Instacne.CheckDoPotionTutorial();
@@ -343,8 +346,10 @@ public class AnimationManager : MonoBehaviour
             {
                 //Material mat = SP.GetComponent<Renderer>().material;
                 //mat.SetFloat("Dissolve_Amount", 0.24f);
-
-                SP.UnDissolveSubPiece();
+                if (SP)
+                {
+                    SP.UnDissolveSubPiece();
+                }
 
             }
         }
@@ -359,6 +364,18 @@ public class AnimationManager : MonoBehaviour
 
     public void SkipEndLevelAnimation(bool isCheat)
     {
+        if (hasSkippedToAnimalAnim)
+        {
+            StartCoroutine(AfterAnimalAnimation(true));
+            return;
+        }
+        else
+        {
+            hasSkippedToAnimalAnim = true;
+            UIManager.Instance.skipAnimationButton.gameObject.SetActive(true);
+            StartCoroutine(AfterAnimalAnimation(false));
+        }
+
         SoundManager.Instance.audioSource.Stop();
 
         if (endAnim != null)
@@ -369,22 +386,20 @@ public class AnimationManager : MonoBehaviour
 
         GameManager.Instance.gameBoard.gameObject.transform.position = new Vector3(100, 0, 0);
 
-        if (!isCheat)
-        {
-            UnDissolveTiles(true);
-            ConnectionManager.Instance.TurnOffAllConnectedVFX();
+        //if (!isCheat)
+        //{
+        //    UnDissolveTiles(true);
+        //    ConnectionManager.Instance.TurnOffAllConnectedVFX();
 
-            if(boardScreenshot == null)
-            {
-                boardScreenshot = Instantiate(GameManager.Instance.gameBoard, new Vector3(100, 0, 0), Quaternion.identity);
-                boardScreenshot.transform.SetParent(GameManager.Instance.destroyOutOfLevel);
-            }
+        //    if(boardScreenshot == null)
+        //    {
+        //        boardScreenshot = Instantiate(GameManager.Instance.gameBoard, new Vector3(100, 0, 0), Quaternion.identity);
+        //        boardScreenshot.transform.SetParent(GameManager.Instance.destroyOutOfLevel);
+        //    }
 
 
-            MoveBoardScreenshotToPosition(boardScreenshot);
-        }
-
-        UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
+        //    MoveBoardScreenshotToPosition(boardScreenshot);
+        //}
 
         tempSubPieceArray.Clear();
 
@@ -422,6 +437,31 @@ public class AnimationManager : MonoBehaviour
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
     }
 
+    public IEnumerator AfterAnimalAnimation(bool isSkip)
+    {
+        if (!isSkip)
+        {
+            yield return new WaitForSeconds(4);
+        }
+
+        UnDissolveTiles(true);
+        ConnectionManager.Instance.TurnOffAllConnectedVFX();
+
+        if (boardScreenshot == null)
+        {
+            boardScreenshot = Instantiate(GameManager.Instance.gameBoard, new Vector3(100, 0, 0), Quaternion.identity);
+            boardScreenshot.transform.SetParent(GameManager.Instance.destroyOutOfLevel);
+        }
+
+
+        MoveBoardScreenshotToPosition(boardScreenshot);
+
+        hasSkippedToAnimalAnim = false;
+
+        Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
+
+        UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
+    }
     private void CheckShowLootTutorial()
     {
         if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.lootTutorial && GameManager.Instance.currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)GameManager.Instance.currentLevel.specificTutorialEnum)) /// specificTutorialIndex == 0  is loot tutorial

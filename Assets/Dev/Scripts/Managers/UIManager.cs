@@ -93,6 +93,7 @@ public class UIManager : MonoBehaviour
     public float fadeIntoLevelDelay;
 
     public float speedFadeInIntro;
+    public float offsetTimeForFirstPage;
     public float speedFadeOutIntro;
 
     public Sprite toggleOffSprite, toggleOnSprite;
@@ -1595,6 +1596,24 @@ public class UIManager : MonoBehaviour
             sr.color = newColor;
         });
 
+        LeanTween.value(introImages[0].imageObject, 0, 1, speedFadeInIntro + offsetTimeForFirstPage).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            Image sr = introImages[0].imageObject.GetComponent<Image>();
+            Color newColor = sr.color;
+            newColor.a = val;
+            sr.color = newColor;
+        });
+
+        LeanTween.value(introImages[0].textObjects[0], 0, 1, speedFadeInIntro + offsetTimeForFirstPage).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            TMP_Text sr = introImages[0].textObjects[0].GetComponent<TMP_Text>();
+            Color newColor = sr.color;
+            newColor.a = val;
+            sr.color = newColor;
+        });
+
+        yield return new WaitForSeconds(speedFadeInIntro + offsetTimeForFirstPage);
+
         LeanTween.value(IntroSkipButton, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
         {
             Image sr = IntroSkipButton.GetComponent<Image>();
@@ -1611,23 +1630,29 @@ public class UIManager : MonoBehaviour
             sr.color = newColor;
         });
 
-        LeanTween.value(introImages[0].imageObject, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        foreach (ImageTextCombo ITC in introImages)
         {
-            Image sr = introImages[0].imageObject.GetComponent<Image>();
-            Color newColor = sr.color;
-            newColor.a = val;
-            sr.color = newColor;
-        });
+            if(ITC != introImages[0])
+            {
+                LeanTween.value(ITC.imageObject, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+                {
+                    Image sr = ITC.imageObject.GetComponent<Image>();
+                    Color newColor = sr.color;
+                    newColor.a = val;
+                    sr.color = newColor;
+                });
 
-        LeanTween.value(introImages[0].textObjects[0], 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-        {
-            TMP_Text sr = introImages[0].textObjects[0].GetComponent<TMP_Text>();
-            Color newColor = sr.color;
-            newColor.a = val;
-            sr.color = newColor;
-        });
+                LeanTween.value(ITC.textObjects[0], 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+                {
+                    TMP_Text sr = ITC.textObjects[0].GetComponent<TMP_Text>();
+                    Color newColor = sr.color;
+                    newColor.a = val;
+                    sr.color = newColor;
+                });
+            }
+        }
 
-        yield return new WaitForSeconds(speedFadeInIntro + 0.1f);
+        yield return new WaitForSeconds(speedFadeInIntro);
 
         canAdvanceIntro = true;
         introImageTextIndex++;
@@ -1716,8 +1741,6 @@ public class UIManager : MonoBehaviour
         }
 
 
-
-
         if (pageFlipped)
         {
             yield return new WaitForSeconds(speedFadeOutIntro + 0.1f);
@@ -1734,7 +1757,7 @@ public class UIManager : MonoBehaviour
                 PlayButton();
                 DisplayDailyRewardsScreen();
 
-                LeanTween.value(TEMPBgIntro, 1, 0, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+                LeanTween.value(TEMPBgIntro, 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
                 {
                     Image sr = TEMPBgIntro.GetComponent<Image>();
                     Color newColor = sr.color;
@@ -1749,15 +1772,15 @@ public class UIManager : MonoBehaviour
             }
             else
             {
-                LeanTween.value(introImages[introImageIndex].imageObject, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-                {
-                    Image sr = introImages[introImageIndex].imageObject.GetComponent<Image>();
-                    Color newColor = sr.color;
-                    newColor.a = val;
-                    sr.color = newColor;
-                });
+                //LeanTween.value(introImages[introImageIndex].imageObject, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+                //{
+                //    Image sr = introImages[introImageIndex].imageObject.GetComponent<Image>();
+                //    Color newColor = sr.color;
+                //    newColor.a = val;
+                //    sr.color = newColor;
+                //});
 
-                LeanTween.value(IntroSkipButton, 0, 1, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+                LeanTween.value(IntroSkipButton, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
                 {
                     Image sr = IntroSkipButton.GetComponent<Image>();
                     Color newColor = sr.color;
@@ -1765,7 +1788,7 @@ public class UIManager : MonoBehaviour
                     sr.color = newColor;
                 });
 
-                LeanTween.value(IntroTapToContinue, 0, 1, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+                LeanTween.value(IntroTapToContinue, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
                 {
                     TMP_Text sr = IntroTapToContinue.GetComponent<TMP_Text>();
                     Color newColor = sr.color;
@@ -1773,13 +1796,13 @@ public class UIManager : MonoBehaviour
                     sr.color = newColor;
                 });
 
-                LeanTween.value(introImages[introImageIndex].textObjects[introImageTextIndex], 0, 1, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-                {
-                    TMP_Text sr = introImages[introImageIndex].textObjects[introImageTextIndex].GetComponent<TMP_Text>();
-                    Color newColor = sr.color;
-                    newColor.a = val;
-                    sr.color = newColor;
-                });
+                //LeanTween.value(introImages[introImageIndex].textObjects[introImageTextIndex], 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+                //{
+                //    TMP_Text sr = introImages[introImageIndex].textObjects[introImageTextIndex].GetComponent<TMP_Text>();
+                //    Color newColor = sr.color;
+                //    newColor.a = val;
+                //    sr.color = newColor;
+                //});
 
             }
         }

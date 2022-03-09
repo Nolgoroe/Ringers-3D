@@ -48,6 +48,7 @@ public class PlayfabManager : MonoBehaviour
         string nameInFile = "";
 
         //// WHAT TO DO WITH IPHONE???
+        //// WE DO NOT WANT THIS TO STAY THIS WAY - IN THE FUTURE WE WILL WANT TO INTERFACE WITH GOOGLE PLAY!
         if (Application.platform == RuntimePlatform.Android)
         {
             filePath = Application.persistentDataPath + "/username.txt";

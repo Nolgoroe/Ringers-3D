@@ -51,6 +51,7 @@ public class AnimalsManager : MonoBehaviour
     public List<AnimalsInGame> unlockedAnimals;
 
     public AnimalsInGame currentLevelAnimal;
+    public GameObject currentLevelLiveAnimal;
 
     public GameObject statueToSwap;
 
@@ -66,6 +67,8 @@ public class AnimalsManager : MonoBehaviour
         Instance = this;
 
         currentLevelAnimal = AnimalsInGame.None;
+        currentLevelLiveAnimal = null;
+        statueToSwap = null;
     }
 
     public void CheckUnlockAnimal(AnimalsInGame toUnclock)
@@ -132,6 +135,8 @@ public class AnimalsManager : MonoBehaviour
         statueToSwap.SetActive(false);
 
         GameObject go = Instantiate(APD.animatedPrefab, statueToSwap.transform.parent);
+
+        currentLevelLiveAnimal = go;
 
         Destroy(statueToSwap.gameObject);
         //Destroy(go, 3.7f);
