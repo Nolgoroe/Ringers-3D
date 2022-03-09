@@ -173,7 +173,7 @@ public class CursorController : MonoBehaviour
             }
         } // detect touch on level prefab
 
-        if (!GameManager.Instance.levelStarted && UIManager.isUsingUI && UIManager.Instance.UnlockedZoneMessageView.activeInHierarchy)
+        if (!GameManager.Instance.levelStarted && !UIManager.isUsingUI && UIManager.Instance.UnlockedZoneMessageView.activeInHierarchy)
         {
             if (Input.touchCount > 0)
             {

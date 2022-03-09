@@ -14,10 +14,7 @@ public enum Sounds
     TileUnmatch,
     ButtonPressUI,
     AddTileBoard,
-    DealAnimOnePiece,
-    DealAnimTwoPieces,
-    DealAnimThreePieces,
-    DealAnimFourPieces,
+    PieceMoveDeal,
     ElementCrafted,
     NegativeSound,
     PageFlip,
@@ -30,7 +27,7 @@ public class EnumAndClip
 {
     public Sounds enumSound;
 
-    public AudioClip theSound;
+    public AudioClip[] theSound;
 }
 
 public class SoundManager : MonoBehaviour
@@ -41,13 +38,13 @@ public class SoundManager : MonoBehaviour
 
     public EnumAndClip[] soundsForGame;
 
-    public Dictionary<Sounds, AudioClip> enumToSound;
+    public Dictionary<Sounds, AudioClip[]> enumToSound;
 
     private void Start()
     {
         Instance = this;
         audioSource = GetComponent<AudioSource>();
-        enumToSound = new Dictionary<Sounds, AudioClip>();
+        enumToSound = new Dictionary<Sounds, AudioClip[]>();
 
 
         foreach (EnumAndClip EAC in soundsForGame)
@@ -61,14 +58,17 @@ public class SoundManager : MonoBehaviour
     {
         audioSource.volume = 0.5f;
 
-        audioSource.PlayOneShot(enumToSound[soundEnum]);
+        int ran = Random.Range(0, (enumToSound[soundEnum].Length));
+        audioSource.PlayOneShot(enumToSound[soundEnum][ran]);
     }
 
     public void PlaySoundChangeVolume(Sounds soundEnum, float Volume)
     {
         audioSource.volume = Volume;
 
-        audioSource.PlayOneShot(enumToSound[soundEnum]);
+        int ran = Random.Range(0, (enumToSound[soundEnum].Length));
+        audioSource.PlayOneShot(enumToSound[soundEnum][ran]);
+
     }
 
     public IEnumerator PlaySoundDelay(Sounds soundEnum, float Delay)
@@ -76,7 +76,9 @@ public class SoundManager : MonoBehaviour
         yield return new WaitForSeconds(Delay);
         audioSource.volume = 0.5f;
 
-        audioSource.PlayOneShot(enumToSound[soundEnum]);
+        int ran = Random.Range(0, (enumToSound[soundEnum].Length));
+        audioSource.PlayOneShot(enumToSound[soundEnum][ran]);
+
     }
 
     public IEnumerator PlaySoundChangeVolumeAndDelay(Sounds soundEnum, float Volume, float Delay)
@@ -85,7 +87,8 @@ public class SoundManager : MonoBehaviour
 
         audioSource.volume = Volume;
 
-        audioSource.PlayOneShot(enumToSound[soundEnum]);
+        int ran = Random.Range(0, (enumToSound[soundEnum].Length));
+        audioSource.PlayOneShot(enumToSound[soundEnum][ran]);
     }
 
 }

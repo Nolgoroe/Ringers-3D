@@ -269,23 +269,23 @@ public class ClipManager : MonoBehaviour
         UIManager.Instance.dealButton.interactable = false;
         StartCoroutine(DeactivateClip(clipCount - 1));
 
-        switch (clipCount)
-        {
-            case 4:
-                SoundManager.Instance.PlaySound(Sounds.DealAnimFourPieces);
-                break;
-            case 3:
-                SoundManager.Instance.PlaySound(Sounds.DealAnimThreePieces);
-                break;
-            case 2:
-                SoundManager.Instance.PlaySound(Sounds.DealAnimTwoPieces);
-                break;
-            case 1:
-                SoundManager.Instance.PlaySound(Sounds.DealAnimOnePiece);
-                break;
-            default:
-                break;
-        }
+        //switch (clipCount)
+        //{
+        //    case 4:
+        //        SoundManager.Instance.PlaySound(Sounds.DealAnimFourPieces);
+        //        break;
+        //    case 3:
+        //        SoundManager.Instance.PlaySound(Sounds.DealAnimThreePieces);
+        //        break;
+        //    case 2:
+        //        SoundManager.Instance.PlaySound(Sounds.DealAnimTwoPieces);
+        //        break;
+        //    case 1:
+        //        SoundManager.Instance.PlaySound(Sounds.DealAnimOnePiece);
+        //        break;
+        //    default:
+        //        break;
+        //}
 
         //yield return new WaitForSeconds(1f); /// TEMPORARY
 
@@ -295,6 +295,7 @@ public class ClipManager : MonoBehaviour
 
             LeanTween.move(toMove, piecesDealPositionsOut[i], timeToAnimateMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
 
+            SoundManager.Instance.PlaySound(Sounds.PieceMoveDeal);
 
             yield return new WaitForSeconds(delayClipMove);
         }
@@ -306,23 +307,23 @@ public class ClipManager : MonoBehaviour
         clipCount--;
 
 
-        switch (clipCount)
-        {
-            case 4:
-                SoundManager.Instance.PlaySound(Sounds.DealAnimFourPieces);
-                break;
-            case 3:
-                SoundManager.Instance.PlaySound(Sounds.DealAnimThreePieces);
-                break;
-            case 2:
-                SoundManager.Instance.PlaySound(Sounds.DealAnimTwoPieces);
-                break;
-            case 1:
-                SoundManager.Instance.PlaySound(Sounds.DealAnimOnePiece);
-                break;
-            default:
-                break;
-        }
+        //switch (clipCount)
+        //{
+        //    case 4:
+        //        SoundManager.Instance.PlaySound(Sounds.DealAnimFourPieces);
+        //        break;
+        //    case 3:
+        //        SoundManager.Instance.PlaySound(Sounds.DealAnimThreePieces);
+        //        break;
+        //    case 2:
+        //        SoundManager.Instance.PlaySound(Sounds.DealAnimTwoPieces);
+        //        break;
+        //    case 1:
+        //        SoundManager.Instance.PlaySound(Sounds.DealAnimOnePiece);
+        //        break;
+        //    default:
+        //        break;
+        //}
 
         //yield return new WaitForSeconds(0.8f); /// TEMPORARY
 
@@ -332,9 +333,19 @@ public class ClipManager : MonoBehaviour
             GameObject toMove = slots[i].GetChild(1).gameObject;
 
             LeanTween.move(toMove, originalPiecePos, timeToAnimateMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
+
+
+            Invoke("playReturnPiecePlaceSound", timeToAnimateMove - 0.25f);
+
             yield return new WaitForSeconds(delayClipMove);
+
         }
         UIManager.Instance.dealButton.interactable = true;
+    }
+
+    void playReturnPiecePlaceSound()
+    {
+        SoundManager.Instance.PlaySound(Sounds.PieceMoveDeal);
     }
 
     public void DealAnimClipLogic()
