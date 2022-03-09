@@ -32,6 +32,7 @@ public class Zone : MonoBehaviour
     [HideInInspector]
     public Image zoneHeader;
 
+    public Vector3 zonePosForUnlock;
     public void Init()
     {
         foreach (Transform child in transform)

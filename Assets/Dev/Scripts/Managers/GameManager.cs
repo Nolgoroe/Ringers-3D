@@ -183,7 +183,7 @@ public class GameManager : MonoBehaviour
                 TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, TutorialSequence.Instacne.maskImage.transform.position.z);
                 Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
-                levelStarted = true;
+                //levelStarted = true;
 
                 LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
 
@@ -268,7 +268,7 @@ public class GameManager : MonoBehaviour
             TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, TutorialSequence.Instacne.maskImage.transform.position.z);
             Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
-            levelStarted = true;
+            //levelStarted = true;
 
             LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
             gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
@@ -355,7 +355,7 @@ public class GameManager : MonoBehaviour
         TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, TutorialSequence.Instacne.maskImage.transform.position.z);
         Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
-        levelStarted = true;
+        //levelStarted = true;
 
         LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
         gameClip = Instantiate(clipPrefab, destroyOutOfLevel);

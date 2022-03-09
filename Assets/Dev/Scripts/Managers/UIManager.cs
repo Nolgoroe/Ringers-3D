@@ -760,7 +760,7 @@ public class UIManager : MonoBehaviour
             ZoneManager.Instance.UnlockLevelViewSequence();
         }
 
-        if (!itemForgeCanvas.activeInHierarchy && !leaderboardScreen.activeInHierarchy && !DailyRewardScreen.activeInHierarchy)
+        if (!itemForgeCanvas.activeInHierarchy && !leaderboardScreen.activeInHierarchy && !DailyRewardScreen.activeInHierarchy && ZoneManager.Instance.zonesToUnlock.Count <= 0)
         {
             Debug.Log("Here");
 

@@ -27,21 +27,25 @@ public class Interactable3D : MonoBehaviour
 
     public void LaunchNoramlLevel()
     {
-        ZoneManager.Instance.SetCurrentZone(currentZoneID);
-
-        if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
+        if (!GameManager.Instance.levelStarted)
         {
-            if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+            ZoneManager.Instance.SetCurrentZone(currentZoneID);
+
+            if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
             {
-                GameManager.Instance.ChooseLevel(overallLevelNum);
-                GameManager.Instance.setCurrentLevelBG(currentZoneID);
-                //GameManager.Instance.CallStartLevel(false);
+                GameManager.Instance.levelStarted = true;
+                if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+                {
+                    GameManager.Instance.ChooseLevel(overallLevelNum);
+                    GameManager.Instance.setCurrentLevelBG(currentZoneID);
+                    //GameManager.Instance.CallStartLevel(false);
 
-                TurnOffVFX();
+                    TurnOffVFX();
 
-                GameManager.Instance.StartLevel(true);
+                    GameManager.Instance.StartLevel(true);
+                }
+
             }
-
         }
     }
 
@@ -53,6 +57,8 @@ public class Interactable3D : MonoBehaviour
         {
             if (ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind)
             {
+                GameManager.Instance.levelStarted = true;
+
                 GameManager.Instance.ChooseLevelGrind(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
                 //GameManager.Instance.CallStartLevel(false);
@@ -74,6 +80,8 @@ public class Interactable3D : MonoBehaviour
         {
             if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
             {
+                GameManager.Instance.levelStarted = true;
+
                 GameManager.Instance.ChooseLevel(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
                 //GameManager.Instance.CallStartLevel(true);
@@ -97,6 +105,8 @@ public class Interactable3D : MonoBehaviour
         {
             if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
             {
+                GameManager.Instance.levelStarted = true;
+
                 GameManager.Instance.ChooseLevel(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
                 //GameManager.Instance.CallStartLevel(false);
@@ -120,6 +130,8 @@ public class Interactable3D : MonoBehaviour
         {
             if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
             {
+                GameManager.Instance.levelStarted = true;
+
                 GameManager.Instance.ChooseLevel(overallLevelNum);
                 GameManager.Instance.setCurrentLevelBG(currentZoneID);
                 //GameManager.Instance.CallStartLevel(true);
@@ -138,6 +150,8 @@ public class Interactable3D : MonoBehaviour
     {
         if(PlayerManager.Instance.bossTicketCount > 0)
         {
+            GameManager.Instance.levelStarted = true;
+
             PlayerManager.Instance.bossTicketCount--;
             ZoneManager.Instance.SetCurrentZone(0);
 

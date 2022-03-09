@@ -93,6 +93,8 @@ public class AnimationManager : MonoBehaviour
 
     public GameObject[] turnOff;
 
+    public GameObject toMoveOpenZone;
+
     void Start()
     {
         instance = this;
@@ -408,6 +410,11 @@ public class AnimationManager : MonoBehaviour
 
         tempSubPieceArray.Clear();
 
+        if(turnOff == null)
+        {
+            turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
+        }
+
         foreach (GameObject GO in turnOff)
         {
             GO.SetActive(true);
@@ -539,15 +546,18 @@ public class AnimationManager : MonoBehaviour
     {
         SoundManager.Instance.PlaySound(Sounds.UnlockZone);
 
-        Camera toMove = Camera.main;
+        //Camera toMove = Camera.main;
 
         UIManager.Instance.zoneToUnlcokNameText.text = ZoneManagerHelpData.Instance.listOfAllZones[ID].zoneName;
 
-        Transform target = ZoneManagerHelpData.Instance.listOfAllZones[ID].transform;
+        //Transform target = ZoneManagerHelpData.Instance.listOfAllZones[ID].transform;
 
-        LeanTween.move(toMove.gameObject, new Vector3(toMove.transform.position.x, target.transform.position.y, -3), cameraMoveTime).setEase(LeanTweenType.easeInOutQuad); // animate
+        RectTransform target = ZoneManagerHelpData.Instance.listOfAllZones[ID].GetComponent<RectTransform>();
+        Debug.Log("Target Y" + target.localPosition.y);
 
-        yield return new WaitUntil((() => toMove.transform.position.x - target.position.x <= 0.1f));
+        LeanTween.move(toMoveOpenZone.GetComponent<RectTransform>(), new Vector3(toMoveOpenZone.transform.position.x, ZoneManagerHelpData.Instance.listOfAllZones[ID].zonePosForUnlock.y, 0), cameraMoveTime).setEase(LeanTweenType.easeInOutQuad); // animate
+
+        yield return new WaitForSeconds(cameraMoveTime - 0.8f);
         FadeInUnlcokScreen();
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] {SystemsToSave.ZoneManager, SystemsToSave.ZoneX});
