@@ -1894,8 +1894,10 @@ public class UIManager : MonoBehaviour
         isUsingUI = isTrue;
     }
 
-    public void MoveAfterLoadingScreen(bool goodLogin)
+    public IEnumerator MoveAfterLoadingScreen(bool goodLogin)
     {
+        yield return new WaitForSeconds(2);
+
         if (goodLogin)
         {
             startAppLoadingScreen.SetActive(false);

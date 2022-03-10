@@ -69,6 +69,10 @@ public class PlayfabManager : MonoBehaviour
             {
                 LoginAutomatically(nameInFile);
             }
+            else
+            {
+                StartCoroutine(UIManager.Instance.MoveAfterLoadingScreen(false));
+            }
         }
     }
 
@@ -135,7 +139,7 @@ public class PlayfabManager : MonoBehaviour
         isLoggedIn = true;
         TimeReferenceDataScript.Start();
 
-        UIManager.Instance.MoveAfterLoadingScreen(true);
+        StartCoroutine(UIManager.Instance.MoveAfterLoadingScreen(true));
 
         SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.RewardsManager, SystemsToSave.DewDrops, SystemsToSave.LoginData });
 
@@ -155,7 +159,7 @@ public class PlayfabManager : MonoBehaviour
         Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
         Debug.LogError(error.GenerateErrorReport());
 
-        UIManager.Instance.MoveAfterLoadingScreen(false);
+        StartCoroutine(UIManager.Instance.MoveAfterLoadingScreen(false));
     }
 
     public void SendLeaderboard(int highestLevelReached)
