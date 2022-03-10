@@ -560,6 +560,9 @@ public class AnimationManager : MonoBehaviour
         yield return new WaitForSeconds(cameraMoveTime - 0.8f);
         FadeInUnlcokScreen();
 
+        yield return new WaitForSeconds(1);
+        ZoneManager.CanUnlockZone = true;
+
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] {SystemsToSave.ZoneManager, SystemsToSave.ZoneX});
     }
 

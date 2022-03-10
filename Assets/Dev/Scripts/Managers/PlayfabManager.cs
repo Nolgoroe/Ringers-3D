@@ -84,7 +84,7 @@ public class PlayfabManager : MonoBehaviour
                 GetPlayerProfile = true
             },
         };
-        PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccess, OnError);
+        PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccess, OnErrorLogin);
     }
 
     IEnumerator LoginInit()
@@ -135,6 +135,8 @@ public class PlayfabManager : MonoBehaviour
         isLoggedIn = true;
         TimeReferenceDataScript.Start();
 
+        UIManager.Instance.MoveAfterLoadingScreen(true);
+
         SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.RewardsManager, SystemsToSave.DewDrops, SystemsToSave.LoginData });
 
 
@@ -146,6 +148,14 @@ public class PlayfabManager : MonoBehaviour
         displayMessages.text = error.ErrorMessage;
         Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
         Debug.LogError(error.GenerateErrorReport());
+    }
+    void OnErrorLogin(PlayFabError error)
+    {
+        displayMessages.text = error.ErrorMessage;
+        Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
+        Debug.LogError(error.GenerateErrorReport());
+
+        UIManager.Instance.MoveAfterLoadingScreen(false);
     }
 
     public void SendLeaderboard(int highestLevelReached)

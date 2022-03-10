@@ -173,7 +173,7 @@ public class CursorController : MonoBehaviour
             }
         } // detect touch on level prefab
 
-        if (!GameManager.Instance.levelStarted && UIManager.isUsingUI && UIManager.Instance.UnlockedZoneMessageView.activeInHierarchy)
+        if (!GameManager.Instance.levelStarted && ZoneManager.CanUnlockZone && UIManager.Instance.UnlockedZoneMessageView.activeInHierarchy)
         {
             if (Input.touchCount > 0)
             {
@@ -186,11 +186,12 @@ public class CursorController : MonoBehaviour
                     Debug.Log("THIS IS HOW MANY TIMES");
                     if (ZoneManager.Instance.zonesToUnlock.Count <= 0)
                     {
-
+                        ZoneManager.CanUnlockZone = false;
                         UIManager.isUsingUI = false;
                     }
                     else
                     {
+                        ZoneManager.CanUnlockZone = false;
                         ZoneManager.Instance.UnlockLevelViewSequence();
                     }
                 }

@@ -20,6 +20,8 @@ public class ZoneManager : MonoBehaviour
 
     public List<int> unlockedZoneID;
 
+    public static bool CanUnlockZone;
+
     private void Awake()
     {
         Instance = this;
@@ -156,6 +158,10 @@ public class ZoneManager : MonoBehaviour
             //}
 
             //SaveZoneManager();
+        }
+        else
+        {
+            CanUnlockZone = false;
         }
     }
 }

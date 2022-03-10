@@ -83,6 +83,7 @@ public class UIManager : MonoBehaviour
     public GameObject bossBattleUIScreen;
     public GameObject placePieceVFX;
     public GameObject dealButtonVFX;
+    public GameObject startAppLoadingScreen;
 
     public Image dewDropsImage;
 
@@ -174,7 +175,8 @@ public class UIManager : MonoBehaviour
         isDuringIntro = false;
         canAdvanceIntro = true;
 
-        mainMenu.SetActive(true); /// ony screen we should see at the start
+        startAppLoadingScreen.SetActive(true);/// ony screen we should see at the start
+        mainMenu.SetActive(false); 
 
         worldGameObject.SetActive(true);
         hudCanvasUI.SetActive(false);
@@ -1890,5 +1892,18 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         isUsingUI = isTrue;
+    }
+
+    public void MoveAfterLoadingScreen(bool goodLogin)
+    {
+        if (goodLogin)
+        {
+            startAppLoadingScreen.SetActive(false);
+        }
+        else
+        {
+            startAppLoadingScreen.SetActive(false);
+            mainMenu.SetActive(true);
+        }
     }
 }
