@@ -1,7 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
+[Serializable]
+public class IconSpritesPerZone
+{
+    public Zone zone;
+    public Sprite levelDoneSprite, levelFirstTimeIconSprite;
+}
 public class ZoneManagerHelpData : MonoBehaviour
 {
     public static ZoneManagerHelpData Instance;
@@ -15,6 +22,8 @@ public class ZoneManagerHelpData : MonoBehaviour
     public Zone currentZoneCheck, nextZoneCheck;
 
     public animalsPerZone[] possibleAnimalsPerZone;
+
+    public IconSpritesPerZone[] iconsPerZone;
 
     private void Start()
     {

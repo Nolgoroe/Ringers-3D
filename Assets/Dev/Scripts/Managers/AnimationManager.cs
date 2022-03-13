@@ -473,6 +473,8 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
 
         GameManager.Instance.WinAfterAnimation();
+
+        TutorialSequence.Instacne.CheckDoPotionTutorial();
     }
     private void CheckShowLootTutorial()
     {

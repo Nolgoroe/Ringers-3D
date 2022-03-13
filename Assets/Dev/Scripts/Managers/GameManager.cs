@@ -139,6 +139,7 @@ public class GameManager : MonoBehaviour
         if (isTutorial)
         {
             LevelEnded = false;
+            levelStarted = true;
 
             if (!isDisableTutorials)
             {
@@ -251,6 +252,7 @@ public class GameManager : MonoBehaviour
         else
         {
             LevelEnded = false;
+            levelStarted = true;
             TutorialSequence.Instacne.DisableTutorialSequence(); //// Make sure tutorial is disabled
             powerupManager.ClearTutorialPowerups(); /// Make sure there are no leftover powerups
 
@@ -338,6 +340,8 @@ public class GameManager : MonoBehaviour
         BossBattleManager.instance.ResetData();
 
         LevelEnded = false;
+        levelStarted = true;
+
         TutorialSequence.Instacne.DisableTutorialSequence(); //// Make sure tutorial is disabled
         powerupManager.ClearTutorialPowerups(); /// Make sure there are no leftover powerups
 

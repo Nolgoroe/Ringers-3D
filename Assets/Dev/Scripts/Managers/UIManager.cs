@@ -1032,12 +1032,15 @@ public class UIManager : MonoBehaviour
         {
             ButtonsPerZone BPZ = buttonsPerZone.Where(p => p.theZone == ZoneManagerHelpData.Instance.listOfAllZones[ID]).Single();
 
+            IconSpritesPerZone ISPZ = ZoneManagerHelpData.Instance.iconsPerZone.Where(p => p.zone == BPZ.theZone).Single();
+
             if (BPZ.theZone.hasUnlockedGrind)
             {
                 //BPZ.theZone.zoneGrindLevel.GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelFirstTimeColor); // 3D map
 
                 //BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconSprite);
-                BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIconSprite;
+                //BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIconSprite;
+                BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = ISPZ.levelFirstTimeIconSprite;
                 //BPZ.theZone.zoneGrindLevel.GetComponent<Button>().interactable = true;
             }
 
@@ -1049,7 +1052,8 @@ public class UIManager : MonoBehaviour
                 }
                 else
                 {
-                    BPZ.zone3DButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIconSprite;
+                    //BPZ.zone3DButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIconSprite;
+                    BPZ.zone3DButtons[i].GetComponent<Image>().sprite = ISPZ.levelFirstTimeIconSprite;
                 }
             }
 
@@ -1071,7 +1075,8 @@ public class UIManager : MonoBehaviour
                     }
                     else
                     {
-                        BPZ.zone3DButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelDoneSprite;
+                        //BPZ.zone3DButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelDoneSprite;
+                        BPZ.zone3DButtons[i].GetComponent<Image>().sprite = ISPZ.levelDoneSprite;
                     }
                     //BPZ.zone3DButtons[i].GetComponent<Renderer>().material.color = BPZ.theZone.levelDoneColor;
                     //BPZ.zoneButtons[i].interactable = false; //// Disable levels that have already been completed
@@ -1091,8 +1096,8 @@ public class UIManager : MonoBehaviour
                     }
                     else
                     {
-                        BPZ.zone3DButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIconSprite;
-
+                        //BPZ.zone3DButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIconSprite;
+                        BPZ.zone3DButtons[i].GetComponent<Image>().sprite = ISPZ.levelFirstTimeIconSprite;
                     }
                     //BPZ.zone3DButtons[i].interactable = true; // isn't button anymore
                 }

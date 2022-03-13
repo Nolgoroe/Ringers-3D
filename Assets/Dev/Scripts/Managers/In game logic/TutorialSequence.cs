@@ -1117,7 +1117,7 @@ public class TutorialSequence : MonoBehaviour
     public void DisplayTutorialHandTapQuaternion(Vector3 position, Quaternion rotation, Vector3 scale)
     {
         Vector3 pos = position;
-        pos.z = -0.3f;
+        //pos.z = -0.3f;
 
         GameObject go = Instantiate(tutorialHandPrefabTap, pos, Quaternion.identity);
         currentlyActiveTutorialHand = go;
