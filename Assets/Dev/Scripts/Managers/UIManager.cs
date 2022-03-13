@@ -1618,15 +1618,19 @@ public class UIManager : MonoBehaviour
             sr.color = newColor;
         });
 
-        LeanTween.value(introImages[0].textObjects[0], 0, 1, speedFadeInIntro + offsetTimeForFirstPage).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-        {
-            TMP_Text sr = introImages[0].textObjects[0].GetComponent<TMP_Text>();
-            Color newColor = sr.color;
-            newColor.a = val;
-            sr.color = newColor;
-        });
+        //LeanTween.value(introImages[0].textObjects[0], 0, 1, speedFadeInIntro + offsetTimeForFirstPage).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        //{
+        //    TMP_Text sr = introImages[0].textObjects[0].GetComponent<TMP_Text>();
+        //    Color newColor = sr.color;
+        //    newColor.a = val;
+        //    sr.color = newColor;
+        //});
 
         yield return new WaitForSeconds(speedFadeInIntro + offsetTimeForFirstPage);
+
+        TextMeshProEffect effect = introImages[0].textObjects[0].GetComponent<TextMeshProEffect>();
+        effect.gameObject.SetActive(true);
+        effect.Play();
 
         LeanTween.value(IntroSkipButton, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
         {
@@ -1745,13 +1749,17 @@ public class UIManager : MonoBehaviour
                 });
             }
 
-            LeanTween.value(introImages[introImageIndex].textObjects[introImageTextIndex], 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-            {
-                TMP_Text sr = introImages[introImageIndex].textObjects[introImageTextIndex].GetComponent<TMP_Text>();
-                Color newColor = sr.color;
-                newColor.a = val;
-                sr.color = newColor;
-            });
+            TextMeshProEffect effect = introImages[introImageIndex].textObjects[introImageTextIndex].GetComponent<TextMeshProEffect>();
+            effect.gameObject.SetActive(true);
+            effect.Play();
+
+            //LeanTween.value(introImages[introImageIndex].textObjects[introImageTextIndex], 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+            //{
+            //    TMP_Text sr = introImages[introImageIndex].textObjects[introImageTextIndex].GetComponent<TMP_Text>();
+            //    Color newColor = sr.color;
+            //    newColor.a = val;
+            //    sr.color = newColor;
+            //});
         }
 
 
@@ -1809,6 +1817,10 @@ public class UIManager : MonoBehaviour
                     newColor.a = val;
                     sr.color = newColor;
                 });
+
+                TextMeshProEffect effect = introImages[introImageIndex].textObjects[introImageTextIndex].GetComponent<TextMeshProEffect>();
+                effect.gameObject.SetActive(true);
+                effect.Play();
 
                 //LeanTween.value(introImages[introImageIndex].textObjects[introImageTextIndex], 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
                 //{
