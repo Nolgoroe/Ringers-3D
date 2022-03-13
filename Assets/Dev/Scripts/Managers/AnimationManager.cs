@@ -371,16 +371,20 @@ public class AnimationManager : MonoBehaviour
     {
         if (hasSkippedToAnimalAnim)
         {
-            StopCoroutine(endAnimToWinScreen);
+            if (endAnimToWinScreen != null)
+            {
+                StopCoroutine(endAnimToWinScreen);
+            }
 
-            endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation(true));
+            //endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation(true));
+            AfterAnimalAnimation();
             return;
         }
         else
         {
             hasSkippedToAnimalAnim = true;
             UIManager.Instance.skipAnimationButton.gameObject.SetActive(true);
-            endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation(false));
+            //endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation(false));
         }
 
         SoundManager.Instance.audioSource.Stop();
@@ -446,12 +450,12 @@ public class AnimationManager : MonoBehaviour
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
     }
 
-    public IEnumerator AfterAnimalAnimation(bool isSkip)
+    public void AfterAnimalAnimation()
     {
-        if (!isSkip)
-        {
-            yield return new WaitForSeconds(4);
-        }
+        //if (!isSkip)
+        //{
+        //    yield return new WaitForSeconds(4);
+        //}
 
         UnDissolveTiles(true);
         ConnectionManager.Instance.TurnOffAllConnectedVFX();

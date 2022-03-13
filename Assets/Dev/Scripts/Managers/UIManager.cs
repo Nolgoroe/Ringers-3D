@@ -115,6 +115,7 @@ public class UIManager : MonoBehaviour
 
     public TMP_Text /*gameplayGoldText,*/ gameplayRubyText/*, gameplayDewDropsText*/;
     public TMP_Text animalNameText;
+    public TMP_Text nameOfPlayer;
 
     public TMP_Text currentLevelWorldName;
     public TMP_Text currentLevelNumber;
