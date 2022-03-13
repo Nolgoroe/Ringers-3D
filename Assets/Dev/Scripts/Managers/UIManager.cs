@@ -160,7 +160,7 @@ public class UIManager : MonoBehaviour
 
 
 
-    public Sprite tutorialLevelIconNotDone, tutorialLevelIconDone;
+    public Sprite tutorialLevelIconNotDone, tutorialLevelIconDone, nextLevelTutorialSprite;
     PanZoom PZ;
 
     public int introImageIndex = 0;
@@ -476,12 +476,12 @@ public class UIManager : MonoBehaviour
             //Camera.main.transform.position = tempForClamp;
             Camera.main.transform.position = new Vector3(0,-1.6f, -3f);
 
-            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, tempForClamp.y, TutorialSequence.Instacne.maskImage.transform.position.z);
+            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, Camera.main.transform.position.y, TutorialSequence.Instacne.maskImage.transform.position.z);
         }
         else
         {
             Camera.main.transform.position = hubCameraPos;
-            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, hubCameraPos.y, TutorialSequence.Instacne.maskImage.transform.position.z);
+            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, Camera.main.transform.position.y, TutorialSequence.Instacne.maskImage.transform.position.z);
         }
 
 
@@ -1040,7 +1040,7 @@ public class UIManager : MonoBehaviour
 
                 //BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconSprite);
                 //BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIconSprite;
-                BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = ISPZ.levelFirstTimeIconSprite;
+                BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = ISPZ.grindLevelSprite;
                 //BPZ.theZone.zoneGrindLevel.GetComponent<Button>().interactable = true;
             }
 
@@ -1092,12 +1092,12 @@ public class UIManager : MonoBehaviour
 
                     if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isTutorialLevel)
                     {
-                        BPZ.zone3DButtons[i].GetComponent<Image>().sprite = tutorialLevelIconNotDone;
+                        BPZ.zone3DButtons[i].GetComponent<Image>().sprite = nextLevelTutorialSprite;
                     }
                     else
                     {
                         //BPZ.zone3DButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIconSprite;
-                        BPZ.zone3DButtons[i].GetComponent<Image>().sprite = ISPZ.levelFirstTimeIconSprite;
+                        BPZ.zone3DButtons[i].GetComponent<Image>().sprite = ISPZ.nextLevelSprite;
                     }
                     //BPZ.zone3DButtons[i].interactable = true; // isn't button anymore
                 }

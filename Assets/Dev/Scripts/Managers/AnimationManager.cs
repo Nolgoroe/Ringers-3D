@@ -441,7 +441,7 @@ public class AnimationManager : MonoBehaviour
         AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
 
 
-        TutorialSequence.Instacne.CheckDoPotionTutorial();
+        //TutorialSequence.Instacne.CheckDoPotionTutorial();
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
     }

@@ -566,6 +566,14 @@ public class GameManager : MonoBehaviour
                 TutorialSequence.Instacne.CheatTutorialClearSpecific();
             }
 
+            if (ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel)
+            {
+                if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.grindLevelIndex)
+                {
+                    ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind = true;
+                }
+            }
+
             foreach (GameObject go in TutorialSequence.Instacne.activatedHeighlights)
             {
                 if (go)

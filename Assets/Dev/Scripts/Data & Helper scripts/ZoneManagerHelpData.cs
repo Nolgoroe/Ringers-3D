@@ -7,7 +7,7 @@ using System;
 public class IconSpritesPerZone
 {
     public Zone zone;
-    public Sprite levelDoneSprite, levelFirstTimeIconSprite;
+    public Sprite levelDoneSprite, levelFirstTimeIconSprite, nextLevelSprite, grindLevelSprite;
 }
 public class ZoneManagerHelpData : MonoBehaviour
 {
