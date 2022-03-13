@@ -154,7 +154,7 @@ public class Piece : MonoBehaviour
             {
                 repeatIndicator++;
             }
-            else if(!isSamePiece && !GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial )
+            else if(!isSamePiece && !GameManager.Instance.isDisableTutorials && (GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial))
             {
                 if (GameManager.Instance.copyOfArrayOfPiecesTutorial.Count > 0)
                 {

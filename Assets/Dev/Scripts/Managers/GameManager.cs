@@ -136,6 +136,28 @@ public class GameManager : MonoBehaviour
 
     public void ResetDataStartLevel(bool isTutorial)
     {
+        if(isTutorial || currentLevel.isSpecificTutorial)
+        {
+            if (copyOfArrayOfPiecesTutorial == null)
+            {
+                copyOfArrayOfPiecesTutorial = new List<pieceDataStruct>();
+            }
+            else
+            {
+                copyOfArrayOfPiecesTutorial.Clear();
+            }
+
+            copyOfArrayOfPiecesTutorial.AddRange(currentLevel.arrayOfPieces);
+
+            copyOfSpecificSliceSpotsTutorial = new List<int>();
+            copyOfSpecificSliceColorsTutorial = new List<PieceColor>();
+            copyOfSpecificSliceSymbolsTutorial = new List<PieceSymbol>();
+
+            copyOfSpecificSliceSpotsTutorial.AddRange(currentLevel.specificSliceSpots);
+            copyOfSpecificSliceColorsTutorial.AddRange(currentLevel.specificSlicesColors);
+            copyOfSpecificSliceSymbolsTutorial.AddRange(currentLevel.specificSlicesShapes);
+        }
+
         if (isTutorial)
         {
             LevelEnded = false;
@@ -149,25 +171,6 @@ public class GameManager : MonoBehaviour
                 {
                     numAnimalsOnBoard[i].amount = 0;
                 }
-
-                if (copyOfArrayOfPiecesTutorial == null)
-                {
-                    copyOfArrayOfPiecesTutorial = new List<pieceDataStruct>();
-                }
-                else
-                {
-                    copyOfArrayOfPiecesTutorial.Clear();
-                }
-
-                copyOfArrayOfPiecesTutorial.AddRange(currentLevel.arrayOfPieces);
-
-                copyOfSpecificSliceSpotsTutorial = new List<int>();
-                copyOfSpecificSliceColorsTutorial = new List<PieceColor>();
-                copyOfSpecificSliceSymbolsTutorial = new List<PieceSymbol>();
-
-                copyOfSpecificSliceSpotsTutorial.AddRange(currentLevel.specificSliceSpots);
-                copyOfSpecificSliceColorsTutorial.AddRange(currentLevel.specificSlicesColors);
-                copyOfSpecificSliceSymbolsTutorial.AddRange(currentLevel.specificSlicesShapes);
 
                 UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
                 UIManager.Instance.TurnOnGameplayUI();
