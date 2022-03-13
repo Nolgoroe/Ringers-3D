@@ -44,7 +44,7 @@ public class Piece : MonoBehaviour
 
         while (isSamePiece)
         {
-            if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
+            if (!GameManager.Instance.isDisableTutorials && (GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial))
             {
                 if (repeatIndicator > 0 || GameManager.Instance.copyOfArrayOfPiecesTutorial.Count <= 0)
                 {

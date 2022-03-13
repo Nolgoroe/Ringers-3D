@@ -449,7 +449,7 @@ public class GameManager : MonoBehaviour
     {
         ZoneManagerHelpData ZMHD = ZoneManagerHelpData.Instance;
 
-        if (currentLevel.isTutorial && currentLevel.specificAnimalForLevel)
+        if (currentLevel.specificAnimalForLevel)
         {
             GameObject go = currentLevel.specificAnimalForLevel;
 
