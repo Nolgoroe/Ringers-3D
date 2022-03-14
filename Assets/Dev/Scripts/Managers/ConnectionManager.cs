@@ -610,7 +610,10 @@ public class ConnectionManager : MonoBehaviour
 
         if (!isGoodConnectLeft && !isGoodConnectRight)
         {
-            CursorController.Instance.SnapFollower(cells[cellIndex].transform, subPiecesOnBoard[currentLeft].transform.parent);
+            if (subPiecesOnBoard[currentLeft])
+            {
+                CursorController.Instance.SnapFollower(cells[cellIndex].transform, subPiecesOnBoard[currentLeft].transform.parent);
+            }
 
             yield break;
         }
@@ -951,6 +954,7 @@ public class ConnectionManager : MonoBehaviour
         SoundManager.Instance.PlaySound(Sounds.TileLock);
 
         relevent.lockSpriteHeighlightAnim.gameObject.SetActive(true);
+        GameManager.Instance.gameBoard.GetComponent<SliceManager>().activeLocksLockAnims.Add(relevent.lockSpriteHeighlightAnim.gameObject);
 
         foreach (Cell c in relevent.connectedCells)
         {

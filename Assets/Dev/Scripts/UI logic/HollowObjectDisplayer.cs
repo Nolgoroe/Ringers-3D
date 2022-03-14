@@ -176,6 +176,10 @@ public class HollowObjectDisplayer : MonoBehaviour
                 HollowCraftAndOwnedManager.Instance.FillHollowScreenCraft(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
             }
 
+            UIManager.Instance.craftedHollowItemScreen.SetActive(true);
+
+            AnimationManager.instance.AnimateCraftedHollowcreen(objectData.objectname, objectData.spritePath);
+
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
 
             return;
@@ -204,6 +208,10 @@ public class HollowObjectDisplayer : MonoBehaviour
             {
                 HollowCraftAndOwnedManager.Instance.FillHollowScreenCraft(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
             }
+
+            UIManager.Instance.craftedHollowItemScreen.SetActive(true);
+
+            AnimationManager.instance.AnimateCraftedHollowcreen(objectData.objectname, objectData.spritePath);
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
         }

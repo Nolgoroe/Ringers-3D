@@ -28,7 +28,8 @@ public class HollowObjectScreenDisplayer : MonoBehaviour
     private void Start()
     {
         craftButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(Sounds.ButtonPressUI));
-        craftButton.onClick.AddListener(() => CraftHollowObject(false));
+        craftButton.onClick.AddListener(() => UIManager.Instance.OpenForgeImmidietly(objectData.objectname));
+        //craftButton.onClick.AddListener(() => CraftHollowObject(false));
     }
 
     public void SpawnMaterialsNeeded(string matList)
@@ -167,7 +168,7 @@ public class HollowObjectScreenDisplayer : MonoBehaviour
             //HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
             //HollowCraftAndOwnedManager.Instance.RefreshOwnedScreen();
 
-            PlaceCraftedItemImmidietly();
+            //PlaceCraftedItemImmidietly();
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.HollowManager});
 
@@ -190,7 +191,7 @@ public class HollowObjectScreenDisplayer : MonoBehaviour
 
             //PlayerManager.Instance.ownedHollowObjects.Add(objectData);
 
-            PlaceCraftedItemImmidietly();
+            //PlaceCraftedItemImmidietly();
 
             //HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
             //HollowCraftAndOwnedManager.Instance.RefreshOwnedScreen();

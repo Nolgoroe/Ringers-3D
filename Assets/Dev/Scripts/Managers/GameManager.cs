@@ -158,6 +158,10 @@ public class GameManager : MonoBehaviour
             copyOfSpecificSliceSymbolsTutorial.AddRange(currentLevel.specificSlicesShapes);
         }
 
+
+        UIManager.Instance.PrepareObjectForEndBoardAnim();
+        LootManager.Instance.finishedGivingLoot = false;
+
         if (isTutorial)
         {
             LevelEnded = false;
@@ -176,7 +180,7 @@ public class GameManager : MonoBehaviour
                 UIManager.Instance.TurnOnGameplayUI();
                 UIManager.Instance.dealButton.interactable = true;
                 UIManager.Instance.ActivateGmaeplayCanvas();
-
+                
                 //Camera.main.orthographicSize = 12;
                 //Camera.main.orthographic = false;
                 //secondCam.orthographic = false;
@@ -664,7 +668,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("IN HERE");
         if (currentLevel.isGrindLevel)
         {
-            LootManager.Instance.GiveLoot();
+            StartCoroutine(LootManager.Instance.GiveLoot());
 
             UIManager.Instance.WinLevel();
 
@@ -677,7 +681,7 @@ public class GameManager : MonoBehaviour
             if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
             {
                 ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone++;
-                LootManager.Instance.GiveLoot();
+                StartCoroutine(LootManager.Instance.GiveLoot());
 
             }
 

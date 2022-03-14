@@ -216,6 +216,23 @@ public class CursorController : MonoBehaviour
             }
         } // detect deactivate brewed potion vfx
 
+        if (!GameManager.Instance.levelStarted && UIManager.isUsingUI && UIManager.Instance.craftedHollowItemScreen.activeInHierarchy)
+        {
+            if (Input.touchCount > 0)
+            {
+                touch = Input.touches[0];
+
+                if (touch.phase == TouchPhase.Began)
+                {
+                    SoundManager.Instance.audioSource.Stop();
+                    UIManager.Instance.craftedHollowItemScreen.SetActive(false);
+                    Debug.Log("THIS IS HOW MANY TIMES");
+
+                    //UIManager.isUsingUI = false;
+                }
+            }
+        } // detect deactivate brewed potion vfx
+
 
 
 

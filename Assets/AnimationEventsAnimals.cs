@@ -6,6 +6,6 @@ public class AnimationEventsAnimals : MonoBehaviour
 {
     public void CallAfterAnimalAnimation()
     {
-        AnimationManager.instance.AfterAnimalAnimation();
+       AnimationManager.instance.endAnimToWinScreen = StartCoroutine(AnimationManager.instance.AfterAnimalAnimation());
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Linq;
 using TMPro;
 using System;
+using System.Text.RegularExpressions;
 
 public class AnimationManager : MonoBehaviour
 {
@@ -47,13 +48,37 @@ public class AnimationManager : MonoBehaviour
     public bool noWaitAnimal;
 
     public bool hasSkippedToAnimalAnim;
+    public bool hasSkippedToBoardAnim;
 
     //public ParticleSystem midPieceParticle;
     public List<SubPiece> tempSubPieceArray;
 
     public timeWaitPull minMaxWaitPullInPieces;
 
-    private GameObject boardScreenshot;
+    //private GameObject boardScreenshot;
+
+
+    [Header("After Animal Animation")]
+    //public float waitTimeBoardFadeIn;
+    public float fadeInTimeBoard;
+    public float waitTimeInPieces;
+    public float offsetWaitTimeInPieces;
+    public float delayBetweenPiecesAppear;
+    public float fadeInTimeTextSuccess;
+    public float fadeInTimeTextAnimalName;
+    public float fadeInTimeButtons;
+    public float timeToScaleBoard;
+    public float waitTimeButtonsAppear;
+    public float DelayBetweenLootAppear;
+    public float timeToScaleLoot;
+    public float timeToScaleUIFlowers;
+    public float timeToScaleBoardAppearGrow;
+    public float timeToScaleBoardAppearBackOriginal;
+
+    public Vector3 boardScaleTo;
+    public Vector3 boardScaleToAppear;
+    public Vector3 lootScaleTo;
+    public Vector3 flowerUIScaleTo;
 
     [Header("Unlcok Zone Settings")]
     public float cameraMoveTime;
@@ -75,6 +100,17 @@ public class AnimationManager : MonoBehaviour
     public TMP_Text brewHeaderText;
     public TMP_Text brewNameText;
     public TMP_Text brewtapToContinueText;
+
+    [Header("Crafted Hollow Item Settings")]
+    public float craftedCameraMoveTime;
+    public float craftedfadingTime;
+
+    public Image craftedbgFadeImage;
+    public SpriteRenderer hollowIcon;
+    public ParticleSystem craftedparticleFade;
+    public TMP_Text craftedHeaderText;
+    public TMP_Text craftedNameText;
+    public TMP_Text craftedtapToContinueText;
 
     [Header("Enter Corrupt Zone")]
     [Space(30)]
@@ -140,7 +176,7 @@ public class AnimationManager : MonoBehaviour
         MoveTopButtonAnim();
 
 
-        //yield return new WaitForSeconds(waitTimeMoveTopBottomTime);
+        yield return new WaitForSeconds(speedOutTopBottom + 0.1f);
 
 
         //foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
@@ -156,14 +192,14 @@ public class AnimationManager : MonoBehaviour
         ConnectionManager.Instance.TurnOffAllConnectedVFX();
 
         yield return new WaitForSeconds(speedOutTopBottom + 0.1f);
-        boardScreenshot = Instantiate(GameManager.Instance.gameBoard, new Vector3(100, 0, 0), Quaternion.identity);
-        boardScreenshot.transform.SetParent(GameManager.Instance.destroyOutOfLevel);
-        yield return new WaitForSeconds(0.1f);
+        //boardScreenshot = Instantiate(GameManager.Instance.gameBoard, new Vector3(100, 0, 0), Quaternion.identity);
+        //boardScreenshot.transform.SetParent(GameManager.Instance.destroyOutOfLevel);
+        //yield return new WaitForSeconds(0.1f);
 
         GameManager.Instance.sliceManager.endLevelAnimVFX.SetActive(true);
 
 
-        
+
         foreach (GameObject GO in turnOff)
         {
             GO.SetActive(false);
@@ -228,15 +264,40 @@ public class AnimationManager : MonoBehaviour
 
 
         //Destroy(GameManager.Instance.gameBoard.gameObject);
-        GameManager.Instance.gameBoard.gameObject.transform.position = new Vector3(100, 0, 0);
-        Destroy(GameManager.Instance.gameClip.gameObject);
+        //GameManager.Instance.gameBoard.gameObject.transform.position = new Vector3(100, 0, 0);
 
-        foreach (GameObject GO in turnOff)
+        SpriteRenderer boardSR = GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>();
+        boardSR.color = new Color(boardSR.color.r, boardSR.color.g, boardSR.color.b, 0);
+
+        foreach (Slice slice in GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices)
         {
-            GO.SetActive(true);
+            SpriteRenderer sliceSR = slice.child.GetComponent<SpriteRenderer>();
+            sliceSR.color = new Color(sliceSR.color.r, sliceSR.color.g, sliceSR.color.b, 0);
         }
 
-        turnOff = null;
+        foreach (GameObject go in GameManager.Instance.gameBoard.GetComponent<SliceManager>().activeLocksLockAnims)
+        {
+            SpriteRenderer goSR = go.GetComponent<SpriteRenderer>();
+            goSR.color = new Color(goSR.color.r, goSR.color.g, goSR.color.b, 0);
+        }
+
+        UnDissolveTiles(false);
+
+        foreach (Cell cell in ConnectionManager.Instance.cells)
+        {
+            cell.pieceHeld.gameObject.SetActive(false);
+        }
+
+        //yield return new WaitForSeconds(waitTimeBoardFadeIn);
+
+        Destroy(GameManager.Instance.gameClip.gameObject);
+
+        //foreach (GameObject GO in turnOff)
+        //{
+        //    GO.SetActive(true);
+        //}
+
+        //turnOff = null;
 
         //GameManager.Instance.WinAfterAnimation();
         //MoveBoardScreenshotToPosition(boardScreenshot);
@@ -262,28 +323,38 @@ public class AnimationManager : MonoBehaviour
             yield return new WaitForSeconds(animalWaitTime);
         }
 
-        AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
+        if (!GameManager.Instance.currentLevel.isGrindLevel)
+        {
+            AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
+            hasSkippedToAnimalAnim = true;
+        }
 
 
         //yield return new WaitForSeconds(waitTimeFadeOut);
+
         yield return new WaitUntil((() => fadeImageEndLevel.color.a <= 0.1f));
         fadeImageEndLevel.gameObject.SetActive(false);
 
         UIManager.Instance.restartButton.interactable = true;
         UIManager.Instance.dealButton.interactable = true;
 
+        if (GameManager.Instance.currentLevel.isGrindLevel)
+        {
+            StartCoroutine(AfterAnimalAnimation());
+        }
+
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
 
-        yield return new WaitForSeconds(4f);
+        //yield return new WaitForSeconds(4f);
 
-        UnDissolveTiles(false);
+        //UnDissolveTiles(false);
 
-        yield return new WaitForSeconds(0.1f); //unDissolve time
-        MoveBoardScreenshotToPosition(boardScreenshot);
-        UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
-        GameManager.Instance.WinAfterAnimation();
-        CheckShowLootTutorial();
-        TutorialSequence.Instacne.CheckDoPotionTutorial();
+       // yield return new WaitForSeconds(0.1f); //unDissolve time
+        //MoveBoardScreenshotToPosition(boardScreenshot);
+        //UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
+        //GameManager.Instance.WinAfterAnimation();
+        //CheckShowLootTutorial();
+        //TutorialSequence.Instacne.CheckDoPotionTutorial();
     }
 
     private void MoveTopButtonAnim()
@@ -362,7 +433,10 @@ public class AnimationManager : MonoBehaviour
         {
             foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
             {
-                SP.UnDissolveSubPiece();
+                if (SP)
+                {
+                    SP.UnDissolveSubPiece();
+                }
             }
         }
     }
@@ -377,7 +451,12 @@ public class AnimationManager : MonoBehaviour
             }
 
             //endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation(true));
-            AfterAnimalAnimation();
+            if (AnimalsManager.Instance.currentLevelLiveAnimal)
+            {
+                Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
+            }
+
+            endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation());
             return;
         }
         else
@@ -395,7 +474,7 @@ public class AnimationManager : MonoBehaviour
             LeanTween.cancelAll();
         }
 
-        GameManager.Instance.gameBoard.gameObject.transform.position = new Vector3(100, 0, 0);
+        //GameManager.Instance.gameBoard.gameObject.transform.position = new Vector3(100, 0, 0);
 
         //if (!isCheat)
         //{
@@ -412,19 +491,45 @@ public class AnimationManager : MonoBehaviour
         //    MoveBoardScreenshotToPosition(boardScreenshot);
         //}
 
-        tempSubPieceArray.Clear();
+        //tempSubPieceArray.Clear();
 
-        if(turnOff == null)
+        SpriteRenderer boardSR = GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>();
+        boardSR.color = new Color(boardSR.color.r, boardSR.color.g, boardSR.color.b, 0);
+
+        foreach (Slice slice in GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices)
+        {
+            SpriteRenderer sliceSR = slice.child.GetComponent<SpriteRenderer>();
+            sliceSR.color = new Color(sliceSR.color.r, sliceSR.color.g, sliceSR.color.b, 0);
+        }
+
+        foreach (GameObject go in GameManager.Instance.gameBoard.GetComponent<SliceManager>().activeLocksLockAnims)
+        {
+            SpriteRenderer goSR = go.GetComponent<SpriteRenderer>();
+            goSR.color = new Color(goSR.color.r, goSR.color.g, goSR.color.b, 0);
+        }
+
+        UnDissolveTiles(false);
+
+        foreach (Cell cell in ConnectionManager.Instance.cells)
+        {
+            if (cell.pieceHeld)
+            {
+                cell.pieceHeld.gameObject.SetActive(false);
+            }
+        }
+
+        ConnectionManager.Instance.TurnOffAllConnectedVFX();
+        if (turnOff == null)
         {
             turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
         }
 
-        foreach (GameObject GO in turnOff)
-        {
-            GO.SetActive(true);
-        }
+        //foreach (GameObject GO in turnOff)
+        //{
+        //    GO.SetActive(true);
+        //}
 
-        turnOff = null;
+        //turnOff = null;
 
         GameManager.Instance.selectedLevelBG.transform.Find("color mask").gameObject.SetActive(false);
 
@@ -437,48 +542,329 @@ public class AnimationManager : MonoBehaviour
             Destroy(GameManager.Instance.gameClip.gameObject);
         }
 
-        UIManager.Instance.restartButton.interactable = true;
+        //UIManager.Instance.restartButton.interactable = false;
 
         UIManager.Instance.TurnOffGameplayUI();
 
         UIManager.Instance.InGameUiScreens.SetActive(true);
-        AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
 
+        if (!GameManager.Instance.currentLevel.isGrindLevel)
+        {
+            AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
+        }
+        else
+        {
+            StartCoroutine(AfterAnimalAnimation());
+        }
 
         //TutorialSequence.Instacne.CheckDoPotionTutorial();
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
     }
 
-    public void AfterAnimalAnimation()
+    public IEnumerator AfterAnimalAnimation()
     {
+        if (hasSkippedToBoardAnim)
+        {
+            if (endAnimToWinScreen != null)
+            {
+                StopCoroutine(endAnimToWinScreen);
+            }
+
+            SkipBoardAnim();
+
+            endAnimToWinScreen = null;
+            hasSkippedToBoardAnim = false;
+            yield break;
+        }
+        else
+        {
+            hasSkippedToBoardAnim = true;
+        }
+
+        if(turnOff != null)
+        {
+            foreach (GameObject GO in turnOff)
+            {
+                if (GO)
+                {
+                    GO.SetActive(true);
+                }
+            }
+        }
+
+        GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>().enabled = true;
+
+        turnOff = null;
+
+        SpriteRenderer boardSR = GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>();
+        boardSR.color = new Color(boardSR.color.r, boardSR.color.g, boardSR.color.b, 1);
+
+        foreach (Slice slice in GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices)
+        {
+            SpriteRenderer sliceSR = slice.child.GetComponent<SpriteRenderer>();
+            sliceSR.color = new Color(sliceSR.color.r, sliceSR.color.g, sliceSR.color.b, 1);
+        }
+
+        foreach (GameObject go in GameManager.Instance.gameBoard.GetComponent<SliceManager>().activeLocksLockAnims)
+        {
+            SpriteRenderer goSR = go.GetComponent<SpriteRenderer>();
+            goSR.color = new Color(goSR.color.r, goSR.color.g, goSR.color.b, 1);
+        }
+
+        Vector3 originalScale = GameManager.Instance.gameBoard.transform.localScale;
+
+        LeanTween.scale(GameManager.Instance.gameBoard, boardScaleToAppear, timeToScaleBoardAppearGrow);
+
+        yield return new WaitForSeconds(timeToScaleBoardAppearGrow);
+
+        LeanTween.scale(GameManager.Instance.gameBoard, originalScale, timeToScaleBoardAppearBackOriginal);
+
+        //LeanTween.value(GameManager.Instance.gameBoard.gameObject, 0f, 1, fadeInTimeBoard).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        //{
+        //    SpriteRenderer boardSR = GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>();
+        //    Color newColor = boardSR.color;
+        //    newColor.a = val;
+        //    boardSR.color = newColor;
+        //});
+
+        //foreach (Slice slice in GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices)
+        //{
+        //    LeanTween.value(slice.child.gameObject, 0f, 1, fadeInTimeBoard).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        //    {
+        //        SpriteRenderer sliceSR = slice.child.GetComponent<SpriteRenderer>();
+        //        Color newColor = sliceSR.color;
+        //        newColor.a = val;
+        //        sliceSR.color = newColor;
+        //    });
+        //}
+
+        //foreach (GameObject go in GameManager.Instance.gameBoard.GetComponent<SliceManager>().activeLocksLockAnims)
+        //{
+        //    LeanTween.value(go, 0f, 1, fadeInTimeBoard).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        //    {
+        //        SpriteRenderer goSR = go.GetComponent<SpriteRenderer>();
+        //        Color newColor = goSR.color;
+        //        newColor.a = val;
+        //        goSR.color = newColor;
+        //    });
+        //}
+
+        yield return new WaitForSeconds(waitTimeInPieces + 0.5f);
+
+
+        foreach (Cell cell in ConnectionManager.Instance.cells)
+        {
+            if (cell.pieceHeld)
+            {
+                cell.pieceHeld.gameObject.SetActive(true);
+                yield return new WaitForSeconds(delayBetweenPiecesAppear);
+            }
+        }
+
+        UIManager.Instance.youWinScreen.SetActive(true);
+
+        LeanTween.value(UIManager.Instance.sucessText.gameObject, 0f, 1, fadeInTimeTextSuccess).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        {
+            TMP_Text succesText = UIManager.Instance.sucessText;
+            Color newColor = succesText.color;
+            newColor.a = val;
+            succesText.color = newColor;
+        });
+
+        LeanTween.scale(UIManager.Instance.flowerUIMask, flowerUIScaleTo, timeToScaleUIFlowers);
+
+        yield return new WaitForSeconds(fadeInTimeTextSuccess + 0.1f);
+
+        string animalName = Regex.Replace(AnimalsManager.Instance.currentLevelAnimal.ToString(), "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
+
+        if (!GameManager.Instance.currentLevel.isGrindLevel)
+        {
+            UIManager.Instance.animalNameText.text = animalName + " Released!";
+        }
+        else
+        {
+            UIManager.Instance.animalNameText.text = "Arena completed!";
+        }
+
+        LeanTween.value(UIManager.Instance.animalNameText.gameObject, 0f, 1, fadeInTimeTextAnimalName).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        {
+            TMP_Text succesText = UIManager.Instance.animalNameText;
+            Color newColor = succesText.color;
+            newColor.a = val;
+            succesText.color = newColor;
+        });
+
+
+        LeanTween.scale(GameManager.Instance.gameBoard.gameObject, boardScaleTo, timeToScaleBoard);
+
+        yield return new WaitForSeconds(timeToScaleBoard + 0.1f);
+        GameManager.Instance.WinAfterAnimation();
+
+        if(LootManager.Instance.rubiesToRecieveInLevel > 0 || LootManager.Instance.craftingMatsLootForLevel.Count > 0)
+        {
+            yield return new WaitUntil(() => LootManager.Instance.finishedGivingLoot == true);
+        }
+
+        yield return new WaitForSeconds(waitTimeButtonsAppear);
+
+        if (!GameManager.Instance.currentLevel.isGrindLevel)
+        {
+            LeanTween.value(UIManager.Instance.backToHubButton.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+            {
+                Image image = UIManager.Instance.backToHubButton.GetComponent<Image>();
+                Color newColor = image.color;
+                newColor.a = val;
+                image.color = newColor;
+            });
+        }
+        else
+        {
+            LeanTween.value(UIManager.Instance.backToHubButton.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+            {
+                Image image = UIManager.Instance.backToHubButton.GetComponent<Image>();
+                Color newColor = image.color;
+                newColor.a = val;
+                image.color = newColor;
+            });
+
+            LeanTween.value(UIManager.Instance.restartGrindLevel.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+            {
+                CanvasGroup image = UIManager.Instance.restartGrindLevel.GetComponent<CanvasGroup>();
+                float num = image.alpha;
+                num = val;
+                image.alpha = num;
+            });
+        }
+
+        LeanTween.value(UIManager.Instance.nextLevelFromWinScreen.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        {
+            Image image = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>(); ;
+            Color newColor = image.color;
+            newColor.a = val;
+            image.color = newColor;
+        });
+
         //if (!isSkip)
         //{
         //    yield return new WaitForSeconds(4);
         //}
 
-        UnDissolveTiles(true);
+        //UnDissolveTiles(true);
+
+        yield return new WaitForSeconds(fadeInTimeButtons + 0.1f);
         ConnectionManager.Instance.TurnOffAllConnectedVFX();
 
-        if (boardScreenshot == null)
-        {
-            boardScreenshot = Instantiate(GameManager.Instance.gameBoard, new Vector3(100, 0, 0), Quaternion.identity);
-            boardScreenshot.transform.SetParent(GameManager.Instance.destroyOutOfLevel);
-        }
 
-        CheckShowLootTutorial();
 
-        MoveBoardScreenshotToPosition(boardScreenshot);
 
         hasSkippedToAnimalAnim = false;
+        hasSkippedToBoardAnim = false;
 
-        Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
+        if (AnimalsManager.Instance.currentLevelLiveAnimal)
+        {
+            Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
+        }
 
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
 
-        GameManager.Instance.WinAfterAnimation();
+
+        UIManager.Instance.restartButton.interactable = true;
+        UIManager.Instance.dealButton.interactable = true;
+
+        CheckShowLootTutorial();
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
+    }
+
+    public void SkipBoardAnim()
+    {
+        //if (turnOff == null)
+        //{
+        //    turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
+        //}
+
+        GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>().enabled = true;
+
+        SpriteRenderer boardSR = GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>();
+        boardSR.color = new Color(boardSR.color.r, boardSR.color.g, boardSR.color.b, 1);
+
+        foreach (Slice slice in GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices)
+        {
+            SpriteRenderer slicedSR = slice.child.GetComponent<SpriteRenderer>();
+            slicedSR.color = new Color(slicedSR.color.r, slicedSR.color.g, slicedSR.color.b, 1);
+        }
+
+        foreach (GameObject go in GameManager.Instance.gameBoard.GetComponent<SliceManager>().activeLocksLockAnims)
+        {
+            SpriteRenderer goSR = go.GetComponent<SpriteRenderer>();
+            goSR.color = new Color(goSR.color.r, goSR.color.g, goSR.color.b, 1);
+        }
+
+
+        foreach (Cell cell in ConnectionManager.Instance.cells)
+        {
+            if (cell.pieceHeld)
+            {
+                cell.pieceHeld.gameObject.SetActive(true);
+            }
+        }
+
+
+
+        UIManager.Instance.youWinScreen.SetActive(true);
+
+        UIManager.Instance.sucessText.color = new Color(UIManager.Instance.sucessText.color.r, UIManager.Instance.sucessText.color.g, UIManager.Instance.sucessText.color.b, 1);
+
+        string animalName = Regex.Replace(AnimalsManager.Instance.currentLevelAnimal.ToString(), "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
+
+        UIManager.Instance.animalNameText.text = animalName + " Released!";
+
+        UIManager.Instance.animalNameText.color = new Color(UIManager.Instance.animalNameText.color.r, UIManager.Instance.animalNameText.color.g, UIManager.Instance.animalNameText.color.b, 1);
+
+        GameManager.Instance.gameBoard.transform.localScale = boardScaleTo;
+
+        GameManager.Instance.WinAfterAnimation();
+
+        if (!GameManager.Instance.currentLevel.isGrindLevel)
+        {
+            Image backToHubImage = UIManager.Instance.backToHubButton.GetComponent<Image>();
+
+            backToHubImage.color = new Color(backToHubImage.color.r, backToHubImage.color.g, backToHubImage.color.b, 1);
+        }
+        else
+        {
+            Image backToHubImage = UIManager.Instance.backToHubButton.GetComponent<Image>();
+
+            backToHubImage.color = new Color(backToHubImage.color.r, backToHubImage.color.g, backToHubImage.color.b, 1);
+
+            CanvasGroup restartGrind = UIManager.Instance.restartGrindLevel.GetComponent<CanvasGroup>();
+
+            restartGrind.alpha = 1;
+            //restartGrind.color = new Color(restartGrind.color.r, restartGrind.color.g, restartGrind.color.b, 1);
+        }
+
+        Image nextLevelButtonImage = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>();
+        nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 1);
+
+        ConnectionManager.Instance.TurnOffAllConnectedVFX();
+
+        hasSkippedToAnimalAnim = false;
+
+        if(AnimalsManager.Instance.currentLevelLiveAnimal)
+        {
+            Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
+        }
+
+        UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
+
+        UIManager.Instance.restartButton.interactable = true;
+        UIManager.Instance.dealButton.interactable = true;
+
+        CheckShowLootTutorial();
+
+        TutorialSequence.Instacne.CheckDoPotionTutorial();
+
     }
     private void CheckShowLootTutorial()
     {
@@ -581,6 +967,16 @@ public class AnimationManager : MonoBehaviour
         potionIcon.sprite = Resources.Load<Sprite>(PotionSpritePath);
 
         FadeInBrewedScreen();
+    }
+    public void AnimateCraftedHollowcreen(string HollowItemname, string HollowItemSpritePath)
+    {
+        SoundManager.Instance.PlaySound(Sounds.ElementCrafted);
+        UIManager.isUsingUI = true;
+
+        craftedNameText.text = HollowItemname;
+        hollowIcon.sprite = Resources.Load<Sprite>(HollowItemSpritePath);
+
+        FadeInHollowCraftedScreen();
     }
 
     internal void CheckContinuedTutorials()
@@ -712,6 +1108,74 @@ public class AnimationManager : MonoBehaviour
         LeanTween.value(potionIcon.gameObject, 0f, 1, brewfadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
         {
             SpriteRenderer sprite = potionIcon;
+            Color newColor = sprite.color;
+            newColor.a = val;
+            sprite.color = newColor;
+        });
+
+    }
+    void FadeInHollowCraftedScreen()
+    {
+        craftedbgFadeImage.color = new Color(craftedbgFadeImage.color.r, craftedbgFadeImage.color.g, craftedbgFadeImage.color.b, 0);
+        craftedHeaderText.color = new Color(craftedHeaderText.color.r, craftedHeaderText.color.g, craftedHeaderText.color.b, 0);
+        craftedNameText.color = new Color(craftedNameText.color.r, craftedNameText.color.g, craftedNameText.color.b, 0);
+        craftedtapToContinueText.color = new Color(craftedtapToContinueText.color.r, craftedtapToContinueText.color.g, craftedtapToContinueText.color.b, 0);
+        hollowIcon.color = new Color(hollowIcon.color.r, hollowIcon.color.g, hollowIcon.color.b, 0);
+
+        ParticleSystemRenderer r = brewparticleFade.GetComponent<ParticleSystemRenderer>();
+        //r.material.color = new Color(r.material.color.r, r.material.color.g, r.material.color.b, 0);
+
+        Color c = Color.white;
+        r.sharedMaterial.SetColor("_BaseColor", new Color(c.r, c.g, c.b, 0));
+
+        UIManager.Instance.craftedHollowItemScreen.SetActive(true);
+
+
+        LeanTween.value(craftedbgFadeImage.gameObject, 0f, 0.65f, brewfadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            Image image = craftedbgFadeImage;
+            Color newColor = image.color;
+            newColor.a = val;
+            image.color = newColor;
+        });
+
+        LeanTween.value(brewparticleFade.gameObject, 0f, 1f, brewfadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            //ParticleSystemRenderer r = particleFade.GetComponent<ParticleSystemRenderer>();
+
+            Color newColor = Color.white;
+            newColor.a = val;
+            //r.material.color = newColor;
+            r.sharedMaterial.SetColor("_BaseColor", newColor);
+        });
+
+        LeanTween.value(craftedHeaderText.gameObject, 0f, 1f, brewfadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            TMP_Text text = craftedHeaderText;
+            Color newColor = text.color;
+            newColor.a = val;
+            text.color = newColor;
+        });
+
+        LeanTween.value(craftedNameText.gameObject, 0f, 1, brewfadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            TMP_Text text = craftedNameText;
+            Color newColor = text.color;
+            newColor.a = val;
+            text.color = newColor;
+        });
+
+        LeanTween.value(craftedtapToContinueText.gameObject, 0f, 1, brewfadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            TMP_Text text = craftedtapToContinueText;
+            Color newColor = text.color;
+            newColor.a = val;
+            text.color = newColor;
+        });
+
+        LeanTween.value(hollowIcon.gameObject, 0f, 1, brewfadingTime).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        {
+            SpriteRenderer sprite = hollowIcon;
             Color newColor = sprite.color;
             newColor.a = val;
             sprite.color = newColor;

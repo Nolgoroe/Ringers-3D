@@ -60,6 +60,7 @@ public class Slice : MonoBehaviour
             //}
 
             lockSpriteAnim.gameObject.SetActive(true);
+            GameManager.Instance.gameBoard.GetComponent<SliceManager>().activeLocksLockAnims.Add(lockSpriteAnim.gameObject);
         }
         else
         {

@@ -151,6 +151,8 @@ public class MaterialsAndForgeManager : MonoBehaviour
 
     public void FillCorruptionDevices(List<CorruptedDevicesData> corruptedDevices)
     {
+        corruptedDevicesInForge.Clear();
+
         foreach (CorruptedDevicesData CDD in corruptedDevices)
         {
             GameObject go = Instantiate(corruptedDeviceDisplayerPrefab, ForgeContent);

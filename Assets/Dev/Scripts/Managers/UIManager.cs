@@ -75,6 +75,7 @@ public class UIManager : MonoBehaviour
     //public GameObject HudCanvasUIHEIGHLIGHTS;
     //public GameObject ItemAndForgeBagHEIGHLIGHTS;
     public GameObject brewedPotionScreen;
+    public GameObject craftedHollowItemScreen;
     public GameObject fadeIntoLevel;
     public GameObject introScreenParent;
     public GameObject TEMPBgIntro;
@@ -84,6 +85,7 @@ public class UIManager : MonoBehaviour
     public GameObject placePieceVFX;
     public GameObject dealButtonVFX;
     public GameObject startAppLoadingScreen;
+    public GameObject flowerUIMask;
 
     public Image dewDropsImage;
 
@@ -115,6 +117,7 @@ public class UIManager : MonoBehaviour
 
     public TMP_Text /*gameplayGoldText,*/ gameplayRubyText/*, gameplayDewDropsText*/;
     public TMP_Text animalNameText;
+    public TMP_Text sucessText;
     public TMP_Text nameOfPlayer;
 
     public TMP_Text currentLevelWorldName;
@@ -233,6 +236,7 @@ public class UIManager : MonoBehaviour
         //HudCanvasUIHEIGHLIGHTS.SetActive(false);
         //ItemAndForgeBagHEIGHLIGHTS.SetActive(false);
         brewedPotionScreen.SetActive(false);
+        craftedHollowItemScreen.SetActive(false);
         fadeIntoLevel.SetActive(false);
         introScreenParent.SetActive(false);
         bossBattleUIScreen.SetActive(false);
@@ -651,6 +655,12 @@ public class UIManager : MonoBehaviour
             if (activeScreen)
             {
                 activeScreen.SetActive(false);
+
+                //itemForgeCanvas.SetActive(false);
+                forge.SetActive(false);
+                Brewery.SetActive(false);
+
+                itemBag.SetActive(true);
             }
 
             activeScreen = itemForgeCanvas;
@@ -684,6 +694,12 @@ public class UIManager : MonoBehaviour
         else
         {
             itemForgeCanvas.SetActive(false);
+
+            forge.SetActive(false);
+            Brewery.SetActive(false);
+
+            itemBag.SetActive(true);
+
             isUsingUI = false;
             activeScreen = null;
         }
@@ -790,6 +806,25 @@ public class UIManager : MonoBehaviour
         potionInventoryButton.enabled = true;
         normalBookBG.SetActive(true);
         potionsBookBG.SetActive(false);
+    }
+
+    public void OpenForgeImmidietly(string objectName)
+    {
+        for (int i = 0; i < HollowCraftAndOwnedManager.Instance.hollowObjectsCreated.Count; i++)
+        {
+            if(HollowCraftAndOwnedManager.Instance.hollowObjectsCreated[i].name == objectName)
+            {
+                HollowCraftAndOwnedManager.Instance.hollowObjectsCreated[i].transform.SetAsFirstSibling();
+            }
+        }
+
+        RectTransform rt = MaterialsAndForgeManager.Instance.ForgeContent.GetComponent<RectTransform>();
+        rt.anchoredPosition = new Vector3(0,0,0);
+
+        OpenItemsAndForgeZone();
+        ToForge();
+
+
     }
     public void ToItemsBag()
     {
@@ -942,13 +977,13 @@ public class UIManager : MonoBehaviour
         isUsingUI = true;
         //bGPanelDisableTouch.SetActive(true);
         //blackLevelBG.SetActive(false);
-        youWinScreen.SetActive(true);
+        //youWinScreen.SetActive(true);
 
         //AnimalPrefabData prefabData = AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
 
-        string animalName = Regex.Replace(AnimalsManager.Instance.currentLevelAnimal.ToString(), "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
+        //string animalName = Regex.Replace(AnimalsManager.Instance.currentLevelAnimal.ToString(), "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
 
-        animalNameText.text = "You have released the " + animalName;
+        //animalNameText.text = "You have released the " + animalName;
     }
     public void DisplayLoseScreen()
     {
@@ -1925,5 +1960,23 @@ public class UIManager : MonoBehaviour
             startAppLoadingScreen.SetActive(false);
             mainMenu.SetActive(true);
         }
+    }
+
+    public void PrepareObjectForEndBoardAnim()
+    {
+        sucessText.color = new Color(sucessText.color.r, sucessText.color.g, sucessText.color.b, 0);
+        animalNameText.color = new Color(animalNameText.color.r, animalNameText.color.g, animalNameText.color.b, 0);
+
+        Image backToHubImage = backToHubButton.GetComponent<Image>();
+        backToHubImage.color = new Color(backToHubImage.color.r, backToHubImage.color.g, backToHubImage.color.b, 0);
+
+        Image nextLevelButtonImage = nextLevelFromWinScreen.GetComponent<Image>();
+        nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 0);
+
+        CanvasGroup restartGrind = restartGrindLevel.GetComponent<CanvasGroup>();
+        restartGrind.alpha = 0;
+        //restartGrind.color = new Color(restartGrind.color.r, restartGrind.color.g, restartGrind.color.b, 0);
+
+        flowerUIMask.transform.localScale = Vector3.zero;
     }
 }

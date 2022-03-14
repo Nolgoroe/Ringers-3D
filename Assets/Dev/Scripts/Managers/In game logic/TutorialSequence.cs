@@ -37,7 +37,7 @@ public class Phase
     public int phaseID;
     public bool isClipPhase, isBoardPhase, isPowerupPhase, isSingleCellPhase, isSingleSlice, isHubButtonPhase;
     public bool isOpenInventoryPhase, isPotionTabPhase, isEmptyTouchPhase, isBrewPhase, isBrewDisplayMaterials;
-    public bool isAnimalSymbolCollectionPhase, hasDelay, isAllLocked, isClearScreen;
+    public bool isAnimalSymbolCollectionPhase, hasDelay, isAllLocked, isClearScreen, isBoardGone;
     public bool dealPhase;
 
     public int[] unlockedPowerups;
@@ -688,6 +688,23 @@ public class TutorialSequence : MonoBehaviour
 
     public void ChangePhase(Sequence[] tutorialArray, int TutorialIndex, int phaseIndex)
     {
+        if (tutorialArray[TutorialIndex].phase[phaseIndex].isBoardGone)
+        {
+            GameManager.Instance.gameBoard.SetActive(false);
+            GameManager.Instance.gameClip.SetActive(false);
+            GameManager.Instance.selectedLevelBG.transform.GetChild(0).gameObject.SetActive(false);
+            UIManager.Instance.gameplayCanvasBotom.SetActive(false);
+            UIManager.Instance.gameplayCanvasTop.SetActive(false);
+        }
+        else
+        {
+            GameManager.Instance.gameBoard.SetActive(true);
+            GameManager.Instance.gameClip.SetActive(true);
+            GameManager.Instance.selectedLevelBG.transform.GetChild(0).gameObject.SetActive(true);
+            UIManager.Instance.gameplayCanvasBotom.SetActive(true);
+            UIManager.Instance.gameplayCanvasTop.SetActive(true);
+        }
+
         if (tutorialArray[TutorialIndex].phase[phaseIndex].isClipPhase)
         {
             ClipPhaseLogic(tutorialArray, TutorialIndex, phaseIndex);

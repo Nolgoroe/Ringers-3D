@@ -18,11 +18,12 @@ public enum ObjectHollowType
 
 public enum HollowItems
 {
-    Cot,
-    Fireplace,
-    Bowls,
+    GrassCot,
     WaterThrought,
     CloverPatch,
+    MediumMossCot,
+    Fireplace,
+    FoodAndWaterBowls,
 }
 
 [Serializable]
@@ -49,6 +50,7 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
     //public ObjectHollowType hollowTypeToFill;
 
     public List<zoneSlotAndType> hollowZones;
+    public List<GameObject> hollowObjectsCreated;
     //public Dictionary<ObjectHollowType, OwnedHollowObjectData> hollowTypeToGameobject;
 
     //public bool isPlaceThroughHollow; /// Either place through hollow or thorugh normal open bag
@@ -78,23 +80,35 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
                 HZS.zoneSlot.objectsInZone[i].gameObject.SetActive(false);
             }
         }
+
+        hollowObjectsCreated = new List<GameObject>();
     }
 
     public void FillCraftScreen(List<HollowCraftObjectData> HollowCraftObjects)
     {
+        hollowObjectsCreated.Clear();
+
+
         foreach (HollowCraftObjectData HCOD in HollowCraftObjects)
         {
-            GameObject go = Instantiate(HollowObjectPrefab, HollowObjectContent);
-            HollowObjectDisplayer HOD = go.GetComponent<HollowObjectDisplayer>();
+            FilledItemAndZoneIndex FIAZI = HollowManagerSaveData.Instance.filledHollowItemsToIndex.Where(p => p.hollowItem == HCOD.hollowItemEnum).SingleOrDefault();
+            HollowCraftObjectData HCODTemp = PlayerManager.Instance.ownedHollowObjects.Where(p => p.hollowItemEnum == HCOD.hollowItemEnum).SingleOrDefault();
 
-            //HOD.itemName.text = HCOD.objectname;
-            HOD.objectData = HCOD;
+            if(FIAZI == null && HCODTemp == null)
+            {
+                GameObject go = Instantiate(HollowObjectPrefab, HollowObjectContent);
+                HollowObjectDisplayer HOD = go.GetComponent<HollowObjectDisplayer>();
+                hollowObjectsCreated.Add(go);
 
-            HOD.itemImage.texture = Resources.Load(HCOD.spritePath) as Texture2D;
+                //HOD.itemName.text = HCOD.objectname;
+                HOD.objectData = HCOD;
 
-            HOD.name = HCOD.objectname;
-            //objectInHollow.Add(HOD);
-            HOD.SpawnMaterialsNeeded(HCOD.mats);
+                HOD.itemImage.texture = Resources.Load(HCOD.spritePath) as Texture2D;
+
+                HOD.name = HCOD.objectname;
+                //objectInHollow.Add(HOD);
+                HOD.SpawnMaterialsNeeded(HCOD.mats);
+            }
         }
     }
 
@@ -265,6 +279,7 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
         {
             PlayerManager.Instance.rubyCount -= currentlyToCraftSecondMethod.rubiesNeededToBuyHollow;
 
+            //currentlyToCraftSecondMethod.CraftHollowObject(true);
             currentlyToCraftSecondMethod.CraftHollowObject(true);
 
             UIManager.Instance.updateRubyAndDewDropsCount();

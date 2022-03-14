@@ -78,6 +78,7 @@ public class SliceManager : MonoBehaviour
     List<int> possibleSlotsTemp;
 
     public List<Slice> fullSlices;
+    public List<GameObject> activeLocksLockAnims;
     //GameObject go;
 
     private int fourRandomSlicePos;
@@ -96,6 +97,7 @@ public class SliceManager : MonoBehaviour
         //limiterSlicecolorToSprite = new Dictionary<PieceColor, Texture>(); // this was used for 3D limiters
         limiterSlicecolorToSprite = new Dictionary<PieceColor, Sprite>();
 
+        activeLocksLockAnims = new List<GameObject>();
         //pieceColorToColor = new Dictionary<PieceColor, Material>();
 
         //lootSliceSymbolDict = new Dictionary<PieceSymbol, Sprite>();

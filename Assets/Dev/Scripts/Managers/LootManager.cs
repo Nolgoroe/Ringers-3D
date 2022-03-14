@@ -182,6 +182,9 @@ public class LootManager : MonoBehaviour
     public List<CraftingMats> tempDataList;
 
     public int rubiesToRecieveInLevel;
+
+    public bool finishedGivingLoot;
+
     private void Start()
     {
         Instance = this;
@@ -203,30 +206,34 @@ public class LootManager : MonoBehaviour
         }
     }
     
-    public void GiveLoot()
+    public IEnumerator GiveLoot()
     {
         Debug.Log("GIVING LOOT");
 
         if(rubiesToRecieveInLevel > 0)
         {
-            DisplayLootGoldRubyToPlayer(rubiesToRecieveInLevel, rubySprite);
+            StartCoroutine(DisplayLootGoldRubyToPlayer(rubiesToRecieveInLevel, rubySprite));
             PlayerManager.Instance.AddRubies(rubiesToRecieveInLevel);
 
             Debug.Log("Rubies to recieve " + rubiesToRecieveInLevel);
+            yield return new WaitForSeconds(AnimationManager.instance.DelayBetweenLootAppear);
         }
-        
-        if(craftingMatsLootForLevel.Count > 0)
+
+        if (craftingMatsLootForLevel.Count > 0)
         {
             foreach (LootToRecieve LTR in craftingMatsLootForLevel)
             {
-                DisplayLootMaterialsToPlayer(LTR.amount, LTR.type);
+                StartCoroutine(DisplayLootMaterialsToPlayer(LTR.amount, LTR.type));
 
                 PlayerManager.Instance.AddMaterials(LTR.type, LTR.amount); //////// Figure out how to get amount from outside dynamically
 
                 Debug.Log("materials recieved " + LTR.type);
+
+                yield return new WaitForSeconds(AnimationManager.instance.DelayBetweenLootAppear);
             }
         }
 
+        finishedGivingLoot = true;
         craftingMatsLootForLevel.Clear();
         tempDataList.Clear();
 
@@ -268,77 +275,6 @@ public class LootManager : MonoBehaviour
         //PlayfabManager.instance.SaveAllGameData();
 
     }
-    //public void RollOnTable(LootPacks lootPack)
-    //{
-    //    //if (lootPack == LootPacks.None)
-    //    //{
-    //    //    return;
-    //    //}
-
-    //    //RewardBag rewardBagByLootPack = new RewardBag();
-
-    //    //rewardBagByLootPack = lootpackEnumToRewardBag[lootPack];
-
-    //    //if (!rewardBagByLootPack.IsMoneyOrRubies)
-    //    //{
-    //        //foreach (CraftingMats CM in craftingMatsLootForLevel)
-    //        //{
-    //        //    DisplayLootMaterialsToPlayer(5, CM);
-
-    //        //    PlayerManager.Instance.AddMaterials(CM, 5); //////// Figure out how to get amount from outside dynamically
-
-    //        //}
-
-    //        //craftingMatsLootForLevel.Clear();
-    //        //List<CraftingMats> craftingMatsFromTables = new List<CraftingMats>();
-
-
-    //        //for (int i = 0; i < rewardBagByLootPack.Pack.Count; i++)
-    //        //{
-    //        //    craftingMatsFromTables.AddRange(itemTableToListOfMats[rewardBagByLootPack.Pack[i]]);
-
-    //        //    int chance = Random.Range(1, 101);
-
-    //        //    if (chance > rewardBagByLootPack.chancesPerItemTable[i])
-    //        //    {
-    //        //        Debug.Log("Youa sucka Fuckkkkaeaeaeaeaeae");
-    //        //        craftingMatsFromTables.Clear();
-    //        //    }
-    //        //    else
-    //        //    {
-    //        //        int randomMat = Random.Range(0, craftingMatsFromTables.Count);
-
-    //        //        Debug.Log(craftingMatsFromTables[randomMat]);
-
-    //        //        DisplayLootMaterialsToPlayer(5, craftingMatsFromTables[randomMat]);
-
-    //        //        PlayerManager.Instance.AddMaterials(craftingMatsFromTables[randomMat], 5); //////// Figure out how to get amount from outside dynamically
-
-    //        //        craftingMatsFromTables.Clear();
-    //        //    }
-    //        //}
-    //    //}
-    //    //else
-    //    //{
-    //        //int[] valuesToRecieve;
-    //        //valuesToRecieve = rewardBagByLootPack.minMaxValues;
-
-
-    //        //int randomNum = (Random.Range(valuesToRecieve[0], valuesToRecieve[1] + 1));
-
-    //        //if (lootPack.ToString().Contains("M"))
-    //        //{
-    //        //    DisplayLootGoldRubyToPlayer(randomNum, goldSprite.texture);
-    //        //    PlayerManager.Instance.AddGold(randomNum);
-    //        //}
-    //        //else
-    //        //{
-    //            //DisplayLootGoldRubyToPlayer(randomNum, rubySprite.texture);
-    //            //PlayerManager.Instance.AddRubies(randomNum);
-    //        //}
-
-    //    //}
-    //}
 
     public void ResetLevelLootData()
     {
@@ -348,26 +284,45 @@ public class LootManager : MonoBehaviour
         tempDataList.Clear();
     }
 
-    public void DisplayLootMaterialsToPlayer(int amount, CraftingMats CM)
+    public IEnumerator DisplayLootMaterialsToPlayer(int amount, CraftingMats CM)
     {
         GameObject go = Instantiate(lootDisplayPrefab, winScreenLootDisplayContent);
+
+        go.transform.localScale = Vector3.zero;
 
         CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
 
         CMD.materialImage.sprite = allMaterialSprites[(int)CM];
         CMD.materialCount.text = amount.ToString();
         CMD.materialCount.color = Color.white;
+
+        Vector3 newSize = new Vector3(AnimationManager.instance.lootScaleTo.x + 0.3f, AnimationManager.instance.lootScaleTo.y + 0.3f, AnimationManager.instance.lootScaleTo.z + 0.3f);
+
+        LeanTween.scale(go, newSize, AnimationManager.instance.timeToScaleLoot).setEaseLinear();
+
+        yield return new WaitForSeconds(AnimationManager.instance.timeToScaleLoot);
+
+        LeanTween.scale(go, AnimationManager.instance.lootScaleTo, AnimationManager.instance.timeToScaleLoot).setEaseLinear();
     }
-    public void DisplayLootGoldRubyToPlayer(int count, Sprite sprite)
+    public IEnumerator DisplayLootGoldRubyToPlayer(int count, Sprite sprite)
     {
         GameObject go = Instantiate(lootDisplayPrefab, winScreenLootDisplayContent);
+
+        go.transform.localScale = Vector3.zero;
 
         CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
 
         CMD.materialImage.sprite = sprite;
         CMD.materialCount.text = count.ToString();
         CMD.materialCount.color = Color.white;
-        ////Tutorial Level 2
+
+        Vector3 newSize = new Vector3(AnimationManager.instance.lootScaleTo.x + 0.3f, AnimationManager.instance.lootScaleTo.y + 0.3f, AnimationManager.instance.lootScaleTo.z + 0.3f);
+
+        LeanTween.scale(go, newSize, AnimationManager.instance.timeToScaleLoot).setEaseLinear();
+
+        yield return new WaitForSeconds(AnimationManager.instance.timeToScaleLoot);
+
+        LeanTween.scale(go, AnimationManager.instance.lootScaleTo, AnimationManager.instance.timeToScaleLoot).setEaseLinear();
     }
 
     public void DestoryWinScreenDisplyedLoot()
