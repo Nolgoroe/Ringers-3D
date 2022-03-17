@@ -329,7 +329,7 @@ public class GameManager : MonoBehaviour
 
             if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)currentLevel.specificTutorialEnum))
             {
-                if (currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft)
+                if (currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen)
                 {
                     //TutorialSequence.Instacne.DisplaySpecificTutorialSequence();
                     StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());

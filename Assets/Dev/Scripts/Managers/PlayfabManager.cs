@@ -74,6 +74,10 @@ public class PlayfabManager : MonoBehaviour
                 StartCoroutine(UIManager.Instance.MoveAfterLoadingScreen(false));
             }
         }
+        else
+        {
+            StartCoroutine(UIManager.Instance.MoveAfterLoadingScreen(false));
+        }
     }
 
 

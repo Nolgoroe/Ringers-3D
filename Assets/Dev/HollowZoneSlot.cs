@@ -28,6 +28,14 @@ public class HollowZoneSlot : MonoBehaviour
         FITZI.indexInZone = indexInZone;
 
         HollowManagerSaveData.Instance.filledHollowItemsToIndex.Add(FITZI);
+
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
+            {
+                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            }
+        }
     }
 
     public void InstantiateObject(HollowCraftObjectData HCOD)

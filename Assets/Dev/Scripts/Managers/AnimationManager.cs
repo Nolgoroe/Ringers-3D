@@ -737,14 +737,29 @@ public class AnimationManager : MonoBehaviour
             });
         }
 
-        LeanTween.value(UIManager.Instance.nextLevelFromWinScreen.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)GameManager.Instance.currentLevel.specificTutorialEnum))
         {
-            Image image = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>(); ;
-            Color newColor = image.color;
-            newColor.a = val;
-            image.color = newColor;
-        });
-
+            if (GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen)
+            {
+                LeanTween.value(UIManager.Instance.nextLevelFromWinScreen.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+                {
+                    Image image = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>(); ;
+                    Color newColor = image.color;
+                    newColor.a = val;
+                    image.color = newColor;
+                });
+            }
+        }
+        else
+        {
+            LeanTween.value(UIManager.Instance.nextLevelFromWinScreen.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+            {
+                Image image = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>(); ;
+                Color newColor = image.color;
+                newColor.a = val;
+                image.color = newColor;
+            });
+        }
         //if (!isSkip)
         //{
         //    yield return new WaitForSeconds(4);
@@ -775,6 +790,7 @@ public class AnimationManager : MonoBehaviour
         CheckShowLootTutorial();
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
+        TutorialSequence.Instacne.CheckDoDenTutorial();
     }
 
     public void SkipBoardAnim()
@@ -844,8 +860,19 @@ public class AnimationManager : MonoBehaviour
             //restartGrind.color = new Color(restartGrind.color.r, restartGrind.color.g, restartGrind.color.b, 1);
         }
 
-        Image nextLevelButtonImage = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>();
-        nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 1);
+        if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)GameManager.Instance.currentLevel.specificTutorialEnum))
+        {
+            if (GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen)
+            {
+                Image nextLevelButtonImage = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>();
+                nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 1);
+            }
+        }
+        else
+        {
+            Image nextLevelButtonImage = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>();
+            nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 1);
+        }
 
         ConnectionManager.Instance.TurnOffAllConnectedVFX();
 
@@ -864,6 +891,7 @@ public class AnimationManager : MonoBehaviour
         CheckShowLootTutorial();
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
+        TutorialSequence.Instacne.CheckDoDenTutorial();
 
     }
     private void CheckShowLootTutorial()

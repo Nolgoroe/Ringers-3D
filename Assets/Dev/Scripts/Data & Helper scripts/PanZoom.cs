@@ -180,6 +180,13 @@ public class PanZoom : MonoBehaviour
 
     void DenScreenControls()
     {
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
+            {
+                return;
+            }
+        }
 
         if (Input.touchCount < 2)
         {

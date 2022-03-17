@@ -10,7 +10,10 @@ public class DetectClickOnUIObject : MonoBehaviour, IPointerClickHandler
     {
         Debug.Log("Clicked HERE");
 
-        CloseWindow();
+        if (!TutorialSequence.Instacne.duringSequence)
+        {
+            CloseWindow();
+        }
     }
 
     void CloseWindow()

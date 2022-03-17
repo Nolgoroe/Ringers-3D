@@ -38,6 +38,7 @@ public class Phase
     public bool isClipPhase, isBoardPhase, isPowerupPhase, isSingleCellPhase, isSingleSlice, isHubButtonPhase;
     public bool isOpenInventoryPhase, isPotionTabPhase, isEmptyTouchPhase, isBrewPhase, isBrewDisplayMaterials;
     public bool isAnimalSymbolCollectionPhase, hasDelay, isAllLocked, isClearScreen, isBoardGone;
+    public bool isOpenDenPhase, isOpenHollowCraftTabPhase, isOpenInventoryInDenPhase, isCraftPhase, isCloseInventoryPhase, isDragHollowItemPhase;
     public bool dealPhase;
 
     public int[] unlockedPowerups;
@@ -47,6 +48,8 @@ public class Phase
     public int[] targetCells;
 
     public int[] targetSlices;
+
+    public GameObject[] targetTutorialHoles;
 
     public float delayAmount;
 }
@@ -66,6 +69,7 @@ public enum SpecificTutorialsEnum
     SliceBombTutorial,
     JokerTutorial,
     PotionCraft,
+    DenScreen,
 
 }
 public class TutorialSequence : MonoBehaviour
@@ -104,7 +108,7 @@ public class TutorialSequence : MonoBehaviour
 
     public List<GameObject> screensDeactivateOnTouch;
 
-    public Transform handPosToHub, handPosOpenInventory, handPosChangeTab, handPosBrewButton;
+    public Transform handPosToHub, handPosOpenInventory, handPosOpenInventoryInDen, handPosOpenDen, handPosChangePotionTab, handPosChangeHollowCraftTab, handPosBrewButton, handPosCraftItemButton, handPosCloseInventory;
 
     private void Start()
     {
@@ -380,11 +384,32 @@ public class TutorialSequence : MonoBehaviour
                 DisplayTutorialHandTapQuaternion(handPosOpenInventory.position, handPosOpenInventory.rotation, handPosOpenInventory.localScale);
             }
 
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isOpenInventoryInDenPhase)
+            {
+                UIManager.Instance.openInventoryButtonHeighlightDenScreen.SetActive(true);
+                activatedHeighlights.Add(UIManager.Instance.openInventoryButtonHeighlightDenScreen.gameObject);
+                DisplayTutorialHandTapQuaternion(handPosOpenInventoryInDen.position, handPosOpenInventoryInDen.rotation, handPosOpenInventoryInDen.localScale);
+            }
+
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isOpenDenPhase)
+            {
+                UIManager.Instance.openDenButtonHeighlight.SetActive(true);
+                activatedHeighlights.Add(UIManager.Instance.openDenButtonHeighlight.gameObject);
+                DisplayTutorialHandTapQuaternion(handPosOpenDen.position, handPosOpenDen.rotation, handPosOpenDen.localScale);
+            }
+
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isPotionTabPhase)
             {
                 UIManager.Instance.potionTabHeighlight.SetActive(true);
                 activatedHeighlights.Add(UIManager.Instance.potionTabHeighlight.gameObject);
-                DisplayTutorialHandTapQuaternion(handPosChangeTab.position, handPosChangeTab.rotation, handPosChangeTab.localScale);
+                DisplayTutorialHandTapQuaternion(handPosChangePotionTab.position, handPosChangePotionTab.rotation, handPosChangePotionTab.localScale);
+            }
+
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isOpenHollowCraftTabPhase)
+            {
+                UIManager.Instance.hollowCraftTabHeighlight.SetActive(true);
+                activatedHeighlights.Add(UIManager.Instance.hollowCraftTabHeighlight.gameObject);
+                DisplayTutorialHandTapQuaternion(handPosChangeHollowCraftTab.position, handPosChangeHollowCraftTab.rotation, handPosChangeHollowCraftTab.localScale);
             }
 
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isBrewPhase)
@@ -392,6 +417,34 @@ public class TutorialSequence : MonoBehaviour
                 UIManager.Instance.brewButtonHeighlight.SetActive(true);
                 activatedHeighlights.Add(UIManager.Instance.brewButtonHeighlight.gameObject);
                 DisplayTutorialHandTapQuaternion(handPosBrewButton.position, handPosBrewButton.rotation, handPosBrewButton.localScale);
+            }
+
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isCraftPhase)
+            {
+                HollowObjectDisplayer HOD = HollowCraftAndOwnedManager.Instance.hollowObjectsCreated[0].GetComponent<HollowObjectDisplayer>();
+
+                HOD.gameObject.SetActive(true);
+                HOD.tutorialHole.gameObject.SetActive(true);
+                activatedHeighlights.Add(HOD.tutorialHole.gameObject);
+                DisplayTutorialHandTapQuaternion(handPosCraftItemButton.position, handPosCraftItemButton.rotation, handPosCraftItemButton.localScale);
+            }
+
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isCloseInventoryPhase)
+            {
+                UIManager.Instance.closeInventoryHeighlight.SetActive(true);
+                activatedHeighlights.Add(UIManager.Instance.closeInventoryHeighlight.gameObject);
+                DisplayTutorialHandTapQuaternion(handPosCloseInventory.position, handPosCloseInventory.rotation, handPosCloseInventory.localScale);
+            }
+
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isDragHollowItemPhase)
+            {
+                foreach (GameObject go in specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[currentPhaseInSequenceSpecific].targetTutorialHoles)
+                {
+                    go.SetActive(true);
+                    activatedHeighlights.Add(go);
+                }
+
+                DisplayTutorialHandHoleToHole(specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[currentPhaseInSequenceSpecific].targetTutorialHoles[0], specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[currentPhaseInSequenceSpecific].targetTutorialHoles[1]);
             }
 
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isBrewDisplayMaterials)
@@ -698,11 +751,14 @@ public class TutorialSequence : MonoBehaviour
         }
         else
         {
-            GameManager.Instance.gameBoard.SetActive(true);
-            GameManager.Instance.gameClip.SetActive(true);
-            GameManager.Instance.selectedLevelBG.transform.GetChild(0).gameObject.SetActive(true);
-            UIManager.Instance.gameplayCanvasBotom.SetActive(true);
-            UIManager.Instance.gameplayCanvasTop.SetActive(true);
+            if (GameManager.Instance.gameBoard && GameManager.Instance.gameClip)
+            {
+                GameManager.Instance.gameBoard.SetActive(true);
+                GameManager.Instance.gameClip.SetActive(true);
+                GameManager.Instance.selectedLevelBG.transform.GetChild(0).gameObject.SetActive(true);
+                UIManager.Instance.gameplayCanvasBotom.SetActive(true);
+                UIManager.Instance.gameplayCanvasTop.SetActive(true);
+            }
         }
 
         if (tutorialArray[TutorialIndex].phase[phaseIndex].isClipPhase)
@@ -1118,6 +1174,20 @@ public class TutorialSequence : MonoBehaviour
         LeanTween.move(go, targetPos, tutorialHandMoveSpeed).setEase(LeanTweenType.easeInOutQuad).setLoopClamp(); // animate
     }
 
+    public void DisplayTutorialHandHoleToHole(GameObject origin, GameObject target)
+    {
+        Vector3 pos = origin.transform.position;
+        //pos.z = -0.3f;
+
+        GameObject go = Instantiate(tutorialHandPrefabMove, pos, Quaternion.identity);
+        currentlyActiveTutorialHand = go;
+
+        Vector3 targetPos = target.transform.position;
+        //targetPos.z = -0.3f;
+
+        LeanTween.move(go, targetPos, tutorialHandMoveSpeed).setEase(LeanTweenType.easeInOutQuad).setLoopClamp(); // animate
+    }
+
     public void DisplayTutorialHandTap(Vector3 position, Vector3 rotation, Vector3 scale)
     {
         Vector3 pos = position;
@@ -1185,6 +1255,20 @@ public class TutorialSequence : MonoBehaviour
             }
         }
     }
+    public void CheckDoDenTutorial()
+    {
+        if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)GameManager.Instance.currentLevel.specificTutorialEnum))
+        {
+            if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
+            {
+                //UIManager.Instance.gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(true);
+                UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+                //TutorialSequence.Instacne.DisplaySpecificTutorialSequence();
+                currentSpecificTutorial = GameManager.Instance.currentLevel.specificTutorialEnum;
+                StartCoroutine(DisplaySpecificTutorialSequence());
+            }
+        }
+    }
 
     public void AddToPlayerMatsForPotion(List<CraftingMatsNeededToRubies> CMNTR)
     {
@@ -1202,6 +1286,26 @@ public class TutorialSequence : MonoBehaviour
             }
         }
 
+        Debug.Log("Added missing ingredients!");
+    }
+
+    public void AddToPlayerMatsForHollowCraft(List<CraftingMatsNeededToRubies> CMNTR)
+    {
+        foreach (CraftingMatsNeededToRubies mat in CMNTR)
+        {
+            if (mat.mat == CraftingMats.DewDrops)
+            {
+                PlayerManager.Instance.collectedDewDrops += mat.amountMissing;
+            }
+            else
+            {
+                CraftingMatEntry CME = PlayerManager.Instance.craftingMatsInInventory.Where(p => p.mat == mat.mat).Single();
+
+                CME.amount += mat.amountMissing;
+            }
+        }
+
+        HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
         Debug.Log("Added missing ingredients!");
     }
 

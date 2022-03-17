@@ -27,15 +27,13 @@ public class HollowObjectDisplayer : MonoBehaviour
 
     public int rubiesNeededToBuyHollow;
 
+    public GameObject tutorialHole;
+
     public bool canCraft;
     private void Start()
     {
         craftButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(Sounds.ButtonPressUI));
         craftButton.onClick.AddListener(() => CraftHollowObject(false));
-
-        //craftingMatsToRubiesHollow = new List<CraftingMatsNeededToRubies>();
-
-        //Debug.Log("Start");
     }
 
     public void SpawnMaterialsNeeded(string matList)
@@ -142,7 +140,8 @@ public class HollowObjectDisplayer : MonoBehaviour
 
     public void CraftHollowObject(bool isBought) ///// Here because the forge button and resources data are local
     {
-        if(PlayerManager.Instance.ownedHollowObjects.Count > 0)
+
+        if (PlayerManager.Instance.ownedHollowObjects.Count > 0)
         {
             HollowCraftObjectData HCOD = PlayerManager.Instance.ownedHollowObjects.Where(p => p.hollowItemEnum == objectData.hollowItemEnum).SingleOrDefault();
 
@@ -234,6 +233,15 @@ public class HollowObjectDisplayer : MonoBehaviour
             }
 
         }
+
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
+            {
+                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            }
+        }
+
         //SortMaster.Instance.RefreshAllScreens();
 
         //PlayerManager.Instance.SavePlayerData();

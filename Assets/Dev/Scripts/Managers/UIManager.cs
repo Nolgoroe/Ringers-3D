@@ -57,9 +57,13 @@ public class UIManager : MonoBehaviour
     public GameObject UnlockedZoneMessageView;
     public GameObject dealButtonHeighlight;
     public GameObject openInventoryButtonHeighlight;
+    public GameObject openInventoryButtonHeighlightDenScreen;
+    public GameObject openDenButtonHeighlight;
     public GameObject potionTabHeighlight;
+    public GameObject hollowCraftTabHeighlight;
     public GameObject toHubButtonHeighlight;
     public GameObject brewButtonHeighlight;
+    public GameObject closeInventoryHeighlight;
     public GameObject[] brewMaterialZonesHeighlights;
     public GameObject normalBookBG, potionsBookBG;
     public GameObject leaderboardScreen;
@@ -153,8 +157,9 @@ public class UIManager : MonoBehaviour
 
     public Vector3 hubCameraPos;
     public Vector3 hubCameraRot;
-    public Vector3 denCameraPos;
-    public Vector3 denCameraRot;
+    public Vector3 denCameraPosForTutorial;
+    //public Vector3 denCameraPos;
+    //public Vector3 denCameraRot;
 
 
     //public Color gameTextColor;
@@ -568,7 +573,7 @@ public class UIManager : MonoBehaviour
 
             if (TutorialSequence.Instacne.duringSequence)
             {
-                if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
+                if (GameManager.Instance.currentLevel.isSpecificTutorial && (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft || GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen))
                 {
                     //gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(false);
                     //HudCanvasUIHEIGHLIGHTS.SetActive(true);
@@ -682,7 +687,7 @@ public class UIManager : MonoBehaviour
 
             if (TutorialSequence.Instacne.duringSequence)
             {
-                if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
+                if (GameManager.Instance.currentLevel.isSpecificTutorial && (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft || GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen))
                 {
                     //HudCanvasUIHEIGHLIGHTS.SetActive(false);
                     //ItemAndForgeBagHEIGHLIGHTS.SetActive(true);
@@ -693,15 +698,18 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            itemForgeCanvas.SetActive(false);
+            if (!TutorialSequence.Instacne.duringSequence)
+            {
+                itemForgeCanvas.SetActive(false);
 
-            forge.SetActive(false);
-            Brewery.SetActive(false);
+                forge.SetActive(false);
+                Brewery.SetActive(false);
 
-            itemBag.SetActive(true);
+                itemBag.SetActive(true);
 
-            isUsingUI = false;
-            activeScreen = null;
+                isUsingUI = false;
+                activeScreen = null;
+            }
         }
         //SortMaster.Instance.SortMatInventory(CraftingMatType.Build); //// For now we always open the inventory sorted on gems
     }
@@ -779,12 +787,22 @@ public class UIManager : MonoBehaviour
             ZoneManager.Instance.UnlockLevelViewSequence();
         }
 
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
+            {
+                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            }
+        }
+
         if (!itemForgeCanvas.activeInHierarchy && !leaderboardScreen.activeInHierarchy && !DailyRewardScreen.activeInHierarchy && ZoneManager.Instance.zonesToUnlock.Count <= 0)
         {
             Debug.Log("Here");
 
             StartCoroutine(SetIsUsingUI(false));
         }
+
+        activeScreen = null;
     }
     public void ToForge()
     {
@@ -806,6 +824,25 @@ public class UIManager : MonoBehaviour
         potionInventoryButton.enabled = true;
         normalBookBG.SetActive(true);
         potionsBookBG.SetActive(false);
+
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            HollowObjectDisplayer HOD = HollowCraftAndOwnedManager.Instance.hollowObjectsCreated[0].GetComponent<HollowObjectDisplayer>();
+
+            if (!HOD.canCraft)
+            {
+                if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
+                {
+                    TutorialSequence.Instacne.AddToPlayerMatsForHollowCraft(HOD.craftingMatsToRubiesHollow);
+                    HOD.canCraft = true;
+                }
+            }
+
+            if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
+            {
+                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            }
+        }
     }
 
     public void OpenForgeImmidietly(string objectName)
@@ -919,14 +956,28 @@ public class UIManager : MonoBehaviour
         hudCanvasUIBottomZoneMainMap.SetActive(false);
         //hudCanvasUI.SetActive(false);
 
-        Camera.main.transform.position = denCameraPos;
-        Camera.main.transform.rotation = Quaternion.Euler(denCameraRot);
+        //Camera.main.transform.position = denCameraPos;
+        //Camera.main.transform.rotation = Quaternion.Euler(denCameraRot);
 
         LightingSettingsManager.instance.SetdenLight();
 
         PZ.isInDenScreen = true;
 
         HollowCraftAndOwnedManager.Instance.RefreshOwnedScreen();
+
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
+            {
+                Camera.main.transform.position = denCameraPosForTutorial;
+                TutorialSequence.Instacne.maskImage.transform.position = new Vector3(denCameraPosForTutorial.x, denCameraPosForTutorial.y, -0.05f);
+
+                //HudCanvasUIHEIGHLIGHTS.SetActive(false);
+                //ItemAndForgeBagHEIGHLIGHTS.SetActive(true);
+
+                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            }
+        }
 
     }
     public void OpenOptions()
@@ -1317,15 +1368,18 @@ public class UIManager : MonoBehaviour
     {
         if (!leaderboardScreen.activeInHierarchy)
         {
-            if (activeScreen)
+            if (!TutorialSequence.Instacne.duringSequence)
             {
-                activeScreen.SetActive(false);
+                if (activeScreen)
+                {
+                    activeScreen.SetActive(false);
+                }
+
+                activeScreen = leaderboardScreen;
+                isUsingUI = true;
+
+                PlayfabManager.instance.GetLeaderboard();
             }
-
-            activeScreen = leaderboardScreen;
-            isUsingUI = true;
-
-            PlayfabManager.instance.GetLeaderboard();
         }
         else
         {
@@ -1338,6 +1392,13 @@ public class UIManager : MonoBehaviour
 
     public void SureWantToResetDataMessage()
     {
+        if (activeScreen)
+        {
+            activeScreen.SetActive(false);
+        }
+
+        activeScreen = sureWantToResetDataScreen;
+
         // no need to check if using UI since we can only get in here if the options menu is open so UI is used
         sureWantToResetDataScreen.SetActive(true);
     }
@@ -1354,6 +1415,7 @@ public class UIManager : MonoBehaviour
     public void SureWantToResetDataNo()
     {
         //isUsingUI = false;
+        activeScreen = null;
 
         sureWantToResetDataScreen.SetActive(false);
     }
@@ -1361,6 +1423,13 @@ public class UIManager : MonoBehaviour
     public void SureWantToLogOutMessage()
     {
         // no need to check if using UI since we can only get in here if the options menu is open so UI is used
+
+        if (activeScreen)
+        {
+            activeScreen.SetActive(false);
+        }
+
+        activeScreen = sureWantToLogOutScreen;
         sureWantToLogOutScreen.SetActive(true);
     }
 
@@ -1377,6 +1446,8 @@ public class UIManager : MonoBehaviour
     {
         //isUsingUI = false;
 
+        activeScreen = null;
+
         sureWantToLogOutScreen.SetActive(false);
     }
 
@@ -1391,13 +1462,17 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void DeactivateDailyRewardScreen()
+    public void CallDeactivateDailyRewardScreen()
     {
-        isUsingUI = false;
-
-        DailyRewardScreen.SetActive(false);
+        StartCoroutine(DeactivateDailyRewardScreen());
     }
 
+    IEnumerator DeactivateDailyRewardScreen()
+    {
+        yield return new WaitForSeconds(0.2f);
+        isUsingUI = false;
+        DailyRewardScreen.SetActive(false);
+    }
 
     //public void DisplayCantBuyPotionScreen()
     //{
@@ -1812,8 +1887,8 @@ public class UIManager : MonoBehaviour
                 TutorialSaveData.Instance.hasFinishedIntro = true;
                 PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
 
-                PlayButton();
                 DisplayDailyRewardsScreen();
+                PlayButton();
 
                 LeanTween.value(TEMPBgIntro, 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
                 {
