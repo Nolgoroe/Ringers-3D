@@ -1469,9 +1469,10 @@ public class UIManager : MonoBehaviour
 
     IEnumerator DeactivateDailyRewardScreen()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(1);
         isUsingUI = false;
         DailyRewardScreen.SetActive(false);
+        ZoneManager.Instance.UnlockLevelViewSequence();
     }
 
     //public void DisplayCantBuyPotionScreen()

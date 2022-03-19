@@ -14,6 +14,9 @@ public class RewardScreenDisplayDataHelper : MonoBehaviour
 
     public Transform displayZone;
 
+    public Color givenRewardDisplayColor;
+    public Vector3 givenRewardDisplayScale;
+
     private void Awake()
     {
         Instance = this;
@@ -33,8 +36,12 @@ public class RewardScreenDisplayDataHelper : MonoBehaviour
 
         lootPrefabsInstantiated.Clear();
 
+        int tempIndex = 0;
+
         foreach (string s in RewardsManager.Instance.dailyRewardPacks[RewardsManager.Instance.indexPack].dailyRewards)
         {
+            tempIndex++;
+
             if (s.Contains("-"))
             {
                 string[] temp = s.Split('-');
@@ -54,7 +61,7 @@ public class RewardScreenDisplayDataHelper : MonoBehaviour
 
                     craftingMatDailyRewardsDisplayer CMDRD = go.GetComponent<craftingMatDailyRewardsDisplayer>();
                     CMDRD.SetImageAndMaterialCount(LootManager.Instance.rubySprite, CraftingMats.None, amount.ToString());
-
+                    CMDRD.SetDayText("day " + tempIndex);
                 }
                 else
                 {
@@ -67,6 +74,8 @@ public class RewardScreenDisplayDataHelper : MonoBehaviour
 
                     craftingMatDailyRewardsDisplayer CMDRD = go.GetComponent<craftingMatDailyRewardsDisplayer>();
                     CMDRD.SetImageAndMaterialCount(LootManager.Instance.allMaterialSprites[(int)matToRecieve], matToRecieve, amount.ToString());
+
+                    CMDRD.SetDayText("day " + tempIndex);
                 }
             }
         }
@@ -76,17 +85,31 @@ public class RewardScreenDisplayDataHelper : MonoBehaviour
     {
         int index = RewardsManager.Instance.indexDayToGive;
 
+        
         for (int i = 0; i < lootPrefabsInstantiated.Count; i++)
         {
-            Image currentImage = lootPrefabsInstantiated[i].GetComponent<Image>();
+            lootPrefabsInstantiated[i].GetComponent<craftingMatDailyRewardsDisplayer>().TurnOFFTodayVFX();
+            lootPrefabsInstantiated[i].GetComponent<craftingMatDailyRewardsDisplayer>().SetScaleNormal();
+        }
 
-            if (i == index)
+        if (lootPrefabsInstantiated[index].GetComponent<craftingMatDailyRewardsDisplayer>().anim)
+        {
+            lootPrefabsInstantiated[index].GetComponent<craftingMatDailyRewardsDisplayer>().anim.enabled = false;
+        }
+
+        lootPrefabsInstantiated[index].GetComponent<craftingMatDailyRewardsDisplayer>().TurnOnTodayVFX();
+        lootPrefabsInstantiated[index].GetComponent<craftingMatDailyRewardsDisplayer>().SetScaleToday();
+    }
+
+    public void CheckGivenRewardsDisplay()
+    {
+        int index = RewardsManager.Instance.indexDayToGive;
+
+        for (int i = 0; i < lootPrefabsInstantiated.Count; i++)
+        {
+            if(i < index)
             {
-                currentImage.color = new Color(255, 0, 0, 255);
-            }
-            else
-            {
-                currentImage.color = new Color(255, 255, 255, 255);
+                lootPrefabsInstantiated[i].GetComponent<craftingMatDailyRewardsDisplayer>().materialImage.color = givenRewardDisplayColor;
             }
         }
     }

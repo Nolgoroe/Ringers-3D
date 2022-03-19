@@ -36,6 +36,9 @@ public class HollowZoneSlot : MonoBehaviour
                 TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
             }
         }
+
+        objectsInZone[indexInZone].GetComponent<Animator>().SetBool("Release Now", true);
+        UIManager.isUsingUI = true; // this is here to diable the option of moving out of screen until animation is done!
     }
 
     public void InstantiateObject(HollowCraftObjectData HCOD)

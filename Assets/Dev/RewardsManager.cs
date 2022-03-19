@@ -57,6 +57,8 @@ public class RewardsManager : MonoBehaviour
 
                 //timeLeftToGiveDailyLoot = PlayfabManager.instance.timeToWaitForDailyRewardSeconds + timeLeftToGiveDailyLoot; //it's plus a minus - time left to give loot will be minus here
                 timeLeftToGiveDailyLoot = PlayfabManager.instance.timeToWaitForDailyRewardSeconds;
+
+                RewardScreenDisplayDataHelper.Instance.HeighlightSpecificIndex();
             }
         }
         else
@@ -102,6 +104,7 @@ public class RewardsManager : MonoBehaviour
 
                 UIManager.Instance.getDailyLootButton.interactable = true;
                 UIManager.Instance.dailyLootTextTime.gameObject.SetActive(false);
+                RewardScreenDisplayDataHelper.Instance.HeighlightSpecificIndex();
             }
 
             float minutes = Mathf.FloorToInt(timeLeftToGiveDailyLoot / 60);
@@ -142,6 +145,8 @@ public class RewardsManager : MonoBehaviour
         RewardScreenDisplayDataHelper.Instance.DisplayDailyRewards();
 
         RewardScreenDisplayDataHelper.Instance.HeighlightSpecificIndex();
+
+        RewardScreenDisplayDataHelper.Instance.CheckGivenRewardsDisplay();
     }
 
     public void RealTimeRewardPacks()
@@ -155,12 +160,14 @@ public class RewardsManager : MonoBehaviour
             RewardScreenDisplayDataHelper.Instance.DisplayDailyRewards();
         }
 
-        RewardScreenDisplayDataHelper.Instance.HeighlightSpecificIndex();
+        //RewardScreenDisplayDataHelper.Instance.CheckGivenRewardsDisplay();
     }
 
     [ContextMenu("give daily rewards")]
     public void giveRewardsButton()
     {
+        //RewardScreenDisplayDataHelper.Instance.lootPrefabsInstantiated[indexDayToGive].GetComponent<craftingMatDailyRewardsDisplayer>().TurnOFFTodayVFX();
+        RewardScreenDisplayDataHelper.Instance.lootPrefabsInstantiated[indexDayToGive].GetComponent<craftingMatDailyRewardsDisplayer>().PlayGiveAnim();
         GiveDailyRewards(indexPack);
 
         RealTimeRewardPacks();
@@ -168,6 +175,8 @@ public class RewardsManager : MonoBehaviour
 
         canGiveDaily = false;
         UIManager.Instance.getDailyLootButton.interactable = false;
+
+
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.RewardsManager});
 
