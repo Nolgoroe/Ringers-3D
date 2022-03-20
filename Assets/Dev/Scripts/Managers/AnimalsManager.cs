@@ -42,13 +42,20 @@ public class SummonedAnimalsData
     public GameObject animalPrefab;
     public int weight;
 }
+[Serializable]
+public class OwnedAnimalDataSet
+{
+    public AnimalsInGame animalEnum;
+    public ObjectHollowType hollowBelongsTo;
+}
 
 [Serializable]
 public class AnimalsManager : MonoBehaviour
 {
     public static AnimalsManager Instance;
 
-    public List<AnimalsInGame> unlockedAnimals;
+    public List<OwnedAnimalDataSet> unlockedAnimals;
+    public List<AnimalsInGame> placedAnimalsInDen;
 
     public AnimalsInGame currentLevelAnimal;
     public GameObject currentLevelLiveAnimal;
@@ -56,6 +63,8 @@ public class AnimalsManager : MonoBehaviour
     public GameObject statueToSwap;
 
     string path;
+
+    public bool spawnedDenAnimals;
 
     private void Awake()
     {
@@ -69,21 +78,32 @@ public class AnimalsManager : MonoBehaviour
         currentLevelAnimal = AnimalsInGame.None;
         currentLevelLiveAnimal = null;
         statueToSwap = null;
+        spawnedDenAnimals = false;
+
+        SpawnAllAnimalsInDenStartApplication();
     }
 
     public void CheckUnlockAnimal(AnimalsInGame toUnclock)
     {
-        StartCoroutine(RescueAnimalSequance());
+        OwnedAnimalDataSet OADS = unlockedAnimals.Where(p => p.animalEnum == currentLevelAnimal).SingleOrDefault();
 
-        if (!unlockedAnimals.Contains(currentLevelAnimal))
+        if (OADS == null)
         {
-            unlockedAnimals.Add(toUnclock);
+            AnimalPrefabData APD = statueToSwap.GetComponent<AnimalPrefabData>();
+
+            OwnedAnimalDataSet newData = new OwnedAnimalDataSet();
+            newData.animalEnum = toUnclock;
+            newData.hollowBelongsTo = APD.animalSO.hollowBelongTo;
+
+            unlockedAnimals.Add(newData);
             //SaveAnimalData();
         }
         else
         {
             Debug.Log("Already has animal");
         }
+
+        StartCoroutine(RescueAnimalSequance());
     }
 
     //[ContextMenu("Save")]
@@ -138,9 +158,9 @@ public class AnimalsManager : MonoBehaviour
 
         currentLevelLiveAnimal = go;
 
-        Destroy(statueToSwap.gameObject);
+        //Destroy(statueToSwap.gameObject);
         //Destroy(go, 3.7f);
-        statueToSwap = null;
+        //statueToSwap = null;
 
         yield return null;
     }
@@ -215,5 +235,78 @@ public class AnimalsManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void CallSpawnAnimalInDen()
+    {
+        AnimalPrefabData APD = statueToSwap.GetComponent<AnimalPrefabData>();
+
+        SpawnAnimalInDen(APD);
+    }
+    public void SpawnAnimalInDen(AnimalPrefabData animalToCheck)
+    {
+        zoneSlotAndType ZSAT = HollowCraftAndOwnedManager.Instance.hollowZones.Where(p => p.acceptedHollowTypes.Contains(animalToCheck.animalSO.hollowBelongTo)).SingleOrDefault();
+
+        bool canSummon = CheckConditionsSummonAnimalDen(animalToCheck, ZSAT);
+
+        if (canSummon)
+        {
+            AnimalDenDataChecker animalCheckTo = AnimalManagerDataHelper.instance.animalDataCheckTo.Where(p => p.animalEnum == animalToCheck.animalType).SingleOrDefault();
+
+            if (animalCheckTo != null)
+            {
+                Instantiate(animalCheckTo.animalLiveDenPrefab, animalCheckTo.parentSummonUnder);
+                placedAnimalsInDen.Add(animalCheckTo.animalEnum);
+
+                PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.animalManager });
+
+                Debug.LogError("Summoned Animal");
+            }
+        }
+    }
+
+    public bool CheckConditionsSummonAnimalDen(AnimalPrefabData animalToCheck, zoneSlotAndType ZSAT)
+    {
+        if (placedAnimalsInDen.Contains(animalToCheck.animalType))
+        {
+            return false;
+        }
+
+        if(ZSAT != null)
+        {
+            if (!ZSAT.zoneSlot.isFilled)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    public void SpawnAllAnimalsInDenStartApplication()
+    {
+        if (!spawnedDenAnimals)
+        {
+            spawnedDenAnimals = true;
+
+            foreach (AnimalsInGame animal in placedAnimalsInDen)
+            {
+                AnimalDenDataChecker animalCheckTo = AnimalManagerDataHelper.instance.animalDataCheckTo.Where(p => p.animalEnum == animal).Single();
+
+                if(animalCheckTo != null)
+                {
+                    Instantiate(animalCheckTo.animalLiveDenPrefab, animalCheckTo.parentSummonUnder);
+                }
+            }
+        }
+    }
+
+    public bool CheckIfAlreadyPlacedAnimalInDenForUI(AnimalPrefabData animalToCheck)
+    {
+        if (placedAnimalsInDen.Contains(animalToCheck.animalType))
+        {
+            return false;
+        }
+
+        return true;
     }
 }

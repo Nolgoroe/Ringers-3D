@@ -147,7 +147,7 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
                                 Debug.LogError("skipped cause PLACED");
                             }
 
-                            if(FIAZI != null && owned != null)
+                            if (FIAZI != null && owned != null)
                             {
                                 Debug.LogError("skipped cause PLACED & OWNED");
                             }
@@ -297,6 +297,12 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
         foreach (FilledItemAndZoneIndex FIAZI in HollowManagerSaveData.Instance.filledHollowItemsToIndex)
         {
             hollowZones[FIAZI.zoneIndex].zoneSlot.objectsInZone[FIAZI.indexInZone].gameObject.SetActive(true);
+            hollowZones[FIAZI.zoneIndex].zoneSlot.currentFilledAmount++;
+
+            if(hollowZones[FIAZI.zoneIndex].zoneSlot.currentFilledAmount == hollowZones[FIAZI.zoneIndex].zoneSlot.maxFiilledZoneAmount)
+            {
+                hollowZones[FIAZI.zoneIndex].zoneSlot.isFilled = true;
+            }
         }
     }
 }

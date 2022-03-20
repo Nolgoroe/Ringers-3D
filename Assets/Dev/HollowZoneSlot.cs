@@ -14,6 +14,10 @@ public class HollowZoneSlot : MonoBehaviour
     public GameObject[] objectsInZone;
     public Transform[] hollowObjectZones;
 
+    public int maxFiilledZoneAmount;
+    public int currentFilledAmount;
+    public bool isFilled;
+
     public void CheckWork(ObjectHollowType typeWorked)
     {
         Debug.Log("Is this detectiong the hollow zone? " + typeWorked);
@@ -37,6 +41,13 @@ public class HollowZoneSlot : MonoBehaviour
             }
         }
 
+        currentFilledAmount++;
+
+        if (currentFilledAmount == maxFiilledZoneAmount)
+        {
+            isFilled = true;
+        }
+
         objectsInZone[indexInZone].GetComponent<Animator>().SetBool("Release Now", true);
         UIManager.isUsingUI = true; // this is here to diable the option of moving out of screen until animation is done!
     }
@@ -55,5 +66,4 @@ public class HollowZoneSlot : MonoBehaviour
             HOZD.connectedZoneSlot = this;
 
     }
-
 }

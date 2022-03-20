@@ -90,6 +90,7 @@ public class UIManager : MonoBehaviour
     public GameObject dealButtonVFX;
     public GameObject startAppLoadingScreen;
     public GameObject flowerUIMask;
+    public GameObject releaseAnimalToDenScreen;
 
     public Image dewDropsImage;
 
@@ -132,6 +133,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text buyPotionRubieCoseText;
     public TMP_Text buyHollowItemRubieCostText;
     public TMP_Text buyHollowItemSecondaryRubieCostText;
+    public TMP_Text animalReleaseToDenText;
     //public TMP_Text cantBuyPotionText;
 
     //public Button commitButton;
@@ -245,6 +247,7 @@ public class UIManager : MonoBehaviour
         fadeIntoLevel.SetActive(false);
         introScreenParent.SetActive(false);
         bossBattleUIScreen.SetActive(false);
+        releaseAnimalToDenScreen.SetActive(false);
         activeScreen = null;
 
         dragControlsImage.sprite = toggleOnSprite;
@@ -268,7 +271,6 @@ public class UIManager : MonoBehaviour
 
         PZ = Camera.main.GetComponent<PanZoom>();
     }
-
     private void Update()
     {
         Debug.Log("Using UI? " + isUsingUI);
@@ -844,7 +846,6 @@ public class UIManager : MonoBehaviour
             }
         }
     }
-
     public void OpenForgeImmidietly(string objectName)
     {
         for (int i = 0; i < HollowCraftAndOwnedManager.Instance.hollowObjectsCreated.Count; i++)
@@ -1062,7 +1063,6 @@ public class UIManager : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-
     private void ClearBuyHollowDisplay()
     {
         foreach (Transform child in buyHollowItemDisplay)
@@ -1073,7 +1073,6 @@ public class UIManager : MonoBehaviour
         HollowCraftAndOwnedManager.Instance.currentlyToCraftNoramlMehtod = null;
         HollowCraftAndOwnedManager.Instance.currentlyToCraftSecondMethod = null;
     }
-
     private void ClearBuyHollowSecondaryDisplay()
     {
         foreach (Transform child in buyHollowItemSecondaryDisplay)
@@ -1084,7 +1083,6 @@ public class UIManager : MonoBehaviour
         HollowCraftAndOwnedManager.Instance.currentlyToCraftNoramlMehtod = null;
         HollowCraftAndOwnedManager.Instance.currentlyToCraftSecondMethod = null;
     }
-
     public void RestartLevelFromLoseScreenUI()
     {
         isUsingUI = false;
@@ -1226,7 +1224,6 @@ public class UIManager : MonoBehaviour
             animalAlbum.SetActive(false);
         }
     }
-
     public void openInventoryTab()
     {
         foreach (InventorySortButtonData ISBD in inventorySortButtons)
@@ -1247,7 +1244,6 @@ public class UIManager : MonoBehaviour
 
         SortMaster.Instance.SortMatInventory(CraftingMatType.Build);
     }
-
     public void ChangeInventorySortButtonSprites(int buttonID)
     {
         if (TutorialSequence.Instacne.duringSequence)
@@ -1309,7 +1305,6 @@ public class UIManager : MonoBehaviour
         dragControlsImage.sprite = toggleOnSprite;
         tapControlsImage.sprite = toggleOffSprite;
     }
-
     public void DisableTutorials()
     {
         GameManager.Instance.isDisableTutorials = !GameManager.Instance.isDisableTutorials;
@@ -1358,12 +1353,10 @@ public class UIManager : MonoBehaviour
 
         deviceImage.sprite = Resources.Load<Sprite>(TMS.connectedCDD.spritePath);
     }
-
     public void DisplayUnlockedZoneMessage(int ID)
     {
         StartCoroutine(AnimationManager.instance.AnimateUnlockScreen(ID));
     }
-
     public void OpenLeaderboardScreen()
     {
         if (!leaderboardScreen.activeInHierarchy)
@@ -1388,8 +1381,6 @@ public class UIManager : MonoBehaviour
             isUsingUI = false;
         }
     }
-
-
     public void SureWantToResetDataMessage()
     {
         if (activeScreen)
@@ -1402,7 +1393,6 @@ public class UIManager : MonoBehaviour
         // no need to check if using UI since we can only get in here if the options menu is open so UI is used
         sureWantToResetDataScreen.SetActive(true);
     }
-
     public void SureWantToResetDataYes()
     {
         isUsingUI = false;
@@ -1411,7 +1401,6 @@ public class UIManager : MonoBehaviour
 
         PlayfabManager.instance.ResetAllData();
     }
-
     public void SureWantToResetDataNo()
     {
         //isUsingUI = false;
@@ -1419,7 +1408,6 @@ public class UIManager : MonoBehaviour
 
         sureWantToResetDataScreen.SetActive(false);
     }
-
     public void SureWantToLogOutMessage()
     {
         // no need to check if using UI since we can only get in here if the options menu is open so UI is used
@@ -1432,7 +1420,6 @@ public class UIManager : MonoBehaviour
         activeScreen = sureWantToLogOutScreen;
         sureWantToLogOutScreen.SetActive(true);
     }
-
     public void SureWantToLogOutYes()
     {
         isUsingUI = false;
@@ -1441,7 +1428,6 @@ public class UIManager : MonoBehaviour
 
         PlayfabManager.instance.LogOut();
     }
-
     public void SureWantToLogOutNo()
     {
         //isUsingUI = false;
@@ -1450,7 +1436,6 @@ public class UIManager : MonoBehaviour
 
         sureWantToLogOutScreen.SetActive(false);
     }
-
     public void DisplayDailyRewardsScreen()
     {
         if (!isUsingUI)
@@ -1461,12 +1446,10 @@ public class UIManager : MonoBehaviour
             activeScreen = DailyRewardScreen;
         }
     }
-
     public void CallDeactivateDailyRewardScreen()
     {
         StartCoroutine(DeactivateDailyRewardScreen());
     }
-
     IEnumerator DeactivateDailyRewardScreen()
     {
         yield return new WaitForSeconds(1);
@@ -1474,7 +1457,6 @@ public class UIManager : MonoBehaviour
         DailyRewardScreen.SetActive(false);
         ZoneManager.Instance.UnlockLevelViewSequence();
     }
-
     //public void DisplayCantBuyPotionScreen()
     //{
     //    cantBuyPotionCraftScreen.SetActive(true);
@@ -1489,12 +1471,10 @@ public class UIManager : MonoBehaviour
     //{
     //    cantBuyPotionCraftScreen.SetActive(false);
     //}
-
     public void DisplayBuyPotionScreen()
     {
         MissingMaterialsPotionCraftScreen.SetActive(true);
     }
-
     public void DisplayBuyPotionScreenRubyCostText(int amount, bool canbuy)
     {
         if (canbuy)
@@ -1510,19 +1490,16 @@ public class UIManager : MonoBehaviour
 
         buyPotionRubieCoseText.text = amount.ToString();
     }
-
     public void BuyPotionScreenYes()
     {
         MissingMaterialsPotionCraftScreen.SetActive(false);
         ClearBuyPotionLootDisplay();
     }
-
     public void BuyPotionScreenNo()
     {
         MissingMaterialsPotionCraftScreen.SetActive(false);
         ClearBuyPotionLootDisplay();
     }
-
     public void DisplayBuyPotionLootNeeded(List<CraftingMatsNeededToRubies> INmaterialsNeedToBuyPotion)
     {
         foreach (CraftingMatsNeededToRubies CMNTR in INmaterialsNeedToBuyPotion)
@@ -1544,19 +1521,15 @@ public class UIManager : MonoBehaviour
             }
         }
     }
-
-
     public void DisplayBuyHollowScreen()
     {
         MissingMaterialsHollowCraftScreen.SetActive(true);
     }
-
     public void DisplayBuyHollowSecondaryScreen()
     {
         MissingMaterialsHollowObjectScreen.SetActive(true);
         isUsingUI = true;
     }
-
     public void DisplayHollowScreenRubyCostText(int amount, bool canbuy)
     {
         if (canbuy)
@@ -1572,7 +1545,6 @@ public class UIManager : MonoBehaviour
 
         buyHollowItemRubieCostText.text = amount.ToString();
     }
-
     public void DisplayHollowScreenSecondaryRubyCostText(int amount, bool canbuy)
     {
         if (canbuy)
@@ -1588,33 +1560,28 @@ public class UIManager : MonoBehaviour
 
         buyHollowItemSecondaryRubieCostText.text = amount.ToString();
     }
-
     public void BuyHollowItemScreenYes()
     {
         MissingMaterialsHollowCraftScreen.SetActive(false);
         ClearBuyHollowDisplay();
     }
-
     public void BuyHollowItemScreenNo()
     {
         MissingMaterialsHollowCraftScreen.SetActive(false);
         ClearBuyHollowDisplay();
     }
-
     public void BuyHollowItemSecondaryScreenYes()
     {
         MissingMaterialsHollowObjectScreen.SetActive(false);
         ClearBuyHollowSecondaryDisplay();
         isUsingUI = false;
     }
-
     public void BuyHollowItemSecondaryScreenNo()
     {
         MissingMaterialsHollowObjectScreen.SetActive(false);
         ClearBuyHollowSecondaryDisplay();
         isUsingUI = false;
     }
-
     public void DisplayBuyHollowItemNeeded(List<CraftingMatsNeededToRubies> INmaterialsNeedToBuyHollow)
     {
         foreach (CraftingMatsNeededToRubies CMNTR in INmaterialsNeedToBuyHollow)
@@ -1636,8 +1603,6 @@ public class UIManager : MonoBehaviour
             }
         }
     }
-
-
     public void DisplayBuySecondaryHollowItemNeeded(List<CraftingMatsNeededToRubies> INmaterialsNeedToBuyHollow)
     {
         foreach (CraftingMatsNeededToRubies CMNTR in INmaterialsNeedToBuyHollow)
@@ -1659,15 +1624,12 @@ public class UIManager : MonoBehaviour
             }
         }
     }
-
     public void updateRubyAndDewDropsCount()
     {
         gameplayRubyText.text = PlayerManager.Instance.rubyCount.ToString();
         hubRubyText.text = PlayerManager.Instance.rubyCount.ToString();
         dewDropsText.text = PlayerManager.Instance.collectedDewDrops.ToString();
     }
-
-
     public IEnumerator FadeIntoLevel(bool isTutorialLevel, bool isBossLevel)
     {
         fadeIntoLevel.SetActive(true);
@@ -1706,8 +1668,6 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(fadeIntoLevelSpeed + 0.1f);
         fadeIntoLevel.SetActive(false);
     }
-
-
     public IEnumerator DisplayIntro()
     {   isDuringIntro = true;
         canAdvanceIntro = false;
@@ -1787,8 +1747,6 @@ public class UIManager : MonoBehaviour
         canAdvanceIntro = true;
         introImageTextIndex++;
     }
-
-
     public IEnumerator AdvanceIntroScreen()
     {
         bool pageFlipped = false;
@@ -1949,8 +1907,6 @@ public class UIManager : MonoBehaviour
         canAdvanceIntro = true;
         introImageTextIndex++;
     }
-
-
     public void SkipIntroScreens()
     {
         isDuringIntro = false;
@@ -1964,7 +1920,6 @@ public class UIManager : MonoBehaviour
 
         StartCoroutine(SkipIntroFade());
     }
-
     public IEnumerator SkipIntroFade()
     {
         if (introImageIndex != introImages.Count() - 1)
@@ -1983,25 +1938,20 @@ public class UIManager : MonoBehaviour
         introScreenParent.SetActive(false);
 
     }
-
-
     public void DisplayBossBattleUIScreen()
     {
         bossBattleUIScreen.SetActive(true);
 
         bossHealthSlider.value = (float)BossBattleManager.instance.currentBossHealth / (float)BossBattleManager.instance.bossLevelSO.BossHealth;
     }
-
     public void DeactivateBossBattleUIScreen()
     {
         bossBattleUIScreen.SetActive(false);
     }
-
     public void UpdateBossHealth()
     {
         bossHealthSlider.value = (float)BossBattleManager.instance.currentBossHealth / (float)BossBattleManager.instance.bossLevelSO.BossHealth;
     }
-
     public void ResetTopAndBottomPos()
     {
         RectTransform top = gameplayCanvasTop.GetComponent<RectTransform>();
@@ -2010,19 +1960,16 @@ public class UIManager : MonoBehaviour
         top.anchoredPosition = new Vector2(0, 0);
         bottom.anchoredPosition = new Vector2(0, 0);
     }
-
     public void turnOnDealVFX()
     {
         GameObject go = Instantiate(dealButtonVFX, dealButton.transform);
     }
-
     public IEnumerator SetIsUsingUI(bool isTrue)
     {
         yield return new WaitForSeconds(0.2f);
 
         isUsingUI = isTrue;
     }
-
     public IEnumerator MoveAfterLoadingScreen(bool goodLogin)
     {
         yield return new WaitForSeconds(2);
@@ -2037,7 +1984,6 @@ public class UIManager : MonoBehaviour
             mainMenu.SetActive(true);
         }
     }
-
     public void PrepareObjectForEndBoardAnim()
     {
         sucessText.color = new Color(sucessText.color.r, sucessText.color.g, sucessText.color.b, 0);
@@ -2055,4 +2001,51 @@ public class UIManager : MonoBehaviour
 
         flowerUIMask.transform.localScale = Vector3.zero;
     }
+
+
+    public void CheckTurnOnReleaseAnimalScreen()
+    {
+        AnimalPrefabData APD = AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
+        zoneSlotAndType ZSAT = HollowCraftAndOwnedManager.Instance.hollowZones.Where(p => p.acceptedHollowTypes.Contains(APD.animalSO.hollowBelongTo)).SingleOrDefault();
+
+        if (GameManager.Instance.currentLevel.isReleaseAnimalToDen)
+        {
+            if (AnimalsManager.Instance.CheckConditionsSummonAnimalDen(APD, ZSAT))
+            {
+                TurnOnReleaseAnimalDenScreen();
+            }
+        }
+    }
+
+    public void TurnOnReleaseAnimalDenScreen()
+    {
+        string animalName = Regex.Replace(AnimalsManager.Instance.currentLevelAnimal.ToString(), "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
+
+        animalReleaseToDenText.text = animalName + " seems to be following you. Would you like to take it to your ringer's den?";
+
+        AnimalPrefabData APD = AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
+
+        if (AnimalsManager.Instance.CheckIfAlreadyPlacedAnimalInDenForUI(APD))
+        {
+            releaseAnimalToDenScreen.SetActive(true);
+        }
+    }
+    public void ReleaseAnimalDenScreenYes()
+    {
+        isUsingUI = false;
+
+        releaseAnimalToDenScreen.SetActive(false);
+
+        ToHud(gameplayCanvas);
+
+        AnimalsManager.Instance.CallSpawnAnimalInDen();
+
+        ToDenScreen(false);
+    }
+    public void ReleaseAnimalDenScreenNo()
+    {
+
+        releaseAnimalToDenScreen.SetActive(false);
+    }
+
 }

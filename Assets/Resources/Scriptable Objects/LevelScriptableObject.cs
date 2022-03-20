@@ -23,6 +23,7 @@ public class LevelScriptableObject : ScriptableObject
     public bool is12PieceRing;
     public bool isDoubleRing;
     public bool isBoss;
+    public bool isReleaseAnimalToDen;
     public GameObject boardPrefab;
 
     public int levelNum;

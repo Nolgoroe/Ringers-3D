@@ -791,6 +791,8 @@ public class AnimationManager : MonoBehaviour
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
         TutorialSequence.Instacne.CheckDoDenTutorial();
+
+        UIManager.Instance.CheckTurnOnReleaseAnimalScreen();
     }
 
     public void SkipBoardAnim()
@@ -892,6 +894,8 @@ public class AnimationManager : MonoBehaviour
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
         TutorialSequence.Instacne.CheckDoDenTutorial();
+
+        UIManager.Instance.CheckTurnOnReleaseAnimalScreen();
 
     }
     private void CheckShowLootTutorial()

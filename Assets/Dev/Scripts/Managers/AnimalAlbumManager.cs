@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Linq;
 
 
 
@@ -54,8 +55,12 @@ public class AnimalAlbumManager : MonoBehaviour
 
     public void CheckHasAnimal(AlbumImageAnimalData data)
     {
-        if(data.isUnlocked = AnimalsManager.Instance.unlockedAnimals.Contains(data.imageAnimalEnum))
+        OwnedAnimalDataSet OADS = AnimalsManager.Instance.unlockedAnimals.Where(p => p.animalEnum == data.imageAnimalEnum).Single();
+
+
+        if (OADS != null)
         {
+            data.isUnlocked = true;
             data.animalImage.sprite = animalEnumToSprite[data.imageAnimalEnum];
         }
         else
