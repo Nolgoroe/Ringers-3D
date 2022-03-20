@@ -91,6 +91,7 @@ public class UIManager : MonoBehaviour
     public GameObject startAppLoadingScreen;
     public GameObject flowerUIMask;
     public GameObject releaseAnimalToDenScreen;
+    public GameObject animalIsHappyScreen;
 
     public Image dewDropsImage;
 
@@ -134,6 +135,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text buyHollowItemRubieCostText;
     public TMP_Text buyHollowItemSecondaryRubieCostText;
     public TMP_Text animalReleaseToDenText;
+    public TMP_Text animalIsHappyText;
     //public TMP_Text cantBuyPotionText;
 
     //public Button commitButton;
@@ -248,6 +250,7 @@ public class UIManager : MonoBehaviour
         introScreenParent.SetActive(false);
         bossBattleUIScreen.SetActive(false);
         releaseAnimalToDenScreen.SetActive(false);
+        animalIsHappyScreen.SetActive(false);
         activeScreen = null;
 
         dragControlsImage.sprite = toggleOnSprite;
@@ -2041,11 +2044,26 @@ public class UIManager : MonoBehaviour
         AnimalsManager.Instance.CallSpawnAnimalInDen();
 
         ToDenScreen(false);
+
+        TurnOnAnimalIsHappyScreen();
     }
     public void ReleaseAnimalDenScreenNo()
     {
 
         releaseAnimalToDenScreen.SetActive(false);
+    }
+
+    public void TurnOnAnimalIsHappyScreen()
+    {
+        string animalName = Regex.Replace(AnimalsManager.Instance.currentLevelAnimal.ToString(), "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
+
+        animalIsHappyText.text = animalName + " seems very happy with it's new home!";
+
+        animalIsHappyScreen.SetActive(true);
+    }
+    public void TurnOFFAnimalIsHappyScreen()
+    {
+        animalIsHappyScreen.SetActive(false);
     }
 
 }
