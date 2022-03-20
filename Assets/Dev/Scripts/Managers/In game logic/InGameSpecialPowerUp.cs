@@ -26,14 +26,26 @@ public class InGameSpecialPowerUp : MonoBehaviour
 
     public void UpdateSlider(int amount)
     {
-        slider.value += (float)amount / amountNeededToActivate;
+        float currentSliderValue = slider.value;
 
-        if(slider.value >= 1)
+        float target = currentSliderValue + ((float)amount / amountNeededToActivate);
+
+        LeanTween.value(slider.gameObject, slider.value, target, 1f).setEase(LeanTweenType.linear).setOnComplete(() => CheckCanUseSpecialPower()).setOnUpdate((float val) =>
+        {
+            float temp = val;
+            slider.value = temp;
+        });
+
+        //slider.value += (float)amount / amountNeededToActivate;
+    }
+
+    private void CheckCanUseSpecialPower()
+    {
+        if (slider.value >= 1)
         {
             button.interactable = true;
         }
     }
-
     public void ResetValues()
     {
         button.interactable = false;

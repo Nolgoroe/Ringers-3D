@@ -953,7 +953,11 @@ public class CursorController : MonoBehaviour
                     if (newPiece && !cell.isFull)
                     {
                         GameManager.Instance.clipManager.PopulateSlot(toMove.transform.parent, 10);
-                        AddNumAnimalsToBoard(toMove);
+
+                        if (GameManager.Instance.currentLevel.symbolsNeededForSpecialPowers.Length > 0)
+                        {
+                            AddNumAnimalsToBoard(toMove);
+                        }
                     }
                 }
                 else
@@ -1103,8 +1107,11 @@ public class CursorController : MonoBehaviour
                                 if (isFromClip/* && !cell.isFull*/)
                                 {
                                     GameManager.Instance.clipManager.PopulateSlot(clipParent, 10);
-                                    AddNumAnimalsToBoard(followerTarget);
 
+                                    if (GameManager.Instance.currentLevel.symbolsNeededForSpecialPowers.Length > 0)
+                                    {
+                                        AddNumAnimalsToBoard(followerTarget);
+                                    }
                                 }
 
                                 StartCoroutine(TutorialSequence.Instacne.IncrementCurrentPhaseInSequence());
@@ -1202,25 +1209,41 @@ public class CursorController : MonoBehaviour
     {
         Piece p = piece.GetComponent<Piece>();
 
+        PowerUpManager PUM = GameManager.Instance.powerupManager;
+
+        PieceSymbol symbolNeeded = PUM.specialPowerupsInGame[0].SymbolNeeded;
+
         SubPiece right = p.rightChild;
         SubPiece left = p.leftChild;
 
-        foreach (NumAnimalTypedOnBoard NATB in GameManager.Instance.numAnimalsOnBoard)
+        if (symbolNeeded == right.symbolOfPiece && symbolNeeded == left.symbolOfPiece)
         {
-            if (NATB.animalSymbol == right.symbolOfPiece && NATB.animalSymbol == left.symbolOfPiece)
-            {
-                NATB.amount += 2;
-                GameManager.Instance.powerupManager.UpdateSpecialPowerupsCount(2, NATB.animalSymbol);
-                break;
-            }
+            GameManager.Instance.powerupManager.UpdateSpecialPowerupsCount(2, symbolNeeded);
 
-            if (NATB.animalSymbol == right.symbolOfPiece || NATB.animalSymbol == left.symbolOfPiece)
-            {
-                NATB.amount++;
-                GameManager.Instance.powerupManager.UpdateSpecialPowerupsCount(1, NATB.animalSymbol);
-            }
+            GameObject side1 = Instantiate(PUM.specialPowerVFXPrefab, right.transform);
+            GameObject side2 = Instantiate(PUM.specialPowerVFXPrefab, left.transform);
+
+            PUM.MoveSpecialPowerVFXToTarget(side1);
+            PUM.MoveSpecialPowerVFXToTarget(side2);
+            return;
         }
 
+        if (symbolNeeded == right.symbolOfPiece || symbolNeeded == left.symbolOfPiece)
+        {
+
+            GameManager.Instance.powerupManager.UpdateSpecialPowerupsCount(1, symbolNeeded);
+
+            if (symbolNeeded == right.symbolOfPiece)
+            {
+                GameObject side1 = Instantiate(PUM.specialPowerVFXPrefab, right.transform);
+                PUM.MoveSpecialPowerVFXToTarget(side1);
+            }
+            else
+            {
+                GameObject side2 = Instantiate(PUM.specialPowerVFXPrefab, left.transform);
+                PUM.MoveSpecialPowerVFXToTarget(side2);
+            }
+        }
     }
     void DestroySecondaryControlsPrefabCell(bool snappedFollower)
     {

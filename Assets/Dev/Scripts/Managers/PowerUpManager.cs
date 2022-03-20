@@ -70,6 +70,8 @@ public class PowerUpManager : MonoBehaviour
 
     Vector3 originalPotionPos = Vector3.zero;
 
+    public GameObject specialPowerVFXPrefab;
+
     private void Start()
     {
         GameManager.Instance.powerupManager = this;
@@ -1062,5 +1064,18 @@ public class PowerUpManager : MonoBehaviour
     public void InstantiatePotionAnimObject(int index)
     {
         GameObject go = Instantiate(potionAnimationObjects[index]);
+    }
+
+    public void MoveSpecialPowerVFXToTarget(GameObject toMove)
+    {
+        Transform target = specialPowerupsInGame[0].icon.transform;
+
+        Vector3 midPoint = new Vector3(toMove.transform.position.x -0.1f, toMove.transform.position.y - 1.5f, toMove.transform.position.z);
+
+        Vector3 closePoint = new Vector3(toMove.transform.position.x - 1, toMove.transform.position.y, toMove.transform.position.z);
+
+        LTBezierPath path = new LTBezierPath(new Vector3[] { toMove.transform.position, midPoint, closePoint, target.position});
+
+        LeanTween.move(toMove, path, 2).setOnComplete(() => Destroy(toMove));
     }
 }
