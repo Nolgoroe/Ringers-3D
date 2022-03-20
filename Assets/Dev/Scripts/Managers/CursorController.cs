@@ -1218,30 +1218,25 @@ public class CursorController : MonoBehaviour
 
         if (symbolNeeded == right.symbolOfPiece && symbolNeeded == left.symbolOfPiece)
         {
-            GameManager.Instance.powerupManager.UpdateSpecialPowerupsCount(2, symbolNeeded);
-
             GameObject side1 = Instantiate(PUM.specialPowerVFXPrefab, right.transform);
             GameObject side2 = Instantiate(PUM.specialPowerVFXPrefab, left.transform);
 
-            PUM.MoveSpecialPowerVFXToTarget(side1);
-            PUM.MoveSpecialPowerVFXToTarget(side2);
+            PUM.MoveSpecialPowerVFXToTarget(side1, true, symbolNeeded);
+            PUM.MoveSpecialPowerVFXToTarget(side2, true, symbolNeeded);
             return;
         }
 
         if (symbolNeeded == right.symbolOfPiece || symbolNeeded == left.symbolOfPiece)
         {
-
-            GameManager.Instance.powerupManager.UpdateSpecialPowerupsCount(1, symbolNeeded);
-
             if (symbolNeeded == right.symbolOfPiece)
             {
                 GameObject side1 = Instantiate(PUM.specialPowerVFXPrefab, right.transform);
-                PUM.MoveSpecialPowerVFXToTarget(side1);
+                PUM.MoveSpecialPowerVFXToTarget(side1, false, symbolNeeded);
             }
             else
             {
                 GameObject side2 = Instantiate(PUM.specialPowerVFXPrefab, left.transform);
-                PUM.MoveSpecialPowerVFXToTarget(side2);
+                PUM.MoveSpecialPowerVFXToTarget(side2, false, symbolNeeded);
             }
         }
     }

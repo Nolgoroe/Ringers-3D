@@ -16,6 +16,7 @@ public class InGameSpecialPowerUp : MonoBehaviour
     public Image icon;
 
     public int amountNeededToActivate = 0;
+    public int currentTotalAmount = 0;
     private void Awake()
     {
         //button = GetComponent<Button>();
@@ -26,17 +27,15 @@ public class InGameSpecialPowerUp : MonoBehaviour
 
     public void UpdateSlider(int amount)
     {
-        float currentSliderValue = slider.value;
+        currentTotalAmount += amount;
 
-        float target = currentSliderValue + ((float)amount / amountNeededToActivate);
+        float target = (float)currentTotalAmount / (float)amountNeededToActivate;
 
         LeanTween.value(slider.gameObject, slider.value, target, 1f).setEase(LeanTweenType.linear).setOnComplete(() => CheckCanUseSpecialPower()).setOnUpdate((float val) =>
         {
             float temp = val;
             slider.value = temp;
         });
-
-        //slider.value += (float)amount / amountNeededToActivate;
     }
 
     private void CheckCanUseSpecialPower()

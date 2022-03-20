@@ -1066,7 +1066,7 @@ public class PowerUpManager : MonoBehaviour
         GameObject go = Instantiate(potionAnimationObjects[index]);
     }
 
-    public void MoveSpecialPowerVFXToTarget(GameObject toMove)
+    public void MoveSpecialPowerVFXToTarget(GameObject toMove, bool isDouble, PieceSymbol symbolNeeded)
     {
         Transform target = specialPowerupsInGame[0].icon.transform;
 
@@ -1076,6 +1076,20 @@ public class PowerUpManager : MonoBehaviour
 
         LTBezierPath path = new LTBezierPath(new Vector3[] { toMove.transform.position, midPoint, closePoint, target.position});
 
-        LeanTween.move(toMove, path, 2).setOnComplete(() => Destroy(toMove));
+        LeanTween.move(toMove, path, 2).setOnComplete(() => OnCompleteMovePowerVFX(toMove, isDouble, symbolNeeded));
+    }
+
+    public void OnCompleteMovePowerVFX(GameObject toMove, bool isDouble, PieceSymbol symbolNeeded)
+    {
+        if (isDouble)
+        {
+            GameManager.Instance.powerupManager.UpdateSpecialPowerupsCount(2, symbolNeeded);
+        }
+        else
+        {
+            GameManager.Instance.powerupManager.UpdateSpecialPowerupsCount(1, symbolNeeded);
+        }
+
+        Destroy(toMove);
     }
 }
