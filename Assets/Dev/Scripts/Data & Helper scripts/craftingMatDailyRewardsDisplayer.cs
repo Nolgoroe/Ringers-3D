@@ -58,6 +58,14 @@ public class craftingMatDailyRewardsDisplayer : MonoBehaviour
     {
         anim.SetBool("Give Daily", true);
     }
+    public void TurnOffAnimator()
+    {
+        anim.enabled = false;
+    }
+    public void TurnOnAnimator()
+    {
+        anim.enabled = true;
+    }
     public void OnEndAnimation()
     {
         UIManager.Instance.CallDeactivateDailyRewardScreen();

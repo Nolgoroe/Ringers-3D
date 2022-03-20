@@ -8,4 +8,9 @@ public class AnimationEventsAnimals : MonoBehaviour
     {
        AnimationManager.instance.endAnimToWinScreen = StartCoroutine(AnimationManager.instance.AfterAnimalAnimation());
     }
+
+    public void ShakeAnimalStatue()
+    {
+        AnimalsManager.Instance.statueToSwap.GetComponent<CameraShake>().ShakeOnce();
+    }
 }

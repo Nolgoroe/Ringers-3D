@@ -42,6 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6317466080763825125}
   - component: {fileID: -3465495260694241978}
+  - component: {fileID: 243758191203734100}
   m_Layer: 0
   m_Name: Stag(Legendary)
   m_TagString: Untagged
@@ -81,6 +82,22 @@ MonoBehaviour:
   animatedPrefab: {fileID: 7012362078373566662, guid: 8fe30bce271c5a54197711d745dfde25,
     type: 3}
   animalSO: {fileID: 11400000, guid: 54656adc5246478468596ebf2c82b740, type: 2}
+--- !u!114 &243758191203734100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6317466080763825126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7536f5480f8cb2541a8e756e7c770003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Amount: {x: 0.07, y: 0.07, z: 0}
+  Duration: 0.3
+  Speed: 7
+  ResetPosition: 1
 --- !u!1 &6317466080797802565
 GameObject:
   m_ObjectHideFlags: 0

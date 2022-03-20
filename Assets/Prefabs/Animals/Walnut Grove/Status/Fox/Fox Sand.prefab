@@ -200,6 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6115078496944762636}
   - component: {fileID: 8719032320675942601}
+  - component: {fileID: -8745524276743529619}
   m_Layer: 0
   m_Name: Fox Sand
   m_TagString: Untagged
@@ -239,6 +240,22 @@ MonoBehaviour:
   animatedPrefab: {fileID: 250949432762967406, guid: cc96f37239c4bc04caa65747b39303e1,
     type: 3}
   animalSO: {fileID: 11400000, guid: 257e370af574dd54c93e8bd6d7387bf9, type: 2}
+--- !u!114 &-8745524276743529619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6115078496944762639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7536f5480f8cb2541a8e756e7c770003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Amount: {x: 0.07, y: 0.07, z: 0}
+  Duration: 0.3
+  Speed: 7
+  ResetPosition: 1
 --- !u!1001 &6115078497211507346
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -39,6 +39,8 @@ public class AnimationManager : MonoBehaviour
 
     public float animalWaitTime;
 
+    public float waitTimeVFXShakeStatue;
+
     public Image fadeImageEndLevel;
 
     public bool noWaitPieces;
@@ -195,6 +197,10 @@ public class AnimationManager : MonoBehaviour
         //boardScreenshot = Instantiate(GameManager.Instance.gameBoard, new Vector3(100, 0, 0), Quaternion.identity);
         //boardScreenshot.transform.SetParent(GameManager.Instance.destroyOutOfLevel);
         //yield return new WaitForSeconds(0.1f);
+
+
+        Instantiate(GameManager.Instance.endLevelAnimStatueShakeVFXPrefab, GameManager.Instance.destroyOutOfLevel);
+        yield return new WaitForSeconds(waitTimeVFXShakeStatue);
 
         GameManager.Instance.sliceManager.endLevelAnimVFX.SetActive(true);
 

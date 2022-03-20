@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject gameBoard;
     public GameObject gameClip;
+    public GameObject endLevelAnimStatueShakeVFXPrefab;
 
     public Transform destroyOutOfLevel;
 

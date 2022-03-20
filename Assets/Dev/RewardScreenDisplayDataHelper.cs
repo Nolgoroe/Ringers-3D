@@ -90,15 +90,13 @@ public class RewardScreenDisplayDataHelper : MonoBehaviour
         {
             lootPrefabsInstantiated[i].GetComponent<craftingMatDailyRewardsDisplayer>().TurnOFFTodayVFX();
             lootPrefabsInstantiated[i].GetComponent<craftingMatDailyRewardsDisplayer>().SetScaleNormal();
+            lootPrefabsInstantiated[i].GetComponent<craftingMatDailyRewardsDisplayer>().TurnOffAnimator();
         }
 
-        if (lootPrefabsInstantiated[index].GetComponent<craftingMatDailyRewardsDisplayer>().anim)
-        {
-            lootPrefabsInstantiated[index].GetComponent<craftingMatDailyRewardsDisplayer>().anim.enabled = false;
-        }
 
         lootPrefabsInstantiated[index].GetComponent<craftingMatDailyRewardsDisplayer>().TurnOnTodayVFX();
         lootPrefabsInstantiated[index].GetComponent<craftingMatDailyRewardsDisplayer>().SetScaleToday();
+        lootPrefabsInstantiated[index].GetComponent<craftingMatDailyRewardsDisplayer>().TurnOnAnimator();
     }
 
     public void CheckGivenRewardsDisplay()

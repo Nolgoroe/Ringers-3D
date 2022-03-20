@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1551197849347798064}
   - component: {fileID: 5411355032714436797}
+  - component: {fileID: 4261071001398161388}
   m_Layer: 0
   m_Name: Red Stag
   m_TagString: Untagged
@@ -48,6 +49,22 @@ MonoBehaviour:
   animatedPrefab: {fileID: 1770636312019413638, guid: 93436fcfa6593cc4aa436533c0124da0,
     type: 3}
   animalSO: {fileID: 11400000, guid: 54656adc5246478468596ebf2c82b740, type: 2}
+--- !u!114 &4261071001398161388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551197849347798067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7536f5480f8cb2541a8e756e7c770003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Amount: {x: 0.07, y: 0.07, z: 0}
+  Duration: 0.3
+  Speed: 7
+  ResetPosition: 1
 --- !u!1 &1551197849528191385
 GameObject:
   m_ObjectHideFlags: 0
