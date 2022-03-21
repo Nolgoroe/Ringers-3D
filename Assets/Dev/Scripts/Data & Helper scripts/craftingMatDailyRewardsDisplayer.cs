@@ -71,6 +71,11 @@ public class craftingMatDailyRewardsDisplayer : MonoBehaviour
         UIManager.Instance.CallDeactivateDailyRewardScreen();
     }
 
+    public void VFXRecieveDaily()
+    {
+        Instantiate(RewardScreenDisplayDataHelper.Instance.VFXRecieveDailyPrefab, todayEffect.transform);
+    }
+
     public void SetDayText(string day)
     {
         dayText.text = day;

@@ -9,6 +9,7 @@ public class RewardScreenDisplayDataHelper : MonoBehaviour
     public static RewardScreenDisplayDataHelper Instance;
 
     public GameObject materialPrefabDisplay;
+    public GameObject VFXRecieveDailyPrefab;
 
     public List<GameObject> lootPrefabsInstantiated;
 
