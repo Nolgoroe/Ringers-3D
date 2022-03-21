@@ -12,7 +12,7 @@ public class HollowObjectDisplayer : MonoBehaviour
 {
     public Button craftButton;
 
-    //public TMP_Text itemName;
+    public TMP_Text itemName;
     public RawImage itemImage;
 
     public Transform ingrediantContentParent;

@@ -82,6 +82,10 @@ public class AnimationManager : MonoBehaviour
     public Vector3 lootScaleTo;
     public Vector3 flowerUIScaleTo;
 
+
+
+    public GameObject successVFX;
+
     [Header("Unlcok Zone Settings")]
     public float cameraMoveTime;
     public float fadingTime;
@@ -128,6 +132,9 @@ public class AnimationManager : MonoBehaviour
     public Coroutine endAnimToWinScreen = null;
 
     bool dissolveStart = false;
+
+    [Header("Other")]
+    [Space(30)]
 
     public GameObject[] turnOff;
     public GameObject[] destroyOnSkilEndLevel;
@@ -602,6 +609,8 @@ public class AnimationManager : MonoBehaviour
             }
         }
 
+        Instantiate(successVFX, GameManager.Instance.destroyOutOfLevel);
+        ///summon VFX HERE
         GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>().enabled = true;
 
         turnOff = null;

@@ -752,7 +752,6 @@ public class PowerUpManager : MonoBehaviour
         layerToHit = new LayerMask();
 
 
-
         EquipmentData ED = null;
 
         for (int i = 0; i < prop.transform.childCount; i++)
@@ -1063,7 +1062,7 @@ public class PowerUpManager : MonoBehaviour
 
     public void InstantiatePotionAnimObject(int index)
     {
-        GameObject go = Instantiate(potionAnimationObjects[index]);
+        GameObject go = Instantiate(potionAnimationObjects[index], GameManager.Instance.destroyOutOfLevel);
     }
 
     public void MoveSpecialPowerVFXToTarget(GameObject toMove, bool isDouble, PieceSymbol symbolNeeded)
@@ -1091,5 +1090,10 @@ public class PowerUpManager : MonoBehaviour
         }
 
         Destroy(toMove);
+    }
+
+    public void ForceStopAllPowerupCoroutines()
+    {
+        StopAllCoroutines();
     }
 }

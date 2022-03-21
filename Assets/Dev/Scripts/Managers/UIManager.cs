@@ -65,7 +65,7 @@ public class UIManager : MonoBehaviour
     public GameObject brewButtonHeighlight;
     public GameObject closeInventoryHeighlight;
     public GameObject[] brewMaterialZonesHeighlights;
-    public GameObject normalBookBG, potionsBookBG;
+    public GameObject normalBookBG, potionsBookBG, craftingBookBG;
     public GameObject leaderboardScreen;
     public GameObject sureWantToResetDataScreen;
     public GameObject sureWantToLogOutScreen;
@@ -519,6 +519,8 @@ public class UIManager : MonoBehaviour
                 GameManager.Instance.powerupManager.ClearTutorialPowerups();
             }
 
+            GameManager.Instance.powerupManager.ForceStopAllPowerupCoroutines();
+
             GameManager.Instance.copyOfArrayOfPiecesTutorial.Clear();
             ZoneManager.Instance.ActivateLevelDisplay();
             LootManager.Instance.DestoryWinScreenDisplyedLoot();
@@ -527,6 +529,7 @@ public class UIManager : MonoBehaviour
             LightingSettingsManager.instance.ResetLightData();
 
             AnimationManager.instance.turnOff = null;
+            AnimationManager.instance.destroyOnSkilEndLevel = null;
 
             restartGrindLevel.gameObject.SetActive(false);
 
@@ -689,6 +692,7 @@ public class UIManager : MonoBehaviour
 
             normalBookBG.SetActive(true);
             potionsBookBG.SetActive(false);
+            craftingBookBG.SetActive(false);
 
             if (TutorialSequence.Instacne.duringSequence)
             {
@@ -827,8 +831,9 @@ public class UIManager : MonoBehaviour
         matsInventoryButton.enabled = true;
         forgeInventoryButton.enabled = false;
         potionInventoryButton.enabled = true;
-        normalBookBG.SetActive(true);
+        normalBookBG.SetActive(false);
         potionsBookBG.SetActive(false);
+        craftingBookBG.SetActive(true);
 
         if (TutorialSequence.Instacne.duringSequence)
         {
@@ -892,7 +897,7 @@ public class UIManager : MonoBehaviour
 
         normalBookBG.SetActive(true);
         potionsBookBG.SetActive(false);
-        potionsBookBG.SetActive(false);
+        craftingBookBG.SetActive(false);
 
     }
     public void ToBrewery()
@@ -908,6 +913,7 @@ public class UIManager : MonoBehaviour
         forgeInventoryButton.enabled = true;
         potionInventoryButton.enabled = false;
 
+        craftingBookBG.SetActive(false);
         normalBookBG.SetActive(false);
         potionsBookBG.SetActive(true);
 

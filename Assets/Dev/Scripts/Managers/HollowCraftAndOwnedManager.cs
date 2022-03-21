@@ -100,11 +100,10 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
                 HollowObjectDisplayer HOD = go.GetComponent<HollowObjectDisplayer>();
                 hollowObjectsCreated.Add(go);
 
-                //HOD.itemName.text = HCOD.objectname;
+                HOD.itemName.text = HCOD.objectname;
                 HOD.objectData = HCOD;
 
                 HOD.itemImage.texture = Resources.Load(HCOD.spritePath) as Texture2D;
-
                 HOD.name = HCOD.objectname;
                 //objectInHollow.Add(HOD);
                 HOD.SpawnMaterialsNeeded(HCOD.mats);

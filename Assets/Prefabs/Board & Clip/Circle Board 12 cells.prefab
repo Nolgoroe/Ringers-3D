@@ -33458,6 +33458,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0a02fa955190c13448dd4add6651b284, type: 3}
   - {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   fullSlices: []
+  activeLocksLockAnims: []
 --- !u!114 &2364524190024533076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64846,7 +64847,17 @@ PrefabInstance:
     - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
         type: 3}
       propertyPath: InitialModule.startRotation.scalar
-      value: -1.5707963
+      value: 3.1415925
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887692534456386060, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: m_MaxParticleSize
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f36bb7037767d2c43bde27954ac415ad, type: 3}
@@ -64942,7 +64953,17 @@ PrefabInstance:
     - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
         type: 3}
       propertyPath: InitialModule.startRotation.scalar
-      value: 0.7853981
+      value: 0.5235988
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887692534456386060, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: m_MaxParticleSize
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f36bb7037767d2c43bde27954ac415ad, type: 3}
@@ -65504,7 +65525,17 @@ PrefabInstance:
     - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
         type: 3}
       propertyPath: InitialModule.startRotation.scalar
-      value: 2.3561945
+      value: 1.5707963
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887692534456386060, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: m_MaxParticleSize
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f36bb7037767d2c43bde27954ac415ad, type: 3}
@@ -65582,6 +65613,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4096583053154687354, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4547798458029713606, guid: f36bb7037767d2c43bde27954ac415ad,
         type: 3}
       propertyPath: m_Name
@@ -65600,7 +65636,12 @@ PrefabInstance:
     - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 3.65
+      value: 3.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887692534456386060, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: m_MaxParticleSize
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f36bb7037767d2c43bde27954ac415ad, type: 3}
@@ -66078,7 +66119,17 @@ PrefabInstance:
     - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
         type: 3}
       propertyPath: InitialModule.startRotation.scalar
-      value: 1.5707963
+      value: 1.0471976
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887692534456386060, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: m_MaxParticleSize
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f36bb7037767d2c43bde27954ac415ad, type: 3}
@@ -66269,7 +66320,17 @@ PrefabInstance:
     - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
         type: 3}
       propertyPath: InitialModule.startRotation.scalar
-      value: -0.7853981
+      value: 5.7595863
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887692534456386060, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: m_MaxParticleSize
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f36bb7037767d2c43bde27954ac415ad, type: 3}
@@ -66845,7 +66906,17 @@ PrefabInstance:
     - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
         type: 3}
       propertyPath: InitialModule.startRotation.scalar
-      value: -0.7853981
+      value: 4.712389
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887692534456386060, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: m_MaxParticleSize
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f36bb7037767d2c43bde27954ac415ad, type: 3}
@@ -67518,7 +67589,17 @@ PrefabInstance:
     - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
         type: 3}
       propertyPath: InitialModule.startRotation.scalar
-      value: -0.7853981
+      value: 3.6651914
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887692534456386060, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: m_MaxParticleSize
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f36bb7037767d2c43bde27954ac415ad, type: 3}
@@ -67999,7 +68080,17 @@ PrefabInstance:
     - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
         type: 3}
       propertyPath: InitialModule.startRotation.scalar
-      value: -0.7853981
+      value: 5.2359877
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887692534456386060, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: m_MaxParticleSize
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f36bb7037767d2c43bde27954ac415ad, type: 3}
@@ -68191,7 +68282,17 @@ PrefabInstance:
     - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
         type: 3}
       propertyPath: InitialModule.startRotation.scalar
-      value: 3.1415925
+      value: 2.0943952
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887692534456386060, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: m_MaxParticleSize
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f36bb7037767d2c43bde27954ac415ad, type: 3}
@@ -68382,7 +68483,17 @@ PrefabInstance:
     - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
         type: 3}
       propertyPath: InitialModule.startRotation.scalar
-      value: -2.3561945
+      value: 2.6179938
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887692534456386060, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: m_MaxParticleSize
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f36bb7037767d2c43bde27954ac415ad, type: 3}
@@ -68575,7 +68686,17 @@ PrefabInstance:
     - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
         type: 3}
       propertyPath: InitialModule.startRotation.scalar
-      value: -0.7853981
+      value: 4.1887903
+      objectReference: {fileID: 0}
+    - target: {fileID: 6581280449417239559, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887692534456386060, guid: f36bb7037767d2c43bde27954ac415ad,
+        type: 3}
+      propertyPath: m_MaxParticleSize
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f36bb7037767d2c43bde27954ac415ad, type: 3}
