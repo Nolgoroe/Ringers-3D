@@ -794,7 +794,7 @@ public class PlayfabManager : MonoBehaviour
         if(result.InfoResultPayload.PlayerProfile != null)
         {
             playerName = result.InfoResultPayload.PlayerProfile.DisplayName;
-            UIManager.Instance.nameOfPlayer.text = playerName;
+            UIManager.Instance.nameOfPlayer.text = "Username: " + playerName;
         }
 
         StartCoroutine(LoginInit());

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.3425489, g: 0.6329369, b: 0.645117, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: dc50609c9b6e50d42918e7a871025c6b,
+    type: 2}
   m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
@@ -151,9 +152,9 @@ Transform:
   m_Children:
   - {fileID: 443329526}
   - {fileID: 941095708}
-  - {fileID: 427766021}
-  - {fileID: 1384133980}
   - {fileID: 271594131}
+  - {fileID: 1384133980}
+  - {fileID: 427766021}
   m_Father: {fileID: 750276147}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1248,8 +1249,7 @@ PrefabInstance:
   m_SourcePrefab: {fileID: 100100000, guid: ebd00c6e50e3f264eb4e6eca885c87b8, type: 3}
 --- !u!4 &271594131 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 279369252551035082, guid: ebd00c6e50e3f264eb4e6eca885c87b8,
-    type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 271594130}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &274754059
@@ -7100,7 +7100,7 @@ Transform:
   m_Children:
   - {fileID: 308465395}
   m_Father: {fileID: 10528731}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: -180, y: 0, z: 31.759995}
 --- !u!1 &435788201
 GameObject:
@@ -20462,14 +20462,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RendererInfo:
-  - renderer: {fileID: 7392466765706850088}
+  - renderer: {fileID: 7805498209915771426}
     lightmapIndex: 0
+    lightmapOffsetScale: {x: 0.5064108, y: 0.5064108, z: -0.00027571485, w: -0.00027571485}
+  - renderer: {fileID: 1273563507006911056}
+    lightmapIndex: 1
+    lightmapOffsetScale: {x: 0.28454798, y: 0.28454798, z: -0.00018415836, w: 0.61114395}
+  - renderer: {fileID: 8397349995933093863}
+    lightmapIndex: 0
+    lightmapOffsetScale: {x: 0.35196394, y: 0.35196394, z: 0.4690876, w: -0.006554638}
+  - renderer: {fileID: 2145099190}
+    lightmapIndex: 0
+    lightmapOffsetScale: {x: 0.38489622, y: 0.38489622, z: -0.03895336, w: 0.5025977}
+  - renderer: {fileID: 1140142679}
+    lightmapIndex: 1
+    lightmapOffsetScale: {x: 0.1770111, y: 0.1770111, z: 0.26788005, w: 0.82873476}
+  - renderer: {fileID: 7392466765706850088}
+    lightmapIndex: 2
     lightmapOffsetScale: {x: 2.0052483, y: 2.0052483, z: -1.0052483, w: 0}
+  - renderer: {fileID: 584534336}
+    lightmapIndex: 3
+    lightmapOffsetScale: {x: 2.0052483, y: 2.0052483, z: -1.0052483, w: 0}
+  - renderer: {fileID: 979489486}
+    lightmapIndex: 1
+    lightmapOffsetScale: {x: 0.49086973, y: 0.49086973, z: 0.45566413, w: -0.000317689}
+  - renderer: {fileID: 1589162633}
+    lightmapIndex: 1
+    lightmapOffsetScale: {x: 0.4673057, y: 0.4673057, z: 0.4557274, w: 0.49193308}
+  - renderer: {fileID: 1066056913}
+    lightmapIndex: 1
+    lightmapOffsetScale: {x: 0.23052607, y: 0.23052607, z: 0.26246408, w: 0.60703504}
+  - renderer: {fileID: 1503073250}
+    lightmapIndex: 1
+    lightmapOffsetScale: {x: 0.6421798, y: 0.6421798, z: -0.064991705, w: -0.0119593395}
   m_Lightmaps:
-  - {fileID: 2800000, guid: 73192d4faa7faa2448a729f7ec417aa5, type: 3}
+  - {fileID: 2800000, guid: 2d0029597aa5988458ca89a823fc9d83, type: 3}
+  - {fileID: 2800000, guid: 7b6c30f76d1715c4eaa1fdf450329af1, type: 3}
+  - {fileID: 2800000, guid: 76d6492a750f0894896b05c6550e11d7, type: 3}
+  - {fileID: 2800000, guid: cbb63bfa03a6aec4ea7f708a15b58eaf, type: 3}
   m_LightmapsDir:
-  - {fileID: 2800000, guid: 4dce1db2c4e306043805b84f60681573, type: 3}
+  - {fileID: 2800000, guid: eba3aab58ef7cf9449070bfa23ee9577, type: 3}
+  - {fileID: 2800000, guid: 89fe316edd941134f9504a04df071bd3, type: 3}
+  - {fileID: 2800000, guid: c6f41ee956fdcd54e9add7c1538d6d80, type: 3}
+  - {fileID: 2800000, guid: f471d9bde7e32bf4ab71881220319f02, type: 3}
   m_ShadowMasks:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
 --- !u!1 &1042314037
 GameObject:
