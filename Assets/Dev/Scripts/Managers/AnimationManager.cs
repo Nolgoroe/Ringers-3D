@@ -130,14 +130,21 @@ public class AnimationManager : MonoBehaviour
     bool dissolveStart = false;
 
     public GameObject[] turnOff;
+    public GameObject[] destroyOnSkilEndLevel;
 
     public GameObject toMoveOpenZone;
 
+
+    public bool endLevelAnimationON;
     void Start()
     {
         instance = this;
         tempSubPieceArray = new List<SubPiece>();
         fadeImageEndLevel.gameObject.SetActive(false);
+        endLevelAnimationON = false;
+
+        destroyOnSkilEndLevel = null;
+        turnOff = null;
     }
 
     [System.Serializable]
@@ -163,6 +170,7 @@ public class AnimationManager : MonoBehaviour
 
     public IEnumerator StartEndLevelAnim()
     {
+        endLevelAnimationON = true;
         turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
 
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(true);
@@ -449,6 +457,8 @@ public class AnimationManager : MonoBehaviour
 
     public void SkipEndLevelAnimation(bool isCheat)
     {
+        endLevelAnimationON = true;
+
         if (hasSkippedToAnimalAnim)
         {
             if (endAnimToWinScreen != null)
@@ -480,24 +490,17 @@ public class AnimationManager : MonoBehaviour
             LeanTween.cancelAll();
         }
 
-        //GameManager.Instance.gameBoard.gameObject.transform.position = new Vector3(100, 0, 0);
+        if (destroyOnSkilEndLevel == null)
+        {
+            destroyOnSkilEndLevel = GameObject.FindGameObjectsWithTag("DestroyOnSkipEndLevel");
+        }
 
-        //if (!isCheat)
-        //{
-        //    UnDissolveTiles(true);
-        //    ConnectionManager.Instance.TurnOffAllConnectedVFX();
+        foreach (GameObject go in destroyOnSkilEndLevel)
+        {
+            Destroy(go);
+        }
 
-        //    if(boardScreenshot == null)
-        //    {
-        //        boardScreenshot = Instantiate(GameManager.Instance.gameBoard, new Vector3(100, 0, 0), Quaternion.identity);
-        //        boardScreenshot.transform.SetParent(GameManager.Instance.destroyOutOfLevel);
-        //    }
-
-
-        //    MoveBoardScreenshotToPosition(boardScreenshot);
-        //}
-
-        //tempSubPieceArray.Clear();
+        destroyOnSkilEndLevel = null;
 
         SpriteRenderer boardSR = GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>();
         boardSR.color = new Color(boardSR.color.r, boardSR.color.g, boardSR.color.b, 0);
@@ -525,10 +528,8 @@ public class AnimationManager : MonoBehaviour
         }
 
         ConnectionManager.Instance.TurnOffAllConnectedVFX();
-        if (turnOff == null)
-        {
-            turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
-        }
+
+
 
         //foreach (GameObject GO in turnOff)
         //{
@@ -570,6 +571,8 @@ public class AnimationManager : MonoBehaviour
 
     public IEnumerator AfterAnimalAnimation()
     {
+        endLevelAnimationON = true;
+
         if (hasSkippedToBoardAnim)
         {
             if (endAnimToWinScreen != null)
@@ -799,10 +802,14 @@ public class AnimationManager : MonoBehaviour
         TutorialSequence.Instacne.CheckDoDenTutorial();
 
         UIManager.Instance.CheckTurnOnReleaseAnimalScreen();
+
+        endLevelAnimationON = false;
     }
 
     public void SkipBoardAnim()
     {
+        endLevelAnimationON = true;
+
         //if (turnOff == null)
         //{
         //    turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
@@ -903,6 +910,7 @@ public class AnimationManager : MonoBehaviour
 
         UIManager.Instance.CheckTurnOnReleaseAnimalScreen();
 
+        endLevelAnimationON = false;
     }
     private void CheckShowLootTutorial()
     {

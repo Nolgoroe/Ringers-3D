@@ -445,7 +445,7 @@ public class CursorController : MonoBehaviour
                 {
                     Piece p = hit.transform.parent.GetComponent<Piece>();
                     //Debug.Log(hit.transform.name);
-                    if (!p.isDuringConnectionAnim)
+                    if (!p.isDuringConnectionAnim && !AnimationManager.instance.endLevelAnimationON)
                     {
                         GrabPiece(p);
                     }

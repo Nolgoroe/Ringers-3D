@@ -13,4 +13,8 @@ public class AnimationEventsAnimals : MonoBehaviour
     {
         AnimalsManager.Instance.statueToSwap.GetComponent<CameraShake>().ShakeOnce();
     }
+    public void DestroySelf()
+    {
+        Destroy(gameObject);
+    }
 }

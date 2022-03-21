@@ -267,6 +267,13 @@ public class AnimalsManager : MonoBehaviour
 
     public bool CheckConditionsSummonAnimalDen(AnimalPrefabData animalToCheck, zoneSlotAndType ZSAT)
     {
+        AnimalDenDataChecker animalCheckTo = AnimalManagerDataHelper.instance.animalDataCheckTo.Where(p => p.animalEnum == animalToCheck.animalType).SingleOrDefault();
+
+        if (animalCheckTo == null)
+        {
+            return false;
+        }
+
         if (placedAnimalsInDen.Contains(animalToCheck.animalType))
         {
             return false;
