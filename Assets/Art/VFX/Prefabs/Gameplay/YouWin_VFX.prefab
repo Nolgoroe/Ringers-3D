@@ -606,7 +606,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.1
+      scalar: 0.05
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -3812,7 +3812,7 @@ ParticleSystem:
     radiusScale: 1
   SubModule:
     serializedVersion: 2
-    enabled: 1
+    enabled: 0
     subEmitters:
     - serializedVersion: 3
       emitter: {fileID: 0}
@@ -4084,8 +4084,8 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.4718628
-          value: 0
+          time: 0.23257446
+          value: 0.0027770996
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -7416,8 +7416,8 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.32716566
         - serializedVersion: 3
-          time: 0.3028166
-          value: 0.19855483
+          time: 0.10788557
+          value: 0.20133193
           inSlope: -6.146121
           outSlope: -0.3522362
           tangentMode: 1
