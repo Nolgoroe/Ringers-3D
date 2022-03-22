@@ -137,7 +137,7 @@ public class AnimationManager : MonoBehaviour
     [Space(30)]
 
     public GameObject[] turnOff;
-    public GameObject[] destroyOnSkilEndLevel;
+    public GameObject[] destroyOnSkipEndLevel;
 
     public GameObject toMoveOpenZone;
 
@@ -150,7 +150,7 @@ public class AnimationManager : MonoBehaviour
         fadeImageEndLevel.gameObject.SetActive(false);
         endLevelAnimationON = false;
 
-        destroyOnSkilEndLevel = null;
+        destroyOnSkipEndLevel = null;
         turnOff = null;
     }
 
@@ -187,7 +187,11 @@ public class AnimationManager : MonoBehaviour
 
         tempSubPieceArray.AddRange(ConnectionManager.Instance.subPiecesOnBoard);
 
-  
+        foreach (InGameSpecialPowerUp IGSP in GameManager.Instance.powerupManager.specialPowerupsInGame)
+        {
+            IGSP.gameObject.SetActive(false);
+        }
+
 
 
         MoveTopButtonAnim();
@@ -497,17 +501,22 @@ public class AnimationManager : MonoBehaviour
             LeanTween.cancelAll();
         }
 
-        if (destroyOnSkilEndLevel == null)
+        if (destroyOnSkipEndLevel == null)
         {
-            destroyOnSkilEndLevel = GameObject.FindGameObjectsWithTag("DestroyOnSkipEndLevel");
+            destroyOnSkipEndLevel = GameObject.FindGameObjectsWithTag("DestroyOnSkipEndLevel");
         }
 
-        foreach (GameObject go in destroyOnSkilEndLevel)
+        foreach (GameObject go in destroyOnSkipEndLevel)
         {
             Destroy(go);
         }
 
-        destroyOnSkilEndLevel = null;
+        destroyOnSkipEndLevel = null;
+
+        foreach (InGameSpecialPowerUp IGSP in GameManager.Instance.powerupManager.specialPowerupsInGame)
+        {
+            IGSP.gameObject.SetActive(false);
+        }
 
         SpriteRenderer boardSR = GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>();
         boardSR.color = new Color(boardSR.color.r, boardSR.color.g, boardSR.color.b, 0);
@@ -568,7 +577,7 @@ public class AnimationManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(AfterAnimalAnimation());
+            endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation());
         }
 
         //TutorialSequence.Instacne.CheckDoPotionTutorial();
@@ -716,6 +725,7 @@ public class AnimationManager : MonoBehaviour
 
         LeanTween.scale(GameManager.Instance.gameBoard.gameObject, boardScaleTo, timeToScaleBoard);
 
+        CheckShowLootTutorial();
         yield return new WaitForSeconds(timeToScaleBoard + 0.1f);
         GameManager.Instance.WinAfterAnimation();
 
@@ -805,12 +815,13 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.restartButton.interactable = true;
         UIManager.Instance.dealButton.interactable = true;
 
-        CheckShowLootTutorial();
-
         TutorialSequence.Instacne.CheckDoPotionTutorial();
         TutorialSequence.Instacne.CheckDoDenTutorial();
 
-        UIManager.Instance.CheckTurnOnReleaseAnimalScreen();
+        if (!GameManager.Instance.currentLevel.isGrindLevel)
+        {
+            UIManager.Instance.CheckTurnOnReleaseAnimalScreen();
+        }
 
         endLevelAnimationON = false;
     }
@@ -854,11 +865,21 @@ public class AnimationManager : MonoBehaviour
 
         UIManager.Instance.youWinScreen.SetActive(true);
 
+
         UIManager.Instance.sucessText.color = new Color(UIManager.Instance.sucessText.color.r, UIManager.Instance.sucessText.color.g, UIManager.Instance.sucessText.color.b, 1);
 
         string animalName = Regex.Replace(AnimalsManager.Instance.currentLevelAnimal.ToString(), "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
 
-        UIManager.Instance.animalNameText.text = animalName + " Released!";
+        if (GameManager.Instance.currentLevel.isGrindLevel)
+        {
+            UIManager.Instance.animalNameText.text = "Arena completed!";
+        }
+        else
+        {
+            UIManager.Instance.animalNameText.text = animalName + " Released!";
+        }
+
+        CheckShowLootTutorial();
 
         UIManager.Instance.animalNameText.color = new Color(UIManager.Instance.animalNameText.color.r, UIManager.Instance.animalNameText.color.g, UIManager.Instance.animalNameText.color.b, 1);
 
@@ -912,12 +933,14 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.restartButton.interactable = true;
         UIManager.Instance.dealButton.interactable = true;
 
-        CheckShowLootTutorial();
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
         TutorialSequence.Instacne.CheckDoDenTutorial();
 
-        UIManager.Instance.CheckTurnOnReleaseAnimalScreen();
+        if (!GameManager.Instance.currentLevel.isGrindLevel)
+        {
+            UIManager.Instance.CheckTurnOnReleaseAnimalScreen();
+        }
 
         endLevelAnimationON = false;
     }

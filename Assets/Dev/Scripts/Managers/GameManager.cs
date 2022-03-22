@@ -719,11 +719,17 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.youWinScreen.SetActive(false);
         UIManager.Instance.bGPanelDisableTouch.SetActive(false);
         UIManager.Instance.ResetTopAndBottomPos();
+        UIManager.Instance.PrepareObjectForEndBoardAnim();
 
         LootManager.Instance.DestoryWinScreenDisplyedLoot();
         powerupManager.DestroySpecialPowersObjects();
 
         powerupManager.ResetData();
+
+        if (selectedLevelBG.transform.Find("color mask"))
+        {
+            selectedLevelBG.transform.Find("color mask").gameObject.SetActive(true); //// put this someplace better in the future
+        }
 
         if (!isDisableTutorials && (currentLevel.isTutorial || currentLevel.isSpecificTutorial))
         {
@@ -796,6 +802,8 @@ public class GameManager : MonoBehaviour
                 go.SetActive(false);
             }
         }
+
+        powerupManager.DestroySpecialPowersObjects();
         TutorialSequence.Instacne.activatedHeighlights.Clear();
 
         DestroyAllLevelChildern();
@@ -835,6 +843,10 @@ public class GameManager : MonoBehaviour
 
         ChooseLevel(currentLevel.levelNum + 1/*, currentLevel.worldName*/);
 
+        if (selectedLevelBG.transform.Find("color mask"))
+        {
+            selectedLevelBG.transform.Find("color mask").gameObject.SetActive(true); //// put this someplace better in the future
+        }
 
         if (nextIsTutorial)
         {

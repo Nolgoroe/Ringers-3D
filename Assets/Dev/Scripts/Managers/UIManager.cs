@@ -529,7 +529,7 @@ public class UIManager : MonoBehaviour
             LightingSettingsManager.instance.ResetLightData();
 
             AnimationManager.instance.turnOff = null;
-            AnimationManager.instance.destroyOnSkilEndLevel = null;
+            AnimationManager.instance.destroyOnSkipEndLevel = null;
 
             restartGrindLevel.gameObject.SetActive(false);
 
@@ -630,6 +630,8 @@ public class UIManager : MonoBehaviour
 
             ZoneManager.Instance.ActivateLevelDisplay();
             PZ.isInDenScreen = false;
+
+            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, TutorialSequence.Instacne.maskImage.transform.position.z);
         }
 
         if (currentCanvas == mainMenu)
