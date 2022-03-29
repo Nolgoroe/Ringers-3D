@@ -203,6 +203,8 @@ public class ConnectionManager : MonoBehaviour
                         //{
                         if (conditionmet)
                         {
+                            GameManager.Instance.sliceManager.SetSliceSolvedSprite(supPieceArray[currentLeft].relevantSlice);
+
                             if (supPieceArray[currentLeft].relevantSlice.anim)
                             {
                                 supPieceArray[currentLeft].relevantSlice.anim.SetBool("Activate", true);
