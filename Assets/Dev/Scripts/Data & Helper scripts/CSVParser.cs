@@ -247,7 +247,8 @@ public class CSVParser : MonoBehaviour
 
             HCOD.mats = parsedList[i][4].ToString();
 
-            HCOD.spritePath = parsedList[i][5].ToString();
+            //HCOD.spritePath = parsedList[i][5].ToString();
+            HCOD.spriteIndex = Convert.ToInt32(parsedList[i][5]);
 
             allHollowCraftObjectsInGame.Add(HCOD);
         }

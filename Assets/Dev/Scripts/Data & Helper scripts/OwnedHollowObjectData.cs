@@ -16,14 +16,11 @@ public class OwnedHollowObjectData : MonoBehaviour, IPointerDownHandler, IDragHa
 
     public Vector2 pos;
 
+    public Image itemSprite;
     private void Awake()
     {
         rect = transform.GetComponent<RectTransform>();
         originalParent = transform.parent;
-    }
-
-    private void Update()
-    {
     }
 
     public void OnPointerDown(PointerEventData eventData)

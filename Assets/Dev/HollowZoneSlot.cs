@@ -54,16 +54,17 @@ public class HollowZoneSlot : MonoBehaviour
 
     public void InstantiateObject(HollowCraftObjectData HCOD)
     {
-            GameObject go = Instantiate(HollowCraftAndOwnedManager.Instance.HollowScreenCraftPrefab, hollowObjectZones[HCOD.indexInHollow]);
-            HollowObjectScreenDisplayer HOZD = go.GetComponent<HollowObjectScreenDisplayer>();
+        GameObject go = Instantiate(HollowCraftAndOwnedManager.Instance.HollowScreenCraftPrefab, hollowObjectZones[HCOD.indexInHollow]);
+        HollowObjectScreenDisplayer HOZD = go.GetComponent<HollowObjectScreenDisplayer>();
 
-            HOZD.objectIcon.texture = Resources.Load(HCOD.spritePath) as Texture2D;
+        //HOZD.objectIcon.texture = Resources.Load(HCOD.spritePath) as Texture2D;
+        HOZD.objectIcon.sprite = HollowCraftAndOwnedManager.Instance.denItemSprites[HCOD.spriteIndex];
 
-            HOZD.objectData = HCOD;
+        HOZD.objectData = HCOD;
 
-            HOZD.SpawnMaterialsNeeded(HCOD.mats);
+        HOZD.SpawnMaterialsNeeded(HCOD.mats);
 
-            HOZD.connectedZoneSlot = this;
+        HOZD.connectedZoneSlot = this;
 
     }
 }

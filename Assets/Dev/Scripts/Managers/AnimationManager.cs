@@ -1046,13 +1046,14 @@ public class AnimationManager : MonoBehaviour
 
         FadeInBrewedScreen();
     }
-    public void AnimateCraftedHollowcreen(string HollowItemname, string HollowItemSpritePath)
+    public void AnimateCraftedHollowcreen(string HollowItemname, int HollowItemSpriteIndex)
     {
         SoundManager.Instance.PlaySound(Sounds.ElementCrafted);
         UIManager.isUsingUI = true;
 
         craftedNameText.text = HollowItemname;
-        hollowIcon.sprite = Resources.Load<Sprite>(HollowItemSpritePath);
+        //hollowIcon.sprite = Resources.Load<Sprite>(HollowItemSpritePath);
+        hollowIcon.sprite = HollowCraftAndOwnedManager.Instance.denItemSprites[HollowItemSpriteIndex];
 
         FadeInHollowCraftedScreen();
     }

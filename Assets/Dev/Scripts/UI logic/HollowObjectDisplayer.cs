@@ -13,7 +13,7 @@ public class HollowObjectDisplayer : MonoBehaviour
     public Button craftButton;
 
     public TMP_Text itemName;
-    public RawImage itemImage;
+    public Image itemImage;
 
     public Transform ingrediantContentParent;
     public GameObject ingrediantDisplayerPrefab;
@@ -177,7 +177,8 @@ public class HollowObjectDisplayer : MonoBehaviour
 
             UIManager.Instance.craftedHollowItemScreen.SetActive(true);
 
-            AnimationManager.instance.AnimateCraftedHollowcreen(objectData.objectname, objectData.spritePath);
+            //AnimationManager.instance.AnimateCraftedHollowcreen(objectData.objectname, objectData.spritePath);
+            AnimationManager.instance.AnimateCraftedHollowcreen(objectData.objectname, objectData.spriteIndex);
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
 
@@ -210,7 +211,8 @@ public class HollowObjectDisplayer : MonoBehaviour
 
             UIManager.Instance.craftedHollowItemScreen.SetActive(true);
 
-            AnimationManager.instance.AnimateCraftedHollowcreen(objectData.objectname, objectData.spritePath);
+            //AnimationManager.instance.AnimateCraftedHollowcreen(objectData.objectname, objectData.spritePath);
+            AnimationManager.instance.AnimateCraftedHollowcreen(objectData.objectname, objectData.spriteIndex);
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
         }

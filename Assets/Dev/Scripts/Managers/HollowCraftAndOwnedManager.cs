@@ -58,6 +58,7 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
     public HollowObjectDisplayer currentlyToCraftNoramlMehtod;
     public HollowObjectScreenDisplayer currentlyToCraftSecondMethod;
 
+    public Sprite[] denItemSprites;
     private void Awake()
     {
         Instance = this;
@@ -103,7 +104,8 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
                 HOD.itemName.text = HCOD.objectname;
                 HOD.objectData = HCOD;
 
-                HOD.itemImage.texture = Resources.Load(HCOD.spritePath) as Texture2D;
+                //HOD.itemImage.texture = Resources.Load(HCOD.spritePath) as Texture2D;
+                HOD.itemImage.sprite = denItemSprites[HCOD.spriteIndex];
                 HOD.name = HCOD.objectname;
                 //objectInHollow.Add(HOD);
                 HOD.SpawnMaterialsNeeded(HCOD.mats);
@@ -185,7 +187,8 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
             OHOD.requiredHollowType = HCOD.objectHollowType;
             //objectsInOwned.Add(OHOD);
 
-            go.GetComponentInChildren<RawImage>().texture = Resources.Load(HCOD.spritePath) as Texture2D;
+            //go.GetComponentInChildren<RawImage>().texture = Resources.Load(HCOD.spritePath) as Texture2D;
+            OHOD.itemSprite.sprite = denItemSprites[HCOD.spriteIndex];
         }
     }
 

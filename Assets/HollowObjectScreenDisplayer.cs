@@ -9,7 +9,7 @@ public class HollowObjectScreenDisplayer : MonoBehaviour
 {
     public Transform craftingMatZone;
     public GameObject materialPrefabHollowScreen;
-    public RawImage objectIcon;
+    public Image objectIcon;
     public HollowCraftObjectData objectData;
 
     public List<string> materialCountPairs;
