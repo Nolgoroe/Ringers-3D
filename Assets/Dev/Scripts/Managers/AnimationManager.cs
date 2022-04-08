@@ -212,7 +212,7 @@ public class AnimationManager : MonoBehaviour
 
         ConnectionManager.Instance.TurnOffAllConnectedVFX();
 
-        yield return new WaitForSeconds(speedOutTopBottom + 0.1f);
+        //yield return new WaitForSeconds(speedOutTopBottom + 0.1f);
         //boardScreenshot = Instantiate(GameManager.Instance.gameBoard, new Vector3(100, 0, 0), Quaternion.identity);
         //boardScreenshot.transform.SetParent(GameManager.Instance.destroyOutOfLevel);
         //yield return new WaitForSeconds(0.1f);
@@ -607,7 +607,8 @@ public class AnimationManager : MonoBehaviour
             hasSkippedToBoardAnim = true;
         }
 
-        if(turnOff != null)
+        SoundManager.Instance.PlaySound(Sounds.LevelWin);
+        if (turnOff != null)
         {
             foreach (GameObject GO in turnOff)
             {
@@ -638,6 +639,8 @@ public class AnimationManager : MonoBehaviour
             SpriteRenderer goSR = go.GetComponent<SpriteRenderer>();
             goSR.color = new Color(goSR.color.r, goSR.color.g, goSR.color.b, 1);
         }
+
+        GameManager.Instance.gameBoard.transform.localScale = boardScaleTo;
 
         Vector3 originalScale = GameManager.Instance.gameBoard.transform.localScale;
 

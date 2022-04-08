@@ -740,7 +740,10 @@ public class CursorController : MonoBehaviour
 
             cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, -0.05f);
 
-            LeanTween.move(followerTarget.gameObject, cursorPos, pickupSpeed); // animate
+            if (!GameManager.Instance.isSecondaryControls)
+            {
+                LeanTween.move(followerTarget.gameObject, cursorPos, pickupSpeed); // animate
+            }
 
             if (GameManager.Instance.currentLevel.is12PieceRing)
             {
@@ -748,10 +751,14 @@ public class CursorController : MonoBehaviour
             }
 
             float angle = Mathf.Atan2(gameBoard.transform.position.y - followerTarget.position.y, gameBoard.transform.position.x - followerTarget.position.x) * Mathf.Rad2Deg;
-            followerTarget.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
+
+            if (!GameManager.Instance.isSecondaryControls)
+            {
+                followerTarget.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 90));
+            }
         }
 
-        if (followerTarget)
+        if (followerTarget && !GameManager.Instance.isSecondaryControls)
         {
             MoveFollower();
         }

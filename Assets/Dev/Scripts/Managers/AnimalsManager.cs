@@ -152,6 +152,9 @@ public class AnimalsManager : MonoBehaviour
     public IEnumerator RescueAnimalSequance()
     {
         AnimalPrefabData APD = statueToSwap.GetComponent<AnimalPrefabData>();
+
+        statueToSwap.GetComponent<AnimalPrefabData>().renderer.materials[0].DisableKeyword("_EMISSION");
+
         statueToSwap.SetActive(false);
 
         GameObject go = Instantiate(APD.animatedPrefab, statueToSwap.transform.parent);

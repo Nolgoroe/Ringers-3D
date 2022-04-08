@@ -9,4 +9,6 @@ public class AnimalPrefabData : MonoBehaviour
     public GameObject animatedPrefab;
 
     public AnimalScriptableObject animalSO;
+
+    public MeshRenderer renderer;
 }

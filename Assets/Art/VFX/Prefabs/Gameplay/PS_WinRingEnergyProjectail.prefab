@@ -41,13 +41,13 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3112492505454969088}
   serializedVersion: 6
-  lengthInSec: 5
+  lengthInSec: 1.1
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -4796,13 +4796,13 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7793889260216835062}
   serializedVersion: 6
-  lengthInSec: 5
+  lengthInSec: 1.1
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -14285,6 +14285,7 @@ GameObject:
   - component: {fileID: 4849073398123821266}
   - component: {fileID: 2732991338457912984}
   - component: {fileID: 8513696887315135944}
+  - component: {fileID: 9188776354628367580}
   m_Layer: 0
   m_Name: PS_WinRingEnergyProjectail
   m_TagString: Untagged
@@ -14299,15 +14300,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8561309546895587586}
-  m_LocalRotation: {x: 0.67799217, y: -0, z: -0, w: 0.7350691}
-  m_LocalPosition: {x: 0.306, y: 2.038, z: -0.76}
-  m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
+  m_LocalRotation: {x: 0.67559016, y: 0, z: 0, w: 0.7372774}
+  m_LocalPosition: {x: 0.25, y: 2.038, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5098117061078165849}
   - {fileID: 6048128589631876033}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 85, y: 0, z: 0}
 --- !u!198 &4849073398123821266
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -14316,13 +14317,13 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8561309546895587586}
   serializedVersion: 6
-  lengthInSec: 5
+  lengthInSec: 1.2
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -19049,6 +19050,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &9188776354628367580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8561309546895587586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bcc2892f30fab64e8d5541d17ddce09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8756282632894298336
 GameObject:
   m_ObjectHideFlags: 0

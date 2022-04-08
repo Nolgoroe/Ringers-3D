@@ -18,7 +18,9 @@ public enum Sounds
     ElementCrafted,
     NegativeSound,
     PageFlip,
-    TileLock
+    TileLock,
+    ItemPop,
+    LevelWin
     //// Add all sounds here
 }
 

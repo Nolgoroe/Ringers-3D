@@ -216,6 +216,8 @@ public class LootManager : MonoBehaviour
             PlayerManager.Instance.AddRubies(rubiesToRecieveInLevel);
 
             Debug.Log("Rubies to recieve " + rubiesToRecieveInLevel);
+
+            SoundManager.Instance.PlaySound(Sounds.ItemPop);
             yield return new WaitForSeconds(AnimationManager.instance.DelayBetweenLootAppear);
         }
 
@@ -228,6 +230,7 @@ public class LootManager : MonoBehaviour
                 PlayerManager.Instance.AddMaterials(LTR.type, LTR.amount); //////// Figure out how to get amount from outside dynamically
 
                 Debug.Log("materials recieved " + LTR.type);
+                SoundManager.Instance.PlaySound(Sounds.ItemPop);
 
                 yield return new WaitForSeconds(AnimationManager.instance.DelayBetweenLootAppear);
             }

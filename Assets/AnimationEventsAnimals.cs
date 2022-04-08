@@ -12,6 +12,8 @@ public class AnimationEventsAnimals : MonoBehaviour
     public void ShakeAnimalStatue()
     {
         AnimalsManager.Instance.statueToSwap.GetComponent<CameraShake>().ShakeOnce();
+
+        AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>().renderer.materials[0].EnableKeyword("_EMISSION");
     }
     public void DestroySelf()
     {
