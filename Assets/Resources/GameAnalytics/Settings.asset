@@ -25,52 +25,219 @@ MonoBehaviour:
   UserMessagesSubmitted: 0
   UserMessagesFailed: 0
   CustomArea: 
-  gameKey: []
-  secretKey: []
-  Build: []
-  SelectedPlatformOrganization: []
-  SelectedPlatformStudio: []
-  SelectedPlatformGame: []
-  SelectedPlatformGameID: 
-  SelectedOrganization: 
-  SelectedStudio: 
-  SelectedGame: 
-  NewVersion: 
-  Changes: 
-  SignUpOpen: 1
-  StudioName: 
-  GameName: 
+  gameKey:
+  - cb8e5984616a67c92b3dce457aa341fd
+  secretKey:
+  - 4bf0227b401edf506b0108746a30602dfd6c54bb
+  Build:
+  - Ringers V0.99.08 - Harpy
+  SelectedPlatformOrganization:
+  - Clover Bite Studios
+  SelectedPlatformStudio:
+  - Clover Bite
+  SelectedPlatformGame:
+  - Ringers3D - THIS
+  SelectedPlatformGameID: 3c0b0200
+  SelectedOrganization: 01000000
+  SelectedStudio: 01000000
+  SelectedGame: 01000000
+  NewVersion: 7.3.23
+  Changes: '7.3.23
+
+    - fixed bug with custom fields (locale related bug)
+
+
+    7.3.22
+
+    -
+    added external dependency manager for .unitypackage release as well to solve
+    issues with appset id on android
+
+
+    7.3.21
+
+    - fixed bug in internal error
+    reporting
+
+
+    7.3.20
+
+    - added event uuid to events sent
+
+
+    7.3.19
+
+    -
+    updated dependencies
+
+
+    7.3.18
+
+    - fixed fps event script to still run
+    coroutines when Time.timeScale = 0 by using WaitForSecondsRealtime instead of
+    WaitForSeconds
+
+
+    7.3.17
+
+    - added method manually update gamekey and secretkey
+
+
+    7.3.16
+
+    -
+    fixed uwp build errors
+
+
+    7.3.15
+
+    - changed frequency logic for fps events
+
+
+    7.3.14
+
+    -
+    small fix
+
+
+    7.3.13
+
+    - fixed crash for android builds
+
+
+    7.3.12
+
+    -
+    removed imei identifiers and other alternative identifiers from user identifier
+    logic (android)
+
+
+    7.3.11
+
+    - updated dependency to external dependency
+    resolver
+
+
+    7.3.10
+
+    - adding missing .meta file for upm release
+
+    -
+    switched to using openupm for scoped registry when using upm, please update the
+    upm setup for the unity sdk
+
+
+    7.3.9
+
+    - fixed upm package.json
+
+
+    7.3.8
+
+    -
+    fixed upm dependecy
+
+
+    7.3.7
+
+    - added depedencies.xml for upm release
+
+
+    7.3.6
+
+    -
+    fixed playmaker bugs
+
+
+    7.3.5
+
+    - changed settings to have FPS events turned
+    off by default
+
+
+    7.3.4
+
+    - added error events to be sent for invalid custom
+    event fields used
+
+    - added optional mergeFields argument to event methods
+    to merge with global custom fields instead of overwrite them
+
+
+    7.3.3
+
+    -
+    playmaker fixes
+
+
+    7.3.2
+
+    - fixed missing custom event fields for when
+    trying to fix missing session end events
+
+
+    7.3.1
+
+    - fixed editor ui bug
+    with games with the same name
+
+
+    7.3.0
+
+    - added global custom event fields
+    function to allow to add custom fields to events sent automatically by the SDK
+
+
+    7.2.1
+
+    -
+    added functionality to force a new user in a/b testing without having to uninstall
+    app first, simply use custom user id function to set a new user id which hasn''t
+    been used yet
+
+
+    7.2.0
+
+    - added support for admob impression events
+
+
+    7.1.1
+
+    -
+    fixed build errors for desktop platforms'
+  SignUpOpen: 0
+  StudioName: CloverBite
+  GameName: Ringers3D - THIS
   OrganizationName: 
   OrganizationIdentifier: 
-  EmailGA: 
-  IntroScreen: 1
+  EmailGA: cloverbitegames@gmail.com
+  IntroScreen: 0
   InfoLogEditor: 1
   InfoLogBuild: 1
   VerboseLogBuild: 0
   UseManualSessionHandling: 0
   SendExampleGameDataToMyGame: 0
-  UseIMEI: 0
   InternetConnectivity: 0
   CustomDimensions01: []
   CustomDimensions02: []
   CustomDimensions03: []
   ResourceItemTypes: []
   ResourceCurrencies: []
-  LastCreatedGamePlatform: 0
-  Platforms: 
-  CurrentInspectorState: 0
+  LastCreatedGamePlatform: -1
+  Platforms: 0b000000
+  CurrentInspectorState: 1
   ClosedHints: 
   DisplayHints: 0
   DisplayHintsScrollState: {x: 0, y: 0}
-  Logo: {fileID: 0}
-  UpdateIcon: {fileID: 0}
-  InfoIcon: {fileID: 0}
-  DeleteIcon: {fileID: 0}
-  GameIcon: {fileID: 0}
-  HomeIcon: {fileID: 0}
-  InstrumentIcon: {fileID: 0}
-  QuestionIcon: {fileID: 0}
-  UserIcon: {fileID: 0}
+  Logo: {fileID: 2800000, guid: 98df8f9c5678a4e5d964caa1244e8958, type: 3}
+  UpdateIcon: {fileID: 2800000, guid: 810bbb19deed24f3cb7b854f9bafde26, type: 3}
+  InfoIcon: {fileID: 2800000, guid: 1b4dd779aadd54ac88856975af0d3c0a, type: 3}
+  DeleteIcon: {fileID: 2800000, guid: 85a626f1668244d30a4e9f616991a793, type: 3}
+  GameIcon: {fileID: 2800000, guid: a9ac7103fc40b4e00923bf8c2cb5d30f, type: 3}
+  HomeIcon: {fileID: 2800000, guid: fe7e2ecc9b2fe447bafe90f6395d4709, type: 3}
+  InstrumentIcon: {fileID: 2800000, guid: 2ba470b4dffd848c6b267c34770cc63e, type: 3}
+  QuestionIcon: {fileID: 2800000, guid: f8ea67e311b0c4b2ea05718e90fd3b5b, type: 3}
+  UserIcon: {fileID: 2800000, guid: f49ef75333ff247cfb5dad4dab0d4dac, type: 3}
   AmazonIcon: {fileID: 0}
   GooglePlayIcon: {fileID: 0}
   iosIcon: {fileID: 0}
@@ -85,7 +252,7 @@ MonoBehaviour:
   IncludeGooglePlay: 1
   FpsCriticalThreshold: 20
   FpsCirticalSubmitInterval: 1
-  PlatformFoldOut: 
+  PlatformFoldOut: 01
   CustomDimensions01FoldOut: 0
   CustomDimensions02FoldOut: 0
   CustomDimensions03FoldOut: 0
