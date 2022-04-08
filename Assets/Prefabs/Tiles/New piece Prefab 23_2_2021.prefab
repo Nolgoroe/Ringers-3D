@@ -129,9 +129,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7536f5480f8cb2541a8e756e7c770003, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Amount: {x: 0.03, y: 0.03, z: 0}
+  Amount: {x: 0.015, y: 0.015, z: 0}
   Duration: 0.3
-  Speed: 7
+  Speed: 5
   ResetPosition: 1
 --- !u!1 &1645121695642233041
 GameObject:
@@ -185,6 +185,7 @@ MonoBehaviour:
   isLocked: 0
   isStone: 0
   isTutorialLocked: 0
+  isDuringConnectionAnim: 0
   partOfBoard: 0
 --- !u!65 &4801052585063378316
 BoxCollider:
@@ -344,7 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7536f5480f8cb2541a8e756e7c770003, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Amount: {x: 0.03, y: 0.03, z: 0}
+  Amount: {x: 0.015, y: 0.015, z: 0}
   Duration: 0.3
-  Speed: 7
+  Speed: 5
   ResetPosition: 1

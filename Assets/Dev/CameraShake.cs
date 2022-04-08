@@ -38,7 +38,7 @@ public class CameraShake : MonoBehaviour
 
     public void Shake()
     {
-        ResetCam();
+        //ResetCam();
         time = Duration;
     }
 
