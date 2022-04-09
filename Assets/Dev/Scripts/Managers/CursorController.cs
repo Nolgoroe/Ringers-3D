@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.EventSystems;
+using GameAnalyticsSDK;
 
 public class CursorController : MonoBehaviour
 {
@@ -70,6 +71,19 @@ public class CursorController : MonoBehaviour
 
     void Update()
     {
+        //test game analytics custom events
+
+        if (Input.touchCount > 0)
+        {
+            touch = Input.touches[0];
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                GameAnalytics.NewDesignEvent("TouchDetected:TouchDown:Complete");
+                GameAnalytics.NewDesignEvent("TouchDetected:TouchDown:Complete", 101);
+            }
+        }
+
 
         if (UIManager.isDuringIntro && UIManager.canAdvanceIntro)
         {
