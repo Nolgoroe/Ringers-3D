@@ -709,6 +709,11 @@ public class GameManager : MonoBehaviour
 
     public void RestartCurrentLevel()
     {
+        string worldName = GameManager.Instance.currentLevel.worldName;
+        string levelNum = GameManager.Instance.currentLevel.levelNum.ToString();
+
+        GameAnalytics.NewDesignEvent("RestartLevel:Restarted:" + worldName + ":" + "Level " + levelNum);
+
         UIManager.isUsingUI = false;
 
         DestroyAllLevelChildern();

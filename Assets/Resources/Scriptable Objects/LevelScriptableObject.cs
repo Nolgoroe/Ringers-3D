@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEditor;
 
 [System.Serializable]
 public class stonePieceDataStruct
@@ -66,4 +67,12 @@ public class LevelScriptableObject : ScriptableObject
     public bool isRandomPieces;
     public int[] specificPiecesIndex;
     
+
+    [ContextMenu("Change Name")]
+    public void NameChange()
+    {
+        string assetPath = AssetDatabase.GetAssetPath(this);
+        AssetDatabase.RenameAsset(assetPath, "Level " + levelNum);
+        AssetDatabase.Refresh();
+    }
 }

@@ -217,9 +217,11 @@ public class AnimationManager : MonoBehaviour
         //boardScreenshot.transform.SetParent(GameManager.Instance.destroyOutOfLevel);
         //yield return new WaitForSeconds(0.1f);
 
-
-        Instantiate(GameManager.Instance.endLevelAnimStatueShakeVFXPrefab, GameManager.Instance.destroyOutOfLevel);
-        yield return new WaitForSeconds(waitTimeVFXShakeStatue);
+        if (!GameManager.Instance.currentLevel.isGrindLevel)
+        {
+            Instantiate(GameManager.Instance.endLevelAnimStatueShakeVFXPrefab, GameManager.Instance.destroyOutOfLevel);
+            yield return new WaitForSeconds(waitTimeVFXShakeStatue);
+        }
 
         GameManager.Instance.sliceManager.endLevelAnimVFX.SetActive(true);
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using System;
+using GameAnalyticsSDK;
 
 public enum PowerUp
 {
@@ -177,6 +178,10 @@ public class PowerUpManager : MonoBehaviour
 
         if (!UIManager.isUsingUI)
         {
+            string worldName = GameManager.Instance.currentLevel.worldName;
+            string levelNum = GameManager.Instance.currentLevel.levelNum.ToString();
+
+            GameAnalytics.NewDesignEvent("DealButton:Clicked:" + worldName + ":" + "Level " + levelNum);
             SoundManager.Instance.PlaySound(Sounds.DealButton);
             UIManager.Instance.turnOnDealVFX();
 

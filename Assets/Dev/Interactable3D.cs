@@ -6,6 +6,9 @@ using UnityEngine.Events;
 public class Interactable3D : MonoBehaviour
 {
     public bool isTutorialLevel;
+    public bool isKeyLevel;
+    public bool isGrindLevel;
+
     public int currentZoneID;
     public int NextZoneID;///only if key level
     public int overallLevelNum;
@@ -23,7 +26,6 @@ public class Interactable3D : MonoBehaviour
     {
         interactEvent.Invoke();
     }
-
 
     public void LaunchNoramlLevel()
     {
@@ -145,7 +147,6 @@ public class Interactable3D : MonoBehaviour
         }
     }
 
-
     public void LaunchBossLevel(LevelScriptableObject bossLevel)
     {
         if(PlayerManager.Instance.bossTicketCount > 0)
@@ -162,7 +163,6 @@ public class Interactable3D : MonoBehaviour
         }
     }
 
-
     public void TurnOnVFX()
     {
         NextLevelVFX.SetActive(true);
@@ -171,5 +171,29 @@ public class Interactable3D : MonoBehaviour
     public void TurnOffVFX()
     {
         NextLevelVFX.SetActive(false);
+    }
+
+    [ContextMenu("Rename")]
+    public void RenameObject()
+    {
+        string newName = "Level " + indexInZone + " ";
+
+        if (isTutorialLevel)
+        {
+            newName += "Tutorial" + " ";
+        }
+
+        if (isGrindLevel)
+        {
+            newName += "Grind" + " ";
+
+        }
+
+        if (isKeyLevel)
+        {
+            newName += "Key" + " ";
+        }
+
+        transform.name = newName;
     }
 }
