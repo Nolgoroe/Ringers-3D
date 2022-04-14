@@ -22,7 +22,7 @@ public class craftingMatDailyRewardsDisplayer : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public void SetImageAndMaterialCount(Sprite icon, CraftingMats matEnum, string amount)
+    public void SetImageAndMaterialCount(Sprite icon, string amount)
     {
         materialImage.sprite = icon;
         materialCount.text = amount;

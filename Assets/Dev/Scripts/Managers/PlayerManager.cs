@@ -533,4 +533,30 @@ public class PlayerManager : MonoBehaviour
 
 
     }
+
+    public void AddSpecificPowerupToInventory(PowerUp PU)
+    {
+        EquipmentData ED = GameManager.Instance.csvParser.allEquipmentInGame.Where(p => p.power == PU).Single();
+
+        EquipmentData newData = new EquipmentData(ED.name, ED.power, ED.specificSymbol, ED.specificColor, ED.numOfUses, ED.scopeOfUses,
+                                  ED.timeForCooldown, ED.nextTimeAvailable, ED.Description, ED.isTutorialPower, ED.mats, ED.spritePath);
+
+        EquipmentData TempED = null;
+
+        if (ownedPowerups.Count > 0)
+        {
+            TempED = ownedPowerups.Where(equip => equip.power == newData.power).FirstOrDefault();
+        }
+
+        if (TempED != null)
+        {
+            TempED.numOfUses += newData.numOfUses;
+        }
+        else
+        {
+            EquipMe(newData);
+        }
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+    }
 }

@@ -61,7 +61,33 @@ public class RewardScreenDisplayDataHelper : MonoBehaviour
                     lootPrefabsInstantiated.Add(go);
 
                     craftingMatDailyRewardsDisplayer CMDRD = go.GetComponent<craftingMatDailyRewardsDisplayer>();
-                    CMDRD.SetImageAndMaterialCount(LootManager.Instance.rubySprite, CraftingMats.None, amount.ToString());
+                    CMDRD.SetImageAndMaterialCount(LootManager.Instance.rubySprite, amount.ToString());
+                    CMDRD.SetDayText("day " + tempIndex);
+                }
+                else if (temp[0].Contains("Potion"))
+                {
+                    string[] tempData = s.Split('-');
+
+                    for (int j = 0; j < tempData.Length; j++)
+                    {
+                        tempData[j] = tempData[j].Trim();
+                        tempData[j] = tempData[j].Replace(" ", string.Empty);
+                    }
+
+                    PowerUp power = (PowerUp)Convert.ToInt16(tempData[1]);
+                    int amount = Convert.ToInt16(tempData[2]);
+
+                    GameObject go = Instantiate(materialPrefabDisplay, displayZone);
+                    lootPrefabsInstantiated.Add(go);
+
+
+                    string path = GameManager.Instance.powerupManager.spriteByType[power];
+
+                    craftingMatDailyRewardsDisplayer CMDRD = go.GetComponent<craftingMatDailyRewardsDisplayer>();
+
+                    Sprite icon = Resources.Load<Sprite>(path);
+
+                    CMDRD.SetImageAndMaterialCount(icon, amount.ToString());
                     CMDRD.SetDayText("day " + tempIndex);
                 }
                 else
@@ -74,7 +100,7 @@ public class RewardScreenDisplayDataHelper : MonoBehaviour
                     lootPrefabsInstantiated.Add(go);
 
                     craftingMatDailyRewardsDisplayer CMDRD = go.GetComponent<craftingMatDailyRewardsDisplayer>();
-                    CMDRD.SetImageAndMaterialCount(LootManager.Instance.allMaterialSprites[(int)matToRecieve], matToRecieve, amount.ToString());
+                    CMDRD.SetImageAndMaterialCount(LootManager.Instance.allMaterialSprites[(int)matToRecieve], amount.ToString());
 
                     CMDRD.SetDayText("day " + tempIndex);
                 }

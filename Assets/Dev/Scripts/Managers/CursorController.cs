@@ -156,7 +156,9 @@ public class CursorController : MonoBehaviour
                     Ray ray = Camera.main.ScreenPointToRay(touch.position);
                     RaycastHit hit;
 
-                    if (EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId))
+                    Debug.Log(IsPointerOverUIObject());
+
+                    if (IsPointerOverUIObject())
                     {
                         if (EventSystem.current.currentSelectedGameObject)
                         {
@@ -202,6 +204,12 @@ public class CursorController : MonoBehaviour
                     {
                         ZoneManager.CanUnlockZone = false;
                         UIManager.isUsingUI = false;
+
+
+                        if(ZoneManager.Instance.unlockedZoneID.Count == 2)
+                        {
+                            UIManager.Instance.DisplayDailyRewardsScreen();
+                        }
                     }
                     else
                     {
@@ -1283,5 +1291,14 @@ public class CursorController : MonoBehaviour
     void ScaleGameObjectBack(GameObject toScale)
     {
         LeanTween.scale(toScale, new Vector3(toScale.transform.localScale.x + 0.2f, toScale.transform.localScale.y + 0.2f, 1), 0.1f);
+    }
+
+    private bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
     }
 }

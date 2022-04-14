@@ -276,7 +276,7 @@ public class UIManager : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log("Using UI? " + isUsingUI);
+        //Debug.Log("Using UI? " + isUsingUI);
         //width.text = "Width: " + Display.main.systemWidth;
         //height.text = "Height: " + Display.main.systemHeight;
 
@@ -459,7 +459,7 @@ public class UIManager : MonoBehaviour
     {
         if (!itemForgeCanvas.activeInHierarchy && !leaderboardScreen.activeInHierarchy && !DailyRewardScreen.activeInHierarchy)
         {
-            Debug.Log("Here");
+            //Debug.Log("Here");
             StartCoroutine(SetIsUsingUI(false));
         }
 
@@ -1449,12 +1449,15 @@ public class UIManager : MonoBehaviour
     }
     public void DisplayDailyRewardsScreen()
     {
-        if (!isUsingUI)
+        if (ZoneManager.Instance.unlockedZoneID.Count > 1)
         {
-            isUsingUI = true;
-            DailyRewardScreen.SetActive(true);
+            if (!isUsingUI)
+            {
+                isUsingUI = true;
+                DailyRewardScreen.SetActive(true);
 
-            activeScreen = DailyRewardScreen;
+                activeScreen = DailyRewardScreen;
+            }
         }
     }
     public void CallDeactivateDailyRewardScreen()
@@ -1858,6 +1861,7 @@ public class UIManager : MonoBehaviour
                 PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
 
                 DisplayDailyRewardsScreen();
+
                 PlayButton();
 
                 LeanTween.value(TEMPBgIntro, 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
@@ -1927,6 +1931,7 @@ public class UIManager : MonoBehaviour
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
 
         PlayButton();
+
         DisplayDailyRewardsScreen();
 
         StartCoroutine(SkipIntroFade());

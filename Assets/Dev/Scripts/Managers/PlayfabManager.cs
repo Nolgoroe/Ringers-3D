@@ -257,7 +257,7 @@ public class PlayfabManager : MonoBehaviour
             Debug.Log("No Message in title data!");
         }
 
-        List<DailyRewardsPacks> dailyRewardPacks = PlayFab.PluginManager.GetPlugin<ISerializerPlugin>(PluginContract.PlayFab_Serializer).DeserializeObject<List< DailyRewardsPacks>>(result.Data["dailyRewardPacks"]);
+        List<DailyRewardsPacks> dailyRewardPacks = PlayFab.PluginManager.GetPlugin<ISerializerPlugin>(PluginContract.PlayFab_Serializer).DeserializeObject<List<DailyRewardsPacks>>(result.Data["dailyRewardPacks_New"]);
 
 
         //List<DailyRewardsPacks> dailyRewardPacks = PlayFab.PfEditor.Json.JsonWrapper.DeserializeObject<List<DailyRewardsPacks>>(result.Data["dailyRewardPacks"]);
@@ -266,7 +266,7 @@ public class PlayfabManager : MonoBehaviour
 
 
 
-        timeToWaitForDailyRewardSeconds = Convert.ToInt32(result.Data["TimeToWaitForDailySeconds"]);
+        timeToWaitForDailyRewardSeconds = Convert.ToInt32(result.Data["TimeToWaitForDailySeconds_New"]);
 
 
         doneWithStep = true;

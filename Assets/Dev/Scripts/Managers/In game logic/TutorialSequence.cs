@@ -501,7 +501,7 @@ public class TutorialSequence : MonoBehaviour
                 for (int i = 0; i < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[index].targetCells.Length; i++)
                 {
                     int num = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[index].targetCells[i];
-                    Debug.Log(num + "yasbfyabfyasb");
+                    //Debug.Log(num + "yasbfyabfyasb");
 
 
                     for (int k = 0; k < ConnectionManager.Instance.cells[num].transform.childCount; k++)

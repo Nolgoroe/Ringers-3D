@@ -166,7 +166,7 @@ public class PowerUpManager : MonoBehaviour
         else
         {
             go.GetComponent<PowerupProperties>().canBeSelected = true;
-            Debug.Log("Can be selected");
+            //Debug.Log("Can be selected");
         }
         AssignPowerUp(current, go.GetComponent<PowerupProperties>());
 

@@ -107,10 +107,13 @@ public class RewardsManager : MonoBehaviour
                 RewardScreenDisplayDataHelper.Instance.HeighlightSpecificIndex();
             }
 
-            float minutes = Mathf.FloorToInt(timeLeftToGiveDailyLoot / 60);
+            float hours = Mathf.FloorToInt(timeLeftToGiveDailyLoot / 3600);
+            float m = timeLeftToGiveDailyLoot % 3600;
+            float minutes = Mathf.FloorToInt(m / 60);
             float seconds = Mathf.FloorToInt(timeLeftToGiveDailyLoot % 60);
 
-            UIManager.Instance.dailyLootTextTime.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            //UIManager.Instance.dailyLootTextTime.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            UIManager.Instance.dailyLootTextTime.text = string.Format("{0:00}:{1:00}:{2:00}", hours ,minutes, seconds);
 
         }
 
@@ -119,10 +122,13 @@ public class RewardsManager : MonoBehaviour
 
     void DisplayTimeNoDelay() ///// This function is only for the start of the game so that players wont see the defult time while the real time is updating
     {
-        float minutes = Mathf.FloorToInt(timeLeftToGiveDailyLoot / 60);
+        float hours = Mathf.FloorToInt(timeLeftToGiveDailyLoot / 3600);
+        float m = timeLeftToGiveDailyLoot % 3600;
+        float minutes = Mathf.FloorToInt(m / 60);
         float seconds = Mathf.FloorToInt(timeLeftToGiveDailyLoot % 60);
 
-        UIManager.Instance.dailyLootTextTime.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        //UIManager.Instance.dailyLootTextTime.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        UIManager.Instance.dailyLootTextTime.text = string.Format("{0:00}:{1:00}:{2:00}", hours, minutes, seconds);
     }
 
     public void UpdateRewardListServer(List<DailyRewardsPacks> _dailyRewardPacks)
@@ -134,13 +140,12 @@ public class RewardsManager : MonoBehaviour
             DecideOnDailyGiftPackIndex();
         }
 
-        if (indexDayToGive >= 7)
+        if (indexDayToGive >= 8)
         {
             indexDayToGive = 0;
 
             DecideOnDailyGiftPackIndex();
         }
-
 
         RewardScreenDisplayDataHelper.Instance.DisplayDailyRewards();
 
@@ -151,7 +156,7 @@ public class RewardsManager : MonoBehaviour
 
     public void RealTimeRewardPacks()
     {
-        if (indexDayToGive >= 7)
+        if (indexDayToGive >= 8)
         {
             indexDayToGive = 0;
 
@@ -200,7 +205,22 @@ public class RewardsManager : MonoBehaviour
                 int amount = Convert.ToInt16(temp[1]);
                 PlayerManager.Instance.AddRubies(amount);
             }
-            else
+            else if (temp[0].Contains("Potion"))
+            {
+                string[] tempData = dailyRewardPacks[packIndex].dailyRewards[indexDayToGive].Split('-');
+
+                for (int j = 0; j < tempData.Length; j++)
+                {
+                    tempData[j] = tempData[j].Trim();
+                    tempData[j] = tempData[j].Replace(" ", string.Empty);
+                }
+
+                PowerUp power = (PowerUp)Convert.ToInt16(tempData[1]);
+
+
+                PlayerManager.Instance.AddSpecificPowerupToInventory(power);
+            }
+            else 
             {
                 CraftingMats matToRecieve = (CraftingMats)System.Enum.Parse(typeof(CraftingMats), temp[0]);
 
