@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEditor;
+//using UnityEditor;
 
 [System.Serializable]
 public class stonePieceDataStruct
@@ -68,11 +68,11 @@ public class LevelScriptableObject : ScriptableObject
     public int[] specificPiecesIndex;
     
 
-    [ContextMenu("Change Name")]
-    public void NameChange()
-    {
-        string assetPath = AssetDatabase.GetAssetPath(this);
-        AssetDatabase.RenameAsset(assetPath, "Level " + levelNum);
-        AssetDatabase.Refresh();
-    }
+    //[ContextMenu("Change Name")]
+    //public void NameChange()
+    //{
+    //    string assetPath = AssetDatabase.GetAssetPath(this);
+    //    AssetDatabase.RenameAsset(assetPath, "Level " + levelNum);
+    //    AssetDatabase.Refresh();
+    //}
 }
