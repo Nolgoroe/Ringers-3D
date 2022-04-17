@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldName: Tutorial Zone
   isGrindLevel: 0
+  is12PieceRing: 0
   isDoubleRing: 0
+  isBoss: 0
+  isReleaseAnimalToDen: 0
   boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
     type: 3}
   levelNum: 3
@@ -36,8 +39,8 @@ MonoBehaviour:
   levelAvailablesymbols: 000000000300000002000000
   symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
-  specificTutorialEnum: 0
   isTutorial: 0
+  specificTutorialEnum: 0
   arrayOfPieces:
   - colorOfPieceRight: 3
     symbolOfPieceRight: 2
@@ -122,3 +125,6 @@ MonoBehaviour:
   specificSliceSpots: 
   specificSlicesShapes: 
   specificSlicesColors: 
+  BossHealth: 0
+  isRandomPieces: 0
+  specificPiecesIndex: 
