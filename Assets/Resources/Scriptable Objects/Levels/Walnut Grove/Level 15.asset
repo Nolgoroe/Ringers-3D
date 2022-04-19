@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldName: Walnut Grove
   isGrindLevel: 0
+  is12PieceRing: 0
   isDoubleRing: 0
+  isBoss: 0
+  isReleaseAnimalToDen: 0
   boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
     type: 3}
   levelNum: 15
@@ -27,18 +30,21 @@ MonoBehaviour:
   powerupsForLevel: 
   specificAnimalForLevel: {fileID: 0}
   stoneTiles: []
-  slicesToSpawn: 010000000000000003000000
-  lockSlices: 010000
+  slicesToSpawn: 010000000000000000000000
+  lockSlices: 000000
   lootSlices: 010101
   limiterSlices: 010101
   RewardBags: 0a00000002000000010000000c0000000d0000000b000000
   levelAvailableColors: 04000000010000000200000003000000
-  levelAvailablesymbols: 00000000010000000200000003000000
+  levelAvailablesymbols: 000000000100000002000000
   symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
-  specificTutorialEnum: 0
   isTutorial: 0
+  specificTutorialEnum: 0
   arrayOfPieces: []
   specificSliceSpots: 000000000200000005000000
   specificSlicesShapes: 
   specificSlicesColors: 
+  BossHealth: 0
+  isRandomPieces: 0
+  specificPiecesIndex: 
