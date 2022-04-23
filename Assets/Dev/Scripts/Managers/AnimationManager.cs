@@ -370,7 +370,7 @@ public class AnimationManager : MonoBehaviour
             StartCoroutine(AfterAnimalAnimation());
         }
 
-        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
+        //PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
 
         //yield return new WaitForSeconds(4f);
 

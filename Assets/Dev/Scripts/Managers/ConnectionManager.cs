@@ -1359,4 +1359,31 @@ public class ConnectionManager : MonoBehaviour
         }
     }
 
+    public bool CheckRepeatingStonePieces(Piece p)
+    {
+        foreach (Cell c in cells)
+        {
+            if (c.isFull)
+            {
+                return ComparerPiece(c.pieceHeld, p);
+            }
+        }
+
+        return false;
+    }
+
+    public bool ComparerPiece(Piece currectCheckPiece, Piece p)
+    {
+        if ((currectCheckPiece.rightChild.colorOfPiece == p.rightChild.colorOfPiece) && (currectCheckPiece.rightChild.symbolOfPiece == p.rightChild.symbolOfPiece))
+        {
+            if ((currectCheckPiece.leftChild.colorOfPiece == p.leftChild.colorOfPiece) && (currectCheckPiece.leftChild.symbolOfPiece == p.leftChild.symbolOfPiece))
+            {
+                Debug.Log("Pieces were the same!" + currectCheckPiece + " " + p);
+                return true; ///// Pieces are the same
+            }
+        }
+
+        return false; //// Pieces are not the same
+    }
+
 }

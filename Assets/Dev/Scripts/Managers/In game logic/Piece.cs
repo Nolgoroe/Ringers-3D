@@ -167,12 +167,13 @@ public class Piece : MonoBehaviour
     public void SetStonePiece(stonePieceDataStruct SPDS)
     {
         bool isRepeatPieceSides = true;
+        bool isRepeatPieceOnBoard = true;
         int repeatIndicator = 0;
 
         rightChild.SetStonePiece(SPDS);
         leftChild.SetStonePiece(SPDS);
 
-        while (isRepeatPieceSides)
+        while (isRepeatPieceSides || isRepeatPieceOnBoard)
         {
             if (repeatIndicator > 0)
             {
@@ -183,7 +184,10 @@ public class Piece : MonoBehaviour
             }
 
             isRepeatPieceSides = CheckNoRepeatPieceSides();
+            isRepeatPieceOnBoard  = ConnectionManager.Instance.CheckRepeatingStonePieces(this);
 
+            //Debug.LogError("Same Pieces? " + isRepeatPieceSides);
+            Debug.LogError("Same Pieces on board? " + isRepeatPieceOnBoard);
 
             if (GameManager.Instance.currentLevel.levelAvailablesymbols.Length > 0)
             {
@@ -226,7 +230,7 @@ public class Piece : MonoBehaviour
                 }
             }
 
-            if (isRepeatPieceSides)
+            if (isRepeatPieceSides || isRepeatPieceOnBoard)
             {
                 repeatIndicator++;
             }
@@ -263,7 +267,7 @@ public class Piece : MonoBehaviour
             {
                 if (p != currectCheckPiece)
                 {
-                    bool isSame = ComparerPiece(currectCheckPiece, p);
+                    bool isSame = ConnectionManager.Instance.ComparerPiece(currectCheckPiece, p);
 
                     if (isSame)
                     {
@@ -276,19 +280,5 @@ public class Piece : MonoBehaviour
         }
 
         return false; //// There was no repeat, is same piece = false
-    }
-
-    private bool ComparerPiece(Piece currectCheckPiece, Piece p)
-    {
-        if ((currectCheckPiece.rightChild.colorOfPiece == p.rightChild.colorOfPiece) && (currectCheckPiece.rightChild.symbolOfPiece == p.rightChild.symbolOfPiece))
-        {
-            if ((currectCheckPiece.leftChild.colorOfPiece == p.leftChild.colorOfPiece) && (currectCheckPiece.leftChild.symbolOfPiece == p.leftChild.symbolOfPiece))
-            {
-                Debug.Log("Pieces were the same!" + currectCheckPiece + " " + p);
-                return true; ///// Pieces are the same
-            }
-        }
-
-        return false; //// Pieces are not the same
     }
 }

@@ -1449,7 +1449,7 @@ public class UIManager : MonoBehaviour
     }
     public void DisplayDailyRewardsScreen()
     {
-        if (ZoneManager.Instance.unlockedZoneID.Count > 1)
+        if (ZoneManager.Instance.unlockedZoneID.Count > 1 && RewardsManager.Instance.canGiveDaily)
         {
             if (!isUsingUI)
             {
@@ -1458,6 +1458,16 @@ public class UIManager : MonoBehaviour
 
                 activeScreen = DailyRewardScreen;
             }
+        }
+    }
+    public void DisplayDailyRewardsScreenNoCondition()
+    {
+        if (!isUsingUI)
+        {
+            isUsingUI = true;
+            DailyRewardScreen.SetActive(true);
+
+            activeScreen = DailyRewardScreen;
         }
     }
     public void CallDeactivateDailyRewardScreen()

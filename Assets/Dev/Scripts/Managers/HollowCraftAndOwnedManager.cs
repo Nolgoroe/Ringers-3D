@@ -307,4 +307,12 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
             }
         }
     }
+
+    public void ResetDenZoneIndications()
+    {
+        foreach (zoneSlotAndType ZSAT in hollowZones)
+        {
+            ZSAT.zoneSlot.zoneIndication.SetActive(false);
+        }
+    }
 }

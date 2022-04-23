@@ -18,6 +18,13 @@ public class HollowZoneSlot : MonoBehaviour
     public int currentFilledAmount;
     public bool isFilled;
 
+    public GameObject zoneIndication;
+
+    private void Start()
+    {
+        zoneIndication.SetActive(false);
+    }
+
     public void CheckWork(ObjectHollowType typeWorked)
     {
         Debug.Log("Is this detectiong the hollow zone? " + typeWorked);

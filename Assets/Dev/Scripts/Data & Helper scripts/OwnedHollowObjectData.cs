@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class OwnedHollowObjectData : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
@@ -30,7 +31,15 @@ public class OwnedHollowObjectData : MonoBehaviour, IPointerDownHandler, IDragHa
 
         Debug.Log("Is this detecting the pointer down? " + objectData.objectname);
 
-        //transform.SetParent(originalParent.parent);
+        foreach (ObjectHollowType OHT in requiredHollowType)
+        {
+            zoneSlotAndType[] ZSAT = HollowCraftAndOwnedManager.Instance.hollowZones.Where(p => p.acceptedHollowTypes.Contains(OHT)).ToArray();
+
+            foreach (zoneSlotAndType zone in ZSAT)
+            {
+                zone.zoneSlot.zoneIndication.SetActive(true);
+            }
+        }
 
     }
 
@@ -71,6 +80,8 @@ public class OwnedHollowObjectData : MonoBehaviour, IPointerDownHandler, IDragHa
         }
 
         rect.anchoredPosition = pos;
+
+        HollowCraftAndOwnedManager.Instance.ResetDenZoneIndications();
         //transform.SetParent(originalParent);
     }
 

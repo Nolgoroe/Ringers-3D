@@ -265,6 +265,7 @@ public class LootManager : MonoBehaviour
                 //ZoneManager.Instance.unlockedZoneID.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id); //// this needs to move to zone manager (WIP)
                 ZoneManager.Instance.zonesToUnlock.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
 
+                PlayfabManager.instance.SaveGameData(new SystemsToSave[] {SystemsToSave.ZoneManager});
 
                 //ZoneManager.Instance.SaveZoneManager();
                 //ZoneManagerHelpData.Instance.currentZoneCheck.SaveZone();
