@@ -129,21 +129,28 @@ public class PlayfabManager : MonoBehaviour
         DewDropsManager.Instance.CalculateReturnDeltaTime();
 
 
-        if (TutorialSaveData.Instance.hasFinishedIntro)
-        {
-            UIManager.Instance.DisplayDailyRewardsScreen();
-
-            UIManager.Instance.PlayButton();
-        }
-        else
-        {
-           StartCoroutine(UIManager.Instance.DisplayIntro());
-        }
 
         isLoggedIn = true;
         TimeReferenceDataScript.Start();
 
         StartCoroutine(UIManager.Instance.MoveAfterLoadingScreen(true));
+
+        if (TutorialSaveData.Instance.hasFinishedIntro)
+        {
+            UIManager.Instance.DisplayDailyRewardsScreen();
+        }
+        else
+        {
+            StartCoroutine(UIManager.Instance.DisplayIntro());
+        }
+
+        yield return new WaitForSeconds(2);
+
+        if (TutorialSaveData.Instance.hasFinishedIntro)
+        {
+            UIManager.Instance.PlayButton();
+        }
+
 
         SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.RewardsManager, SystemsToSave.DewDrops, SystemsToSave.LoginData });
 
@@ -455,6 +462,8 @@ public class PlayfabManager : MonoBehaviour
 
     public void UpdateAndSaveTimeSensitiveData()
     {
+        Debug.Log("Save time sensitive data");
+
         DateTime timeToSave = currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
         RewardsManager.Instance.UpdateQuitTime(timeToSave);
         DewDropsManager.Instance.UpdateQuitTime(timeToSave);

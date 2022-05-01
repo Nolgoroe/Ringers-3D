@@ -197,7 +197,7 @@ public class CursorController : MonoBehaviour
 
                 if (touch.phase == TouchPhase.Began)
                 {
-                    SoundManager.Instance.audioSource.Stop();
+                    SoundManager.Instance.audioSourceSFX.Stop();
                     UIManager.Instance.UnlockedZoneMessageView.SetActive(false);
                     Debug.Log("THIS IS HOW MANY TIMES");
                     if (ZoneManager.Instance.zonesToUnlock.Count <= 0)
@@ -229,7 +229,7 @@ public class CursorController : MonoBehaviour
 
                 if (touch.phase == TouchPhase.Began)
                 {
-                    SoundManager.Instance.audioSource.Stop();
+                    SoundManager.Instance.audioSourceSFX.Stop();
                     UIManager.Instance.brewedPotionScreen.SetActive(false);
                     Debug.Log("THIS IS HOW MANY TIMES");
 
@@ -246,7 +246,7 @@ public class CursorController : MonoBehaviour
 
                 if (touch.phase == TouchPhase.Began)
                 {
-                    SoundManager.Instance.audioSource.Stop();
+                    SoundManager.Instance.audioSourceSFX.Stop();
                     UIManager.Instance.craftedHollowItemScreen.SetActive(false);
                     Debug.Log("THIS IS HOW MANY TIMES");
 
@@ -1250,8 +1250,8 @@ public class CursorController : MonoBehaviour
             GameObject side1 = Instantiate(PUM.specialPowerVFXPrefab, right.transform);
             GameObject side2 = Instantiate(PUM.specialPowerVFXPrefab, left.transform);
 
-            PUM.MoveSpecialPowerVFXToTarget(side1, true, symbolNeeded);
-            PUM.MoveSpecialPowerVFXToTarget(side2, true, symbolNeeded);
+            PUM.MoveSpecialPowerVFXToTarget(side1, symbolNeeded);
+            PUM.MoveSpecialPowerVFXToTarget(side2, symbolNeeded);
             return;
         }
 
@@ -1260,12 +1260,12 @@ public class CursorController : MonoBehaviour
             if (symbolNeeded == right.symbolOfPiece)
             {
                 GameObject side1 = Instantiate(PUM.specialPowerVFXPrefab, right.transform);
-                PUM.MoveSpecialPowerVFXToTarget(side1, false, symbolNeeded);
+                PUM.MoveSpecialPowerVFXToTarget(side1, symbolNeeded);
             }
             else
             {
                 GameObject side2 = Instantiate(PUM.specialPowerVFXPrefab, left.transform);
-                PUM.MoveSpecialPowerVFXToTarget(side2, false, symbolNeeded);
+                PUM.MoveSpecialPowerVFXToTarget(side2, symbolNeeded);
             }
         }
     }

@@ -313,6 +313,27 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
         foreach (zoneSlotAndType ZSAT in hollowZones)
         {
             ZSAT.zoneSlot.zoneIndication.SetActive(false);
+
+            TurnOffSpecificHeighlights(ZSAT.zoneSlot.zoneIndication);
         }
     }
+
+
+    public IEnumerator TurnOnSpecificHeighlights(GameObject turnOn)
+    {
+        turnOn.SetActive(true);
+        yield return new WaitForEndOfFrame();
+
+        TutorialSequence.Instacne.toTextureDenScreen();
+    }
+    public void TurnOffSpecificHeighlights(GameObject turnOn)
+    {
+        turnOn.SetActive(false);
+        UIManager.Instance.maskImageDenScreen.gameObject.SetActive(false);
+        //yield return new WaitForEndOfFrame();
+
+
+        //TutorialSequence.Instacne.toTexture();
+    }
+
 }

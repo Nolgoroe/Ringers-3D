@@ -20,7 +20,8 @@ public enum Sounds
     PageFlip,
     TileLock,
     ItemPop,
-    LevelWin
+    LevelWin,
+    LevelAmbience
     //// Add all sounds here
 }
 
@@ -36,7 +37,8 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
 
-    public AudioSource audioSource;
+    public AudioSource audioSourceSFX;
+    public AudioSource audioSourceAmbience;
 
     public EnumAndClip[] soundsForGame;
 
@@ -45,7 +47,7 @@ public class SoundManager : MonoBehaviour
     private void Start()
     {
         Instance = this;
-        audioSource = GetComponent<AudioSource>();
+        audioSourceSFX = GetComponent<AudioSource>();
         enumToSound = new Dictionary<Sounds, AudioClip[]>();
 
 
@@ -58,28 +60,28 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(Sounds soundEnum)
     {
-        audioSource.volume = 0.5f;
+        audioSourceSFX.volume = 0.5f;
 
         int ran = Random.Range(0, (enumToSound[soundEnum].Length));
-        audioSource.PlayOneShot(enumToSound[soundEnum][ran]);
+        audioSourceSFX.PlayOneShot(enumToSound[soundEnum][ran]);
     }
 
     public void PlaySoundChangeVolume(Sounds soundEnum, float Volume)
     {
-        audioSource.volume = Volume;
+        audioSourceSFX.volume = Volume;
 
         int ran = Random.Range(0, (enumToSound[soundEnum].Length));
-        audioSource.PlayOneShot(enumToSound[soundEnum][ran]);
+        audioSourceSFX.PlayOneShot(enumToSound[soundEnum][ran]);
 
     }
 
     public IEnumerator PlaySoundDelay(Sounds soundEnum, float Delay)
     {
         yield return new WaitForSeconds(Delay);
-        audioSource.volume = 0.5f;
+        audioSourceSFX.volume = 0.5f;
 
         int ran = Random.Range(0, (enumToSound[soundEnum].Length));
-        audioSource.PlayOneShot(enumToSound[soundEnum][ran]);
+        audioSourceSFX.PlayOneShot(enumToSound[soundEnum][ran]);
 
     }
 
@@ -87,10 +89,55 @@ public class SoundManager : MonoBehaviour
     {
         yield return new WaitForSeconds(Delay);
 
-        audioSource.volume = Volume;
+        audioSourceSFX.volume = Volume;
 
         int ran = Random.Range(0, (enumToSound[soundEnum].Length));
-        audioSource.PlayOneShot(enumToSound[soundEnum][ran]);
+        audioSourceSFX.PlayOneShot(enumToSound[soundEnum][ran]);
     }
 
+    public void PlayAmbience(Sounds soundEnum)
+    {
+        //audioSourceSFX.volume = 0.5f;
+        int ran = Random.Range(0, (enumToSound[soundEnum].Length));
+        audioSourceAmbience.clip = enumToSound[soundEnum][ran];
+
+        audioSourceAmbience.Play();
+    }
+
+    public void StopAmbienceMusic()
+    {
+        audioSourceAmbience.Stop();
+    }
+    public IEnumerator FadeOutAmbientMusic()
+    {
+        float vol = 1;
+
+        LeanTween.value(audioSourceAmbience.gameObject, 1, 0, 2).setOnUpdate((float val) =>
+        {
+            vol = val;
+            audioSourceAmbience.volume = vol;
+        });
+
+        yield return new WaitForSeconds(2);
+        audioSourceAmbience.Stop();
+    }
+    public IEnumerator FadeInAmbientMusic(Sounds soundEnum)
+    {
+        audioSourceAmbience.volume = 0;
+
+        int ran = Random.Range(0, (enumToSound[soundEnum].Length));
+        audioSourceAmbience.clip = enumToSound[soundEnum][ran];
+
+        audioSourceAmbience.Play();
+
+        float vol = 0;
+
+        LeanTween.value(audioSourceAmbience.gameObject, 0, 1, 2).setOnUpdate((float val) =>
+        {
+            vol = val;
+            audioSourceAmbience.volume = vol;
+        });
+
+        yield return new WaitForSeconds(2);
+    }
 }

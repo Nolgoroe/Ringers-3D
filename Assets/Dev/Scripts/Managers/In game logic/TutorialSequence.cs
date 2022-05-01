@@ -233,7 +233,7 @@ public class TutorialSequence : MonoBehaviour
         if(secondCam.targetTexture.width != Display.main.systemWidth || secondCam.targetTexture.height != Display.main.systemHeight)
         {
             //StartCoroutine(RecreateRenderTexture());
-            RecreateRenderTexture();
+            RecreateRenderTexture(false);
         }
         else
         {
@@ -249,8 +249,29 @@ public class TutorialSequence : MonoBehaviour
             maskImage.gameObject.SetActive(true);
         }
     }
+    public void toTextureDenScreen()
+    {
+        if(secondCam.targetTexture.width != Display.main.systemWidth || secondCam.targetTexture.height != Display.main.systemHeight)
+        {
+            //StartCoroutine(RecreateRenderTexture());
+            RecreateRenderTexture(true);
+        }
+        else
+        {
+            //secondCam.Render();
 
-    public void RecreateRenderTexture()
+            Texture2D texture = new Texture2D(Display.main.systemWidth, Display.main.systemHeight, TextureFormat.ARGB32, false);
+            Sprite sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+
+            Graphics.CopyTexture(secondCam.targetTexture, texture);
+
+            UIManager.Instance.maskImageDenScreen.sprite = sprite;
+
+            UIManager.Instance.maskImageDenScreen.gameObject.SetActive(true);
+        }
+    }
+
+    public void RecreateRenderTexture(bool isDen)
     {
         Debug.LogError("IN HERE NOW");
         //secondCam.targetTexture.Release();
@@ -267,7 +288,15 @@ public class TutorialSequence : MonoBehaviour
         //ScalableBufferManager.ResizeBuffers(deltaW, deltaH);
         //tempToWorkOn.Create();
         //yield return new WaitForEndOfFrame();
-        toTexture();
+
+        if (isDen)
+        {
+            toTextureDenScreen();
+        }
+        else
+        {
+            toTexture();
+        }
     }
     public IEnumerator SelectReleventHeighlights(int index, bool isSpecific) //// PASS LIST AND INDEX INTO FUNCTION TO MAKE THIS SHIT CODE BETTER
     {
@@ -573,6 +602,8 @@ public class TutorialSequence : MonoBehaviour
         yield return new WaitForEndOfFrame();
         toTexture();
     }
+
+
     public IEnumerator IncrementCurrentPhaseInSequence()
     {
         if (currentlyActiveTutorialHand)

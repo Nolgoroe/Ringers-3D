@@ -45,10 +45,12 @@ public class PowerUpManager : MonoBehaviour
     public Dictionary<PowerUp, string> spriteByType;
     public Dictionary<PowerUp, string> nameTextByType;
     public Dictionary<SpecialPowerUp, Sprite> specialPowerUpSpriteByType;
+    public Dictionary<SpecialPowerUp, Sprite> specialPowerUpSpriteByTypeON;
 
     public string[] powerupSpritesPath;
     public string[] powerupNames;
     public Sprite[] specialPowerupSprites;
+    public Sprite[] specialPowerupSpritesON;
 
 
     public List<PowerupProperties> powerupButtons;
@@ -80,6 +82,7 @@ public class PowerUpManager : MonoBehaviour
         spriteByType = new Dictionary<PowerUp, string>();
         nameTextByType = new Dictionary<PowerUp, string>();
         specialPowerUpSpriteByType = new Dictionary<SpecialPowerUp, Sprite>();
+        specialPowerUpSpriteByTypeON = new Dictionary<SpecialPowerUp, Sprite>();
 
         for (int i = 0; i < System.Enum.GetValues(typeof(PowerUp)).Length - 1; i++)
         {
@@ -90,6 +93,11 @@ public class PowerUpManager : MonoBehaviour
         for (int i = 0; i < System.Enum.GetValues(typeof(SpecialPowerUp)).Length - 1; i++)
         {
             specialPowerUpSpriteByType.Add((SpecialPowerUp)i, specialPowerupSprites[i]);
+        }
+
+        for (int i = 0; i < System.Enum.GetValues(typeof(SpecialPowerUp)).Length - 1; i++)
+        {
+            specialPowerUpSpriteByTypeON.Add((SpecialPowerUp)i, specialPowerupSpritesON[i]);
         }
 
     }
@@ -1000,6 +1008,49 @@ public class PowerUpManager : MonoBehaviour
         }
     }
 
+    public void TurnOnSpecialPowerDisplay(InGameSpecialPowerUp IGSP, PieceSymbol symbol, bool reset)
+    {
+        if (reset)
+        {
+            switch (symbol)
+            {
+                case PieceSymbol.FireFly:
+                    IGSP.icon.sprite = specialPowerUpSpriteByType[IGSP.type];
+                    break;
+                case PieceSymbol.Badger:
+                    IGSP.icon.sprite = specialPowerUpSpriteByType[IGSP.type];
+                    break;
+                case PieceSymbol.Goat:
+                    IGSP.icon.sprite = specialPowerUpSpriteByType[IGSP.type];
+                    break;
+                case PieceSymbol.Turtle:
+                    IGSP.icon.sprite = specialPowerUpSpriteByType[IGSP.type];
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            switch (symbol)
+            {
+                case PieceSymbol.FireFly:
+                    IGSP.icon.sprite = specialPowerUpSpriteByTypeON[IGSP.type];
+                    break;
+                case PieceSymbol.Badger:
+                    IGSP.icon.sprite = specialPowerUpSpriteByTypeON[IGSP.type];
+                    break;
+                case PieceSymbol.Goat:
+                    IGSP.icon.sprite = specialPowerUpSpriteByTypeON[IGSP.type];
+                    break;
+                case PieceSymbol.Turtle:
+                    IGSP.icon.sprite = specialPowerUpSpriteByTypeON[IGSP.type];
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
     public void DestroySpecialPowersObjects()
     {
         for (int i = 0; i < specialPowerupsInGame.Count; i++)
@@ -1070,7 +1121,7 @@ public class PowerUpManager : MonoBehaviour
         GameObject go = Instantiate(potionAnimationObjects[index], GameManager.Instance.destroyOutOfLevel);
     }
 
-    public void MoveSpecialPowerVFXToTarget(GameObject toMove, bool isDouble, PieceSymbol symbolNeeded)
+    public void MoveSpecialPowerVFXToTarget(GameObject toMove, PieceSymbol symbolNeeded)
     {
         Transform target = specialPowerupsInGame[0].icon.transform;
 
@@ -1080,19 +1131,12 @@ public class PowerUpManager : MonoBehaviour
 
         LTBezierPath path = new LTBezierPath(new Vector3[] { toMove.transform.position, midPoint, closePoint, target.position});
 
-        LeanTween.move(toMove, path, 2).setOnComplete(() => OnCompleteMovePowerVFX(toMove, isDouble, symbolNeeded));
+        LeanTween.move(toMove, path, 2).setOnComplete(() => OnCompleteMovePowerVFX(toMove, symbolNeeded));
     }
 
-    public void OnCompleteMovePowerVFX(GameObject toMove, bool isDouble, PieceSymbol symbolNeeded)
+    public void OnCompleteMovePowerVFX(GameObject toMove, PieceSymbol symbolNeeded)
     {
-        if (isDouble)
-        {
-            GameManager.Instance.powerupManager.UpdateSpecialPowerupsCount(2, symbolNeeded);
-        }
-        else
-        {
-            GameManager.Instance.powerupManager.UpdateSpecialPowerupsCount(1, symbolNeeded);
-        }
+        GameManager.Instance.powerupManager.UpdateSpecialPowerupsCount(1, symbolNeeded);
 
         Destroy(toMove);
     }

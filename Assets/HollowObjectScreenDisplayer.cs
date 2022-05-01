@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using System.Linq;
+using UnityEngine.EventSystems;
 
-public class HollowObjectScreenDisplayer : MonoBehaviour
+public class HollowObjectScreenDisplayer : MonoBehaviour, IPointerDownHandler
 {
     public Transform craftingMatZone;
     public GameObject materialPrefabHollowScreen;
@@ -25,12 +26,12 @@ public class HollowObjectScreenDisplayer : MonoBehaviour
 
     public HollowZoneSlot connectedZoneSlot;
 
-    private void Start()
-    {
-        craftButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(Sounds.ButtonPressUI));
-        craftButton.onClick.AddListener(() => UIManager.Instance.OpenForgeImmidietly(objectData.objectname));
-        //craftButton.onClick.AddListener(() => CraftHollowObject(false));
-    }
+    //private void Start()
+    //{
+    //    craftButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(Sounds.ButtonPressUI));
+    //    craftButton.onClick.AddListener(() => UIManager.Instance.OpenForgeImmidietly(objectData.objectname));
+    //    //craftButton.onClick.AddListener(() => CraftHollowObject(false));
+    //}
 
     public void SpawnMaterialsNeeded(string matList)
     {
@@ -231,5 +232,11 @@ public class HollowObjectScreenDisplayer : MonoBehaviour
 
 
         HollowCraftAndOwnedManager.Instance.FillHollowScreenCraft(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {       
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+        UIManager.Instance.OpenForgeImmidietly(objectData.objectname);
     }
 }

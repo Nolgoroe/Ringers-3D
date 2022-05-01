@@ -38,6 +38,7 @@ public class OwnedHollowObjectData : MonoBehaviour, IPointerDownHandler, IDragHa
             foreach (zoneSlotAndType zone in ZSAT)
             {
                 zone.zoneSlot.zoneIndication.SetActive(true);
+                StartCoroutine(HollowCraftAndOwnedManager.Instance.TurnOnSpecificHeighlights(zone.zoneSlot.zoneIndication));
             }
         }
 
@@ -84,14 +85,6 @@ public class OwnedHollowObjectData : MonoBehaviour, IPointerDownHandler, IDragHa
         HollowCraftAndOwnedManager.Instance.ResetDenZoneIndications();
         //transform.SetParent(originalParent);
     }
-
-
-
-
-
-
-
-
 
 
     public void PlaceFurniture(GameObject ToPlace)

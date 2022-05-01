@@ -165,6 +165,7 @@ public class UIManager : MonoBehaviour
     //public Vector3 denCameraPos;
     //public Vector3 denCameraRot;
 
+    public SpriteMask maskImageDenScreen;
 
     //public Color gameTextColor;
     public static bool isUsingUI;
@@ -474,6 +475,7 @@ public class UIManager : MonoBehaviour
         //GameManager.Instance.secondCam.orthographicSize = 9f;
 
         Camera.main.transform.rotation = Quaternion.Euler(hubCameraRot);
+        GameManager.Instance.secondCam.fieldOfView = 60;
 
         PZ.SetFieldOfView();
         hudCanvasUIBottomZoneMainMap.SetActive(true);
@@ -502,6 +504,7 @@ public class UIManager : MonoBehaviour
 
         if (currentCanvas == gameplayCanvas)
         {
+            StartCoroutine(SoundManager.Instance.FadeOutAmbientMusic());
 
             if (AnimationManager.instance.endAnimToWinScreen != null)
             {
@@ -958,7 +961,8 @@ public class UIManager : MonoBehaviour
         }
 
         //StartCoroutine(HollowCraftAndOwnedManager.Instance.FillHollowScreenCraft(GameManager.Instance.csvParser.allHollowCraftObjectsInGame));
-       HollowCraftAndOwnedManager.Instance.FillHollowScreenCraft(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
+        GameManager.Instance.secondCam.fieldOfView = 120;
+        HollowCraftAndOwnedManager.Instance.FillHollowScreenCraft(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
 
         ringersHutDisplay.SetActive(true);
         ringersHutUICanvas.SetActive(true);

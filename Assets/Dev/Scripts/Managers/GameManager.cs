@@ -137,8 +137,8 @@ public class GameManager : MonoBehaviour
 
     public void ResetDataStartLevel(bool isTutorial)
     {
-        if(isTutorial || currentLevel.isSpecificTutorial)
-        {
+        //if(isTutorial || currentLevel.isSpecificTutorial)
+        //{
             if (copyOfArrayOfPiecesTutorial == null)
             {
                 copyOfArrayOfPiecesTutorial = new List<pieceDataStruct>();
@@ -157,7 +157,7 @@ public class GameManager : MonoBehaviour
             copyOfSpecificSliceSpotsTutorial.AddRange(currentLevel.specificSliceSpots);
             copyOfSpecificSliceColorsTutorial.AddRange(currentLevel.specificSlicesColors);
             copyOfSpecificSliceSymbolsTutorial.AddRange(currentLevel.specificSlicesShapes);
-        }
+        //}
 
 
         UIManager.Instance.PrepareObjectForEndBoardAnim();
@@ -341,6 +341,8 @@ public class GameManager : MonoBehaviour
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
         }
 
+        //SoundManager.Instance.PlayAmbience(Sounds.LevelAmbience);
+        StartCoroutine(SoundManager.Instance.FadeInAmbientMusic(Sounds.LevelAmbience));
     }
 
     public void ResetDataStartBossLevel()

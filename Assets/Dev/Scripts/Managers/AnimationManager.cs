@@ -495,7 +495,7 @@ public class AnimationManager : MonoBehaviour
             //endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation(false));
         }
 
-        SoundManager.Instance.audioSource.Stop();
+        SoundManager.Instance.audioSourceSFX.Stop();
 
         if (endAnimToAnimal != null)
         {

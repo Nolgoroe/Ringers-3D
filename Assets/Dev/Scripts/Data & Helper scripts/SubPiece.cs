@@ -32,6 +32,11 @@ public class SubPiece : MonoBehaviour
 
     public void SetPiece()
     {
+        if(symbolOfPiece == PieceSymbol.Joker)
+        {
+            SetPieceAsNormalMat();
+        }
+
         if(GameManager.Instance.currentLevel.levelAvailableColors.Length > 0 || GameManager.Instance.currentLevel.levelAvailablesymbols.Length > 0)
         {
             int indexcColor = 0;
@@ -374,6 +379,10 @@ public class SubPiece : MonoBehaviour
         rend.material = GameManager.Instance.powerupManager.jokerMat;
     }
 
+    public void SetPieceAsNormalMat()
+    {
+        rend.material = GameManager.Instance.clipManager.generalPieceMat;
+    }
 
     public IEnumerator DissolveSubPiece(float dissolveSpeedMaskCrack, float waitTimeBeforeFillGlow, float fillGlowSpeed, float waitTimeBeforeFinalGlow, float finalGlowSpeed)
     {

@@ -147,7 +147,7 @@ public class Slice : MonoBehaviour
 
     public void SetRendereDataLimiter(SpriteRenderer[] rend, int pieceSymbolEnumCount, int pieceColorEnumCount)
     {
-        if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
+        if (GameManager.Instance.copyOfSpecificSliceSymbolsTutorial.Count > 0 || GameManager.Instance.copyOfSpecificSliceColorsTutorial.Count > 0)
         {
             switch (sliceCatagory)
             {
