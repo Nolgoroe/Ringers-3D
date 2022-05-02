@@ -916,6 +916,7 @@ public class PowerUpManager : MonoBehaviour
     {
         if(GameManager.Instance.currentLevel.symbolsNeededForSpecialPowers.Length > 0)
         {
+            GameManager.Instance.gameBoard.transform.position = new Vector3(0, 1.75f , 0);
             //bool leftSide = true;
             //bool up = false;
             GameObject go = null;
