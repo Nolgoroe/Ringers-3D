@@ -148,7 +148,14 @@ public class SubPiece : MonoBehaviour
         {
             if (isRightSubPiece)
             {
-                colorOfPiece = SPDS.colorOfPieceRight;
+                if (!SPDS.isNeutral)
+                {
+                    colorOfPiece = SPDS.colorOfPieceRight;
+                }
+                else
+                {
+                    colorOfPiece = PieceColor.None;
+                }
 
                 symbolOfPiece = SPDS.symbolOfPieceRight;
 
@@ -173,7 +180,14 @@ public class SubPiece : MonoBehaviour
             }
             else
             {
-                colorOfPiece = SPDS.colorOfPieceLeft;
+                if (!SPDS.isNeutral)
+                {
+                    colorOfPiece = SPDS.colorOfPieceLeft;
+                }
+                else
+                {
+                    colorOfPiece = PieceColor.None;
+                }
 
                 symbolOfPiece = SPDS.symbolOfPieceLeft;
 

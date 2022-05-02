@@ -504,7 +504,7 @@ public class UIManager : MonoBehaviour
 
         if (currentCanvas == gameplayCanvas)
         {
-            StartCoroutine(SoundManager.Instance.FadeOutAmbientMusic());
+            StartCoroutine(SoundManager.Instance.FadeOutAmbientMusic(0.5f));
 
             if (AnimationManager.instance.endAnimToWinScreen != null)
             {

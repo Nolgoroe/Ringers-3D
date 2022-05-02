@@ -161,6 +161,8 @@ public class AnimationManager : MonoBehaviour
     }
     public void StartEndLevelAnimSequence(bool cheat)
     {
+        StartCoroutine(SoundManager.Instance.FadeOutAmbientMusic(2));
+
         if (cheat)
         {
             SkipEndLevelAnimation(true);

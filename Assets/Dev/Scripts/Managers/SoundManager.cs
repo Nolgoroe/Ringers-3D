@@ -108,17 +108,17 @@ public class SoundManager : MonoBehaviour
     {
         audioSourceAmbience.Stop();
     }
-    public IEnumerator FadeOutAmbientMusic()
+    public IEnumerator FadeOutAmbientMusic(float time)
     {
         float vol = 1;
 
-        LeanTween.value(audioSourceAmbience.gameObject, 1, 0, 2).setOnUpdate((float val) =>
+        LeanTween.value(audioSourceAmbience.gameObject, 1, 0, time).setOnUpdate((float val) =>
         {
             vol = val;
             audioSourceAmbience.volume = vol;
         });
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(time);
         audioSourceAmbience.Stop();
     }
     public IEnumerator FadeInAmbientMusic(Sounds soundEnum)
