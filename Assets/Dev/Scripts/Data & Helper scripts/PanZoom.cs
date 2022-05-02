@@ -74,6 +74,11 @@ public class PanZoom : MonoBehaviour
         if (aspectRatio >= (9 / 16f))
         {
             mainCam.fieldOfView = 60;
+
+            if(Screen.height == 1920)
+            {
+                mainCam.fieldOfView = 57;
+            }
         }
         else if (aspectRatio >= 3 / 4f)
         {
