@@ -35,9 +35,10 @@ public class Interactable3D : MonoBehaviour
 
             if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
             {
-                GameManager.Instance.levelStarted = true;
-                if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+                if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
                 {
+                    GameManager.Instance.levelStarted = true;
+
                     GameManager.Instance.ChooseLevel(overallLevelNum);
                     GameManager.Instance.setCurrentLevelBG(currentZoneID);
                     //GameManager.Instance.CallStartLevel(false);
@@ -84,7 +85,7 @@ public class Interactable3D : MonoBehaviour
 
             if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
             {
-                if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+                if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
                 {
                     GameManager.Instance.levelStarted = true;
 
@@ -111,7 +112,7 @@ public class Interactable3D : MonoBehaviour
 
             if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
             {
-                if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+                if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
                 {
                     GameManager.Instance.levelStarted = true;
 
@@ -138,7 +139,7 @@ public class Interactable3D : MonoBehaviour
 
             if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
             {
-                if (indexInZone <= ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+                if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
                 {
                     GameManager.Instance.levelStarted = true;
 
