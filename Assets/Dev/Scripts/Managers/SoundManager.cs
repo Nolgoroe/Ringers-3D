@@ -21,7 +21,9 @@ public enum Sounds
     TileLock,
     ItemPop,
     LevelWin,
-    LevelAmbience
+    LevelAmbienceFast,
+    LevelAmbienceSlow,
+    
     //// Add all sounds here
 }
 

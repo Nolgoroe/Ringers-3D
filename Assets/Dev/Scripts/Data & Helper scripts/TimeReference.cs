@@ -25,7 +25,7 @@ public static class TimeReferenceDataScript //It is not inheriting from MonoBeha
     {
         if (!isRunning)
         {
-            return TimeSpan.MinValue; //Not running, return some default
+            return TimeSpan.Zero; //Not running, return some default
         }
 
         TimeSpan elapsedTime = (DateTime.Now - dt);

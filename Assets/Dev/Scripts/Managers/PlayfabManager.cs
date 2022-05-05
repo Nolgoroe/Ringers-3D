@@ -10,11 +10,27 @@ using System;
 using System.IO;
 using System.Linq;
 
-public enum SystemsToSave { Player, DewDrops, animalManager, corruptedZonesManager, TutorialSaveData, ZoneManager, ZoneX, RewardsManager, LoginData, HollowManager, ALL }
+public enum SystemsToSave 
+{ 
+    Player, 
+    DewDrops, 
+    animalManager, 
+    corruptedZonesManager, 
+    TutorialSaveData, 
+    ZoneManager, 
+    ZoneX, 
+    RewardsManager, 
+    LoginData, 
+    HollowManager,
+    VersionUpdaterData,
+    CheatingSaveData,
+    ALL
+}
 
 public class PlayfabManager : MonoBehaviour
 {
     public static bool isLoggedIn = false;
+    public static bool doneWithStep = false;
 
     public static PlayfabManager instance;
 
@@ -28,7 +44,6 @@ public class PlayfabManager : MonoBehaviour
     public TMP_InputField userNameInput;
     public TMP_Text displayMessages;
 
-    bool doneWithStep = false;
 
     public Transform leaderboardDisplayZone;
     public GameObject leaderboardPersonPrefab;
@@ -97,16 +112,35 @@ public class PlayfabManager : MonoBehaviour
 
     IEnumerator LoginInit()
     {
+        doneWithStep = false;
+
+        LoadGameVersion();
+
+        yield return new WaitUntil(() => doneWithStep == true);
+
+        doneWithStep = false;
+
+        AutoVersionUpdater.instance.CheckMostRecentVersionWithServer();
+
+        yield return new WaitUntil(() => doneWithStep == true);
+
+        doneWithStep = false;
+
         displayMessages.text = "Logged In!";
 
         LoadupAllGameData();
 
+
         yield return new WaitUntil(() => doneWithStep == true);
+
+        doneWithStep = false;
 
         GetServerCurrentTime();
 
         yield return new WaitUntil(() => doneWithStep == true);
+
         doneWithStep = false;
+
         InitAllSystems();
 
 
@@ -133,6 +167,8 @@ public class PlayfabManager : MonoBehaviour
         isLoggedIn = true;
         TimeReferenceDataScript.Start();
 
+        UIManager.Instance.CheckDisplayCheatButtons();
+
         StartCoroutine(UIManager.Instance.MoveAfterLoadingScreen(true));
 
         if (TutorialSaveData.Instance.hasFinishedIntro)
@@ -152,7 +188,7 @@ public class PlayfabManager : MonoBehaviour
         }
 
 
-        SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.RewardsManager, SystemsToSave.DewDrops, SystemsToSave.LoginData });
+        SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.RewardsManager, SystemsToSave.DewDrops, SystemsToSave.LoginData, SystemsToSave.CheatingSaveData });
 
 
         InvokeRepeating("UpdateAndSaveTimeSensitiveData", 1, 10);
@@ -275,6 +311,7 @@ public class PlayfabManager : MonoBehaviour
 
         timeToWaitForDailyRewardSeconds = Convert.ToInt32(result.Data["TimeToWaitForDailySeconds_New"]);
 
+        RewardsManager.Instance.timeLeftToGiveDailyLoot = timeToWaitForDailyRewardSeconds;
 
         doneWithStep = true;
     }
@@ -285,6 +322,22 @@ public class PlayfabManager : MonoBehaviour
         // Player Data
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecieved, OnError);
         //DewDropsManager.Instance.LoadDewDropsData();
+    }
+
+    public void LoadGameVersion()
+    {
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedVersion, OnError);
+    }
+
+    void OnDataRecievedVersion(GetUserDataResult result)
+    {
+        // Auto Version Updater
+        if (result.Data != null && result.Data.ContainsKey("Version Updater Data"))
+        {
+            JsonUtility.FromJsonOverwrite(result.Data["Version Updater Data"].Value, AutoVersionUpdater.instance);
+        }
+
+        doneWithStep = true;
     }
 
     void OnDataRecieved(GetUserDataResult result)
@@ -348,13 +401,18 @@ public class PlayfabManager : MonoBehaviour
             JsonUtility.FromJsonOverwrite(result.Data["Hollow Manager Data"].Value, HollowManagerSaveData.Instance);
         }
 
+        // Cheating Save Data
+        if (result.Data != null && result.Data.ContainsKey("Cheating Save Data"))
+        {
+            JsonUtility.FromJsonOverwrite(result.Data["Cheating Save Data"].Value, CheatingSaveData.instance);
+        }
+
         doneWithStep = true;
     }
 
     [ContextMenu("Step 2")]
     public void  InitAllSystems()
     {
-        doneWithStep = false;
         PlayerManager.Instance.Init();
         DewDropsManager.Instance.Init();
         AnimalsManager.Instance.Init();
@@ -447,6 +505,16 @@ public class PlayfabManager : MonoBehaviour
                     //Hollow manager
                     savedData = JsonUtility.ToJson(HollowManagerSaveData.Instance);
                     SendDataToBeSavedJson(savedData, SystemsToSave.HollowManager, -1);
+                    break;
+                case SystemsToSave.VersionUpdaterData:
+                    //Auto Version Updater
+                    savedData = JsonUtility.ToJson(AutoVersionUpdater.instance);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.VersionUpdaterData, -1);
+                    break;
+                case SystemsToSave.CheatingSaveData:
+                    //Cheating Save Data
+                    savedData = JsonUtility.ToJson(CheatingSaveData.instance);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.CheatingSaveData, -1);
                     break;
                 case SystemsToSave.ALL:
                     SaveAllGameData();
@@ -545,7 +613,7 @@ public class PlayfabManager : MonoBehaviour
             SendDataToBeSavedJson(savedData, SystemsToSave.ZoneX, zone.id);
         }
 
-        doneWithStep = false; //// set it back to false so last action will reset it
+        //doneWithStep = false; //// set it back to false so last action will reset it
 
         // Rewards Manager Data
         savedData = JsonUtility.ToJson(RewardsManager.Instance);
@@ -554,6 +622,14 @@ public class PlayfabManager : MonoBehaviour
         //Hollow manager
         savedData = JsonUtility.ToJson(HollowManagerSaveData.Instance);
         SendDataToBeSavedJson(savedData, SystemsToSave.HollowManager, -1);
+
+        //Version Updater Data
+        savedData = JsonUtility.ToJson(AutoVersionUpdater.instance);
+        SendDataToBeSavedJson(savedData, SystemsToSave.VersionUpdaterData, -1);
+
+        //Cheating Save Data
+        savedData = JsonUtility.ToJson(CheatingSaveData.instance);
+        SendDataToBeSavedJson(savedData, SystemsToSave.CheatingSaveData, -1);
 
     }
 
@@ -663,6 +739,24 @@ public class PlayfabManager : MonoBehaviour
                     }
                 };
                 break;
+            case SystemsToSave.VersionUpdaterData:
+                request = new UpdateUserDataRequest
+                {
+                    Data = new Dictionary<string, string>()
+                    {
+                        { "Version Updater Data", saveData }
+                    }
+                };
+                break;
+            case SystemsToSave.CheatingSaveData:
+                request = new UpdateUserDataRequest
+                {
+                    Data = new Dictionary<string, string>()
+                    {
+                        { "Cheating Save Data", saveData }
+                    }
+                };
+                break;
             default:
                 break;
         }
@@ -738,8 +832,9 @@ public class PlayfabManager : MonoBehaviour
         yield return new WaitUntil(() => doneWithStep == true);
 
         SceneManager.LoadScene(0);
-        doneWithStep = false;
 
+        SetGameVersionSameAsServer();
+        doneWithStep = false;
     }
 
 
@@ -779,9 +874,33 @@ public class PlayfabManager : MonoBehaviour
     {
         displayMessages.text = "Registered Successfully!";
         playerName = userNameInput.text;
+        UIManager.Instance.nameOfPlayer.text = "Username: " + playerName;
+
+        SetGameVersionSameAsServer();
+
         StartCoroutine(LoginInit());
 
         Debug.Log("Registered Successfully!");
+    }
+
+    void SetGameVersionSameAsServer()
+    {
+        PlayFabClientAPI.GetTitleData(new GetTitleDataRequest(), onGetVersionFromServer, OnError);
+    }
+
+    void onGetVersionFromServer(GetTitleDataResult result)
+    {
+        if (result.Data == null)
+        {
+            Debug.Log("No Message in title data!");
+        }
+        else
+        {
+            AutoVersionUpdater.instance.mostRecentGameVersion = Convert.ToInt32(result.Data["Game Most Recent Version"]);
+            SaveGameData(new SystemsToSave[] { SystemsToSave.VersionUpdaterData });
+
+            doneWithStep = true;
+        }
     }
 
     public void LoginButton()
@@ -805,6 +924,8 @@ public class PlayfabManager : MonoBehaviour
             playerName = result.InfoResultPayload.PlayerProfile.DisplayName;
             UIManager.Instance.nameOfPlayer.text = "Username: " + playerName;
         }
+
+        doneWithStep = true; //setup fir the loginInit function
 
         StartCoroutine(LoginInit());
     }

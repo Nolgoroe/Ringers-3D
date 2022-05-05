@@ -35,7 +35,7 @@ public class Interactable3D : MonoBehaviour
 
             if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
             {
-                if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+                if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || GameManager.Instance.canRepeatLevels)
                 {
                     GameManager.Instance.levelStarted = true;
 
@@ -85,7 +85,7 @@ public class Interactable3D : MonoBehaviour
 
             if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
             {
-                if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+                if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || GameManager.Instance.canRepeatLevels)
                 {
                     GameManager.Instance.levelStarted = true;
 
@@ -112,7 +112,7 @@ public class Interactable3D : MonoBehaviour
 
             if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
             {
-                if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+                if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || GameManager.Instance.canRepeatLevels)
                 {
                     GameManager.Instance.levelStarted = true;
 
@@ -139,7 +139,7 @@ public class Interactable3D : MonoBehaviour
 
             if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
             {
-                if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+                if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || GameManager.Instance.canRepeatLevels)
                 {
                     GameManager.Instance.levelStarted = true;
 

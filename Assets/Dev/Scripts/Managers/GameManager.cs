@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static bool LevelEnded;
+    public bool canRepeatLevels;
+
     //public GameObject circleBoardPrefab;
     //public GameObject doubleCircleBoardPrefab;
 
@@ -92,6 +94,7 @@ public class GameManager : MonoBehaviour
         }
 
         LevelEnded = false;
+        canRepeatLevels = false;
     }
 
     //public void CallStartLevel(bool isTutorial)
@@ -342,9 +345,9 @@ public class GameManager : MonoBehaviour
         }
 
         //SoundManager.Instance.PlayAmbience(Sounds.LevelAmbience);
-        StartCoroutine(SoundManager.Instance.FadeInAmbientMusic(Sounds.LevelAmbience));
+        StartCoroutine(SoundManager.Instance.FadeInAmbientMusic(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbience));
     }
-
+        
     public void ResetDataStartBossLevel()
     {
         BossBattleManager.instance.ResetData();
@@ -417,6 +420,7 @@ public class GameManager : MonoBehaviour
 
         powerupManager.instnatiatedZonesCounter = 0;
 
+        StartCoroutine(SoundManager.Instance.FadeInAmbientMusic(Sounds.LevelAmbienceFast));
 
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
 
@@ -668,6 +672,7 @@ public class GameManager : MonoBehaviour
     }
     public void WinAfterAnimation()
     {
+
         Debug.Log("IN HERE");
         if (currentLevel.isGrindLevel)
         {
@@ -1068,5 +1073,12 @@ public class GameManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+    }
+
+    public void ToggleCanRepeatLevels()
+    {
+        canRepeatLevels = !canRepeatLevels;
+
+        UIManager.Instance.SetCanRepeatLevelsDisplay();
     }
 }

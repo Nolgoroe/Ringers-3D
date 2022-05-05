@@ -625,6 +625,8 @@ public class AnimationManager : MonoBehaviour
 
         Instantiate(successVFX, GameManager.Instance.destroyOutOfLevel);
         ///summon VFX HERE
+        ///
+        GameManager.Instance.gameBoard.transform.position = new Vector3(0, 1.55f, 0);
         GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>().enabled = true;
 
         turnOff = null;
@@ -842,6 +844,7 @@ public class AnimationManager : MonoBehaviour
         //    turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
         //}
 
+        GameManager.Instance.gameBoard.transform.position = new Vector3(0, 1.55f, 0);
         GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>().enabled = true;
 
         SpriteRenderer boardSR = GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>();

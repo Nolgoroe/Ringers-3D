@@ -42,6 +42,8 @@ public class UIManager : MonoBehaviour
     public GameObject craft, owned;
     public GameObject animalAlbum;
     public GameObject OptionsScreen;
+    public GameObject cheatOptionsButton;
+    public GameObject cheatOptionsScreen;
     public GameObject wardrobe;
     public GameObject usingPowerupText;
     public GameObject youWinScreen, loseScreen/*, youLoseText*/;
@@ -97,6 +99,7 @@ public class UIManager : MonoBehaviour
 
     public Image tapControlsImage, dragControlsImage, tutorialDisableImage;
     public Image matsInventoryButton, forgeInventoryButton, potionInventoryButton;
+    public Image canRepeatLevelsImage;
 
     public float fadeIntoLevelSpeed;
     public float fadeIntoLevelDelay;
@@ -205,6 +208,8 @@ public class UIManager : MonoBehaviour
 
         leaderboardScreen.SetActive(false);
         OptionsScreen.SetActive(false);
+        cheatOptionsButton.SetActive(false);
+        cheatOptionsScreen.SetActive(false);
         ringersHutDisplay.SetActive(false);
         ringersHutUICanvas.SetActive(false);
         wardrobe.SetActive(false);
@@ -540,6 +545,7 @@ public class UIManager : MonoBehaviour
 
             gameplayCanvas.SetActive(false);
             OptionsScreen.SetActive(false);
+            cheatOptionsScreen.SetActive(false);
             youWinScreen.SetActive(false);
             bGPanelDisableTouch.SetActive(false);
 
@@ -777,6 +783,11 @@ public class UIManager : MonoBehaviour
             OptionsScreen.SetActive(false);
         }
 
+        if (ToClose == cheatOptionsScreen)
+        {
+            cheatOptionsScreen.SetActive(false);
+        }
+
         if (ToClose == wardrobe)
         {
             wardrobe.SetActive(false);
@@ -1001,6 +1012,11 @@ public class UIManager : MonoBehaviour
     public void OpenOptions()
     {
         OptionsScreen.SetActive(true);
+        isUsingUI = true;
+    }
+    public void OpenCheatOptions()
+    {
+        cheatOptionsScreen.SetActive(true);
         isUsingUI = true;
     }
     public void CloseGame()
@@ -2095,4 +2111,23 @@ public class UIManager : MonoBehaviour
         animalIsHappyScreen.SetActive(false);
     }
 
+    public void SetCanRepeatLevelsDisplay()
+    {
+        if (GameManager.Instance.canRepeatLevels)
+        {
+            canRepeatLevelsImage.sprite = toggleOnSprite;
+        }
+        else
+        {
+            canRepeatLevelsImage.sprite = toggleOffSprite;
+        }
+    }
+
+    public void CheckDisplayCheatButtons()
+    {
+        if (CheatingSaveData.instance.isAdmin)
+        {
+            cheatOptionsButton.SetActive(true);
+        }
+    }
 }
