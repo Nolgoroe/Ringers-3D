@@ -31,7 +31,7 @@ public class CameraShake : MonoBehaviour
 
     public void ShakeOnce()
     {
-        Debug.Log("Shake");
+        //Debug.Log("Shake");
         destroyAfterPlay = false;
         Shake();
     }

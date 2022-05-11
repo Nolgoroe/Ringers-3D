@@ -6,7 +6,7 @@ using TMPro;
 using System.IO;
 using System;
 using System.Linq;
-
+using GameAnalyticsSDK;
 
 
 [Serializable]
@@ -152,6 +152,8 @@ public class EquipmentDisplayer : MonoBehaviour
 
             if (!isBought)
             {
+                GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Crafted Potion:" + data.power.ToString());
+
                 foreach (CraftingMatsNeeded CMN in craftingMatsForEquipment)
                 {
                     Debug.Log(CMN.mat.ToString());
@@ -239,6 +241,7 @@ public class EquipmentDisplayer : MonoBehaviour
                 //break;
             }
         }
+
 
         BDL.CalculateNeededRubiesToBuyPotion();
 

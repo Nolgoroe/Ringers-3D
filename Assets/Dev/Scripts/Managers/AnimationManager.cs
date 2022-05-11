@@ -300,8 +300,11 @@ public class AnimationManager : MonoBehaviour
 
         foreach (Slice slice in GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices)
         {
-            SpriteRenderer sliceSR = slice.child.GetComponent<SpriteRenderer>();
-            sliceSR.color = new Color(sliceSR.color.r, sliceSR.color.g, sliceSR.color.b, 0);
+            if (slice.child)
+            {
+                SpriteRenderer sliceSR = slice.child.GetComponent<SpriteRenderer>();
+                sliceSR.color = new Color(sliceSR.color.r, sliceSR.color.g, sliceSR.color.b, 0);
+            }
         }
 
         foreach (GameObject go in GameManager.Instance.gameBoard.GetComponent<SliceManager>().activeLocksLockAnims)
@@ -527,8 +530,11 @@ public class AnimationManager : MonoBehaviour
 
         foreach (Slice slice in GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices)
         {
-            SpriteRenderer sliceSR = slice.child.GetComponent<SpriteRenderer>();
-            sliceSR.color = new Color(sliceSR.color.r, sliceSR.color.g, sliceSR.color.b, 0);
+            if (slice.child)
+            {
+                SpriteRenderer sliceSR = slice.child.GetComponent<SpriteRenderer>();
+                sliceSR.color = new Color(sliceSR.color.r, sliceSR.color.g, sliceSR.color.b, 0);
+            }
         }
 
         foreach (GameObject go in GameManager.Instance.gameBoard.GetComponent<SliceManager>().activeLocksLockAnims)
@@ -636,8 +642,11 @@ public class AnimationManager : MonoBehaviour
 
         foreach (Slice slice in GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices)
         {
-            SpriteRenderer sliceSR = slice.child.GetComponent<SpriteRenderer>();
-            sliceSR.color = new Color(sliceSR.color.r, sliceSR.color.g, sliceSR.color.b, 1);
+            if (slice.child)
+            {
+                SpriteRenderer sliceSR = slice.child.GetComponent<SpriteRenderer>();
+                sliceSR.color = new Color(sliceSR.color.r, sliceSR.color.g, sliceSR.color.b, 1);
+            }
         }
 
         foreach (GameObject go in GameManager.Instance.gameBoard.GetComponent<SliceManager>().activeLocksLockAnims)

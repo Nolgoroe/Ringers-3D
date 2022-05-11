@@ -546,8 +546,8 @@ public class CursorController : MonoBehaviour
                         {
                             if (!hit.transform.GetComponent<Cell>().isFull && !hit.transform.GetComponent<Cell>().isDuringConnectionAnim)
                             {
-                                Debug.Log("In first");
-                                Debug.Log(hit.transform.name + "UAHSIUASUBFS");
+                                //Debug.Log("In first");
+                                //Debug.Log(hit.transform.name + "UAHSIUASUBFS");
                                 ConnectionManager.Instance.ConnectionManagerAnim(hit.transform.GetComponent<Cell>().cellIndex, hit.transform.GetComponent<Cell>().isOuter);
                             }
                             else
@@ -677,6 +677,9 @@ public class CursorController : MonoBehaviour
                                     {
                                         PowerUpManager.IsUsingPowerUp = false;
                                         PowerUpManager.HasUsedPowerUp = true;
+
+                                        GameAnalytics.NewDesignEvent("Has used potion:" + GameManager.Instance.currentLevel.worldName + ":" + "Level " + GameManager.Instance.currentLevel.levelNum);
+
                                         PowerUpManager.ObjectToUsePowerUpOn = hit.transform.gameObject;
                                         LeanTween.scale(hit.transform.gameObject, new Vector3(hit.transform.localScale.x - 0.2f, hit.transform.localScale.y - 0.2f, 1), 0.1f).setOnComplete(() => ScaleGameObjectBack(hit.transform.gameObject));
 
@@ -856,7 +859,7 @@ public class CursorController : MonoBehaviour
         }
         else
         {
-            Debug.Log("AUISBFIASBFAF");
+            //Debug.Log("AUISBFIASBFAF");
             float minDist = 1000;
 
             Collider closest = null;
@@ -881,7 +884,7 @@ public class CursorController : MonoBehaviour
                 {
                     if (previousHeighlightChosen != closest.gameObject)
                     {
-                        Debug.Log(closest.gameObject.name);
+                        //Debug.Log(closest.gameObject.name);
 
                         if (previousHeighlightChosen != null)
                         {

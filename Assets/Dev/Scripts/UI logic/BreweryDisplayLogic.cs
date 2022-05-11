@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Linq;
+using GameAnalyticsSDK;
 
 [Serializable]
 public class CraftingMatsNeededToRubies
@@ -151,6 +152,8 @@ public class BreweryDisplayLogic : MonoBehaviour
     {
         if(PlayerManager.Instance.rubyCount >= rubiesNeededToBuyPotion)
         {
+            GameAnalytics.NewDesignEvent("BoughtPotions:" + selectedPotion.name);
+
             PlayerManager.Instance.rubyCount -= rubiesNeededToBuyPotion;
 
             selectedPotion.ForgeItem(true, true);

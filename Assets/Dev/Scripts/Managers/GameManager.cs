@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     //public LightingSettingsManager lightSettingsManager;
 
     public LevelScriptableObject currentLevel;
+    public string timeStartLevel;
 
     public CSVParser csvParser;
 
@@ -142,7 +143,7 @@ public class GameManager : MonoBehaviour
     {
         //if(isTutorial || currentLevel.isSpecificTutorial)
         //{
-            if (copyOfArrayOfPiecesTutorial == null)
+        if (copyOfArrayOfPiecesTutorial == null)
             {
                 copyOfArrayOfPiecesTutorial = new List<pieceDataStruct>();
             }
@@ -192,7 +193,7 @@ public class GameManager : MonoBehaviour
                 //secondCam.fieldOfView = 60f;
 
                 Camera.main.transform.position = inGameCamPos;
-                TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, TutorialSequence.Instacne.maskImage.transform.position.z);
+                TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, -0.05f);
                 Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
                 //levelStarted = true;
@@ -278,7 +279,7 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.ActivateGmaeplayCanvas();
 
             Camera.main.transform.position = inGameCamPos;
-            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, TutorialSequence.Instacne.maskImage.transform.position.z);
+            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, -0.05f);
             Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
             //levelStarted = true;
@@ -350,6 +351,7 @@ public class GameManager : MonoBehaviour
         
     public void ResetDataStartBossLevel()
     {
+
         BossBattleManager.instance.ResetData();
 
         LevelEnded = false;
@@ -369,7 +371,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.ActivateGmaeplayCanvas();
 
         Camera.main.transform.position = inGameCamPos;
-        TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, TutorialSequence.Instacne.maskImage.transform.position.z);
+        TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, -0.05f);
         Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
         //levelStarted = true;
@@ -642,6 +644,17 @@ public class GameManager : MonoBehaviour
 
                 GameAnalytics.NewProgressionEvent(GAProgressionStatus.Complete, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
 
+
+                TimeSpan deltaLevelTime = DateTime.Now - DateTime.Parse(timeStartLevel);
+
+                string time = deltaLevelTime.ToString();
+                time = string.Format("{0} - {1} - {2}", deltaLevelTime.Hours, deltaLevelTime.Minutes, deltaLevelTime.Seconds);
+
+                GameAnalytics.NewDesignEvent("Finished level:" + currentLevel.worldName + ":" + "Level " + currentLevel.levelNum + ":" + "Time taken " + time);
+
+                Debug.Log(time);
+
+                timeStartLevel = "";
 
                 //TutorialSequence.Instacne.CheckContinuedTutorials();
                 return true;

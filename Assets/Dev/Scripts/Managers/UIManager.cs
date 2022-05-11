@@ -498,18 +498,19 @@ public class UIManager : MonoBehaviour
             //Camera.main.transform.position = tempForClamp;
             Camera.main.transform.position = new Vector3(0,-1.6f, -3f);
 
-            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, Camera.main.transform.position.y, TutorialSequence.Instacne.maskImage.transform.position.z);
+            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, Camera.main.transform.position.y, -0.05f);
         }
         else
         {
             Camera.main.transform.position = hubCameraPos;
-            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, Camera.main.transform.position.y, TutorialSequence.Instacne.maskImage.transform.position.z);
+            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, Camera.main.transform.position.y, -0.05f);
         }
 
 
         if (currentCanvas == gameplayCanvas)
         {
             GameManager.Instance.levelStarted = false;
+            GameManager.Instance.timeStartLevel = "";
 
             StartCoroutine(SoundManager.Instance.FadeOutAmbientMusic(0.5f));
 
@@ -999,7 +1000,7 @@ public class UIManager : MonoBehaviour
             if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
             {
                 Camera.main.transform.position = denCameraPosForTutorial;
-                TutorialSequence.Instacne.maskImage.transform.position = new Vector3(denCameraPosForTutorial.x, denCameraPosForTutorial.y, -0.05f);
+                TutorialSequence.Instacne.maskImage.transform.position = new Vector3(denCameraPosForTutorial.x, denCameraPosForTutorial.y, -2.02f);
 
                 //HudCanvasUIHEIGHLIGHTS.SetActive(false);
                 //ItemAndForgeBagHEIGHLIGHTS.SetActive(true);

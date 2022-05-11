@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameAnalyticsSDK;
 
 public class Cell : MonoBehaviour
 {
@@ -89,7 +90,11 @@ public class Cell : MonoBehaviour
                 }
             }
         }
-
+        else
+        {
+            Debug.LogError("Moved piece inside ring");
+            GameAnalytics.NewDesignEvent("Pice moved in ring:" + GameManager.Instance.currentLevel.worldName + ":" + "Level " + GameManager.Instance.currentLevel.levelNum);
+        }
 
         GameObject go = Instantiate(UIManager.Instance.placePieceVFX, followerTarget);
 
