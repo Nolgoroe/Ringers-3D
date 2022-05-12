@@ -235,7 +235,11 @@ public class HollowObjectScreenDisplayer : MonoBehaviour, IPointerDownHandler
     }
 
     public void OnPointerDown(PointerEventData eventData)
-    {       
+    {
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            return;
+        }
         SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
         UIManager.Instance.OpenForgeImmidietly(objectData.objectname);
     }

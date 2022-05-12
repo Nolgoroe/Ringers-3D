@@ -415,6 +415,8 @@ public class TutorialSequence : MonoBehaviour
 
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isOpenInventoryInDenPhase)
             {
+                UIManager.Instance.requiredButtonForTutorialPhase = UIManager.Instance.openInventoryButttonDen;
+
                 UIManager.Instance.openInventoryButtonHeighlightDenScreen.SetActive(true);
                 activatedHeighlights.Add(UIManager.Instance.openInventoryButtonHeighlightDenScreen.gameObject);
                 DisplayTutorialHandTapQuaternion(handPosOpenInventoryInDen.position, handPosOpenInventoryInDen.rotation, handPosOpenInventoryInDen.localScale);
@@ -422,6 +424,8 @@ public class TutorialSequence : MonoBehaviour
 
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isOpenDenPhase)
             {
+                UIManager.Instance.requiredButtonForTutorialPhase = UIManager.Instance.openDenButttonMap;
+
                 UIManager.Instance.openDenButtonHeighlight.SetActive(true);
                 activatedHeighlights.Add(UIManager.Instance.openDenButtonHeighlight.gameObject);
                 DisplayTutorialHandTapQuaternion(handPosOpenDen.position, handPosOpenDen.rotation, handPosOpenDen.localScale);
@@ -436,6 +440,8 @@ public class TutorialSequence : MonoBehaviour
 
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isOpenHollowCraftTabPhase)
             {
+                UIManager.Instance.requiredButtonForTutorialPhase = UIManager.Instance.forgeInventoryButton.GetComponent<Button>();
+
                 UIManager.Instance.hollowCraftTabHeighlight.SetActive(true);
                 activatedHeighlights.Add(UIManager.Instance.hollowCraftTabHeighlight.gameObject);
                 DisplayTutorialHandTapQuaternion(handPosChangeHollowCraftTab.position, handPosChangeHollowCraftTab.rotation, handPosChangeHollowCraftTab.localScale);
@@ -452,6 +458,8 @@ public class TutorialSequence : MonoBehaviour
             {
                 HollowObjectDisplayer HOD = HollowCraftAndOwnedManager.Instance.hollowObjectsCreated[0].GetComponent<HollowObjectDisplayer>();
 
+                UIManager.Instance.requiredButtonForTutorialPhase = HOD.craftButton;
+
                 HOD.gameObject.SetActive(true);
                 HOD.tutorialHole.gameObject.SetActive(true);
                 activatedHeighlights.Add(HOD.tutorialHole.gameObject);
@@ -460,6 +468,8 @@ public class TutorialSequence : MonoBehaviour
 
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isCloseInventoryPhase)
             {
+                UIManager.Instance.requiredButtonForTutorialPhase = UIManager.Instance.closeInventoryButton;
+
                 UIManager.Instance.closeInventoryHeighlight.SetActive(true);
                 activatedHeighlights.Add(UIManager.Instance.closeInventoryHeighlight.gameObject);
                 DisplayTutorialHandTapQuaternion(handPosCloseInventory.position, handPosCloseInventory.rotation, handPosCloseInventory.localScale);

@@ -180,6 +180,8 @@ public class PlayfabManager : MonoBehaviour
             StartCoroutine(UIManager.Instance.DisplayIntro());
         }
 
+        UIManager.Instance.SetCanRepeatLevelsDisplay();
+
         yield return new WaitForSeconds(2);
 
         if (TutorialSaveData.Instance.hasFinishedIntro)

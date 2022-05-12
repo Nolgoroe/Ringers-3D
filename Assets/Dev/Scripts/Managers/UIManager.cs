@@ -152,6 +152,19 @@ public class UIManager : MonoBehaviour
     public Button buyPotionYesButton;
     public Button buyHollowItemYesButton;
     public Button buyHollowItemSecondaryYesButton;
+    public Button openInventoryButttonMap;
+    public Button openLeaderboardButttonMap;
+    public Button openDenButttonMap;
+    public Button returnToMapButttonDen;
+    public Button openLeaderboardButttonDen;
+    public Button openInventoryButttonDen;
+    public Button openDailyLootButton;
+    public Button openSettingsButton;
+    public Button openCheatSettingsButton;
+    public Button closeInventoryButton;
+
+
+    public Button requiredButtonForTutorialPhase;
 
     //public Button[] levelButtons;
     public Slider bossHealthSlider;
@@ -546,6 +559,7 @@ public class UIManager : MonoBehaviour
 
             gameplayCanvas.SetActive(false);
             OptionsScreen.SetActive(false);
+            cheatOptionsButton.SetActive(true);
             cheatOptionsScreen.SetActive(false);
             youWinScreen.SetActive(false);
             bGPanelDisableTouch.SetActive(false);
@@ -679,6 +693,14 @@ public class UIManager : MonoBehaviour
     {
         if (!itemForgeCanvas.activeInHierarchy)
         {
+            if (TutorialSequence.Instacne.duringSequence)
+            {
+                if (requiredButtonForTutorialPhase != openInventoryButttonMap && requiredButtonForTutorialPhase != openInventoryButttonDen)
+                {
+                    return;
+                }
+            }
+
             if (activeScreen)
             {
                 activeScreen.SetActive(false);
@@ -764,6 +786,7 @@ public class UIManager : MonoBehaviour
                 {
                     return;
                 }
+
             }
         }
 
@@ -771,6 +794,14 @@ public class UIManager : MonoBehaviour
 
         if (ToClose == itemForgeCanvas)
         {
+            if (TutorialSequence.Instacne.duringSequence)
+            {
+                if (requiredButtonForTutorialPhase != closeInventoryButton)
+                {
+                    return;
+                }
+            }
+
             itemForgeCanvas.SetActive(false);
             forge.SetActive(false);
             Brewery.SetActive(false);
@@ -870,6 +901,10 @@ public class UIManager : MonoBehaviour
             if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
             {
                 TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+
+
+                matsInventoryButton.GetComponent<Button>().interactable = true;
+                potionInventoryButton.GetComponent<Button>().interactable = true;
             }
         }
     }
@@ -899,6 +934,12 @@ public class UIManager : MonoBehaviour
             {
                 return;
             }
+
+            if (requiredButtonForTutorialPhase != matsInventoryButton.GetComponent<Button>())
+            {
+                return;
+            }
+
         }
 
         openInventoryTab();
@@ -921,6 +962,14 @@ public class UIManager : MonoBehaviour
     }
     public void ToBrewery()
     {
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (requiredButtonForTutorialPhase != potionInventoryButton.GetComponent<Button>())
+            {
+                return;
+            }
+        }
+
         SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
         SoundManager.Instance.PlaySound(Sounds.PageFlip);
 
@@ -970,6 +1019,14 @@ public class UIManager : MonoBehaviour
 
         if (returningToHud)
         {
+            if (TutorialSequence.Instacne.duringSequence)
+            {
+                if (requiredButtonForTutorialPhase != returnToMapButttonDen)
+                {
+                    return;
+                }
+            }
+
             ToHud(ringersHutDisplay);
             return;
         }
@@ -1006,17 +1063,34 @@ public class UIManager : MonoBehaviour
                 //ItemAndForgeBagHEIGHLIGHTS.SetActive(true);
 
                 TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+
             }
         }
 
     }
     public void OpenOptions()
     {
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (requiredButtonForTutorialPhase != openSettingsButton)
+            {
+                return;
+            }
+        }
+
         OptionsScreen.SetActive(true);
         isUsingUI = true;
     }
     public void OpenCheatOptions()
     {
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (requiredButtonForTutorialPhase != openCheatSettingsButton)
+            {
+                return;
+            }
+        }
+
         cheatOptionsScreen.SetActive(true);
         isUsingUI = true;
     }
@@ -1286,6 +1360,14 @@ public class UIManager : MonoBehaviour
             {
                 return;
             }
+
+            if (TutorialSequence.Instacne.duringSequence)
+            {
+                if (requiredButtonForTutorialPhase != inventorySortButtons[buttonID - 1])
+                {
+                    return;
+                }
+            }
         }
 
         SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
@@ -1314,6 +1396,7 @@ public class UIManager : MonoBehaviour
         gameplayCanvasBotom.SetActive(false);
         gameplayCanvasTop.SetActive(false);
         InGameUiScreens.SetActive(false);
+        cheatOptionsButton.SetActive(false);
     }
     public void TurnOnGameplayUI()
     {
@@ -1322,6 +1405,7 @@ public class UIManager : MonoBehaviour
         gameplayCanvasTop.SetActive(true);
         InGameUiScreens.SetActive(true);
         dealButton.interactable = true;
+        cheatOptionsButton.SetActive(true);
     }
     //public void RefreshDewDropsDisplay(int spriteIndex)
     //{
@@ -1395,18 +1479,23 @@ public class UIManager : MonoBehaviour
     {
         if (!leaderboardScreen.activeInHierarchy)
         {
-            if (!TutorialSequence.Instacne.duringSequence)
+            if (TutorialSequence.Instacne.duringSequence)
             {
-                if (activeScreen)
+                if (requiredButtonForTutorialPhase != openLeaderboardButttonMap && requiredButtonForTutorialPhase != openLeaderboardButttonDen)
                 {
-                    activeScreen.SetActive(false);
+                    return;
                 }
-
-                activeScreen = leaderboardScreen;
-                isUsingUI = true;
-
-                PlayfabManager.instance.GetLeaderboard();
             }
+
+            if (activeScreen)
+            {
+                activeScreen.SetActive(false);
+            }
+
+            activeScreen = leaderboardScreen;
+            isUsingUI = true;
+
+            PlayfabManager.instance.GetLeaderboard();
         }
         else
         {
@@ -1487,6 +1576,14 @@ public class UIManager : MonoBehaviour
     {
         if (!isUsingUI)
         {
+            if (TutorialSequence.Instacne.duringSequence)
+            {
+                if(requiredButtonForTutorialPhase != openDailyLootButton)
+                {
+                    return;
+                }
+            }
+
             isUsingUI = true;
             DailyRewardScreen.SetActive(true);
 
@@ -2114,7 +2211,7 @@ public class UIManager : MonoBehaviour
 
     public void SetCanRepeatLevelsDisplay()
     {
-        if (GameManager.Instance.canRepeatLevels)
+        if (CheatingSaveData.instance.canRepeatLevels)
         {
             canRepeatLevelsImage.sprite = toggleOnSprite;
         }

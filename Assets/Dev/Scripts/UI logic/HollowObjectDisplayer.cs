@@ -140,6 +140,13 @@ public class HollowObjectDisplayer : MonoBehaviour
 
     public void CraftHollowObject(bool isBought) ///// Here because the forge button and resources data are local
     {
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+           if(UIManager.Instance.requiredButtonForTutorialPhase != craftButton)
+            {
+                return;
+            }
+        }
 
         if (PlayerManager.Instance.ownedHollowObjects.Count > 0)
         {

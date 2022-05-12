@@ -26,13 +26,13 @@ public class OwnedHollowObjectData : MonoBehaviour, IPointerDownHandler, IDragHa
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        CursorController.OverUI = true;
+        pos = rect.anchoredPosition;
+
+        Debug.Log("Is this detecting the pointer down? " + objectData.objectname);
+
         if (!TutorialSequence.Instacne.duringSequence)
         {
-            CursorController.OverUI = true;
-            pos = rect.anchoredPosition;
-
-            Debug.Log("Is this detecting the pointer down? " + objectData.objectname);
-
             foreach (ObjectHollowType OHT in requiredHollowType)
             {
                 zoneSlotAndType[] ZSAT = HollowCraftAndOwnedManager.Instance.hollowZones.Where(p => p.acceptedHollowTypes.Contains(OHT)).ToArray();
@@ -43,7 +43,6 @@ public class OwnedHollowObjectData : MonoBehaviour, IPointerDownHandler, IDragHa
                     StartCoroutine(HollowCraftAndOwnedManager.Instance.TurnOnSpecificHeighlights(zone.zoneSlot.zoneIndication));
                 }
             }
-
         }
     }
 

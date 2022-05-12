@@ -84,7 +84,11 @@ public class ZoneManagerHelpData : MonoBehaviour
 
         UIManager.Instance.UnlockLevels();
 
+        PlayerManager.Instance.rubyCount = 5000;
+        PlayerManager.Instance.collectedDewDrops = 5000;
 
-        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneManager, SystemsToSave.ZoneX});
+        UIManager.Instance.updateRubyAndDewDropsCount();
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.ZoneManager, SystemsToSave.ZoneX});
     }
 }

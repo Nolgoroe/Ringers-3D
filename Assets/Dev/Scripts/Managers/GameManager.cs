@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static bool LevelEnded;
-    public bool canRepeatLevels;
 
     //public GameObject circleBoardPrefab;
     //public GameObject doubleCircleBoardPrefab;
@@ -95,7 +94,6 @@ public class GameManager : MonoBehaviour
         }
 
         LevelEnded = false;
-        canRepeatLevels = false;
     }
 
     //public void CallStartLevel(bool isTutorial)
@@ -1088,10 +1086,4 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ToggleCanRepeatLevels()
-    {
-        canRepeatLevels = !canRepeatLevels;
-
-        UIManager.Instance.SetCanRepeatLevelsDisplay();
-    }
 }
