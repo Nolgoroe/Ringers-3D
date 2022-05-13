@@ -181,4 +181,13 @@ public class MaterialsAndForgeManager : MonoBehaviour
         FillCorruptionDevices(GameManager.Instance.csvParser.allCorruptedDevicesInGame);
     }
 
+    public void ResetPotionDataAfterTutorial()
+    {
+        foreach (EquipmentDisplayer equipment in equipmentInBrewScreen)
+        {
+            equipment.selectPotionButton.onClick.AddListener(() => equipment.BDL.SetSelectedPotion(equipment));
+            equipment.selectPotionButton.onClick.AddListener(() => SoundManager.Instance.PlaySound(Sounds.ButtonPressUI));
+        }
+
+    }
 }

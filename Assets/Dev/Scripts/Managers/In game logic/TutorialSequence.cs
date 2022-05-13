@@ -408,6 +408,8 @@ public class TutorialSequence : MonoBehaviour
 
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isOpenInventoryPhase)
             {
+                UIManager.Instance.requiredButtonForTutorialPhase = UIManager.Instance.openInventoryButttonMap;
+
                 UIManager.Instance.openInventoryButtonHeighlight.SetActive(true);
                 activatedHeighlights.Add(UIManager.Instance.openInventoryButtonHeighlight.gameObject);
                 DisplayTutorialHandTapQuaternion(handPosOpenInventory.position, handPosOpenInventory.rotation, handPosOpenInventory.localScale);
@@ -433,6 +435,8 @@ public class TutorialSequence : MonoBehaviour
 
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isPotionTabPhase)
             {
+                UIManager.Instance.requiredButtonForTutorialPhase = UIManager.Instance.potionInventoryButton.GetComponent<Button>();
+
                 UIManager.Instance.potionTabHeighlight.SetActive(true);
                 activatedHeighlights.Add(UIManager.Instance.potionTabHeighlight.gameObject);
                 DisplayTutorialHandTapQuaternion(handPosChangePotionTab.position, handPosChangePotionTab.rotation, handPosChangePotionTab.localScale);
@@ -449,6 +453,13 @@ public class TutorialSequence : MonoBehaviour
 
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isBrewPhase)
             {
+                UIManager.Instance.requiredButtonForTutorialPhase = UIManager.Instance.brewPotionButton;
+
+                foreach (EquipmentDisplayer equipment in MaterialsAndForgeManager.Instance.equipmentInBrewScreen)
+                {
+                    equipment.GetComponent<Button>().onClick.RemoveAllListeners();
+                }
+
                 UIManager.Instance.brewButtonHeighlight.SetActive(true);
                 activatedHeighlights.Add(UIManager.Instance.brewButtonHeighlight.gameObject);
                 DisplayTutorialHandTapQuaternion(handPosBrewButton.position, handPosBrewButton.rotation, handPosBrewButton.localScale);
@@ -728,10 +739,13 @@ public class TutorialSequence : MonoBehaviour
 
         if (currentPhaseInSequenceSpecific + 1 > specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].EndPhaseID)
         {
-            //if(currentSpecificTutorial == SpecificTutorialsEnum.PotionCraft)
-            //{
-            //    UIManager.Instance.ItemAndForgeBagHEIGHLIGHTS.SetActive(false);
-            //}
+            if (currentSpecificTutorial == SpecificTutorialsEnum.PotionCraft)
+            {
+                Debug.LogError("Potions should work now");
+                MaterialsAndForgeManager.Instance.ResetPotionDataAfterTutorial();
+            }
+
+            UIManager.Instance.requiredButtonForTutorialPhase = null;
 
             TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add((int)GameManager.Instance.currentLevel.specificTutorialEnum);
             //TutorialSaveData.Instance.completedTutorialLevelId.Add(GameManager.Instance.currentLevel.levelNum);

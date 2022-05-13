@@ -162,6 +162,7 @@ public class UIManager : MonoBehaviour
     public Button openSettingsButton;
     public Button openCheatSettingsButton;
     public Button closeInventoryButton;
+    public Button brewPotionButton;
 
 
     public Button requiredButtonForTutorialPhase;
@@ -1030,7 +1031,16 @@ public class UIManager : MonoBehaviour
             ToHud(ringersHutDisplay);
             return;
         }
-
+        else
+        {
+            if (TutorialSequence.Instacne.duringSequence)
+            {
+                if (requiredButtonForTutorialPhase != openDenButttonMap)
+                {
+                    return;
+                }
+            }
+        }
         //StartCoroutine(HollowCraftAndOwnedManager.Instance.FillHollowScreenCraft(GameManager.Instance.csvParser.allHollowCraftObjectsInGame));
         GameManager.Instance.secondCam.fieldOfView = 120;
         HollowCraftAndOwnedManager.Instance.FillHollowScreenCraft(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
