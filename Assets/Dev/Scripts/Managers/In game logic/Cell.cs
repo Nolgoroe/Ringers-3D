@@ -59,23 +59,13 @@ public class Cell : MonoBehaviour
 
         }
 
-        //if (GameManager.Instance.currentLevel.isDoubleRing)
-        //{
-        //    int badInterConnections = 0;
-
-        //    badInterConnections = InterconnectionManager.Instance.CheckInterConnection(cellIndex, isOuter);
-
-        //    GameManager.Instance.unsuccessfullConnectionCount += badInterConnections;
-
-        //}
-
         if (isNew)
         {
             GameManager.Instance.currentFilledCellCount++;
 
-            if (GameManager.Instance.currentLevel.isBoss)
+            if (GameManager.Instance.currentLevel.ver1Boss)
             {
-                BossBattleManager.instance.CheckEndLevelBoss();
+                BossBattleManager.instance.CheckEndLevelBossVersionOne();
             }
             else
             {
@@ -83,10 +73,7 @@ public class Cell : MonoBehaviour
                 {
                     ConnectionManager.Instance.CallConnection(cellIndex, isOuter, true);
 
-                    //bool gameWon = GameManager.Instance.CheckEndLevel();
-
                     return;
-                    //UIManager.Instance.ActivateCommitButton();
                 }
             }
         }

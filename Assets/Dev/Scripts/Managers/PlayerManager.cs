@@ -171,6 +171,9 @@ public class PlayerManager : MonoBehaviour
         rubyCount += amount;
         //Debug.Log(amount);
         UIManager.Instance.updateRubyAndDewDropsCount();
+
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
     }
     public void PopulatePowerUps()
     {

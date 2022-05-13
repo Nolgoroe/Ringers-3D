@@ -106,6 +106,14 @@ public class ClipManager : MonoBehaviour
             RerollSlotPieceData(p);
         }
     }
+    public void RefreshSlotsBossV2()
+    {
+        for (int i = 0; i < clipCount; i++)
+        {
+            Piece p = slots[i].GetComponentInChildren<Piece>();
+            RerollSlotPieceData(p);
+        }
+    }
     public void ExtraDealSlots()
     {
         foreach (Transform t in slots)
@@ -267,27 +275,8 @@ public class ClipManager : MonoBehaviour
     public IEnumerator DealAnimation()
     {
         UIManager.Instance.dealButton.interactable = false;
+
         StartCoroutine(DeactivateClip(clipCount - 1));
-
-        //switch (clipCount)
-        //{
-        //    case 4:
-        //        SoundManager.Instance.PlaySound(Sounds.DealAnimFourPieces);
-        //        break;
-        //    case 3:
-        //        SoundManager.Instance.PlaySound(Sounds.DealAnimThreePieces);
-        //        break;
-        //    case 2:
-        //        SoundManager.Instance.PlaySound(Sounds.DealAnimTwoPieces);
-        //        break;
-        //    case 1:
-        //        SoundManager.Instance.PlaySound(Sounds.DealAnimOnePiece);
-        //        break;
-        //    default:
-        //        break;
-        //}
-
-        //yield return new WaitForSeconds(1f); /// TEMPORARY
 
         for (int i = 0; i < clipCount; i++)
         {
@@ -305,28 +294,6 @@ public class ClipManager : MonoBehaviour
         DealAnimClipLogic();
 
         clipCount--;
-
-
-        //switch (clipCount)
-        //{
-        //    case 4:
-        //        SoundManager.Instance.PlaySound(Sounds.DealAnimFourPieces);
-        //        break;
-        //    case 3:
-        //        SoundManager.Instance.PlaySound(Sounds.DealAnimThreePieces);
-        //        break;
-        //    case 2:
-        //        SoundManager.Instance.PlaySound(Sounds.DealAnimTwoPieces);
-        //        break;
-        //    case 1:
-        //        SoundManager.Instance.PlaySound(Sounds.DealAnimOnePiece);
-        //        break;
-        //    default:
-        //        break;
-        //}
-
-        //yield return new WaitForSeconds(0.8f); /// TEMPORARY
-
 
         for (int i = clipCount -1; i > -1; i--)
         {
@@ -350,7 +317,14 @@ public class ClipManager : MonoBehaviour
 
     public void DealAnimClipLogic()
     {
-        RefreshSlots();
+        if (GameManager.Instance.currentLevel.isBoss && !GameManager.Instance.currentLevel.ver1Boss)
+        {
+            RefreshSlotsBossV2();
+        }
+        else
+        {
+            RefreshSlots();
+        }
     }
     public IEnumerator DeactivateClip(int index)
     {

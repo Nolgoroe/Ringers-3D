@@ -349,10 +349,12 @@ public class GameManager : MonoBehaviour
         
     public void ResetDataStartBossLevel()
     {
+        if (currentLevel.ver1Boss)
+        {
+            BossBattleManager.instance.ResetDataBossVer1();
+        }
 
-        BossBattleManager.instance.ResetData();
-
-        LevelEnded = false;
+        //LevelEnded = false;
         levelStarted = true;
 
         TutorialSequence.Instacne.DisableTutorialSequence(); //// Make sure tutorial is disabled
@@ -367,17 +369,19 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.TurnOnGameplayUI();
         UIManager.Instance.dealButton.interactable = true;
         UIManager.Instance.ActivateGmaeplayCanvas();
+        UIManager.Instance.bossScreensParent.SetActive(false);
 
         Camera.main.transform.position = inGameCamPos;
         TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, -0.05f);
         Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
-        //levelStarted = true;
-
         LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
         gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
 
+        gameClip.transform.position = new Vector3(gameClip.transform.position.x, 2.65f, gameClip.transform.position.z);
+
         gameBoard = Instantiate(BossBattleManager.instance.bossLevelSO.boardPrefab, destroyOutOfLevel);
+        gameBoard.transform.position = new Vector3(gameBoard.transform.position.x, 1.45f, gameBoard.transform.position.z);
         sliceManager = gameBoard.GetComponent<SliceManager>();
 
         //UIManager.Instance.GetCommitButton(gameBoard); 
@@ -402,17 +406,6 @@ public class GameManager : MonoBehaviour
         if (selectedLevelBG)
         {
             selectedLevelBG.SetActive(true);
-
-            //AnimalPrefabData data = InstantiateAnimals(selectedLevelBG);
-
-            //if (data != null)
-            //{
-            //    AnimalsManager.Instance.currentLevelAnimal = data.animalType;
-            //}
-            //else
-            //{
-            //    Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
-            //}
         }
 
         InstantiateStonePieces();
@@ -424,7 +417,17 @@ public class GameManager : MonoBehaviour
 
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
 
-        StartCoroutine(BossBattleManager.instance.delayStartBossActions());
+        if (currentLevel.ver1Boss)
+        {
+            StartCoroutine(BossBattleManager.instance.delayStartBossActions());
+
+            UIManager.Instance.bossV2TimerText.gameObject.SetActive(false);
+        }
+        else
+        {
+            StartCoroutine(BossBattleManager.instance.delayStartBossActionsVer2());
+            UIManager.Instance.bossV2TimerText.gameObject.SetActive(true);
+        }
     }
 
 

@@ -954,8 +954,6 @@ public class CursorController : MonoBehaviour
 
         if (toMove)
         {
-            //toMove.GetComponent<Piece>().isDuringConnectionAnim = false;
-
             if (cellHit)
             {
                 cellHit.GetComponent<Cell>().isDuringConnectionAnim = false;
@@ -966,10 +964,7 @@ public class CursorController : MonoBehaviour
 
         if (TutorialSequence.Instacne.duringSequence)
         {
-            //if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].isBoardPhase || TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequence].isClipPhase)
-            //{
             SnapFollowerTutorial(cellHit);
-            //}
         }
         else
         {
@@ -996,7 +991,6 @@ public class CursorController : MonoBehaviour
                 {
                     GameManager.Instance.clipManager.emptyClip = toMove.transform.parent;
                     GameManager.Instance.clipManager.latestPiece = toMove;
-                    //AddNumAnimalsToBoard(followerTarget);
                 }
 
 

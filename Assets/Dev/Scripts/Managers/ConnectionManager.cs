@@ -99,7 +99,7 @@ public class ConnectionManager : MonoBehaviour
                                                                                     //When the last piece is placed on the board we HAVE TO check connections before activating slice animations and logic.
                                                                                     //If one of the sides of the LAST PIECE are wrong then we don't activate any slices even if condition is met
 
-        if (GameManager.Instance.currentLevel.isBoss)
+        if (GameManager.Instance.currentLevel.ver1Boss)
         {
             StartCoroutine(BossBattleManager.instance.DamageBoss());
         }
@@ -274,9 +274,11 @@ public class ConnectionManager : MonoBehaviour
                             }
                         }
 
-
-                        BossBattleManager.instance.piecesToRemove.Add(supPieceArray[currentLeft].parentPiece); /// middle piece
-                        BossBattleManager.instance.piecesToRemove.Add(supPieceArray[leftContested].parentPiece); /// left piece
+                        if (GameManager.Instance.currentLevel.ver1Boss)
+                        {
+                            BossBattleManager.instance.piecesToRemove.Add(supPieceArray[currentLeft].parentPiece); /// middle piece
+                            BossBattleManager.instance.piecesToRemove.Add(supPieceArray[leftContested].parentPiece); /// left piece
+                        }
 
                         CheckRight(supPieceArray, cellList, cellIndex, isOuterCell, lastPiece);
                     }
@@ -320,12 +322,6 @@ public class ConnectionManager : MonoBehaviour
 
         int currentRight = cellIndex * 2 + 1;
 
-        //int rightContested = CheckIntRange((cellIndex * 2) + 2);
-        //int leftContested = CheckIntRange((cellIndex * 2) -1);
-
-        //int currentRight = cellIndex * 2 + 1;
-        //int currentLeft = cellIndex * 2;
-
         if (supPieceArray[rightContested] && subPiecesOnBoard[rightContested].parentPiece.partOfBoard)
         {
             nextToOtherpiece = true;
@@ -340,7 +336,6 @@ public class ConnectionManager : MonoBehaviour
                     {
                         CursorController.Instance.tutorialBadConnection = true;
                     }
-                    //Debug.Log("Bad Connection Left Conetsted");
                     GameManager.Instance.unsuccessfullConnectionCount++;
 
                     if (supPieceArray[currentRight].relevantSlice.hasSlice)
@@ -353,15 +348,12 @@ public class ConnectionManager : MonoBehaviour
 
                     supPieceArray[currentRight].isBadConnection = true;
                     supPieceArray[rightContested].isBadConnection = true;
-                    //supPieceArray[currentRight].gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
-                    //supPieceArray[rightContested].gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
 
                     if (supPieceArray[currentRight].relevantSlice)
                     {
                         supPieceArray[currentRight].relevantSlice.fulfilledCondition = false;
                     }
 
-                    //Instantiate(badConnectionParticle, cellList[cellIndex].leftParticleZone);
                 }
                 else
                 {
@@ -378,21 +370,6 @@ public class ConnectionManager : MonoBehaviour
                                 GameManager.Instance.unsuccessfullSlicesCount--;
                             }
                         }
-                        //else
-                        //{
-                        //    if (!supPieceArray[currentRight].relevantSlice.fulfilledCondition)
-                        //    {
-                        //        if (!conditionmet)
-                        //        {
-                        //            GameManager.Instance.unsuccessfullSlicesCount++;
-                        //        }
-                        //        else
-                        //        {
-                        //            GameManager.Instance.unsuccessfullSlicesCount--;
-                        //        }
-                        //    }
-                        //}
-
                     }
 
                     CursorController.Instance.tutorialBadConnection = false;
@@ -400,25 +377,16 @@ public class ConnectionManager : MonoBehaviour
                     supPieceArray[currentRight].isBadConnection = false;
                     supPieceArray[rightContested].isBadConnection = false;
 
-                    //supPieceArray[currentRight].transform.parent.GetComponent<CameraShake>().ShakeOnce();
-                    //supPieceArray[rightContested].transform.parent.GetComponent<CameraShake>().ShakeOnce();
-
-                    //Instantiate(goodConnectionParticle, cellList[cellIndex].leftParticleZone);
 
                     supPieceArray[currentRight].SetConnectedMaterial();
                     supPieceArray[rightContested].SetConnectedMaterial();
-                    //Instantiate(connectedTilesVFX, cellList[cellIndex].leftParticleZone);
                     cellList[cellIndex].rightParticleZone.GetChild(0).gameObject.SetActive(true);
 
-                    //Debug.Log("Emission is happening");
 
                     if (!playedConnectedSound)
                     {
                         StartCoroutine(SoundManager.Instance.PlaySoundChangeVolumeAndDelay(Sounds.TileMatch,0.5f ,0.1f));
                     }
-
-                    //supPieceArray[currentRight].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
-                    //supPieceArray[rightContested].gameObject.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
 
                     if (conditionmet)
                     {
@@ -455,20 +423,16 @@ public class ConnectionManager : MonoBehaviour
                         }
                     }
 
-                    if (!BossBattleManager.instance.piecesToRemove.Contains(supPieceArray[currentRight].parentPiece))
+                    if (GameManager.Instance.currentLevel.ver1Boss)
                     {
-                        BossBattleManager.instance.piecesToRemove.Add(supPieceArray[currentRight].parentPiece); // middle pice - if we already have this piece - we do not need it again!!
+                        if (!BossBattleManager.instance.piecesToRemove.Contains(supPieceArray[currentRight].parentPiece))
+                        {
+                            BossBattleManager.instance.piecesToRemove.Add(supPieceArray[currentRight].parentPiece); // middle pice - if we already have this piece - we do not need it again!!
+                        }
+
+                        BossBattleManager.instance.piecesToRemove.Add(supPieceArray[rightContested].parentPiece); // right piece
+
                     }
-
-                    BossBattleManager.instance.piecesToRemove.Add(supPieceArray[rightContested].parentPiece); // right piece
-
-
-                    //supPieceArray[currentRight].parentPiece.GetComponentInParent<Cell>().RemovePiece(true, false);
-                    //supPieceArray[rightContested].parentPiece.GetComponentInParent<Cell>().RemovePiece(true, false);
-
-                    //Destroy(supPieceArray[currentRight].parentPiece.gameObject);
-                    //Destroy(supPieceArray[rightContested].parentPiece.gameObject);
-
                 }
             }
             else
@@ -488,7 +452,6 @@ public class ConnectionManager : MonoBehaviour
                     {
                         GameManager.Instance.unsuccessfullSlicesCount++;
                     }
-                    //supPieceArray[currentRight].relevantSlice.fulfilledCondition = false;
                 }
             }
         }
@@ -498,9 +461,19 @@ public class ConnectionManager : MonoBehaviour
             SoundManager.Instance.PlaySoundChangeVolume(Sounds.AddTileBoard, 0.5f);
         }
 
-        if (lastPiece && !GameManager.Instance.currentLevel.isBoss)
+        if (lastPiece)
         {
-            GameManager.Instance.CheckEndLevel(false);
+            if (!GameManager.Instance.currentLevel.isBoss)
+            {
+                GameManager.Instance.CheckEndLevel(false);
+            }
+            else
+            {
+                if (!GameManager.Instance.currentLevel.ver1Boss)
+                {
+                    StartCoroutine(BossBattleManager.instance.CheckCompletedRingVer2Boss());
+                }
+            }
         }
     }
 
@@ -620,14 +593,8 @@ public class ConnectionManager : MonoBehaviour
             yield break;
         }
 
-        //if (!cells[cellIndex].isFull)
-        //{
-        //    cells[cellIndex].GetComponent<Cell>().RemoveToSubPiecesOnBoardTemp();
-        //}
-
 
         yield return new WaitForSeconds(speedPieceConnectAnim - 0.05f);
-        //Debug.LogError("I AM CONNMECTEDDDDD");
 
         if (subPiecesOnBoard[currentLeft].parentPiece.isDuringConnectionAnim)
         {

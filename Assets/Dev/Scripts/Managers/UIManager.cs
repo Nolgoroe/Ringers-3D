@@ -87,7 +87,6 @@ public class UIManager : MonoBehaviour
     public GameObject TEMPBgIntro;
     public GameObject IntroSkipButton;
     public GameObject IntroTapToContinue;
-    public GameObject bossBattleUIScreen;
     public GameObject placePieceVFX;
     public GameObject dealButtonVFX;
     public GameObject startAppLoadingScreen;
@@ -199,6 +198,16 @@ public class UIManager : MonoBehaviour
 
     public GameObject activeScreen;
 
+
+    [Header("Boss Header")]
+    public GameObject bossBattleUIScreen;
+    public GameObject bossScreensParent;
+    public GameObject bossWellDoneScreen;
+    public GameObject bossWinScreen;
+    public TMP_Text bossScreenHPText;
+    public TMP_Text bossDamageDoneText;
+    public TMP_Text bossV2TimerText;
+
     private void Start()
     {
         Instance = this;
@@ -271,6 +280,9 @@ public class UIManager : MonoBehaviour
         bossBattleUIScreen.SetActive(false);
         releaseAnimalToDenScreen.SetActive(false);
         animalIsHappyScreen.SetActive(false);
+        bossWellDoneScreen.SetActive(false);
+        bossWinScreen.SetActive(false);
+        bossScreensParent.SetActive(false);
         activeScreen = null;
 
         dragControlsImage.sprite = toggleOnSprite;
@@ -349,7 +361,6 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.clipManager.RepopulateLatestClip();
 
         isUsingUI = false;
-
     }
     public void EndLevelMessageYes()
     {
@@ -621,7 +632,7 @@ public class UIManager : MonoBehaviour
                     TutorialSequence.Instacne.activatedHeighlights.Clear();
                     TutorialSequence.Instacne.activatedBoardParticles.Clear();
 
-                    BossBattleManager.instance.ResetData();
+                    BossBattleManager.instance.ResetDataBossVer1();
 
                     if (GameManager.Instance.currentLevel.isBoss)
                     {
@@ -636,7 +647,7 @@ public class UIManager : MonoBehaviour
             }
             else
             {
-                BossBattleManager.instance.ResetData();
+                BossBattleManager.instance.ResetDataBossVer1();
 
                 if (GameManager.Instance.currentLevel.isBoss)
                 {
@@ -2099,6 +2110,11 @@ public class UIManager : MonoBehaviour
         bossBattleUIScreen.SetActive(true);
 
         bossHealthSlider.value = (float)BossBattleManager.instance.currentBossHealth / (float)BossBattleManager.instance.bossLevelSO.BossHealth;
+
+        float currentHP = (float)BossBattleManager.instance.currentBossHealth;
+        float MaxHP = (float)BossBattleManager.instance.bossLevelSO.BossHealth;
+
+        bossScreenHPText.text = currentHP.ToString() + "/" + MaxHP.ToString();
     }
     public void DeactivateBossBattleUIScreen()
     {
@@ -2107,6 +2123,11 @@ public class UIManager : MonoBehaviour
     public void UpdateBossHealth()
     {
         bossHealthSlider.value = (float)BossBattleManager.instance.currentBossHealth / (float)BossBattleManager.instance.bossLevelSO.BossHealth;
+
+        float currentHP = (float)BossBattleManager.instance.currentBossHealth;
+        float MaxHP = (float)BossBattleManager.instance.bossLevelSO.BossHealth;
+
+        bossScreenHPText.text = currentHP.ToString() + "/" + MaxHP.ToString();
     }
     public void ResetTopAndBottomPos()
     {
@@ -2237,5 +2258,37 @@ public class UIManager : MonoBehaviour
         {
             cheatOptionsButton.SetActive(true);
         }
+    }
+
+    public void DisplayBossWellDoneScreen()
+    {
+        bossScreensParent.SetActive(true);
+        bossWellDoneScreen.SetActive(true);
+        GameManager.Instance.gameClip.SetActive(false);
+        gameplayCanvas.SetActive(false);
+        bossV2TimerText.gameObject.SetActive(false);
+        PlayerManager.Instance.AddRubies(GameManager.Instance.currentLevel.rubyRewardNoDefeat);
+
+        bossDamageDoneText.text = "You managed to deal " + BossBattleManager.instance.damageDealtToBossCurrentFight + " damage to the Rive!";
+
+
+        BossesSaveDataManager.instance.BossOneSaveHP = BossBattleManager.instance.currentBossHealth;
+    }
+    public void DisplayBossWinScreen()
+    {
+        bossScreensParent.SetActive(true);
+        bossWinScreen.SetActive(true);
+        gameplayCanvas.SetActive(false);
+        GameManager.Instance.gameClip.SetActive(false);
+        bossV2TimerText.gameObject.SetActive(false);
+        PlayerManager.Instance.AddRubies(GameManager.Instance.currentLevel.rubyRewardDefeat);
+
+        BossesSaveDataManager.instance.BossOneSaveHP = 0;
+    }
+
+    public void PressedGreatButton()
+    {
+        bossWellDoneScreen.SetActive(false);
+        bossWinScreen.SetActive(false);
     }
 }

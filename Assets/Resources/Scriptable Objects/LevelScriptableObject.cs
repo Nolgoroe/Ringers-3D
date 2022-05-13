@@ -62,17 +62,16 @@ public class LevelScriptableObject : ScriptableObject
     public PieceColor[] specificSlicesColors;
 
 
-    [Header("Boss Settings")]
+    [Header("Boss General Settings")]
     public int BossHealth;
     public bool isRandomPieces;
     public int[] specificPiecesIndex;
-    
+    public int rubyRewardNoDefeat;
+    public int rubyRewardDefeat;
+    public bool ver1Boss;
 
-    //[ContextMenu("Change Name")]
-    //public void NameChange()
-    //{
-    //    string assetPath = AssetDatabase.GetAssetPath(this);
-    //    AssetDatabase.RenameAsset(assetPath, "Level " + levelNum);
-    //    AssetDatabase.Refresh();
-    //}
+    [Header("Boss V2 General Settings")]
+    public float timeForLevelInSeconds;
+    public float dealButtonTimer;
+    public float damageToBossCompeleRing;
 }

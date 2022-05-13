@@ -20,6 +20,7 @@ public class SliceManager : MonoBehaviour
     public GameObject endLevelAnimVFX;
     public GameObject slicePrefab;
     public GameObject slicePrefabLimiter;
+    public GameObject particleZonesParent;
 
     public Texture emptyScrollTexture;
 
@@ -92,38 +93,10 @@ public class SliceManager : MonoBehaviour
         sliceSymbolToSprite = new Dictionary<PieceSymbol, Texture>();
         slicecolorToSprite = new Dictionary<PieceColor, Texture>();
 
-        //limiterSliceSymbolToSprite = new Dictionary<PieceSymbol, Texture>(); // this was used for 3D limiters
         limiterSliceSymbolToSprite = new Dictionary<PieceSymbol, Sprite>();
-        //limiterSlicecolorToSprite = new Dictionary<PieceColor, Texture>(); // this was used for 3D limiters
         limiterSlicecolorToSprite = new Dictionary<PieceColor, Sprite>();
 
         activeLocksLockAnims = new List<GameObject>();
-        //pieceColorToColor = new Dictionary<PieceColor, Material>();
-
-        //lootSliceSymbolDict = new Dictionary<PieceSymbol, Sprite>();
-        //lootSliceColorDict = new Dictionary<PieceColor, Sprite>();
-
-        //lootLockSliceSymbolSpritesDict = new Dictionary<PieceSymbol, Sprite>();
-        //lootLockSliceColorDict = new Dictionary<PieceColor, Sprite>();
-
-        //lootLockLimiterSliceSymbolSpritesDict = new Dictionary<PieceSymbol, Sprite>();
-        //lootLockSLimiterliceColorDict = new Dictionary<PieceColor, Sprite>();
-
-        //lootToIcon = new Dictionary<LootPacks, Sprite>();
-
-        //for (int i = 1; i < System.Enum.GetValues(typeof(LootPacks)).Length; i++)
-        //{
-        //    string lootPackName = System.Enum.GetName(typeof(LootPacks), i);
-
-        //    if (lootPackName.Contains("I"))
-        //    {
-        //        //lootToIcon.Add((LootPacks)i, sliceLootIcons[1]); ////// The last sprite in the list is the same sprite for all Loot packes with 'I' in them
-        //    }
-        //    else
-        //    {
-        //        //lootToIcon.Add((LootPacks)i, sliceLootIcons[0]);
-        //    }
-        //}
 
         for (int i = 0; i < sliceSymbolsSprites.Length; i++)
         {
@@ -137,53 +110,13 @@ public class SliceManager : MonoBehaviour
 
         for (int i = 0; i < limiterSliceSymbolsSprites.Length; i++)
         {
-            //limiterSliceSymbolToSprite.Add((PieceSymbol)i, limiterSliceSymbolsSprites[i]); // this was used for 3D limiters
             limiterSliceSymbolToSprite.Add((PieceSymbol)i, limiterSliceSymbolsSprites[i]);
         }
 
-        //for (int i = 0; i < limiterSliceColors.Length; i++)
-        //{
-        //    limiterSlicecolorToSprite.Add((PieceColor)i, limiterSliceColors[i]); // this was used for 3D limiters
-        //}
         for (int i = 0; i < limiterSliceColors.Length; i++)
         {
             limiterSlicecolorToSprite.Add((PieceColor)i, limiterSliceColors[i]);
         }
-
-        //for (int i = 0; i < System.Enum.GetValues(typeof(PieceColor)).Length; i++)
-        //{
-        //    pieceColorToColor.Add((PieceColor)i, GameManager.Instance.clipManager.gameColors[i]);
-        //}
-
-        //for (int i = 0; i < lootSliceSymbolSprites.Length; i++)
-        //{
-        //    lootSliceSymbolDict.Add((PieceSymbol)i, lootSliceSymbolSprites[i]);
-        //}
-
-        //for (int i = 0; i < lootSliceColorSprites.Length; i++)
-        //{
-        //    lootSliceColorDict.Add((PieceColor)i, lootSliceColorSprites[i]);
-        //}
-
-        //for (int i = 0; i < lootLockSliceSymbolSprites.Length; i++)
-        //{
-        //    lootLockSliceSymbolSpritesDict.Add((PieceSymbol)i, lootSliceSymbolSprites[i]);
-        //}
-
-        //for (int i = 0; i < lootLockSliceColorSprites.Length; i++)
-        //{
-        //    lootLockSliceColorDict.Add((PieceColor)i, lootSliceColorSprites[i]);
-        //}
-
-        //for (int i = 0; i < lootLockLimiterSliceSymbolSprites.Length; i++)
-        //{
-        //    lootLockLimiterSliceSymbolSpritesDict.Add((PieceSymbol)i, lootSliceSymbolSprites[i]);
-        //}
-
-        //for (int i = 0; i < lootLockLimiterSliceColorSprites.Length; i++)
-        //{
-        //    lootLockSLimiterliceColorDict.Add((PieceColor)i, lootSliceColorSprites[i]);
-        //}
     }
 
     public void SpawnSlices(int numOfSlices)

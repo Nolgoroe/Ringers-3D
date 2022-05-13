@@ -210,9 +210,14 @@ public class PowerUpManager : MonoBehaviour
             }
             else
             {
-                StartCoroutine(GameManager.Instance.clipManager.DealAnimation());
-                //GameManager.Instance.clipManager.clipCount--;
-                //GameManager.Instance.clipManager.RefreshSlots();
+                if (GameManager.Instance.currentLevel.isBoss && !GameManager.Instance.currentLevel.ver1Boss)
+                {
+                    StartCoroutine(BossBattleManager.instance.DealAnimationBossVer2());
+                }
+                else
+                {
+                    StartCoroutine(GameManager.Instance.clipManager.DealAnimation());
+                }
             }
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using GameAnalyticsSDK;
+using UnityEngine.UI;
 
 public class BossBattleManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class BossBattleManager : MonoBehaviour
     public int currentBossHealth;
 
     public int twoComboBaseDMG;
+
+    public int damageDealtToBossCurrentFight;
 
     [Header("Boss Action Data")]
     public bool bossBattleStarted = false;
@@ -32,6 +35,11 @@ public class BossBattleManager : MonoBehaviour
     public List<PieceColor> colorToDmg;
     public List<PieceSymbol> symbolToDmg;
 
+
+    [Header("Boss V2 General Settings")]
+    public List<GameObject> completedRings;
+    public Transform completedRingsParent;
+
     private void Start()
     {
         instance = this;
@@ -48,21 +56,24 @@ public class BossBattleManager : MonoBehaviour
     {
         if (bossBattleStarted && !UIManager.isUsingUI)
         {
-            CheckEndLevelBoss();
-
-            currentTimeTillNextTick += Time.fixedDeltaTime;
-
-            if(currentTimeTillNextTick >= currentMaxTimeTillNextTick)
+            if (bossLevelSO.ver1Boss)
             {
-                BossAddRandomPieceToBoard();
+                CheckEndLevelBossVersionOne();
 
+                currentTimeTillNextTick += Time.fixedDeltaTime;
 
-                if (currentMaxTimeTillNextTick - reduceEveryTick >= minimalTimeForTick)
+                if (currentTimeTillNextTick >= currentMaxTimeTillNextTick)
                 {
-                    currentMaxTimeTillNextTick -= reduceEveryTick;
-                }
+                    BossAddRandomPieceToBoard();
 
-                currentTimeTillNextTick = 0;
+
+                    if (currentMaxTimeTillNextTick - reduceEveryTick >= minimalTimeForTick)
+                    {
+                        currentMaxTimeTillNextTick -= reduceEveryTick;
+                    }
+
+                    currentTimeTillNextTick = 0;
+                }
             }
         }
     }
@@ -77,12 +88,12 @@ public class BossBattleManager : MonoBehaviour
         emptyCells[randomCell].AddPieceRandom();
     }
 
-    public void CheckEndLevelBoss()
+    public void CheckEndLevelBossVersionOne()
     {
         if(currentBossHealth <= 0)
         {
             bossBattleStarted = false;
-            UIManager.Instance.youWinScreen.SetActive(true);
+            UIManager.Instance.DisplayBossWinScreen();
 
             Debug.Log("YOU WIN");
 
@@ -92,7 +103,7 @@ public class BossBattleManager : MonoBehaviour
         if (GameManager.Instance.currentFilledCellCount == bossLevelSO.cellsCountInLevel)
         {
             bossBattleStarted = false;
-            UIManager.Instance.DisplayLoseScreen();
+            UIManager.Instance.DisplayBossWellDoneScreen();
 
             Debug.Log("YOU LOSE");
 
@@ -100,27 +111,86 @@ public class BossBattleManager : MonoBehaviour
         }
     }
 
-    public void ResetData()
+    public void ResetDataBossVer1()
     {
         currentMaxTimeTillNextTick = originalTimeTillNextTick;
         bossBattleStarted = false;
         currentTimeTillNextTick = 0;
         currentBossHealth = 0;
+        damageDealtToBossCurrentFight = 0;
 
         piecesToRemove.Clear();
         colorToDmg.Clear();
         symbolToDmg.Clear();
     }
+    public void ResetDataBossVer2()
+    {
+        GameManager.Instance.gameBoard.name = "Done ring";
+        GameManager.Instance.gameBoard.SetActive(false);
+
+        GameManager.Instance.gameBoard = Instantiate(bossLevelSO.boardPrefab, GameManager.Instance.destroyOutOfLevel);
+        GameManager.Instance.gameBoard.transform.position = new Vector3(GameManager.Instance.gameBoard.transform.position.x, 1.45f, GameManager.Instance.gameBoard.transform.position.z);
+
+        GameManager.Instance.sliceManager = GameManager.Instance.gameBoard.GetComponent<SliceManager>();
+
+        ConnectionManager.Instance.ResetConnectionData();
+
+        ConnectionManager.Instance.GrabCellList(GameManager.Instance.gameBoard.transform);
+        ConnectionManager.Instance.SetLevelConnectionData(bossLevelSO.is12PieceRing);
+
+        GameManager.Instance.sliceManager.SpawnSlices(bossLevelSO.slicesToSpawn.Length);
+
+        GameManager.Instance.currentFilledCellCount = 0;
+        GameManager.Instance.unsuccessfullConnectionCount = 0;
+
+
+
+        GameManager.Instance.clipManager.PopulateSlot(GameManager.Instance.clipManager.emptyClip, 10);
+    }
+    public void EndDataBossVer2()
+    {
+        Destroy(GameManager.Instance.gameBoard.gameObject);
+
+        ConnectionManager.Instance.ResetConnectionData();
+
+        ConnectionManager.Instance.GrabCellList(GameManager.Instance.gameBoard.transform);
+        ConnectionManager.Instance.SetLevelConnectionData(bossLevelSO.is12PieceRing);
+
+        GameManager.Instance.currentFilledCellCount = 0;
+        GameManager.Instance.unsuccessfullConnectionCount = 0;
+    }
 
     public IEnumerator delayStartBossActions()
     {
-        currentBossHealth = bossLevelSO.BossHealth;
-
+        if(BossesSaveDataManager.instance.BossOneSaveHP > 0)
+        {
+            currentBossHealth = BossesSaveDataManager.instance.BossOneSaveHP;
+        }
+        else
+        {
+            currentBossHealth = bossLevelSO.BossHealth;
+        }
 
         yield return new WaitForSeconds(delayTimeBossActions);
         bossBattleStarted = true;
         UIManager.Instance.DisplayBossBattleUIScreen();
 
+    }
+    public IEnumerator delayStartBossActionsVer2()
+    {
+        if(BossesSaveDataManager.instance.BossTwoSaveHP > 0)
+        {
+            currentBossHealth = BossesSaveDataManager.instance.BossTwoSaveHP;
+        }
+        else
+        {
+            currentBossHealth = bossLevelSO.BossHealth;
+        }
+
+        yield return new WaitForSeconds(delayTimeBossActions);
+        bossBattleStarted = true;
+        UIManager.Instance.DisplayBossBattleUIScreen();
+        DisplayTimeNoDelay();
     }
 
 
@@ -169,12 +239,144 @@ public class BossBattleManager : MonoBehaviour
         if(piecesToRemove.Count() == 2)
         {
             currentBossHealth -= twoComboBaseDMG;
+
+            damageDealtToBossCurrentFight += twoComboBaseDMG;
         }
         else if(piecesToRemove.Count() == 3)
         {
             currentBossHealth -= twoComboBaseDMG * 3;
+            damageDealtToBossCurrentFight += twoComboBaseDMG * 3;
         }
 
         UIManager.Instance.UpdateBossHealth();
+    }
+    public void DmgBossCalcBossVer2()
+    {
+        /// we do not have weaknesses / vulnerabilities... but they will be calculated here!
+        currentBossHealth -= (int)GameManager.Instance.currentLevel.damageToBossCompeleRing;
+
+        UIManager.Instance.UpdateBossHealth();
+
+        if (currentBossHealth <= 0)
+        {
+            bossBattleStarted = false;
+            UIManager.Instance.DisplayBossWinScreen();
+            EndDataBossVer2();
+
+            Debug.Log("YOU WIN");
+
+            return;
+        }
+    }
+
+
+    public IEnumerator DealAnimationBossVer2()
+    {
+        UIManager.Instance.dealButton.interactable = false;
+
+        Image dealButtonImage = UIManager.Instance.dealButton.GetComponent<Image>();
+        dealButtonImage.fillAmount = 0;
+
+        LeanTween.value(dealButtonImage.gameObject, dealButtonImage.fillAmount, 1, GameManager.Instance.currentLevel.dealButtonTimer).setOnComplete(() => UIManager.Instance.dealButton.interactable = true).setOnUpdate((float val) =>
+        {
+            dealButtonImage.fillAmount = val;
+        });
+
+        for (int i = 0; i < GameManager.Instance.clipManager.clipCount; i++)
+        {
+            GameObject toMove = GameManager.Instance.clipManager.slots[i].GetChild(1).gameObject;
+
+            LeanTween.move(toMove, GameManager.Instance.clipManager.piecesDealPositionsOut[i], GameManager.Instance.clipManager.timeToAnimateMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
+
+            SoundManager.Instance.PlaySound(Sounds.PieceMoveDeal);
+
+            yield return new WaitForSeconds(GameManager.Instance.clipManager.delayClipMove);
+        }
+
+
+        yield return new WaitForSeconds(GameManager.Instance.clipManager.WaitTimeBeforeIn);
+        GameManager.Instance.clipManager.DealAnimClipLogic();
+
+        for (int i = GameManager.Instance.clipManager.clipCount - 1; i > -1; i--)
+        {
+            GameObject toMove = GameManager.Instance.clipManager.slots[i].GetChild(1).gameObject;
+
+            LeanTween.move(toMove, GameManager.Instance.clipManager.originalPiecePos, GameManager.Instance.clipManager.timeToAnimateMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
+
+            Invoke("playReturnPiecePlaceSound", GameManager.Instance.clipManager.timeToAnimateMove - 0.25f);
+
+            yield return new WaitForSeconds(GameManager.Instance.clipManager.delayClipMove);
+
+        }
+    }
+
+    void playReturnPiecePlaceSound()
+    {
+        SoundManager.Instance.PlaySound(Sounds.PieceMoveDeal);
+    }
+
+
+    void DisplayTimeNoDelay() ///// This function is only for the start of the game so that players wont see the defult time while the real time is updating
+    {
+        float m = GameManager.Instance.currentLevel.timeForLevelInSeconds % 3600;
+        float minutes = Mathf.FloorToInt(m / 60);
+        float seconds = Mathf.FloorToInt(GameManager.Instance.currentLevel.timeForLevelInSeconds % 60);
+
+        UIManager.Instance.bossV2TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+        StartCoroutine(DisplayTimeLiveBossV2());
+    }
+
+    IEnumerator DisplayTimeLiveBossV2()
+    {
+        float currentTimer = GameManager.Instance.currentLevel.timeForLevelInSeconds;
+
+        while (currentTimer > 0)
+        {
+            UIManager.Instance.dailyLootTextTime.gameObject.SetActive(true);
+
+            yield return new WaitForSecondsRealtime(1);
+
+            currentTimer--;
+
+            float m = currentTimer % 3600;
+            float minutes = Mathf.FloorToInt(m / 60);
+            float seconds = Mathf.FloorToInt(currentTimer % 60);
+
+            UIManager.Instance.bossV2TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        }
+
+
+        bossBattleStarted = false;
+        UIManager.Instance.DisplayBossWellDoneScreen();
+        EndDataBossVer2();
+
+        Debug.Log("YOU LOSE");
+    }
+
+    public IEnumerator CheckCompletedRingVer2Boss()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        if (GameManager.Instance.currentFilledCellCount == GameManager.Instance.currentLevel.cellsCountInLevel && GameManager.Instance.unsuccessfullConnectionCount == 0 && GameManager.Instance.unsuccessfullSlicesCount == 0)
+        {
+            completedRings.Add(GameManager.Instance.gameBoard);
+            GameManager.Instance.gameBoard.transform.SetParent(completedRingsParent);
+            Destroy(GameManager.Instance.sliceManager.particleZonesParent.gameObject);
+            GameManager.Instance.gameBoard.AddComponent<RectTransform>();
+            GameManager.Instance.gameBoard.transform.localScale = new Vector3(25, 25, 25);
+
+            DmgBossCalcBossVer2();
+
+
+            if (currentBossHealth > 0)
+            {
+                ResetDataBossVer2();
+            }
+        }
+        else
+        {
+            UIManager.Instance.DisplayEndLevelMessage();
+        }
     }
 }
