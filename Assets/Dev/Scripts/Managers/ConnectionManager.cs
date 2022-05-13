@@ -596,20 +596,23 @@ public class ConnectionManager : MonoBehaviour
 
         yield return new WaitForSeconds(speedPieceConnectAnim - 0.05f);
 
-        if (subPiecesOnBoard[currentLeft].parentPiece.isDuringConnectionAnim)
+        if (subPiecesOnBoard[currentLeft].parentPiece)
         {
-            CursorController.Instance.SnapFollower(cells[cellIndex].transform, subPiecesOnBoard[currentLeft].transform.parent);
-
-            if (isGoodConnectLeft)
+            if (subPiecesOnBoard[currentLeft].parentPiece.isDuringConnectionAnim)
             {
-                subPiecesOnBoard[currentLeft].parentPiece.isDuringConnectionAnim = false;
-                subPiecesOnBoard[leftContested].parentPiece.isDuringConnectionAnim = false;
-            }
+                CursorController.Instance.SnapFollower(cells[cellIndex].transform, subPiecesOnBoard[currentLeft].transform.parent);
 
-            if (isGoodConnectRight)
-            {
-                subPiecesOnBoard[currentRight].parentPiece.isDuringConnectionAnim = false;
-                subPiecesOnBoard[rightContested].parentPiece.isDuringConnectionAnim = false;
+                if (isGoodConnectLeft)
+                {
+                    subPiecesOnBoard[currentLeft].parentPiece.isDuringConnectionAnim = false;
+                    subPiecesOnBoard[leftContested].parentPiece.isDuringConnectionAnim = false;
+                }
+
+                if (isGoodConnectRight)
+                {
+                    subPiecesOnBoard[currentRight].parentPiece.isDuringConnectionAnim = false;
+                    subPiecesOnBoard[rightContested].parentPiece.isDuringConnectionAnim = false;
+                }
             }
         }
 

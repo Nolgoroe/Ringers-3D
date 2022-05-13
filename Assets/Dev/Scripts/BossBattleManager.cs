@@ -94,8 +94,11 @@ public class BossBattleManager : MonoBehaviour
         {
             bossBattleStarted = false;
             UIManager.Instance.DisplayBossWinScreen();
+            BossesSaveDataManager.instance.BossOneSaveHP = 0;
 
             Debug.Log("YOU WIN");
+
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.BossesSaveData });
 
             return;
         }
@@ -104,8 +107,11 @@ public class BossBattleManager : MonoBehaviour
         {
             bossBattleStarted = false;
             UIManager.Instance.DisplayBossWellDoneScreen();
+            BossesSaveDataManager.instance.BossOneSaveHP = currentBossHealth;
 
             Debug.Log("YOU LOSE");
+
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.BossesSaveData });
 
             return;
         }
@@ -123,7 +129,7 @@ public class BossBattleManager : MonoBehaviour
         colorToDmg.Clear();
         symbolToDmg.Clear();
     }
-    public void ResetDataBossVer2()
+    public void NextRing()
     {
         GameManager.Instance.gameBoard.name = "Done ring";
         GameManager.Instance.gameBoard.SetActive(false);
@@ -149,11 +155,13 @@ public class BossBattleManager : MonoBehaviour
     }
     public void EndDataBossVer2()
     {
-        Destroy(GameManager.Instance.gameBoard.gameObject);
+        if (GameManager.Instance.gameBoard)
+        {
+            Destroy(GameManager.Instance.gameBoard.gameObject);
+        }
 
         ConnectionManager.Instance.ResetConnectionData();
 
-        ConnectionManager.Instance.GrabCellList(GameManager.Instance.gameBoard.transform);
         ConnectionManager.Instance.SetLevelConnectionData(bossLevelSO.is12PieceRing);
 
         GameManager.Instance.currentFilledCellCount = 0;
@@ -259,9 +267,12 @@ public class BossBattleManager : MonoBehaviour
 
         if (currentBossHealth <= 0)
         {
+            GameManager.Instance.gameBoard = null;
+
             bossBattleStarted = false;
             UIManager.Instance.DisplayBossWinScreen();
-            EndDataBossVer2();
+            BossesSaveDataManager.instance.BossTwoSaveHP = 0;
+            OnEndBossVer2Fight();
 
             Debug.Log("YOU WIN");
 
@@ -344,16 +355,35 @@ public class BossBattleManager : MonoBehaviour
             float seconds = Mathf.FloorToInt(currentTimer % 60);
 
             UIManager.Instance.bossV2TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+            if (currentBossHealth <= 0)
+            {
+                break;
+            }
         }
 
+        if (currentBossHealth > 0)
+        {
+            bossBattleStarted = false;
+            UIManager.Instance.DisplayBossWellDoneScreen();
+            BossesSaveDataManager.instance.BossTwoSaveHP = currentBossHealth;
+            OnEndBossVer2Fight();
 
-        bossBattleStarted = false;
-        UIManager.Instance.DisplayBossWellDoneScreen();
-        EndDataBossVer2();
-
-        Debug.Log("YOU LOSE");
+            Debug.Log("YOU LOSE");
+        }
     }
 
+    void OnEndBossVer2Fight()
+    {
+        EndDataBossVer2();
+
+        foreach (GameObject go in completedRings)
+        {
+            go.SetActive(true);
+        }
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.BossesSaveData});
+    }
     public IEnumerator CheckCompletedRingVer2Boss()
     {
         yield return new WaitForSeconds(0.1f);
@@ -363,15 +393,17 @@ public class BossBattleManager : MonoBehaviour
             completedRings.Add(GameManager.Instance.gameBoard);
             GameManager.Instance.gameBoard.transform.SetParent(completedRingsParent);
             Destroy(GameManager.Instance.sliceManager.particleZonesParent.gameObject);
+            Destroy(GameManager.Instance.sliceManager.endLevelAnimVFX.gameObject);
             GameManager.Instance.gameBoard.AddComponent<RectTransform>();
             GameManager.Instance.gameBoard.transform.localScale = new Vector3(25, 25, 25);
+
 
             DmgBossCalcBossVer2();
 
 
             if (currentBossHealth > 0)
             {
-                ResetDataBossVer2();
+                NextRing();
             }
         }
         else

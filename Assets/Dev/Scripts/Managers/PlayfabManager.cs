@@ -24,6 +24,7 @@ public enum SystemsToSave
     HollowManager,
     VersionUpdaterData,
     CheatingSaveData,
+    BossesSaveData,
     ALL
 }
 
@@ -344,8 +345,6 @@ public class PlayfabManager : MonoBehaviour
 
     void OnDataRecieved(GetUserDataResult result)
     {
-        //Debug.Log("Recieved Character Data");
-
         // Player Data
         if (result.Data != null && result.Data.ContainsKey("Player Data"))
         {
@@ -407,6 +406,11 @@ public class PlayfabManager : MonoBehaviour
         if (result.Data != null && result.Data.ContainsKey("Cheating Save Data"))
         {
             JsonUtility.FromJsonOverwrite(result.Data["Cheating Save Data"].Value, CheatingSaveData.instance);
+        }
+        // Bosses Save Data
+        if (result.Data != null && result.Data.ContainsKey("Bosses Save Data"))
+        {
+            JsonUtility.FromJsonOverwrite(result.Data["Bosses Save Data"].Value, BossesSaveDataManager.instance);
         }
 
         doneWithStep = true;
@@ -517,6 +521,11 @@ public class PlayfabManager : MonoBehaviour
                     //Cheating Save Data
                     savedData = JsonUtility.ToJson(CheatingSaveData.instance);
                     SendDataToBeSavedJson(savedData, SystemsToSave.CheatingSaveData, -1);
+                    break;
+                case SystemsToSave.BossesSaveData:
+                    //Bosses Save Data
+                    savedData = JsonUtility.ToJson(BossesSaveDataManager.instance);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.BossesSaveData, -1);
                     break;
                 case SystemsToSave.ALL:
                     SaveAllGameData();
@@ -633,29 +642,15 @@ public class PlayfabManager : MonoBehaviour
         savedData = JsonUtility.ToJson(CheatingSaveData.instance);
         SendDataToBeSavedJson(savedData, SystemsToSave.CheatingSaveData, -1);
 
+        //Bosses Save Data
+        savedData = JsonUtility.ToJson(BossesSaveDataManager.instance);
+        SendDataToBeSavedJson(savedData, SystemsToSave.BossesSaveData, -1);
+
     }
 
     public void SendDataToBeSavedJson(string saveData, SystemsToSave system, int zoneNumber)
     {
         UpdateUserDataRequest request = null;
-
-        //request = new UpdateUserDataRequest
-        //{
-        //    Data = new Dictionary<string, string>()
-        //            {
-        //                { "Player Data", saveData },
-        //                { "Dew Drops Data", saveData },
-        //                { "Animal Manager Data", saveData },
-        //                { "corrupted Zones Manager Data", saveData },
-        //                { "Tutorial Save Data", saveData },
-        //                { "Zone Manager Data", saveData },
-        //                { "Rewards Manager Data", saveData },
-        //            },
-        //};
-
-        //foreach (Zone zone in ZoneManagerHelpData.Instance.listOfAllZones)
-        //{
-        //}
 
         switch (system)
         {
@@ -756,6 +751,15 @@ public class PlayfabManager : MonoBehaviour
                     Data = new Dictionary<string, string>()
                     {
                         { "Cheating Save Data", saveData }
+                    }
+                };
+                break;
+            case SystemsToSave.BossesSaveData:
+                request = new UpdateUserDataRequest
+                {
+                    Data = new Dictionary<string, string>()
+                    {
+                        { "Bosses Save Data", saveData }
                     }
                 };
                 break;

@@ -632,32 +632,36 @@ public class UIManager : MonoBehaviour
                     TutorialSequence.Instacne.activatedHeighlights.Clear();
                     TutorialSequence.Instacne.activatedBoardParticles.Clear();
 
-                    BossBattleManager.instance.ResetDataBossVer1();
 
-                    if (GameManager.Instance.currentLevel.isBoss)
-                    {
-                        DeactivateBossBattleUIScreen();
-                        BossBattleManager.instance.bossLevelSO = null;
-                    }
-
-                    GameManager.Instance.currentLevel = null;
 
                     TutorialSequence.Instacne.duringSequence = false;
                 }
             }
-            else
+
+            if (GameManager.Instance.currentLevel.isBoss)
             {
-                BossBattleManager.instance.ResetDataBossVer1();
+                DeactivateBossBattleUIScreen();
+                BossBattleManager.instance.bossLevelSO = null;
+                BossBattleManager.instance.bossBattleStarted = false;
 
-                if (GameManager.Instance.currentLevel.isBoss)
+                BossBattleManager.instance.StopAllCoroutines();
+
+                if (GameManager.Instance.currentLevel.ver1Boss)
                 {
-                    DeactivateBossBattleUIScreen();
-                    BossBattleManager.instance.bossLevelSO = null;
+                    BossBattleManager.instance.ResetDataBossVer1();
                 }
+                else
+                {
+                    foreach (GameObject go in BossBattleManager.instance.completedRings)
+                    {
+                        Destroy(go.gameObject);
+                    }
 
-                GameManager.Instance.currentLevel = null;
+                    BossBattleManager.instance.completedRings.Clear();
+                }
             }
-            //// SAVE ZONE MANAGER HERE???
+
+            GameManager.Instance.currentLevel = null;
         }
 
         if (currentCanvas == ringersHutDisplay)
@@ -2271,8 +2275,6 @@ public class UIManager : MonoBehaviour
 
         bossDamageDoneText.text = "You managed to deal " + BossBattleManager.instance.damageDealtToBossCurrentFight + " damage to the Rive!";
 
-
-        BossesSaveDataManager.instance.BossOneSaveHP = BossBattleManager.instance.currentBossHealth;
     }
     public void DisplayBossWinScreen()
     {
@@ -2282,8 +2284,6 @@ public class UIManager : MonoBehaviour
         GameManager.Instance.gameClip.SetActive(false);
         bossV2TimerText.gameObject.SetActive(false);
         PlayerManager.Instance.AddRubies(GameManager.Instance.currentLevel.rubyRewardDefeat);
-
-        BossesSaveDataManager.instance.BossOneSaveHP = 0;
     }
 
     public void PressedGreatButton()
