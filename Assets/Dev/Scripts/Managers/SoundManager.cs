@@ -46,6 +46,8 @@ public class SoundManager : MonoBehaviour
 
     public Dictionary<Sounds, AudioClip[]> enumToSound;
 
+    public bool muteMusic, muteSFX;
+
     private void Start()
     {
         Instance = this;
@@ -62,7 +64,10 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(Sounds soundEnum)
     {
-        audioSourceSFX.volume = 0.5f;
+        if (!muteSFX)
+        {
+            audioSourceSFX.volume = 0.5f;
+        }
 
         int ran = Random.Range(0, (enumToSound[soundEnum].Length));
         audioSourceSFX.PlayOneShot(enumToSound[soundEnum][ran]);
@@ -70,7 +75,10 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySoundChangeVolume(Sounds soundEnum, float Volume)
     {
-        audioSourceSFX.volume = Volume;
+        if (!muteSFX)
+        {
+            audioSourceSFX.volume = Volume;
+        }
 
         int ran = Random.Range(0, (enumToSound[soundEnum].Length));
         audioSourceSFX.PlayOneShot(enumToSound[soundEnum][ran]);
@@ -80,7 +88,11 @@ public class SoundManager : MonoBehaviour
     public IEnumerator PlaySoundDelay(Sounds soundEnum, float Delay)
     {
         yield return new WaitForSeconds(Delay);
-        audioSourceSFX.volume = 0.5f;
+
+        if (!muteSFX)
+        {
+            audioSourceSFX.volume = 0.5f;
+        }
 
         int ran = Random.Range(0, (enumToSound[soundEnum].Length));
         audioSourceSFX.PlayOneShot(enumToSound[soundEnum][ran]);
@@ -91,7 +103,10 @@ public class SoundManager : MonoBehaviour
     {
         yield return new WaitForSeconds(Delay);
 
-        audioSourceSFX.volume = Volume;
+        if (!muteSFX)
+        {
+            audioSourceSFX.volume = Volume;
+        }
 
         int ran = Random.Range(0, (enumToSound[soundEnum].Length));
         audioSourceSFX.PlayOneShot(enumToSound[soundEnum][ran]);
@@ -99,7 +114,6 @@ public class SoundManager : MonoBehaviour
 
     public void PlayAmbience(Sounds soundEnum)
     {
-        //audioSourceSFX.volume = 0.5f;
         int ran = Random.Range(0, (enumToSound[soundEnum].Length));
         audioSourceAmbience.clip = enumToSound[soundEnum][ran];
 
@@ -112,6 +126,11 @@ public class SoundManager : MonoBehaviour
     }
     public IEnumerator FadeOutAmbientMusic(float time)
     {
+        if (muteMusic)
+        {
+            yield break;
+        }
+
         float vol = 1;
 
         LeanTween.value(audioSourceAmbience.gameObject, 1, 0, time).setOnUpdate((float val) =>
@@ -125,6 +144,11 @@ public class SoundManager : MonoBehaviour
     }
     public IEnumerator FadeInAmbientMusic(Sounds soundEnum)
     {
+        if (muteMusic)
+        {
+            yield break;
+        }
+
         audioSourceAmbience.volume = 0;
 
         int ran = Random.Range(0, (enumToSound[soundEnum].Length));
@@ -141,5 +165,28 @@ public class SoundManager : MonoBehaviour
         });
 
         yield return new WaitForSeconds(2);
+    }
+
+    public void MuteMusic()
+    {
+        audioSourceAmbience.volume = 0;
+        muteMusic = true;
+    }
+
+    public void MuteSFX()
+    {
+        audioSourceSFX.volume = 0;
+        muteSFX = true;
+    }
+    public void UnMuteMusic()
+    {
+        audioSourceAmbience.volume = 1;
+        muteMusic = false;
+    }
+
+    public void UnMuteSFX()
+    {
+        audioSourceSFX.volume = 1;
+        muteSFX = false;
     }
 }

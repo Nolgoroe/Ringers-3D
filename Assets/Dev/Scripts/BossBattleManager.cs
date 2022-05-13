@@ -262,6 +262,7 @@ public class BossBattleManager : MonoBehaviour
     {
         /// we do not have weaknesses / vulnerabilities... but they will be calculated here!
         currentBossHealth -= (int)GameManager.Instance.currentLevel.damageToBossCompeleRing;
+        damageDealtToBossCurrentFight += (int)GameManager.Instance.currentLevel.damageToBossCompeleRing;
 
         UIManager.Instance.UpdateBossHealth();
 

@@ -322,24 +322,6 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    //[ContextMenu("Save")]
-    //public void SavePlayerData()
-    //{
-    //    //Debug.Log("Saved Player");
-    //    //string savedData = JsonUtility.ToJson(this);
-
-    //    //PlayfabManager.instance.SavePlayerDataJsonServer(savedData);
-    //}
-
-    //[ContextMenu("Load")]
-    //public void LoadPlayerData()
-    //{
-    //    //PlayfabManager.instance.LoadAllData();
-
-    //    //Instance = this;
-
-    //}
-
     public void HandleItemCooldowns()
     {
         List<EquipmentData> toRemove = new List<EquipmentData>();
