@@ -48,6 +48,7 @@ public class CursorController : MonoBehaviour
     public bool tutorialBadConnection = false;
 
     public static bool OverUI;
+    public static bool canMovePieces;
 
     PanZoom pz = null;
 
@@ -67,6 +68,7 @@ public class CursorController : MonoBehaviour
     {
         gameBoard = GameManager.Instance.gameBoard;
         gameClip = GameManager.Instance.gameClip;
+        canMovePieces = true;
     }
 
     void Update()
@@ -469,7 +471,10 @@ public class CursorController : MonoBehaviour
                     //Debug.Log(hit.transform.name);
                     if (!p.isDuringConnectionAnim && !AnimationManager.instance.endLevelAnimationON)
                     {
-                        GrabPiece(p);
+                        if (canMovePieces)
+                        {
+                            GrabPiece(p);
+                        }
                     }
                 }
 

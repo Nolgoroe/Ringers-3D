@@ -167,26 +167,31 @@ public class SoundManager : MonoBehaviour
         yield return new WaitForSeconds(2);
     }
 
-    public void MuteMusic()
+    public void MuteUnmuteMusic()
     {
-        audioSourceAmbience.volume = 0;
-        muteMusic = true;
+        muteMusic = !muteMusic;
+
+        if (muteMusic)
+        {
+            audioSourceAmbience.volume = 0;
+        }
+        else
+        {
+            audioSourceAmbience.volume = 1;
+        }
     }
 
-    public void MuteSFX()
+    public void MuteUnmuteSFX()
     {
-        audioSourceSFX.volume = 0;
-        muteSFX = true;
-    }
-    public void UnMuteMusic()
-    {
-        audioSourceAmbience.volume = 1;
-        muteMusic = false;
-    }
+        muteSFX = !muteSFX;
 
-    public void UnMuteSFX()
-    {
-        audioSourceSFX.volume = 1;
-        muteSFX = false;
+        if (muteSFX)
+        {
+            audioSourceSFX.volume = 0;
+        }
+        else
+        {
+            audioSourceSFX.volume = 1;
+        }
     }
 }

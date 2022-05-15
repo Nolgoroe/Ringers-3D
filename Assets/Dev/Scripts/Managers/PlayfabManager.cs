@@ -116,9 +116,6 @@ public class PlayfabManager : MonoBehaviour
         doneWithStep = false;
 
         LoadupAllGameData();
-
-        yield return new WaitUntil(() => doneWithStep == true);
-
         LoadGameVersion();
 
         yield return new WaitUntil(() => doneWithStep == true);

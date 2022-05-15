@@ -470,16 +470,18 @@ public class TutorialSequence : MonoBehaviour
                 HollowObjectDisplayer HOD = HollowCraftAndOwnedManager.Instance.hollowObjectsCreated[0].GetComponent<HollowObjectDisplayer>();
 
                 UIManager.Instance.requiredButtonForTutorialPhase = HOD.craftButton;
+                UIManager.Instance.forgeScrollRectView.enabled = false;
 
                 HOD.gameObject.SetActive(true);
                 HOD.tutorialHole.gameObject.SetActive(true);
                 activatedHeighlights.Add(HOD.tutorialHole.gameObject);
                 DisplayTutorialHandTapQuaternion(handPosCraftItemButton.position, handPosCraftItemButton.rotation, handPosCraftItemButton.localScale);
             }
-
+            
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isCloseInventoryPhase)
             {
                 UIManager.Instance.requiredButtonForTutorialPhase = UIManager.Instance.closeInventoryButton;
+                UIManager.Instance.forgeScrollRectView.enabled = true;
 
                 UIManager.Instance.closeInventoryHeighlight.SetActive(true);
                 activatedHeighlights.Add(UIManager.Instance.closeInventoryHeighlight.gameObject);
@@ -627,6 +629,7 @@ public class TutorialSequence : MonoBehaviour
 
     public IEnumerator IncrementCurrentPhaseInSequence()
     {
+
         if (currentlyActiveTutorialHand)
         {
             Destroy(currentlyActiveTutorialHand.gameObject);
@@ -635,6 +638,7 @@ public class TutorialSequence : MonoBehaviour
 
         currentPhaseInSequenceLevels++;
 
+
         //clear screen to show it better
         if (currentPhaseInSequenceLevels < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Count())
         {
@@ -642,6 +646,11 @@ public class TutorialSequence : MonoBehaviour
             {
                 maskImage.gameObject.SetActive(false);
                 UIManager.Instance.tutorialCanvasParent.SetActive(false);
+
+                if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].isAllLocked)
+                {
+                    AllLockedLogic(levelSequences, GameManager.Instance.currentLevel.tutorialIndexForList, currentPhaseInSequenceLevels);
+                }
             }
         }
 
@@ -796,6 +805,8 @@ public class TutorialSequence : MonoBehaviour
 
     public void ChangePhase(Sequence[] tutorialArray, int TutorialIndex, int phaseIndex)
     {
+        CursorController.canMovePieces = true;
+
         if (tutorialArray[TutorialIndex].phase[phaseIndex].isBoardGone)
         {
             GameManager.Instance.gameBoard.SetActive(false);
@@ -1056,6 +1067,7 @@ public class TutorialSequence : MonoBehaviour
     public void AllLockedLogic(Sequence[] tutorialArray, int TutorialIndex, int phaseIndex)
     {
         UIManager.Instance.dealButton.interactable = false;
+        CursorController.canMovePieces = false;
 
         foreach (Cell c in ConnectionManager.Instance.cells)
         {

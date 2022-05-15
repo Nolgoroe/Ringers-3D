@@ -169,6 +169,9 @@ public class UIManager : MonoBehaviour
 
     public Button requiredButtonForTutorialPhase;
 
+
+    public ScrollRect forgeScrollRectView;
+
     //public Button[] levelButtons;
     public Slider bossHealthSlider;
 
@@ -406,6 +409,14 @@ public class UIManager : MonoBehaviour
     }
     public void SureWantToRestartMessage()
     {
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (requiredButtonForTutorialPhase != restartButton)
+            {
+                return;
+            }
+        }
+
         if (!isUsingUI)
         {
             bGPanelDisableTouch.SetActive(true);
@@ -665,8 +676,6 @@ public class UIManager : MonoBehaviour
                     BossBattleManager.instance.completedRings.Clear();
                 }
             }
-
-            GameManager.Instance.currentLevel = null;
         }
 
         if (currentCanvas == ringersHutDisplay)
@@ -1236,24 +1245,6 @@ public class UIManager : MonoBehaviour
 
         TurnOnGameplayUI();
     }
-    //public void GetCommitButton(GameObject board)
-    //{
-    //    commitButton = board.GetComponentInChildren<Button>();
-    //    commitButton.onClick.AddListener(GameManager.Instance.CheckEndLevel);
-    //    Debug.Log(commitButton.onClick);
-    //    commitButton.interactable = false;
-    //}
-
-    //public void ActivateCommitButton()
-    //{
-    //    commitButton.interactable = true;
-    //    commitButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color(0, 0, 0, 1);
-    //}
-
-    //public void DisableCommitButton()
-    //{
-    //    commitButton.gameObject.SetActive(false);
-    //}
     public void UnlockLevels()
     {
         foreach (int ID in ZoneManager.Instance.unlockedZoneID)
@@ -1333,27 +1324,6 @@ public class UIManager : MonoBehaviour
             }
         }
     }
-    //public void UnlockZoneFirstTime(int ID)
-    //{
-    //    ButtonsPerZone BPZ = buttonsPerZone.Where(p => p.theZone == ZoneManagerHelpData.Instance.listOfAllZones[ID]).Single();
-
-    //    for (int i = 0; i < BPZ.zoneButtons.Length; i++)
-    //    {
-    //        if( i == 0)
-    //        {
-    //            BPZ.zoneButtons[i].interactable = true;
-    //        }
-
-    //        BPZ.zoneButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconPath);
-    //    }
-    //}
-    //public void RefreshGoldAndRubyDisplay()
-    //{
-    //    //hubGoldText.text = PlayerManager.Instance.goldCount.ToString();
-    //    hubRubyText.text = PlayerManager.Instance.rubyCount.ToString();
-    //    //gameplayGoldText.text = PlayerManager.Instance.goldCount.ToString();
-    //    gameplayRubyText.text = PlayerManager.Instance.rubyCount.ToString();
-    //}
     public void ToggleAnimalAlbum(bool Open)
     {
         if (Open)
@@ -2188,7 +2158,6 @@ public class UIManager : MonoBehaviour
 
         CanvasGroup restartGrind = restartGrindLevel.GetComponent<CanvasGroup>();
         restartGrind.alpha = 0;
-        //restartGrind.color = new Color(restartGrind.color.r, restartGrind.color.g, restartGrind.color.b, 0);
 
         flowerUIMask.transform.localScale = Vector3.zero;
     }

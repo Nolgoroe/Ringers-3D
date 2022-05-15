@@ -14,7 +14,7 @@ public class AutoVersionUpdater : MonoBehaviour
 
     bool hasUpdated;
 
-    void Start()
+    void Awake()
     {
         instance = this;
     }
