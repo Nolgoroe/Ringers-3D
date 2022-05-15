@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum Sounds
 {
@@ -47,6 +48,8 @@ public class SoundManager : MonoBehaviour
     public Dictionary<Sounds, AudioClip[]> enumToSound;
 
     public bool muteMusic, muteSFX;
+
+    public Toggle musicToggle, SFXToggle;
 
     private void Start()
     {
@@ -173,10 +176,13 @@ public class SoundManager : MonoBehaviour
 
         if (muteMusic)
         {
+            musicToggle.isOn = false;
             audioSourceAmbience.volume = 0;
         }
         else
         {
+            musicToggle.isOn = true;
+
             audioSourceAmbience.volume = 1;
         }
     }
@@ -187,10 +193,14 @@ public class SoundManager : MonoBehaviour
 
         if (muteSFX)
         {
+            SFXToggle.isOn = false;
+
             audioSourceSFX.volume = 0;
         }
         else
         {
+            SFXToggle.isOn = true;
+
             audioSourceSFX.volume = 1;
         }
     }
