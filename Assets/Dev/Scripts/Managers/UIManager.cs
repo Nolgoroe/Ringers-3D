@@ -93,6 +93,8 @@ public class UIManager : MonoBehaviour
     public GameObject flowerUIMask;
     public GameObject releaseAnimalToDenScreen;
     public GameObject animalIsHappyScreen;
+    public GameObject SystemUpdaterScreen;
+    public GameObject bossLevelsParent;
 
     public Image dewDropsImage;
 
@@ -138,6 +140,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text buyHollowItemSecondaryRubieCostText;
     public TMP_Text animalReleaseToDenText;
     public TMP_Text animalIsHappyText;
+    public TMP_Text SystemUpdaterScreenText;
     //public TMP_Text cantBuyPotionText;
 
     //public Button commitButton;
@@ -283,6 +286,8 @@ public class UIManager : MonoBehaviour
         bossWellDoneScreen.SetActive(false);
         bossWinScreen.SetActive(false);
         bossScreensParent.SetActive(false);
+        SystemUpdaterScreen.SetActive(false);
+        bossLevelsParent.SetActive(false);
         activeScreen = null;
 
         dragControlsImage.sprite = toggleOnSprite;
@@ -846,7 +851,6 @@ public class UIManager : MonoBehaviour
             hollowCraftAndOwned.SetActive(false);
             craft.SetActive(true);
             owned.SetActive(false);
-            //HollowCraftAndOwnedManager.Instance.hollowTypeToFill = ObjectHollowType.All;
         }
 
         if(ToClose == leaderboardScreen)
@@ -860,6 +864,11 @@ public class UIManager : MonoBehaviour
             PlayfabManager.instance.UpdateAndSaveTimeSensitiveData(); //// could be that we need to send to save here
 
             ZoneManager.Instance.UnlockLevelViewSequence();
+        }
+
+        if(ToClose == SystemUpdaterScreen)
+        {
+            SystemUpdaterScreen.SetActive(false);
         }
 
         if (TutorialSequence.Instacne.duringSequence)
@@ -876,6 +885,7 @@ public class UIManager : MonoBehaviour
 
             StartCoroutine(SetIsUsingUI(false));
         }
+
 
         activeScreen = null;
     }
@@ -2256,11 +2266,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void CheckDisplayCheatButtons()
+    public void CheckDisplayCheatMenusAndObjects()
     {
         if (CheatingSaveData.instance.isAdmin)
         {
             cheatOptionsButton.SetActive(true);
+            bossLevelsParent.SetActive(true);
         }
     }
 

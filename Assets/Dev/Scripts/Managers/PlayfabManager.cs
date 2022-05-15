@@ -115,6 +115,10 @@ public class PlayfabManager : MonoBehaviour
     {
         doneWithStep = false;
 
+        LoadupAllGameData();
+
+        yield return new WaitUntil(() => doneWithStep == true);
+
         LoadGameVersion();
 
         yield return new WaitUntil(() => doneWithStep == true);
@@ -125,14 +129,7 @@ public class PlayfabManager : MonoBehaviour
 
         yield return new WaitUntil(() => doneWithStep == true);
 
-        doneWithStep = false;
-
         displayMessages.text = "Logged In!";
-
-        LoadupAllGameData();
-
-
-        yield return new WaitUntil(() => doneWithStep == true);
 
         doneWithStep = false;
 
@@ -168,7 +165,7 @@ public class PlayfabManager : MonoBehaviour
         isLoggedIn = true;
         TimeReferenceDataScript.Start();
 
-        UIManager.Instance.CheckDisplayCheatButtons();
+        UIManager.Instance.CheckDisplayCheatMenusAndObjects();
 
         StartCoroutine(UIManager.Instance.MoveAfterLoadingScreen(true));
 
@@ -338,6 +335,8 @@ public class PlayfabManager : MonoBehaviour
         if (result.Data != null && result.Data.ContainsKey("Version Updater Data"))
         {
             JsonUtility.FromJsonOverwrite(result.Data["Version Updater Data"].Value, AutoVersionUpdater.instance);
+
+            AutoVersionUpdater.instance.Init();
         }
 
         doneWithStep = true;
