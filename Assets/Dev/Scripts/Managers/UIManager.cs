@@ -2290,4 +2290,27 @@ public class UIManager : MonoBehaviour
         bossWellDoneScreen.SetActive(false);
         bossWinScreen.SetActive(false);
     }
+
+    public void BGOff()
+    {
+        if (GameManager.Instance.selectedLevelBG.activeInHierarchy)
+        {
+            GameManager.Instance.selectedLevelBG.SetActive(false);
+        }
+        else
+        {
+            GameManager.Instance.selectedLevelBG.SetActive(true);
+        }
+    }
+    public void HideLevelData()
+    {
+        if (GameManager.Instance.destroyOutOfLevel.gameObject.activeInHierarchy)
+        {
+            GameManager.Instance.destroyOutOfLevel.gameObject.SetActive(false);
+        }
+        else
+        {
+            GameManager.Instance.destroyOutOfLevel.gameObject.SetActive(true);
+        }
+    }
 }

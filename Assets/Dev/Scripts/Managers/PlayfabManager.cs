@@ -124,6 +124,7 @@ public class PlayfabManager : MonoBehaviour
 
         AutoVersionUpdater.instance.CheckMostRecentVersionWithServer();
 
+        yield return new WaitForSeconds(3);
         yield return new WaitUntil(() => doneWithStep == true);
 
         displayMessages.text = "Logged In!";

@@ -6,6 +6,24 @@
       "source": "builtin",
       "dependencies": {}
     },
+    "com.unity.adaptiveperformance": {
+      "version": "1.1.10",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.subsystemregistration": "1.0.6"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.adaptiveperformance.samsung.android": {
+      "version": "1.1.10",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.adaptiveperformance": "1.1.10"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.collab-proxy": {
       "version": "1.14.15",
       "depth": 0,
@@ -14,7 +32,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.device-simulator": {
-      "version": "2.2.4-preview",
+      "version": "3.0.3-preview",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -78,6 +96,13 @@
       "dependencies": {
         "com.unity.render-pipelines.core": "7.3.1"
       },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.subsystemregistration": {
+      "version": "1.0.6",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.sysroot": {
