@@ -117,6 +117,7 @@ public class PlayfabManager : MonoBehaviour
 
         LoadupAllGameData();
         LoadGameVersion();
+        displayMessages.text = "Connecting to server";
 
         yield return new WaitForSeconds(3);
         yield return new WaitUntil(() => doneWithStep == true);
