@@ -715,6 +715,9 @@ public class CursorController : MonoBehaviour
                             PowerUpManager.ObjectToUsePowerUpOn = hit.transform.gameObject;
                             LeanTween.scale(hit.transform.gameObject, new Vector3(hit.transform.localScale.x - 0.2f, hit.transform.localScale.y - 0.2f, 1), 0.1f).setOnComplete(() => ScaleGameObjectBack(hit.transform.gameObject));
                         }
+
+
+                        SoundManager.Instance.PlaySound(Sounds.PotionUse);
                     }
                     else
                     {

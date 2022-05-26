@@ -205,21 +205,21 @@ public class ConnectionManager : MonoBehaviour
                         {
                             GameManager.Instance.sliceManager.SetSliceSolvedSprite(supPieceArray[currentLeft].relevantSlice);
 
-                            if (supPieceArray[currentLeft].relevantSlice.anim)
-                            {
-                                supPieceArray[currentLeft].relevantSlice.anim.SetBool("Activate", true);
+                            //if (supPieceArray[currentLeft].relevantSlice.anim)
+                            //{
+                                //supPieceArray[currentLeft].relevantSlice.anim.SetBool("Activate", true);
 
                                 if (supPieceArray[currentLeft].relevantSlice.isLimiter)
                                 {
                                     SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
 
-                                    supPieceArray[currentLeft].relevantSlice.anim.SetBool("Reverse", false);
+                                    //supPieceArray[currentLeft].relevantSlice.anim.SetBool("Reverse", false);
                                 }
                                 else
                                 {
                                     SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
                                 }
-                            }
+                            //}
 
                             supPieceArray[currentLeft].relevantSlice.fulfilledCondition = true;
 
@@ -241,16 +241,16 @@ public class ConnectionManager : MonoBehaviour
                         {
                             GameManager.Instance.sliceManager.SetSliceSolvedSprite(supPieceArray[currentLeft].relevantSlice);
 
-                            if (supPieceArray[currentLeft].relevantSlice.anim)
-                            {
+                            //if (supPieceArray[currentLeft].relevantSlice.anim)
+                            //{
 
-                                supPieceArray[currentLeft].relevantSlice.anim.SetBool("Activate", true);
+                                //supPieceArray[currentLeft].relevantSlice.anim.SetBool("Activate", true);
 
                                 if (supPieceArray[currentLeft].relevantSlice.isLimiter)
                                 {
                                     SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
 
-                                    supPieceArray[currentLeft].relevantSlice.anim.SetBool("Reverse", false);
+                                    //supPieceArray[currentLeft].relevantSlice.anim.SetBool("Reverse", false);
                                 }
                                 else
                                 {
@@ -259,7 +259,7 @@ public class ConnectionManager : MonoBehaviour
                                         SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
                                     }
                                 }
-                            }
+                            //}
 
                             supPieceArray[currentLeft].relevantSlice.fulfilledCondition = true;
 
@@ -392,15 +392,15 @@ public class ConnectionManager : MonoBehaviour
                     {
                         GameManager.Instance.sliceManager.SetSliceSolvedSprite(supPieceArray[currentRight].relevantSlice);
 
-                        if (supPieceArray[currentRight].relevantSlice.anim)
-                        {
-                            supPieceArray[currentRight].relevantSlice.anim.SetBool("Activate", true);
+                        //if (supPieceArray[currentRight].relevantSlice.anim)
+                        //{
+                            //supPieceArray[currentRight].relevantSlice.anim.SetBool("Activate", true);
 
                             if (supPieceArray[currentRight].relevantSlice.isLimiter)
                             {
                                 SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
 
-                                supPieceArray[currentRight].relevantSlice.anim.SetBool("Reverse", false);
+                                //supPieceArray[currentRight].relevantSlice.anim.SetBool("Reverse", false);
                             }
                             else
                             {
@@ -409,7 +409,7 @@ public class ConnectionManager : MonoBehaviour
                                     SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
                                 }
                             }
-                        }
+                        //}
 
                         supPieceArray[currentRight].relevantSlice.fulfilledCondition = true;
                         if (supPieceArray[currentRight].relevantSlice.isLoot)

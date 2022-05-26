@@ -146,7 +146,7 @@ namespace PlayFab.Internal
 
             if (!string.IsNullOrEmpty(www.error))
             {
-                OnError(www.error, reqContainer);
+                OnError(www.error, reqContainer);               
             }
             else
             {

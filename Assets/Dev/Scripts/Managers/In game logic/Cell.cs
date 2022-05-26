@@ -236,6 +236,7 @@ public class Cell : MonoBehaviour
                     if (pieceHeld.leftChild.relevantSlice.fulfilledCondition)
                     {
                         GameManager.Instance.unsuccessfullSlicesCount++;
+                        SoundManager.Instance.PlaySound(Sounds.RuneLimiterUnMatch);
                     }
                     else
                     {
@@ -273,6 +274,7 @@ public class Cell : MonoBehaviour
                     if (pieceHeld.rightChild.relevantSlice.fulfilledCondition)
                     {
                         GameManager.Instance.unsuccessfullSlicesCount++;
+                        SoundManager.Instance.PlaySound(Sounds.RuneLimiterUnMatch);
                     }
                     else
                     {

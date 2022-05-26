@@ -197,16 +197,26 @@ public class PlayfabManager : MonoBehaviour
     void OnError(PlayFabError error)
     {
         displayMessages.text = error.ErrorMessage;
-        Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
+
         Debug.LogError(error.GenerateErrorReport());
+
+        if (error.HttpStatus.Contains("Bad"))
+        {
+            UIManager.Instance.TurnOnDisconnectedScreen();
+        }
     }
     void OnErrorLogin(PlayFabError error)
     {
         displayMessages.text = error.ErrorMessage;
-        Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
+
         Debug.LogError(error.GenerateErrorReport());
 
         StartCoroutine(UIManager.Instance.MoveAfterLoadingScreen(false));
+
+        if (error.HttpStatus.Contains("Bad"))
+        {
+            UIManager.Instance.TurnOnDisconnectedScreen();
+        }
     }
 
     public void SendLeaderboard(int highestLevelReached)

@@ -96,6 +96,7 @@ public class UIManager : MonoBehaviour
     public GameObject animalIsHappyScreen;
     public GameObject SystemUpdaterScreen;
     public GameObject bossLevelsParent;
+    public GameObject disconnectedFromInternetScreen;
 
     public Image dewDropsImage;
 
@@ -293,6 +294,7 @@ public class UIManager : MonoBehaviour
         bossScreensParent.SetActive(false);
         SystemUpdaterScreen.SetActive(false);
         bossLevelsParent.SetActive(false);
+        disconnectedFromInternetScreen.SetActive(false);
         activeScreen = null;
 
         dragControlsImage.sprite = toggleOnSprite;
@@ -886,6 +888,11 @@ public class UIManager : MonoBehaviour
         if(ToClose == SystemUpdaterScreen)
         {
             SystemUpdaterScreen.SetActive(false);
+        }
+
+        if(ToClose == disconnectedFromInternetScreen)
+        {
+            disconnectedFromInternetScreen.SetActive(false);
         }
 
         if (TutorialSequence.Instacne.duringSequence)
@@ -2312,5 +2319,10 @@ public class UIManager : MonoBehaviour
         {
             GameManager.Instance.destroyOutOfLevel.gameObject.SetActive(true);
         }
+    }
+
+    public void TurnOnDisconnectedScreen()
+    {
+        disconnectedFromInternetScreen.SetActive(true);
     }
 }

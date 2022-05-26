@@ -24,7 +24,7 @@ public enum Sounds
     LevelWin,
     LevelAmbienceFast,
     LevelAmbienceSlow,
-    
+    PotionUse,
     //// Add all sounds here
 }
 
