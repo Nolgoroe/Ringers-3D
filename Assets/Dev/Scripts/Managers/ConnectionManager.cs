@@ -207,8 +207,10 @@ public class ConnectionManager : MonoBehaviour
 
                             //if (supPieceArray[currentLeft].relevantSlice.anim)
                             //{
-                                //supPieceArray[currentLeft].relevantSlice.anim.SetBool("Activate", true);
+                            //supPieceArray[currentLeft].relevantSlice.anim.SetBool("Activate", true);
 
+                            if (supPieceArray[currentLeft].relevantSlice.hasSlice)
+                            {
                                 if (supPieceArray[currentLeft].relevantSlice.isLimiter)
                                 {
                                     SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
@@ -219,6 +221,7 @@ public class ConnectionManager : MonoBehaviour
                                 {
                                     SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
                                 }
+                            }
                             //}
 
                             supPieceArray[currentLeft].relevantSlice.fulfilledCondition = true;
@@ -244,8 +247,10 @@ public class ConnectionManager : MonoBehaviour
                             //if (supPieceArray[currentLeft].relevantSlice.anim)
                             //{
 
-                                //supPieceArray[currentLeft].relevantSlice.anim.SetBool("Activate", true);
+                            //supPieceArray[currentLeft].relevantSlice.anim.SetBool("Activate", true);
 
+                            if (supPieceArray[currentLeft].relevantSlice.hasSlice)
+                            {
                                 if (supPieceArray[currentLeft].relevantSlice.isLimiter)
                                 {
                                     SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
@@ -259,6 +264,7 @@ public class ConnectionManager : MonoBehaviour
                                         SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
                                     }
                                 }
+                            }
                             //}
 
                             supPieceArray[currentLeft].relevantSlice.fulfilledCondition = true;
@@ -394,8 +400,10 @@ public class ConnectionManager : MonoBehaviour
 
                         //if (supPieceArray[currentRight].relevantSlice.anim)
                         //{
-                            //supPieceArray[currentRight].relevantSlice.anim.SetBool("Activate", true);
+                        //supPieceArray[currentRight].relevantSlice.anim.SetBool("Activate", true);
 
+                        if (supPieceArray[currentRight].relevantSlice.hasSlice)
+                        {
                             if (supPieceArray[currentRight].relevantSlice.isLimiter)
                             {
                                 SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
@@ -409,6 +417,7 @@ public class ConnectionManager : MonoBehaviour
                                     SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
                                 }
                             }
+                        }
                         //}
 
                         supPieceArray[currentRight].relevantSlice.fulfilledCondition = true;
