@@ -320,6 +320,8 @@ public class PowerUpManager : MonoBehaviour
             if (toWorkOn.partOfBoard /*&& !toWorkOn.isLocked*/)
             {
                 InstantiatePotionAnimObject((int)prop.powerupType);
+                SoundManager.Instance.PlaySound(Sounds.PotionUse);
+
                 yield return new WaitForSeconds(2.5f);
 
                 toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(false);
@@ -341,6 +343,8 @@ public class PowerUpManager : MonoBehaviour
             else
             {
                 InstantiatePotionAnimObject((int)prop.powerupType);
+                SoundManager.Instance.PlaySound(Sounds.PotionUse);
+
                 yield return new WaitForSeconds(2.5f);
 
                 toWorkOn.leftChild.symbolOfPiece = PieceSymbol.Joker;
@@ -417,6 +421,8 @@ public class PowerUpManager : MonoBehaviour
             else
             {
                 InstantiatePotionAnimObject((int)prop.powerupType);
+                SoundManager.Instance.PlaySound(Sounds.PotionUse);
+
                 yield return new WaitForSeconds(2.5f);
 
                 PieceColor tempColor = toWorkOn.leftChild.colorOfPiece;
@@ -458,7 +464,9 @@ public class PowerUpManager : MonoBehaviour
 
         if (toWorkOn.partOfBoard)
         {
+            SoundManager.Instance.PlaySound(Sounds.PotionUse);
             InstantiatePotionAnimObject((int)prop.powerupType);
+
             yield return new WaitForSeconds(2.5f);
 
             //Debug.LogError("Times called");
@@ -485,6 +493,7 @@ public class PowerUpManager : MonoBehaviour
             {
                 TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
             }
+
         }
         else
         {
@@ -499,7 +508,9 @@ public class PowerUpManager : MonoBehaviour
         layerToHit = LayerMask.GetMask("Slice");
         yield return new WaitUntil(() => HasUsedPowerUp == true);
 
+        SoundManager.Instance.PlaySound(Sounds.PotionUse);
         InstantiatePotionAnimObject((int)prop.powerupType);
+
         yield return new WaitForSeconds(2.5f);
 
         Slice toWorkOn = ObjectToUsePowerUpOn.transform.parent.GetComponent<Slice>();
@@ -607,6 +618,7 @@ public class PowerUpManager : MonoBehaviour
 
         ObjectToUsePowerUpOn.GetComponent<CameraShake>().ShakeOnce();
 
+
         yield return new WaitForEndOfFrame();
         Destroy(ObjectToUsePowerUpOn.gameObject, 0.6f);
 
@@ -618,6 +630,7 @@ public class PowerUpManager : MonoBehaviour
         {
             TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
         }
+
         Debug.Log("Slice Bomb");
 
     }
@@ -679,6 +692,8 @@ public class PowerUpManager : MonoBehaviour
     }
     public void UsingPowerup(PowerupProperties butt)
     {
+        SoundManager.Instance.PlaySound(Sounds.PotionSelect);
+
         if (TutorialSequence.Instacne.duringSequence) /// this if statemene does exactly the same as the else??????
         {
             if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPowerupPhase)
