@@ -821,6 +821,11 @@ public class GameManager : MonoBehaviour
             Destroy(GO.gameObject);
         }
 
+        if (AnimalsManager.Instance.currentLevelLiveAnimal)
+        {
+            Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
+        }
+
         foreach (GameObject go in TutorialSequence.Instacne.activatedHeighlights)
         {
             if (go)

@@ -559,6 +559,11 @@ public class UIManager : MonoBehaviour
 
             StartCoroutine(SoundManager.Instance.FadeOutAmbientMusic(0.5f));
 
+            if (AnimalsManager.Instance.currentLevelLiveAnimal)
+            {
+                Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
+            }
+
             if (AnimationManager.instance.endAnimToWinScreen != null)
             {
                 StopCoroutine(AnimationManager.instance.endAnimToWinScreen);
