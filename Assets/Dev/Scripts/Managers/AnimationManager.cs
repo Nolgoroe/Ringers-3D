@@ -136,6 +136,8 @@ public class AnimationManager : MonoBehaviour
     [Header("Other")]
     [Space(30)]
 
+    public GameObject endLevelTreePrefab;
+
     public GameObject[] turnOff;
     public GameObject[] destroyOnSkipEndLevel;
 
@@ -357,7 +359,15 @@ public class AnimationManager : MonoBehaviour
 
         if (!GameManager.Instance.currentLevel.isGrindLevel)
         {
-            AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
+            if (GameManager.Instance.currentLevel.isAnimalLevel)
+            {
+                AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
+            }
+            else
+            {
+                AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetBool("Clear Tree", true);
+            }
+
             hasSkippedToAnimalAnim = true;
         }
 
@@ -485,10 +495,10 @@ public class AnimationManager : MonoBehaviour
             }
 
             //endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation(true));
-            if (AnimalsManager.Instance.currentLevelLiveAnimal)
-            {
-                Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
-            }
+            //if (AnimalsManager.Instance.currentLevelLiveAnimal)
+            //{
+            //    Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
+            //}
 
             endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation());
             return;
@@ -583,7 +593,14 @@ public class AnimationManager : MonoBehaviour
 
         if (!GameManager.Instance.currentLevel.isGrindLevel)
         {
-            AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
+            if (GameManager.Instance.currentLevel.isAnimalLevel)
+            {
+                AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
+            }
+            else
+            {
+                AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetBool("Clear Tree", true);
+            }
         }
         else
         {
@@ -938,10 +955,10 @@ public class AnimationManager : MonoBehaviour
 
         hasSkippedToAnimalAnim = false;
 
-        if(AnimalsManager.Instance.currentLevelLiveAnimal)
-        {
-            Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
-        }
+        //if(AnimalsManager.Instance.currentLevelLiveAnimal)
+        //{
+        //    Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
+        //}
 
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
 

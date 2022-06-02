@@ -322,7 +322,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
+                    Debug.Log("NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA - OR STATUE IS GRIND STATE/TREE STATUE");
                 }
             }
 
@@ -482,31 +482,48 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (ZMHD.possibleAnimalsPerZone.Length != 0)
+            if (currentLevel.isAnimalLevel)
             {
-                if (ZMHD.possibleAnimalsPerZone[ZMHD.currentZoneCheck.id].animalsData.Length == 1)
+                if (ZMHD.possibleAnimalsPerZone.Length != 0)
                 {
-                    AnimalsManager.Instance.statueToSwap = Instantiate(ZMHD.possibleAnimalsPerZone[ZMHD.currentZoneCheck.id].animalsData[0].animalPrefab, destroyOutOfLevel);
-                    return AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
-                }
-                else
-                {
-                    GameObject go = AnimalsManager.Instance.PopulateWeightSystemAnimals();
-
-                    if (go)
+                    if (ZMHD.possibleAnimalsPerZone[ZMHD.currentZoneCheck.id].animalsData.Length == 1)
                     {
-                        AnimalsManager.Instance.statueToSwap = Instantiate(go, destroyOutOfLevel);
+                        AnimalsManager.Instance.statueToSwap = Instantiate(ZMHD.possibleAnimalsPerZone[ZMHD.currentZoneCheck.id].animalsData[0].animalPrefab, destroyOutOfLevel);
                         return AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
                     }
                     else
                     {
-                        return null;
+                        GameObject go = AnimalsManager.Instance.PopulateWeightSystemAnimals();
+
+                        if (go)
+                        {
+                            AnimalsManager.Instance.statueToSwap = Instantiate(go, destroyOutOfLevel);
+                            return AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
+                        }
+                        else
+                        {
+                            return null;
+                        }
                     }
+                }
+                else
+                {
+                    return null;
                 }
             }
             else
             {
-                return null;
+                GameObject go = AnimationManager.instance.endLevelTreePrefab;
+
+                if (go)
+                {
+                    AnimalsManager.Instance.statueToSwap = Instantiate(go, destroyOutOfLevel);
+                    return AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
     }

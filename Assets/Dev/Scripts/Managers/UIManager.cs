@@ -2195,11 +2195,11 @@ public class UIManager : MonoBehaviour
 
     public void CheckTurnOnReleaseAnimalScreen()
     {
-        AnimalPrefabData APD = AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
-        zoneSlotAndType ZSAT = HollowCraftAndOwnedManager.Instance.hollowZones.Where(p => p.acceptedHollowTypes.Contains(APD.animalSO.hollowBelongTo)).SingleOrDefault();
-
         if (GameManager.Instance.currentLevel.isReleaseAnimalToDen)
         {
+            AnimalPrefabData APD = AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
+            zoneSlotAndType ZSAT = HollowCraftAndOwnedManager.Instance.hollowZones.Where(p => p.acceptedHollowTypes.Contains(APD.animalSO.hollowBelongTo)).SingleOrDefault();
+
             if (AnimalsManager.Instance.CheckConditionsSummonAnimalDen(APD, ZSAT))
             {
                 TurnOnReleaseAnimalDenScreen();
