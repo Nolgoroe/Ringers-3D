@@ -682,6 +682,7 @@ GameObject:
   - component: {fileID: 8812667510636934774}
   - component: {fileID: 1496789474908578847}
   - component: {fileID: -8544428062688180651}
+  - component: {fileID: 154171896176863207}
   m_Layer: 0
   m_Name: Tree_Corrupted
   m_TagString: Untagged
@@ -739,6 +740,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bcc2892f30fab64e8d5541d17ddce09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &154171896176863207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8812667510636934775}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7536f5480f8cb2541a8e756e7c770003, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Amount: {x: 0.07, y: 0.07, z: 0}
+  Duration: 0.3
+  Speed: 7
+  ResetPosition: 1
 --- !u!1 &8812667510760899343
 GameObject:
   m_ObjectHideFlags: 0

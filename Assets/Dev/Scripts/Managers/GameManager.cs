@@ -183,7 +183,13 @@ public class GameManager : MonoBehaviour
                 UIManager.Instance.TurnOnGameplayUI();
                 UIManager.Instance.dealButton.interactable = true;
                 UIManager.Instance.ActivateGmaeplayCanvas();
-                
+
+                if (AnimationManager.instance.endLevelAnimationON)
+                {
+                    Debug.LogError("CHECK THIS PROBLEM");
+                    AnimationManager.instance.endLevelAnimationON = false;
+                }
+
                 //Camera.main.orthographicSize = 12;
                 //Camera.main.orthographic = false;
                 //secondCam.orthographic = false;
@@ -370,6 +376,12 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.dealButton.interactable = true;
         UIManager.Instance.ActivateGmaeplayCanvas();
         UIManager.Instance.bossScreensParent.SetActive(false);
+
+        if (AnimationManager.instance.endLevelAnimationON)
+        {
+            Debug.LogError("CHECK THIS PROBLEM");
+            AnimationManager.instance.endLevelAnimationON = false;
+        }
 
         Camera.main.transform.position = inGameCamPos;
         TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, -0.05f);

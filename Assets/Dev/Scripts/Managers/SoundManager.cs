@@ -173,6 +173,8 @@ public class SoundManager : MonoBehaviour
 
     public void MuteUnmuteMusic()
     {
+        LeanTween.cancel(audioSourceAmbience.gameObject);
+
         muteMusic = !muteMusic;
 
         if (muteMusic)

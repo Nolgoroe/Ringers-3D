@@ -31,7 +31,8 @@ public enum SystemsToSave
 public class PlayfabManager : MonoBehaviour
 {
     public static bool isLoggedIn = false;
-    public static bool doneWithStep = false;
+    public static bool? successfullyDoneWithStep = null;
+    //public static bool isSuccessfullConnection = true;
 
     public static PlayfabManager instance;
 
@@ -113,49 +114,52 @@ public class PlayfabManager : MonoBehaviour
 
     IEnumerator LoginInit()
     {
-        doneWithStep = false;
+        successfullyDoneWithStep = null;
 
-        LoadupAllGameData();
-        LoadGameVersion();
         displayMessages.text = "Connecting to server";
 
-        yield return new WaitForSeconds(3);
-        yield return new WaitUntil(() => doneWithStep == true);
+        yield return StartCoroutine(LoadupAllGameData());
 
-        doneWithStep = false;
+        successfullyDoneWithStep = null;
+        CheckActionConnectionError();
 
-        AutoVersionUpdater.instance.CheckMostRecentVersionWithServer();
+        yield return StartCoroutine(LoadGameVersion());
 
-        yield return new WaitForSeconds(3);
-        yield return new WaitUntil(() => doneWithStep == true);
+        successfullyDoneWithStep = null;
+        CheckActionConnectionError();
+
+        yield return StartCoroutine(AutoVersionUpdater.instance.CheckMostRecentVersionWithServer());
+
+        successfullyDoneWithStep = null;
+        CheckActionConnectionError();
+
+        //yield return new WaitForSeconds(3);
 
         displayMessages.text = "Logged In!";
 
-        doneWithStep = false;
+        yield return StartCoroutine(GetServerCurrentTime());
 
-        GetServerCurrentTime();
+        successfullyDoneWithStep = null;
+        CheckActionConnectionError();
 
-        yield return new WaitUntil(() => doneWithStep == true);
-
-        doneWithStep = false;
-
-        InitAllSystems();
+        yield return StartCoroutine(InitAllSystems()); // this does not connect to database!!
 
 
         // from here on can do actions however we want since we loaded and initted all systems
 
         //Debug.Log("Debug 2 " + currentTimeReference);
-        if(currentTimeReference != DateTime.MinValue)
+        if (currentTimeReference != DateTime.MinValue)
         {
             RewardsManager.Instance.UpdateCurrentTime(currentTimeReference);
             DewDropsManager.Instance.UpdateCurrentTime(currentTimeReference);
-
         }
 
-        GetDailyRewardsData();
+        yield return StartCoroutine(GetDailyRewardsData());
 
+        successfullyDoneWithStep = null;
+        CheckActionConnectionError();
 
-        yield return new WaitUntil(() => doneWithStep == true);
+        //yield return new WaitUntil(() => doneWithStep == true);
 
         RewardsManager.Instance.CalculateReturnDeltaTime();
         DewDropsManager.Instance.CalculateReturnDeltaTime();
@@ -188,7 +192,7 @@ public class PlayfabManager : MonoBehaviour
         }
 
 
-        SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.RewardsManager, SystemsToSave.DewDrops, SystemsToSave.LoginData, SystemsToSave.CheatingSaveData });
+        SaveGameData(new SystemsToSave[] { SystemsToSave.ALL});
 
 
         InvokeRepeating("UpdateAndSaveTimeSensitiveData", 1, 10);
@@ -197,6 +201,9 @@ public class PlayfabManager : MonoBehaviour
     void OnError(PlayFabError error)
     {
         displayMessages.text = error.ErrorMessage;
+
+        //isSuccessfullConnection = false;
+        successfullyDoneWithStep = false;
 
         Debug.LogError(error.GenerateErrorReport());
 
@@ -297,10 +304,11 @@ public class PlayfabManager : MonoBehaviour
 
 
     [ContextMenu("Get Daily Rewards Data from Server")]
-    void GetDailyRewardsData()
+    IEnumerator GetDailyRewardsData()
     {
-        doneWithStep = false;
+        //doneWithStep = false;
         PlayFabClientAPI.GetTitleData(new GetTitleDataRequest(), onDailyRewardsDataGet, OnError);
+        yield return new WaitUntil(() => successfullyDoneWithStep != null);
     }
 
     void onDailyRewardsDataGet(GetTitleDataResult result)
@@ -323,20 +331,22 @@ public class PlayfabManager : MonoBehaviour
 
         RewardsManager.Instance.timeLeftToGiveDailyLoot = timeToWaitForDailyRewardSeconds;
 
-        doneWithStep = true;
+        successfullyDoneWithStep = true;
     }
 
     [ContextMenu("Load ALL game data from server - STEP 1")]
-    public void LoadupAllGameData()
+    public IEnumerator LoadupAllGameData()
     {
         // Player Data
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecieved, OnError);
+        yield return new WaitUntil(() => successfullyDoneWithStep != null);
         //DewDropsManager.Instance.LoadDewDropsData();
     }
 
-    public void LoadGameVersion()
+    public IEnumerator LoadGameVersion()
     {
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedVersion, OnError);
+        yield return new WaitUntil(() => successfullyDoneWithStep != null);
     }
 
     void OnDataRecievedVersion(GetUserDataResult result)
@@ -349,7 +359,8 @@ public class PlayfabManager : MonoBehaviour
             AutoVersionUpdater.instance.Init();
         }
 
-        doneWithStep = true;
+
+        successfullyDoneWithStep = true;
     }
 
     void OnDataRecieved(GetUserDataResult result)
@@ -422,11 +433,11 @@ public class PlayfabManager : MonoBehaviour
             JsonUtility.FromJsonOverwrite(result.Data["Bosses Save Data"].Value, BossesSaveDataManager.instance);
         }
 
-        doneWithStep = true;
+        successfullyDoneWithStep = true;
     }
 
     [ContextMenu("Step 2")]
-    public void  InitAllSystems()
+    public IEnumerator InitAllSystems()
     {
         PlayerManager.Instance.Init();
         DewDropsManager.Instance.Init();
@@ -442,6 +453,7 @@ public class PlayfabManager : MonoBehaviour
             zone.Init();
         }
 
+        yield return null;
         //SortMaster.Instance.ClearAllForgeScreens();
 
         //StartCoroutine(HollowCraftAndOwnedManager.Instance.FillHollowScreenCraft(GameManager.Instance.csvParser.allHollowCraftObjectsInGame));
@@ -543,8 +555,6 @@ public class PlayfabManager : MonoBehaviour
                     break;
             }
         }
-
-        doneWithStep = true;
     }
 
 
@@ -788,68 +798,133 @@ public class PlayfabManager : MonoBehaviour
 
     void OnDataSend(UpdateUserDataResult result)
     {
-        doneWithStep = true;
-        //Debug.Log("Updated Player Data on Server!");
+        //AutoVersionUpdater.saveCounter++;
+    }
+
+
+    public IEnumerator ResetAllDataAutoUpdater()
+    {
+        yield return StartCoroutine(ResetActionAutoUpdater());
+    }
+
+    IEnumerator ResetActionAutoUpdater()
+    {
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedReset, OnError);
+        yield return WaitForEndReset(AutoVersionUpdater.instance.numOfKeyValuePairsInServer);
+
+        AutoVersionUpdater.doneWithSubStep = true;
+    }
+
+    void OnDataRecievedReset(GetUserDataResult result)
+    {
+        foreach (string key in result.Data.Keys)
+        {
+            UpdateUserDataRequest request = null;
+
+            request = new UpdateUserDataRequest
+            {
+                Data = new Dictionary<string, string>()
+                {
+                    { key, null }
+                }
+            };
+
+            if (request != null)
+            {
+                PlayFabClientAPI.UpdateUserData(request, OnDataSendResetUpdater, OnError);
+            }
+        }
+    }
+
+    void OnDataSendResetUpdater(UpdateUserDataResult result)
+    {
+        AutoVersionUpdater.resetSystemCounter++;
+    }
+
+    public IEnumerator WaitForEndReset(int amountSystemsToReset)
+    {
+        float counter = 0;
+
+        while (AutoVersionUpdater.resetSystemCounter < amountSystemsToReset)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            counter += 0.1f;
+
+            if (counter >= 10)
+            {
+                break;
+            }
+        }
+
+        if (AutoVersionUpdater.resetSystemCounter != amountSystemsToReset)
+        {
+            Debug.LogError($"what happened? Counter: {AutoVersionUpdater.resetSystemCounter} Length:{amountSystemsToReset}");
+            yield break;
+        }
     }
 
     [ContextMenu("Reset All Data")]
     public void ResetAllData()
     {
-        StartCoroutine(ResetAction());
+        ResetAction();
+        //StartCoroutine(ResetAction());
     }
-
-    IEnumerator ResetAction()
+    void ResetAction()
     {
-        doneWithStep = false;
-        UpdateUserDataRequest request = null;
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedReset, OnError);
 
-        request = new UpdateUserDataRequest
-        {
-            Data = new Dictionary<string, string>()
-            {
-                { "Player Data", "" },
-                { "Dew Drops Data", "" },
-                { "Animal Manager Data", "" },
-                { "corrupted Zones Manager Data", "" },
-                { "Tutorial Save Data", "" },
-                { "Zone Manager Data", "" },
-                {"Rewards Manager Data", ""},
-                {"Hollow Manager Data", ""}
+        //doneWithStep = false;
+        //UpdateUserDataRequest request = null;
+
+        //request = new UpdateUserDataRequest
+        //{
+        //    Data = new Dictionary<string, string>()
+        //    {
+        //        {"Player Data", "" },
+        //        {"Dew Drops Data", "" },
+        //        {"Animal Manager Data", "" },
+        //        {"corrupted Zones Manager Data", "" },
+        //        {"Tutorial Save Data", "" },
+        //        {"Zone Manager Data", "" },
+        //        {"Rewards Manager Data", ""},
+        //        {"Bosses Save Data", ""},
+        //        {"Hollow Manager Data", ""}
                 
-            }
-        };
+        //    }
+        //};
 
-        if (request != null)
-        {
-            PlayFabClientAPI.UpdateUserData(request, OnDataSendReset, OnError);
-        }
+        //if (request != null)
+        //{
+        //    PlayFabClientAPI.UpdateUserData(request, OnDataSendReset, OnError);
+        //}
 
-        /// what to do with DoneWithStep here???
+        ///// what to do with DoneWithStep here???
         
-        foreach (Zone zone in ZoneManagerHelpData.Instance.listOfAllZones)
-        {
-            request = new UpdateUserDataRequest
-            {
-                Data = new Dictionary<string, string>()
-                    {
-                        { "Zone Data" + zone.id, "" }
-                    }
-            };
+        //foreach (Zone zone in ZoneManagerHelpData.Instance.listOfAllZones)
+        //{
+        //    request = new UpdateUserDataRequest
+        //    {
+        //        Data = new Dictionary<string, string>()
+        //            {
+        //                { "Zone Data" + zone.id, "" }
+        //            }
+        //    };
 
-            if (request != null)
-            {
-                PlayFabClientAPI.UpdateUserData(request, OnDataSendReset, OnError);
-            }
-        }
+        //    if (request != null)
+        //    {
+        //        PlayFabClientAPI.UpdateUserData(request, OnDataSendReset, OnError);
+        //    }
+        //}
 
         SendLeaderboard(0);
         TimeReferenceDataScript.Reset();
-        yield return new WaitUntil(() => doneWithStep == true);
+        //yield return new WaitUntil(() => doneWithStep == true);
 
         SceneManager.LoadScene(0);
 
         SetGameVersionSameAsServer();
-        doneWithStep = false;
+        //doneWithStep = false;
     }
 
 
@@ -864,12 +939,13 @@ public class PlayfabManager : MonoBehaviour
 
     IEnumerator logOutAction()
     {
-        yield return new WaitUntil(() => doneWithStep == true);
+        yield return null;
         SceneManager.LoadScene(0);
     }
     void OnDataSendReset(UpdateUserDataResult result)
     {
-        doneWithStep = true;
+        //doneWithStep = true;
+        Debug.Log("Check here");
     }
 
     public void RegisterButton()
@@ -914,7 +990,7 @@ public class PlayfabManager : MonoBehaviour
             AutoVersionUpdater.instance.mostRecentGameVersion = Convert.ToInt32(result.Data["Game Most Recent Version"]);
             SaveGameData(new SystemsToSave[] { SystemsToSave.VersionUpdaterData });
 
-            doneWithStep = true;
+            //doneWithStep = true;
         }
     }
 
@@ -940,16 +1016,17 @@ public class PlayfabManager : MonoBehaviour
             UIManager.Instance.nameOfPlayer.text = "Username: " + playerName;
         }
 
-        doneWithStep = true; //setup fir the loginInit function
+        //doneWithStep = true; //setup fir the loginInit function
 
         StartCoroutine(LoginInit());
     }
 
 
-    public void GetServerCurrentTime()
+    public IEnumerator GetServerCurrentTime()
     {
-        doneWithStep = false;
+        //doneWithStep = false;
         PlayFabClientAPI.GetTime(new GetTimeRequest(), OnGetTimeSuccess, OnError);
+        yield return new WaitUntil(() => successfullyDoneWithStep != null);
     }
 
     void OnGetTimeSuccess(GetTimeResult result)
@@ -958,7 +1035,7 @@ public class PlayfabManager : MonoBehaviour
         //Debug.Log(result.Time + " what?");
         //Debug.Log("Debug 1 " + currentTimeReference);
 
-        doneWithStep = true;
+        successfullyDoneWithStep = true;
     }
 
     // check if need this AND Focus
@@ -1000,6 +1077,17 @@ public class PlayfabManager : MonoBehaviour
     }
 
 
+
+    public void CheckActionConnectionError()
+    {
+        if (successfullyDoneWithStep.HasValue && !successfullyDoneWithStep.Value)
+        {
+            StopCoroutine("LoginInit");
+
+            //// stop the coroutine here
+        }
+
+    }
     // check if need this AND Pause 
     private void OnApplicationFocus(bool focus)
     {

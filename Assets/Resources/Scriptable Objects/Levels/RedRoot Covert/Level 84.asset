@@ -17,32 +17,26 @@ MonoBehaviour:
   is12PieceRing: 1
   isDoubleRing: 0
   isBoss: 0
+  isAnimalLevel: 1
   isReleaseAnimalToDen: 0
   boardPrefab: {fileID: 6382559071292991177, guid: 9fa6c7e47566ca141a795f93ffbccf9b,
     type: 3}
   levelNum: 84
-  worldNum: 5
-  levelIndexInZone: 7
+  worldNum: 3
+  levelIndexInZone: 29
   tutorialIndexForList: 0
   cellsCountInLevel: 12
   RandomSlicePositions: 1
   allowRepeatSlices: 0
   powerupsForLevel: 
   specificAnimalForLevel: {fileID: 0}
-  stoneTiles:
-  - cellIndex: 11
-    randomValues: 1
-    isNeutral: 1
-    colorOfPieceRight: 0
-    symbolOfPieceRight: 0
-    colorOfPieceLeft: 0
-    symbolOfPieceLeft: 0
-  slicesToSpawn: 030000000300000001000000
-  lockSlices: 000001
-  lootSlices: 010101
-  limiterSlices: 010101
-  RewardBags: 1600000017000000
-  levelAvailableColors: 00000000010000000200000003000000
+  stoneTiles: []
+  slicesToSpawn: 01000000000000000000000001000000
+  lockSlices: 00000000
+  lootSlices: 01010101
+  limiterSlices: 01010101
+  RewardBags: 0400000005000000
+  levelAvailableColors: 0000000001000000020000000300000004000000
   levelAvailablesymbols: 00000000010000000200000003000000
   symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
@@ -55,3 +49,9 @@ MonoBehaviour:
   BossHealth: 0
   isRandomPieces: 0
   specificPiecesIndex: 
+  rubyRewardNoDefeat: 0
+  rubyRewardDefeat: 0
+  ver1Boss: 0
+  timeForLevelInSeconds: 0
+  dealButtonTimer: 0
+  damageToBossCompeleRing: 0

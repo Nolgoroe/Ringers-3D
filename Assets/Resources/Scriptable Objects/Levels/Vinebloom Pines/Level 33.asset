@@ -17,26 +17,20 @@ MonoBehaviour:
   is12PieceRing: 0
   isDoubleRing: 0
   isBoss: 0
+  isAnimalLevel: 1
   isReleaseAnimalToDen: 0
   boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
     type: 3}
   levelNum: 33
-  worldNum: 2
-  levelIndexInZone: 6
+  worldNum: 1
+  levelIndexInZone: 13
   tutorialIndexForList: 0
   cellsCountInLevel: 8
   RandomSlicePositions: 0
   allowRepeatSlices: 0
-  powerupsForLevel: 02000000
+  powerupsForLevel: 
   specificAnimalForLevel: {fileID: 0}
   stoneTiles:
-  - cellIndex: 0
-    randomValues: 1
-    isNeutral: 1
-    colorOfPieceRight: 5
-    symbolOfPieceRight: 4
-    colorOfPieceLeft: 5
-    symbolOfPieceLeft: 4
   - cellIndex: 2
     randomValues: 1
     isNeutral: 1
@@ -51,21 +45,27 @@ MonoBehaviour:
     symbolOfPieceRight: 4
     colorOfPieceLeft: 5
     symbolOfPieceLeft: 4
-  slicesToSpawn: 
-  lockSlices: 
-  lootSlices: 
-  limiterSlices: 
-  RewardBags: 0a00000001000000010000000c0000000d0000000b000000
-  levelAvailableColors: 00000000040000000200000003000000
-  levelAvailablesymbols: 030000000200000001000000
+  slicesToSpawn: 0100000001000000
+  lockSlices: 0000
+  lootSlices: 0101
+  limiterSlices: 0101
+  RewardBags: 02000000010000000c0000000d0000000e0000000f000000
+  levelAvailableColors: 00000000010000000200000003000000
+  levelAvailablesymbols: 000000000200000003000000
   symbolsNeededForSpecialPowers: []
-  isSpecificTutorial: 1
+  isSpecificTutorial: 0
   isTutorial: 0
-  specificTutorialEnum: 3
+  specificTutorialEnum: 0
   arrayOfPieces: []
-  specificSliceSpots: 
+  specificSliceSpots: 0400000000000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0
   isRandomPieces: 0
   specificPiecesIndex: 
+  rubyRewardNoDefeat: 0
+  rubyRewardDefeat: 0
+  ver1Boss: 0
+  timeForLevelInSeconds: 0
+  dealButtonTimer: 0
+  damageToBossCompeleRing: 0

@@ -224,6 +224,10 @@ public class UIManager : MonoBehaviour
         canAdvanceIntro = true;
 
         startAppLoadingScreen.SetActive(true);/// ony screen we should see at the start
+
+
+
+
         mainMenu.SetActive(false); 
 
         worldGameObject.SetActive(true);
@@ -508,11 +512,13 @@ public class UIManager : MonoBehaviour
     }
     public void ToHud(GameObject currentCanvas)
     {
-        if (!itemForgeCanvas.activeInHierarchy && !leaderboardScreen.activeInHierarchy && !DailyRewardScreen.activeInHierarchy)
-        {
-            //Debug.Log("Here");
-            StartCoroutine(SetIsUsingUI(false));
-        }
+        //if (!itemForgeCanvas.activeInHierarchy && !leaderboardScreen.activeInHierarchy && !DailyRewardScreen.activeInHierarchy)
+        //{
+        //    //Debug.Log("Here");
+        //    StartCoroutine(SetIsUsingUI(false));
+        //}
+
+        StartCoroutine(SetIsUsingUI(false));
 
         updateRubyAndDewDropsCount();
         PlayerManager.Instance.activePowerups.Clear();
@@ -908,13 +914,14 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        if (!itemForgeCanvas.activeInHierarchy && !leaderboardScreen.activeInHierarchy && !DailyRewardScreen.activeInHierarchy && ZoneManager.Instance.zonesToUnlock.Count <= 0)
-        {
-            Debug.Log("Here");
+        //if (!itemForgeCanvas.activeInHierarchy && !leaderboardScreen.activeInHierarchy && !DailyRewardScreen.activeInHierarchy && ZoneManager.Instance.zonesToUnlock.Count <= 0)
+        //{
+        //    Debug.Log("Here");
 
-            StartCoroutine(SetIsUsingUI(false));
-        }
+        //    StartCoroutine(SetIsUsingUI(false));
+        //}
 
+        StartCoroutine(SetIsUsingUI(false));
 
         activeScreen = null;
     }
