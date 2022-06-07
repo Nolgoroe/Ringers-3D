@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using PlayFab;
 using PlayFab.ClientModels;
+using PlayFab.Json;
 using System;
 using System.IO;
 using System.Linq;
@@ -118,10 +119,6 @@ public class PlayfabManager : MonoBehaviour
 
         displayMessages.text = "Connecting to server";
 
-        yield return StartCoroutine(LoadupAllGameData());
-
-        successfullyDoneWithStep = null;
-        CheckActionConnectionError();
 
         yield return StartCoroutine(LoadGameVersion());
 
@@ -129,6 +126,11 @@ public class PlayfabManager : MonoBehaviour
         CheckActionConnectionError();
 
         yield return StartCoroutine(AutoVersionUpdater.instance.CheckMostRecentVersionWithServer());
+
+        successfullyDoneWithStep = null;
+        CheckActionConnectionError();
+
+        yield return StartCoroutine(LoadupAllGameData());
 
         successfullyDoneWithStep = null;
         CheckActionConnectionError();
@@ -404,9 +406,25 @@ public class PlayfabManager : MonoBehaviour
         // Zone X Data
         foreach (Zone zone in ZoneManagerHelpData.Instance.listOfAllZones)
         {
-            if (result.Data != null && result.Data.ContainsKey("Zone Data" + zone.id))
+            //UserDataRecord USR;
+
+            //if(result.Data.TryGetValue("Zone Data" + zone.id, out USR))
+            //{
+            //    JsonObject testJsonObj = (JsonObject)PlayFab.PluginManager.GetPlugin<ISerializerPlugin>(PluginContract.PlayFab_Serializer).DeserializeObject(USR.Value);
+
+            //    object testJsonValue;
+
+            //    if (testJsonObj.TryGetValue("zoneName", out testJsonValue))
+            //    {
+            //        if(zone.zoneName == testJsonValue.ToString())
+            //        {
+            //            JsonUtility.FromJsonOverwrite(result.Data["Zone Data" + zone.id].Value, zone);
+            //        }
+            //    }
+            //}
+            if (result.Data != null && result.Data.ContainsKey("Zone Data " + zone.zoneName))
             {
-                JsonUtility.FromJsonOverwrite(result.Data["Zone Data" + zone.id].Value, zone);
+                JsonUtility.FromJsonOverwrite(result.Data["Zone Data " + zone.zoneName].Value, zone);
             }
         }
 
@@ -475,32 +493,32 @@ public class PlayfabManager : MonoBehaviour
             {
                 case SystemsToSave.Player:
                     savedData = JsonUtility.ToJson(PlayerManager.Instance);
-                    SendDataToBeSavedJson(savedData, SystemsToSave.Player, -1);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.Player, "");
                     break;
                 case SystemsToSave.DewDrops:
                     // Dew Drops Data
                     savedData = JsonUtility.ToJson(DewDropsManager.Instance);
-                    SendDataToBeSavedJson(savedData, SystemsToSave.DewDrops, -1);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.DewDrops, "");
                     break;
                 case SystemsToSave.animalManager:
                     // Animal Manager Data
                     savedData = JsonUtility.ToJson(AnimalsManager.Instance);
-                    SendDataToBeSavedJson(savedData, SystemsToSave.animalManager, -1);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.animalManager, "");
                     break;
                 case SystemsToSave.corruptedZonesManager:
                     // Corrupted Zones Data
                     savedData = JsonUtility.ToJson(CorruptedZonesSaveData.Instance);
-                    SendDataToBeSavedJson(savedData, SystemsToSave.corruptedZonesManager, -1);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.corruptedZonesManager, "");
                     break;
                 case SystemsToSave.TutorialSaveData:
                     // Tutorial Save Data
                     savedData = JsonUtility.ToJson(TutorialSaveData.Instance);
-                    SendDataToBeSavedJson(savedData, SystemsToSave.TutorialSaveData, -1);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.TutorialSaveData, "");
                     break;
                 case SystemsToSave.ZoneManager:
                     // Zone Manager Data
                     savedData = JsonUtility.ToJson(ZoneManager.Instance);
-                    SendDataToBeSavedJson(savedData, SystemsToSave.ZoneManager, -1);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.ZoneManager, "");
                     break;
                 case SystemsToSave.ZoneX:
                     // Zone X Data
@@ -509,13 +527,13 @@ public class PlayfabManager : MonoBehaviour
                         Zone zone = ZoneManagerHelpData.Instance.listOfAllZones[zoneindex];
 
                         savedData = JsonUtility.ToJson(zone);
-                        SendDataToBeSavedJson(savedData, SystemsToSave.ZoneX, zone.id);
+                        SendDataToBeSavedJson(savedData, SystemsToSave.ZoneX, zone.zoneName);
                     }
                     break;
                 case SystemsToSave.RewardsManager:
                     // Rewards Manager Data
                     savedData = JsonUtility.ToJson(RewardsManager.Instance);
-                    SendDataToBeSavedJson(savedData, SystemsToSave.RewardsManager, -1);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.RewardsManager, "");
                     break;
                 case SystemsToSave.LoginData:
                     if (Application.platform == RuntimePlatform.Android)
@@ -531,22 +549,22 @@ public class PlayfabManager : MonoBehaviour
                 case SystemsToSave.HollowManager:
                     //Hollow manager
                     savedData = JsonUtility.ToJson(HollowManagerSaveData.Instance);
-                    SendDataToBeSavedJson(savedData, SystemsToSave.HollowManager, -1);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.HollowManager, "");
                     break;
                 case SystemsToSave.VersionUpdaterData:
                     //Auto Version Updater
                     savedData = JsonUtility.ToJson(AutoVersionUpdater.instance);
-                    SendDataToBeSavedJson(savedData, SystemsToSave.VersionUpdaterData, -1);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.VersionUpdaterData, "");
                     break;
                 case SystemsToSave.CheatingSaveData:
                     //Cheating Save Data
                     savedData = JsonUtility.ToJson(CheatingSaveData.instance);
-                    SendDataToBeSavedJson(savedData, SystemsToSave.CheatingSaveData, -1);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.CheatingSaveData, "");
                     break;
                 case SystemsToSave.BossesSaveData:
                     //Bosses Save Data
                     savedData = JsonUtility.ToJson(BossesSaveDataManager.instance);
-                    SendDataToBeSavedJson(savedData, SystemsToSave.BossesSaveData, -1);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.BossesSaveData, "");
                     break;
                 case SystemsToSave.ALL:
                     SaveAllGameData();
@@ -614,60 +632,60 @@ public class PlayfabManager : MonoBehaviour
 
         // Player Data
         savedData = JsonUtility.ToJson(PlayerManager.Instance);
-        SendDataToBeSavedJson(savedData, SystemsToSave.Player, -1);
+        SendDataToBeSavedJson(savedData, SystemsToSave.Player, "");
 
         // Dew Drops Data
         savedData = JsonUtility.ToJson(DewDropsManager.Instance);
-        SendDataToBeSavedJson(savedData, SystemsToSave.DewDrops, -1);
+        SendDataToBeSavedJson(savedData, SystemsToSave.DewDrops, "");
 
         // Animal Manager Data
         savedData = JsonUtility.ToJson(AnimalsManager.Instance);
-        SendDataToBeSavedJson(savedData, SystemsToSave.animalManager, -1);
+        SendDataToBeSavedJson(savedData, SystemsToSave.animalManager, "");
 
         // Corrupted Zones Data
         savedData = JsonUtility.ToJson(CorruptedZonesSaveData.Instance);
-        SendDataToBeSavedJson(savedData, SystemsToSave.corruptedZonesManager, -1);
+        SendDataToBeSavedJson(savedData, SystemsToSave.corruptedZonesManager, "");
 
         // Tutorial Save Data
         savedData = JsonUtility.ToJson(TutorialSaveData.Instance);
-        SendDataToBeSavedJson(savedData, SystemsToSave.TutorialSaveData, -1);
+        SendDataToBeSavedJson(savedData, SystemsToSave.TutorialSaveData, "");
 
         // Zone Manager Data
         savedData = JsonUtility.ToJson(ZoneManager.Instance);
-        SendDataToBeSavedJson(savedData, SystemsToSave.ZoneManager, -1);
+        SendDataToBeSavedJson(savedData, SystemsToSave.ZoneManager, "");
 
         // Zone X Data
         foreach (Zone zone in ZoneManagerHelpData.Instance.listOfAllZones)
         {
             savedData = JsonUtility.ToJson(zone);
-            SendDataToBeSavedJson(savedData, SystemsToSave.ZoneX, zone.id);
+            SendDataToBeSavedJson(savedData, SystemsToSave.ZoneX, zone.zoneName);
         }
 
         //doneWithStep = false; //// set it back to false so last action will reset it
 
         // Rewards Manager Data
         savedData = JsonUtility.ToJson(RewardsManager.Instance);
-        SendDataToBeSavedJson(savedData, SystemsToSave.RewardsManager, -1);
+        SendDataToBeSavedJson(savedData, SystemsToSave.RewardsManager, "");
 
         //Hollow manager
         savedData = JsonUtility.ToJson(HollowManagerSaveData.Instance);
-        SendDataToBeSavedJson(savedData, SystemsToSave.HollowManager, -1);
+        SendDataToBeSavedJson(savedData, SystemsToSave.HollowManager, "");
 
         //Version Updater Data
         savedData = JsonUtility.ToJson(AutoVersionUpdater.instance);
-        SendDataToBeSavedJson(savedData, SystemsToSave.VersionUpdaterData, -1);
+        SendDataToBeSavedJson(savedData, SystemsToSave.VersionUpdaterData, "");
 
         //Cheating Save Data
         savedData = JsonUtility.ToJson(CheatingSaveData.instance);
-        SendDataToBeSavedJson(savedData, SystemsToSave.CheatingSaveData, -1);
+        SendDataToBeSavedJson(savedData, SystemsToSave.CheatingSaveData, "");
 
         //Bosses Save Data
         savedData = JsonUtility.ToJson(BossesSaveDataManager.instance);
-        SendDataToBeSavedJson(savedData, SystemsToSave.BossesSaveData, -1);
+        SendDataToBeSavedJson(savedData, SystemsToSave.BossesSaveData, "");
 
     }
 
-    public void SendDataToBeSavedJson(string saveData, SystemsToSave system, int zoneNumber)
+    public void SendDataToBeSavedJson(string saveData, SystemsToSave system, string zoneName)
     {
         UpdateUserDataRequest request = null;
 
@@ -733,7 +751,7 @@ public class PlayfabManager : MonoBehaviour
                     Data = new Dictionary<string, string>()
                     {
 
-                        { "Zone Data" + zoneNumber, saveData }
+                        { "Zone Data " + zoneName, saveData }
                     }
                 };
                 break;
@@ -802,44 +820,44 @@ public class PlayfabManager : MonoBehaviour
     }
 
 
-    public IEnumerator ResetAllDataAutoUpdater()
-    {
-        yield return StartCoroutine(ResetActionAutoUpdater());
-    }
+    //public IEnumerator ResetAllDataAutoUpdater()
+    //{
+    //    yield return StartCoroutine(ResetActionAutoUpdater());
+    //}
 
-    IEnumerator ResetActionAutoUpdater()
-    {
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedReset, OnError);
-        yield return WaitForEndReset(AutoVersionUpdater.instance.numOfKeyValuePairsInServer);
+    //IEnumerator ResetActionAutoUpdater()
+    //{
+    //    PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedReset, OnError);
+    //    yield return WaitForEndReset(AutoVersionUpdater.instance.numOfKeyValuePairsInServer);
 
-        AutoVersionUpdater.doneWithSubStep = true;
-    }
+    //    AutoVersionUpdater.doneWithSubStep = true;
+    //}
 
-    void OnDataRecievedReset(GetUserDataResult result)
-    {
-        foreach (string key in result.Data.Keys)
-        {
-            UpdateUserDataRequest request = null;
+    //void OnDataRecievedReset(GetUserDataResult result)
+    //{
+    //    foreach (string key in result.Data.Keys)
+    //    {
+    //        UpdateUserDataRequest request = null;
 
-            request = new UpdateUserDataRequest
-            {
-                Data = new Dictionary<string, string>()
-                {
-                    { key, null }
-                }
-            };
+    //        request = new UpdateUserDataRequest
+    //        {
+    //            Data = new Dictionary<string, string>()
+    //            {
+    //                { key, null }
+    //            }
+    //        };
 
-            if (request != null)
-            {
-                PlayFabClientAPI.UpdateUserData(request, OnDataSendResetUpdater, OnError);
-            }
-        }
-    }
+    //        if (request != null)
+    //        {
+    //            PlayFabClientAPI.UpdateUserData(request, OnDataSendResetUpdater, OnError);
+    //        }
+    //    }
+    //}
 
-    void OnDataSendResetUpdater(UpdateUserDataResult result)
-    {
-        AutoVersionUpdater.resetSystemCounter++;
-    }
+    //void OnDataSendResetUpdater(UpdateUserDataResult result)
+    //{
+    //    AutoVersionUpdater.resetSystemCounter++;
+    //}
 
     public IEnumerator WaitForEndReset(int amountSystemsToReset)
     {
@@ -927,6 +945,30 @@ public class PlayfabManager : MonoBehaviour
         //doneWithStep = false;
     }
 
+    void OnDataRecievedReset(GetUserDataResult result)
+    {
+        foreach (string key in result.Data.Keys)
+        {
+            UpdateUserDataRequest request = null;
+
+            request = new UpdateUserDataRequest
+            {
+                Data = new Dictionary<string, string>()
+                {
+                    { key, null }
+                }
+            };
+
+            if (request != null)
+            {
+                PlayFabClientAPI.UpdateUserData(request, OnDataSendResetSuccess, OnError);
+            }
+        }
+    }
+    void OnDataSendResetSuccess(UpdateUserDataResult result)
+    {
+        Debug.Log("Check here");
+    }
 
     public void LogOut()
     {
@@ -941,11 +983,6 @@ public class PlayfabManager : MonoBehaviour
     {
         yield return null;
         SceneManager.LoadScene(0);
-    }
-    void OnDataSendReset(UpdateUserDataResult result)
-    {
-        //doneWithStep = true;
-        Debug.Log("Check here");
     }
 
     public void RegisterButton()

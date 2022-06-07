@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
+using PlayFab.Json;
 using System;
 
 public class AutoVersionUpdater : MonoBehaviour
@@ -20,6 +21,8 @@ public class AutoVersionUpdater : MonoBehaviour
     //public static int saveCounter;
     public static int resetSystemCounter;
 
+
+    int numNeededToCompleteZeroToOne, numCompleteToCompleteZeroToOne;
     void Awake()
     {
         if(instance == null)
@@ -82,6 +85,15 @@ public class AutoVersionUpdater : MonoBehaviour
             {
                StartCoroutine(ZeroToOne());
             }
+            else if (mostRecentGameVersion == 1)
+            {
+               StartCoroutine(OneToTwo());
+            }
+            else
+            {
+                PlayfabManager.successfullyDoneWithStep = true;
+                Debug.Log("Server version is too high for this version of the game.");
+            }
         }
         else
         {
@@ -100,66 +112,131 @@ public class AutoVersionUpdater : MonoBehaviour
 
     IEnumerator ZeroToOne()
     {
-        // Here change data in local build and then save the game.
-
+        yield return new WaitForSeconds(3);
         mostRecentGameVersion = 1;
 
-        ZoneManager.Instance.unlockedZoneID.RemoveAt(0);
+        Debug.Log("Successfull Data Update");
+        CompareVersions();
+    }
+    IEnumerator OneToTwo()
+    {
+        // Here change data in local build and then save the game.
 
-        if(ZoneManager.Instance.unlockedZoneID.Count == 0)
-        {
-            ZoneManager.Instance.unlockedZoneID.Add(0);
-        }
+        mostRecentGameVersion = 2;
 
-        for (int i = 0; i < ZoneManager.Instance.unlockedZoneID.Count; i++)
-        {
-            ZoneManager.Instance.unlockedZoneID[i] = i;
-        }
+        doneWithSubStep = null;
 
-        resetSystemCounter = 0;
-        yield return StartCoroutine(PlayfabManager.instance.ResetAllDataAutoUpdater());
-
-        //saveCounter = 0;
-        //PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ALL});
-
-        //StartCoroutine(WaitForEndSave(2 + ZoneManager.Instance.unlockedZoneID.Count)); // 2(one each for zone manager and VUD) + amount of unlocked zones
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedOneToTwo, OnError);
 
         yield return new WaitUntil(() => doneWithSubStep != null);
-
-        //StartCoroutine(CompareVersions());
-        resetSystemCounter = 0;
-        //saveCounter = 0;
+        Debug.LogError("Done with zero to one!");
 
         Debug.Log("Successfull Data Update");
         CompareVersions();
     }
 
+    void OnDataRecievedOneToTwo(GetUserDataResult result)
+    {
 
-    //public IEnumerator WaitForEndSave(int amountSystemsToSave)
-    //{
-    //    float counter = 0;
+        if (result.Data != null && result.Data.ContainsKey("Zone Manager Data"))
+        {
+            JsonUtility.FromJsonOverwrite(result.Data["Zone Manager Data"].Value, ZoneManager.Instance);
+        }
 
-    //    while (saveCounter != amountSystemsToSave)
-    //    {
-    //        yield return new WaitForSeconds(0.1f);
+        ZoneManager.Instance.unlockedZoneID.RemoveAt(0);
 
-    //        counter += 0.1f;
+        if (ZoneManager.Instance.unlockedZoneID.Count == 0)
+        {
+            ZoneManager.Instance.unlockedZoneID.Add(0);
+            ZoneManagerHelpData.Instance.listOfAllZones[ZoneManager.Instance.unlockedZoneID[0]].isUnlocked = true;
+            ZoneManagerHelpData.Instance.listOfAllZones[ZoneManager.Instance.unlockedZoneID[0]].maxLevelReachedInZone = 1;
+        }
 
-    //        if (counter >= 5)
-    //        {
-    //            break;
-    //        }
-    //    }
+        for (int i = 0; i < ZoneManager.Instance.unlockedZoneID.Count; i++)
+        {
+            ZoneManager.Instance.unlockedZoneID[i] = i;
+            if (ZoneManagerHelpData.Instance.listOfAllZones[ZoneManager.Instance.unlockedZoneID[0]].maxLevelReachedInZone <= 0)
+            {
+                ZoneManagerHelpData.Instance.listOfAllZones[ZoneManager.Instance.unlockedZoneID[0]].maxLevelReachedInZone = 1;
+            }
+        }
 
-    //    if (saveCounter != amountSystemsToSave)
-    //    {
-    //        Debug.LogError($"what happened? Counter: {saveCounter} Length:{amountSystemsToSave}");
-    //        doneWithSubStep = true;
-    //        yield break;
-    //    }
-    //    else
-    //    {
-    //        doneWithSubStep = true;
-    //    }
-    //}
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneManager });
+
+
+        numNeededToCompleteZeroToOne = 0;
+        UserDataRecord USR;
+
+        for (int i = 0; i < 6; i++)
+        {
+            if (result.Data.TryGetValue("Zone Data" + i, out USR))
+            {
+                numNeededToCompleteZeroToOne++;
+            }
+        }
+
+        for (int i = 0; i < 6; i++)
+        {            
+            if (result.Data.TryGetValue("Zone Data" + i, out USR))
+            {
+                JsonObject testJsonObj = (JsonObject)PlayFab.PluginManager.GetPlugin<ISerializerPlugin>(PluginContract.PlayFab_Serializer).DeserializeObject(USR.Value);
+
+                object testJsonValue;
+
+                if (testJsonObj.TryGetValue("zoneName", out testJsonValue))
+                {
+                    string savedData = testJsonObj.ToString();
+
+                    UpdateUserDataRequest request = null;
+
+                    if(i == 0)
+                    {
+                        request = new UpdateUserDataRequest
+                        {
+                            Data = new Dictionary<string, string>()
+                            {
+                                { "Zone Data" + i, null }
+                            }
+                        };
+
+                    }
+                    else
+                    {
+                        request = new UpdateUserDataRequest
+                        {
+                            Data = new Dictionary<string, string>()
+                            {
+                                { "Zone Data " + testJsonValue, savedData },
+                                { "Zone Data" + i, null }
+                            }
+                        };
+
+                    }
+
+                    if (request != null)
+                    {
+                        PlayFabClientAPI.UpdateUserData(request, OnDataSendOneToTwo, OnErrorOneToTwo);
+                    }
+                }
+            }
+        }
+    }
+
+    void OnDataSendOneToTwo(UpdateUserDataResult result)
+    {
+        numCompleteToCompleteZeroToOne++;
+
+        if(numCompleteToCompleteZeroToOne == numNeededToCompleteZeroToOne)
+        {
+            doneWithSubStep = true;
+        }
+    }
+
+    void OnErrorOneToTwo(PlayFabError error)
+    {
+        Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
+        Debug.LogError(error.GenerateErrorReport());
+
+        doneWithSubStep = true;
+    }
 }

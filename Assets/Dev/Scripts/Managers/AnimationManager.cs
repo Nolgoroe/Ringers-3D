@@ -955,10 +955,10 @@ public class AnimationManager : MonoBehaviour
 
         hasSkippedToAnimalAnim = false;
 
-        //if(AnimalsManager.Instance.currentLevelLiveAnimal)
-        //{
-        //    Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
-        //}
+        if (AnimalsManager.Instance.currentLevelLiveAnimal)
+        {
+            Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
+        }
 
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
 
