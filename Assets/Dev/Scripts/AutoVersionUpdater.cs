@@ -187,12 +187,12 @@ public class AutoVersionUpdater : MonoBehaviour
             {
                 if(AZAL.levelsInZone[i].isTutorial)
                 {
-                    TutorialSaveData.Instance.completedTutorialLevelId.Add(AZAL.levelsInZone[i].levelNum);
+                    TutorialSaveData.Instance.completedTutorialLevelId.Add(AZAL.levelsInZone[i].numIndexForLeaderBoard);
                 }
                 
                 if(AZAL.levelsInZone[i].isSpecificTutorial)
                 {
-                    TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(AZAL.levelsInZone[i].levelNum);
+                    TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(AZAL.levelsInZone[i].numIndexForLeaderBoard);
                 }
                 
 
@@ -255,11 +255,6 @@ public class AutoVersionUpdater : MonoBehaviour
         for (int i = 0; i < ZoneManager.Instance.unlockedZoneID.Count; i++)
         {
             ZoneManager.Instance.unlockedZoneID[i] = i;
-        }
-
-        if (ZoneManagerHelpData.Instance.listOfAllZones[ZoneManager.Instance.unlockedZoneID[0]].maxLevelReachedInZone <= 0)
-        {
-            ZoneManagerHelpData.Instance.listOfAllZones[ZoneManager.Instance.unlockedZoneID[0]].maxLevelReachedInZone = 1;
         }
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneManager });
@@ -356,6 +351,11 @@ public class AutoVersionUpdater : MonoBehaviour
         ZoneManagerHelpData.Instance.listOfAllZones[2].lastLevelNum = 20;
         ZoneManagerHelpData.Instance.listOfAllZones[3].lastLevelNum = 30;
         ZoneManagerHelpData.Instance.listOfAllZones[4].lastLevelNum = 15;
+
+        if (ZoneManagerHelpData.Instance.listOfAllZones[ZoneManager.Instance.unlockedZoneID[0]].maxLevelReachedInZone <= 0)
+        {
+            ZoneManagerHelpData.Instance.listOfAllZones[ZoneManager.Instance.unlockedZoneID[0]].maxLevelReachedInZone = 1;
+        }
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.AllZones });
 
