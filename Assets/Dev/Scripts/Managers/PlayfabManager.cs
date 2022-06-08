@@ -26,6 +26,7 @@ public enum SystemsToSave
     VersionUpdaterData,
     CheatingSaveData,
     BossesSaveData,
+    AllZones,
     ALL
 }
 
@@ -404,24 +405,9 @@ public class PlayfabManager : MonoBehaviour
         }
 
         // Zone X Data
+
         foreach (Zone zone in ZoneManagerHelpData.Instance.listOfAllZones)
         {
-            //UserDataRecord USR;
-
-            //if(result.Data.TryGetValue("Zone Data" + zone.id, out USR))
-            //{
-            //    JsonObject testJsonObj = (JsonObject)PlayFab.PluginManager.GetPlugin<ISerializerPlugin>(PluginContract.PlayFab_Serializer).DeserializeObject(USR.Value);
-
-            //    object testJsonValue;
-
-            //    if (testJsonObj.TryGetValue("zoneName", out testJsonValue))
-            //    {
-            //        if(zone.zoneName == testJsonValue.ToString())
-            //        {
-            //            JsonUtility.FromJsonOverwrite(result.Data["Zone Data" + zone.id].Value, zone);
-            //        }
-            //    }
-            //}
             if (result.Data != null && result.Data.ContainsKey("Zone Data " + zone.zoneName))
             {
                 JsonUtility.FromJsonOverwrite(result.Data["Zone Data " + zone.zoneName].Value, zone);
@@ -526,6 +512,14 @@ public class PlayfabManager : MonoBehaviour
                     {
                         Zone zone = ZoneManagerHelpData.Instance.listOfAllZones[zoneindex];
 
+                        savedData = JsonUtility.ToJson(zone);
+                        SendDataToBeSavedJson(savedData, SystemsToSave.ZoneX, zone.zoneName);
+                    }
+                    break;
+                case SystemsToSave.AllZones:
+                    // All Zones Data
+                    foreach (Zone zone in ZoneManagerHelpData.Instance.listOfAllZones)
+                    {
                         savedData = JsonUtility.ToJson(zone);
                         SendDataToBeSavedJson(savedData, SystemsToSave.ZoneX, zone.zoneName);
                     }
