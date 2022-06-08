@@ -140,13 +140,13 @@ public class AutoVersionUpdater : MonoBehaviour
         yield return new WaitUntil(() => doneWithSubStep != null);
 
         doneWithSubStep = null;
-        StartCoroutine(ResetZoneIndexesOneToTwo()); // reset zone indexes to new indexes - we took out zone index 0 - noew we need to make sure the indexes go from 0 - 4 instead of 1 - 5 since we have arrays using the zones id's
+        yield return StartCoroutine(ResetZoneIndexesOneToTwo()); // reset zone indexes to new indexes - we took out zone index 0 - noew we need to make sure the indexes go from 0 - 4 instead of 1 - 5 since we have arrays using the zones id's
 
         yield return new WaitUntil(() => doneWithSubStep != null);
         //Debug.LogError("Done with zero to one!");
 
         doneWithSubStep = null;
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedUpdateTutorialData, OnErrorUpdateZones); // rewrite tutorial data
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedUpdateTutorialData, OnErrorUpdateTutorialData); // rewrite tutorial data
 
         yield return new WaitUntil(() => doneWithSubStep != null);
 
@@ -350,6 +350,12 @@ public class AutoVersionUpdater : MonoBehaviour
         {
             ZoneManagerHelpData.Instance.listOfAllZones[i].id = i;
         }
+
+        ZoneManagerHelpData.Instance.listOfAllZones[0].lastLevelNum = 25;
+        ZoneManagerHelpData.Instance.listOfAllZones[1].lastLevelNum = 30;
+        ZoneManagerHelpData.Instance.listOfAllZones[2].lastLevelNum = 20;
+        ZoneManagerHelpData.Instance.listOfAllZones[3].lastLevelNum = 30;
+        ZoneManagerHelpData.Instance.listOfAllZones[4].lastLevelNum = 15;
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.AllZones });
 
