@@ -14,6 +14,12 @@ public class NumAnimalTypedOnBoard
     public PieceSymbol animalSymbol;
     public int amount;
 }
+[Serializable]
+public class AllZonesAndLevels
+{
+    public Zone zone;
+    public LevelScriptableObject[] levelsInZone;
+}
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -64,7 +70,7 @@ public class GameManager : MonoBehaviour
 
     public NumAnimalTypedOnBoard[] numAnimalsOnBoard;
 
-    public LevelScriptableObject[] allLevels;
+    public AllZonesAndLevels[] allZonesAndLevels;
 
     public Camera secondCam;
 
@@ -901,7 +907,7 @@ public class GameManager : MonoBehaviour
 
         bool nextIsTutorial = CheckNextLevelIsTutorial(currentLevel.levelNum + 1);
 
-        ChooseLevel(currentLevel.levelNum + 1/*, currentLevel.worldName*/);
+        ChooseLevel(currentLevel.levelIndexInZone + 1/*, currentLevel.worldName*/);
 
         if (selectedLevelBG.transform.Find("color mask"))
         {

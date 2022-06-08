@@ -5,6 +5,7 @@ using PlayFab;
 using PlayFab.ClientModels;
 using PlayFab.Json;
 using System;
+using System.Linq;
 
 public class AutoVersionUpdater : MonoBehaviour
 {
@@ -46,6 +47,8 @@ public class AutoVersionUpdater : MonoBehaviour
     {
         PlayFabClientAPI.GetTitleData(new GetTitleDataRequest(), onGetTitleData, OnError);
         yield return new WaitUntil(() => PlayfabManager.successfullyDoneWithStep != null);
+
+        Debug.LogError("Compared versions and updated the game!!");
     }
 
     void onGetTitleData(GetTitleDataResult result)
@@ -79,7 +82,7 @@ public class AutoVersionUpdater : MonoBehaviour
         {
             hasUpdated = true;
 
-            Debug.LogError("Not same version as server!!!!");
+            //Debug.LogError("Not same version as server!!!!");
 
             if (mostRecentGameVersion == 0)
             {
@@ -97,7 +100,7 @@ public class AutoVersionUpdater : MonoBehaviour
         }
         else
         {
-            Debug.LogError("At most recent version!");
+            //Debug.LogError("At most recent version!");
 
             if (hasUpdated)
             {
@@ -112,10 +115,10 @@ public class AutoVersionUpdater : MonoBehaviour
 
     IEnumerator ZeroToOne()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         mostRecentGameVersion = 1;
 
-        Debug.Log("Successfull Data Update");
+        Debug.Log("Successfull Data Update Zero to one");
         CompareVersions();
     }
     IEnumerator OneToTwo()
@@ -126,25 +129,85 @@ public class AutoVersionUpdater : MonoBehaviour
 
         doneWithSubStep = null;
 
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedOneToTwo, OnErrorRecieveOneToTwo);
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedOneToTwo, OnErrorRecieveOneToTwo); // change zone manager data + rewrite zones from index based to unique identifier base
 
         yield return new WaitUntil(() => doneWithSubStep != null);
 
         doneWithSubStep = null;
 
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedUpdateZones, OnErrorUpdateZones);
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedUpdateZones, OnErrorUpdateZones); // load zones data from server - now with new unique identifier base
 
         yield return new WaitUntil(() => doneWithSubStep != null);
 
         doneWithSubStep = null;
-        StartCoroutine(ResetZoneIndexesOneToTwo());
+        StartCoroutine(ResetZoneIndexesOneToTwo()); // reset zone indexes to new indexes - we took out zone index 0 - noew we need to make sure the indexes go from 0 - 4 instead of 1 - 5 since we have arrays using the zones id's
 
         yield return new WaitUntil(() => doneWithSubStep != null);
-        Debug.LogError("Done with zero to one!");
+        //Debug.LogError("Done with zero to one!");
 
-        Debug.Log("Successfull Data Update");
+        doneWithSubStep = null;
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedUpdateTutorialData, OnErrorUpdateZones); // rewrite tutorial data
+
+        yield return new WaitUntil(() => doneWithSubStep != null);
+
+        Debug.Log("Successfull Data Update One to two!");
         CompareVersions();
     }
+
+    void OnErrorUpdateTutorialData(PlayFabError error)
+    {
+        Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
+        Debug.LogError(error.GenerateErrorReport());
+        doneWithSubStep = true;
+    }
+
+    void OnDataRecievedUpdateTutorialData(GetUserDataResult result)
+    {
+        if (result.Data != null && result.Data.ContainsKey("Tutorial Save Data"))
+        {
+            JsonUtility.FromJsonOverwrite(result.Data["Tutorial Save Data"].Value, TutorialSaveData.Instance);
+        }
+
+        TutorialSaveData.Instance.completedTutorialLevelId.Clear();
+        TutorialSaveData.Instance.completedSpecificTutorialLevelId.Clear();
+
+        StartCoroutine(ResetTutorialDataOneToTwo());
+        //ResetTutorialDataOneToTwo();
+    }
+
+    IEnumerator ResetTutorialDataOneToTwo()
+    {
+        foreach (int zoneindex in ZoneManager.Instance.unlockedZoneID)
+        {
+            Zone zone = ZoneManagerHelpData.Instance.listOfAllZones[zoneindex];
+
+            AllZonesAndLevels AZAL = GameManager.Instance.allZonesAndLevels.Where(p => p.zone == zone).SingleOrDefault();
+
+            for (int i = 0; i < zone.maxLevelReachedInZone; i++)
+            {
+                if(AZAL.levelsInZone[i].isTutorial)
+                {
+                    TutorialSaveData.Instance.completedTutorialLevelId.Add(AZAL.levelsInZone[i].levelNum);
+                }
+                
+                if(AZAL.levelsInZone[i].isSpecificTutorial)
+                {
+                    TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(AZAL.levelsInZone[i].levelNum);
+                }
+                
+
+            }
+        }
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+
+        yield return new WaitForSeconds(2);
+
+        //yield return null;
+        doneWithSubStep = true;
+    }
+
+
 
     void OnErrorUpdateZones(PlayFabError error)
     {
@@ -163,7 +226,7 @@ public class AutoVersionUpdater : MonoBehaviour
         }
 
         doneWithSubStep = true;
-        Debug.LogError("Loaded levels");
+        //Debug.LogError("Loaded levels");
     }
 
     void OnErrorRecieveOneToTwo(PlayFabError error)
@@ -201,10 +264,13 @@ public class AutoVersionUpdater : MonoBehaviour
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneManager });
 
+
+
+
         numNeededToCompleteZeroToOne = 0;
         UserDataRecord USR;
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 6; i++) //6 was the number of all zones in this version of the game. we need to potentially check for all of them
         {
             if (result.Data.TryGetValue("Zone Data" + i, out USR))
             {
@@ -213,9 +279,13 @@ public class AutoVersionUpdater : MonoBehaviour
             }
         }
 
-        Debug.LogError("WHAT " + numNeededToCompleteZeroToOne);
+        if(numNeededToCompleteZeroToOne == 0)
+        {
+            doneWithSubStep = true;
+            return;
+        }
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < numNeededToCompleteZeroToOne; i++)
         {            
             if (result.Data.TryGetValue("Zone Data" + i, out USR))
             {
@@ -271,7 +341,7 @@ public class AutoVersionUpdater : MonoBehaviour
         {
             doneWithSubStep = true;
 
-            Debug.LogError("Now done with transferring data");
+            //Debug.LogError("Now done with transferring data!!!");
         }
     }
     IEnumerator ResetZoneIndexesOneToTwo()
@@ -283,7 +353,7 @@ public class AutoVersionUpdater : MonoBehaviour
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.AllZones });
 
-        Debug.LogError("Now waiting");
+        //Debug.LogError("Now waiting");
 
         yield return new WaitForSeconds(2);
         doneWithSubStep = true;

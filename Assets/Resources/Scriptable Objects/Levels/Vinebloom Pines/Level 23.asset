@@ -23,34 +23,42 @@ MonoBehaviour:
     type: 3}
   levelNum: 23
   worldNum: 1
-  levelIndexInZone: 3
-  tutorialIndexForList: 5
+  levelIndexInZone: 23
+  numIndexForLeaderBoard: 48
+  tutorialIndexForList: 0
   cellsCountInLevel: 8
   RandomSlicePositions: 0
   allowRepeatSlices: 0
   powerupsForLevel: 
   specificAnimalForLevel: {fileID: 0}
   stoneTiles:
-  - cellIndex: 1
+  - cellIndex: 2
     randomValues: 1
     isNeutral: 1
     colorOfPieceRight: 5
     symbolOfPieceRight: 4
     colorOfPieceLeft: 5
     symbolOfPieceLeft: 4
-  slicesToSpawn: 0200000001000000
-  lockSlices: 0000
-  lootSlices: 0101
-  limiterSlices: 0101
-  RewardBags: 080000000900000002000000010000000b0000000a000000
+  - cellIndex: 7
+    randomValues: 1
+    isNeutral: 1
+    colorOfPieceRight: 5
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 5
+    symbolOfPieceLeft: 4
+  slicesToSpawn: 02000000
+  lockSlices: 00
+  lootSlices: 01
+  limiterSlices: 01
+  RewardBags: 02000000010000000c0000000d0000000e0000000f000000
   levelAvailableColors: 00000000010000000200000003000000
-  levelAvailablesymbols: 030000000100000002000000
+  levelAvailablesymbols: 00000000020000000300000001000000
   symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
   isTutorial: 0
   specificTutorialEnum: 0
   arrayOfPieces: []
-  specificSliceSpots: 0400000007000000
+  specificSliceSpots: 05000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0

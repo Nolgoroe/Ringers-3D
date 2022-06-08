@@ -469,7 +469,7 @@ public class PlayerManager : MonoBehaviour
 
     public void UpdateMaxLevelReached(LevelScriptableObject level)
     {
-        highestLevelReached = level.levelNum;
+        highestLevelReached = level.numIndexForLeaderBoard;
 
         PlayfabManager.instance.SendLeaderboard(highestLevelReached);
 

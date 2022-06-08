@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f245e6ade46975b42912a0bdcd673818, type: 3}
+  m_Name: Level 2
+  m_EditorClassIdentifier: 
+  worldName: Vinebloom Pines
+  isGrindLevel: 0
+  is12PieceRing: 0
+  isDoubleRing: 0
+  isBoss: 0
+  isAnimalLevel: 1
+  isReleaseAnimalToDen: 0
+  boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
+    type: 3}
+  levelNum: 2
+  worldNum: 1
+  levelIndexInZone: 2
+  numIndexForLeaderBoard: 27
+  tutorialIndexForList: 0
+  cellsCountInLevel: 8
+  RandomSlicePositions: 0
+  allowRepeatSlices: 0
+  powerupsForLevel: 
+  specificAnimalForLevel: {fileID: 0}
+  stoneTiles:
+  - cellIndex: 5
+    randomValues: 1
+    isNeutral: 1
+    colorOfPieceRight: 5
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 5
+    symbolOfPieceLeft: 4
+  slicesToSpawn: 02000000
+  lockSlices: 0001
+  lootSlices: 0101
+  limiterSlices: 0101
+  RewardBags: 080000000900000002000000010000000b0000000a000000
+  levelAvailableColors: 00000000010000000200000003000000
+  levelAvailablesymbols: 000000000200000003000000
+  symbolsNeededForSpecialPowers: []
+  isSpecificTutorial: 0
+  isTutorial: 0
+  specificTutorialEnum: 0
+  arrayOfPieces: []
+  specificSliceSpots: 02000000
+  specificSlicesShapes: 
+  specificSlicesColors: 
+  BossHealth: 0
+  isRandomPieces: 0
+  specificPiecesIndex: 
+  rubyRewardNoDefeat: 0
+  rubyRewardDefeat: 0
+  ver1Boss: 0
+  timeForLevelInSeconds: 0
+  dealButtonTimer: 0
+  damageToBossCompeleRing: 0

@@ -12,7 +12,6 @@ public class Interactable3D : MonoBehaviour
 
     public int currentZoneID;
     public int NextZoneID;///only if key level
-    public int overallLevelNum;
     public int indexInZone;
 
     public UnityEvent interactEvent;
@@ -41,7 +40,7 @@ public class Interactable3D : MonoBehaviour
                     GameManager.Instance.levelStarted = true;
                     GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
-                    GameManager.Instance.ChooseLevel(overallLevelNum);
+                    GameManager.Instance.ChooseLevel(indexInZone);
                     GameManager.Instance.setCurrentLevelBG(currentZoneID);
                     //GameManager.Instance.CallStartLevel(false);
 
@@ -67,7 +66,7 @@ public class Interactable3D : MonoBehaviour
                     GameManager.Instance.levelStarted = true;
                     GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
-                    GameManager.Instance.ChooseLevelGrind(overallLevelNum);
+                    GameManager.Instance.ChooseLevelGrind(indexInZone);
                     GameManager.Instance.setCurrentLevelBG(currentZoneID);
                     //GameManager.Instance.CallStartLevel(false);
 
@@ -93,7 +92,7 @@ public class Interactable3D : MonoBehaviour
                     GameManager.Instance.levelStarted = true;
                     GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
-                    GameManager.Instance.ChooseLevel(overallLevelNum);
+                    GameManager.Instance.ChooseLevel(indexInZone);
                     GameManager.Instance.setCurrentLevelBG(currentZoneID);
                     //GameManager.Instance.CallStartLevel(true);
 
@@ -121,7 +120,7 @@ public class Interactable3D : MonoBehaviour
                     GameManager.Instance.levelStarted = true;
                     GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
-                    GameManager.Instance.ChooseLevel(overallLevelNum);
+                    GameManager.Instance.ChooseLevel(indexInZone);
                     GameManager.Instance.setCurrentLevelBG(currentZoneID);
                     //GameManager.Instance.CallStartLevel(false);
 
@@ -149,7 +148,7 @@ public class Interactable3D : MonoBehaviour
                     GameManager.Instance.levelStarted = true;
                     GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
-                    GameManager.Instance.ChooseLevel(overallLevelNum);
+                    GameManager.Instance.ChooseLevel(indexInZone);
                     GameManager.Instance.setCurrentLevelBG(currentZoneID);
                     //GameManager.Instance.CallStartLevel(true);
 

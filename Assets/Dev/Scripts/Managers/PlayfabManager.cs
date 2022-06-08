@@ -146,6 +146,7 @@ public class PlayfabManager : MonoBehaviour
         CheckActionConnectionError();
 
         yield return StartCoroutine(InitAllSystems()); // this does not connect to database!!
+        Debug.LogError("Init all systems!!!");
 
 
         // from here on can do actions however we want since we loaded and initted all systems
@@ -162,12 +163,10 @@ public class PlayfabManager : MonoBehaviour
         successfullyDoneWithStep = null;
         CheckActionConnectionError();
 
-        //yield return new WaitUntil(() => doneWithStep == true);
+
 
         RewardsManager.Instance.CalculateReturnDeltaTime();
         DewDropsManager.Instance.CalculateReturnDeltaTime();
-
-
 
         isLoggedIn = true;
         TimeReferenceDataScript.Start();
@@ -188,6 +187,8 @@ public class PlayfabManager : MonoBehaviour
         UIManager.Instance.SetCanRepeatLevelsDisplay();
 
         yield return new WaitForSeconds(2);
+
+        Debug.LogError("Finished all Login Init sequence!!!!");
 
         if (TutorialSaveData.Instance.hasFinishedIntro)
         {
@@ -287,23 +288,52 @@ public class PlayfabManager : MonoBehaviour
         UIManager.Instance.leaderboardScreen.SetActive(true);
     }
 
-    string findWorldAndLevelByScriptableObject(int levelNum)
+    string findWorldAndLevelByScriptableObject(int levelNumForLeaderBoard)
     {
-        if(levelNum != 0)
+        //if (levelNumForLeaderBoard != 0)
+        //{
+        //    levelNumForLeaderBoard--; // cause we start checking a list/arry from 0
+        //}
+
+        int lastLevelLeaderboardNum = 0;
+
+        foreach (AllZonesAndLevels AZAL in GameManager.Instance.allZonesAndLevels)
         {
-            levelNum--; // cause we start checking a list/arry from 0
+            lastLevelLeaderboardNum += AZAL.levelsInZone.Length;
+        }
+            
+
+        if (levelNumForLeaderBoard > lastLevelLeaderboardNum)
+        {
+            levelNumForLeaderBoard = lastLevelLeaderboardNum;
         }
 
-        int lastNum = GameManager.Instance.allLevels.Last().levelNum;
+        int worldNum = -1;
+        int indexInZone = -2;
+        bool found = false;
 
-        if(levelNum > lastNum)
+        foreach (AllZonesAndLevels AZAL in GameManager.Instance.allZonesAndLevels)
         {
-            levelNum = lastNum;
+            for (int i = 0; i < AZAL.levelsInZone.Length; i++)
+            {
+                if(AZAL.levelsInZone[i].numIndexForLeaderBoard == levelNumForLeaderBoard)
+                {
+                    worldNum = AZAL.zone.id;
+                    indexInZone = i;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found)
+            {
+                break;
+            }
         }
 
-        return (GameManager.Instance.allLevels[levelNum].worldNum + " - " + GameManager.Instance.allLevels[levelNum].levelIndexInZone).ToString();
+        return (worldNum + " - " + indexInZone).ToString();
+        //return "no";
     }
-
 
 
     [ContextMenu("Get Daily Rewards Data from Server")]
@@ -312,6 +342,8 @@ public class PlayfabManager : MonoBehaviour
         //doneWithStep = false;
         PlayFabClientAPI.GetTitleData(new GetTitleDataRequest(), onDailyRewardsDataGet, OnError);
         yield return new WaitUntil(() => successfullyDoneWithStep != null);
+
+        Debug.LogError("Got daily rewards data!!!");
     }
 
     void onDailyRewardsDataGet(GetTitleDataResult result)
@@ -343,13 +375,16 @@ public class PlayfabManager : MonoBehaviour
         // Player Data
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecieved, OnError);
         yield return new WaitUntil(() => successfullyDoneWithStep != null);
-        //DewDropsManager.Instance.LoadDewDropsData();
+
+        Debug.LogError("Loaded all game data!");
     }
 
     public IEnumerator LoadGameVersion()
     {
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedVersion, OnError);
         yield return new WaitUntil(() => successfullyDoneWithStep != null);
+
+        Debug.LogError("Loaded game version");
     }
 
     void OnDataRecievedVersion(GetUserDataResult result)
@@ -1058,6 +1093,8 @@ public class PlayfabManager : MonoBehaviour
         //doneWithStep = false;
         PlayFabClientAPI.GetTime(new GetTimeRequest(), OnGetTimeSuccess, OnError);
         yield return new WaitUntil(() => successfullyDoneWithStep != null);
+
+        Debug.LogError("Got server time");
     }
 
     void OnGetTimeSuccess(GetTimeResult result)

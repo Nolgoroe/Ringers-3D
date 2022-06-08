@@ -31,6 +31,7 @@ public class LevelScriptableObject : ScriptableObject
     public int levelNum;
     public int worldNum;
     public int levelIndexInZone;
+    public int numIndexForLeaderBoard;
     public int tutorialIndexForList;
     public int cellsCountInLevel;
 
@@ -75,4 +76,24 @@ public class LevelScriptableObject : ScriptableObject
     public float timeForLevelInSeconds;
     public float dealButtonTimer;
     public float damageToBossCompeleRing;
+
+
+    [ContextMenu("THIS")]
+    public void actionhere()
+    {
+        string n = name;
+        n = n.Replace("Level ", "");
+
+        int num = Convert.ToInt32(n);
+
+        levelNum = num;
+        levelIndexInZone = num;
+
+        Debug.Log(num);
+    }
+    [ContextMenu("THIS Leaderboard")]
+    public void actionhere2()
+    {
+        numIndexForLeaderBoard = 105 + levelNum;
+    }
 }
