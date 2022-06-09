@@ -1280,13 +1280,27 @@ public class UIManager : MonoBehaviour
 
             IconSpritesPerZone ISPZ = ZoneManagerHelpData.Instance.iconsPerZone.Where(p => p.zone == BPZ.theZone).Single();
 
-            if (BPZ.theZone.hasUnlockedGrind && BPZ.theZone.zoneGrindLevel)
+
+            if (BPZ.theZone.hasUnlockedGrind)
             {
+                foreach (GameObject go in ZoneManagerHelpData.Instance.zoneGrindLevelPerZone)
+                {
+                    if (go.GetComponent<Interactable3D>())
+                    {
+                        Interactable3D interactable = go.GetComponent<Interactable3D>();
+
+                        if(interactable.currentZoneID == BPZ.theZone.id)
+                        {
+                            go.GetComponent<Image>().sprite = ISPZ.grindLevelSprite;
+                        }
+                    }
+                }
+
                 //BPZ.theZone.zoneGrindLevel.GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelFirstTimeColor); // 3D map
 
                 //BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconSprite);
                 //BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIconSprite;
-                BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = ISPZ.grindLevelSprite;
+                //BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = ISPZ.grindLevelSprite;
                 //BPZ.theZone.zoneGrindLevel.GetComponent<Button>().interactable = true;
             }
 

@@ -258,9 +258,17 @@ public class GameManager : MonoBehaviour
                 PlayerManager.Instance.PopulatePowerUps();
                 powerupManager.instnatiatedZonesCounter = 0;
 
-                if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.levelNum))
+                if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
                 {
-                    TutorialSequence.Instacne.StartTutorialLevelSequence();
+                    if (currentLevel.isSpecificTutorial)
+                    {
+                        StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
+                        TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
+                    }
+                    else
+                    {
+                        TutorialSequence.Instacne.StartTutorialLevelSequence();
+                    }
                 }
 
 
@@ -561,7 +569,7 @@ public class GameManager : MonoBehaviour
     }
     public void ChooseLevelGrind(int levelNum)
     {
-        currentLevel = Instantiate((LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/Grind Levels" + "/Level " + levelNum));
+        currentLevel = Instantiate((LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/" + ZoneManagerHelpData.Instance.currentZoneName + "/Grind Level " + levelNum));
     }
 
 
@@ -618,13 +626,29 @@ public class GameManager : MonoBehaviour
                 TutorialSequence.Instacne.CheatTutorialClearSpecific();
             }
 
-            if (ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel)
+            foreach (GameObject go in ZoneManagerHelpData.Instance.zoneGrindLevelPerZone)
             {
-                if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.grindLevelIndex)
+                if (go.GetComponent<Interactable3D>())
                 {
-                    ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind = true;
+                    Interactable3D interactable = go.GetComponent<Interactable3D>();
+
+                    if(ZoneManagerHelpData.Instance.currentZoneCheck.id == interactable.currentZoneID)
+                    {
+                        if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.grindLevelIndex)
+                        {
+                            ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind = true;
+                        }
+                    }
                 }
             }
+
+            //if (ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel)
+            //{
+            //    if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.grindLevelIndex)
+            //    {
+            //        ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind = true;
+            //    }
+            //}
 
             foreach (GameObject go in TutorialSequence.Instacne.activatedHeighlights)
             {
@@ -653,17 +677,33 @@ public class GameManager : MonoBehaviour
                         LootManager.Instance.giveKey = true;
                     }
 
-                    if (ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel)
+                    foreach (GameObject go in ZoneManagerHelpData.Instance.zoneGrindLevelPerZone)
                     {
-                        if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.grindLevelIndex)
+                        if (go.GetComponent<Interactable3D>())
                         {
-                            ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind = true;
-                            //ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel.GetComponent<Image>().sprite = Resources.Load<Sprite>(ZoneManagerHelpData.Instance.currentZoneCheck.levelDonePath);
-                            //ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel.GetComponent<Button>().interactable = true;
-                            //ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel.GetComponent<Renderer>().material.SetColor("_BaseColor", ZoneManagerHelpData.Instance.currentZoneCheck.levelFirstTimeColor);
+                            Interactable3D interactable = go.GetComponent<Interactable3D>();
 
+                            if (ZoneManagerHelpData.Instance.currentZoneCheck.id == interactable.currentZoneID)
+                            {
+                                if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.grindLevelIndex)
+                                {
+                                    ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind = true;
+                                }
+                            }
                         }
                     }
+
+                    //if (ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel)
+                    //{
+                    //    if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.grindLevelIndex)
+                    //    {
+                    //        ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind = true;
+                    //        //ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel.GetComponent<Image>().sprite = Resources.Load<Sprite>(ZoneManagerHelpData.Instance.currentZoneCheck.levelDonePath);
+                    //        //ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel.GetComponent<Button>().interactable = true;
+                    //        //ZoneManagerHelpData.Instance.currentZoneCheck.zoneGrindLevel.GetComponent<Renderer>().material.SetColor("_BaseColor", ZoneManagerHelpData.Instance.currentZoneCheck.levelFirstTimeColor);
+
+                    //    }
+                    //}
                 }
 
                 Debug.Log("YOU WIN");

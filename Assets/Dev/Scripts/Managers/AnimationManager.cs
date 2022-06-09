@@ -978,7 +978,7 @@ public class AnimationManager : MonoBehaviour
     }
     private void CheckShowLootTutorial()
     {
-        if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.lootTutorial && GameManager.Instance.currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)GameManager.Instance.currentLevel.specificTutorialEnum)) /// specificTutorialIndex == 0  is loot tutorial
+        if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.lootTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)GameManager.Instance.currentLevel.specificTutorialEnum)) /// specificTutorialIndex == 0  is loot tutorial
         {
             //TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.specificTutorialIndex);
             LootManager.Instance.rubiesToRecieveInLevel = 8;
@@ -1057,7 +1057,7 @@ public class AnimationManager : MonoBehaviour
         RectTransform target = ZoneManagerHelpData.Instance.listOfAllZones[ID].GetComponent<RectTransform>();
         Debug.Log("Target Y" + target.localPosition.y);
 
-        LeanTween.move(toMoveOpenZone.GetComponent<RectTransform>(), new Vector3(toMoveOpenZone.transform.position.x, ZoneManagerHelpData.Instance.listOfAllZones[ID].zonePosForUnlock.y, 0), cameraMoveTime).setEase(LeanTweenType.easeInOutQuad); // animate
+        LeanTween.move(toMoveOpenZone.GetComponent<RectTransform>(), new Vector3(toMoveOpenZone.transform.position.x, ZoneManagerHelpData.Instance.unlockPosPerZone[ID].y, 0), cameraMoveTime).setEase(LeanTweenType.easeInOutQuad); // animate
 
         yield return new WaitForSeconds(cameraMoveTime - 0.8f);
         FadeInUnlcokScreen();

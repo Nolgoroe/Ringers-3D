@@ -654,7 +654,7 @@ public class ConnectionManager : MonoBehaviour
         conditionMet = true;
         isGoodConnect = false;
 
-        if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ShapeMatch)
+        if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ShapeMatch)
         {
             CompareResault result = TotalCheck(currentSide, contestedSide);
 
@@ -673,7 +673,7 @@ public class ConnectionManager : MonoBehaviour
             }
         }
 
-        if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ColorMatch)
+        if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ColorMatch)
         {
             CompareResault result = TotalCheck(currentSide, contestedSide);
 

@@ -25,21 +25,19 @@ public class Zone : MonoBehaviour
 
     public Color levelDoneColor, levelFirstTimeColor;
 
-    public GameObject zoneGrindLevel;
 
     //public GameObject zoneBackground;
 
     [HideInInspector]
     public Image zoneHeader;
 
-    public Vector3 zonePosForUnlock;
     public void Init()
     {
         foreach (Transform child in transform)
         {
             if (child.CompareTag("Grind Level Button"))
             {
-                zoneGrindLevel = child.gameObject;
+                ZoneManagerHelpData.Instance.zoneGrindLevelPerZone.Add(child.gameObject);
             }
         }
     }

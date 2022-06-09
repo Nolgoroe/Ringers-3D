@@ -34,6 +34,10 @@ public class ZoneManagerHelpData : MonoBehaviour
 
     public AmbientMusicPerZone[] musicPerZone;
 
+    public Vector3[] unlockPosPerZone;
+
+    public List<GameObject> zoneGrindLevelPerZone;
+
     private void Start()
     {
         Instance = this;    
@@ -60,11 +64,18 @@ public class ZoneManagerHelpData : MonoBehaviour
             z.hasAwardedKey = true;
             z.isUnlocked = true;
 
-            if (z.zoneGrindLevel)
+            foreach (GameObject go in zoneGrindLevelPerZone)
             {
-                z.hasUnlockedGrind = true;
-            }
+                if (go.GetComponent<Interactable3D>())
+                {
+                    Interactable3D interactable = go.GetComponent<Interactable3D>();
 
+                    if (interactable.currentZoneID == z.id)
+                    {
+                        z.hasUnlockedGrind = true;
+                    }
+                }
+            }
             z.maxLevelReachedInZone = z.lastLevelNum;
 
             if (!ZoneManager.Instance.unlockedZoneID.Contains(z.id))
