@@ -68,16 +68,16 @@ public class Piece : MonoBehaviour
             isSamePiece = CheckNoRepeatPieceClip();
 
 
-            //// To make sure unity doesnt get stuck because of human error - we check to see if we need to default same piece to false.
-            //// we default same piece to false when the color OR symbol arrays contain only 1 element.. since all pieces will be the same
-            ////  we default same piece to false when the color OR symbol arrays contain more than 1 element, BUT ALL ELEMENTS ARE THE SAME!
-            if (GameManager.Instance.currentLevel.levelAvailableColors.Length > 0)
+            if(GameManager.Instance.currentLevel.levelAvailableColors.Length == 1 && GameManager.Instance.currentLevel.levelAvailablesymbols.Length == 1)
             {
-                if(GameManager.Instance.currentLevel.levelAvailableColors.Length == 1)
-                {
-                    isSamePiece = false;
-                }
-                else
+                isSamePiece = false;
+            }
+            else
+            {
+                //// To make sure unity doesnt get stuck because of human error - we check to see if we need to default same piece to false.
+                //// we default same piece to false when the color OR symbol arrays contain only 1 element.. since all pieces will be the same
+                ////  we default same piece to false when the color OR symbol arrays contain more than 1 element, BUT ALL ELEMENTS ARE THE SAME!
+                if (GameManager.Instance.currentLevel.levelAvailableColors.Length > 1)
                 {
                     for (int i = 0; i < System.Enum.GetValues(typeof(PieceColor)).Length; i++)
                     {
@@ -107,18 +107,11 @@ public class Piece : MonoBehaviour
                         //}
                     }
                 }
-            }
 
-            //// To make sure unity doesnt get stuck because of human error - we check to see if we need to default same piece to false.
-            //// we default same piece to false when the color OR symbol arrays contain only 1 element.. since all pieces will be the same
-            ////  we default same piece to false when the color OR symbol arrays contain more than 1 element, BUT ALL ELEMENTS ARE THE SAME!
-            if (GameManager.Instance.currentLevel.levelAvailablesymbols.Length > 0) 
-            {
-                if (GameManager.Instance.currentLevel.levelAvailablesymbols.Length == 1)
-                {
-                    isSamePiece = false;
-                }
-                else
+                //// To make sure unity doesnt get stuck because of human error - we check to see if we need to default same piece to false.
+                //// we default same piece to false when the color AND symbol arrays contain only 1 element.. since all pieces will be the same
+                ////  we default same piece to false when the color OR symbol arrays contain more than 1 element, BUT ALL ELEMENTS ARE THE SAME!
+                if (GameManager.Instance.currentLevel.levelAvailablesymbols.Length > 1)
                 {
                     for (int i = 0; i < System.Enum.GetValues(typeof(PieceSymbol)).Length; i++)
                     {
@@ -130,12 +123,12 @@ public class Piece : MonoBehaviour
                                 same++;
                             }
 
-                            if(same > 1)
+                            if (same > 1)
                             {
                                 Debug.LogError("Found duplicates in the level Available symbols array!");
                             }
 
-                            if(same == GameManager.Instance.currentLevel.levelAvailablesymbols.Length)
+                            if (same == GameManager.Instance.currentLevel.levelAvailablesymbols.Length)
                             {
                                 isSamePiece = false;
                                 break;

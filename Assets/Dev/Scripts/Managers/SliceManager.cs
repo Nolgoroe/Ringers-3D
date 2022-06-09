@@ -249,7 +249,7 @@ public class SliceManager : MonoBehaviour
 
             for (int i = 0; i < fullSlices.Count; i++)
             {
-                fullSlices[i].SetSliceData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
+                fullSlices[i].SetSliceData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i].sliceToSpawn, GameManager.Instance.currentLevel.slicesToSpawn[i].isLock, GameManager.Instance.currentLevel.slicesToSpawn[i].isLoot, GameManager.Instance.currentLevel.slicesToSpawn[i].isLimiter);
             }
         }
         else
@@ -263,7 +263,7 @@ public class SliceManager : MonoBehaviour
 
             for (int i = 0; i < fullSlices.Count; i++)
             {
-                fullSlices[i].SetSliceData(sliceSlots[GameManager.Instance.currentLevel.specificSliceSpots[i]].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
+                fullSlices[i].SetSliceData(sliceSlots[GameManager.Instance.currentLevel.specificSliceSpots[i]].transform, GameManager.Instance.currentLevel.slicesToSpawn[i].sliceToSpawn, GameManager.Instance.currentLevel.slicesToSpawn[i].isLock, GameManager.Instance.currentLevel.slicesToSpawn[i].isLoot, GameManager.Instance.currentLevel.slicesToSpawn[i].isLimiter);
             }
         }
     }
@@ -385,7 +385,7 @@ public class SliceManager : MonoBehaviour
 
             for (int i = 0; i < fullSlices.Count; i++)
             {
-                fullSlices[i].SetSliceData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
+                fullSlices[i].SetSliceData(fullSlices[i].transform, GameManager.Instance.currentLevel.slicesToSpawn[i].sliceToSpawn, GameManager.Instance.currentLevel.slicesToSpawn[i].isLock, GameManager.Instance.currentLevel.slicesToSpawn[i].isLoot, GameManager.Instance.currentLevel.slicesToSpawn[i].isLimiter);
             }
         }
         else
@@ -399,7 +399,7 @@ public class SliceManager : MonoBehaviour
 
             for (int i = 0; i < fullSlices.Count; i++)
             {
-                fullSlices[i].SetSliceData(sliceSlots[GameManager.Instance.currentLevel.specificSliceSpots[i]].transform, GameManager.Instance.currentLevel.slicesToSpawn[i], GameManager.Instance.currentLevel.lockSlices[i], GameManager.Instance.currentLevel.lootSlices[i], GameManager.Instance.currentLevel.limiterSlices[i]);
+                fullSlices[i].SetSliceData(sliceSlots[GameManager.Instance.currentLevel.specificSliceSpots[i]].transform, GameManager.Instance.currentLevel.slicesToSpawn[i].sliceToSpawn, GameManager.Instance.currentLevel.slicesToSpawn[i].isLock, GameManager.Instance.currentLevel.slicesToSpawn[i].isLoot, GameManager.Instance.currentLevel.slicesToSpawn[i].isLimiter);
             }
         }
     }
@@ -505,7 +505,7 @@ public class SliceManager : MonoBehaviour
 
             for (int k = 0; k < fullSlices.Count; k++)
             {
-                fullSlices[k].SetSliceData(fullSlices[k].transform, GameManager.Instance.currentLevel.slicesToSpawn[k], GameManager.Instance.currentLevel.lockSlices[k], GameManager.Instance.currentLevel.lootSlices[k], GameManager.Instance.currentLevel.limiterSlices[k]);
+                fullSlices[k].SetSliceData(fullSlices[k].transform, GameManager.Instance.currentLevel.slicesToSpawn[k].sliceToSpawn, GameManager.Instance.currentLevel.slicesToSpawn[k].isLock, GameManager.Instance.currentLevel.slicesToSpawn[k].isLoot, GameManager.Instance.currentLevel.slicesToSpawn[k].isLimiter);
             }
 
             if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || GameManager.Instance.currentLevel.isGrindLevel)

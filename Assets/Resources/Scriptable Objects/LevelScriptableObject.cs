@@ -16,6 +16,16 @@ public class stonePieceDataStruct
     public PieceSymbol symbolOfPieceLeft;
 }
 
+[System.Serializable]
+public class sliceToSpawnDataStruct
+{
+    public SliceCatagory sliceToSpawn;
+    public bool isLock;
+    public bool isLoot;
+    public bool isLimiter;
+
+}
+
 [CreateAssetMenu(fileName = "Level", menuName = "ScriptableObjects/Create Level")]
 public class LevelScriptableObject : ScriptableObject
 {
@@ -41,10 +51,11 @@ public class LevelScriptableObject : ScriptableObject
     public GameObject specificAnimalForLevel;
 
     public stonePieceDataStruct[] stoneTiles;
-    public SliceCatagory[] slicesToSpawn;
-    public bool[] lockSlices;
-    public bool[] lootSlices;
-    public bool[] limiterSlices;
+    public sliceToSpawnDataStruct[] slicesToSpawn;
+    //public SliceCatagory[] slicesToSpawn;
+    //public bool[] lockSlices;
+    //public bool[] lootSlices;
+    //public bool[] limiterSlices;
     public LootPacks[] RewardBags;
 
 

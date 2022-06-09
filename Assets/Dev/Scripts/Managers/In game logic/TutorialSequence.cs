@@ -70,6 +70,8 @@ public enum SpecificTutorialsEnum
     JokerTutorial,
     PotionCraft,
     DenScreen,
+    ColorMatch,
+    ShapeMatch
 
 }
 public class TutorialSequence : MonoBehaviour

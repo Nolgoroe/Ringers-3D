@@ -17,7 +17,7 @@ MonoBehaviour:
   is12PieceRing: 0
   isDoubleRing: 0
   isBoss: 0
-  isAnimalLevel: 1
+  isAnimalLevel: 0
   isReleaseAnimalToDen: 0
   boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
     type: 3}
@@ -27,41 +27,25 @@ MonoBehaviour:
   numIndexForLeaderBoard: 117
   tutorialIndexForList: 0
   cellsCountInLevel: 8
-  RandomSlicePositions: 0
+  RandomSlicePositions: 1
   allowRepeatSlices: 0
   powerupsForLevel: 
   specificAnimalForLevel: {fileID: 0}
-  stoneTiles:
-  - cellIndex: 0
-    randomValues: 0
-    isNeutral: 1
-    colorOfPieceRight: 5
-    symbolOfPieceRight: 0
-    colorOfPieceLeft: 5
-    symbolOfPieceLeft: 1
-  - cellIndex: 3
-    randomValues: 0
-    isNeutral: 1
-    colorOfPieceRight: 5
-    symbolOfPieceRight: 3
-    colorOfPieceLeft: 5
-    symbolOfPieceLeft: 2
-  slicesToSpawn: 02000000
-  lockSlices: 01
-  lootSlices: 01
-  limiterSlices: 01
-  RewardBags: 140000001500000003000000
+  stoneTiles: []
+  slicesToSpawn: 
+  lockSlices: 
+  lootSlices: 
+  limiterSlices: 
+  RewardBags: 
   levelAvailableColors: 00000000010000000200000003000000
   levelAvailablesymbols: 00000000010000000200000003000000
-  symbolsNeededForSpecialPowers:
-  - symbol: 0
-    amount: 3
+  symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
   isTutorial: 0
   specificTutorialEnum: 0
   arrayOfPieces: []
-  specificSliceSpots: 06000000
-  specificSlicesShapes: 00000000
+  specificSliceSpots: 
+  specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0
   isRandomPieces: 0

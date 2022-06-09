@@ -233,7 +233,7 @@ public class ConnectionManager : MonoBehaviour
 
                             if (supPieceArray[currentLeft].relevantSlice.isLock)
                             {
-                               StartCoroutine(LockCell(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter));
+                                StartCoroutine(LockCell(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter));
                             }
                         }
                         //}
@@ -391,7 +391,7 @@ public class ConnectionManager : MonoBehaviour
 
                     if (!playedConnectedSound)
                     {
-                        StartCoroutine(SoundManager.Instance.PlaySoundChangeVolumeAndDelay(Sounds.TileMatch,0.5f ,0.1f));
+                        StartCoroutine(SoundManager.Instance.PlaySoundChangeVolumeAndDelay(Sounds.TileMatch, 0.5f, 0.1f));
                     }
 
                     if (conditionmet)
@@ -428,7 +428,7 @@ public class ConnectionManager : MonoBehaviour
 
                         if (supPieceArray[currentRight].relevantSlice.isLock)
                         {
-                           StartCoroutine(LockCell(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter));
+                            StartCoroutine(LockCell(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter));
                         }
                     }
 
@@ -454,7 +454,7 @@ public class ConnectionManager : MonoBehaviour
         else
         {
             if (!isOuterCell)
-            {      
+            {
                 if (supPieceArray[currentRight].relevantSlice.hasSlice)
                 {
                     if (supPieceArray[currentRight].relevantSlice.isLimiter)
@@ -596,7 +596,7 @@ public class ConnectionManager : MonoBehaviour
         {
             if (subPiecesOnBoard[currentLeft])
             {
-                CursorController.Instance.SnapFollower(cells[cellIndex].transform, subPiecesOnBoard[currentLeft].transform.parent);
+                CursorController.Instance.SnapFollower(cells[cellIndex].transform);
             }
 
             yield break;
@@ -609,7 +609,7 @@ public class ConnectionManager : MonoBehaviour
         {
             if (subPiecesOnBoard[currentLeft].parentPiece.isDuringConnectionAnim)
             {
-                CursorController.Instance.SnapFollower(cells[cellIndex].transform, subPiecesOnBoard[currentLeft].transform.parent);
+                CursorController.Instance.SnapFollower(cells[cellIndex].transform);
 
                 if (isGoodConnectLeft)
                 {
@@ -654,6 +654,43 @@ public class ConnectionManager : MonoBehaviour
         conditionMet = true;
         isGoodConnect = false;
 
+        if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ShapeMatch)
+        {
+            CompareResault result = TotalCheck(currentSide, contestedSide);
+
+            if (result.gSymbolMatch)
+            {
+                isGoodConnect = true;
+            }
+
+            if (isGoodConnect)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ColorMatch)
+        {
+            CompareResault result = TotalCheck(currentSide, contestedSide);
+
+            if (result.gColorMatch)
+            {
+                isGoodConnect = true;
+            }
+
+            if (isGoodConnect)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         if (currentSide.relevantSlice)
         {
             if (currentSide.relevantSlice.sliceCatagory != SliceCatagory.None)
@@ -1284,7 +1321,7 @@ public class ConnectionManager : MonoBehaviour
     {
         foreach (Cell c in cells)
         {
-            if(c.pieceHeld != null && c.pieceHeld != p && !c.pieceHeld.isLocked && !c.pieceHeld.isStone)
+            if (c.pieceHeld != null && c.pieceHeld != p && !c.pieceHeld.isLocked && !c.pieceHeld.isStone)
             {
                 float toMoveZRight = Random.Range(upAmountPieceEffectMinZ, upAmountPieceEffectMaxZ);
                 float toMoveZLeft = Random.Range(upAmountPieceEffectMinZ, upAmountPieceEffectMaxZ);

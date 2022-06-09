@@ -339,7 +339,7 @@ public class CursorController : MonoBehaviour
 
                             DestroySecondaryControlsPrefabCell(true);
 
-                            SnapFollower(cellhitSecondaryControls.transform, followerTarget);
+                            SnapFollower(cellhitSecondaryControls.transform);
                         }
                         else
                         {
@@ -353,7 +353,7 @@ public class CursorController : MonoBehaviour
                             if (followerTarget)
                             {
                                 ResetSecondaryControlsPieceColor(followerTarget);
-                                SnapFollower(hit.transform, followerTarget);
+                                SnapFollower(hit.transform);
                             }
                         }
                         else
@@ -382,14 +382,14 @@ public class CursorController : MonoBehaviour
                                 {
                                     ResetSecondaryControlsPieceColor(followerTarget);
 
-                                    SnapFollower(closest.transform, followerTarget);
+                                    SnapFollower(closest.transform);
                                 }
                             }
                             else
                             {
                                 ResetSecondaryControlsPieceColor(followerTarget);
 
-                                SnapFollower(null, followerTarget);
+                                SnapFollower(null);
                             }
                         }
                     }
@@ -518,12 +518,12 @@ public class CursorController : MonoBehaviour
                                 }
                                 else
                                 {
-                                    SnapFollower(null, followerTarget);
+                                    SnapFollower(null);
                                 }
                             }
                             else
                             {
-                                SnapFollower(null, followerTarget);
+                                SnapFollower(null);
                             }
                         }
                         else
@@ -536,12 +536,12 @@ public class CursorController : MonoBehaviour
                                 }
                                 else
                                 {
-                                    SnapFollower(null, followerTarget);
+                                    SnapFollower(null);
                                 }
                             }
                             else
                             {
-                                SnapFollower(null, followerTarget);
+                                SnapFollower(null);
                             }
                         }
                     }
@@ -557,7 +557,7 @@ public class CursorController : MonoBehaviour
                             }
                             else
                             {
-                                SnapFollower(null, followerTarget);
+                                SnapFollower(null);
                             }
 
                             //SnapFollower(hit.transform);
@@ -597,12 +597,12 @@ public class CursorController : MonoBehaviour
                                 }
                                 else
                                 {
-                                    SnapFollower(null, followerTarget);
+                                    SnapFollower(null);
                                 }
                             }
                             else
                             {
-                                SnapFollower(null, followerTarget);
+                                SnapFollower(null);
                             }
 
                         }
@@ -617,7 +617,7 @@ public class CursorController : MonoBehaviour
                                 }
                                 else
                                 {
-                                    SnapFollower(null, followerTarget);
+                                    SnapFollower(null);
                                 }
                             }
                         }
@@ -628,7 +628,7 @@ public class CursorController : MonoBehaviour
                         {
                             if (!followerTarget.GetComponent<Piece>().isDuringConnectionAnim)
                             {
-                                SnapFollower(null, followerTarget);
+                                SnapFollower(null);
                             }
                         }
                     }
@@ -946,7 +946,7 @@ public class CursorController : MonoBehaviour
             }
         }
     }
-    public void SnapFollower(Transform cellHit, Transform toMove)
+    public void SnapFollower(Transform cellHit)
     {
         if(cellHit == null)
         {
@@ -957,14 +957,14 @@ public class CursorController : MonoBehaviour
 
         }
 
-        if (toMove)
+        if (followerTarget)
         {
             if (cellHit)
             {
                 cellHit.GetComponent<Cell>().isDuringConnectionAnim = false;
             }
 
-            LeanTween.cancel(toMove.gameObject);
+            LeanTween.cancel(followerTarget.gameObject);
         }
 
         if (TutorialSequence.Instacne.duringSequence)
@@ -976,34 +976,21 @@ public class CursorController : MonoBehaviour
             if (cellHit != null)
             {
                 Cell cell = cellHit.GetComponent<Cell>();
-                Cell previousCell = toMove.parent.GetComponent<Cell>(); //// Only relevant if piece is moved from cell to cell
+                Cell previousCell = followerTarget.parent.GetComponent<Cell>(); //// Only relevant if piece is moved from cell to cell
 
-                bool newPiece = toMove.transform.parent.CompareTag("Clip");
+                bool newPiece = followerTarget.transform.parent.CompareTag("Clip");
+                Transform clipParent = null;
 
-                if (GameManager.Instance.currentFilledCellCount + 1 != GameManager.Instance.currentLevel.cellsCountInLevel)
-                {
-                    if (newPiece && !cell.isFull)
-                    {
-                        GameManager.Instance.clipManager.PopulateSlot(toMove.transform.parent, 10);
-
-                        if (GameManager.Instance.currentLevel.symbolsNeededForSpecialPowers.Length > 0)
-                        {
-                            AddNumAnimalsToBoard(toMove);
-                        }
-                    }
-                }
-                else
-                {
-                    GameManager.Instance.clipManager.emptyClip = toMove.transform.parent;
-                    GameManager.Instance.clipManager.latestPiece = toMove;
+                if (followerTarget.transform.parent.CompareTag("Clip"))
+                {                    
+                    clipParent = followerTarget.transform.parent;
                 }
 
-
-                if (!cell.isFull)
+                if (!cell.isFull && cell != previousCell)
                 {
-                    cell.AddPiece(toMove, newPiece);
+                    cell.AddPiece(followerTarget, newPiece);
 
-                    if (!newPiece && cell != previousCell)
+                    if (!newPiece)
                     {
                         previousCell.isFull = false;
                     }
@@ -1013,10 +1000,34 @@ public class CursorController : MonoBehaviour
                     ReturnHome();
                 }
 
-                if(followerTarget == toMove)
+                //if (followerTarget == toMove)
+                //{
+                //    followerTarget = null;
+                //}
+                //else
+                //{
+                //    Debug.LogError("something went horribly wrong here");
+                //}
+
+                if (GameManager.Instance.currentFilledCellCount != GameManager.Instance.currentLevel.cellsCountInLevel)
                 {
-                    followerTarget = null;
+                    if (newPiece)
+                    {
+                        GameManager.Instance.clipManager.PopulateSlot(clipParent, 10);
+
+                        if (GameManager.Instance.currentLevel.symbolsNeededForSpecialPowers.Length > 0)
+                        {
+                            AddNumAnimalsToBoard(followerTarget);
+                        }
+                    }
                 }
+                else
+                {
+                    GameManager.Instance.clipManager.emptyClip = followerTarget.transform.parent;
+                    GameManager.Instance.clipManager.latestPiece = followerTarget;
+                }
+
+
             }
             else
             {
@@ -1028,13 +1039,10 @@ public class CursorController : MonoBehaviour
 
             if (GameManager.Instance.isSecondaryControls)
             {
-                if (followerTarget == toMove)
-                {
-                    followerTarget = null;
-                }
-
                 cellhitSecondaryControls = null;
             }
+
+            followerTarget = null;
         }
     }
     private void SnapFollowerTutorial(Transform cellHit)
