@@ -101,12 +101,12 @@ public class SubPiece : MonoBehaviour
 
     public void SetStonePiece(stonePieceDataStruct SPDS)
     {
-        if (SPDS.randomValues && !SPDS.isNeutral)
+        if (SPDS.randomValues && !SPDS.isNeutral) //sets piece with random color and shape
         {
             SetPiece();
             //rend.material.SetColor("_BaseColor", CursorController.Instance.stonePieceColorTint);
         }
-        else if(SPDS.randomValues && SPDS.isNeutral)
+        else if(SPDS.randomValues && SPDS.isNeutral) // sets piece with random shapes - but no color.
         {
             colorOfPiece = PieceColor.None;
             int indexcSymbol = 0;
@@ -146,6 +146,8 @@ public class SubPiece : MonoBehaviour
         }
         else
         {
+            // Shape and Color are decided by the scriptable object data.
+
             if (isRightSubPiece)
             {
                 if (!SPDS.isNeutral)

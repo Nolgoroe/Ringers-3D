@@ -352,6 +352,10 @@ public class AutoVersionUpdater : MonoBehaviour
         ZoneManagerHelpData.Instance.listOfAllZones[3].lastLevelNum = 30;
         ZoneManagerHelpData.Instance.listOfAllZones[4].lastLevelNum = 15;
 
+        ZoneManagerHelpData.Instance.listOfAllZones[0].hasUnlockedGrind = false; //we do not have grind levels here in this version so we just make sure the system is correct
+        ZoneManagerHelpData.Instance.listOfAllZones[1].hasUnlockedGrind = false; //we do not have grind levels here in this version so we just make sure the system is correct
+        ZoneManagerHelpData.Instance.listOfAllZones[4].hasUnlockedGrind = false; //we do not have grind levels here in this version so we just make sure the system is correct
+
         if (ZoneManagerHelpData.Instance.listOfAllZones[ZoneManager.Instance.unlockedZoneID[0]].maxLevelReachedInZone <= 0)
         {
             ZoneManagerHelpData.Instance.listOfAllZones[ZoneManager.Instance.unlockedZoneID[0]].maxLevelReachedInZone = 1;

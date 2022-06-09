@@ -32,11 +32,20 @@ MonoBehaviour:
   powerupsForLevel: 
   specificAnimalForLevel: {fileID: 0}
   stoneTiles: []
-  slicesToSpawn: 
-  lockSlices: 
-  lootSlices: 
-  limiterSlices: 
-  RewardBags: 
+  slicesToSpawn:
+  - sliceToSpawn: 1
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
+  - sliceToSpawn: 0
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
+  - sliceToSpawn: 0
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
+  RewardBags: 1500000016000000
   levelAvailableColors: 00000000010000000200000003000000
   levelAvailablesymbols: 00000000010000000200000003000000
   symbolsNeededForSpecialPowers: []

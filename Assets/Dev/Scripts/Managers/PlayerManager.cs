@@ -486,7 +486,7 @@ public class PlayerManager : MonoBehaviour
 
             foreach (PowerUp PU in GameManager.Instance.currentLevel.powerupsForLevel)
             {
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < 3; i++)
                 {
                     EquipmentData ED = GameManager.Instance.csvParser.allEquipmentInGame.Where(p => p.power == PU).Single();
 

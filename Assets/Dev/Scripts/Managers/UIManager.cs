@@ -1280,7 +1280,7 @@ public class UIManager : MonoBehaviour
 
             IconSpritesPerZone ISPZ = ZoneManagerHelpData.Instance.iconsPerZone.Where(p => p.zone == BPZ.theZone).Single();
 
-            if (BPZ.theZone.hasUnlockedGrind)
+            if (BPZ.theZone.hasUnlockedGrind && BPZ.theZone.zoneGrindLevel)
             {
                 //BPZ.theZone.zoneGrindLevel.GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelFirstTimeColor); // 3D map
 

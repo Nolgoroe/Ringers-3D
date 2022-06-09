@@ -31,17 +31,21 @@ MonoBehaviour:
   allowRepeatSlices: 0
   powerupsForLevel: 
   specificAnimalForLevel: {fileID: 0}
-  stoneTiles: []
-  slicesToSpawn: 
-  lockSlices: 
-  lootSlices: 
-  limiterSlices: 
-  RewardBags: 
+  stoneTiles:
+  - cellIndex: 0
+    randomValues: 1
+    isNeutral: 1
+    colorOfPieceRight: 0
+    symbolOfPieceRight: 0
+    colorOfPieceLeft: 0
+    symbolOfPieceLeft: 0
+  slicesToSpawn: []
+  RewardBags: 0a0000000b000000
   levelAvailableColors: 00000000010000000200000003000000
   levelAvailablesymbols: 000000000100000002000000
   symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
-  isTutorial: 0
+  isTutorial: 1
   specificTutorialEnum: 0
   arrayOfPieces: []
   specificSliceSpots: 
