@@ -64,10 +64,10 @@ public enum SpecificTutorialsEnum
     lootTutorial,
     SwapSidesTutorial,
     DenScreen,
-    TileBombTutorial,
+    PotionCraft,
     SliceBombTutorial,
     JokerTutorial,
-    PotionCraft,
+    TileBombTutorial,
     ColorMatch,
     ShapeMatch
 

@@ -281,8 +281,18 @@ public class SubPiece : MonoBehaviour
         //r.SetPropertyBlock(mpb);
 
         //rend.material = GameManager.Tile_Albedo_Map.clipManager.colorsToMats[randomColor].colorMats[(int)symbolOfPiece];
-        rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex[(int)symbolOfPiece]);
-        rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[(int)symbolOfPiece].symbolTex);
+
+        if(symbolOfPiece == PieceSymbol.Joker && colorOfPiece == PieceColor.Joker)
+        {
+            SetPieceAsJoker();
+        }
+        else
+        {
+            SetPieceAsNormalMat();
+
+            rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex[(int)symbolOfPiece]);
+            rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[(int)symbolOfPiece].symbolTex);
+        }
         //if (rend.materials[0].IsKeywordEnabled("_EMISSION"))
         //{
         //    rend.materials[0].DisableKeyword("_EMISSION");

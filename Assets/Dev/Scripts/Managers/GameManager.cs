@@ -148,23 +148,23 @@ public class GameManager : MonoBehaviour
         //if(isTutorial || currentLevel.isSpecificTutorial)
         //{
         if (copyOfArrayOfPiecesTutorial == null)
-            {
-                copyOfArrayOfPiecesTutorial = new List<pieceDataStruct>();
-            }
-            else
-            {
-                copyOfArrayOfPiecesTutorial.Clear();
-            }
+        {
+            copyOfArrayOfPiecesTutorial = new List<pieceDataStruct>();
+        }
+        else
+        {
+            copyOfArrayOfPiecesTutorial.Clear();
+        }
 
-            copyOfArrayOfPiecesTutorial.AddRange(currentLevel.arrayOfPieces);
+        copyOfArrayOfPiecesTutorial.AddRange(currentLevel.arrayOfPieces);
 
-            copyOfSpecificSliceSpotsTutorial = new List<int>();
-            copyOfSpecificSliceColorsTutorial = new List<PieceColor>();
-            copyOfSpecificSliceSymbolsTutorial = new List<PieceSymbol>();
+        copyOfSpecificSliceSpotsTutorial = new List<int>();
+        copyOfSpecificSliceColorsTutorial = new List<PieceColor>();
+        copyOfSpecificSliceSymbolsTutorial = new List<PieceSymbol>();
 
-            copyOfSpecificSliceSpotsTutorial.AddRange(currentLevel.specificSliceSpots);
-            copyOfSpecificSliceColorsTutorial.AddRange(currentLevel.specificSlicesColors);
-            copyOfSpecificSliceSymbolsTutorial.AddRange(currentLevel.specificSlicesShapes);
+        copyOfSpecificSliceSpotsTutorial.AddRange(currentLevel.specificSliceSpots);
+        copyOfSpecificSliceColorsTutorial.AddRange(currentLevel.specificSlicesColors);
+        copyOfSpecificSliceSymbolsTutorial.AddRange(currentLevel.specificSlicesShapes);
         //}
 
 
@@ -263,6 +263,18 @@ public class GameManager : MonoBehaviour
                     if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
                     {
                         TutorialSequence.Instacne.StartTutorialLevelSequence();
+                    }
+                }
+
+                if (currentLevel.isSpecificTutorial)
+                {
+                    if(currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft)
+                    {
+                        if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
+                        {
+                            StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
+                            TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
+                        }
                     }
                 }
 
@@ -450,7 +462,7 @@ public class GameManager : MonoBehaviour
 
         powerupManager.instnatiatedZonesCounter = 0;
 
-        StartCoroutine(SoundManager.Instance.FadeInAmbientMusic(Sounds.LevelAmbienceFast));
+        StartCoroutine(SoundManager.Instance.FadeInAmbientMusic(Sounds.LevelAmbience));
 
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
 

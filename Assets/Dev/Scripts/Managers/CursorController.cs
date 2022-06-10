@@ -587,7 +587,7 @@ public class CursorController : MonoBehaviour
 
                     if (closest != null)
                     {
-                        if (TutorialSequence.Instacne.duringSequence)
+                        if (TutorialSequence.Instacne.duringSequence && GameManager.Instance.currentLevel.isTutorial)
                         {
                             if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Length > 0)
                             {
@@ -827,11 +827,25 @@ public class CursorController : MonoBehaviour
 
                         if (TutorialSequence.Instacne.duringSequence)
                         {
-                            if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Length > 0)
+                            if (GameManager.Instance.currentLevel.isTutorial)
                             {
-                                if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Contains(c.cellIndex))
+                                if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Length > 0)
                                 {
-                                    c.TurnOnHighlightParticle();
+                                    if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Contains(c.cellIndex))
+                                    {
+                                        c.TurnOnHighlightParticle();
+                                    }
+                                }
+                            }
+
+                            if (GameManager.Instance.currentLevel.isSpecificTutorial)
+                            {
+                                if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Length > 0)
+                                {
+                                    if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Contains(c.cellIndex))
+                                    {
+                                        c.TurnOnHighlightParticle();
+                                    }
                                 }
                             }
                         }
@@ -900,11 +914,26 @@ public class CursorController : MonoBehaviour
 
                         if (TutorialSequence.Instacne.duringSequence)
                         {
-                            if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Length > 0)
+                            if (GameManager.Instance.currentLevel.isTutorial)
                             {
-                                if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Contains(c.cellIndex))
+                                if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Length > 0)
                                 {
-                                    c.TurnOnHighlightParticle();
+                                    if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Contains(c.cellIndex))
+                                    {
+                                        c.TurnOnHighlightParticle();
+                                    }
+                                }
+                            }
+
+
+                            if (GameManager.Instance.currentLevel.isSpecificTutorial)
+                            {
+                                if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Length > 0)
+                                {
+                                    if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Contains(c.cellIndex))
+                                    {
+                                        c.TurnOnHighlightParticle();
+                                    }
                                 }
                             }
                         }

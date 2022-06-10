@@ -25,9 +25,9 @@ MonoBehaviour:
   worldNum: 4
   levelIndexInZone: 1
   numIndexForLeaderBoard: 106
-  tutorialIndexForList: -1
+  tutorialIndexForList: 11
   cellsCountInLevel: 8
-  RandomSlicePositions: 1
+  RandomSlicePositions: 0
   allowRepeatSlices: 0
   powerupsForLevel: 
   specificAnimalForLevel: {fileID: 0}
@@ -54,8 +54,16 @@ MonoBehaviour:
   isSpecificTutorial: 0
   isTutorial: 1
   specificTutorialEnum: 0
-  arrayOfPieces: []
-  specificSliceSpots: 
+  arrayOfPieces:
+  - colorOfPieceRight: 0
+    symbolOfPieceRight: 0
+    colorOfPieceLeft: 1
+    symbolOfPieceLeft: 0
+  - colorOfPieceRight: 2
+    symbolOfPieceRight: 0
+    colorOfPieceLeft: 0
+    symbolOfPieceLeft: 1
+  specificSliceSpots: 000000000200000004000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0

@@ -22,8 +22,8 @@ public enum Sounds
     TileLock,
     ItemPop,
     LevelWin,
-    LevelAmbienceFast,
-    LevelAmbienceSlow,
+    LevelAmbience,
+    //LevelAmbienceSlow,
     PotionUse,
     PotionSelect,
     //// Add all sounds here
