@@ -390,8 +390,10 @@ public class PowerUpManager : MonoBehaviour
                 if (!toWorkOn.isLocked)
                 {
                     InstantiatePotionAnimObject((int)prop.powerupType);
+                    SoundManager.Instance.PlaySound(Sounds.PotionUse);
 
                     yield return new WaitForSeconds(2.5f);
+
                     toWorkOn.transform.parent.GetComponent<Cell>().RemovePiece(false);
 
                     PieceColor tempColor = toWorkOn.leftChild.colorOfPiece;

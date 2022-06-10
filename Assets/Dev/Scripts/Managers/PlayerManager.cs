@@ -185,7 +185,7 @@ public class PlayerManager : MonoBehaviour
             GCHD.referenceNumUsesText.SetActive(false);
         }
 
-        if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard) && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)GameManager.Instance.currentLevel.specificTutorialEnum))
+        if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard) && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
         {
             //EquipmentData TempED = null;
             if (/*(GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial) && */GameManager.Instance.currentLevel.powerupsForLevel.Length > 0)

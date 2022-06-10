@@ -11,7 +11,7 @@ public class AutoVersionUpdater : MonoBehaviour
 {
     public static AutoVersionUpdater instance;
     public int mostRecentGameVersion;
-    public int numOfKeyValuePairsInServer;
+    int numOfKeyValuePairsInServer;
     int serverVersion;
     int startVersion;
 

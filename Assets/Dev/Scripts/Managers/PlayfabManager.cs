@@ -978,19 +978,22 @@ public class PlayfabManager : MonoBehaviour
     {
         foreach (string key in result.Data.Keys)
         {
-            UpdateUserDataRequest request = null;
-
-            request = new UpdateUserDataRequest
+            if (!key.Contains("Cheating") && !key.Contains("Version Updater Data"))
             {
-                Data = new Dictionary<string, string>()
+                UpdateUserDataRequest request = null;
+
+                request = new UpdateUserDataRequest
+                {
+                    Data = new Dictionary<string, string>()
                 {
                     { key, null }
                 }
-            };
+                };
 
-            if (request != null)
-            {
-                PlayFabClientAPI.UpdateUserData(request, OnDataSendResetSuccess, OnError);
+                if (request != null)
+                {
+                    PlayFabClientAPI.UpdateUserData(request, OnDataSendResetSuccess, OnError);
+                }
             }
         }
     }
@@ -1081,6 +1084,8 @@ public class PlayfabManager : MonoBehaviour
             playerName = result.InfoResultPayload.PlayerProfile.DisplayName;
             UIManager.Instance.nameOfPlayer.text = "Username: " + playerName;
         }
+
+        SaveGameData(new SystemsToSave[] { SystemsToSave.LoginData });
 
         //doneWithStep = true; //setup fir the loginInit function
 

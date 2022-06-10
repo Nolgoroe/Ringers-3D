@@ -25,7 +25,7 @@ MonoBehaviour:
   worldNum: 0
   levelIndexInZone: 12
   numIndexForLeaderBoard: 12
-  tutorialIndexForList: -1
+  tutorialIndexForList: 5
   cellsCountInLevel: 8
   RandomSlicePositions: 0
   allowRepeatSlices: 0
@@ -44,8 +44,16 @@ MonoBehaviour:
   isSpecificTutorial: 0
   isTutorial: 1
   specificTutorialEnum: 0
-  arrayOfPieces: []
-  specificSliceSpots: 00000000
+  arrayOfPieces:
+  - colorOfPieceRight: 0
+    symbolOfPieceRight: 2
+    colorOfPieceLeft: 1
+    symbolOfPieceLeft: 1
+  - colorOfPieceRight: 2
+    symbolOfPieceRight: 2
+    colorOfPieceLeft: 0
+    symbolOfPieceLeft: 0
+  specificSliceSpots: 01000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0

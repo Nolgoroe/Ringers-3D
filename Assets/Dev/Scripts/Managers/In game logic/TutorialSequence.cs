@@ -317,8 +317,8 @@ public class TutorialSequence : MonoBehaviour
 
         if (isSpecific)
         {
-            ///// Maybe do this part below better
-            specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[index].SetActive(true);
+            /////// Maybe do this part below better
+            //specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[index].SetActive(true);
 
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].dealPhase)
             {
@@ -511,8 +511,8 @@ public class TutorialSequence : MonoBehaviour
 
         if (!isSpecific)
         {
-            ///// Maybe do this part below better
-            levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[index].SetActive(true);
+            /////// Maybe do this part below better
+            //levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[index].SetActive(true);
 
             if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[index].dealPhase)
             {
@@ -639,6 +639,46 @@ public class TutorialSequence : MonoBehaviour
         currentPhaseInSequenceLevels++;
 
 
+        if (currentPhaseInSequenceLevels == levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].EndPhaseID)
+        {
+            TutorialSaveData.Instance.completedTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
+            //TutorialSaveData.Instance.SaveTutorialSaveData();
+
+            maskImage.gameObject.SetActive(false);
+            duringSequence = false;
+            Debug.Log("Phases are done!");
+            //Invoke("UnlockAll", 2);
+
+            if (!GameManager.LevelEnded)
+            {
+                UnlockAll();
+            }
+
+
+            //Invoke("DeactivateTutorialScreens", 0.1f);
+
+            DeactivateAllTutorialScreens();
+
+            //if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].doFadeInEnd)
+            //{
+            //    StartCoroutine(DeactivateTutorialScreens(levelSequences, GameManager.Instance.currentLevel.tutorialIndexForList, levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].waitTimeEndPhase));
+            //}
+            //else
+            //{
+            //    screensDeactivateOnTouch.Add(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[currentPhaseInSequenceLevels - 1]);
+            //}
+
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+            yield break;
+        }
+        //else
+        //{
+        //    StartCoroutine(SelectReleventHeighlights(currentPhaseInSequenceLevels, false));
+        //    ChangePhase(levelSequences, GameManager.Instance.currentLevel.tutorialIndexForList, currentPhaseInSequenceLevels);
+        //}
+
+
+
         //clear screen to show it better
         if (currentPhaseInSequenceLevels < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Count())
         {
@@ -684,38 +724,10 @@ public class TutorialSequence : MonoBehaviour
         }
 
 
-        if (currentPhaseInSequenceLevels + 1 > levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].EndPhaseID)
+
+        if (currentPhaseInSequenceLevels + 1 <= levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].EndPhaseID)
         {
-            TutorialSaveData.Instance.completedTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
-            //TutorialSaveData.Instance.SaveTutorialSaveData();
-
-            maskImage.gameObject.SetActive(false);
-            duringSequence = false;
-            Debug.Log("Phases are done!");
-            //Invoke("UnlockAll", 2);
-
-            if (!GameManager.LevelEnded)
-            {
-                UnlockAll();
-            }
-
-
-            //Invoke("DeactivateTutorialScreens", 0.1f);
-
-            if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].doFadeInEnd)
-            {
-                StartCoroutine(DeactivateTutorialScreens(levelSequences, GameManager.Instance.currentLevel.tutorialIndexForList, levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].waitTimeEndPhase));
-            }
-            else
-            {
-                screensDeactivateOnTouch.Add(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[currentPhaseInSequenceLevels]);
-            }
-
-            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData});
-            yield break;
-        }
-        else
-        {
+            Debug.Log("ARRIVED HERE");
             StartCoroutine(SelectReleventHeighlights(currentPhaseInSequenceLevels, false));
             ChangePhase(levelSequences, GameManager.Instance.currentLevel.tutorialIndexForList, currentPhaseInSequenceLevels);
         }
@@ -735,18 +747,7 @@ public class TutorialSequence : MonoBehaviour
             Destroy(currentlyActiveTutorialHand.gameObject);
         }
 
-        if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific])
-        {
-            if (currentPhaseInSequenceSpecific > 0)
-            {
-                specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific - 1].SetActive(false);
-            }
-
-            specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific].SetActive(true);
-            specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific].transform.GetChild(0).gameObject.SetActive(true);
-        }
-
-        if (currentPhaseInSequenceSpecific + 1 > specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].EndPhaseID)
+        if (currentPhaseInSequenceSpecific == specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].EndPhaseID)
         {
             if (currentSpecificTutorial == SpecificTutorialsEnum.PotionCraft)
             {
@@ -756,7 +757,7 @@ public class TutorialSequence : MonoBehaviour
 
             UIManager.Instance.requiredButtonForTutorialPhase = null;
 
-            TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add((int)GameManager.Instance.currentLevel.specificTutorialEnum);
+            TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
             //TutorialSaveData.Instance.completedTutorialLevelId.Add(GameManager.Instance.currentLevel.levelNum);
             //TutorialSaveData.Instance.SaveTutorialSaveData();
             currentSpecificTutorial = SpecificTutorialsEnum.None;
@@ -775,21 +776,42 @@ public class TutorialSequence : MonoBehaviour
             PlayerManager.Instance.checkDoAddPotionsToInventory();
             //Invoke("DeactivateTutorialScreens", 0.1f);
 
+            DeactivateAllTutorialScreens();
+
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
 
-            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].doFadeInEnd)
-            {
-                StartCoroutine(DeactivateTutorialScreens(specificTutorials, GameManager.Instance.currentLevel.tutorialIndexForList, specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].waitTimeEndPhase));
-            }
-            else
-            {
-                screensDeactivateOnTouch.Add(specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific]);
-            }
+            //if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].doFadeInEnd)
+            //{
+            //    StartCoroutine(DeactivateTutorialScreens(specificTutorials, GameManager.Instance.currentLevel.tutorialIndexForList, specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].waitTimeEndPhase));
+            //}
+            //else
+            //{
+            //    screensDeactivateOnTouch.Add(specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific - 1]);
+            //}
 
             return;
         }
-        else
+        //else
+        //{
+        //    StartCoroutine(SelectReleventHeighlights(currentPhaseInSequenceSpecific, true));
+        //    ChangePhase(specificTutorials, GameManager.Instance.currentLevel.tutorialIndexForList, currentPhaseInSequenceSpecific);
+        //}
+
+        if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific])
         {
+            if (currentPhaseInSequenceSpecific > 0)
+            {
+                specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific - 1].SetActive(false);
+            }
+
+            specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific].SetActive(true);
+            specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific].transform.GetChild(0).gameObject.SetActive(true);
+        }
+
+
+        if (currentPhaseInSequenceLevels + 1 <= levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].EndPhaseID)
+        {
+            Debug.Log("ARRIVED HERE");
             StartCoroutine(SelectReleventHeighlights(currentPhaseInSequenceSpecific, true));
             ChangePhase(specificTutorials, GameManager.Instance.currentLevel.tutorialIndexForList, currentPhaseInSequenceSpecific);
         }
@@ -1319,7 +1341,7 @@ public class TutorialSequence : MonoBehaviour
 
     public void CheckDoPotionTutorial()
     {
-        if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)GameManager.Instance.currentLevel.specificTutorialEnum))
+        if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
         {
             if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
             {
@@ -1333,7 +1355,7 @@ public class TutorialSequence : MonoBehaviour
     }
     public void CheckDoDenTutorial()
     {
-        if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)GameManager.Instance.currentLevel.specificTutorialEnum))
+        if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
         {
             if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
             {
@@ -1454,16 +1476,18 @@ public class TutorialSequence : MonoBehaviour
 
         PlayerManager.Instance.checkDoAddPotionsToInventory();
 
+        DeactivateAllTutorialScreens();
+
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
 
-        if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].doFadeInEnd)
-        {
-            StartCoroutine(DeactivateTutorialScreens(specificTutorials, GameManager.Instance.currentLevel.tutorialIndexForList, specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].waitTimeEndPhase));
-        }
-        else
-        {
-            screensDeactivateOnTouch.Add(specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific]);
-        }
+        //if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].doFadeInEnd)
+        //{
+        //    StartCoroutine(DeactivateTutorialScreens(specificTutorials, GameManager.Instance.currentLevel.tutorialIndexForList, specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].waitTimeEndPhase));
+        //}
+        //else
+        //{
+        //    screensDeactivateOnTouch.Add(specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific - 1]);
+        //}
     }
 }
 
