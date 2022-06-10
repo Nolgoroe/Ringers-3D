@@ -387,7 +387,17 @@ public class GameManager : MonoBehaviour
         }
 
         //SoundManager.Instance.PlayAmbience(Sounds.LevelAmbience);
-        StartCoroutine(SoundManager.Instance.FadeInAmbientMusic(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbience));
+        if (!SoundManager.Instance.audioSourceAmbience.isPlaying)
+        {
+            Debug.Log("Change music");
+
+            StartCoroutine(SoundManager.Instance.FadeInAmbientMusic(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbience));
+        }
+        else
+        {
+            Debug.Log("Just volume up");
+            StartCoroutine(SoundManager.Instance.FadeInOnlyVolume(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbience));         
+        }
     }
         
     public void ResetDataStartBossLevel()

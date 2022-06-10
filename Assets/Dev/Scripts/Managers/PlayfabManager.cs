@@ -182,6 +182,8 @@ public class PlayfabManager : MonoBehaviour
         else
         {
             StartCoroutine(UIManager.Instance.DisplayIntro());
+
+            StartCoroutine(SoundManager.Instance.PlaySoundFadeIn(Sounds.IntroMusic));
         }
 
         UIManager.Instance.SetCanRepeatLevelsDisplay();

@@ -2049,6 +2049,7 @@ public class UIManager : MonoBehaviour
                 DisplayDailyRewardsScreen();
 
                 PlayButton();
+                StartCoroutine(SoundManager.Instance.PlaySoundFadeOut());
 
                 LeanTween.value(TEMPBgIntro, 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
                 {

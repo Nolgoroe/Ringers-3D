@@ -26,6 +26,7 @@ public enum Sounds
     //LevelAmbienceSlow,
     PotionUse,
     PotionSelect,
+    IntroMusic,
     //// Add all sounds here
 }
 
@@ -68,10 +69,10 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(Sounds soundEnum)
     {
-        if (!muteSFX)
-        {
-            audioSourceSFX.volume = 0.5f;
-        }
+        //if (!muteSFX)
+        //{
+        //    audioSourceSFX.volume = 0.5f;
+        //}
 
         int ran = Random.Range(0, (enumToSound[soundEnum].Length));
         audioSourceSFX.PlayOneShot(enumToSound[soundEnum][ran]);
@@ -86,6 +87,50 @@ public class SoundManager : MonoBehaviour
 
         int ran = Random.Range(0, (enumToSound[soundEnum].Length));
         audioSourceSFX.PlayOneShot(enumToSound[soundEnum][ran]);
+
+    }
+
+    public IEnumerator PlaySoundFadeIn(Sounds soundEnum)
+    {
+        if (muteMusic)
+        {
+            yield break;
+        }
+
+        audioSourceSFX.volume = 0;
+
+        int ran = Random.Range(0, (enumToSound[soundEnum].Length));
+        audioSourceSFX.PlayOneShot(enumToSound[soundEnum][ran]);
+
+        float vol = 0;
+
+        LeanTween.value(audioSourceSFX.gameObject, 0, 1, 1.5f).setOnUpdate((float val) =>
+        {
+            vol = val;
+            audioSourceSFX.volume = vol;
+        });
+    }
+    public IEnumerator PlaySoundFadeOut()
+    {
+        Debug.Log("Fading out");
+        if (muteMusic)
+        {
+            yield break;
+        }
+
+        audioSourceSFX.volume = 1;
+
+        float vol = 1;
+
+        LeanTween.value(audioSourceSFX.gameObject, 1, 0, 0.5f).setOnUpdate((float val) =>
+        {
+            vol = val;
+            audioSourceSFX.volume = vol;
+        });
+
+        yield return new WaitForSeconds(0.5f);
+        audioSourceSFX.Stop();
+        audioSourceSFX.volume = 1;
 
     }
 
@@ -159,6 +204,26 @@ public class SoundManager : MonoBehaviour
         audioSourceAmbience.clip = enumToSound[soundEnum][ran];
 
         audioSourceAmbience.Play();
+
+        float vol = 0;
+
+        LeanTween.value(audioSourceAmbience.gameObject, 0, 1, 2).setOnUpdate((float val) =>
+        {
+            vol = val;
+            audioSourceAmbience.volume = vol;
+        });
+
+        yield return new WaitForSeconds(2);
+    }
+
+    public IEnumerator FadeInOnlyVolume(Sounds soundEnum)
+    {
+        if (muteMusic)
+        {
+            yield break;
+        }
+
+        audioSourceAmbience.volume = 0;
 
         float vol = 0;
 
