@@ -125,7 +125,7 @@ public class CursorController : MonoBehaviour
                 {
                     if (GameManager.Instance.currentLevel)
                     {
-                        if (GameManager.Instance.currentLevel.isSpecificTutorial)
+                        if (GameManager.Instance.currentLevel.isSpecificTutorial || GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.lootTutorial)
                         {
                             if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isEmptyTouchPhase)
                             {

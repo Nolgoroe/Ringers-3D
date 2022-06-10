@@ -63,11 +63,11 @@ public enum SpecificTutorialsEnum
     None,
     lootTutorial,
     SwapSidesTutorial,
+    DenScreen,
     TileBombTutorial,
     SliceBombTutorial,
     JokerTutorial,
     PotionCraft,
-    DenScreen,
     ColorMatch,
     ShapeMatch
 
@@ -658,6 +658,7 @@ public class TutorialSequence : MonoBehaviour
             //Invoke("DeactivateTutorialScreens", 0.1f);
 
             DeactivateAllTutorialScreens();
+            currentPhaseInSequenceLevels = 0;
 
             //if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].doFadeInEnd)
             //{
@@ -775,6 +776,7 @@ public class TutorialSequence : MonoBehaviour
 
             PlayerManager.Instance.checkDoAddPotionsToInventory();
             //Invoke("DeactivateTutorialScreens", 0.1f);
+            currentPhaseInSequenceSpecific = 0;
 
             DeactivateAllTutorialScreens();
 
@@ -809,11 +811,11 @@ public class TutorialSequence : MonoBehaviour
         }
 
 
-        if (currentPhaseInSequenceLevels + 1 <= levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].EndPhaseID)
+        if (currentPhaseInSequenceLevels + 1 <= specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].EndPhaseID)
         {
             Debug.Log("ARRIVED HERE");
             StartCoroutine(SelectReleventHeighlights(currentPhaseInSequenceSpecific, true));
-            ChangePhase(specificTutorials, GameManager.Instance.currentLevel.tutorialIndexForList, currentPhaseInSequenceSpecific);
+            ChangePhase(specificTutorials, (int)GameManager.Instance.currentLevel.specificTutorialEnum - 1, currentPhaseInSequenceSpecific);
         }
     }
 
@@ -1315,7 +1317,7 @@ public class TutorialSequence : MonoBehaviour
     {
         //if(GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.None)
         //{
-        if(GameManager.Instance.currentLevel.isSpecificTutorial)
+        if(GameManager.Instance.currentLevel.isSpecificTutorial || GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.lootTutorial)
         {
             foreach (GameObject go in specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens) /// THESE ARE ALL THE TEXT POPUPS
             {

@@ -258,18 +258,29 @@ public class GameManager : MonoBehaviour
                 PlayerManager.Instance.PopulatePowerUps();
                 powerupManager.instnatiatedZonesCounter = 0;
 
-                if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
+                if (currentLevel.isTutorial)
                 {
-                    if (currentLevel.isSpecificTutorial)
-                    {
-                        StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
-                        TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
-                    }
-                    else
+                    if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
                     {
                         TutorialSequence.Instacne.StartTutorialLevelSequence();
                     }
                 }
+
+                //if (currentLevel.isSpecificTutorial)
+                //{
+                //    if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
+                //    {
+                //        StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
+                //        TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
+                //    }
+                //}
+                //else
+                //{
+                //    if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
+                //    {
+                //        TutorialSequence.Instacne.StartTutorialLevelSequence();
+                //    }
+                //}
 
 
                 GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());

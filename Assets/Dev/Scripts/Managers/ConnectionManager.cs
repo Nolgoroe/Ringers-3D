@@ -186,7 +186,7 @@ public class ConnectionManager : MonoBehaviour
                     cellList[cellIndex].leftParticleZone.GetChild(0).gameObject.SetActive(true);
 
 
-                    StartCoroutine(SoundManager.Instance.PlaySoundChangeVolumeAndDelay(Sounds.TileMatch, 0.5f, 0.1f));
+                    StartCoroutine(SoundManager.Instance.PlaySoundChangeVolumeAndDelay(Sounds.TileMatch, 0.5f, 0f));
                     playedConnectedSound = true;
 
                     //Debug.Log("Emission is happening");
@@ -391,7 +391,7 @@ public class ConnectionManager : MonoBehaviour
 
                     if (!playedConnectedSound)
                     {
-                        StartCoroutine(SoundManager.Instance.PlaySoundChangeVolumeAndDelay(Sounds.TileMatch, 0.5f, 0.1f));
+                        StartCoroutine(SoundManager.Instance.PlaySoundChangeVolumeAndDelay(Sounds.TileMatch, 0.5f, 0f));
                     }
 
                     if (conditionmet)
