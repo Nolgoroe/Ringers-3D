@@ -815,7 +815,7 @@ public class GameManager : MonoBehaviour
 
             }
 
-            if(currentLevel.levelNum > PlayerManager.Instance.highestLevelReached)
+            if(currentLevel.numIndexForLeaderBoard > PlayerManager.Instance.highestLevelReached)
             {
                 PlayerManager.Instance.UpdateMaxLevelReached(currentLevel);
             }

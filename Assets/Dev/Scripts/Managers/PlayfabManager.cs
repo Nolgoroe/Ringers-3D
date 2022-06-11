@@ -333,6 +333,7 @@ public class PlayfabManager : MonoBehaviour
             }
         }
 
+        indexInZone += 1;
         return (worldNum + " - " + indexInZone).ToString();
         //return "no";
     }
