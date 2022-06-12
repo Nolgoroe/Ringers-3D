@@ -603,7 +603,7 @@ public class ConnectionManager : MonoBehaviour
         }
 
 
-        yield return new WaitForSeconds(speedPieceConnectAnim - 0.05f);
+        yield return new WaitForSeconds(speedPieceConnectAnim + 0.1f);
 
         if (subPiecesOnBoard[currentLeft].parentPiece)
         {
@@ -1319,6 +1319,8 @@ public class ConnectionManager : MonoBehaviour
 
     public void JumpPiecesEffect(Piece p)
     {
+        Vector3 originalPosReturnTo = Vector3.zero;
+
         foreach (Cell c in cells)
         {
             if (c.pieceHeld != null && c.pieceHeld != p && !c.pieceHeld.isLocked && !c.pieceHeld.isStone)
@@ -1343,24 +1345,27 @@ public class ConnectionManager : MonoBehaviour
                 LeanTween.moveLocal(c.pieceHeld.leftChild.gameObject, targetPosLeft, speedUpPieceEffect).setEaseOutBack(); // animate
 
                 //yield return new WaitForSeconds(speedUpPieceEffect);
-                returnPieceToOriginPosUpEffect(c.pieceHeld.leftChild);
-                returnPieceToOriginPosUpEffect(c.pieceHeld.rightChild);
+                originalPosReturnTo = c.pieceHeld.leftChild.transform.localPosition;
+                returnPieceToOriginPosUpEffect(c.pieceHeld.leftChild, originalPosReturnTo);
+
+                originalPosReturnTo = c.pieceHeld.rightChild.transform.localPosition;
+                returnPieceToOriginPosUpEffect(c.pieceHeld.rightChild, originalPosReturnTo);
             }
         }
     }
 
-    public void returnPieceToOriginPosUpEffect(SubPiece p)
+    public void returnPieceToOriginPosUpEffect(SubPiece p, Vector3 targetPos)
     {
-        Vector3 targetPos = Vector3.zero;
+        //targetPos = Vector3.zero;
 
-        if (p.isRightSubPiece)
-        {
-            targetPos = new Vector3(0.7826648f, 0, 0);
-        }
-        else
-        {
-            targetPos = new Vector3(-0.7826648f, 0, 0);
-        }
+        //if (p.isRightSubPiece)
+        //{
+        //    targetPos = new Vector3(0.7826648f, 0, 0);
+        //}
+        //else
+        //{
+        //    targetPos = new Vector3(-0.7826648f, 0, 0);
+        //}
 
         LeanTween.moveLocal(p.gameObject, targetPos, speedUpPieceEffect).setDelay(speedUpPieceEffect); // animate
     }

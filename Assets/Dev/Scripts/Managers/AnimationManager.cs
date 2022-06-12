@@ -764,10 +764,10 @@ public class AnimationManager : MonoBehaviour
         yield return new WaitForSeconds(timeToScaleBoard + 0.1f);
         GameManager.Instance.WinAfterAnimation();
 
-        if(LootManager.Instance.rubiesToRecieveInLevel > 0 || LootManager.Instance.craftingMatsLootForLevel.Count > 0)
-        {
-            yield return new WaitUntil(() => LootManager.Instance.finishedGivingLoot == true);
-        }
+        //if(LootManager.Instance.rubiesToRecieveInLevel > 0 || LootManager.Instance.craftingMatsLootForLevel.Count > 0)
+        //{
+        //    yield return new WaitUntil(() => LootManager.Instance.finishedGivingLoot == true);
+        //}
 
         yield return new WaitForSeconds(waitTimeButtonsAppear);
 

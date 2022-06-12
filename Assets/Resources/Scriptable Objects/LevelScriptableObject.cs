@@ -37,6 +37,7 @@ public class LevelScriptableObject : ScriptableObject
     public bool isAnimalLevel = true;
     public bool isReleaseAnimalToDen;
     public GameObject boardPrefab;
+    public GameObject clipPrefab;
 
     public int levelNum;
     public int worldNum;

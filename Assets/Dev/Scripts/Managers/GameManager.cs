@@ -210,7 +210,7 @@ public class GameManager : MonoBehaviour
 
                 LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
 
-                gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
+                gameClip = Instantiate(currentLevel.clipPrefab, destroyOutOfLevel);
 
                 gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
                 sliceManager = gameBoard.GetComponent<SliceManager>();
@@ -326,7 +326,7 @@ public class GameManager : MonoBehaviour
             //levelStarted = true;
 
             LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
-            gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
+            gameClip = Instantiate(currentLevel.clipPrefab, destroyOutOfLevel);
 
             gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
             sliceManager = gameBoard.GetComponent<SliceManager>();
@@ -498,7 +498,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            selectedLevelBG = levelBGModels[backgroundID - 1]; // -1 since FOR NOW we don't have a bg for tutorial zone.. so we skip index 0
+            selectedLevelBG = levelBGModels[backgroundID];
         }
 
         if(selectedLevelBG.transform.Find("color mask"))

@@ -52,6 +52,8 @@ public class CursorController : MonoBehaviour
 
     PanZoom pz = null;
 
+    Vector3 originalScaleOfPiece = Vector3.one;
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(mouseRay.origin, mouseRay.origin + rayLength * mouseRay.direction);
@@ -469,7 +471,7 @@ public class CursorController : MonoBehaviour
                 {
                     Piece p = hit.transform.parent.GetComponent<Piece>();
                     //Debug.Log(hit.transform.name);
-                    if (!p.isDuringConnectionAnim && !AnimationManager.instance.endLevelAnimationON)
+                    if (!followerTarget && !p.isDuringConnectionAnim && !AnimationManager.instance.endLevelAnimationON)
                     {
                         if (canMovePieces)
                         {
@@ -762,6 +764,8 @@ public class CursorController : MonoBehaviour
             }
 
             followerTarget = p.transform;
+            originalScaleOfPiece = followerTarget.transform.localScale;
+
             Cell c = p.transform.parent.GetComponent<Cell>();
 
             if (c)
@@ -778,7 +782,7 @@ public class CursorController : MonoBehaviour
 
             if (GameManager.Instance.currentLevel.is12PieceRing)
             {
-                LeanTween.scale(followerTarget.gameObject, Vector3.one, pickupSpeed - 0.3f); // animate
+                LeanTween.scale(followerTarget.gameObject, GameManager.Instance.clipManager.pieceScaleOnBoard, pickupSpeed - 0.3f); // animate
             }
 
             float angle = Mathf.Atan2(gameBoard.transform.position.y - followerTarget.position.y, gameBoard.transform.position.x - followerTarget.position.x) * Mathf.Rad2Deg;
@@ -1236,7 +1240,8 @@ public class CursorController : MonoBehaviour
         Vector3 home = GameManager.Instance.clipManager.piece.transform.position;
         followerTarget.localPosition = home;
         followerTarget.localRotation = Quaternion.Euler(0, 180, 67); ///// reset piece rotation to it's original local rotation
-        followerTarget.localScale = new Vector3(1.45f, 1.45f, 1);
+        //followerTarget.localScale = new Vector3(1.45f, 1.45f, 1);
+        followerTarget.localScale = originalScaleOfPiece;
 
         if (followerTarget.transform.parent.GetComponent<Cell>())
         {
