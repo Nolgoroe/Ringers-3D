@@ -837,7 +837,8 @@ public class TutorialSequence : MonoBehaviour
             GameManager.Instance.gameBoard.SetActive(false);
             GameManager.Instance.gameClip.SetActive(false);
             GameManager.Instance.selectedLevelBG.transform.GetChild(0).gameObject.SetActive(false);
-            UIManager.Instance.gameplayCanvasBotom.SetActive(false);
+            //UIManager.Instance.gameplayCanvasBotom.SetActive(false);
+            UIManager.Instance.DecideBottmUIShow(GameManager.Instance.currentLevel.bottomUIToShow);
             UIManager.Instance.gameplayCanvasTop.SetActive(false);
         }
         else
@@ -847,7 +848,8 @@ public class TutorialSequence : MonoBehaviour
                 GameManager.Instance.gameBoard.SetActive(true);
                 GameManager.Instance.gameClip.SetActive(true);
                 GameManager.Instance.selectedLevelBG.transform.GetChild(0).gameObject.SetActive(true);
-                UIManager.Instance.gameplayCanvasBotom.SetActive(true);
+                //UIManager.Instance.gameplayCanvasBotom.SetActive(true);
+                UIManager.Instance.DecideBottmUIShow(GameManager.Instance.currentLevel.bottomUIToShow);
                 UIManager.Instance.gameplayCanvasTop.SetActive(true);
             }
         }

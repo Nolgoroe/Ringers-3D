@@ -127,7 +127,7 @@ public class CursorController : MonoBehaviour
                 {
                     if (GameManager.Instance.currentLevel)
                     {
-                        if (GameManager.Instance.currentLevel.isSpecificTutorial || GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.lootTutorial)
+                        if (GameManager.Instance.currentLevel.isSpecificTutorial || TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.lootTutorial)
                         {
                             if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isEmptyTouchPhase)
                             {
@@ -1057,7 +1057,7 @@ public class CursorController : MonoBehaviour
                 }
                 else
                 {
-                    GameManager.Instance.clipManager.emptyClip = followerTarget.transform.parent;
+                    GameManager.Instance.clipManager.emptyClip = clipParent;
                     GameManager.Instance.clipManager.latestPiece = followerTarget;
                 }
 
@@ -1131,7 +1131,7 @@ public class CursorController : MonoBehaviour
                                     followerTarget.transform.SetParent(clipParent.transform);
                                     followerTarget.transform.localScale = originalScale;
 
-                                    GameManager.Instance.clipManager.emptyClip = followerTarget.transform.parent;
+                                    GameManager.Instance.clipManager.emptyClip = clipParent;
                                     GameManager.Instance.clipManager.latestPiece = followerTarget;
                                     ReturnHome();
                                 }
@@ -1201,7 +1201,7 @@ public class CursorController : MonoBehaviour
                                 followerTarget.transform.SetParent(clipParent.transform);
                                 followerTarget.transform.localScale = originalScale;
 
-                                GameManager.Instance.clipManager.emptyClip = followerTarget.transform.parent;
+                                GameManager.Instance.clipManager.emptyClip = clipParent;
                                 GameManager.Instance.clipManager.latestPiece = followerTarget;
                                 ReturnHome();
                             }

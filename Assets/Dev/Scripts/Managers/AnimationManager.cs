@@ -50,6 +50,7 @@ public class AnimationManager : MonoBehaviour
     public bool noWaitAnimal;
 
     public bool hasSkippedToAnimalAnim;
+    public bool hasSkippedToAfterAnimalAnim;
     public bool hasSkippedToBoardAnim;
 
     //public ParticleSystem midPieceParticle;
@@ -128,8 +129,8 @@ public class AnimationManager : MonoBehaviour
 
     private Coroutine endAnimToAnimal = null;
 
-    [HideInInspector]
-    public Coroutine endAnimToWinScreen = null;
+    //[HideInInspector]
+    //public Coroutine endAnimToWinScreen = null;
 
     bool dissolveStart = false;
 
@@ -167,7 +168,7 @@ public class AnimationManager : MonoBehaviour
 
         if (cheat)
         {
-            SkipEndLevelAnimation(true);
+            StartCoroutine(SkipEndLevelAnimation());
         }
         else
         {
@@ -412,6 +413,28 @@ public class AnimationManager : MonoBehaviour
         LeanTween.move(bottomeZone, new Vector3(bottomeZone.transform.position.x, bottomeZone.transform.position.y - 1f, bottomeZone.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
     }
 
+    private void SkipMoveTopBottom()
+    {
+        GameObject clip = GameManager.Instance.gameClip;
+        GameObject topZone = UIManager.Instance.gameplayCanvasTop;
+        GameObject bottomeZone = UIManager.Instance.gameplayCanvasBotom;
+
+        if (clip)
+        {
+            clip.transform.position = new Vector3(clip.transform.position.x, clip.transform.position.y + 2.2f, clip.transform.position.z);
+        }
+
+        if (topZone)
+        {
+            topZone.transform.position = new Vector3(topZone.transform.position.x, topZone.transform.position.y + 1f, topZone.transform.position.z);
+        }
+
+        if (bottomeZone)
+        {
+            bottomeZone.transform.position = new Vector3(bottomeZone.transform.position.x, bottomeZone.transform.position.y - 1f, bottomeZone.transform.position.z);
+        }
+    }
+
     public void MoveSubPiece(SubPiece toMove)
     {
         if(toMove.subPieceIndex % 2 != 0)
@@ -483,25 +506,34 @@ public class AnimationManager : MonoBehaviour
         }
     }
 
-    public void SkipEndLevelAnimation(bool isCheat)
+    public void CallSkipEndLevelAnim()
+    {
+        StartCoroutine(SkipEndLevelAnimation());
+    }
+
+    public IEnumerator SkipEndLevelAnimation()
     {
         endLevelAnimationON = true;
+        //StopCoroutine(endAnimToAnimal);
+        StopAllCoroutines();
+        LeanTween.cancelAll();
 
         if (hasSkippedToAnimalAnim)
         {
-            if (endAnimToWinScreen != null)
-            {
-                StopCoroutine(endAnimToWinScreen);
-            }
+            //hasSkippedToAnimalAnim = false;
 
+            StartCoroutine(AfterAnimalAnimation());
+
+            StopCoroutine("SkipEndLevelAnimation");
+
+            //Debug.LogError("HERE");
             //endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation(true));
             //if (AnimalsManager.Instance.currentLevelLiveAnimal)
             //{
             //    Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
             //}
 
-            endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation());
-            return;
+            yield break;
         }
         else
         {
@@ -512,11 +544,13 @@ public class AnimationManager : MonoBehaviour
 
         SoundManager.Instance.audioSourceSFX.Stop();
 
-        if (endAnimToAnimal != null)
-        {
-            StopCoroutine(endAnimToAnimal);
-            LeanTween.cancelAll();
-        }
+        //if (endAnimToAnimal != null)
+        //{
+        //    StopCoroutine(endAnimToAnimal);
+        //    LeanTween.cancelAll();
+        //}
+
+        SkipMoveTopBottom();
 
         if (destroyOnSkipEndLevel == null)
         {
@@ -604,11 +638,14 @@ public class AnimationManager : MonoBehaviour
         }
         else
         {
-            endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation());
+           StartCoroutine(AfterAnimalAnimation());
         }
 
         //TutorialSequence.Instacne.CheckDoPotionTutorial();
 
+        //hasSkippedToAnimalAnim = false;
+
+        Debug.LogError("Reached end of skip");
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
     }
 
@@ -616,25 +653,31 @@ public class AnimationManager : MonoBehaviour
     {
         endLevelAnimationON = true;
 
-        if (hasSkippedToBoardAnim)
+        if (hasSkippedToAfterAnimalAnim)
         {
-            if (endAnimToWinScreen != null)
-            {
-                StopCoroutine(endAnimToWinScreen);
-            }
+            //if (endAnimToWinScreen != null)
+            //{
+            //    StopCoroutine(endAnimToWinScreen);
+            //}
+            //hasSkippedToAfterAnimalAnim = false;
+
+
+            StopCoroutine("AfterAnimalAnimation");
 
             SkipBoardAnim();
 
-            endAnimToWinScreen = null;
-            hasSkippedToBoardAnim = false;
+
+            //endAnimToWinScreen = null;
             yield break;
         }
         else
         {
-            hasSkippedToBoardAnim = true;
+            hasSkippedToAfterAnimalAnim = true;
         }
 
         SoundManager.Instance.PlaySound(Sounds.LevelWin);
+
+
         if (turnOff != null)
         {
             foreach (GameObject GO in turnOff)
@@ -647,6 +690,11 @@ public class AnimationManager : MonoBehaviour
         }
 
         Instantiate(successVFX, GameManager.Instance.destroyOutOfLevel);
+
+        if (AnimalsManager.Instance.currentLevelLiveAnimal)
+        {
+            Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
+        }
         ///summon VFX HERE
         ///
         GameManager.Instance.gameBoard.transform.position = new Vector3(0, 1.55f, 0);
@@ -742,7 +790,14 @@ public class AnimationManager : MonoBehaviour
 
         if (!GameManager.Instance.currentLevel.isGrindLevel)
         {
-            UIManager.Instance.animalNameText.text = animalName + " Released!";
+            if (GameManager.Instance.currentLevel.isAnimalLevel)
+            {
+                UIManager.Instance.animalNameText.text = animalName + " Released!";
+            }
+            else
+            {
+                UIManager.Instance.animalNameText.text = "Tree cleansed!";
+            }
         }
         else
         {
@@ -836,9 +891,6 @@ public class AnimationManager : MonoBehaviour
 
 
 
-        hasSkippedToAnimalAnim = false;
-        hasSkippedToBoardAnim = false;
-
 
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
 
@@ -854,12 +906,20 @@ public class AnimationManager : MonoBehaviour
             UIManager.Instance.CheckTurnOnReleaseAnimalScreen();
         }
 
+        //hasSkippedToAfterAnimalAnim = false;
+
+        Debug.LogError("Reached end of After animal");
         endLevelAnimationON = false;
+
+        //ResetAllSkipData();
     }
 
     public void SkipBoardAnim()
     {
+        //StopCoroutine(endAnimToWinScreen);
+
         endLevelAnimationON = true;
+        hasSkippedToBoardAnim = true;
 
         //if (turnOff == null)
         //{
@@ -901,6 +961,7 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.sucessText.color = new Color(UIManager.Instance.sucessText.color.r, UIManager.Instance.sucessText.color.g, UIManager.Instance.sucessText.color.b, 1);
 
         string animalName = Regex.Replace(AnimalsManager.Instance.currentLevelAnimal.ToString(), "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
+        LeanTween.scale(UIManager.Instance.flowerUIMask, flowerUIScaleTo, timeToScaleUIFlowers);
 
         if (GameManager.Instance.currentLevel.isGrindLevel)
         {
@@ -908,7 +969,14 @@ public class AnimationManager : MonoBehaviour
         }
         else
         {
-            UIManager.Instance.animalNameText.text = animalName + " Released!";
+            if (GameManager.Instance.currentLevel.isAnimalLevel)
+            {
+                UIManager.Instance.animalNameText.text = animalName + " Released!";
+            }
+            else
+            {
+                UIManager.Instance.animalNameText.text = "Tree cleansed!";
+            }
         }
 
         CheckShowLootTutorial();
@@ -953,7 +1021,6 @@ public class AnimationManager : MonoBehaviour
 
         ConnectionManager.Instance.TurnOffAllConnectedVFX();
 
-        hasSkippedToAnimalAnim = false;
 
         if (AnimalsManager.Instance.currentLevelLiveAnimal)
         {
@@ -974,7 +1041,12 @@ public class AnimationManager : MonoBehaviour
             UIManager.Instance.CheckTurnOnReleaseAnimalScreen();
         }
 
+        Debug.LogError("Reached end of skip board");
+
+        //hasSkippedToBoardAnim = false;
         endLevelAnimationON = false;
+
+        //ResetAllSkipData();
     }
     private void CheckShowLootTutorial()
     {
@@ -1292,5 +1364,12 @@ public class AnimationManager : MonoBehaviour
             sprite.color = newColor;
         });
 
+    }
+
+    public void ResetAllSkipData()
+    {
+        hasSkippedToAnimalAnim = false;
+        hasSkippedToAfterAnimalAnim = false;
+        hasSkippedToBoardAnim = false;
     }
 }

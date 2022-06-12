@@ -68,6 +68,7 @@ public class LevelScriptableObject : ScriptableObject
     public bool isSpecificTutorial;
     public bool isTutorial;
     public SpecificTutorialsEnum specificTutorialEnum;
+    public BottomUIToShow bottomUIToShow;
 
     [Header("Specific Slice Settings")]
     public List<pieceDataStruct> arrayOfPieces;

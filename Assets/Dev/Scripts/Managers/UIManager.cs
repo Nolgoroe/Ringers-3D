@@ -25,12 +25,18 @@ public class ImageTextCombo
     public GameObject[] textObjects;
     //public Button[] zoneButtons;
 }
+public enum BottomUIToShow
+{
+    None,
+    OnlyDeal,
+    All
+}
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    public GameObject mainMenu, worldGameObject, hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasBotom, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
+    public GameObject mainMenu, worldGameObject, hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
     public GameObject InGameUiScreens;
     //public GameObject blackBagBG;
     public GameObject zoomInCorruptedBlack;
@@ -97,6 +103,10 @@ public class UIManager : MonoBehaviour
     public GameObject SystemUpdaterScreen;
     public GameObject bossLevelsParent;
     public GameObject disconnectedFromInternetScreen;
+    public GameObject quitGameScreen;
+    public GameObject gameplayCanvasBotom;
+    public GameObject gameplayCanvasBotomDeal;
+    public GameObject gameplayCanvasBotomPotions;
 
     public Image dewDropsImage;
 
@@ -299,6 +309,7 @@ public class UIManager : MonoBehaviour
         SystemUpdaterScreen.SetActive(false);
         bossLevelsParent.SetActive(false);
         disconnectedFromInternetScreen.SetActive(false);
+        quitGameScreen.SetActive(false);
         activeScreen = null;
 
         dragControlsImage.sprite = toggleOnSprite;
@@ -570,11 +581,14 @@ public class UIManager : MonoBehaviour
                 Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
             }
 
-            if (AnimationManager.instance.endAnimToWinScreen != null)
-            {
-                StopCoroutine(AnimationManager.instance.endAnimToWinScreen);
-                AnimationManager.instance.endAnimToWinScreen = null;
-            }
+            AnimationManager.instance.StopAllCoroutines();
+            AnimationManager.instance.ResetAllSkipData();
+
+            //if (AnimationManager.instance.endAnimToWinScreen != null)
+            //{
+            //    StopCoroutine(AnimationManager.instance.endAnimToWinScreen);
+            //    AnimationManager.instance.endAnimToWinScreen = null;
+            //}
 
             if (GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial)
             {
@@ -904,6 +918,11 @@ public class UIManager : MonoBehaviour
         if(ToClose == disconnectedFromInternetScreen)
         {
             disconnectedFromInternetScreen.SetActive(false);
+        }
+
+        if(ToClose == quitGameScreen)
+        {
+            quitGameScreen.SetActive(false);
         }
 
         if (TutorialSequence.Instacne.duringSequence)
@@ -1439,7 +1458,8 @@ public class UIManager : MonoBehaviour
     public void TurnOffGameplayUI()
     {
         //blackLevelBG.SetActive(false);
-        gameplayCanvasBotom.SetActive(false);
+        //gameplayCanvasBotom.SetActive(false);
+        DecideBottmUIShow(GameManager.Instance.currentLevel.bottomUIToShow);
         gameplayCanvasTop.SetActive(false);
         InGameUiScreens.SetActive(false);
 
@@ -1452,7 +1472,8 @@ public class UIManager : MonoBehaviour
     public void TurnOnGameplayUI()
     {
         //blackLevelBG.SetActive(true);
-        gameplayCanvasBotom.SetActive(true);
+        //gameplayCanvasBotom.SetActive(true);
+        DecideBottmUIShow(GameManager.Instance.currentLevel.bottomUIToShow);
         gameplayCanvasTop.SetActive(true);
         InGameUiScreens.SetActive(true);
         dealButton.interactable = true;
@@ -2351,5 +2372,44 @@ public class UIManager : MonoBehaviour
     public void TurnOnDisconnectedScreen()
     {
         disconnectedFromInternetScreen.SetActive(true);
+    }
+
+    public void ShowAreYouSureQuitScreen()
+    {
+        quitGameScreen.SetActive(true);
+    }
+
+    public void DecideBottmUIShow(BottomUIToShow toShow)
+    {
+        switch (toShow)
+        {
+            case BottomUIToShow.None:
+                NoBottomUI();
+                break;
+            case BottomUIToShow.OnlyDeal:
+                BottomUIOnlyDeal();
+                break;
+            case BottomUIToShow.All:
+                AllBottomUI();
+                break;
+            default:
+                break;
+        }
+    }
+    private void NoBottomUI()
+    {
+        gameplayCanvasBotom.SetActive(false);
+    }
+    private void BottomUIOnlyDeal()
+    {
+        gameplayCanvasBotom.SetActive(true);
+        gameplayCanvasBotomDeal.SetActive(true);
+        gameplayCanvasBotomPotions.SetActive(false);
+    }
+    private void AllBottomUI()
+    {
+        gameplayCanvasBotom.SetActive(true);
+        gameplayCanvasBotomDeal.SetActive(true);
+        gameplayCanvasBotomPotions.SetActive(true);
     }
 }

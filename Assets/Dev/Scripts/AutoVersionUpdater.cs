@@ -179,12 +179,18 @@ public class AutoVersionUpdater : MonoBehaviour
     {
         foreach (int zoneindex in ZoneManager.Instance.unlockedZoneID)
         {
-            Zone zone = ZoneManagerHelpData.Instance.listOfAllZones[zoneindex];
+            Zone zone = null;
+            zone = ZoneManagerHelpData.Instance.listOfAllZones[zoneindex];
 
             AllZonesAndLevels AZAL = GameManager.Instance.allZonesAndLevels.Where(p => p.zone == zone).SingleOrDefault();
 
             for (int i = 0; i < zone.maxLevelReachedInZone; i++)
             {
+                if(AZAL.levelsInZone[i].levelIndexInZone == zone.maxLevelReachedInZone)
+                {
+                    break;
+                }
+
                 if(AZAL.levelsInZone[i].isTutorial)
                 {
                     TutorialSaveData.Instance.completedTutorialLevelId.Add(AZAL.levelsInZone[i].numIndexForLeaderBoard);

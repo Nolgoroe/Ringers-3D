@@ -258,23 +258,17 @@ public class GameManager : MonoBehaviour
                 PlayerManager.Instance.PopulatePowerUps();
                 powerupManager.instnatiatedZonesCounter = 0;
 
-                if (currentLevel.isTutorial)
+                if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
                 {
-                    if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
-                    {
-                        TutorialSequence.Instacne.StartTutorialLevelSequence();
-                    }
+                    TutorialSequence.Instacne.StartTutorialLevelSequence();
                 }
 
-                if (currentLevel.isSpecificTutorial)
+                if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
                 {
                     if(currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft)
                     {
-                        if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
-                        {
-                            StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
-                            TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
-                        }
+                        StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
+                        TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
                     }
                 }
 
@@ -373,7 +367,7 @@ public class GameManager : MonoBehaviour
 
             powerupManager.instnatiatedZonesCounter = 0;
 
-            if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains((int)currentLevel.specificTutorialEnum))
+            if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
             {
                 if (currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen)
                 {

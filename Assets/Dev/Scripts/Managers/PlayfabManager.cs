@@ -201,7 +201,7 @@ public class PlayfabManager : MonoBehaviour
         SaveGameData(new SystemsToSave[] { SystemsToSave.ALL});
 
 
-        InvokeRepeating("UpdateAndSaveTimeSensitiveData", 1, 10);
+        InvokeRepeating("UpdateAndSaveTimeSensitiveData", 1, 5);
     }
 
     void OnError(PlayFabError error)
@@ -509,7 +509,7 @@ public class PlayfabManager : MonoBehaviour
         Debug.Log("Inside Save all game data script");
         string savedData = " ";
 
-        UpdateAndSaveTimeSensitiveData();
+        //UpdateAndSaveTimeSensitiveData();
 
         foreach (SystemsToSave STS in systemsToSave)
         {
@@ -649,7 +649,7 @@ public class PlayfabManager : MonoBehaviour
     {
         string savedData = " ";
 
-        UpdateAndSaveTimeSensitiveData();
+        //UpdateAndSaveTimeSensitiveData();
 
         // Player Login Username
         if (Application.platform == RuntimePlatform.Android)

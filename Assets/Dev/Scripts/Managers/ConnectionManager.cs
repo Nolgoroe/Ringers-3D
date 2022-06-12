@@ -186,7 +186,7 @@ public class ConnectionManager : MonoBehaviour
                     cellList[cellIndex].leftParticleZone.GetChild(0).gameObject.SetActive(true);
 
 
-                    StartCoroutine(SoundManager.Instance.PlaySoundChangeVolumeAndDelay(Sounds.TileMatch, 0.5f, 0f));
+                    SoundManager.Instance.PlaySound(Sounds.TileMatch);
                     playedConnectedSound = true;
 
                     //Debug.Log("Emission is happening");
@@ -391,7 +391,7 @@ public class ConnectionManager : MonoBehaviour
 
                     if (!playedConnectedSound)
                     {
-                        StartCoroutine(SoundManager.Instance.PlaySoundChangeVolumeAndDelay(Sounds.TileMatch, 0.5f, 0f));
+                        SoundManager.Instance.PlaySound(Sounds.TileMatch);
                     }
 
                     if (conditionmet)
@@ -508,7 +508,7 @@ public class ConnectionManager : MonoBehaviour
             {
                 if (CheckSubPieceConnection(subPiecesOnBoard[currentLeft], subPiecesOnBoard[leftContested], out bool conditionmet, out bool isGoodConnect))
                 {
-                    Debug.Log("Good Connect Anim Left");
+                    //Debug.Log("Good Connect Anim Left");
                     if (conditionmet)
                     {
                         isGoodConnectLeft = true;
@@ -603,7 +603,7 @@ public class ConnectionManager : MonoBehaviour
         }
 
 
-        yield return new WaitForSeconds(speedPieceConnectAnim + 0.1f);
+        yield return new WaitForSeconds(speedPieceConnectAnim -0.05f);
 
         if (subPiecesOnBoard[currentLeft].parentPiece)
         {
@@ -1338,8 +1338,8 @@ public class ConnectionManager : MonoBehaviour
                 Vector3 targetPosRight = new Vector3(c.pieceHeld.rightChild.transform.localPosition.x + toMoveXRight, c.pieceHeld.rightChild.transform.localPosition.y + toMoveYRight, c.pieceHeld.rightChild.transform.localPosition.z - toMoveZRight);
                 Vector3 targetPosLeft = new Vector3(c.pieceHeld.leftChild.transform.localPosition.x + toMoveXLeft, c.pieceHeld.leftChild.transform.localPosition.y + toMoveYLeft, c.pieceHeld.leftChild.transform.localPosition.z - toMoveZLeft);
 
-                Debug.Log(c);
-                Debug.Log(c.pieceHeld);
+                //Debug.Log(c);
+                //Debug.Log(c.pieceHeld);
 
                 LeanTween.moveLocal(c.pieceHeld.rightChild.gameObject, targetPosRight, speedUpPieceEffect).setEaseOutBack(); // animate
                 LeanTween.moveLocal(c.pieceHeld.leftChild.gameObject, targetPosLeft, speedUpPieceEffect).setEaseOutBack(); // animate
@@ -1367,7 +1367,8 @@ public class ConnectionManager : MonoBehaviour
         //    targetPos = new Vector3(-0.7826648f, 0, 0);
         //}
 
-        LeanTween.moveLocal(p.gameObject, targetPos, speedUpPieceEffect).setDelay(speedUpPieceEffect); // animate
+        //LeanTween.moveLocal(p.gameObject, targetPos, speedUpPieceEffect).setDelay(speedUpPieceEffect); // animate
+        LeanTween.moveLocal(p.gameObject, targetPos, speedUpPieceEffect);// animate
     }
 
 
