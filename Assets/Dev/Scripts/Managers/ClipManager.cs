@@ -267,7 +267,7 @@ public class ClipManager : MonoBehaviour
 
             if (GameManager.Instance.currentLevel.is12PieceRing)
             {
-                p.transform.localScale = new Vector3(1.45f, 1.45f, 1);
+                p.transform.localScale = new Vector3(1.85f, 1.85f, 1);
             }
         }
         else

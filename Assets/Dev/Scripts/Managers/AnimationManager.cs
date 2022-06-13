@@ -185,7 +185,6 @@ public class AnimationManager : MonoBehaviour
         endLevelAnimationON = true;
         turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
 
-        UIManager.Instance.skipAnimationButton.gameObject.SetActive(true);
 
         UIManager.Instance.restartButton.interactable = false;
         UIManager.Instance.dealButton.interactable = false;
@@ -204,6 +203,7 @@ public class AnimationManager : MonoBehaviour
 
         yield return new WaitForSeconds(speedOutTopBottom + 0.1f);
 
+        UIManager.Instance.skipAnimationButton.gameObject.SetActive(true);
 
         //foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
         //{
@@ -910,8 +910,11 @@ public class AnimationManager : MonoBehaviour
 
         foreach (Slice slice in GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices)
         {
-            SpriteRenderer slicedSR = slice.child.GetComponent<SpriteRenderer>();
-            slicedSR.color = new Color(slicedSR.color.r, slicedSR.color.g, slicedSR.color.b, 1);
+            if (slice.child)
+            {
+                SpriteRenderer slicedSR = slice.child.GetComponent<SpriteRenderer>();
+                slicedSR.color = new Color(slicedSR.color.r, slicedSR.color.g, slicedSR.color.b, 1);
+            }
         }
 
         foreach (GameObject go in GameManager.Instance.gameBoard.GetComponent<SliceManager>().activeLocksLockAnims)

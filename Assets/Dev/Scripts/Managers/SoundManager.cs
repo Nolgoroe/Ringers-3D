@@ -69,6 +69,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(Sounds soundEnum)
     {
+        Debug.Log("Played " + soundEnum);
         //if (!muteSFX)
         //{
         //    audioSourceSFX.volume = 0.5f;

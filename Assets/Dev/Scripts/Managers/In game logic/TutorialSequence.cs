@@ -996,6 +996,10 @@ public class TutorialSequence : MonoBehaviour
             }
         }
 
+        Vector3 handPosDeal = tutorialHandPosDealButton;
+
+        handPosDeal.z = -0.3f;
+
         DisplayTutorialHandTap(tutorialHandPosDealButton, tutorialHandRotationDealButton, Vector3.one);
     }
     public void PowerUpPhase(Sequence[] tutorialArray, int TutorialIndex, int phaseIndex)
@@ -1021,7 +1025,9 @@ public class TutorialSequence : MonoBehaviour
 
         Vector3 handPosPowerup = GameManager.Instance.powerupManager.instnatiateZones[powerupZoneID].transform.position;
 
-        Debug.Log(handPosPowerup);
+        //Debug.Log(handPosPowerup);
+
+        handPosPowerup.z = 0;
 
         DisplayTutorialHandTap(handPosPowerup + tutorialHandPosPowerupOffset, tutorialHandRotationDealButton, Vector3.one);
     }
@@ -1046,6 +1052,7 @@ public class TutorialSequence : MonoBehaviour
 
         int cellID = tutorialArray[TutorialIndex].phase[phaseIndex].unlockedBoardCells;
         Vector3 pos = ConnectionManager.Instance.cells[cellID].transform.position;
+        pos.z = -0.3f;
 
         DisplayTutorialHandTap(pos,tutorialHandRotationDealButton, Vector3.one);
     }
@@ -1070,6 +1077,7 @@ public class TutorialSequence : MonoBehaviour
 
         int SliceID = tutorialArray[TutorialIndex].phase[phaseIndex].targetSlices[0];
         Vector3 pos = GameManager.Instance.sliceManager.sliceSlots[SliceID].transform.position;
+        pos.z = -0.3f;
 
         DisplayTutorialHandTap(pos,tutorialHandRotationDealButton, Vector3.one);
     }
@@ -1288,7 +1296,7 @@ public class TutorialSequence : MonoBehaviour
     public void DisplayTutorialHandTap(Vector3 position, Vector3 rotation, Vector3 scale)
     {
         Vector3 pos = position;
-        pos.z = -0.3f;
+        //pos.z = -0.3f;
 
         GameObject go = Instantiate(tutorialHandPrefabTap, pos, Quaternion.Euler(rotation));
         currentlyActiveTutorialHand = go;
