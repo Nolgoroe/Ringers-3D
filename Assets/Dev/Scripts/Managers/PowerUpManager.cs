@@ -193,7 +193,7 @@ public class PowerUpManager : MonoBehaviour
             SoundManager.Instance.PlaySound(Sounds.DealButton);
             UIManager.Instance.turnOnDealVFX();
 
-            if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
+            if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial && TutorialSequence.Instacne.duringSequence)
             {
                 if (TutorialSequence.Instacne.currentPhaseInSequenceLevels < TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Length)
                 {

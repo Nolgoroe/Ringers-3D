@@ -8,7 +8,8 @@ public class AnimationEventsAnimals : MonoBehaviour
     {
         if (!AnimationManager.instance.hasSkippedToAfterAnimalAnim)
         {
-            StartCoroutine(AnimationManager.instance.AfterAnimalAnimation());
+            //StartCoroutine(AnimationManager.instance.AfterAnimalAnimation());
+            AnimationManager.instance.CallAfterAnimalAnimation();
         }
     }
 

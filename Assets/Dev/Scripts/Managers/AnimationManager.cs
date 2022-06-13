@@ -649,6 +649,11 @@ public class AnimationManager : MonoBehaviour
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
     }
 
+    public void CallAfterAnimalAnimation()
+    {
+        StartCoroutine(AfterAnimalAnimation());
+
+    }
     public IEnumerator AfterAnimalAnimation()
     {
         endLevelAnimationON = true;
@@ -694,6 +699,7 @@ public class AnimationManager : MonoBehaviour
         if (AnimalsManager.Instance.currentLevelLiveAnimal)
         {
             Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
+            AnimalsManager.Instance.currentLevelLiveAnimal.SetActive(false);
         }
         ///summon VFX HERE
         ///
@@ -729,36 +735,6 @@ public class AnimationManager : MonoBehaviour
         yield return new WaitForSeconds(timeToScaleBoardAppearGrow);
 
         LeanTween.scale(GameManager.Instance.gameBoard, originalScale, timeToScaleBoardAppearBackOriginal);
-
-        //LeanTween.value(GameManager.Instance.gameBoard.gameObject, 0f, 1, fadeInTimeBoard).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
-        //{
-        //    SpriteRenderer boardSR = GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>();
-        //    Color newColor = boardSR.color;
-        //    newColor.a = val;
-        //    boardSR.color = newColor;
-        //});
-
-        //foreach (Slice slice in GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices)
-        //{
-        //    LeanTween.value(slice.child.gameObject, 0f, 1, fadeInTimeBoard).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
-        //    {
-        //        SpriteRenderer sliceSR = slice.child.GetComponent<SpriteRenderer>();
-        //        Color newColor = sliceSR.color;
-        //        newColor.a = val;
-        //        sliceSR.color = newColor;
-        //    });
-        //}
-
-        //foreach (GameObject go in GameManager.Instance.gameBoard.GetComponent<SliceManager>().activeLocksLockAnims)
-        //{
-        //    LeanTween.value(go, 0f, 1, fadeInTimeBoard).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
-        //    {
-        //        SpriteRenderer goSR = go.GetComponent<SpriteRenderer>();
-        //        Color newColor = goSR.color;
-        //        newColor.a = val;
-        //        goSR.color = newColor;
-        //    });
-        //}
 
         yield return new WaitForSeconds(waitTimeInPieces + 0.5f);
 

@@ -913,6 +913,7 @@ public class GameManager : MonoBehaviour
     {
         //StartCoroutine(UIManager.Instance.FadeIntoLevel(nextIsTutorial));
         //yield return new WaitForSeconds(UIManager.Instance.fadeIntoLevelSpeed + 0.1f);
+        AnimationManager.instance.ResetAllSkipData();
 
         LootManager.Instance.rubiesToRecieveInLevel = 0;
 
