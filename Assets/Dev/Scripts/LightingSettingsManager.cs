@@ -34,8 +34,8 @@ public class LightingSettingsManager : MonoBehaviour
         }
         else
         {
-            zoneID -= 1; // we take down one since there is no specific lighting for tutorial zone
-                         // meaning we skip the first index
+            //zoneID -= 1; // we take down one since there is no specific lighting for tutorial zone
+            //             // meaning we skip the first index
             RenderSettings.skybox = allLightingSO[zoneID].skyBox;
             RenderSettings.sun = allLightingSO[zoneID].mainLight;
 

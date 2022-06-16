@@ -199,11 +199,22 @@ public class SoundManager : MonoBehaviour
 
         //vol = 1;
 
-        LeanTween.value(normalAmbience.gameObject, 1, 0, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
+        LeanTween.value(normalAmbience.gameObject, 1, 0, time).setOnUpdate((float val) =>
         {
             vol = val;
             normalAmbience.volume = vol;
         });
+
+        if (isStop) /// temporary here
+        {
+            vol = 1;
+
+            LeanTween.value(forestSounds.gameObject, 1, 0, time).setOnUpdate((float val) =>
+            {
+                vol = val;
+                forestSounds.volume = vol;
+            });
+        }
 
         yield return new WaitForSeconds(time);
 
@@ -229,6 +240,38 @@ public class SoundManager : MonoBehaviour
 
         forestSounds.Play();
         normalAmbience.Play();
+
+        float vol = 0;
+
+        LeanTween.value(forestSounds.gameObject, 0, 1, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
+        {
+            vol = val;
+            forestSounds.volume = vol;
+        });
+
+        vol = 0;
+
+        LeanTween.value(normalAmbience.gameObject, 0, 1, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
+        {
+            vol = val;
+            normalAmbience.volume = vol;
+        });
+
+        yield return new WaitForSeconds(timeFadeInAmbienceLevel);
+    }
+
+    public IEnumerator FadeInOnlyLevelVolume(Sounds soundEnum)
+    {
+        if (muteMusic)
+        {
+            yield break;
+        }
+
+        int ran = Random.Range(0, (enumToSound[soundEnum].Length));
+        normalAmbience.clip = enumToSound[soundEnum][ran];
+
+        forestSounds.volume = 0;
+        normalAmbience.volume = 0;
 
         float vol = 0;
 

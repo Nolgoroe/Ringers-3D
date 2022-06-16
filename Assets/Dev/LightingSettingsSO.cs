@@ -17,5 +17,10 @@ public class LightingSettingsSO : ScriptableObject
 
     public Color fogColor;
 
+    public FogMode fodMogde;
+
     public float fogDensity;
+
+    public float fogStart;
+    public float fogEnd;
 }

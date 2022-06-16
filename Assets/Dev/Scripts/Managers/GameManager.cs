@@ -383,7 +383,7 @@ public class GameManager : MonoBehaviour
         }
 
         //SoundManager.Instance.PlayAmbience(Sounds.LevelAmbience);
-        if (!SoundManager.Instance.audioSourceAmbience.isPlaying)
+        if (!SoundManager.Instance.normalAmbience.isPlaying)
         {
             Debug.Log("Change music");
 
@@ -394,7 +394,7 @@ public class GameManager : MonoBehaviour
             if (!hasRestartedLevel)
             {
                 Debug.Log("Just volume up");
-                StartCoroutine(SoundManager.Instance.FadeInOnlyVolume(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbience));
+                StartCoroutine(SoundManager.Instance.FadeInOnlyLevelVolume(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbience));
             }
         }
     }

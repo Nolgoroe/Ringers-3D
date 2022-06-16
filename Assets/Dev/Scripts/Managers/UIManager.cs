@@ -574,7 +574,7 @@ public class UIManager : MonoBehaviour
             GameManager.Instance.levelStarted = false;
             GameManager.Instance.timeStartLevel = "";
 
-            if (SoundManager.Instance.audioSourceAmbience.isPlaying)
+            if (SoundManager.Instance.normalAmbience.isPlaying)
             {
                 StartCoroutine(SoundManager.Instance.FadeOutAmbientMusicLevel(SoundManager.Instance.timeFadeOutAmbienceLevel, true));
             }
