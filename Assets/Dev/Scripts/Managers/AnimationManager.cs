@@ -164,7 +164,7 @@ public class AnimationManager : MonoBehaviour
     }
     public void StartEndLevelAnimSequence(bool cheat)
     {
-        StartCoroutine(SoundManager.Instance.FadeOutAmbientMusic(2));
+        StartCoroutine(SoundManager.Instance.FadeOutAmbientMusicLevel(SoundManager.Instance.timeFadeOutAmbienceLevel, false));
 
         if (cheat)
         {

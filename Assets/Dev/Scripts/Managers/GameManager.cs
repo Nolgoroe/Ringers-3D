@@ -74,6 +74,8 @@ public class GameManager : MonoBehaviour
 
     public Camera secondCam;
 
+    bool hasRestartedLevel;
+
     private void Awake()
     {
         Instance = this;
@@ -385,12 +387,15 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Change music");
 
-            StartCoroutine(SoundManager.Instance.FadeInAmbientMusic(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbience));
+            StartCoroutine(SoundManager.Instance.FadeInAmbientMusicLevel(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbience));
         }
         else
         {
-            Debug.Log("Just volume up");
-            StartCoroutine(SoundManager.Instance.FadeInOnlyVolume(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbience));         
+            if (!hasRestartedLevel)
+            {
+                Debug.Log("Just volume up");
+                StartCoroutine(SoundManager.Instance.FadeInOnlyVolume(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbience));
+            }
         }
     }
         
@@ -466,7 +471,7 @@ public class GameManager : MonoBehaviour
 
         powerupManager.instnatiatedZonesCounter = 0;
 
-        StartCoroutine(SoundManager.Instance.FadeInAmbientMusic(Sounds.LevelAmbience));
+        StartCoroutine(SoundManager.Instance.FadeInAmbientMusicLevel(Sounds.LevelAmbience));
 
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
 
@@ -832,6 +837,8 @@ public class GameManager : MonoBehaviour
 
     public void RestartCurrentLevel()
     {
+        hasRestartedLevel = true;
+
         string worldName = GameManager.Instance.currentLevel.worldName;
         string levelNum = GameManager.Instance.currentLevel.levelNum.ToString();
 

@@ -574,7 +574,10 @@ public class UIManager : MonoBehaviour
             GameManager.Instance.levelStarted = false;
             GameManager.Instance.timeStartLevel = "";
 
-            StartCoroutine(SoundManager.Instance.FadeOutAmbientMusic(0.5f));
+            if (SoundManager.Instance.audioSourceAmbience.isPlaying)
+            {
+                StartCoroutine(SoundManager.Instance.FadeOutAmbientMusicLevel(SoundManager.Instance.timeFadeOutAmbienceLevel, true));
+            }
 
             if (AnimalsManager.Instance.currentLevelLiveAnimal)
             {
@@ -2070,7 +2073,7 @@ public class UIManager : MonoBehaviour
                 DisplayDailyRewardsScreen();
 
                 PlayButton();
-                StartCoroutine(SoundManager.Instance.PlaySoundFadeOut());
+                StartCoroutine(SoundManager.Instance.PlaySoundAmbienceFadeOut(SoundManager.Instance.fadeOutIntroSound));
 
                 LeanTween.value(TEMPBgIntro, 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
                 {

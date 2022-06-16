@@ -53,6 +53,12 @@ public class SoundManager : MonoBehaviour
 
     public Toggle musicToggle, SFXToggle;
 
+    public float timeFadeInAmbienceLevel;
+    public float timeFadeOutAmbienceLevel;
+    public float fadeOutIntroSound;
+
+    public AudioSource forestSounds, normalAmbience;
+
     private void Start()
     {
         Instance = this;
@@ -111,7 +117,7 @@ public class SoundManager : MonoBehaviour
             audioSourceSFX.volume = vol;
         });
     }
-    public IEnumerator PlaySoundFadeOut()
+    public IEnumerator PlaySoundAmbienceFadeOut(float time)
     {
         Debug.Log("Fading out");
         if (muteMusic)
@@ -123,13 +129,13 @@ public class SoundManager : MonoBehaviour
 
         float vol = 1;
 
-        LeanTween.value(audioSourceSFX.gameObject, 1, 0, 0.5f).setOnUpdate((float val) =>
+        LeanTween.value(audioSourceSFX.gameObject, 1, 0, time).setOnUpdate((float val) =>
         {
             vol = val;
             audioSourceSFX.volume = vol;
         });
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(time);
         audioSourceSFX.Stop();
         audioSourceSFX.volume = 1;
 
@@ -174,47 +180,73 @@ public class SoundManager : MonoBehaviour
     {
         audioSourceAmbience.Stop();
     }
-    public IEnumerator FadeOutAmbientMusic(float time)
+    public IEnumerator FadeOutAmbientMusicLevel(float time, bool isStop)
     {
         if (muteMusic)
         {
             yield break;
         }
+
+
 
         float vol = 1;
 
-        LeanTween.value(audioSourceAmbience.gameObject, 1, 0, time).setOnUpdate((float val) =>
+        //LeanTween.value(forestSounds.gameObject, 1, 0, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
+        //{
+        //    vol = val;
+        //    forestSounds.volume = vol;
+        //});
+
+        //vol = 1;
+
+        LeanTween.value(normalAmbience.gameObject, 1, 0, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
         {
             vol = val;
-            audioSourceAmbience.volume = vol;
+            normalAmbience.volume = vol;
         });
 
         yield return new WaitForSeconds(time);
-        audioSourceAmbience.Stop();
+
+        if (isStop)
+        {
+            audioSourceAmbience.Stop();
+            forestSounds.Stop();
+            normalAmbience.Stop();
+        }
     }
-    public IEnumerator FadeInAmbientMusic(Sounds soundEnum)
+    public IEnumerator FadeInAmbientMusicLevel(Sounds soundEnum)
     {
         if (muteMusic)
         {
             yield break;
         }
 
-        audioSourceAmbience.volume = 0;
-
         int ran = Random.Range(0, (enumToSound[soundEnum].Length));
-        audioSourceAmbience.clip = enumToSound[soundEnum][ran];
+        normalAmbience.clip = enumToSound[soundEnum][ran];
 
-        audioSourceAmbience.Play();
+        forestSounds.volume = 0;
+        normalAmbience.volume = 0;
+
+        forestSounds.Play();
+        normalAmbience.Play();
 
         float vol = 0;
 
-        LeanTween.value(audioSourceAmbience.gameObject, 0, 1, 2).setOnUpdate((float val) =>
+        LeanTween.value(forestSounds.gameObject, 0, 1, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
         {
             vol = val;
-            audioSourceAmbience.volume = vol;
+            forestSounds.volume = vol;
         });
 
-        yield return new WaitForSeconds(2);
+        vol = 0;
+
+        LeanTween.value(normalAmbience.gameObject, 0, 1, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
+        {
+            vol = val;
+            normalAmbience.volume = vol;
+        });
+
+        yield return new WaitForSeconds(timeFadeInAmbienceLevel);
     }
 
     public IEnumerator FadeInOnlyVolume(Sounds soundEnum)
