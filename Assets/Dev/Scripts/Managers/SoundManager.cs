@@ -189,7 +189,7 @@ public class SoundManager : MonoBehaviour
 
 
 
-        float vol = 1;
+        float vol = normalAmbience.volume;
 
         //LeanTween.value(forestSounds.gameObject, 1, 0, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
         //{
@@ -199,7 +199,7 @@ public class SoundManager : MonoBehaviour
 
         //vol = 1;
 
-        LeanTween.value(normalAmbience.gameObject, 1, 0, time).setOnUpdate((float val) =>
+        LeanTween.value(normalAmbience.gameObject, normalAmbience.volume, 0, time).setOnUpdate((float val) =>
         {
             vol = val;
             normalAmbience.volume = vol;
@@ -207,9 +207,9 @@ public class SoundManager : MonoBehaviour
 
         if (isStop) /// temporary here
         {
-            vol = 1;
+            vol = forestSounds.volume;
 
-            LeanTween.value(forestSounds.gameObject, 1, 0, time).setOnUpdate((float val) =>
+            LeanTween.value(forestSounds.gameObject, forestSounds.volume, 0, time).setOnUpdate((float val) =>
             {
                 vol = val;
                 forestSounds.volume = vol;

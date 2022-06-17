@@ -41,7 +41,7 @@ public class AnimationManager : MonoBehaviour
 
     public float waitTimeVFXShakeStatue;
 
-    public Image fadeImageEndLevel;
+    //public Image fadeImageEndLevel;
 
     public bool noWaitPieces;
     public bool noWaitParticles;
@@ -150,7 +150,7 @@ public class AnimationManager : MonoBehaviour
     {
         instance = this;
         tempSubPieceArray = new List<SubPiece>();
-        fadeImageEndLevel.gameObject.SetActive(false);
+        //fadeImageEndLevel.gameObject.SetActive(false);
         endLevelAnimationON = false;
 
         destroyOnSkipEndLevel = null;
@@ -229,6 +229,8 @@ public class AnimationManager : MonoBehaviour
         }
 
         GameManager.Instance.sliceManager.endLevelAnimVFX.SetActive(true);
+        //// Dissolve Tiles Here
+        StartCoroutine(DissolveTiles());
 
 
 
@@ -257,8 +259,8 @@ public class AnimationManager : MonoBehaviour
             yield return new WaitForSeconds(waitTimeDissolveTiles);
         }
 
-        //// Dissolve Tiles Here
-        StartCoroutine(DissolveTiles());
+        ////// Dissolve Tiles Here
+        //StartCoroutine(DissolveTiles());
 
         yield return new WaitUntil(() => dissolveStart == true);
 
@@ -280,19 +282,19 @@ public class AnimationManager : MonoBehaviour
         //    }
         //}
 
-        yield return new WaitForSeconds(waitTimeFadeIn);
-        fadeImageEndLevel.gameObject.SetActive(true);
+        //yield return new WaitForSeconds(waitTimeFadeIn);
+        ////fadeImageEndLevel.gameObject.SetActive(true);
 
-        LeanTween.value(fadeImageEndLevel.gameObject, 0f, 1, fadingSpeedGameplay).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-        {
-            Image sr = fadeImageEndLevel;
-            Color newColor = sr.color;
-            newColor.a = val;
-            sr.color = newColor;
-        });
+        //LeanTween.value(fadeImageEndLevel.gameObject, 0f, 1, fadingSpeedGameplay).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        //{
+        //    Image sr = fadeImageEndLevel;
+        //    Color newColor = sr.color;
+        //    newColor.a = val;
+        //    sr.color = newColor;
+        //});
 
 
-        yield return new WaitForSeconds(waitTimeWinScreen);
+        //yield return new WaitForSeconds(waitTimeWinScreen);
 
 
         //Destroy(GameManager.Instance.gameBoard.gameObject);
@@ -339,15 +341,15 @@ public class AnimationManager : MonoBehaviour
         //UnDissolveTiles();
 
 
-        yield return new WaitForSeconds(waitTimeFadeOut);
+        //yield return new WaitForSeconds(waitTimeFadeOut);
 
-        LeanTween.value(fadeImageEndLevel.gameObject, 1, 0, fadingSpeedGameplay).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-        {
-            Image sr = fadeImageEndLevel;
-            Color newColor = sr.color;
-            newColor.a = val;
-            sr.color = newColor;
-        });
+        //LeanTween.value(fadeImageEndLevel.gameObject, 1, 0, fadingSpeedGameplay).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        //{
+        //    Image sr = fadeImageEndLevel;
+        //    Color newColor = sr.color;
+        //    newColor.a = val;
+        //    sr.color = newColor;
+        //});
 
         UIManager.Instance.TurnOffGameplayUI();
         UIManager.Instance.InGameUiScreens.SetActive(true);
@@ -375,8 +377,8 @@ public class AnimationManager : MonoBehaviour
 
         //yield return new WaitForSeconds(waitTimeFadeOut);
 
-        yield return new WaitUntil((() => fadeImageEndLevel.color.a <= 0.1f));
-        fadeImageEndLevel.gameObject.SetActive(false);
+        //yield return new WaitUntil((() => fadeImageEndLevel.color.a <= 0.1f));
+        //fadeImageEndLevel.gameObject.SetActive(false);
 
         UIManager.Instance.restartButton.interactable = true;
         UIManager.Instance.dealButton.interactable = true;
@@ -610,7 +612,7 @@ public class AnimationManager : MonoBehaviour
 
         GameManager.Instance.selectedLevelBG.transform.Find("color mask").gameObject.SetActive(false);
 
-        fadeImageEndLevel.gameObject.SetActive(false);
+        //fadeImageEndLevel.gameObject.SetActive(false);
 
 
         if (GameManager.Instance.gameBoard.gameObject)
