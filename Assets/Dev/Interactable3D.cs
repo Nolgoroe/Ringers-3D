@@ -38,7 +38,7 @@ public class Interactable3D : MonoBehaviour
                 if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (indexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && CheatingSaveData.instance.canRepeatLevels))
                 {
                     GameManager.Instance.levelStarted = true;
-                    GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
+                    //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
                     GameManager.Instance.ChooseLevel(indexInZone);
                     GameManager.Instance.setCurrentLevelBG(currentZoneID);
@@ -64,7 +64,7 @@ public class Interactable3D : MonoBehaviour
                 if (ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind)
                 {
                     GameManager.Instance.levelStarted = true;
-                    GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
+                    //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
                     GameManager.Instance.ChooseLevelGrind(indexInZone);
                     GameManager.Instance.setCurrentLevelBG(currentZoneID);
@@ -90,7 +90,7 @@ public class Interactable3D : MonoBehaviour
                 if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (indexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && CheatingSaveData.instance.canRepeatLevels))
                 {
                     GameManager.Instance.levelStarted = true;
-                    GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
+                    //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
                     GameManager.Instance.ChooseLevel(indexInZone);
                     GameManager.Instance.setCurrentLevelBG(currentZoneID);
@@ -118,7 +118,7 @@ public class Interactable3D : MonoBehaviour
                 if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (indexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && CheatingSaveData.instance.canRepeatLevels))
                 {
                     GameManager.Instance.levelStarted = true;
-                    GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
+                    //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
                     GameManager.Instance.ChooseLevel(indexInZone);
                     GameManager.Instance.setCurrentLevelBG(currentZoneID);
@@ -146,7 +146,7 @@ public class Interactable3D : MonoBehaviour
                 if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (indexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && CheatingSaveData.instance.canRepeatLevels))
                 {
                     GameManager.Instance.levelStarted = true;
-                    GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
+                    //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
                     GameManager.Instance.ChooseLevel(indexInZone);
                     GameManager.Instance.setCurrentLevelBG(currentZoneID);

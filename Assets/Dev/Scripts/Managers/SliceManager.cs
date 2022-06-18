@@ -144,9 +144,12 @@ public class SliceManager : MonoBehaviour
 
             if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || GameManager.Instance.currentLevel.isGrindLevel || CheatingSaveData.instance.canRepeatLevels)
             {
-                for (int i = 0; i < fullSlices.Count; i++)
+                if(GameManager.Instance.currentLevel.RewardBags.Length > 0)
                 {
-                    fullSlices[i].SetSliceLootData(GameManager.Instance.currentLevel.RewardBags[Random.Range(0, GameManager.Instance.currentLevel.RewardBags.Length)]);
+                    for (int i = 0; i < fullSlices.Count; i++)
+                    {
+                        fullSlices[i].SetSliceLootData(GameManager.Instance.currentLevel.RewardBags[Random.Range(0, GameManager.Instance.currentLevel.RewardBags.Length)]);
+                    }
                 }
             }
 

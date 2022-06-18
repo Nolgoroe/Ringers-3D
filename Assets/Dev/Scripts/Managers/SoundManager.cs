@@ -180,14 +180,18 @@ public class SoundManager : MonoBehaviour
     {
         audioSourceAmbience.Stop();
     }
+    
+    public void CallFadeOutAmbientMusicLevel(float time, bool isStop)
+    {
+        StartCoroutine(FadeOutAmbientMusicLevel(time, isStop));
+    }
+
     public IEnumerator FadeOutAmbientMusicLevel(float time, bool isStop)
     {
         if (muteMusic)
         {
             yield break;
         }
-
-
 
         float vol = normalAmbience.volume;
 
@@ -347,5 +351,15 @@ public class SoundManager : MonoBehaviour
 
             audioSourceSFX.volume = 1;
         }
+    }
+
+    public void CancelLeantweensSound()
+    {
+        LeanTween.cancel(normalAmbience.gameObject);
+        LeanTween.cancel(forestSounds.gameObject);
+    }
+    public void CancelCoRoutinesSound()
+    {
+        StopAllCoroutines();
     }
 }

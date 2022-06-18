@@ -160,7 +160,7 @@ public class CursorController : MonoBehaviour
                     Ray ray = Camera.main.ScreenPointToRay(touch.position);
                     RaycastHit hit;
 
-                    Debug.Log(IsPointerOverUIObject());
+                    Debug.Log(IsPointerOverUIObject() + "habazza");
 
                     if (IsPointerOverUIObject())
                     {

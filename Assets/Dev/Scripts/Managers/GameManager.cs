@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
 
     public Camera secondCam;
 
-    bool hasRestartedLevel;
+    public bool hasRestartedLevel;
 
     private void Awake()
     {
@@ -149,6 +149,9 @@ public class GameManager : MonoBehaviour
     {
         //if(isTutorial || currentLevel.isSpecificTutorial)
         //{
+
+        timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
+
         if (copyOfArrayOfPiecesTutorial == null)
         {
             copyOfArrayOfPiecesTutorial = new List<pieceDataStruct>();
@@ -382,6 +385,9 @@ public class GameManager : MonoBehaviour
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
         }
 
+        SoundManager.Instance.CancelLeantweensSound();
+        SoundManager.Instance.CancelCoRoutinesSound();
+
         //SoundManager.Instance.PlayAmbience(Sounds.LevelAmbience);
         if (!SoundManager.Instance.normalAmbience.isPlaying)
         {
@@ -401,6 +407,8 @@ public class GameManager : MonoBehaviour
         
     public void ResetDataStartBossLevel()
     {
+        timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
+
         if (currentLevel.ver1Boss)
         {
             BossBattleManager.instance.ResetDataBossVer1();
@@ -470,6 +478,9 @@ public class GameManager : MonoBehaviour
         InstantiatePrePiecesOnBoard();
 
         powerupManager.instnatiatedZonesCounter = 0;
+
+        SoundManager.Instance.CancelLeantweensSound();
+        SoundManager.Instance.CancelCoRoutinesSound();
 
         StartCoroutine(SoundManager.Instance.FadeInAmbientMusicLevel(Sounds.LevelAmbience));
 
@@ -920,6 +931,8 @@ public class GameManager : MonoBehaviour
     {
         //StartCoroutine(UIManager.Instance.FadeIntoLevel(nextIsTutorial));
         //yield return new WaitForSeconds(UIManager.Instance.fadeIntoLevelSpeed + 0.1f);
+        hasRestartedLevel = false;
+
         AnimationManager.instance.ResetAllSkipData();
 
         LootManager.Instance.rubiesToRecieveInLevel = 0;

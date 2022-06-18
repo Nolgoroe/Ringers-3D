@@ -573,10 +573,15 @@ public class UIManager : MonoBehaviour
         {
             GameManager.Instance.levelStarted = false;
             GameManager.Instance.timeStartLevel = "";
+            GameManager.Instance.hasRestartedLevel = false;
 
             if (SoundManager.Instance.normalAmbience.isPlaying)
             {
-                StartCoroutine(SoundManager.Instance.FadeOutAmbientMusicLevel(SoundManager.Instance.timeFadeOutAmbienceLevel, true));
+                SoundManager.Instance.CancelLeantweensSound();
+                SoundManager.Instance.CancelCoRoutinesSound();
+
+                //StartCoroutine(SoundManager.Instance.FadeOutAmbientMusicLevel(SoundManager.Instance.timeFadeOutAmbienceLevel, true));
+                SoundManager.Instance.CallFadeOutAmbientMusicLevel(SoundManager.Instance.timeFadeOutAmbienceLevel, true);
             }
 
             if (AnimalsManager.Instance.currentLevelLiveAnimal)

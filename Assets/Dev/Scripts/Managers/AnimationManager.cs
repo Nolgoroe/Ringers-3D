@@ -164,7 +164,7 @@ public class AnimationManager : MonoBehaviour
     }
     public void StartEndLevelAnimSequence(bool cheat)
     {
-        StartCoroutine(SoundManager.Instance.FadeOutAmbientMusicLevel(SoundManager.Instance.timeFadeOutAmbienceLevel, false));
+        SoundManager.Instance.CallFadeOutAmbientMusicLevel(SoundManager.Instance.timeFadeOutAmbienceLevel, false);
 
         if (cheat)
         {
@@ -518,7 +518,7 @@ public class AnimationManager : MonoBehaviour
         endLevelAnimationON = true;
         //StopCoroutine(endAnimToAnimal);
         StopAllCoroutines();
-        LeanTween.cancelAll();
+        //LeanTween.cancelAll();
 
         if (hasSkippedToAnimalAnim)
         {
