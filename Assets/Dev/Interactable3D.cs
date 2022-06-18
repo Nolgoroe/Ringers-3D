@@ -29,34 +29,29 @@ public class Interactable3D : MonoBehaviour
 
     public void LaunchNoramlLevel()
     {
-        if (!GameManager.Instance.levelStarted && GameManager.Instance.clickedPlayButton)
+        ZoneManager.Instance.SetCurrentZone(currentZoneID);
+
+        if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
         {
-            ZoneManager.Instance.SetCurrentZone(currentZoneID);
-
-            if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
+            if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (indexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && CheatingSaveData.instance.canRepeatLevels))
             {
-                if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (indexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && CheatingSaveData.instance.canRepeatLevels))
-                {
-                    GameManager.Instance.levelStarted = true;
-                    //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
+                GameManager.Instance.levelStarted = true;
+                //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
-                    GameManager.Instance.ChooseLevel(indexInZone);
-                    GameManager.Instance.setCurrentLevelBG(currentZoneID);
-                    //GameManager.Instance.CallStartLevel(false);
+                GameManager.Instance.ChooseLevel(indexInZone);
+                GameManager.Instance.setCurrentLevelBG(currentZoneID);
+                //GameManager.Instance.CallStartLevel(false);
 
-                    TurnOffVFX();
+                TurnOffVFX();
 
-                    GameManager.Instance.StartLevel(true);
-                }
-
+                GameManager.Instance.StartLevel(true);
             }
+
         }
     }
 
     public void LaunchGrindLevel()
     {
-        if (!GameManager.Instance.levelStarted && GameManager.Instance.clickedPlayButton)
-        {
             ZoneManager.Instance.SetCurrentZone(currentZoneID);
 
             if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
@@ -76,13 +71,10 @@ public class Interactable3D : MonoBehaviour
                 }
 
             }
-        }
     }
 
     public void LaunchTutorialLevel()
     {
-        if (!GameManager.Instance.levelStarted && GameManager.Instance.clickedPlayButton)
-        {
             ZoneManager.Instance.SetCurrentZone(currentZoneID);
 
             if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
@@ -103,13 +95,10 @@ public class Interactable3D : MonoBehaviour
                 }
 
             }
-        }
     }
 
     public void LaunchKeyLevel()
     {
-        if (!GameManager.Instance.levelStarted && GameManager.Instance.clickedPlayButton)
-        {
             ZoneManager.Instance.CheckZoneAwardedKey(currentZoneID);
             ZoneManager.Instance.SetUnlockZone(NextZoneID);
 
@@ -131,13 +120,10 @@ public class Interactable3D : MonoBehaviour
                 }
 
             }
-        }
     }
 
     public void LaunchKeyAndTutorialLevel()
     {
-        if (!GameManager.Instance.levelStarted && GameManager.Instance.clickedPlayButton)
-        {
             ZoneManager.Instance.CheckZoneAwardedKey(currentZoneID);
             ZoneManager.Instance.SetUnlockZone(NextZoneID);
 
@@ -159,13 +145,10 @@ public class Interactable3D : MonoBehaviour
                 }
 
             }
-        }
     }
 
     public void LaunchBossLevel(LevelScriptableObject bossLevel)
     {
-        if (!GameManager.Instance.levelStarted && GameManager.Instance.clickedPlayButton)
-        {
             if (PlayerManager.Instance.bossTicketCount > 0)
             {
                 GameManager.Instance.levelStarted = true;
@@ -179,7 +162,6 @@ public class Interactable3D : MonoBehaviour
                 GameManager.Instance.setCurrentLevelBG(0);
                 GameManager.Instance.startBossLevel(true);
             }
-        }
     }
 
     public void TurnOnVFX()

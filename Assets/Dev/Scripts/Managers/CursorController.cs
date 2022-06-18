@@ -12,6 +12,7 @@ public class CursorController : MonoBehaviour
     public static CursorController Instance;
     public LayerMask pieceLayer;
     public LayerMask boardCellLayer;
+    public LayerMask mapIconLayer;
 
     public Transform cursorPos;
     public Transform followerTarget;
@@ -149,7 +150,7 @@ public class CursorController : MonoBehaviour
 
 
 
-        if (!GameManager.Instance.levelStarted && !UIManager.isUsingUI && GameManager.Instance.clickedPlayButton && !pz.isDragging && !TutorialSequence.Instacne.duringSequence)
+        if (!GameManager.Instance.levelStarted && !UIManager.isUsingUI && GameManager.Instance.clickedPlayButton && !TutorialSequence.Instacne.duringSequence)
         {
             if (Input.touchCount > 0)
             {
@@ -158,33 +159,33 @@ public class CursorController : MonoBehaviour
                 if (touch.phase == TouchPhase.Ended)
                 {
                     Ray ray = Camera.main.ScreenPointToRay(touch.position);
-                    RaycastHit hit;
+                    //RaycastHit hit;
 
-                    Debug.Log(IsPointerOverUIObject() + "habazza");
+                    RaycastHit[] hits;
+                    hits = Physics.RaycastAll(ray, Mathf.Infinity, mapIconLayer);
 
-                    if (IsPointerOverUIObject())
+                    foreach (var item in hits)
                     {
-                        if (EventSystem.current.currentSelectedGameObject)
+                        if (item.transform.GetComponent<Interactable3D>())
                         {
-                            Debug.Log("Selected UI element: " + EventSystem.current.currentSelectedGameObject.name);
-
-                            Debug.Log("Over UI");
-                            OverUI = true;
-                            return;
+                            item.transform.GetComponent<Interactable3D>().ShootEvent();
                         }
                     }
-                    else
-                    {
-                        OverUI = false;
-                    }
 
-                    if (Physics.Raycast(ray, out hit))
-                    {
-                        if (hit.collider.CompareTag("Level Button") || hit.collider.CompareTag("Grind Level Button"))
-                        {
-                            hit.transform.GetComponent<Interactable3D>().ShootEvent();
-                        }
-                    }
+                    //if (Physics.Raycast(ray, out hit))
+                    //{
+                    //    if (hit.collider.CompareTag("Level Button") || hit.collider.CompareTag("Grind Level Button"))
+                    //    {
+                    //        hit.transform.GetComponent<Interactable3D>().ShootEvent();
+                    //    }
+                    //}
+                    //if (Physics.Raycast(ray, out hit))
+                    //{
+                    //    if (hit.collider.CompareTag("Level Button") || hit.collider.CompareTag("Grind Level Button"))
+                    //    {
+                    //        hit.transform.GetComponent<Interactable3D>().ShootEvent();
+                    //    }
+                    //}
                 }
             }
             else
