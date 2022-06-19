@@ -188,6 +188,19 @@ public class PlayfabManager : MonoBehaviour
 
         UIManager.Instance.SetCanRepeatLevelsDisplay();
 
+        UIManager.Instance.FocusOnArea(ZoneManager.Instance.unlockedZoneID[ZoneManager.Instance.unlockedZoneID.Count - 1]);
+
+
+        if (TutorialSaveData.Instance.hasFinishedDen)
+        {
+            UIManager.Instance.TurnOnHutAndInventroyButtons();
+        }
+
+        if (ZoneManager.Instance.hasFinishedVinebloom)
+        {
+            UIManager.Instance.TurnOnLeaderboardButtons();
+        }
+
         yield return new WaitForSeconds(2);
 
         Debug.LogError("Finished all Login Init sequence!!!!");
@@ -917,12 +930,14 @@ public class PlayfabManager : MonoBehaviour
     [ContextMenu("Reset All Data")]
     public void ResetAllData()
     {
-        ResetAction();
+        StartCoroutine(ResetAction());
         //StartCoroutine(ResetAction());
     }
-    void ResetAction()
+    IEnumerator ResetAction()
     {
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedReset, OnError);
+
+        yield return new WaitForSeconds(2);
 
         //doneWithStep = false;
         //UpdateUserDataRequest request = null;

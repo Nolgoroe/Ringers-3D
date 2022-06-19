@@ -602,7 +602,7 @@ public class AnimationManager : MonoBehaviour
         ConnectionManager.Instance.TurnOffAllConnectedVFX();
 
 
-
+        GameManager.Instance.sliceManager.endLevelAnimVFX.SetActive(false);
         //foreach (GameObject GO in turnOff)
         //{
         //    GO.SetActive(true);

@@ -108,6 +108,8 @@ public class UIManager : MonoBehaviour
     public GameObject gameplayCanvasBotomDeal;
     public GameObject gameplayCanvasBotomPotions;
 
+    public RectTransform zoneMoveObjectOnMap;
+
     public Image dewDropsImage;
 
     public Image tapControlsImage, dragControlsImage, tutorialDisableImage;
@@ -227,6 +229,11 @@ public class UIManager : MonoBehaviour
     public TMP_Text bossDamageDoneText;
     public TMP_Text bossV2TimerText;
 
+    [Header("Inventory Hut and Leaderboard")]
+    public GameObject[] inventoryButtons;
+    public GameObject[] hutButtons;
+    public GameObject[] LeaderboardButtons;
+
     private void Start()
     {
         Instance = this;
@@ -312,6 +319,22 @@ public class UIManager : MonoBehaviour
         disconnectedFromInternetScreen.SetActive(false);
         quitGameScreen.SetActive(false);
         activeScreen = null;
+
+
+        foreach (var item in inventoryButtons)
+        {
+            item.SetActive(false);
+        }
+
+        foreach (var item in hutButtons)
+        {
+            item.SetActive(false);
+        }
+
+        foreach (var item in LeaderboardButtons)
+        {
+            item.SetActive(false);
+        }
 
         dragControlsImage.sprite = toggleOnSprite;
         tapControlsImage.sprite = toggleOffSprite;
@@ -431,10 +454,7 @@ public class UIManager : MonoBehaviour
     {
         if (TutorialSequence.Instacne.duringSequence)
         {
-            if (requiredButtonForTutorialPhase != restartButton)
-            {
-                return;
-            }
+            return;
         }
 
         if (!isUsingUI)
@@ -672,8 +692,15 @@ public class UIManager : MonoBehaviour
             //    ZoneManagerHelpData.Instance.listOfAllZones[ID].SaveZone();
             //}
 
+            if(ZoneManager.Instance.zonesToUnlock.Count > 0)
+            {
+                ZoneManager.Instance.UnlockLevelViewSequence();
+            }
+            else
+            {
+                //FocusOnArea(ZoneManager.Instance.unlockedZoneID[ZoneManager.Instance.unlockedZoneID.Count - 1]);
+            }
 
-            ZoneManager.Instance.UnlockLevelViewSequence();
             UnlockLevels();
 
 
@@ -684,7 +711,7 @@ public class UIManager : MonoBehaviour
                     //gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(false);
                     //HudCanvasUIHEIGHLIGHTS.SetActive(true);
                     isUsingUI = true;
-
+                    TurnOnHutAndInventroyButtons();
                     TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
                 }
                 else
@@ -1173,10 +1200,7 @@ public class UIManager : MonoBehaviour
     {
         if (TutorialSequence.Instacne.duringSequence)
         {
-            if (requiredButtonForTutorialPhase != openSettingsButton)
-            {
-                return;
-            }
+            return;
         }
 
         OptionsScreen.SetActive(true);
@@ -1186,10 +1210,7 @@ public class UIManager : MonoBehaviour
     {
         if (TutorialSequence.Instacne.duringSequence)
         {
-            if (requiredButtonForTutorialPhase != openCheatSettingsButton)
-            {
-                return;
-            }
+            return;
         }
 
         cheatOptionsScreen.SetActive(true);
@@ -2422,5 +2443,31 @@ public class UIManager : MonoBehaviour
         gameplayCanvasBotom.SetActive(true);
         gameplayCanvasBotomDeal.SetActive(true);
         gameplayCanvasBotomPotions.SetActive(true);
+    }
+
+    public void FocusOnArea(int id)
+    {
+        zoneMoveObjectOnMap.anchoredPosition = new Vector3(zoneMoveObjectOnMap.transform.position.x, ZoneManagerHelpData.Instance.unlockPosPerZone[id].y, 0);
+    }
+
+    public void TurnOnHutAndInventroyButtons()
+    {
+        foreach (var item in inventoryButtons)
+        {
+            item.SetActive(true);
+        }
+
+        foreach (var item in hutButtons)
+        {
+            item.SetActive(true);
+        }
+    }
+
+    public void TurnOnLeaderboardButtons()
+    {
+        foreach (var item in LeaderboardButtons)
+        {
+            item.SetActive(true);
+        }
     }
 }

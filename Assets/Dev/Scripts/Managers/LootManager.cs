@@ -257,6 +257,13 @@ public class LootManager : MonoBehaviour
                 ZoneManagerHelpData.Instance.nextZoneCheck.isUnlocked = true;
                 ZoneManagerHelpData.Instance.nextZoneCheck.maxLevelReachedInZone = 1;
                 ZoneManager.Instance.unlockedZoneID.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
+                ZoneManager.Instance.UpdateMaxZoneIdReached(ZoneManagerHelpData.Instance.nextZoneCheck.id);
+
+                if(ZoneManagerHelpData.Instance.nextZoneCheck.id == 2)
+                {
+                    ZoneManager.Instance.hasFinishedVinebloom = true;
+                    UIManager.Instance.TurnOnLeaderboardButtons();
+                }
 
                 //ZoneManagerHelpData.Instance.nextZoneCheck.zoneHeader.sprite = Resources.Load<Sprite>(ZoneManagerHelpData.Instance.nextZoneCheck.unlockedZonePath);
 

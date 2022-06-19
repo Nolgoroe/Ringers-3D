@@ -755,6 +755,11 @@ public class TutorialSequence : MonoBehaviour
                 Debug.LogError("Potions should work now");
                 MaterialsAndForgeManager.Instance.ResetPotionDataAfterTutorial();
             }
+            if (currentSpecificTutorial == SpecificTutorialsEnum.DenScreen)
+            {
+                Debug.LogError("Den Tutorial Done");
+                TutorialSaveData.Instance.hasFinishedDen = true;
+            }
 
             UIManager.Instance.requiredButtonForTutorialPhase = null;
 

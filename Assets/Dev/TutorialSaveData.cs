@@ -12,6 +12,7 @@ public class TutorialSaveData : MonoBehaviour
     public List<int> completedSpecificTutorialLevelId;
 
     public bool hasFinishedIntro = false;
+    public bool hasFinishedDen = false;
     //public bool completedLootTutorial;
 
     string path;

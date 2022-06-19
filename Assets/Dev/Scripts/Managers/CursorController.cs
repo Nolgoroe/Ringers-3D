@@ -1033,6 +1033,7 @@ public class CursorController : MonoBehaviour
                 else
                 {
                     ReturnHome();
+                    return;
                 }
 
                 //if (followerTarget == toMove)

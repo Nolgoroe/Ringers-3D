@@ -11,6 +11,7 @@ public class ZoneManager : MonoBehaviour
     /// SAVE ZONE IS BEING CALLED TO MANY TIMES - OPTEMIZE THIS!
     /// </summary>
     public bool isKeyLevel;
+    public int maxZoneIdReached;
 
     string path;
 
@@ -21,6 +22,8 @@ public class ZoneManager : MonoBehaviour
     public List<int> unlockedZoneID;
 
     public static bool CanUnlockZone;
+
+    public bool hasFinishedVinebloom = false;
 
     private void Awake()
     {
@@ -163,5 +166,10 @@ public class ZoneManager : MonoBehaviour
         {
             CanUnlockZone = false;
         }
+    }
+
+    public void UpdateMaxZoneIdReached(int id)
+    {
+        maxZoneIdReached = id;
     }
 }

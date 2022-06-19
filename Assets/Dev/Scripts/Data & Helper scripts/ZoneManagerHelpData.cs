@@ -83,6 +83,8 @@ public class ZoneManagerHelpData : MonoBehaviour
                 ZoneManager.Instance.unlockedZoneID.Add(z.id);
             }
 
+            ZoneManager.Instance.UpdateMaxZoneIdReached(ZoneManager.Instance.unlockedZoneID[ZoneManager.Instance.unlockedZoneID.Count -1]);
+
             Interactable3D[] array = z.GetComponentsInChildren<Interactable3D>();
 
             foreach (Interactable3D child in array)
