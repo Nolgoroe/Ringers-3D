@@ -275,6 +275,8 @@ public class LootManager : MonoBehaviour
             giveKey = false;
         }
 
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+
         //PlayerManager.Instance.SavePlayerData();
         //PlayfabManager.instance.SaveAllGameData();
 

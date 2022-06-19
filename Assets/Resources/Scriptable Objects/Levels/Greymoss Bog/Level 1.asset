@@ -35,12 +35,12 @@ MonoBehaviour:
   specificAnimalForLevel: {fileID: 0}
   stoneTiles:
   - cellIndex: 0
-    randomValues: 1
+    randomValues: 0
     isNeutral: 1
     colorOfPieceRight: 0
     symbolOfPieceRight: 0
     colorOfPieceLeft: 0
-    symbolOfPieceLeft: 0
+    symbolOfPieceLeft: 1
   slicesToSpawn: []
   RewardBags: 0a0000000b000000
   levelAvailableColors: 00000000010000000200000003000000
@@ -50,7 +50,11 @@ MonoBehaviour:
   isTutorial: 1
   specificTutorialEnum: 0
   bottomUIToShow: 2
-  arrayOfPieces: []
+  arrayOfPieces:
+  - colorOfPieceRight: 0
+    symbolOfPieceRight: 1
+    colorOfPieceLeft: 1
+    symbolOfPieceLeft: 0
   specificSliceSpots: 
   specificSlicesShapes: 
   specificSlicesColors: 
