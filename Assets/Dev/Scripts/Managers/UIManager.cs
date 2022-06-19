@@ -183,6 +183,7 @@ public class UIManager : MonoBehaviour
 
 
     public ScrollRect forgeScrollRectView;
+    public ScrollRect mapScrollRect;
 
     //public Button[] levelButtons;
     public Slider bossHealthSlider;
@@ -719,6 +720,8 @@ public class UIManager : MonoBehaviour
                     BossBattleManager.instance.completedRings.Clear();
                 }
             }
+
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
         }
 
         if (currentCanvas == ringersHutDisplay)

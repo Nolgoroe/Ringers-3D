@@ -890,6 +890,8 @@ public class AnimationManager : MonoBehaviour
         endLevelAnimationON = false;
 
         //ResetAllSkipData();
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
     }
 
     public void SkipBoardAnim()
@@ -1028,6 +1030,8 @@ public class AnimationManager : MonoBehaviour
         endLevelAnimationON = false;
 
         //ResetAllSkipData();
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
     }
     private void CheckShowLootTutorial()
     {

@@ -150,7 +150,7 @@ public class CursorController : MonoBehaviour
 
 
 
-        if (!GameManager.Instance.levelStarted && !UIManager.isUsingUI && GameManager.Instance.clickedPlayButton && !TutorialSequence.Instacne.duringSequence)
+        if (!GameManager.Instance.levelStarted && !pz.isDragging && !UIManager.isUsingUI && GameManager.Instance.clickedPlayButton && !TutorialSequence.Instacne.duringSequence)
         {
             if (Input.touchCount > 0)
             {

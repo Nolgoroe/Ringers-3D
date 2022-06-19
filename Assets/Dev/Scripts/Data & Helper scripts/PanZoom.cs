@@ -27,7 +27,7 @@ public class PanZoom : MonoBehaviour
     public float topBound;
     public float bottomBound;
 
-
+    public float dragDetectThreshhold;
     [Header("Data for Den screen")]
 
     public bool isInDenScreen = false;
@@ -101,6 +101,10 @@ public class PanZoom : MonoBehaviour
 
         if (!UIManager.isUsingUI && !CursorController.OverUI)
         {
+            if (UIManager.Instance.mapScrollRect.velocity.magnitude < dragDetectThreshhold)
+            {
+                isDragging = false;
+            }
             //leftBound = (horzExtent - (SpriteBounds.bounds.size.x / 2.0f));
             //rightBound = ((SpriteBounds.bounds.size.x / 2.0f - horzExtent));
 
@@ -136,7 +140,11 @@ public class PanZoom : MonoBehaviour
             {
                 if (touch.phase == TouchPhase.Moved)
                 {
-                    isDragging = true;
+                    if(UIManager.Instance.mapScrollRect.velocity.magnitude > dragDetectThreshhold)
+                    {
+                        isDragging = true;
+                    }
+
                     //Vector2 touchDeltaPos = touch.deltaPosition;
 
                     //Vector3 newPos = new Vector3(mainCam.transform.position.x - touchDeltaPos.x, mainCam.transform.position.y - touchDeltaPos.y, 0);
