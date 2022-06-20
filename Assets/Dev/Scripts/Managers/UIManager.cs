@@ -513,10 +513,10 @@ public class UIManager : MonoBehaviour
             sureWantToRestartNoLoot.SetActive(false);
         }
 
-        if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
-        {
-            TutorialSequence.Instacne.TurnOnTutorialScreensAfterRestart();
-        }
+        //if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
+        //{
+        //    TutorialSequence.Instacne.TurnOnTutorialScreensAfterRestart();
+        //}
     }
     public void SureWantToRestartMessageYes(bool withLoot)
     {

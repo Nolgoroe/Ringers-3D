@@ -1045,9 +1045,19 @@ public class PlayfabManager : MonoBehaviour
             DisplayName = userNameInput.text
         };
 
-        PlayFabClientAPI.RegisterPlayFabUser(request, OnRegisterSuccess, OnError);
+        PlayFabClientAPI.RegisterPlayFabUser(request, OnRegisterSuccess, OnRegisterFail);
     }
-    
+
+    void OnRegisterFail(PlayFabError error)
+    {
+        displayMessages.text = "Name must be between 3 and 20 characters!";
+
+        //isSuccessfullConnection = false;
+        successfullyDoneWithStep = false;
+
+        Debug.LogError(error.GenerateErrorReport());
+    }
+
     void OnRegisterSuccess(RegisterPlayFabUserResult result)
     {
         displayMessages.text = "Registered Successfully!";
