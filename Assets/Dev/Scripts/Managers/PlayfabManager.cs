@@ -219,6 +219,8 @@ public class PlayfabManager : MonoBehaviour
 
     void OnError(PlayFabError error)
     {
+        ClearSystemMessage();
+
         displayMessages.text = error.ErrorMessage;
 
         //isSuccessfullConnection = false;
@@ -233,6 +235,8 @@ public class PlayfabManager : MonoBehaviour
     }
     void OnErrorLogin(PlayFabError error)
     {
+        ClearSystemMessage();
+
         displayMessages.text = error.ErrorMessage;
 
         Debug.LogError(error.GenerateErrorReport());
@@ -1050,16 +1054,36 @@ public class PlayfabManager : MonoBehaviour
 
     void OnRegisterFail(PlayFabError error)
     {
-        displayMessages.text = "Name must be between 3 and 20 characters!";
+        ClearSystemMessage();
+
+        int textLength = userNameInput.text.Length;
+        string[] parts = userNameInput.text.Split(' ');
+
+
 
         //isSuccessfullConnection = false;
         successfullyDoneWithStep = false;
 
         Debug.LogError(error.GenerateErrorReport());
+
+        if(parts.Length > 1)
+        {
+            displayMessages.text = "Name cannot contain spaces!";
+            return;
+        }
+
+        if (textLength < 3)
+        {
+            displayMessages.text = "Name must be between 3 and 20 characters!";
+            return;
+        }
+
     }
 
     void OnRegisterSuccess(RegisterPlayFabUserResult result)
     {
+        ClearSystemMessage();
+
         displayMessages.text = "Registered Successfully!";
         playerName = userNameInput.text;
         UIManager.Instance.nameOfPlayer.text = "Username: " + playerName;
@@ -1107,7 +1131,9 @@ public class PlayfabManager : MonoBehaviour
 
     void OnLoginSuccess(LoginResult result)
     {
-        if(result.InfoResultPayload.PlayerProfile != null)
+        ClearSystemMessage();
+
+        if (result.InfoResultPayload.PlayerProfile != null)
         {
             playerName = result.InfoResultPayload.PlayerProfile.DisplayName;
             UIManager.Instance.nameOfPlayer.text = "Username: " + playerName;
@@ -1225,5 +1251,10 @@ public class PlayfabManager : MonoBehaviour
                 RewardsManager.Instance.CalculateReturnDeltaTime();
             }
         }
+    }
+
+    public void ClearSystemMessage()
+    {
+        displayMessages.text = " ";
     }
 }

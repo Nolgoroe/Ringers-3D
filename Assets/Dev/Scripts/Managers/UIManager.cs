@@ -2156,9 +2156,14 @@ public class UIManager : MonoBehaviour
                 //});
 
             }
+
+            yield return new WaitForSeconds(speedFadeInIntro);
+
+            introImages[introImageIndex - 1].imageObject.SetActive(false);
         }
 
         yield return new WaitForSeconds(speedFadeInIntro + 0.1f);
+
         canAdvanceIntro = true;
         introImageTextIndex++;
     }
