@@ -48,6 +48,7 @@ public class PlayfabManager : MonoBehaviour
     public TMP_InputField userNameInput;
     public TMP_Text displayMessages;
 
+    public TMP_InputField newDisplayNameInputField;
 
     public Transform leaderboardDisplayZone;
     public GameObject leaderboardPersonPrefab;
@@ -523,7 +524,11 @@ public class PlayfabManager : MonoBehaviour
 
     public void SaveGameData(SystemsToSave[] systemsToSave)
     {
-        Debug.Log("Inside Save all game data script");
+        foreach (var item in systemsToSave)
+        {
+            Debug.Log("Inside Save game. systems: " + item);
+        }
+
         string savedData = " ";
 
         //UpdateAndSaveTimeSensitiveData();
@@ -1035,7 +1040,7 @@ public class PlayfabManager : MonoBehaviour
 
     IEnumerator logOutAction()
     {
-        yield return null;
+        yield return new WaitForSeconds(3);
         SceneManager.LoadScene(0);
     }
 
@@ -1126,7 +1131,7 @@ public class PlayfabManager : MonoBehaviour
                 GetPlayerProfile = true
             },
         };
-        PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccess, OnError);
+        PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccess, OnLoginError);
     }
 
     void OnLoginSuccess(LoginResult result)
@@ -1144,6 +1149,35 @@ public class PlayfabManager : MonoBehaviour
         //doneWithStep = true; //setup fir the loginInit function
 
         StartCoroutine(LoginInit());
+    }
+    void OnLoginError(PlayFabError error)
+    {
+        ClearSystemMessage();
+
+        Debug.LogError(error.GenerateErrorReport());
+
+        int textLength = userNameInput.text.Length;
+        string[] parts = userNameInput.text.Split(' ');
+
+
+
+        //isSuccessfullConnection = false;
+        successfullyDoneWithStep = false;
+
+        Debug.LogError(error.GenerateErrorReport());
+
+        if (parts.Length > 1)
+        {
+            displayMessages.text = "Name cannot contain spaces!";
+            return;
+        }
+
+        if (textLength < 3)
+        {
+            displayMessages.text = "Name must be between 3 and 20 characters!";
+            return;
+        }
+
     }
 
 
@@ -1166,42 +1200,42 @@ public class PlayfabManager : MonoBehaviour
     }
 
     // check if need this AND Focus
-    private void OnApplicationPause(bool pause)
-    {
-        //Debug.Log("Pause is: " + pause);
-       // Debug.Log("is Logged In is: " + isLoggedIn);
+    //private void OnApplicationPause(bool pause)
+    //{
+    //    //Debug.Log("Pause is: " + pause);
+    //   // Debug.Log("is Logged In is: " + isLoggedIn);
 
-        if (pause && isLoggedIn)
-        {
-            //Debug.Log("On Application Pause");
-            //GetServerCurrentTime();
-            //yield return new WaitUntil(() => doneWithStep == true);
+    //    if (pause && isLoggedIn)
+    //    {
+    //        //Debug.Log("On Application Pause");
+    //        //GetServerCurrentTime();
+    //        //yield return new WaitUntil(() => doneWithStep == true);
 
-            //DateTime timeSpanSinceStart = Convert.ToDateTime();
-
-
-            DateTime timeToSave = currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
+    //        //DateTime timeSpanSinceStart = Convert.ToDateTime();
 
 
+    //        DateTime timeToSave = currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
 
-           // Debug.Log(timeToSave + "Pause time!");
 
-            RewardsManager.Instance.UpdateQuitTime(timeToSave);
-            DewDropsManager.Instance.UpdateQuitTime(timeToSave);
 
-            SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
+    //       // Debug.Log(timeToSave + "Pause time!");
 
-            //Debug.Log("Saved all data! - PAUSE");
-        }
-        else if(!pause && isLoggedIn)
-        {
-            DewDropsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
-            DewDropsManager.Instance.CalculateReturnDeltaTime();
+    //        RewardsManager.Instance.UpdateQuitTime(timeToSave);
+    //        DewDropsManager.Instance.UpdateQuitTime(timeToSave);
 
-            RewardsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
-            RewardsManager.Instance.CalculateReturnDeltaTime();
-        }
-    }
+    //        SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
+
+    //        //Debug.Log("Saved all data! - PAUSE");
+    //    }
+    //    else if(!pause && isLoggedIn)
+    //    {
+    //        DewDropsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
+    //        DewDropsManager.Instance.CalculateReturnDeltaTime();
+
+    //        RewardsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
+    //        RewardsManager.Instance.CalculateReturnDeltaTime();
+    //    }
+    //}
 
 
 
@@ -1216,41 +1250,207 @@ public class PlayfabManager : MonoBehaviour
 
     }
     // check if need this AND Pause 
-    private void OnApplicationFocus(bool focus)
+    //private void OnApplicationFocus(bool focus)
+    //{
+    //    if (Application.isEditor)
+    //    {
+    //        //Debug.Log("focus is: " + focus);
+    //        //Debug.Log("is Logged In is: " + isLoggedIn);
+
+    //        if (!focus && isLoggedIn)
+    //        {
+    //            //Debug.Log("On Application Focus");
+    //            //GetServerCurrentTime();
+    //            //yield return new WaitUntil(() => doneWithStep == true);
+
+    //            DateTime timeToSave = currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
+
+
+    //            Debug.Log(timeToSave + "Focus time!");
+
+
+    //            RewardsManager.Instance.UpdateQuitTime(timeToSave);
+    //            DewDropsManager.Instance.UpdateQuitTime(timeToSave);
+
+    //            SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
+
+    //            //Debug.Log("Saved all data! - focus");
+    //        }
+    //        else if (focus && isLoggedIn)
+    //        {
+    //            DewDropsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
+    //            DewDropsManager.Instance.CalculateReturnDeltaTime();
+
+    //            RewardsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
+    //            RewardsManager.Instance.CalculateReturnDeltaTime();
+    //        }
+    //    }
+    //}
+
+    public void PlayButtonAutoRegister()
     {
-        if (Application.isEditor)
+        ClearSystemMessage();
+
+        GetDeviceID(out string androidID, out string customID);
+
+        string name = string.Empty;
+
+        if (!string.IsNullOrEmpty(androidID))
         {
-            //Debug.Log("focus is: " + focus);
-            //Debug.Log("is Logged In is: " + isLoggedIn);
+            name = androidID;
+        }
+        else if (!string.IsNullOrEmpty(customID))
+        {
+            name = customID;
+        }
+        else
+        {
+            Debug.LogError("PROBLEM HERE");
+            return;
+        }
 
-            if (!focus && isLoggedIn)
+        playerName = name;
+
+
+        var request = new LoginWithPlayFabRequest
+        {
+            Username = playerName,
+            Password = "123456",
+            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
             {
-                //Debug.Log("On Application Focus");
-                //GetServerCurrentTime();
-                //yield return new WaitUntil(() => doneWithStep == true);
+                GetPlayerProfile = true
+            },
+        };
 
-                DateTime timeToSave = currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
+        PlayFabClientAPI.LoginWithPlayFab(request, OnPressPlayPlayerExists, OnPressPlayPlayerExistsError);
+    }
 
+    void GetDeviceID(out string androidID, out string customID)
+    {
+        androidID = string.Empty;
+        customID = string.Empty;
 
-                Debug.Log(timeToSave + "Focus time!");
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
 
+            AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+            AndroidJavaObject contentResolver = activity.Call<AndroidJavaObject>("getContentResolver");
+            AndroidJavaClass secure = new AndroidJavaClass("android.provider.Settings$Secure");
+            androidID = secure.CallStatic<string>("getString", contentResolver, "android_id");
 
-                RewardsManager.Instance.UpdateQuitTime(timeToSave);
-                DewDropsManager.Instance.UpdateQuitTime(timeToSave);
-
-                SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
-
-                //Debug.Log("Saved all data! - focus");
+            if(androidID.Length > 20)
+            {
+                androidID = androidID.Substring(0, 20);
             }
-            else if (focus && isLoggedIn)
+            else
             {
-                DewDropsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
-                DewDropsManager.Instance.CalculateReturnDeltaTime();
-
-                RewardsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
-                RewardsManager.Instance.CalculateReturnDeltaTime();
+                androidID = androidID.Substring(0, androidID.Length);
             }
         }
+        else
+        {
+            customID = SystemInfo.deviceUniqueIdentifier;
+
+            if (customID.Length > 20)
+            {
+                customID = customID.Substring(0, 20);
+            }
+            else
+            {
+                customID = customID.Substring(0, customID.Length);
+            }
+
+        }
+    }
+
+    void OnPressPlayPlayerExists(LoginResult result)
+    {
+        Debug.LogError("Found User");
+
+        ClearSystemMessage();
+
+        var request = new GetAccountInfoRequest
+        {
+            Username = playerName,
+        };
+
+        PlayFabClientAPI.GetAccountInfo(request, OnGetExsistingPlayerDataSuccess, OnGetExsistingPlayerDataError);
+
+
+    }
+
+    void OnGetExsistingPlayerDataSuccess(GetAccountInfoResult result)
+    {
+        UIManager.Instance.nameOfPlayer.text = "Username: " + result.AccountInfo.TitleInfo.DisplayName;
+
+        StartCoroutine(LoginInit());
+    }
+    void OnGetExsistingPlayerDataError(PlayFabError error)
+    {
+        Debug.LogError("FAILED");
+
+        Debug.LogError(error.GenerateErrorReport());
+    }
+
+    void OnPressPlayPlayerExistsError(PlayFabError error)
+    {
+        Debug.LogError("No such user");
+
+        var request = new RegisterPlayFabUserRequest
+        {
+            Username = playerName,
+            Password = "123456",
+            RequireBothUsernameAndEmail = false,
+            DisplayName = playerName
+        };
+
+        PlayFabClientAPI.RegisterPlayFabUser(request, OnPressPlayPlayerCreated, OnPressPlayPlayerCreatedFailed);
+    }
+
+
+    void OnPressPlayPlayerCreated(RegisterPlayFabUserResult result)
+    {
+        ClearSystemMessage();
+
+        displayMessages.text = "Registered Successfully!";
+
+        UIManager.Instance.nameOfPlayer.text = "Username: " + playerName;
+
+        SetGameVersionSameAsServer();
+
+        StartCoroutine(LoginInit());
+    }
+
+    void OnPressPlayPlayerCreatedFailed(PlayFabError error)
+    {
+        Debug.LogError("FAILED");
+
+        Debug.LogError(error.GenerateErrorReport());
+
+    }
+
+    public void ChangeDisplayName()
+    {
+        var request = new UpdateUserTitleDisplayNameRequest
+        {
+            DisplayName = newDisplayNameInputField.text,
+        };
+
+        PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnUpdateNewDisplayNameSuccess, OnUpdateNewDisplayNameError);
+    }
+
+    void OnUpdateNewDisplayNameSuccess(UpdateUserTitleDisplayNameResult result)
+    {
+        Debug.LogError("SUCCESS!");
+
+        UIManager.Instance.nameOfPlayer.text = "Username: " + newDisplayNameInputField.text;
+    }
+    void OnUpdateNewDisplayNameError(PlayFabError error)
+    {
+        Debug.LogError("FAILED");
+
+        Debug.LogError(error.GenerateErrorReport());
     }
 
     public void ClearSystemMessage()

@@ -1218,16 +1218,6 @@ public class UIManager : MonoBehaviour
     }
     public void CloseGame()
     {
-        DateTime timeToSave = PlayfabManager.instance.currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
-
-
-
-        Debug.Log(timeToSave + "Pause time!");
-
-        RewardsManager.Instance.UpdateQuitTime(timeToSave);
-        DewDropsManager.Instance.UpdateQuitTime(timeToSave);
-
-        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
 
         Debug.Log("Saved all data! - close game");
 
@@ -2413,6 +2403,17 @@ public class UIManager : MonoBehaviour
 
     public void ShowAreYouSureQuitScreen()
     {
+        DateTime timeToSave = PlayfabManager.instance.currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
+
+
+
+        Debug.Log(timeToSave + "Pause time!");
+
+        RewardsManager.Instance.UpdateQuitTime(timeToSave);
+        DewDropsManager.Instance.UpdateQuitTime(timeToSave);
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
+
         quitGameScreen.SetActive(true);
     }
 
