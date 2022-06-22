@@ -1647,9 +1647,8 @@ public class UIManager : MonoBehaviour
         activeScreen = sureWantToLogOutScreen;
         sureWantToLogOutScreen.SetActive(true);
 
-        DateTime timeToSave = PlayfabManager.instance.currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
-        RewardsManager.Instance.UpdateQuitTime(timeToSave);
-        DewDropsManager.Instance.UpdateQuitTime(timeToSave);
+        //DateTime timeToSave = PlayfabManager.instance.currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
+        StartCoroutine(PlayfabManager.instance.GetServerCurrentTimeUpdated());
     }
     public void SureWantToLogOutYes()
     {
@@ -2412,14 +2411,16 @@ public class UIManager : MonoBehaviour
 
     public void ShowAreYouSureQuitScreen()
     {
-        DateTime timeToSave = PlayfabManager.instance.currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
+        //DateTime timeToSave = PlayfabManager.instance.currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
 
 
 
-        Debug.Log(timeToSave + "Pause time!");
+        //Debug.Log(timeToSave + "Pause time!");
 
-        RewardsManager.Instance.UpdateQuitTime(timeToSave);
-        DewDropsManager.Instance.UpdateQuitTime(timeToSave);
+        //RewardsManager.Instance.UpdateQuitTime(timeToSave);
+        //DewDropsManager.Instance.UpdateQuitTime(timeToSave);
+
+        StartCoroutine(PlayfabManager.instance.GetServerCurrentTimeUpdated());
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
 

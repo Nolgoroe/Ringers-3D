@@ -163,9 +163,11 @@ public class PlayfabManager : MonoBehaviour
         //Debug.Log("Debug 2 " + currentTimeReference);
         if (currentTimeReference != DateTime.MinValue)
         {
+            Debug.LogError("Updated Time");
             RewardsManager.Instance.UpdateCurrentTime(currentTimeReference);
             DewDropsManager.Instance.UpdateCurrentTime(currentTimeReference);
         }
+        yield return new WaitForSeconds(1);
 
         yield return StartCoroutine(GetDailyRewardsData());
 
@@ -664,9 +666,10 @@ public class PlayfabManager : MonoBehaviour
     {
         Debug.Log("Save time sensitive data");
 
-        DateTime timeToSave = currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
-        RewardsManager.Instance.UpdateQuitTime(timeToSave);
-        DewDropsManager.Instance.UpdateQuitTime(timeToSave);
+        //DateTime timeToSave = currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
+        //RewardsManager.Instance.UpdateQuitTime(timeToSave);
+        //DewDropsManager.Instance.UpdateQuitTime(timeToSave);
+        StartCoroutine(GetServerCurrentTimeUpdated());
 
         UpdateUserDataRequest request = null;
         string saveDataDrop = " ";
@@ -1235,12 +1238,44 @@ public class PlayfabManager : MonoBehaviour
     void OnGetTimeSuccess(GetTimeResult result)
     {
         currentTimeReference = result.Time;
-        //Debug.Log(result.Time + " what?");
         //Debug.Log("Debug 1 " + currentTimeReference);
 
         successfullyDoneWithStep = true;
     }
     void OnGetTimeFail(PlayFabError error)
+    {
+        GooglePlayConnectManager.instance.desc.text = "Fail! " + error.GenerateErrorReport();
+
+        Debug.LogError("FAILED");
+
+        Debug.LogError(error.GenerateErrorReport());
+
+        successfullyDoneWithStep = true;
+    }
+
+    public IEnumerator GetServerCurrentTimeUpdated()
+    {
+        //doneWithStep = false;
+        PlayFabClientAPI.GetTime(new GetTimeRequest(), OnGetTimeUpdatedSuccess, OnGetTimeUpdatedFail);
+        yield return new WaitUntil(() => successfullyDoneWithStep != null);
+
+        Debug.LogError("Got server time");
+    }
+
+    void OnGetTimeUpdatedSuccess(GetTimeResult result)
+    {
+        currentTimeReference = result.Time;
+        Debug.LogError(result.Time + " what?");
+
+        RewardsManager.Instance.UpdateQuitTime(currentTimeReference);
+        DewDropsManager.Instance.UpdateQuitTime(currentTimeReference);
+        //Debug.Log("Debug 1 " + currentTimeReference);
+
+        SaveGameData(new SystemsToSave[] { SystemsToSave.DewDrops });
+
+        successfullyDoneWithStep = true;
+    }
+    void OnGetTimeUpdatedFail(PlayFabError error)
     {
         GooglePlayConnectManager.instance.desc.text = "Fail! " + error.GenerateErrorReport();
 
