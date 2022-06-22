@@ -1319,6 +1319,11 @@ public class UIManager : MonoBehaviour
         {
             ButtonsPerZone BPZ = buttonsPerZone.Where(p => p.theZone == ZoneManagerHelpData.Instance.listOfAllZones[ID]).Single();
 
+            foreach (GameObject item in BPZ.zone3DButtons)
+            {
+                item.GetComponent<Interactable3D>().TurnOffVFX();
+            }
+
             IconSpritesPerZone ISPZ = ZoneManagerHelpData.Instance.iconsPerZone.Where(p => p.zone == BPZ.theZone).Single();
 
 
@@ -1641,6 +1646,10 @@ public class UIManager : MonoBehaviour
 
         activeScreen = sureWantToLogOutScreen;
         sureWantToLogOutScreen.SetActive(true);
+
+        DateTime timeToSave = PlayfabManager.instance.currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
+        RewardsManager.Instance.UpdateQuitTime(timeToSave);
+        DewDropsManager.Instance.UpdateQuitTime(timeToSave);
     }
     public void SureWantToLogOutYes()
     {

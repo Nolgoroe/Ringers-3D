@@ -15,8 +15,14 @@ public class DewDropsManager : MonoBehaviour
 
     public string savedDateTime;
     public DateTime currentTime;
+    public string CurrentTimeTemp;
+
     public string path;
 
+    private void Update()
+    {
+        CurrentTimeTemp = currentTime.ToString();
+    }
     private void Awake()
     {
         Instance = this;
@@ -55,7 +61,7 @@ public class DewDropsManager : MonoBehaviour
         {
             
             //Debug.Log("has previos save time: " + savedDateTime);
-            TimeSpan deltaDateTime = Convert.ToDateTime(savedDateTime) - currentTime;
+            TimeSpan deltaDateTime = currentTime - Convert.ToDateTime(savedDateTime);
 
             //Debug.Log("THIS IS THE DELTA TIME: " + deltaDateTime);
 
@@ -73,7 +79,7 @@ public class DewDropsManager : MonoBehaviour
     private void GiveElapsedTimeDewDrops(TimeSpan elapsedTime)
     {
         //timeLeftToGiveDrop = timeLeftToGiveDrop - Math.Abs((float)elapsedTime.TotalSeconds);
-        timeLeftToGiveDrop -= -((float)elapsedTime.TotalSeconds % (timeTillGiveDrewDropStatic * 60));
+        timeLeftToGiveDrop -= ((float)elapsedTime.TotalSeconds % (timeTillGiveDrewDropStatic * 60));
         int absDrops = 0;
 
         if (Mathf.Abs((float)elapsedTime.TotalMinutes) >= 1)
@@ -84,10 +90,15 @@ public class DewDropsManager : MonoBehaviour
         }
         else
         {
+            Debug.LogError("1111 GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
+
             if (timeLeftToGiveDrop < 0)
             {
                 timeLeftToGiveDrop = (timeTillGiveDrewDropStatic * 60) + timeLeftToGiveDrop;
-                //Debug.Log("GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
+
+                savedDateTime = DateTime.Now.ToString();
+
+                Debug.LogError("GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
                 GiveDrop(1);
             }
             else
@@ -162,6 +173,8 @@ public class DewDropsManager : MonoBehaviour
 
                 if (PlayerManager.Instance.collectedDewDrops < maxDrops)
                 {
+                    Debug.LogError("222 GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
+
                     GiveDrop(1);
                 }
             }
@@ -186,6 +199,7 @@ public class DewDropsManager : MonoBehaviour
 
     public void GiveDrop(int amount)
     {
+        Debug.LogError("Gave drop");
         PlayerManager.Instance.collectedDewDrops += amount;
 
         if (PlayerManager.Instance.collectedDewDrops > maxDrops)
@@ -197,6 +211,8 @@ public class DewDropsManager : MonoBehaviour
         //UIManager.Instance.RefreshDewDropsDisplay(PlayerManager.Instance.collectedDewDrops);
 
         //PlayerManager.Instance.SavePlayerData();
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.DewDrops});
     }
 
     public void UpdateCurrentTime(DateTime time)

@@ -56,6 +56,12 @@ public class PlayfabManager : MonoBehaviour
 
     public DateTime currentTimeReference;
 
+    public string currentTimeRef;
+
+    private void Update()
+    {
+        currentTimeRef = currentTimeReference.ToString();
+    }
     private void Awake()
     {
         instance = this;
@@ -115,8 +121,10 @@ public class PlayfabManager : MonoBehaviour
         PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccess, OnErrorLogin);
     }
 
-    IEnumerator LoginInit()
+    public IEnumerator LoginInit()
     {
+        UIManager.Instance.startAppLoadingScreen.SetActive(true);
+
         successfullyDoneWithStep = null;
 
         displayMessages.text = "Connecting to server";
@@ -211,9 +219,13 @@ public class PlayfabManager : MonoBehaviour
             UIManager.Instance.PlayButton();
         }
 
+        UIManager.Instance.startAppLoadingScreen.SetActive(false);
 
         SaveGameData(new SystemsToSave[] { SystemsToSave.ALL});
 
+        CancelInvoke("UpdateAndSaveTimeSensitiveData");
+
+        yield return new WaitForSeconds(1);
 
         InvokeRepeating("UpdateAndSaveTimeSensitiveData", 1, 5);
     }
@@ -361,7 +373,7 @@ public class PlayfabManager : MonoBehaviour
     IEnumerator GetDailyRewardsData()
     {
         //doneWithStep = false;
-        PlayFabClientAPI.GetTitleData(new GetTitleDataRequest(), onDailyRewardsDataGet, OnError);
+        PlayFabClientAPI.GetTitleData(new GetTitleDataRequest(), onDailyRewardsDataGet, OnDailyRewardsDataGetFail);
         yield return new WaitUntil(() => successfullyDoneWithStep != null);
 
         Debug.LogError("Got daily rewards data!!!");
@@ -390,6 +402,14 @@ public class PlayfabManager : MonoBehaviour
         successfullyDoneWithStep = true;
     }
 
+    void OnDailyRewardsDataGetFail(PlayFabError error)
+    {
+        GooglePlayConnectManager.instance.desc.text = "Fail! " + error.GenerateErrorReport();
+
+        Debug.LogError("FAILED");
+
+        Debug.LogError(error.GenerateErrorReport());
+    }
     [ContextMenu("Load ALL game data from server - STEP 1")]
     public IEnumerator LoadupAllGameData()
     {
@@ -402,7 +422,7 @@ public class PlayfabManager : MonoBehaviour
 
     public IEnumerator LoadGameVersion()
     {
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedVersion, OnError);
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedVersion, OnDataRecievedVersionFailed);
         yield return new WaitUntil(() => successfullyDoneWithStep != null);
 
         Debug.LogError("Loaded game version");
@@ -418,6 +438,16 @@ public class PlayfabManager : MonoBehaviour
             AutoVersionUpdater.instance.Init();
         }
 
+
+        successfullyDoneWithStep = true;
+    }
+    void OnDataRecievedVersionFailed(PlayFabError error)
+    {
+        GooglePlayConnectManager.instance.desc.text = "Fail! " + error.GenerateErrorReport();
+
+        Debug.LogError("FAILED");
+
+        Debug.LogError(error.GenerateErrorReport());
 
         successfullyDoneWithStep = true;
     }
@@ -669,6 +699,8 @@ public class PlayfabManager : MonoBehaviour
     [ContextMenu("Save ALL game data to server - STEP 3")]
     public void SaveAllGameData()
     {
+        GooglePlayConnectManager.instance.statusText.text = "at save all game!";
+
         string savedData = " ";
 
         //UpdateAndSaveTimeSensitiveData();
@@ -736,6 +768,8 @@ public class PlayfabManager : MonoBehaviour
         //Bosses Save Data
         savedData = JsonUtility.ToJson(BossesSaveDataManager.instance);
         SendDataToBeSavedJson(savedData, SystemsToSave.BossesSaveData, "");
+
+        GooglePlayConnectManager.instance.statusText.text = "Done.";
 
     }
 
@@ -860,7 +894,7 @@ public class PlayfabManager : MonoBehaviour
 
         if (request != null)
         {
-            PlayFabClientAPI.UpdateUserData(request, OnDataSend, OnError);
+            PlayFabClientAPI.UpdateUserData(request, OnDataSend, OnDataSendFail);
         }
         else
         {
@@ -871,6 +905,14 @@ public class PlayfabManager : MonoBehaviour
     void OnDataSend(UpdateUserDataResult result)
     {
         //AutoVersionUpdater.saveCounter++;
+    }
+    void OnDataSendFail(PlayFabError error)
+    {
+        GooglePlayConnectManager.instance.desc.text = "Fail! " + error.GenerateErrorReport();
+
+        Debug.LogError("FAILED");
+
+        Debug.LogError(error.GenerateErrorReport());
     }
 
 
@@ -1100,7 +1142,7 @@ public class PlayfabManager : MonoBehaviour
         Debug.Log("Registered Successfully!");
     }
 
-    void SetGameVersionSameAsServer()
+    public void SetGameVersionSameAsServer()
     {
         PlayFabClientAPI.GetTitleData(new GetTitleDataRequest(), onGetVersionFromServer, OnError);
     }
@@ -1184,7 +1226,7 @@ public class PlayfabManager : MonoBehaviour
     public IEnumerator GetServerCurrentTime()
     {
         //doneWithStep = false;
-        PlayFabClientAPI.GetTime(new GetTimeRequest(), OnGetTimeSuccess, OnError);
+        PlayFabClientAPI.GetTime(new GetTimeRequest(), OnGetTimeSuccess, OnGetTimeFail);
         yield return new WaitUntil(() => successfullyDoneWithStep != null);
 
         Debug.LogError("Got server time");
@@ -1195,6 +1237,16 @@ public class PlayfabManager : MonoBehaviour
         currentTimeReference = result.Time;
         //Debug.Log(result.Time + " what?");
         //Debug.Log("Debug 1 " + currentTimeReference);
+
+        successfullyDoneWithStep = true;
+    }
+    void OnGetTimeFail(PlayFabError error)
+    {
+        GooglePlayConnectManager.instance.desc.text = "Fail! " + error.GenerateErrorReport();
+
+        Debug.LogError("FAILED");
+
+        Debug.LogError(error.GenerateErrorReport());
 
         successfullyDoneWithStep = true;
     }
