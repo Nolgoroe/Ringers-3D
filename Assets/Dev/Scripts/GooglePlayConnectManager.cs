@@ -21,6 +21,8 @@ public class GooglePlayConnectManager : MonoBehaviour
     public TMP_Text displayName;
     public TMP_Text userNameDesc;
 
+    public TMP_Text connectedToGooglePlayText;
+
     string googlePlayerID;
 
     public PlayGamesClientConfiguration clientConfiguration;
@@ -38,6 +40,42 @@ public class GooglePlayConnectManager : MonoBehaviour
         clientConfiguration = new PlayGamesClientConfiguration.Builder().Build();
     }
 
+    public void SignInToGPGSHasAccount(SignInInteractivity interactivity, PlayGamesClientConfiguration configuration)
+    {
+        configuration = clientConfiguration;
+        PlayGamesPlatform.InitializeInstance(configuration);
+        PlayGamesPlatform.Activate();
+
+        PlayGamesPlatform.Instance.Authenticate(interactivity, (code) =>
+        {
+            if (code == SignInStatus.Success)
+            {
+                statusText.text = "Success";
+                desc.text = "Hello " + Social.localUser.userName + " You have an ID of " + Social.localUser.id;
+
+                googlePlayerID = Social.localUser.id;
+
+                if (googlePlayerID.Length > 20)
+                {
+                    googlePlayerID = googlePlayerID.Substring(0, 20);
+                }
+                else
+                {
+                    googlePlayerID = googlePlayerID.Substring(0, googlePlayerID.Length);
+                }
+
+                PlayfabManager.instance.playerPlayfabUsername = googlePlayerID;
+
+                userNameDesc.text = googlePlayerID;
+            }
+            else
+            {
+                statusText.text = "fail";
+                desc.text = "WHY FAIL: " + code;
+            }
+        });
+
+    }
 
     public void SignIntoGPGS(SignInInteractivity interactivity, PlayGamesClientConfiguration configuration)
     {
@@ -55,7 +93,6 @@ public class GooglePlayConnectManager : MonoBehaviour
                 desc.text = "Hello " + Social.localUser.userName + " You have an ID of " + Social.localUser.id;
 
                 googlePlayerID = Social.localUser.id;
-                PlayfabManager.instance.playerPlayfabUsername = googlePlayerID;
 
                 if (googlePlayerID.Length > 20)
                 {
@@ -65,7 +102,10 @@ public class GooglePlayConnectManager : MonoBehaviour
                 {
                     googlePlayerID = googlePlayerID.Substring(0, googlePlayerID.Length);
                 }
-                
+
+                PlayfabManager.instance.playerPlayfabUsername = googlePlayerID;
+                userNameDesc.text = googlePlayerID;
+
                 var request = new LoginWithPlayFabRequest
                 {
                     Username = googlePlayerID,
@@ -75,8 +115,6 @@ public class GooglePlayConnectManager : MonoBehaviour
                         GetPlayerProfile = true
                     },
                 };
-
-                userNameDesc.text = googlePlayerID;
 
                 PlayFabClientAPI.LoginWithPlayFab(request, LoginWithPlayFabeSuccess, LoginWithPlayFabFail);
             }
@@ -92,11 +130,12 @@ public class GooglePlayConnectManager : MonoBehaviour
     {
         statusText.text = "Signed In as " + googlePlayerID;
 
+        PlayfabManager.instance.ClearSystemMessage();
+
         if (result.InfoResultPayload.PlayerProfile != null)
         {
             PlayfabManager.instance.playerName = result.InfoResultPayload.PlayerProfile.DisplayName;
             UIManager.Instance.nameOfPlayer.text = "Username: " + PlayfabManager.instance.playerName;
-
             displayName.text = PlayfabManager.instance.playerName;
         }
 
@@ -107,19 +146,6 @@ public class GooglePlayConnectManager : MonoBehaviour
     IEnumerator DelayMoveToGooglePlayAccountLogin()
     {
         yield return new WaitForSeconds(1);
-        StartCoroutine(PlayfabManager.instance.LoginInit());
-    }
-    IEnumerator DelayMoveToGoogleAccountCreate()
-    {
-        if (TutorialSaveData.Instance.hasFinishedIntro)
-        {
-            yield return new WaitForSeconds(1);
-            PlayfabManager.instance.SaveAllGameData();
-        }
-
-        PlayfabManager.instance.SetGameVersionSameAsServer();
-
-        yield return new WaitForSeconds(2);
         StartCoroutine(PlayfabManager.instance.LoginInit());
     }
     void LoginWithPlayFabFail(PlayFabError error)
@@ -143,14 +169,28 @@ public class GooglePlayConnectManager : MonoBehaviour
         statusText.text = "Created Player!";
 
         PlayfabManager.instance.playerName = googlePlayerID;
-        //PlayfabManager.instance.playerPlayfabUsername = googlePlayerID;
         UIManager.Instance.nameOfPlayer.text = "Username: " + PlayfabManager.instance.playerName;
+        displayName.text = PlayfabManager.instance.playerName;
+
+
         ServerRelatedData.instance.hasConnectedWithGooglePlay = true;
 
-        displayName.text = PlayfabManager.instance.playerName;
 
         StartCoroutine(DelayMoveToGoogleAccountCreate());
 
+    }
+    IEnumerator DelayMoveToGoogleAccountCreate()
+    {
+        if (TutorialSaveData.Instance.hasFinishedIntro)
+        {
+            yield return new WaitForSeconds(1);
+            PlayfabManager.instance.SaveAllGameData();
+        }
+
+        PlayfabManager.instance.SetGameVersionSameAsServer();
+
+        yield return new WaitForSeconds(2);
+        StartCoroutine(PlayfabManager.instance.LoginInit());
     }
 
     void OnGooglePlayCreatedCharFail(PlayFabError error)

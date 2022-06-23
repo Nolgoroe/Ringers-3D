@@ -61,6 +61,8 @@ public class PlayfabManager : MonoBehaviour
 
     public string currentTimeRef;
 
+    string Saveseperator = "###";
+
     private void Update()
     {
         currentTimeRef = currentTimeReference.ToString();
@@ -80,21 +82,22 @@ public class PlayfabManager : MonoBehaviour
         //// WE DO NOT WANT THIS TO STAY THIS WAY - IN THE FUTURE WE WILL WANT TO INTERFACE WITH GOOGLE PLAY!
         if (Application.platform == RuntimePlatform.Android)
         {
-            filePath = Application.persistentDataPath + "/username.txt";
+            filePath = Application.persistentDataPath + "/GeneralSaveData.txt";
         }
         else
         {
-            filePath = Application.dataPath + "/Save Files Folder/username.txt";
+            filePath = Application.dataPath + "/Save Files Folder/GeneralSaveData.txt";
         }
 
         if (File.Exists(filePath))
         {
-            StreamReader reader = new StreamReader(filePath);
-            nameInFile = reader.ReadLine(); //There is only 1 line here always so we can use read line
+            ServerRelatedData.instance.hasConnectedWithGooglePlay = System.Convert.ToBoolean(GetGeneralSaveData(0));
+            GooglePlayConnectManager.instance.connectedToGooglePlayText.text = ServerRelatedData.instance.hasConnectedWithGooglePlay.ToString();
 
-            reader.Close();
+            nameInFile = GetGeneralSaveData(1);
+            //string test = GetGeneralSaveData(1);
 
-            if (nameInFile != null)
+            if (nameInFile != null && nameInFile != "")
             {
                 LoginAutomatically(nameInFile);
             }
@@ -114,6 +117,8 @@ public class PlayfabManager : MonoBehaviour
     {
         playerPlayfabUsername = nameInFile;
 
+        GooglePlayConnectManager.instance.userNameDesc.text = playerPlayfabUsername;
+
         var request = new LoginWithPlayFabRequest
         {
             Username = nameInFile,
@@ -125,7 +130,32 @@ public class PlayfabManager : MonoBehaviour
         };
         PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccess, OnErrorLogin);
     }
+    void OnLoginSuccess(LoginResult result)
+    {
+        ClearSystemMessage();
 
+        if (result.InfoResultPayload.PlayerProfile != null)
+        {
+            playerName = result.InfoResultPayload.PlayerProfile.DisplayName;
+            UIManager.Instance.nameOfPlayer.text = "Username: " + playerName;
+
+            GooglePlayConnectManager.instance.displayName.text = playerName;
+        }
+
+        SaveGameData(new SystemsToSave[] { SystemsToSave.LoginData });
+
+        //doneWithStep = true; //setup fir the loginInit function
+
+        StartCoroutine(AfterLoginSuccess());
+    }
+
+    private IEnumerator AfterLoginSuccess()
+    {
+        yield return StartCoroutine(LoginInit());
+
+        CheckLoginWithGP();
+
+    }
     public IEnumerator LoginInit()
     {
         UIManager.Instance.startAppLoadingScreen.SetActive(true);
@@ -237,6 +267,14 @@ public class PlayfabManager : MonoBehaviour
         InvokeRepeating("UpdateAndSaveTimeSensitiveData", 1, 5);
     }
 
+    private void CheckLoginWithGP()
+    {
+        if (ServerRelatedData.instance.hasConnectedWithGooglePlay)
+        {
+            GooglePlayConnectManager.instance.SignInToGPGSHasAccount(SignInInteractivity.CanPromptAlways, GooglePlayConnectManager.instance.clientConfiguration);
+        }
+    }
+
     void OnError(PlayFabError error)
     {
         ClearSystemMessage();
@@ -263,10 +301,10 @@ public class PlayfabManager : MonoBehaviour
 
         StartCoroutine(UIManager.Instance.MoveAfterLoadingScreen(false));
 
-        if (error.HttpStatus.Contains("Bad"))
-        {
-            UIManager.Instance.TurnOnDisconnectedScreen();
-        }
+        //if (error.HttpStatus.Contains("Bad"))
+        //{
+        //    UIManager.Instance.TurnOnDisconnectedScreen();
+        //}
     }
 
     public void SendLeaderboard(int highestLevelReached)
@@ -629,13 +667,13 @@ public class PlayfabManager : MonoBehaviour
                 case SystemsToSave.LoginData:
                     if (Application.platform == RuntimePlatform.Android)
                     {
-                        filePath = Application.persistentDataPath + "/username.txt";
+                        filePath = Application.persistentDataPath + "/GeneralSaveData.txt";
                     }
                     else
                     {
-                        filePath = Application.dataPath + "/Save Files Folder/username.txt";
+                        filePath = Application.dataPath + "/Save Files Folder/GeneralSaveData.txt";
                     }
-                    File.WriteAllText(filePath, playerPlayfabUsername);
+                    File.WriteAllText(filePath, SetGeneralSaveData());
                     break;
                 case SystemsToSave.HollowManager:
                     //Hollow manager
@@ -713,16 +751,16 @@ public class PlayfabManager : MonoBehaviour
 
         //UpdateAndSaveTimeSensitiveData();
 
-        // Player Login Username
+        // General Save Data
         if (Application.platform == RuntimePlatform.Android)
         {
-            filePath = Application.persistentDataPath + "/username.txt";
+            filePath = Application.persistentDataPath + "/GeneralSaveData.txt";
         }
         else
         {
-            filePath = Application.dataPath + "/Save Files Folder/username.txt";
+            filePath = Application.dataPath + "/Save Files Folder/GeneralSaveData.txt";
         }
-        File.WriteAllText(filePath, playerPlayfabUsername);
+        File.WriteAllText(filePath, SetGeneralSaveData());
 
         // Player Data
         savedData = JsonUtility.ToJson(PlayerManager.Instance);
@@ -1086,12 +1124,16 @@ public class PlayfabManager : MonoBehaviour
 
         SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
 
+        if (ServerRelatedData.instance.hasConnectedWithGooglePlay)
+        {
+            GooglePlayConnectManager.instance.SignOutButton();
+        }
         StartCoroutine(logOutAction());
     }
 
     IEnumerator logOutAction()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene(0);
     }
 
@@ -1185,22 +1227,6 @@ public class PlayfabManager : MonoBehaviour
         PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccess, OnLoginError);
     }
 
-    void OnLoginSuccess(LoginResult result)
-    {
-        ClearSystemMessage();
-
-        if (result.InfoResultPayload.PlayerProfile != null)
-        {
-            playerName = result.InfoResultPayload.PlayerProfile.DisplayName;
-            UIManager.Instance.nameOfPlayer.text = "Username: " + playerName;
-        }
-
-        SaveGameData(new SystemsToSave[] { SystemsToSave.LoginData });
-
-        //doneWithStep = true; //setup fir the loginInit function
-
-        StartCoroutine(LoginInit());
-    }
     void OnLoginError(PlayFabError error)
     {
         ClearSystemMessage();
@@ -1292,46 +1318,6 @@ public class PlayfabManager : MonoBehaviour
         successfullyDoneWithStep = true;
     }
 
-    // check if need this AND Focus
-    //private void OnApplicationPause(bool pause)
-    //{
-    //    //Debug.Log("Pause is: " + pause);
-    //   // Debug.Log("is Logged In is: " + isLoggedIn);
-
-    //    if (pause && isLoggedIn)
-    //    {
-    //        //Debug.Log("On Application Pause");
-    //        //GetServerCurrentTime();
-    //        //yield return new WaitUntil(() => doneWithStep == true);
-
-    //        //DateTime timeSpanSinceStart = Convert.ToDateTime();
-
-
-    //        DateTime timeToSave = currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
-
-
-
-    //       // Debug.Log(timeToSave + "Pause time!");
-
-    //        RewardsManager.Instance.UpdateQuitTime(timeToSave);
-    //        DewDropsManager.Instance.UpdateQuitTime(timeToSave);
-
-    //        SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
-
-    //        //Debug.Log("Saved all data! - PAUSE");
-    //    }
-    //    else if(!pause && isLoggedIn)
-    //    {
-    //        DewDropsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
-    //        DewDropsManager.Instance.CalculateReturnDeltaTime();
-
-    //        RewardsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
-    //        RewardsManager.Instance.CalculateReturnDeltaTime();
-    //    }
-    //}
-
-
-
     public void CheckActionConnectionError()
     {
         if (successfullyDoneWithStep.HasValue && !successfullyDoneWithStep.Value)
@@ -1342,50 +1328,16 @@ public class PlayfabManager : MonoBehaviour
         }
 
     }
-    // check if need this AND Pause 
-    //private void OnApplicationFocus(bool focus)
-    //{
-    //    if (Application.isEditor)
-    //    {
-    //        //Debug.Log("focus is: " + focus);
-    //        //Debug.Log("is Logged In is: " + isLoggedIn);
-
-    //        if (!focus && isLoggedIn)
-    //        {
-    //            //Debug.Log("On Application Focus");
-    //            //GetServerCurrentTime();
-    //            //yield return new WaitUntil(() => doneWithStep == true);
-
-    //            DateTime timeToSave = currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
-
-
-    //            Debug.Log(timeToSave + "Focus time!");
-
-
-    //            RewardsManager.Instance.UpdateQuitTime(timeToSave);
-    //            DewDropsManager.Instance.UpdateQuitTime(timeToSave);
-
-    //            SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
-
-    //            //Debug.Log("Saved all data! - focus");
-    //        }
-    //        else if (focus && isLoggedIn)
-    //        {
-    //            DewDropsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
-    //            DewDropsManager.Instance.CalculateReturnDeltaTime();
-
-    //            RewardsManager.Instance.UpdateCurrentTime(currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed()));
-    //            RewardsManager.Instance.CalculateReturnDeltaTime();
-    //        }
-    //    }
-    //}
-
     public void PlayButtonAutoRegister()
     {
         ClearSystemMessage();
 
-        if (ServerRelatedData.instance.hasConnectedWithGooglePlay)
+        /// check here if we have the connected with google play saved on local device - that is our only way to know if this device has 
+        /// already connected to google play BEFORE we login to playfab....
+        
+        if (ServerRelatedData.instance.hasConnectedWithGooglePlay)/* if we know from the saved data that we have already connected to google play from this device*/
         {
+            // login with google play.
             GooglePlayConnectManager.instance.SignIntoGPGS(SignInInteractivity.CanPromptAlways, GooglePlayConnectManager.instance.clientConfiguration);
         }
         else
@@ -1409,13 +1361,11 @@ public class PlayfabManager : MonoBehaviour
             }
 
             playerPlayfabUsername = name;
-            playerName = playerPlayfabUsername;
-
             GooglePlayConnectManager.instance.userNameDesc.text = playerPlayfabUsername;
 
             var request = new LoginWithPlayFabRequest
             {
-                Username = playerName,
+                Username = playerPlayfabUsername,
                 Password = "123456",
                 InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
                 {
@@ -1432,6 +1382,29 @@ public class PlayfabManager : MonoBehaviour
         androidID = string.Empty;
         customID = string.Empty;
 
+
+#if UNITY_EDITOR
+        Debug.Log("Unity Editor");
+
+        customID = SystemInfo.deviceUniqueIdentifier;
+
+        if (customID.Length > 20)
+        {
+            customID = customID.Substring(0, 20);
+        }
+        else
+        {
+            customID = customID.Substring(0, customID.Length);
+        }
+
+        GooglePlayConnectManager.instance.statusText.text = "Unity Editor";
+#else
+
+        GooglePlayConnectManager.instance.statusText.text = "NOT Unity Editor";
+
+        androidID = string.Empty;
+        customID = string.Empty;
+
         if (Application.platform == RuntimePlatform.Android)
         {
             AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
@@ -1441,7 +1414,7 @@ public class PlayfabManager : MonoBehaviour
             AndroidJavaClass secure = new AndroidJavaClass("android.provider.Settings$Secure");
             androidID = secure.CallStatic<string>("getString", contentResolver, "android_id");
 
-            if(androidID.Length > 20)
+            if (androidID.Length > 20)
             {
                 androidID = androidID.Substring(0, 20);
             }
@@ -1464,6 +1437,8 @@ public class PlayfabManager : MonoBehaviour
             }
 
         }
+
+#endif
     }
 
     void OnPressPlayPlayerExists(LoginResult result)
@@ -1484,7 +1459,8 @@ public class PlayfabManager : MonoBehaviour
 
     void OnGetExsistingPlayerDataSuccess(GetAccountInfoResult result)
     {
-        UIManager.Instance.nameOfPlayer.text = "Username: " + result.AccountInfo.TitleInfo.DisplayName;
+        playerName = result.AccountInfo.TitleInfo.DisplayName;
+        UIManager.Instance.nameOfPlayer.text = "Username: " + playerName;
         GooglePlayConnectManager.instance.displayName.text = playerName;
 
         StartCoroutine(LoginInit());
@@ -1517,6 +1493,8 @@ public class PlayfabManager : MonoBehaviour
         ClearSystemMessage();
 
         displayMessages.text = "Registered Successfully!";
+
+        playerName = playerPlayfabUsername;
 
         UIManager.Instance.nameOfPlayer.text = "Username: " + playerName;
 
@@ -1563,5 +1541,36 @@ public class PlayfabManager : MonoBehaviour
     public void ClearSystemMessage()
     {
         displayMessages.text = " ";
+    }
+
+    private string SetGeneralSaveData()
+    {
+        string[] contents = new string[]
+        {
+            "" + ServerRelatedData.instance.hasConnectedWithGooglePlay,
+            playerPlayfabUsername,       
+        };
+
+        string saveString = string.Join(Saveseperator, contents);
+
+        return saveString;
+    }
+    private string GetGeneralSaveData(int index)
+    {
+        string savedString = File.ReadAllText(filePath);
+
+        string[] contents = savedString.Split(new[] { Saveseperator }, System.StringSplitOptions.None);
+
+        switch (index)
+        {
+            case 0:
+                return contents[0];
+            case 1:
+                return contents[1];
+            default:
+                break;
+        }
+
+        return "WRONG ERROR!!";
     }
 }
