@@ -10,6 +10,8 @@ using PlayFab.Json;
 using System;
 using System.IO;
 using System.Linq;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 
 public enum SystemsToSave 
 { 
@@ -24,7 +26,7 @@ public enum SystemsToSave
     LoginData, 
     HollowManager,
     VersionUpdaterData,
-    CheatingSaveData,
+    ServerRelatedData,
     BossesSaveData,
     AllZones,
     ALL
@@ -518,9 +520,9 @@ public class PlayfabManager : MonoBehaviour
         }
 
         // Cheating Save Data
-        if (result.Data != null && result.Data.ContainsKey("Cheating Save Data"))
+        if (result.Data != null && result.Data.ContainsKey("Server Related Data"))
         {
-            JsonUtility.FromJsonOverwrite(result.Data["Cheating Save Data"].Value, CheatingSaveData.instance);
+            JsonUtility.FromJsonOverwrite(result.Data["Server Related Data"].Value, ServerRelatedData.instance);
         }
         // Bosses Save Data
         if (result.Data != null && result.Data.ContainsKey("Bosses Save Data"))
@@ -645,10 +647,10 @@ public class PlayfabManager : MonoBehaviour
                     savedData = JsonUtility.ToJson(AutoVersionUpdater.instance);
                     SendDataToBeSavedJson(savedData, SystemsToSave.VersionUpdaterData, "");
                     break;
-                case SystemsToSave.CheatingSaveData:
+                case SystemsToSave.ServerRelatedData:
                     //Cheating Save Data
-                    savedData = JsonUtility.ToJson(CheatingSaveData.instance);
-                    SendDataToBeSavedJson(savedData, SystemsToSave.CheatingSaveData, "");
+                    savedData = JsonUtility.ToJson(ServerRelatedData.instance);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.ServerRelatedData, "");
                     break;
                 case SystemsToSave.BossesSaveData:
                     //Bosses Save Data
@@ -768,8 +770,8 @@ public class PlayfabManager : MonoBehaviour
         SendDataToBeSavedJson(savedData, SystemsToSave.VersionUpdaterData, "");
 
         //Cheating Save Data
-        savedData = JsonUtility.ToJson(CheatingSaveData.instance);
-        SendDataToBeSavedJson(savedData, SystemsToSave.CheatingSaveData, "");
+        savedData = JsonUtility.ToJson(ServerRelatedData.instance);
+        SendDataToBeSavedJson(savedData, SystemsToSave.ServerRelatedData, "");
 
         //Bosses Save Data
         savedData = JsonUtility.ToJson(BossesSaveDataManager.instance);
@@ -876,12 +878,12 @@ public class PlayfabManager : MonoBehaviour
                     }
                 };
                 break;
-            case SystemsToSave.CheatingSaveData:
+            case SystemsToSave.ServerRelatedData:
                 request = new UpdateUserDataRequest
                 {
                     Data = new Dictionary<string, string>()
                     {
-                        { "Cheating Save Data", saveData }
+                        { "Server Related Data", saveData }
                     }
                 };
                 break;
@@ -1080,6 +1082,7 @@ public class PlayfabManager : MonoBehaviour
     public void LogOut()
     {
         playerName = null;
+        playerPlayfabUsername = null;
 
         SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
 
@@ -1381,39 +1384,47 @@ public class PlayfabManager : MonoBehaviour
     {
         ClearSystemMessage();
 
-        GetDeviceID(out string androidID, out string customID);
-
-        string name = string.Empty;
-
-        if (!string.IsNullOrEmpty(androidID))
+        if (ServerRelatedData.instance.hasConnectedWithGooglePlay)
         {
-            name = androidID;
-        }
-        else if (!string.IsNullOrEmpty(customID))
-        {
-            name = customID;
+            GooglePlayConnectManager.instance.SignIntoGPGS(SignInInteractivity.CanPromptAlways, GooglePlayConnectManager.instance.clientConfiguration);
         }
         else
         {
-            Debug.LogError("PROBLEM HERE");
-            return;
-        }
+            GetDeviceID(out string androidID, out string customID);
 
-        playerPlayfabUsername = name;
-        playerName = playerPlayfabUsername;
+            string name = string.Empty;
 
-
-        var request = new LoginWithPlayFabRequest
-        {
-            Username = playerName,
-            Password = "123456",
-            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+            if (!string.IsNullOrEmpty(androidID))
             {
-                GetPlayerProfile = true
-            },
-        };
+                name = androidID;
+            }
+            else if (!string.IsNullOrEmpty(customID))
+            {
+                name = customID;
+            }
+            else
+            {
+                Debug.LogError("PROBLEM HERE");
+                return;
+            }
 
-        PlayFabClientAPI.LoginWithPlayFab(request, OnPressPlayPlayerExists, OnPressPlayPlayerExistsError);
+            playerPlayfabUsername = name;
+            playerName = playerPlayfabUsername;
+
+            GooglePlayConnectManager.instance.userNameDesc.text = playerPlayfabUsername;
+
+            var request = new LoginWithPlayFabRequest
+            {
+                Username = playerName,
+                Password = "123456",
+                InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+                {
+                    GetPlayerProfile = true
+                },
+            };
+
+            PlayFabClientAPI.LoginWithPlayFab(request, OnPressPlayPlayerExists, OnPressPlayPlayerExistsError);
+        }
     }
 
     void GetDeviceID(out string androidID, out string customID)
@@ -1463,7 +1474,7 @@ public class PlayfabManager : MonoBehaviour
 
         var request = new GetAccountInfoRequest
         {
-            Username = playerName,
+            Username = playerPlayfabUsername,
         };
 
         PlayFabClientAPI.GetAccountInfo(request, OnGetExsistingPlayerDataSuccess, OnGetExsistingPlayerDataError);
@@ -1474,6 +1485,7 @@ public class PlayfabManager : MonoBehaviour
     void OnGetExsistingPlayerDataSuccess(GetAccountInfoResult result)
     {
         UIManager.Instance.nameOfPlayer.text = "Username: " + result.AccountInfo.TitleInfo.DisplayName;
+        GooglePlayConnectManager.instance.displayName.text = playerName;
 
         StartCoroutine(LoginInit());
     }
@@ -1507,6 +1519,8 @@ public class PlayfabManager : MonoBehaviour
         displayMessages.text = "Registered Successfully!";
 
         UIManager.Instance.nameOfPlayer.text = "Username: " + playerName;
+
+        GooglePlayConnectManager.instance.displayName.text = playerName;
 
         SetGameVersionSameAsServer();
 

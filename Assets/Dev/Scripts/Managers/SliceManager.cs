@@ -142,7 +142,7 @@ public class SliceManager : MonoBehaviour
             }
 
 
-            if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || GameManager.Instance.currentLevel.isGrindLevel || CheatingSaveData.instance.canRepeatLevels)
+            if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || GameManager.Instance.currentLevel.isGrindLevel || ServerRelatedData.instance.canRepeatLevels)
             {
                 if(GameManager.Instance.currentLevel.RewardBags.Length > 0)
                 {
@@ -511,7 +511,7 @@ public class SliceManager : MonoBehaviour
                 fullSlices[k].SetSliceData(fullSlices[k].transform, GameManager.Instance.currentLevel.slicesToSpawn[k].sliceToSpawn, GameManager.Instance.currentLevel.slicesToSpawn[k].isLock, GameManager.Instance.currentLevel.slicesToSpawn[k].isLoot, GameManager.Instance.currentLevel.slicesToSpawn[k].isLimiter);
             }
 
-            if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || GameManager.Instance.currentLevel.isGrindLevel || CheatingSaveData.instance.canRepeatLevels)
+            if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || GameManager.Instance.currentLevel.isGrindLevel || ServerRelatedData.instance.canRepeatLevels)
             {
                 for (int i = 0; i < fullSlices.Count; i++)
                 {

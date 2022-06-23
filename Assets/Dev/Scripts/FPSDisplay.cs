@@ -7,7 +7,7 @@ public class FPSDisplay : MonoBehaviour
 
 	void Update()
 	{
-        if (CheatingSaveData.instance.isAdmin)
+        if (ServerRelatedData.instance.isAdmin)
         {
 			deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
 		}
@@ -15,7 +15,7 @@ public class FPSDisplay : MonoBehaviour
 
 	void OnGUI()
 	{
-		if (CheatingSaveData.instance.isAdmin)
+		if (ServerRelatedData.instance.isAdmin)
         {
 			int w = Screen.width, h = Screen.height;
 

@@ -646,7 +646,7 @@ public class UIManager : MonoBehaviour
             gameplayCanvas.SetActive(false);
             OptionsScreen.SetActive(false);
 
-            if (CheatingSaveData.instance.isAdmin)
+            if (ServerRelatedData.instance.isAdmin)
             {
                 cheatOptionsButton.SetActive(true);
                 cheatOptionsButtonIngame.SetActive(false);
@@ -1490,7 +1490,7 @@ public class UIManager : MonoBehaviour
         gameplayCanvasTop.SetActive(false);
         InGameUiScreens.SetActive(false);
 
-        if (CheatingSaveData.instance.isAdmin)
+        if (ServerRelatedData.instance.isAdmin)
         {
             cheatOptionsButton.SetActive(false);
             cheatOptionsButtonIngame.SetActive(false);
@@ -1505,7 +1505,7 @@ public class UIManager : MonoBehaviour
         InGameUiScreens.SetActive(true);
         dealButton.interactable = true;
 
-        if (CheatingSaveData.instance.isAdmin)
+        if (ServerRelatedData.instance.isAdmin)
         {
             cheatOptionsButton.SetActive(false);
             cheatOptionsButtonIngame.SetActive(true);
@@ -2333,7 +2333,7 @@ public class UIManager : MonoBehaviour
 
     public void SetCanRepeatLevelsDisplay()
     {
-        if (CheatingSaveData.instance.canRepeatLevels)
+        if (ServerRelatedData.instance.canRepeatLevels)
         {
             canRepeatLevelsImage.sprite = toggleOnSprite;
         }
@@ -2345,7 +2345,7 @@ public class UIManager : MonoBehaviour
 
     public void CheckDisplayCheatMenusAndObjects()
     {
-        if (CheatingSaveData.instance.isAdmin)
+        if (ServerRelatedData.instance.isAdmin)
         {
             cheatOptionsButton.SetActive(true);
             cheatOptionsButtonIngame.SetActive(false);

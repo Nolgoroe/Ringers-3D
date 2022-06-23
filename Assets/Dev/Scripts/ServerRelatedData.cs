@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheatingSaveData : MonoBehaviour
+public class ServerRelatedData : MonoBehaviour
 {
-    public static CheatingSaveData instance;
+    public static ServerRelatedData instance;
 
     public bool isAdmin;
     public bool canRepeatLevels;
+    public bool hasConnectedWithGooglePlay;
 
     void Start()
     {
@@ -21,6 +22,6 @@ public class CheatingSaveData : MonoBehaviour
         UIManager.Instance.SetCanRepeatLevelsDisplay();
 
 
-        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.CheatingSaveData });
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ServerRelatedData });
     }
 }
