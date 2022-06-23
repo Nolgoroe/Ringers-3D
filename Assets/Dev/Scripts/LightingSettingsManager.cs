@@ -29,7 +29,7 @@ public class LightingSettingsManager : MonoBehaviour
             RenderSettings.subtractiveShadowColor = allLightingSO[0].realtimeShadowColor;
             RenderSettings.fogColor = allLightingSO[0].fogColor;
             RenderSettings.fogDensity = allLightingSO[0].fogDensity;
-
+            RenderSettings.fog = allLightingSO[0].fogON;
 
         }
         else
@@ -47,6 +47,7 @@ public class LightingSettingsManager : MonoBehaviour
             RenderSettings.subtractiveShadowColor = allLightingSO[zoneID].realtimeShadowColor;
             RenderSettings.fogColor = allLightingSO[zoneID].fogColor;
             RenderSettings.fogDensity = allLightingSO[zoneID].fogDensity;
+            RenderSettings.fog = allLightingSO[zoneID].fogON;
 
         }
     }
@@ -64,6 +65,7 @@ public class LightingSettingsManager : MonoBehaviour
         RenderSettings.subtractiveShadowColor = DenLight.realtimeShadowColor;
         RenderSettings.fogColor = DenLight.fogColor;
         RenderSettings.fogDensity = DenLight.fogDensity;
+        RenderSettings.fog = DenLight.fogON;
 
     }
 

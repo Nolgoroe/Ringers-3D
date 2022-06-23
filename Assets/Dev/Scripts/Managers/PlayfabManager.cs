@@ -39,6 +39,7 @@ public class PlayfabManager : MonoBehaviour
     public static PlayfabManager instance;
 
     public string playerName;
+    public string playerPlayfabUsername;
 
     public TMP_Text testingContentTabServer;
 
@@ -109,6 +110,8 @@ public class PlayfabManager : MonoBehaviour
 
     public void LoginAutomatically(string nameInFile)
     {
+        playerPlayfabUsername = nameInFile;
+
         var request = new LoginWithPlayFabRequest
         {
             Username = nameInFile,
@@ -630,7 +633,7 @@ public class PlayfabManager : MonoBehaviour
                     {
                         filePath = Application.dataPath + "/Save Files Folder/username.txt";
                     }
-                    File.WriteAllText(filePath, playerName);
+                    File.WriteAllText(filePath, playerPlayfabUsername);
                     break;
                 case SystemsToSave.HollowManager:
                     //Hollow manager
@@ -717,7 +720,7 @@ public class PlayfabManager : MonoBehaviour
         {
             filePath = Application.dataPath + "/Save Files Folder/username.txt";
         }
-        File.WriteAllText(filePath, playerName);
+        File.WriteAllText(filePath, playerPlayfabUsername);
 
         // Player Data
         savedData = JsonUtility.ToJson(PlayerManager.Instance);
@@ -1396,7 +1399,8 @@ public class PlayfabManager : MonoBehaviour
             return;
         }
 
-        playerName = name;
+        playerPlayfabUsername = name;
+        playerName = playerPlayfabUsername;
 
 
         var request = new LoginWithPlayFabRequest
@@ -1486,10 +1490,10 @@ public class PlayfabManager : MonoBehaviour
 
         var request = new RegisterPlayFabUserRequest
         {
-            Username = playerName,
+            Username = playerPlayfabUsername,
             Password = "123456",
             RequireBothUsernameAndEmail = false,
-            DisplayName = playerName
+            DisplayName = playerPlayfabUsername
         };
 
         PlayFabClientAPI.RegisterPlayFabUser(request, OnPressPlayPlayerCreated, OnPressPlayPlayerCreatedFailed);
@@ -1523,6 +1527,8 @@ public class PlayfabManager : MonoBehaviour
         {
             DisplayName = newDisplayNameInputField.text,
         };
+
+        playerName = newDisplayNameInputField.text;
 
         PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnUpdateNewDisplayNameSuccess, OnUpdateNewDisplayNameError);
     }

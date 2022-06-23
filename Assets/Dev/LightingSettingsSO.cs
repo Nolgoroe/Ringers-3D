@@ -15,6 +15,8 @@ public class LightingSettingsSO : ScriptableObject
 
     public Color realtimeShadowColor;
 
+    public bool fogON;
+
     public Color fogColor;
 
     public FogMode fodMogde;
