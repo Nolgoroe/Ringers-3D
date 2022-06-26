@@ -23,7 +23,7 @@ public class ZoneManager : MonoBehaviour
 
     public static bool CanUnlockZone;
 
-    public bool hasFinishedVinebloom = false;
+    public bool hasStartedVinebloom = false;
 
     private void Awake()
     {
@@ -147,7 +147,7 @@ public class ZoneManager : MonoBehaviour
     {
         if (zonesToUnlock.Count > 0)
         {
-            UIManager.isUsingUI = true;
+            //UIManager.Instance.isUsingUI = true;
 
             int num = zonesToUnlock[0];
             //List<int> temp = new List<int>();

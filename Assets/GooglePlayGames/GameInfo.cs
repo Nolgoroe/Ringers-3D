@@ -38,7 +38,7 @@ namespace GooglePlayGames {
 
         public const string ApplicationId = "559113036855"; // Filled in automatically
         public const string IosClientId = "__IOS_CLIENTID__"; // Filled in automatically
-        public const string WebClientId = "559113036855-tg54p8093f0g3icmsk22o134g80g2696.apps.googleusercontent.com"; // Filled in automatically
+        public const string WebClientId = "559113036855-m51je8oliej15u43mvj3okv1h5vi3hq2.apps.googleusercontent.com"; // Filled in automatically
         public const string NearbyConnectionServiceId = "com.CloverBite.Ringers3D";
 
         public static bool ApplicationIdInitialized() {

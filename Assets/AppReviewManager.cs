@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Google.Play.Review;
+using GameAnalyticsSDK;
 
 public class AppReviewManager : MonoBehaviour
 {
@@ -10,13 +11,77 @@ public class AppReviewManager : MonoBehaviour
     private ReviewManager _reviewManager;
     private PlayReviewInfo _playReviewInfo;
 
+    public int[] levelsToShowReviewMessage;
 
     private void Start()
     {
         instance = this;
-        StartCoroutine(RequestReviews());
     }
 
+    public void DontAskAgainClicked()
+    {
+        ServerRelatedData.instance.hasRatedOnGoogle = true;
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ServerRelatedData });
+    }
+    public void RateButtonClicked()
+    {
+        if (ServerRelatedData.instance.appReviewStarsAmountSelected == 5)
+        {
+            UIManager.Instance.thankyou5Stars.SetActive(true);
+        }
+        else
+        {
+            UIManager.Instance.thankyou4orLowerStars.SetActive(true);
+            ServerRelatedData.instance.hasRatedOnGoogle = true;
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ServerRelatedData });
+        }
+
+        GameAnalytics.NewDesignEvent("RatedGame:StarAmount" +ServerRelatedData.instance.appReviewStarsAmountSelected);
+
+    }
+    public void SureButtonClicked()
+    {
+        CallRequestReviews();
+    }
+
+
+    public void CheckShowReviewMessages()
+    {
+        for (int i = 0; i < levelsToShowReviewMessage.Length; i++)
+        {
+            if (PlayerManager.Instance.highestLevelReached == levelsToShowReviewMessage[i])
+            {
+                ServerRelatedData.instance.canShowReviewMessage = true;
+                PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ServerRelatedData });
+
+                return;
+            }
+        }
+    }
+
+    public void ShowReviewMessage()
+    {
+        ServerRelatedData.instance.canShowReviewMessage = false ;
+
+        if (!ServerRelatedData.instance.hasShowsInitialReviewMessage)
+        {
+            UIManager.Instance.reviewUsPanel.SetActive(true);
+            ServerRelatedData.instance.hasShowsInitialReviewMessage = true;
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ServerRelatedData });
+        }
+        else
+        {
+            UIManager.Instance.reviewUsPanelRepeatable.SetActive(true);
+        }
+    }
+
+    public void CallRequestReviews()
+    {
+        ServerRelatedData.instance.hasRatedOnGoogle = true;
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ServerRelatedData });
+
+        StartCoroutine(RequestReviews());
+    }
     IEnumerator RequestReviews()
     {
         //request Reviewinfo object from google play
@@ -45,4 +110,5 @@ public class AppReviewManager : MonoBehaviour
         // reviewed or not, or even whether the review dialog was shown. Thus, no
         // matter the result, we continue our app flow.
     }
+
 }

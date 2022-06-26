@@ -36,6 +36,8 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
+    public bool isUsingUI;
+
     public GameObject mainMenu, worldGameObject, hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
     public GameObject InGameUiScreens;
     //public GameObject blackBagBG;
@@ -205,7 +207,6 @@ public class UIManager : MonoBehaviour
     public SpriteMask maskImageDenScreen;
 
     //public Color gameTextColor;
-    public static bool isUsingUI;
     public static bool isDuringIntro;
     public static bool canAdvanceIntro;
 
@@ -219,6 +220,12 @@ public class UIManager : MonoBehaviour
 
     public GameObject activeScreen;
 
+    [Header("Review screen")]
+    public ImageSwapOnClick[] starImages;
+    public GameObject reviewUsPanel;
+    public GameObject reviewUsPanelRepeatable;
+    public GameObject thankyou4orLowerStars;
+    public GameObject thankyou5Stars;
 
     [Header("Boss Header")]
     public GameObject bossBattleUIScreen;
@@ -245,6 +252,10 @@ public class UIManager : MonoBehaviour
 
 
 
+        reviewUsPanel.SetActive(false);
+        reviewUsPanelRepeatable.SetActive(false);
+        thankyou4orLowerStars.SetActive(false);
+        thankyou5Stars.SetActive(false);
 
         mainMenu.SetActive(false); 
 
@@ -402,7 +413,6 @@ public class UIManager : MonoBehaviour
     {
         endLevelSureMessage.SetActive(true);
         bGPanelDisableTouch.SetActive(true);
-        isUsingUI = true;
     }
     public void EndLevelMessageNo()
     {
@@ -411,12 +421,9 @@ public class UIManager : MonoBehaviour
 
         GameManager.Instance.clipManager.RepopulateLatestClip();
 
-        isUsingUI = false;
     }
     public void EndLevelMessageYes()
     {
-        isUsingUI = false;
-
         endLevelSureMessage.SetActive(false);
         bGPanelDisableTouch.SetActive(false);
 
@@ -427,21 +434,15 @@ public class UIManager : MonoBehaviour
     {
         clipsAboutToEndMessage.SetActive(true);
         bGPanelDisableTouch.SetActive(true);
-
-        isUsingUI = true;
     }
     public void ClipsAboutToEndMessageNo()
     {
-        isUsingUI = false;
-
         clipsAboutToEndMessage.SetActive(false);
         bGPanelDisableTouch.SetActive(false);
 
     }
     public void ClipsAboutToEndMessageYes()
     {
-        isUsingUI = false;
-
         clipsAboutToEndMessage.SetActive(false);
         bGPanelDisableTouch.SetActive(false);
         //LootManager.Instance.currentLevelLootToGive.Clear();
@@ -461,7 +462,7 @@ public class UIManager : MonoBehaviour
         {
             bGPanelDisableTouch.SetActive(true);
 
-            isUsingUI = true;
+            //isUsingUI = true;
 
             if (LootManager.Instance.rubiesToRecieveInLevel > 0 || LootManager.Instance.craftingMatsLootForLevel.Count > 0)
             {
@@ -500,7 +501,7 @@ public class UIManager : MonoBehaviour
     }
     public void SureWantToRestartMessageNo(bool withLoot)
     {
-        isUsingUI = false;
+        //isUsingUI = false;
         bGPanelDisableTouch.SetActive(false);
 
         if (withLoot)
@@ -520,7 +521,7 @@ public class UIManager : MonoBehaviour
     }
     public void SureWantToRestartMessageYes(bool withLoot)
     {
-        isUsingUI = false;
+        //isUsingUI = false;
 
         bGPanelDisableTouch.SetActive(false);
 
@@ -550,7 +551,7 @@ public class UIManager : MonoBehaviour
         //    StartCoroutine(SetIsUsingUI(false));
         //}
 
-        StartCoroutine(SetIsUsingUI(false));
+        //StartCoroutine(SetIsUsingUI(false));
 
         updateRubyAndDewDropsCount();
         PlayerManager.Instance.activePowerups.Clear();
@@ -748,6 +749,11 @@ public class UIManager : MonoBehaviour
                 }
             }
 
+            if (ServerRelatedData.instance.canShowReviewMessage)
+            {
+                AppReviewManager.instance.ShowReviewMessage();
+            }
+
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
         }
 
@@ -821,7 +827,7 @@ public class UIManager : MonoBehaviour
 
             itemForgeCanvas.SetActive(true);
 
-            isUsingUI = true;
+            //isUsingUI = true;
 
             openInventoryTab();
 
@@ -855,7 +861,7 @@ public class UIManager : MonoBehaviour
 
                 itemBag.SetActive(true);
 
-                isUsingUI = false;
+                //isUsingUI = false;
                 activeScreen = null;
             }
         }
@@ -868,7 +874,7 @@ public class UIManager : MonoBehaviour
         craft.SetActive(true);
 
         //HollowCraftAndOwnedManager.Instance.isPlaceThroughHollow = false;
-        isUsingUI = true;
+        //isUsingUI = true;
     }
     public void OpenHollowOwnedObjectsToPlace()
     {
@@ -877,8 +883,16 @@ public class UIManager : MonoBehaviour
         craft.SetActive(false);
         //HollowCraftAndOwnedManager.Instance.isPlaceThroughHollow = true;
 
-        isUsingUI = true;
+        //isUsingUI = true;
     }
+
+    public void CloseWindowImmidiate(GameObject ToClose)
+    {
+        ToClose.SetActive(false);
+
+        StartCoroutine(SetIsUsingUI(false));
+    }
+
     public void closeWindow(GameObject ToClose)
     {
         if (TutorialSequence.Instacne.duringSequence)
@@ -1131,7 +1145,7 @@ public class UIManager : MonoBehaviour
     }
     public void ToDenScreen(bool returningToHud)
     {
-        if (isUsingUI)
+        if (AnimationManager.instance.isPlacingDenItem)
         {
             return;
         }
@@ -1204,7 +1218,7 @@ public class UIManager : MonoBehaviour
         }
 
         OptionsScreen.SetActive(true);
-        isUsingUI = true;
+        //isUsingUI = true;
     }
     public void OpenCheatOptions()
     {
@@ -1214,7 +1228,7 @@ public class UIManager : MonoBehaviour
         }
 
         cheatOptionsScreen.SetActive(true);
-        isUsingUI = true;
+        //isUsingUI = true;
     }
     public void CloseGame()
     {
@@ -1227,7 +1241,7 @@ public class UIManager : MonoBehaviour
     {
         wardrobe.SetActive(true);
 
-        isUsingUI = true;
+        //isUsingUI = true;
     }
     public void ActivateUsingPowerupMessage(bool on)
     {
@@ -1262,7 +1276,7 @@ public class UIManager : MonoBehaviour
         //gameplayCanvasBotom.SetActive(false);
 
         ClearLootDisplays();
-        isUsingUI = true;
+        //isUsingUI = true;
         bGPanelDisableTouch.SetActive(true);
 
         loseScreen.SetActive(true);
@@ -1305,7 +1319,7 @@ public class UIManager : MonoBehaviour
     }
     public void RestartLevelFromLoseScreenUI()
     {
-        isUsingUI = false;
+        //isUsingUI = false;
         //gameplayCanvasBotom.SetActive(true);
         bGPanelDisableTouch.SetActive(false);
 
@@ -1597,7 +1611,7 @@ public class UIManager : MonoBehaviour
             }
 
             activeScreen = leaderboardScreen;
-            isUsingUI = true;
+            //isUsingUI = true;
 
             PlayfabManager.instance.GetLeaderboard();
         }
@@ -1605,7 +1619,7 @@ public class UIManager : MonoBehaviour
         {
             leaderboardScreen.SetActive(false);
             activeScreen = null;
-            isUsingUI = false;
+            //isUsingUI = false;
         }
     }
     public void SureWantToResetDataMessage()
@@ -1622,7 +1636,7 @@ public class UIManager : MonoBehaviour
     }
     public void SureWantToResetDataYes()
     {
-        isUsingUI = false;
+        //isUsingUI = false;
 
         sureWantToResetDataScreen.SetActive(false);
 
@@ -1652,7 +1666,7 @@ public class UIManager : MonoBehaviour
     }
     public void SureWantToLogOutYes()
     {
-        isUsingUI = false;
+        //isUsingUI = false;
 
         sureWantToLogOutScreen.SetActive(false);
 
@@ -1672,7 +1686,7 @@ public class UIManager : MonoBehaviour
         {
             if (!isUsingUI)
             {
-                isUsingUI = true;
+            //    isUsingUI = true;
                 DailyRewardScreen.SetActive(true);
 
                 activeScreen = DailyRewardScreen;
@@ -1691,7 +1705,7 @@ public class UIManager : MonoBehaviour
                 }
             }
 
-            isUsingUI = true;
+            //isUsingUI = true;
             DailyRewardScreen.SetActive(true);
 
             activeScreen = DailyRewardScreen;
@@ -1699,12 +1713,12 @@ public class UIManager : MonoBehaviour
     }
     public void CallDeactivateDailyRewardScreen()
     {
-        StartCoroutine(DeactivateDailyRewardScreen());
+        DeactivateDailyRewardScreen();
     }
-    IEnumerator DeactivateDailyRewardScreen()
+    void DeactivateDailyRewardScreen()
     {
-        yield return new WaitForSeconds(1);
-        isUsingUI = false;
+        //yield return new WaitForSeconds(1);
+        //isUsingUI = false;
         DailyRewardScreen.SetActive(false);
         ZoneManager.Instance.UnlockLevelViewSequence();
     }
@@ -1779,7 +1793,7 @@ public class UIManager : MonoBehaviour
     public void DisplayBuyHollowSecondaryScreen()
     {
         MissingMaterialsHollowObjectScreen.SetActive(true);
-        isUsingUI = true;
+        //isUsingUI = true;
     }
     public void DisplayHollowScreenRubyCostText(int amount, bool canbuy)
     {
@@ -1825,13 +1839,13 @@ public class UIManager : MonoBehaviour
     {
         MissingMaterialsHollowObjectScreen.SetActive(false);
         ClearBuyHollowSecondaryDisplay();
-        isUsingUI = false;
+        //isUsingUI = false;
     }
     public void BuyHollowItemSecondaryScreenNo()
     {
         MissingMaterialsHollowObjectScreen.SetActive(false);
         ClearBuyHollowSecondaryDisplay();
-        isUsingUI = false;
+        //isUsingUI = false;
     }
     public void DisplayBuyHollowItemNeeded(List<CraftingMatsNeededToRubies> INmaterialsNeedToBuyHollow)
     {
@@ -2235,7 +2249,7 @@ public class UIManager : MonoBehaviour
     }
     public IEnumerator SetIsUsingUI(bool isTrue)
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
 
         isUsingUI = isTrue;
     }
@@ -2300,7 +2314,7 @@ public class UIManager : MonoBehaviour
     }
     public void ReleaseAnimalDenScreenYes()
     {
-        isUsingUI = false;
+        //isUsingUI = false;
 
         releaseAnimalToDenScreen.SetActive(false);
 
@@ -2485,5 +2499,20 @@ public class UIManager : MonoBehaviour
         {
             item.SetActive(true);
         }
+    }
+
+    public void SetReviewStarDisplayAmount(int amount)
+    {
+        for (int i = 0; i < starImages.Length; i++)
+        {
+            starImages[i].SetNotClicked();
+        }
+
+        for (int i = 0; i <= amount; i++)
+        {
+            starImages[i].SetClicked();
+        }
+
+        ServerRelatedData.instance.appReviewStarsAmountSelected = amount + 1;
     }
 }

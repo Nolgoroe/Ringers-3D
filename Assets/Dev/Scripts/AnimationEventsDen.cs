@@ -14,6 +14,6 @@ public class AnimationEventsDen : MonoBehaviour
     public void ResetPlacedDataObjects()
     {
         anim.SetBool("Release Now", false);
-        UIManager.isUsingUI = false; // this is here to diable the option of moving out of screen until animation is done!
+        AnimationManager.instance.isPlacingDenItem = false; // this is here to diable the option of moving out of screen until animation is done!
     }
 }

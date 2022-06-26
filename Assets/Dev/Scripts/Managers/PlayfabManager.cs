@@ -95,15 +95,30 @@ public class PlayfabManager : MonoBehaviour
             GooglePlayConnectManager.instance.connectedToGooglePlayText.text = ServerRelatedData.instance.hasConnectedWithGooglePlay.ToString();
 
             nameInFile = GetGeneralSaveData(1);
+
             //string test = GetGeneralSaveData(1);
 
-            if (nameInFile != null && nameInFile != "")
+            if (ServerRelatedData.instance.hasConnectedWithGooglePlay)
             {
-                LoginAutomatically(nameInFile);
+                if (nameInFile != null && nameInFile != "")
+                {
+                    LoginAutomaticallyGooglePlay(nameInFile);
+                }
+                else
+                {
+                    StartCoroutine(UIManager.Instance.MoveAfterLoadingScreen(false));
+                }
             }
             else
             {
-                StartCoroutine(UIManager.Instance.MoveAfterLoadingScreen(false));
+                if (nameInFile != null && nameInFile != "")
+                {
+                    LoginAutomatically(nameInFile);
+                }
+                else
+                {
+                    StartCoroutine(UIManager.Instance.MoveAfterLoadingScreen(false));
+                }
             }
         }
         else
@@ -113,6 +128,27 @@ public class PlayfabManager : MonoBehaviour
     }
 
 
+    public void LoginAutomaticallyGooglePlay(string nameInFile)
+    {
+        playerPlayfabUsername = nameInFile;
+
+        GooglePlayConnectManager.instance.userNameDesc.text = playerPlayfabUsername;
+
+        GooglePlayConnectManager.instance.SignInToGPGSHasAccount(SignInInteractivity.CanPromptAlways);
+        //var request = new LoginWithGoogleAccountRequest
+        //{
+        //    TitleId = PlayFabSettings.TitleId,
+        //    ServerAuthCode = serverAuthCode,
+
+        //    Username = nameInFile,
+        //    Password = "123456",
+        //    InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+        //    {
+        //        GetPlayerProfile = true
+        //    },
+        //};
+        //PlayFabClientAPI.LoginWithGoogleAccount(request, OnLoginSuccessNormal, OnErrorLogin);
+    }
     public void LoginAutomatically(string nameInFile)
     {
         playerPlayfabUsername = nameInFile;
@@ -128,9 +164,9 @@ public class PlayfabManager : MonoBehaviour
                 GetPlayerProfile = true
             },
         };
-        PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccess, OnErrorLogin);
+        PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccessNormal, OnErrorLogin);
     }
-    void OnLoginSuccess(LoginResult result)
+    void OnLoginSuccessNormal(LoginResult result)
     {
         ClearSystemMessage();
 
@@ -146,14 +182,33 @@ public class PlayfabManager : MonoBehaviour
 
         //doneWithStep = true; //setup fir the loginInit function
 
-        StartCoroutine(AfterLoginSuccess());
+        AfterLoginSuccess();
+    }
+    void OnErrorLogin(PlayFabError error)
+    {
+        ClearSystemMessage();
+
+        displayMessages.text = error.ErrorMessage;
+
+        Debug.LogError(error.GenerateErrorReport());
+
+        StartCoroutine(UIManager.Instance.MoveAfterLoadingScreen(false));
+
+        //if (error.HttpStatus.Contains("Bad"))
+        //{
+        //    UIManager.Instance.TurnOnDisconnectedScreen();
+        //}
     }
 
-    private IEnumerator AfterLoginSuccess()
-    {
-        yield return StartCoroutine(LoginInit());
 
-        CheckLoginWithGP();
+    public void AfterLoginSuccess()
+    {
+        GooglePlayConnectManager.instance.statusText.text = "Loading";
+        GooglePlayConnectManager.instance.desc.text = "Loading";
+
+        StartCoroutine(LoginInit());
+
+        //CheckLoginWithGP();
 
     }
     public IEnumerator LoginInit()
@@ -242,7 +297,7 @@ public class PlayfabManager : MonoBehaviour
             UIManager.Instance.TurnOnHutAndInventroyButtons();
         }
 
-        if (ZoneManager.Instance.hasFinishedVinebloom)
+        if (ZoneManager.Instance.hasStartedVinebloom)
         {
             UIManager.Instance.TurnOnLeaderboardButtons();
         }
@@ -271,7 +326,7 @@ public class PlayfabManager : MonoBehaviour
     {
         if (ServerRelatedData.instance.hasConnectedWithGooglePlay)
         {
-            GooglePlayConnectManager.instance.SignInToGPGSHasAccount(SignInInteractivity.CanPromptAlways, GooglePlayConnectManager.instance.clientConfiguration);
+            GooglePlayConnectManager.instance.SignInToGPGSHasAccount(SignInInteractivity.CanPromptAlways);
         }
     }
 
@@ -290,21 +345,6 @@ public class PlayfabManager : MonoBehaviour
         {
             UIManager.Instance.TurnOnDisconnectedScreen();
         }
-    }
-    void OnErrorLogin(PlayFabError error)
-    {
-        ClearSystemMessage();
-
-        displayMessages.text = error.ErrorMessage;
-
-        Debug.LogError(error.GenerateErrorReport());
-
-        StartCoroutine(UIManager.Instance.MoveAfterLoadingScreen(false));
-
-        //if (error.HttpStatus.Contains("Bad"))
-        //{
-        //    UIManager.Instance.TurnOnDisconnectedScreen();
-        //}
     }
 
     public void SendLeaderboard(int highestLevelReached)
@@ -1093,7 +1133,7 @@ public class PlayfabManager : MonoBehaviour
     {
         foreach (string key in result.Data.Keys)
         {
-            if (!key.Contains("Cheating") && !key.Contains("Version Updater Data"))
+            if (!key.Contains("Server") && !key.Contains("Version Updater Data"))
             {
                 UpdateUserDataRequest request = null;
 
@@ -1120,7 +1160,7 @@ public class PlayfabManager : MonoBehaviour
     public void LogOut()
     {
         playerName = null;
-        playerPlayfabUsername = null;
+        //playerPlayfabUsername = null;
 
         SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });
 
@@ -1224,7 +1264,7 @@ public class PlayfabManager : MonoBehaviour
                 GetPlayerProfile = true
             },
         };
-        PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccess, OnLoginError);
+        PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccessNormal, OnLoginError);
     }
 
     void OnLoginError(PlayFabError error)
@@ -1297,7 +1337,7 @@ public class PlayfabManager : MonoBehaviour
     void OnGetTimeUpdatedSuccess(GetTimeResult result)
     {
         currentTimeReference = result.Time;
-        Debug.LogError(result.Time + " what?");
+        //Debug.LogError(result.Time + " what?");
 
         RewardsManager.Instance.UpdateQuitTime(currentTimeReference);
         DewDropsManager.Instance.UpdateQuitTime(currentTimeReference);
@@ -1338,7 +1378,7 @@ public class PlayfabManager : MonoBehaviour
         if (ServerRelatedData.instance.hasConnectedWithGooglePlay)/* if we know from the saved data that we have already connected to google play from this device*/
         {
             // login with google play.
-            GooglePlayConnectManager.instance.SignIntoGPGS(SignInInteractivity.CanPromptAlways, GooglePlayConnectManager.instance.clientConfiguration);
+            GooglePlayConnectManager.instance.SignInToGPGSHasAccount(SignInInteractivity.CanPromptAlways);
         }
         else
         {

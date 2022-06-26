@@ -184,7 +184,7 @@ public class PowerUpManager : MonoBehaviour
     {
         //CameraShake.ShakeOnce();
 
-        if (!UIManager.isUsingUI)
+        if (!UIManager.Instance.isUsingUI)
         {
             string worldName = GameManager.Instance.currentLevel.worldName;
             string levelNum = GameManager.Instance.currentLevel.levelNum.ToString();

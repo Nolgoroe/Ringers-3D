@@ -259,9 +259,9 @@ public class LootManager : MonoBehaviour
                 ZoneManager.Instance.unlockedZoneID.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
                 ZoneManager.Instance.UpdateMaxZoneIdReached(ZoneManagerHelpData.Instance.nextZoneCheck.id);
 
-                if(ZoneManagerHelpData.Instance.nextZoneCheck.id == 2)
+                if(ZoneManagerHelpData.Instance.nextZoneCheck.id == 1)
                 {
-                    ZoneManager.Instance.hasFinishedVinebloom = true;
+                    ZoneManager.Instance.hasStartedVinebloom = true;
                     UIManager.Instance.TurnOnLeaderboardButtons();
                 }
 

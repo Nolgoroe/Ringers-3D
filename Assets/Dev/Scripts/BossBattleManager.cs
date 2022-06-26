@@ -54,7 +54,7 @@ public class BossBattleManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (bossBattleStarted && !UIManager.isUsingUI)
+        if (bossBattleStarted && !UIManager.Instance.isUsingUI)
         {
             if (bossLevelSO.ver1Boss)
             {

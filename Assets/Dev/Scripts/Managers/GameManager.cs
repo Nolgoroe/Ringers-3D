@@ -843,6 +843,11 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        if (!ServerRelatedData.instance.hasRatedOnGoogle)
+        {
+            AppReviewManager.instance.CheckShowReviewMessages();
+        }
+
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
     }
 
@@ -855,7 +860,7 @@ public class GameManager : MonoBehaviour
 
         GameAnalytics.NewDesignEvent("RestartLevel:Restarted:" + worldName + ":" + "Level " + levelNum);
 
-        UIManager.isUsingUI = false;
+        UIManager.Instance.isUsingUI = false;
 
         DestroyAllLevelChildern();
         LootManager.Instance.ResetLevelLootData();
@@ -976,7 +981,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.youWinScreen.SetActive(false);
         UIManager.Instance.TurnOnGameplayUI();
         UIManager.Instance.ResetTopAndBottomPos();
-        UIManager.isUsingUI = false;
+        UIManager.Instance.isUsingUI = false;
 
         powerupManager.ResetData();
 

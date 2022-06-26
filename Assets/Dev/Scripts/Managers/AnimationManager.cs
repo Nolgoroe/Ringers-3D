@@ -134,6 +134,11 @@ public class AnimationManager : MonoBehaviour
 
     bool dissolveStart = false;
 
+    [Header("Place hollow item den")]
+    [Space(30)]
+
+    public bool isPlacingDenItem;
+
     [Header("Other")]
     [Space(30)]
 
@@ -1128,7 +1133,6 @@ public class AnimationManager : MonoBehaviour
     public void AnimateBrewScreen(string PotionName, string PotionSpritePath)
     {
         SoundManager.Instance.PlaySound(Sounds.ElementCrafted);
-        UIManager.isUsingUI = true;
 
         brewNameText.text = PotionName;
         potionIcon.sprite = Resources.Load<Sprite>(PotionSpritePath);
@@ -1138,7 +1142,6 @@ public class AnimationManager : MonoBehaviour
     public void AnimateCraftedHollowcreen(string HollowItemname, int HollowItemSpriteIndex)
     {
         SoundManager.Instance.PlaySound(Sounds.ElementCrafted);
-        UIManager.isUsingUI = true;
 
         craftedNameText.text = HollowItemname;
         //hollowIcon.sprite = Resources.Load<Sprite>(HollowItemSpritePath);

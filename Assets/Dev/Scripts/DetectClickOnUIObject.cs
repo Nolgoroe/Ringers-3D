@@ -6,6 +6,21 @@ using UnityEngine.EventSystems;
 public class DetectClickOnUIObject : MonoBehaviour, IPointerClickHandler
 {
     public GameObject toClose;
+    public bool isImmidiateClose;
+
+    private void OnEnable()
+    {
+        UIManager.Instance.isUsingUI = true;
+    }
+
+    private void OnDisable()
+    {
+        if (isImmidiateClose)
+        {
+            UIManager.Instance.isUsingUI = false;
+        }
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("Clicked HERE");
@@ -18,7 +33,13 @@ public class DetectClickOnUIObject : MonoBehaviour, IPointerClickHandler
 
     void CloseWindow()
     {
-        UIManager.Instance.closeWindow(toClose);
-        //UIManager.isUsingUI = false;
+        if (isImmidiateClose)
+        {
+            UIManager.Instance.CloseWindowImmidiate(toClose);
+        }
+        else
+        {
+            UIManager.Instance.closeWindow(toClose);
+        }
     }
 }

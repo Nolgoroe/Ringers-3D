@@ -10,6 +10,12 @@ public class ServerRelatedData : MonoBehaviour
     public bool canRepeatLevels;
     public bool hasConnectedWithGooglePlay;
 
+    [Header("Rate Game")]
+    public bool canShowReviewMessage;
+    public bool hasShowsInitialReviewMessage;
+    public bool hasRatedOnGoogle;
+    public int appReviewStarsAmountSelected;
+
     void Start()
     {
         instance = this;

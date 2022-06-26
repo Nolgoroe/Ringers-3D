@@ -99,7 +99,7 @@ public class PanZoom : MonoBehaviour
 
         //fovText.text = mainCam.fieldOfView.ToString();
 
-        if (!UIManager.isUsingUI && !CursorController.OverUI)
+        if (!UIManager.Instance.isUsingUI && !CursorController.OverUI)
         {
             if (UIManager.Instance.mapScrollRect.velocity.magnitude < dragDetectThreshhold)
             {
