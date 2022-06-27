@@ -551,8 +551,6 @@ public class UIManager : MonoBehaviour
         //    StartCoroutine(SetIsUsingUI(false));
         //}
 
-        //StartCoroutine(SetIsUsingUI(false));
-
         updateRubyAndDewDropsCount();
         PlayerManager.Instance.activePowerups.Clear();
         //PlayerManager.Instance.SavePlayerData();
@@ -693,18 +691,6 @@ public class UIManager : MonoBehaviour
             //    ZoneManagerHelpData.Instance.listOfAllZones[ID].SaveZone();
             //}
 
-            if(ZoneManager.Instance.zonesToUnlock.Count > 0)
-            {
-                ZoneManager.Instance.UnlockLevelViewSequence();
-            }
-            else
-            {
-                //FocusOnArea(ZoneManager.Instance.unlockedZoneID[ZoneManager.Instance.unlockedZoneID.Count - 1]);
-            }
-
-            UnlockLevels();
-
-
             if (TutorialSequence.Instacne.duringSequence)
             {
                 if (GameManager.Instance.currentLevel.isSpecificTutorial && (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft || GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen))
@@ -725,6 +711,23 @@ public class UIManager : MonoBehaviour
                     TutorialSequence.Instacne.duringSequence = false;
                 }
             }
+            else
+            {
+                StartCoroutine(SetIsUsingUI(false));
+            }
+
+            if (ZoneManager.Instance.zonesToUnlock.Count > 0)
+            {
+                ZoneManager.Instance.UnlockLevelViewSequence();
+            }
+            else
+            {
+                //FocusOnArea(ZoneManager.Instance.unlockedZoneID[ZoneManager.Instance.unlockedZoneID.Count - 1]);
+            }
+
+            UnlockLevels();
+
+
 
             if (GameManager.Instance.currentLevel.isBoss)
             {
@@ -765,6 +768,8 @@ public class UIManager : MonoBehaviour
 
             ZoneManager.Instance.ActivateLevelDisplay();
             PZ.isInDenScreen = false;
+
+            StartCoroutine(SetIsUsingUI(false));
 
             TutorialSequence.Instacne.maskImage.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, TutorialSequence.Instacne.maskImage.transform.position.z);
         }
@@ -886,11 +891,9 @@ public class UIManager : MonoBehaviour
         //isUsingUI = true;
     }
 
-    public void CloseWindowImmidiate(GameObject ToClose)
+    public void CloseWindowNoAdditionalAction(GameObject ToClose)
     {
         ToClose.SetActive(false);
-
-        StartCoroutine(SetIsUsingUI(false));
     }
 
     public void closeWindow(GameObject ToClose)
@@ -1159,6 +1162,7 @@ public class UIManager : MonoBehaviour
                     return;
                 }
             }
+            isUsingUI = true;
 
             ToHud(ringersHutDisplay);
             return;
@@ -1719,7 +1723,7 @@ public class UIManager : MonoBehaviour
     {
         //yield return new WaitForSeconds(1);
         //isUsingUI = false;
-        DailyRewardScreen.SetActive(false);
+        closeWindow(DailyRewardScreen);
         ZoneManager.Instance.UnlockLevelViewSequence();
     }
     //public void DisplayCantBuyPotionScreen()
@@ -2252,6 +2256,10 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
 
         isUsingUI = isTrue;
+    }
+    public void CallSetIsUsingUI(bool isTrue)
+    {
+        StartCoroutine(SetIsUsingUI(isTrue));
     }
     public IEnumerator MoveAfterLoadingScreen(bool goodLogin)
     {

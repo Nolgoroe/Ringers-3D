@@ -1484,6 +1484,7 @@ public class PlayfabManager : MonoBehaviour
     void OnPressPlayPlayerExists(LoginResult result)
     {
         Debug.LogError("Found User");
+        displayMessages.text = "Found User";
 
         ClearSystemMessage();
 
@@ -1515,6 +1516,7 @@ public class PlayfabManager : MonoBehaviour
     void OnPressPlayPlayerExistsError(PlayFabError error)
     {
         Debug.LogError("No such user");
+        displayMessages.text = "Creating User";
 
         var request = new RegisterPlayFabUserRequest
         {

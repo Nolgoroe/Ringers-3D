@@ -147,6 +147,10 @@ public class ZoneManager : MonoBehaviour
     {
         if (zonesToUnlock.Count > 0)
         {
+
+            StartCoroutine(UIManager.Instance.SetIsUsingUI(true));
+
+
             //UIManager.Instance.isUsingUI = true;
 
             int num = zonesToUnlock[0];

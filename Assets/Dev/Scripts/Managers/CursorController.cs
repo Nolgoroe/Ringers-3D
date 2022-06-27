@@ -209,8 +209,9 @@ public class CursorController : MonoBehaviour
                     {
                         ZoneManager.CanUnlockZone = false;
 
+                        StartCoroutine(UIManager.Instance.SetIsUsingUI(false));
 
-                        if(ZoneManager.Instance.unlockedZoneID.Count == 2)
+                        if (ZoneManager.Instance.unlockedZoneID.Count == 2)
                         {
                             UIManager.Instance.DisplayDailyRewardsScreen();
                         }
@@ -223,42 +224,6 @@ public class CursorController : MonoBehaviour
                 }
             }
         } // detect deactivate unlocked level vfx
-
-
-        if (!GameManager.Instance.levelStarted && UIManager.Instance.isUsingUI && UIManager.Instance.brewedPotionScreen.activeInHierarchy)
-        {
-            if (Input.touchCount > 0)
-            {
-                touch = Input.touches[0];
-
-                if (touch.phase == TouchPhase.Began)
-                {
-                    SoundManager.Instance.audioSourceSFX.Stop();
-                    UIManager.Instance.brewedPotionScreen.SetActive(false);
-                    Debug.Log("THIS IS HOW MANY TIMES");
-
-                    //UIManager.Instance.isUsingUI = false;
-                }
-            }
-        } // detect deactivate brewed potion vfx
-
-        if (!GameManager.Instance.levelStarted && UIManager.Instance.isUsingUI && UIManager.Instance.craftedHollowItemScreen.activeInHierarchy)
-        {
-            if (Input.touchCount > 0)
-            {
-                touch = Input.touches[0];
-
-                if (touch.phase == TouchPhase.Began)
-                {
-                    SoundManager.Instance.audioSourceSFX.Stop();
-                    UIManager.Instance.craftedHollowItemScreen.SetActive(false);
-                    Debug.Log("THIS IS HOW MANY TIMES");
-
-                    //UIManager.Instance.isUsingUI = false;
-                }
-            }
-        } // detect deactivate brewed potion vfx
-
 
 
 

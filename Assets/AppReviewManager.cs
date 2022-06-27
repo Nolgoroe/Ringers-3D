@@ -25,6 +25,8 @@ public class AppReviewManager : MonoBehaviour
     }
     public void RateButtonClicked()
     {
+        UIManager.Instance.reviewUsPanel.SetActive(false);
+
         if (ServerRelatedData.instance.appReviewStarsAmountSelected == 5)
         {
             UIManager.Instance.thankyou5Stars.SetActive(true);

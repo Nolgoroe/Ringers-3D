@@ -7,17 +7,25 @@ public class DetectClickOnUIObject : MonoBehaviour, IPointerClickHandler
 {
     public GameObject toClose;
     public bool isImmidiateClose;
+    public bool disableVFXSound;
+    public bool tutorialSequenceInturrupt;
+    public bool disableUsingUI;
 
     private void OnEnable()
     {
-        UIManager.Instance.isUsingUI = true;
+        StartCoroutine(UIManager.Instance.SetIsUsingUI(true));
     }
 
     private void OnDisable()
     {
-        if (isImmidiateClose)
+        if (isImmidiateClose && disableUsingUI)
         {
-            UIManager.Instance.isUsingUI = false;
+           UIManager.Instance.CallSetIsUsingUI(false);
+        }
+
+        if (disableVFXSound)
+        {
+            SoundManager.Instance.audioSourceSFX.Stop();
         }
     }
 
@@ -25,7 +33,14 @@ public class DetectClickOnUIObject : MonoBehaviour, IPointerClickHandler
     {
         Debug.Log("Clicked HERE");
 
-        if (!TutorialSequence.Instacne.duringSequence)
+        if (tutorialSequenceInturrupt)
+        {
+            if (!TutorialSequence.Instacne.duringSequence)
+            {
+                CloseWindow();
+            }
+        }
+        else
         {
             CloseWindow();
         }
@@ -33,9 +48,14 @@ public class DetectClickOnUIObject : MonoBehaviour, IPointerClickHandler
 
     void CloseWindow()
     {
+        if (disableUsingUI)
+        {
+            StartCoroutine(UIManager.Instance.SetIsUsingUI(false));
+        }
+
         if (isImmidiateClose)
         {
-            UIManager.Instance.CloseWindowImmidiate(toClose);
+            UIManager.Instance.CloseWindowNoAdditionalAction(toClose);
         }
         else
         {
