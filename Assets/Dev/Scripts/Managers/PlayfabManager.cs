@@ -100,6 +100,9 @@ public class PlayfabManager : MonoBehaviour
 
             if (ServerRelatedData.instance.hasConnectedWithGooglePlay)
             {
+                UIManager.Instance.googlePlayButton.SetActive(false);
+                UIManager.Instance.switchAccountButton.SetActive(true);
+
                 if (nameInFile != null && nameInFile != "")
                 {
                     LoginAutomaticallyGooglePlay(nameInFile);
@@ -111,6 +114,9 @@ public class PlayfabManager : MonoBehaviour
             }
             else
             {
+                UIManager.Instance.googlePlayButton.SetActive(true);
+                UIManager.Instance.switchAccountButton.SetActive(false);
+
                 if (nameInFile != null && nameInFile != "")
                 {
                     LoginAutomatically(nameInFile);
@@ -123,6 +129,9 @@ public class PlayfabManager : MonoBehaviour
         }
         else
         {
+            UIManager.Instance.googlePlayButton.SetActive(true);
+            UIManager.Instance.switchAccountButton.SetActive(false);
+
             StartCoroutine(UIManager.Instance.MoveAfterLoadingScreen(false));
         }
     }
@@ -727,6 +736,8 @@ public class PlayfabManager : MonoBehaviour
                     break;
                 case SystemsToSave.ServerRelatedData:
                     //Cheating Save Data
+                    GooglePlayConnectManager.instance.statusText.text = "Saved this!";
+
                     savedData = JsonUtility.ToJson(ServerRelatedData.instance);
                     SendDataToBeSavedJson(savedData, SystemsToSave.ServerRelatedData, "");
                     break;
@@ -848,6 +859,7 @@ public class PlayfabManager : MonoBehaviour
         SendDataToBeSavedJson(savedData, SystemsToSave.VersionUpdaterData, "");
 
         //Cheating Save Data
+        GooglePlayConnectManager.instance.statusText.text = "Saved this!";
         savedData = JsonUtility.ToJson(ServerRelatedData.instance);
         SendDataToBeSavedJson(savedData, SystemsToSave.ServerRelatedData, "");
 

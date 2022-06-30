@@ -241,6 +241,11 @@ public class UIManager : MonoBehaviour
     public GameObject[] hutButtons;
     public GameObject[] LeaderboardButtons;
 
+    [Header("options screen")]
+    public GameObject toMapButton;
+    public GameObject googlePlayButton;
+    public GameObject switchAccountButton;
+
     private void Start()
     {
         Instance = this;
@@ -568,6 +573,19 @@ public class UIManager : MonoBehaviour
         hudCanvasUIBottomZoneMainMap.SetActive(true);
 
         SortMaster.Instance.RefreshAllForgeScreens();
+
+        toMapButton.SetActive(false);
+
+        if (ServerRelatedData.instance.hasConnectedWithGooglePlay)
+        {
+            googlePlayButton.SetActive(false);
+            switchAccountButton.SetActive(true);
+        }
+        else
+        {
+            googlePlayButton.SetActive(true);
+            switchAccountButton.SetActive(false);
+        }
 
         if (ZoneManagerHelpData.Instance.currentZoneCheck)
         {

@@ -176,6 +176,11 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.PrepareObjectForEndBoardAnim();
         LootManager.Instance.finishedGivingLoot = false;
 
+
+        UIManager.Instance.toMapButton.SetActive(true);
+        UIManager.Instance.googlePlayButton.SetActive(false);
+        UIManager.Instance.switchAccountButton.SetActive(false);
+
         if (isTutorial)
         {
             LevelEnded = false;
@@ -430,6 +435,10 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.dealButton.interactable = true;
         UIManager.Instance.ActivateGmaeplayCanvas();
         UIManager.Instance.bossScreensParent.SetActive(false);
+
+        UIManager.Instance.toMapButton.SetActive(true);
+        UIManager.Instance.googlePlayButton.SetActive(false);
+        UIManager.Instance.switchAccountButton.SetActive(false);
 
         if (AnimationManager.instance.endLevelAnimationON)
         {

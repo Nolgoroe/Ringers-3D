@@ -27,4 +27,18 @@ public class ImageSwapOnClick : MonoBehaviour
         isClicked = false;
 
     }
+
+    public void SetClickOrNotClicked()
+    {
+        if (isClicked)
+        {
+            isClicked = false;
+            connectedImageComponent.sprite = notClickedSprite;
+        }
+        else
+        {
+            isClicked = true;
+            connectedImageComponent.sprite = clickedSprite;
+        }
+    }
 }

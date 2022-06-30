@@ -20,7 +20,8 @@ public class AppReviewManager : MonoBehaviour
 
     public void DontAskAgainClicked()
     {
-        ServerRelatedData.instance.hasRatedOnGoogle = true;
+        ServerRelatedData.instance.hasRatedOnGoogle = !ServerRelatedData.instance.hasRatedOnGoogle;
+
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ServerRelatedData });
     }
     public void RateButtonClicked()

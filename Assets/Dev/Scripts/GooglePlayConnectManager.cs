@@ -163,7 +163,7 @@ public class GooglePlayConnectManager : MonoBehaviour
                 statusText.text = authCode;
 
                 var request = new LinkGoogleAccountRequest
-                {
+                { 
                     ForceLink = true,
                     ServerAuthCode = authCode,
                 };
@@ -182,6 +182,11 @@ public class GooglePlayConnectManager : MonoBehaviour
     {
         statusText.text = "Signed In";
         desc.text = PlayfabManager.instance.playerPlayfabUsername;
+        ServerRelatedData.instance.hasConnectedWithGooglePlay = true;
+        statusText.text = "connected to google?: " + ServerRelatedData.instance.hasConnectedWithGooglePlay;
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ServerRelatedData });
+
+        connectedToGooglePlayText.text = ServerRelatedData.instance.hasConnectedWithGooglePlay.ToString();
 
         PlayfabManager.instance.ClearSystemMessage();
 
@@ -217,8 +222,7 @@ public class GooglePlayConnectManager : MonoBehaviour
         statusText.text = "Successful!!!!";
         desc.text = "connectd with google play";
 
-        ServerRelatedData.instance.hasConnectedWithGooglePlay = true;
-        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ServerRelatedData, SystemsToSave.LoginData });
+        //PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ServerRelatedData, SystemsToSave.LoginData });
 
         PlayfabManager.instance.playerName = result.AccountInfo.TitleInfo.DisplayName;
         UIManager.Instance.nameOfPlayer.text = "Username: " + PlayfabManager.instance.playerName;
@@ -239,22 +243,25 @@ public class GooglePlayConnectManager : MonoBehaviour
     IEnumerator DelayMoveToGooglePlayAccountLogin()
     {
         yield return new WaitForSeconds(1);
-        StartCoroutine(PlayfabManager.instance.LoginInit());
+        yield return StartCoroutine(PlayfabManager.instance.LoginInit());
+
+        StartCoroutine(UIManager.Instance.SetIsUsingUI(false));
+
     }
 
-    IEnumerator DelayMoveToGoogleAccountCreate()
-    {
-        if (TutorialSaveData.Instance.hasFinishedIntro)
-        {
-            yield return new WaitForSeconds(1);
-            PlayfabManager.instance.SaveAllGameData();
-        }
+    //IEnumerator DelayMoveToGoogleAccountCreate()
+    //{
+    //    if (TutorialSaveData.Instance.hasFinishedIntro)
+    //    {
+    //        yield return new WaitForSeconds(1);
+    //        PlayfabManager.instance.SaveAllGameData();
+    //    }
 
-        PlayfabManager.instance.SetGameVersionSameAsServer();
+    //    PlayfabManager.instance.SetGameVersionSameAsServer();
 
-        yield return new WaitForSeconds(2);
-        StartCoroutine(PlayfabManager.instance.LoginInit());
-    }
+    //    yield return new WaitForSeconds(2);
+    //    StartCoroutine(PlayfabManager.instance.LoginInit());
+    //}
 
     public void SignInButton()
     {
@@ -268,5 +275,17 @@ public class GooglePlayConnectManager : MonoBehaviour
         PlayGamesPlatform.Instance.SignOut();
         statusText.text = "Sign out!";
         desc.text = "";
+    }
+
+    public void CallSwitchAccount()
+    {
+        StartCoroutine(SwitchAccount());
+    }
+
+    public IEnumerator SwitchAccount()
+    {
+        SignOutButton();
+        yield return new WaitForSeconds(1);
+        SignInButton();
     }
 }
