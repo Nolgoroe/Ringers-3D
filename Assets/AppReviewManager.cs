@@ -80,10 +80,10 @@ public class AppReviewManager : MonoBehaviour
 
     public void CallRequestReviews()
     {
+        StartCoroutine(RequestReviews());
+
         ServerRelatedData.instance.hasRatedOnGoogle = true;
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ServerRelatedData });
-
-        StartCoroutine(RequestReviews());
     }
     IEnumerator RequestReviews()
     {
@@ -95,23 +95,31 @@ public class AppReviewManager : MonoBehaviour
         if (requestFlowOperation.Error != ReviewErrorCode.NoError)
         {
             // Log error. For example, using requestFlowOperation.Error.ToString().
+            Debug.LogError("Big problem with review!");
             yield break;
         }
-        _playReviewInfo = requestFlowOperation.GetResult();
 
+        _playReviewInfo = requestFlowOperation.GetResult();
+        Debug.LogError(_playReviewInfo);
 
         //launch in app review
         var launchFlowOperation = _reviewManager.LaunchReviewFlow(_playReviewInfo);
+
+        Debug.LogError(launchFlowOperation);
+
         yield return launchFlowOperation;
         _playReviewInfo = null; // Reset the object
         if (launchFlowOperation.Error != ReviewErrorCode.NoError)
         {
             // Log error. For example, using requestFlowOperation.Error.ToString().
+            Debug.LogError("Big problem with review! again!");
             yield break;
         }
         // The flow has finished. The API does not indicate whether the user
         // reviewed or not, or even whether the review dialog was shown. Thus, no
         // matter the result, we continue our app flow.
+
+        Debug.LogError("no problem - done!");
     }
 
 }

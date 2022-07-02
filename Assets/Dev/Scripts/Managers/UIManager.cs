@@ -256,6 +256,7 @@ public class UIManager : MonoBehaviour
         startAppLoadingScreen.SetActive(true);/// ony screen we should see at the start
 
 
+        versionText.gameObject.SetActive(false);
 
         reviewUsPanel.SetActive(false);
         reviewUsPanelRepeatable.SetActive(false);
@@ -2390,6 +2391,7 @@ public class UIManager : MonoBehaviour
             cheatOptionsButton.SetActive(true);
             cheatOptionsButtonIngame.SetActive(false);
             bossLevelsParent.SetActive(true);
+            versionText.gameObject.SetActive(true);
         }
     }
 

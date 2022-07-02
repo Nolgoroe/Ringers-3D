@@ -650,7 +650,7 @@ public class PlayfabManager : MonoBehaviour
     {
         foreach (var item in systemsToSave)
         {
-            Debug.Log("Inside Save game. systems: " + item);
+            //Debug.Log("Inside Save game. systems: " + item);
         }
 
         string savedData = " ";
@@ -758,7 +758,7 @@ public class PlayfabManager : MonoBehaviour
 
     public void UpdateAndSaveTimeSensitiveData()
     {
-        Debug.Log("Save time sensitive data");
+        //Debug.Log("Save time sensitive data");
 
         //DateTime timeToSave = currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
         //RewardsManager.Instance.UpdateQuitTime(timeToSave);
@@ -1316,7 +1316,7 @@ public class PlayfabManager : MonoBehaviour
         PlayFabClientAPI.GetTime(new GetTimeRequest(), OnGetTimeSuccess, OnGetTimeFail);
         yield return new WaitUntil(() => successfullyDoneWithStep != null);
 
-        Debug.LogError("Got server time");
+        //Debug.LogError("Got server time");
     }
 
     void OnGetTimeSuccess(GetTimeResult result)
@@ -1343,7 +1343,7 @@ public class PlayfabManager : MonoBehaviour
         PlayFabClientAPI.GetTime(new GetTimeRequest(), OnGetTimeUpdatedSuccess, OnGetTimeUpdatedFail);
         yield return new WaitUntil(() => successfullyDoneWithStep != null);
 
-        Debug.LogError("Got server time");
+        //Debug.LogError("Got server time");
     }
 
     void OnGetTimeUpdatedSuccess(GetTimeResult result)
