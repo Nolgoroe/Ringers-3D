@@ -394,7 +394,7 @@ public class GameManager : MonoBehaviour
         SoundManager.Instance.CancelCoRoutinesSound();
 
         //SoundManager.Instance.PlayAmbience(Sounds.LevelAmbience);
-        if (!SoundManager.Instance.normalAmbience.isPlaying)
+        if (!SoundManager.Instance.normalAmbienceLevel.isPlaying)
         {
             Debug.Log("Change music");
 
@@ -591,7 +591,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                GameObject go = AnimationManager.instance.endLevelTreePrefab;
+                GameObject go = AnimalManagerDataHelper.instance.treesPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].treePrefab;
 
                 if (go)
                 {
@@ -762,7 +762,7 @@ public class GameManager : MonoBehaviour
 
                 LevelEnded = true;
 
-                SoundManager.Instance.PlaySound(Sounds.SolvedRing);
+                //SoundManager.Instance.PlaySound(Sounds.SolvedRing);
                 powerupManager.CheckTurnTempPowerToPermaPower();
                 AnimationManager.instance.StartEndLevelAnimSequence(false); ///// loot is given here
 
@@ -874,6 +874,10 @@ public class GameManager : MonoBehaviour
         DestroyAllLevelChildern();
         LootManager.Instance.ResetLevelLootData();
         ConnectionManager.Instance.cells.Clear();
+        ConnectionManager.Instance.tempSymbolPiecesStoneFound.Clear();
+        ConnectionManager.Instance.amountStonePiecesInstantiated = 0;
+
+
         CursorController.Instance.tutorialBadConnection = false;
 
         UIManager.Instance.youWinScreen.SetActive(false);
@@ -979,6 +983,8 @@ public class GameManager : MonoBehaviour
 
         LootManager.Instance.ResetLevelLootData();
         ConnectionManager.Instance.cells.Clear();
+        ConnectionManager.Instance.tempSymbolPiecesStoneFound.Clear();
+        ConnectionManager.Instance.amountStonePiecesInstantiated = 0;
 
         if (currentLevel.levelIndexInZone + 1 == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex)
         {

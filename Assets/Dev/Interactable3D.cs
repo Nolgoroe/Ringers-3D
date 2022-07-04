@@ -44,6 +44,9 @@ public class Interactable3D : MonoBehaviour
 
                 TurnOffVFX();
 
+                //StartCoroutine(SoundManager.Instance.FadeOutMapBGMusic(SoundManager.Instance.timeFadeOutBGMusic, true));
+                SoundManager.Instance.FadeOutMapBGMusic(SoundManager.Instance.timeFadeOutBGMusic, true);
+
                 GameManager.Instance.StartLevel(true);
             }
 

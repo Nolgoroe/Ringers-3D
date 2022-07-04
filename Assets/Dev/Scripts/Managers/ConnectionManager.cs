@@ -40,6 +40,10 @@ public class ConnectionManager : MonoBehaviour
 
 
     public float speedPieceConnectAnim;
+
+    public List<PieceSymbol> tempSymbolPiecesStoneFound;
+    public int amountStonePiecesInstantiated;
+
     private void Start()
     {
         Instance = this;
@@ -186,7 +190,6 @@ public class ConnectionManager : MonoBehaviour
                     cellList[cellIndex].leftParticleZone.GetChild(0).gameObject.SetActive(true);
 
 
-                    SoundManager.Instance.PlaySound(Sounds.TileMatch);
                     playedConnectedSound = true;
 
                     //Debug.Log("Emission is happening");
@@ -240,6 +243,8 @@ public class ConnectionManager : MonoBehaviour
                     }
                     else
                     {
+                        SoundManager.Instance.PlaySound(Sounds.TileMatch);
+
                         if (conditionmet)
                         {
                             GameManager.Instance.sliceManager.SetSliceSolvedSprite(supPieceArray[currentLeft].relevantSlice);
@@ -472,6 +477,8 @@ public class ConnectionManager : MonoBehaviour
 
         if (lastPiece)
         {
+            SoundManager.Instance.PlaySound(Sounds.LastTileSequence);
+
             if (!GameManager.Instance.currentLevel.isBoss)
             {
                 GameManager.Instance.CheckEndLevel(false);
@@ -603,7 +610,7 @@ public class ConnectionManager : MonoBehaviour
         }
 
 
-        yield return new WaitForSeconds(speedPieceConnectAnim -0.05f);
+        yield return new WaitForSeconds(speedPieceConnectAnim - 0.05f);
 
         if (subPiecesOnBoard[currentLeft].parentPiece)
         {
@@ -1159,6 +1166,8 @@ public class ConnectionManager : MonoBehaviour
     public void ResetConnectionData()
     {
         cells.Clear();
+        tempSymbolPiecesStoneFound.Clear();
+        amountStonePiecesInstantiated = 0;
         outerCells.Clear();
         subPiecesOnBoard = new SubPiece[0];
         subPiecesDoubleRing = new SubPiece[0];
@@ -1392,6 +1401,99 @@ public class ConnectionManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    public bool CheckRepeatingSymbolsStonePieces(Piece p)
+    {
+        // we already take care of the fact of 1 stone tile since no tile can repeat itself.
+        if (GameManager.Instance.currentLevel.stoneTiles.Count() == 1)
+        {
+            return false;
+        }
+
+        foreach (Cell c in cells)
+        {
+            if (c.isFull)
+            {
+                FindAmountOFSymbols(c.pieceHeld, p);
+            }
+        }
+
+
+
+        if (GameManager.Instance.currentLevel.stoneTiles.Count() == 2)
+        {
+            if (GameManager.Instance.currentLevel.levelAvailablesymbols.Count() < 3)
+            {
+                if (tempSymbolPiecesStoneFound.Count >= GameManager.Instance.currentLevel.levelAvailablesymbols.Count())
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (tempSymbolPiecesStoneFound.Count >= 3)
+                {
+                    return false;
+                }
+            }
+        }
+        else if (GameManager.Instance.currentLevel.stoneTiles.Count() == 3)
+        {
+            if (GameManager.Instance.currentLevel.levelAvailablesymbols.Count() < 4)
+            {
+                if (tempSymbolPiecesStoneFound.Count >= GameManager.Instance.currentLevel.levelAvailablesymbols.Count())
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (tempSymbolPiecesStoneFound.Count >= 4)
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            if (GameManager.Instance.currentLevel.levelAvailablesymbols.Count() < 4)
+            {
+                if (tempSymbolPiecesStoneFound.Count >= GameManager.Instance.currentLevel.levelAvailablesymbols.Count())
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (tempSymbolPiecesStoneFound.Count >= 4)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private void FindAmountOFSymbols(Piece currectCheckPiece, Piece p)
+    {
+
+        if ((currectCheckPiece.leftChild.symbolOfPiece != p.leftChild.symbolOfPiece) && (currectCheckPiece.leftChild.symbolOfPiece != p.rightChild.symbolOfPiece))
+        {
+            if (!tempSymbolPiecesStoneFound.Contains(currectCheckPiece.leftChild.symbolOfPiece))
+            {
+                tempSymbolPiecesStoneFound.Add(currectCheckPiece.leftChild.symbolOfPiece);
+            }
+        }
+        
+        if ((currectCheckPiece.rightChild.symbolOfPiece != p.rightChild.symbolOfPiece) && (currectCheckPiece.rightChild.symbolOfPiece != p.leftChild.symbolOfPiece))
+        {
+            if (!tempSymbolPiecesStoneFound.Contains(currectCheckPiece.rightChild.symbolOfPiece))
+            {
+                tempSymbolPiecesStoneFound.Add(currectCheckPiece.rightChild.symbolOfPiece);
+            }
+        }
     }
 
     public bool ComparerPiece(Piece currectCheckPiece, Piece p)

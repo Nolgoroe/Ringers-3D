@@ -161,13 +161,24 @@ public class Piece : MonoBehaviour
     {
         bool isRepeatPieceSides = true;
         bool isRepeatPieceOnBoard = true;
+        bool hasRepeatedSymbols = false;
         int repeatIndicator = 0;
 
         rightChild.SetStonePiece(SPDS);
         leftChild.SetStonePiece(SPDS);
 
-        while (isRepeatPieceSides || isRepeatPieceOnBoard)
+        int errorBreakerCount = 0;
+
+        while (isRepeatPieceSides || isRepeatPieceOnBoard || hasRepeatedSymbols)
         {
+            errorBreakerCount++;
+
+            if(errorBreakerCount >= 1000)
+            {
+                Debug.LogError("Problem here!");
+                return;
+            }
+
             if (repeatIndicator > 0)
             {
                 rightChild.SetStonePiece(SPDS);
@@ -179,8 +190,13 @@ public class Piece : MonoBehaviour
             isRepeatPieceSides = CheckNoRepeatPieceSides();
             isRepeatPieceOnBoard  = ConnectionManager.Instance.CheckRepeatingStonePieces(this);
 
+            if(ConnectionManager.Instance.amountStonePiecesInstantiated > 1)
+            {
+                hasRepeatedSymbols = ConnectionManager.Instance.CheckRepeatingSymbolsStonePieces(this);
+            }
+
             //Debug.LogError("Same Pieces? " + isRepeatPieceSides);
-            Debug.LogError("Same Pieces on board? " + isRepeatPieceOnBoard);
+             Debug.LogError("Same Pieces on board? " + isRepeatPieceOnBoard);
 
             if (GameManager.Instance.currentLevel.levelAvailablesymbols.Length > 0)
             {
@@ -214,16 +230,11 @@ public class Piece : MonoBehaviour
                                 break;
                             }
                         }
-
-                        //if (!isSamePiece)
-                        //{
-                        //    break;
-                        //}
                     }
                 }
             }
 
-            if (isRepeatPieceSides || isRepeatPieceOnBoard)
+            if (isRepeatPieceSides || isRepeatPieceOnBoard || hasRepeatedSymbols)
             {
                 repeatIndicator++;
             }
@@ -243,6 +254,16 @@ public class Piece : MonoBehaviour
         }
         else
         {
+            if (!ConnectionManager.Instance.tempSymbolPiecesStoneFound.Contains(currectCheckPiece.leftChild.symbolOfPiece))
+            {
+                ConnectionManager.Instance.tempSymbolPiecesStoneFound.Add(currectCheckPiece.leftChild.symbolOfPiece);
+            }
+
+            if (!ConnectionManager.Instance.tempSymbolPiecesStoneFound.Contains(currectCheckPiece.rightChild.symbolOfPiece))
+            {
+                ConnectionManager.Instance.tempSymbolPiecesStoneFound.Add(currectCheckPiece.rightChild.symbolOfPiece);
+            }
+
             return false;
         }
 

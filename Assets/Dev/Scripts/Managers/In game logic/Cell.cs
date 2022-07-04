@@ -96,6 +96,8 @@ public class Cell : MonoBehaviour
         {
             GameObject go = Instantiate(GameManager.Instance.clipManager.corruptedPiece, transform);
 
+            ConnectionManager.Instance.amountStonePiecesInstantiated++;
+
             Piece p = null;
             if (go)
             {

@@ -11,12 +11,20 @@ public class AnimalDenDataChecker
     public GameObject animalLiveDenPrefab;
     public Transform parentSummonUnder;
 }
+[Serializable]
+public class TreePrefabPerZone
+{
+    public Zone theZone;
+    public GameObject treePrefab;
+}
 
 public class AnimalManagerDataHelper : MonoBehaviour
 {
     public static AnimalManagerDataHelper instance;
 
     public List<AnimalDenDataChecker> animalDataCheckTo;
+
+    public TreePrefabPerZone[] treesPerZone;
 
     private void Awake()
     {

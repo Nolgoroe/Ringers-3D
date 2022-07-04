@@ -27,6 +27,7 @@ public enum Sounds
     PotionUse,
     PotionSelect,
     IntroMusic,
+    LastTileSequence
     //// Add all sounds here
 }
 
@@ -55,9 +56,13 @@ public class SoundManager : MonoBehaviour
 
     public float timeFadeInAmbienceLevel;
     public float timeFadeOutAmbienceLevel;
+
+    public float timeFadeInBGMusic;
+    public float timeFadeOutBGMusic;
+
     public float fadeOutIntroSound;
 
-    public AudioSource forestSounds, normalAmbience;
+    public AudioSource forestSounds, normalAmbienceLevel, hudBGMuisc;
 
     private void Start()
     {
@@ -195,7 +200,7 @@ public class SoundManager : MonoBehaviour
         //    yield break;
         //}
 
-        float vol = normalAmbience.volume;
+        float vol = normalAmbienceLevel.volume;
 
         //LeanTween.value(forestSounds.gameObject, 1, 0, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
         //{
@@ -205,10 +210,10 @@ public class SoundManager : MonoBehaviour
 
         //vol = 1;
 
-        LeanTween.value(normalAmbience.gameObject, normalAmbience.volume, 0, time).setOnUpdate((float val) =>
+        LeanTween.value(normalAmbienceLevel.gameObject, normalAmbienceLevel.volume, 0, time).setOnUpdate((float val) =>
         {
             vol = val;
-            normalAmbience.volume = vol;
+            normalAmbienceLevel.volume = vol;
         });
 
         if (isStop) /// temporary here
@@ -228,21 +233,21 @@ public class SoundManager : MonoBehaviour
         {
             audioSourceAmbience.Stop();
             forestSounds.Stop();
-            normalAmbience.Stop();
+            normalAmbienceLevel.Stop();
         }
     }
     public IEnumerator FadeInAmbientMusicLevel(Sounds soundEnum)
     {
 
         int ran = Random.Range(0, (enumToSound[soundEnum].Length));
-        normalAmbience.clip = enumToSound[soundEnum][ran];
+        normalAmbienceLevel.clip = enumToSound[soundEnum][ran];
 
         forestSounds.volume = 0;
-        normalAmbience.volume = 0;
+        normalAmbienceLevel.volume = 0;
 
 
         forestSounds.Play();
-        normalAmbience.Play();
+        normalAmbienceLevel.Play();
 
         if (!muteMusic)
         {
@@ -256,15 +261,45 @@ public class SoundManager : MonoBehaviour
 
             vol = 0;
 
-            LeanTween.value(normalAmbience.gameObject, 0, 1, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
+            LeanTween.value(normalAmbienceLevel.gameObject, 0, 1, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
             {
                 vol = val;
-                normalAmbience.volume = vol;
+                normalAmbienceLevel.volume = vol;
             });
         }
 
 
         yield return new WaitForSeconds(timeFadeInAmbienceLevel);
+    }
+
+    public IEnumerator FadeInMapBGMusic()
+    {
+        hudBGMuisc.Play();
+
+        if (!muteMusic)
+        {
+            float vol = 0;
+
+            LeanTween.value(hudBGMuisc.gameObject, 0, 1, timeFadeInBGMusic).setOnUpdate((float val) =>
+            {
+                vol = val;
+                hudBGMuisc.volume = vol;
+            });
+        }
+
+
+        yield return new WaitForSeconds(timeFadeInAmbienceLevel);
+    }
+    public void FadeOutMapBGMusic(float time, bool isStop)
+    {
+
+        float vol = hudBGMuisc.volume;
+
+        LeanTween.value(hudBGMuisc.gameObject, hudBGMuisc.volume, 0, time).setOnComplete(() => hudBGMuisc.Stop()).setOnUpdate((float val) =>
+        {
+            vol = val;
+            hudBGMuisc.volume = vol;
+        });
     }
 
     public IEnumerator FadeInOnlyLevelVolume(Sounds soundEnum)
@@ -275,10 +310,10 @@ public class SoundManager : MonoBehaviour
         }
 
         int ran = Random.Range(0, (enumToSound[soundEnum].Length));
-        normalAmbience.clip = enumToSound[soundEnum][ran];
+        normalAmbienceLevel.clip = enumToSound[soundEnum][ran];
 
         forestSounds.volume = 0;
-        normalAmbience.volume = 0;
+        normalAmbienceLevel.volume = 0;
 
         float vol = 0;
 
@@ -290,10 +325,10 @@ public class SoundManager : MonoBehaviour
 
         vol = 0;
 
-        LeanTween.value(normalAmbience.gameObject, 0, 1, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
+        LeanTween.value(normalAmbienceLevel.gameObject, 0, 1, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
         {
             vol = val;
-            normalAmbience.volume = vol;
+            normalAmbienceLevel.volume = vol;
         });
 
         yield return new WaitForSeconds(timeFadeInAmbienceLevel);
@@ -323,7 +358,7 @@ public class SoundManager : MonoBehaviour
     {
         LeanTween.cancel(audioSourceAmbience.gameObject);
         LeanTween.cancel(forestSounds.gameObject);
-        LeanTween.cancel(normalAmbience.gameObject);
+        LeanTween.cancel(normalAmbienceLevel.gameObject);
 
         muteMusic = !muteMusic;
 
@@ -332,7 +367,7 @@ public class SoundManager : MonoBehaviour
             musicToggle.isOn = false;
             audioSourceAmbience.volume = 0;
             forestSounds.volume = 0;
-            normalAmbience.volume = 0;
+            normalAmbienceLevel.volume = 0;
         }
         else
         {
@@ -347,7 +382,7 @@ public class SoundManager : MonoBehaviour
             else
             {
                 forestSounds.volume = 1;
-                normalAmbience.volume = 1;
+                normalAmbienceLevel.volume = 1;
             }
         }
     }
@@ -372,7 +407,7 @@ public class SoundManager : MonoBehaviour
 
     public void CancelLeantweensSound()
     {
-        LeanTween.cancel(normalAmbience.gameObject);
+        LeanTween.cancel(normalAmbienceLevel.gameObject);
         LeanTween.cancel(forestSounds.gameObject);
     }
     public void CancelCoRoutinesSound()

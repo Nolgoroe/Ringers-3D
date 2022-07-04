@@ -142,8 +142,6 @@ public class AnimationManager : MonoBehaviour
     [Header("Other")]
     [Space(30)]
 
-    public GameObject endLevelTreePrefab;
-
     public GameObject[] turnOff;
     public GameObject[] destroyOnSkipEndLevel;
 
@@ -687,7 +685,7 @@ public class AnimationManager : MonoBehaviour
             hasSkippedToAfterAnimalAnim = true;
         }
 
-        SoundManager.Instance.PlaySound(Sounds.LevelWin);
+        //SoundManager.Instance.PlaySound(Sounds.LevelWin);
 
 
         if (turnOff != null)
