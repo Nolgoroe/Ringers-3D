@@ -1050,14 +1050,14 @@ public class UIManager : MonoBehaviour
         {
             HollowObjectDisplayer HOD = HollowCraftAndOwnedManager.Instance.hollowObjectsCreated[0].GetComponent<HollowObjectDisplayer>();
 
-            if (!HOD.canCraft)
-            {
+            //if (!HOD.canCraft)
+            //{
                 if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
                 {
-                    TutorialSequence.Instacne.AddToPlayerMatsForHollowCraft(HOD.craftingMatsToRubiesHollow);
+                    TutorialSequence.Instacne.AddToPlayerMatsForHollowCraft(HOD.craftingMatsForEquipment);
                     HOD.canCraft = true;
                 }
-            }
+            //}
 
             if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
             {
@@ -2216,9 +2216,10 @@ public class UIManager : MonoBehaviour
         TutorialSaveData.Instance.hasFinishedIntro = true;
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
 
-        PlayButton();
-
         DisplayDailyRewardsScreen();
+
+        PlayButton();
+        StartCoroutine(SoundManager.Instance.PlaySoundAmbienceFadeOut(SoundManager.Instance.fadeOutIntroSound));
 
         StartCoroutine(SkipIntroFade());
     }
@@ -2226,13 +2227,19 @@ public class UIManager : MonoBehaviour
     {
         if (introImageIndex != introImages.Count() - 1)
         {
-            LeanTween.value(TEMPBgIntro, 1, 0, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+            LeanTween.value(introScreenParent, 1, 0, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
             {
-                Image sr = TEMPBgIntro.GetComponent<Image>();
-                Color newColor = sr.color;
-                newColor.a = val;
-                sr.color = newColor;
+                CanvasGroup group = introScreenParent.GetComponent<CanvasGroup>();
+                group.alpha = val;
             });
+
+            //LeanTween.value(TEMPBgIntro, 1, 0, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+            //{
+            //    Image sr = TEMPBgIntro.GetComponent<Image>();
+            //    Color newColor = sr.color;
+            //    newColor.a = val;
+            //    sr.color = newColor;
+            //});
         }
 
         yield return new WaitForSeconds(speedFadeOutIntro + 0.1f);

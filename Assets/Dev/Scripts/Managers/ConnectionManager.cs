@@ -1403,22 +1403,13 @@ public class ConnectionManager : MonoBehaviour
         return false;
     }
 
-    public bool CheckRepeatingSymbolsStonePieces(Piece p)
+    public bool CheckHasEnoughSymbolsStonePieces(Piece p)
     {
         // we already take care of the fact of 1 stone tile since no tile can repeat itself.
         if (GameManager.Instance.currentLevel.stoneTiles.Count() == 1)
         {
-            return false;
+            return true;
         }
-
-        foreach (Cell c in cells)
-        {
-            if (c.isFull)
-            {
-                FindAmountOFSymbols(c.pieceHeld, p);
-            }
-        }
-
 
 
         if (GameManager.Instance.currentLevel.stoneTiles.Count() == 2)
@@ -1427,14 +1418,14 @@ public class ConnectionManager : MonoBehaviour
             {
                 if (tempSymbolPiecesStoneFound.Count >= GameManager.Instance.currentLevel.levelAvailablesymbols.Count())
                 {
-                    return false;
+                    return true;
                 }
             }
             else
             {
                 if (tempSymbolPiecesStoneFound.Count >= 3)
                 {
-                    return false;
+                    return true;
                 }
             }
         }
@@ -1444,14 +1435,14 @@ public class ConnectionManager : MonoBehaviour
             {
                 if (tempSymbolPiecesStoneFound.Count >= GameManager.Instance.currentLevel.levelAvailablesymbols.Count())
                 {
-                    return false;
+                    return true;
                 }
             }
             else
             {
                 if (tempSymbolPiecesStoneFound.Count >= 4)
                 {
-                    return false;
+                    return true;
                 }
             }
         }
@@ -1461,19 +1452,19 @@ public class ConnectionManager : MonoBehaviour
             {
                 if (tempSymbolPiecesStoneFound.Count >= GameManager.Instance.currentLevel.levelAvailablesymbols.Count())
                 {
-                    return false;
+                    return true;
                 }
             }
             else
             {
                 if (tempSymbolPiecesStoneFound.Count >= 4)
                 {
-                    return false;
+                    return true;
                 }
             }
         }
 
-        return true;
+        return false;
     }
 
     private void FindAmountOFSymbols(Piece currectCheckPiece, Piece p)

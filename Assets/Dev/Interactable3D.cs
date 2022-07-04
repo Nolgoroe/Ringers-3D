@@ -55,116 +55,131 @@ public class Interactable3D : MonoBehaviour
 
     public void LaunchGrindLevel()
     {
-            ZoneManager.Instance.SetCurrentZone(currentZoneID);
+        ZoneManager.Instance.SetCurrentZone(currentZoneID);
 
-            if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
+        if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
+        {
+            if (ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind)
             {
-                if (ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind)
-                {
-                    GameManager.Instance.levelStarted = true;
-                    //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
+                GameManager.Instance.levelStarted = true;
+                //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
-                    GameManager.Instance.ChooseLevelGrind(indexInZone);
-                    GameManager.Instance.setCurrentLevelBG(currentZoneID);
-                    //GameManager.Instance.CallStartLevel(false);
+                GameManager.Instance.ChooseLevelGrind(indexInZone);
+                GameManager.Instance.setCurrentLevelBG(currentZoneID);
+                //GameManager.Instance.CallStartLevel(false);
 
-                    TurnOffVFX();
+                TurnOffVFX();
 
-                    GameManager.Instance.StartLevel(true);
-                }
+                SoundManager.Instance.FadeOutMapBGMusic(SoundManager.Instance.timeFadeOutBGMusic, true);
 
+                GameManager.Instance.StartLevel(true);
             }
+
+        }
     }
 
     public void LaunchTutorialLevel()
     {
-            ZoneManager.Instance.SetCurrentZone(currentZoneID);
+        ZoneManager.Instance.SetCurrentZone(currentZoneID);
 
-            if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
+        if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
+        {
+            if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (indexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
             {
-                if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (indexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
-                {
-                    GameManager.Instance.levelStarted = true;
-                    //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
+                GameManager.Instance.levelStarted = true;
+                //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
-                    GameManager.Instance.ChooseLevel(indexInZone);
-                    GameManager.Instance.setCurrentLevelBG(currentZoneID);
-                    //GameManager.Instance.CallStartLevel(true);
+                GameManager.Instance.ChooseLevel(indexInZone);
+                GameManager.Instance.setCurrentLevelBG(currentZoneID);
+                //GameManager.Instance.CallStartLevel(true);
 
-                    TurnOffVFX();
+                TurnOffVFX();
 
-                    GameManager.Instance.StartTutorialLevel(true);
+                SoundManager.Instance.FadeOutMapBGMusic(SoundManager.Instance.timeFadeOutBGMusic, true);
 
-                }
+
+                GameManager.Instance.StartTutorialLevel(true);
 
             }
+
+        }
     }
 
     public void LaunchKeyLevel()
     {
-            ZoneManager.Instance.CheckZoneAwardedKey(currentZoneID);
-            ZoneManager.Instance.SetUnlockZone(NextZoneID);
+        ZoneManager.Instance.CheckZoneAwardedKey(currentZoneID);
+        ZoneManager.Instance.SetUnlockZone(NextZoneID);
 
-            if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
+        if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
+        {
+            if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (indexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
             {
-                if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (indexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
-                {
-                    GameManager.Instance.levelStarted = true;
-                    //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
+                GameManager.Instance.levelStarted = true;
+                //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
-                    GameManager.Instance.ChooseLevel(indexInZone);
-                    GameManager.Instance.setCurrentLevelBG(currentZoneID);
-                    //GameManager.Instance.CallStartLevel(false);
+                GameManager.Instance.ChooseLevel(indexInZone);
+                GameManager.Instance.setCurrentLevelBG(currentZoneID);
+                //GameManager.Instance.CallStartLevel(false);
 
-                    TurnOffVFX();
+                TurnOffVFX();
 
-                    GameManager.Instance.StartLevel(true);
+                SoundManager.Instance.FadeOutMapBGMusic(SoundManager.Instance.timeFadeOutBGMusic, true);
 
-                }
+
+                GameManager.Instance.StartLevel(true);
 
             }
+
+        }
     }
 
     public void LaunchKeyAndTutorialLevel()
     {
-            ZoneManager.Instance.CheckZoneAwardedKey(currentZoneID);
-            ZoneManager.Instance.SetUnlockZone(NextZoneID);
+        ZoneManager.Instance.CheckZoneAwardedKey(currentZoneID);
+        ZoneManager.Instance.SetUnlockZone(NextZoneID);
 
-            if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
+        if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
+        {
+            if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (indexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
             {
-                if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (indexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
-                {
-                    GameManager.Instance.levelStarted = true;
-                    //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
+                GameManager.Instance.levelStarted = true;
+                //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
-                    GameManager.Instance.ChooseLevel(indexInZone);
-                    GameManager.Instance.setCurrentLevelBG(currentZoneID);
-                    //GameManager.Instance.CallStartLevel(true);
+                GameManager.Instance.ChooseLevel(indexInZone);
+                GameManager.Instance.setCurrentLevelBG(currentZoneID);
+                //GameManager.Instance.CallStartLevel(true);
 
-                    TurnOffVFX();
+                TurnOffVFX();
 
-                    GameManager.Instance.StartTutorialLevel(true);
+                SoundManager.Instance.FadeOutMapBGMusic(SoundManager.Instance.timeFadeOutBGMusic, true);
 
-                }
+
+                GameManager.Instance.StartTutorialLevel(true);
 
             }
+
+        }
     }
 
     public void LaunchBossLevel(LevelScriptableObject bossLevel)
     {
-            if (PlayerManager.Instance.bossTicketCount > 0)
-            {
-                GameManager.Instance.levelStarted = true;
-                GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
+        if (PlayerManager.Instance.bossTicketCount > 0)
+        {
+            GameManager.Instance.levelStarted = true;
+            GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
-                PlayerManager.Instance.bossTicketCount--;
-                ZoneManager.Instance.SetCurrentZone(0);
+            PlayerManager.Instance.bossTicketCount--;
+            ZoneManager.Instance.SetCurrentZone(0);
 
-                BossBattleManager.instance.bossLevelSO = bossLevel;
-                GameManager.Instance.currentLevel = bossLevel;
-                GameManager.Instance.setCurrentLevelBG(0);
-                GameManager.Instance.startBossLevel(true);
-            }
+            BossBattleManager.instance.bossLevelSO = bossLevel;
+            GameManager.Instance.currentLevel = bossLevel;
+            GameManager.Instance.setCurrentLevelBG(0);
+
+
+            SoundManager.Instance.FadeOutMapBGMusic(SoundManager.Instance.timeFadeOutBGMusic, true);
+
+            GameManager.Instance.startBossLevel(true);
+        }
     }
 
     public void TurnOnVFX()

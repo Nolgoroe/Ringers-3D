@@ -758,6 +758,19 @@ public class GameManager : MonoBehaviour
                     //}
                 }
 
+                if (currentLevel.isTutorial)
+                {
+                    TutorialSaveData.Instance.completedTutorialLevelId.Add(currentLevel.numIndexForLeaderBoard);
+                    PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+                }
+
+                if (currentLevel.isSpecificTutorial && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft)
+                {
+                    TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(currentLevel.numIndexForLeaderBoard);
+                    PlayerManager.Instance.CheckTransformTempPowersToActualPowers();
+                    PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+                }
+
                 Debug.Log("YOU WIN");
 
                 LevelEnded = true;

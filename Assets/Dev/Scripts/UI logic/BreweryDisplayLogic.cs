@@ -34,12 +34,17 @@ public class BreweryDisplayLogic : MonoBehaviour
     public int rubiesNeededToBuyPotion;
 
     public bool canForgePotion;
+    private bool hasGivenMatsTutorial;
 
     private void Awake()
     {
         materialsNeedToBuyPotion = new List<CraftingMatsNeededToRubies>();
     }
 
+    private void Start()
+    {
+        hasGivenMatsTutorial = false;
+    }
 
     public void BreweryPotionDisplay(EquipmentDisplayer ED)
     {
@@ -58,11 +63,13 @@ public class BreweryDisplayLogic : MonoBehaviour
 
         if (TutorialSequence.Instacne.duringSequence)
         {
-            if (!canForgePotion)
+            if (!hasGivenMatsTutorial)
             {
                 if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPotionTabPhase)
                 {
-                    TutorialSequence.Instacne.AddToPlayerMatsForPotion(materialsNeedToBuyPotion);
+                    //TutorialSequence.Instacne.AddToPlayerMatsForPotion(materialsNeedToBuyPotion);
+                    TutorialSequence.Instacne.AddToPlayerMatsForPotion(selectedPotion.craftingMatsForEquipment);
+                    hasGivenMatsTutorial = true;
                     BreweryPotionDisplay(selectedPotion);
                 }
             }

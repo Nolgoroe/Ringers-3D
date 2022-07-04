@@ -641,7 +641,7 @@ public class TutorialSequence : MonoBehaviour
 
         if (currentPhaseInSequenceLevels == levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].EndPhaseID)
         {
-            TutorialSaveData.Instance.completedTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
+            //TutorialSaveData.Instance.completedTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
             //TutorialSaveData.Instance.SaveTutorialSaveData();
 
             maskImage.gameObject.SetActive(false);
@@ -669,7 +669,7 @@ public class TutorialSequence : MonoBehaviour
             //    screensDeactivateOnTouch.Add(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[currentPhaseInSequenceLevels - 1]);
             //}
 
-            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+            //PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
             yield break;
         }
         //else
@@ -752,25 +752,27 @@ public class TutorialSequence : MonoBehaviour
         {
             if (currentSpecificTutorial == SpecificTutorialsEnum.PotionCraft)
             {
+                TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
+                PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+
                 Debug.LogError("Potions should work now");
                 MaterialsAndForgeManager.Instance.ResetPotionDataAfterTutorial();
             }
             if (currentSpecificTutorial == SpecificTutorialsEnum.DenScreen)
             {
+                TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
+                PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+
                 Debug.LogError("Den Tutorial Done");
                 TutorialSaveData.Instance.hasFinishedDen = true;
             }
 
             UIManager.Instance.requiredButtonForTutorialPhase = null;
 
-            TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
-            //TutorialSaveData.Instance.completedTutorialLevelId.Add(GameManager.Instance.currentLevel.levelNum);
-            //TutorialSaveData.Instance.SaveTutorialSaveData();
+            //TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
             currentSpecificTutorial = SpecificTutorialsEnum.None;
             maskImage.gameObject.SetActive(false);
             duringSequence = false;
-            //Debug.Log("Phases are done!");
-            //Invoke("UnlockAll", 2);
             activatedHeighlights.Clear();
             activatedBoardParticles.Clear();
 
@@ -780,29 +782,12 @@ public class TutorialSequence : MonoBehaviour
             }
 
             PlayerManager.Instance.checkDoAddPotionsToInventory();
-            //Invoke("DeactivateTutorialScreens", 0.1f);
             currentPhaseInSequenceSpecific = 0;
 
             DeactivateAllTutorialScreens();
 
-            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
-
-            //if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].doFadeInEnd)
-            //{
-            //    StartCoroutine(DeactivateTutorialScreens(specificTutorials, GameManager.Instance.currentLevel.tutorialIndexForList, specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].waitTimeEndPhase));
-            //}
-            //else
-            //{
-            //    screensDeactivateOnTouch.Add(specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific - 1]);
-            //}
-
             return;
         }
-        //else
-        //{
-        //    StartCoroutine(SelectReleventHeighlights(currentPhaseInSequenceSpecific, true));
-        //    ChangePhase(specificTutorials, GameManager.Instance.currentLevel.tutorialIndexForList, currentPhaseInSequenceSpecific);
-        //}
 
         if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific])
         {
@@ -1385,38 +1370,38 @@ public class TutorialSequence : MonoBehaviour
         }
     }
 
-    public void AddToPlayerMatsForPotion(List<CraftingMatsNeededToRubies> CMNTR)
+    public void AddToPlayerMatsForPotion(List<CraftingMatsNeeded> CMN)
     {
-        foreach (CraftingMatsNeededToRubies mat in CMNTR)
+        foreach (CraftingMatsNeeded mat in CMN)
         {
             if(mat.mat == CraftingMats.DewDrops)
             {
-                PlayerManager.Instance.collectedDewDrops += mat.amountMissing;
+                PlayerManager.Instance.collectedDewDrops += mat.amount;
             }
             else
             {
                 CraftingMatEntry CME = PlayerManager.Instance.craftingMatsInInventory.Where(p => p.mat == mat.mat).Single();
 
-                CME.amount += mat.amountMissing;
+                CME.amount += mat.amount;
             }
         }
 
         Debug.Log("Added missing ingredients!");
     }
 
-    public void AddToPlayerMatsForHollowCraft(List<CraftingMatsNeededToRubies> CMNTR)
+    public void AddToPlayerMatsForHollowCraft(List<CraftingMatsNeeded> CMN)
     {
-        foreach (CraftingMatsNeededToRubies mat in CMNTR)
+        foreach (CraftingMatsNeeded mat in CMN)
         {
             if (mat.mat == CraftingMats.DewDrops)
             {
-                PlayerManager.Instance.collectedDewDrops += mat.amountMissing;
+                PlayerManager.Instance.collectedDewDrops += mat.amount;
             }
             else
             {
                 CraftingMatEntry CME = PlayerManager.Instance.craftingMatsInInventory.Where(p => p.mat == mat.mat).Single();
 
-                CME.amount += mat.amountMissing;
+                CME.amount += mat.amount;
             }
         }
 
