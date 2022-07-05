@@ -477,8 +477,6 @@ public class ConnectionManager : MonoBehaviour
 
         if (lastPiece)
         {
-            SoundManager.Instance.PlaySound(Sounds.LastTileSequence);
-
             if (!GameManager.Instance.currentLevel.isBoss)
             {
                 GameManager.Instance.CheckEndLevel(false);

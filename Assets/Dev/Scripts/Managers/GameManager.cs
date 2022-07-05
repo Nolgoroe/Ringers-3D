@@ -661,6 +661,8 @@ public class GameManager : MonoBehaviour
     {
         if (cheat)
         {
+            SoundManager.Instance.PlaySound(Sounds.LastTileSequence);
+
             LevelEnded = true;
 
             if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex && !ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey)
@@ -722,6 +724,8 @@ public class GameManager : MonoBehaviour
             //UIManager.Instance.DisableCommitButton();
             if (currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0 && unsuccessfullSlicesCount == 0)
             {
+                SoundManager.Instance.PlaySound(Sounds.LastTileSequence);
+
                 if (ZoneManagerHelpData.Instance.currentZoneCheck)
                 {
                     if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex && !ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey)

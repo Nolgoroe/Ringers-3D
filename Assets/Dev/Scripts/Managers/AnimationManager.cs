@@ -685,7 +685,7 @@ public class AnimationManager : MonoBehaviour
             hasSkippedToAfterAnimalAnim = true;
         }
 
-        //SoundManager.Instance.PlaySound(Sounds.LevelWin);
+        SoundManager.Instance.PlaySound(Sounds.LevelWin);
 
 
         if (turnOff != null)

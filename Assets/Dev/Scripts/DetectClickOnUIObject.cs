@@ -10,6 +10,7 @@ public class DetectClickOnUIObject : MonoBehaviour, IPointerClickHandler
     public bool disableVFXSound;
     public bool tutorialSequenceInturrupt;
     public bool disableUsingUI;
+    public bool isClosingScreen = true;
 
     private void OnEnable()
     {
@@ -33,16 +34,19 @@ public class DetectClickOnUIObject : MonoBehaviour, IPointerClickHandler
     {
         Debug.Log("Clicked HERE");
 
-        if (tutorialSequenceInturrupt)
+        if (isClosingScreen)
         {
-            if (!TutorialSequence.Instacne.duringSequence)
+            if (tutorialSequenceInturrupt)
+            {
+                if (!TutorialSequence.Instacne.duringSequence)
+                {
+                    CloseWindow();
+                }
+            }
+            else
             {
                 CloseWindow();
             }
-        }
-        else
-        {
-            CloseWindow();
         }
     }
 
