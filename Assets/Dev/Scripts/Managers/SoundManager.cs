@@ -359,6 +359,7 @@ public class SoundManager : MonoBehaviour
         LeanTween.cancel(audioSourceAmbience.gameObject);
         LeanTween.cancel(forestSounds.gameObject);
         LeanTween.cancel(normalAmbienceLevel.gameObject);
+        LeanTween.cancel(hudBGMuisc.gameObject);
 
         muteMusic = !muteMusic;
 
@@ -368,12 +369,14 @@ public class SoundManager : MonoBehaviour
             audioSourceAmbience.volume = 0;
             forestSounds.volume = 0;
             normalAmbienceLevel.volume = 0;
+            hudBGMuisc.volume = 0;
         }
         else
         {
             musicToggle.isOn = true;
 
             audioSourceAmbience.volume = 1;
+            hudBGMuisc.volume = 1;
 
             if (GameManager.Instance.levelStarted)
             {
@@ -381,8 +384,8 @@ public class SoundManager : MonoBehaviour
             }
             else
             {
-                forestSounds.volume = 1;
-                normalAmbienceLevel.volume = 1;
+                forestSounds.volume = 0;
+                normalAmbienceLevel.volume = 0;
             }
         }
     }
