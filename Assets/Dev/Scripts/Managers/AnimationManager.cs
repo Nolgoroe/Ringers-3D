@@ -371,7 +371,7 @@ public class AnimationManager : MonoBehaviour
             }
             else
             {
-                AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetBool("Clear Tree", true);
+                AnimalsManager.Instance.statueToSwap.transform.GetChild(0).GetComponent<Animator>().SetBool("Clear Tree", true);
             }
 
             hasSkippedToAnimalAnim = true;

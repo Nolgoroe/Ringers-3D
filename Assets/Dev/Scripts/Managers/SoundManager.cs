@@ -312,12 +312,12 @@ public class SoundManager : MonoBehaviour
         int ran = Random.Range(0, (enumToSound[soundEnum].Length));
         normalAmbienceLevel.clip = enumToSound[soundEnum][ran];
 
-        forestSounds.volume = 0;
-        normalAmbienceLevel.volume = 0;
+        //forestSounds.volume = 0;
+        //normalAmbienceLevel.volume = 0;
 
         float vol = 0;
 
-        LeanTween.value(forestSounds.gameObject, 0, 1, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
+        LeanTween.value(forestSounds.gameObject, forestSounds.volume, 1, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
         {
             vol = val;
             forestSounds.volume = vol;
@@ -325,7 +325,7 @@ public class SoundManager : MonoBehaviour
 
         vol = 0;
 
-        LeanTween.value(normalAmbienceLevel.gameObject, 0, 1, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
+        LeanTween.value(normalAmbienceLevel.gameObject, normalAmbienceLevel.volume, 1, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
         {
             vol = val;
             normalAmbienceLevel.volume = vol;
