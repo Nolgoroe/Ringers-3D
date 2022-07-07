@@ -150,8 +150,8 @@ public class EquipmentDisplayer : MonoBehaviour
 
             EquipmentData TempED = null;
 
-            if (!isBought)
-            {
+            //if (!isBought)
+            //{
                 GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Crafted Potion:" + data.power.ToString());
 
                 foreach (CraftingMatsNeeded CMN in craftingMatsForEquipment)
@@ -163,7 +163,7 @@ public class EquipmentDisplayer : MonoBehaviour
                 }
 
                 //SortMaster.Instance.RefreshAllForgeScreens();
-            }
+            //}
 
             //SortMaster.Instance.RefreshAllScreens();
 

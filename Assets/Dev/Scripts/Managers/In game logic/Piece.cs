@@ -38,11 +38,13 @@ public class Piece : MonoBehaviour
     public void SetPieces()
     {
         bool isSamePiece = true;
+        bool isRepeatPieceSides = true;
+
         int repeatIndicator = 0;
         rightChild.isRightSubPiece = true; // this needs to be better
 
 
-        while (isSamePiece)
+        while (isSamePiece || isRepeatPieceSides)
         {
             if (!GameManager.Instance.isDisableTutorials && (GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial))
             {
@@ -66,9 +68,10 @@ public class Piece : MonoBehaviour
             }
 
             isSamePiece = CheckNoRepeatPieceClip();
+            isRepeatPieceSides = CheckNoRepeatPieceSidesNormalPiece();
 
 
-            if(GameManager.Instance.currentLevel.levelAvailableColors.Length == 1 && GameManager.Instance.currentLevel.levelAvailablesymbols.Length == 1)
+            if (GameManager.Instance.currentLevel.levelAvailableColors.Length == 1 && GameManager.Instance.currentLevel.levelAvailablesymbols.Length == 1)
             {
                 isSamePiece = false;
             }
@@ -143,7 +146,7 @@ public class Piece : MonoBehaviour
                 }
             }
 
-            if (isSamePiece)
+            if (isSamePiece || isRepeatPieceSides)
             {
                 repeatIndicator++;
             }
@@ -265,6 +268,20 @@ public class Piece : MonoBehaviour
         Piece currectCheckPiece = GetComponent<Piece>();
 
         if(currectCheckPiece.rightChild.symbolOfPiece == currectCheckPiece.leftChild.symbolOfPiece)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+    public bool CheckNoRepeatPieceSidesNormalPiece() // for now it's only for stone pieces
+    {
+        Piece currectCheckPiece = GetComponent<Piece>();
+
+        if(currectCheckPiece.rightChild.symbolOfPiece == currectCheckPiece.leftChild.symbolOfPiece && currectCheckPiece.rightChild.colorOfPiece == currectCheckPiece.leftChild.colorOfPiece)
         {
             return true;
         }

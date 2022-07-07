@@ -195,8 +195,8 @@ public class HollowObjectDisplayer : MonoBehaviour
 
         if (canCraft)
         {
-            if (!isBought)
-            {
+            //if (!isBought)
+            //{
                 foreach (CraftingMatsNeeded CMN in craftingMatsForEquipment)
                 {
                     Debug.Log(CMN.mat.ToString());
@@ -204,7 +204,7 @@ public class HollowObjectDisplayer : MonoBehaviour
 
                     PlayerManager.Instance.DecreaseNumOfMats(CMN);
                 }
-            }
+            //}
 
             PlayerManager.Instance.ownedHollowObjects.Add(objectData);
 

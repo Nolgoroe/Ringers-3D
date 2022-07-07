@@ -131,7 +131,7 @@ public class PlayerManager : MonoBehaviour
 
             if(collectedDewDrops < 0)
             {
-                Debug.LogError("Something wrong with dew drops counter!");
+                collectedDewDrops = 0;
             }
 
             UIManager.Instance.dewDropsText.text = collectedDewDrops.ToString();
@@ -149,6 +149,11 @@ public class PlayerManager : MonoBehaviour
             CraftingMatEntry CME = craftingMatsInInventory.Where(p => p.mat == CMN.mat).Single();
 
             CME.amount -= CMN.amount;
+
+            if(CME.amount < 0)
+            {
+                CME.amount = 0;
+            }
         }
     }
     public void AddMaterials(CraftingMats matToAdd, int amountToAdd)
