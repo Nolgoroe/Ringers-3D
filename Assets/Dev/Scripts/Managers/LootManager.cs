@@ -210,7 +210,44 @@ public class LootManager : MonoBehaviour
     {
         Debug.Log("GIVING LOOT");
 
-        if(rubiesToRecieveInLevel > 0)
+        if (giveKey)
+        {
+            Instantiate(keyPrefab, GameManager.Instance.destroyOutOfLevel);
+            ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey = true;
+
+            if (ZoneManagerHelpData.Instance.nextZoneCheck)
+            {
+                ZoneManagerHelpData.Instance.nextZoneCheck.isUnlocked = true;
+                ZoneManagerHelpData.Instance.nextZoneCheck.maxLevelReachedInZone = 1;
+                ZoneManager.Instance.unlockedZoneID.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
+                ZoneManager.Instance.UpdateMaxZoneIdReached(ZoneManagerHelpData.Instance.nextZoneCheck.id);
+
+                if (ZoneManagerHelpData.Instance.nextZoneCheck.id == 1)
+                {
+                    ZoneManager.Instance.hasStartedVinebloom = true;
+                    UIManager.Instance.TurnOnLeaderboardButtons();
+                }
+
+                //ZoneManagerHelpData.Instance.nextZoneCheck.zoneHeader.sprite = Resources.Load<Sprite>(ZoneManagerHelpData.Instance.nextZoneCheck.unlockedZonePath);
+
+                //UIManager.Instance.UnlockZoneFirstTime(ZoneManagerHelpData.Instance.nextZoneCheck.id);
+
+                //ZoneManager.Instance.unlockedZoneID.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id); //// this needs to move to zone manager (WIP)
+                ZoneManager.Instance.zonesToUnlock.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
+
+                PlayfabManager.instance.SaveGameData(new SystemsToSave[] { });
+
+                //ZoneManager.Instance.SaveZoneManager();
+                //ZoneManagerHelpData.Instance.currentZoneCheck.SaveZone();
+                //ZoneManagerHelpData.Instance.nextZoneCheck.SaveZone();
+            }
+
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneManager, SystemsToSave.AllZones });
+
+            giveKey = false;
+        }
+
+        if (rubiesToRecieveInLevel > 0)
         {
             StartCoroutine(DisplayLootGoldRubyToPlayer(rubiesToRecieveInLevel, rubySprite));
             PlayerManager.Instance.AddRubies(rubiesToRecieveInLevel);
@@ -247,42 +284,8 @@ public class LootManager : MonoBehaviour
 
         //currentLevelLootToGive.Clear();
 
-        if (giveKey)
-        {
-            Instantiate(keyPrefab, GameManager.Instance.destroyOutOfLevel);
-            ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey = true;
 
-            if (ZoneManagerHelpData.Instance.nextZoneCheck)
-            {
-                ZoneManagerHelpData.Instance.nextZoneCheck.isUnlocked = true;
-                ZoneManagerHelpData.Instance.nextZoneCheck.maxLevelReachedInZone = 1;
-                ZoneManager.Instance.unlockedZoneID.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
-                ZoneManager.Instance.UpdateMaxZoneIdReached(ZoneManagerHelpData.Instance.nextZoneCheck.id);
-
-                if(ZoneManagerHelpData.Instance.nextZoneCheck.id == 1)
-                {
-                    ZoneManager.Instance.hasStartedVinebloom = true;
-                    UIManager.Instance.TurnOnLeaderboardButtons();
-                }
-
-                //ZoneManagerHelpData.Instance.nextZoneCheck.zoneHeader.sprite = Resources.Load<Sprite>(ZoneManagerHelpData.Instance.nextZoneCheck.unlockedZonePath);
-
-                //UIManager.Instance.UnlockZoneFirstTime(ZoneManagerHelpData.Instance.nextZoneCheck.id);
-
-                //ZoneManager.Instance.unlockedZoneID.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id); //// this needs to move to zone manager (WIP)
-                ZoneManager.Instance.zonesToUnlock.Add(ZoneManagerHelpData.Instance.nextZoneCheck.id);
-
-                PlayfabManager.instance.SaveGameData(new SystemsToSave[] {SystemsToSave.ZoneManager});
-
-                //ZoneManager.Instance.SaveZoneManager();
-                //ZoneManagerHelpData.Instance.currentZoneCheck.SaveZone();
-                //ZoneManagerHelpData.Instance.nextZoneCheck.SaveZone();
-            }
-
-            giveKey = false;
-        }
-
-        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.ZoneManager, SystemsToSave.AllZones });
 
         //PlayerManager.Instance.SavePlayerData();
         //PlayfabManager.instance.SaveAllGameData();

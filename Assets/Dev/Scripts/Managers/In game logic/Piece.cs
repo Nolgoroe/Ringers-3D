@@ -38,13 +38,12 @@ public class Piece : MonoBehaviour
     public void SetPieces()
     {
         bool isSamePiece = true;
-        bool isRepeatPieceSides = true;
+        //bool isRepeatPieceSides = true;
 
         int repeatIndicator = 0;
         rightChild.isRightSubPiece = true; // this needs to be better
 
-
-        while (isSamePiece || isRepeatPieceSides)
+        while (isSamePiece /*|| isRepeatPieceSides*/)
         {
             if (!GameManager.Instance.isDisableTutorials && (GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial))
             {
@@ -68,7 +67,7 @@ public class Piece : MonoBehaviour
             }
 
             isSamePiece = CheckNoRepeatPieceClip();
-            isRepeatPieceSides = CheckNoRepeatPieceSidesNormalPiece();
+            //isRepeatPieceSides = CheckNoRepeatPieceSidesNormalPiece();
 
 
             if (GameManager.Instance.currentLevel.levelAvailableColors.Length == 1 && GameManager.Instance.currentLevel.levelAvailablesymbols.Length == 1)
@@ -146,7 +145,7 @@ public class Piece : MonoBehaviour
                 }
             }
 
-            if (isSamePiece || isRepeatPieceSides)
+            if (isSamePiece /*|| isRepeatPieceSides*/)
             {
                 repeatIndicator++;
             }

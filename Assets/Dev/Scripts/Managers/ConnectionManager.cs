@@ -494,6 +494,7 @@ public class ConnectionManager : MonoBehaviour
 
     public void ConnectionManagerAnim(int cellIndex, bool isOuterCell)
     {
+        Debug.LogError("here");
         StartCheckLeftConnectAnim(cellIndex, isOuterCell);
 
     }
@@ -608,6 +609,7 @@ public class ConnectionManager : MonoBehaviour
         }
 
 
+        //this is after the connect anim
         yield return new WaitForSeconds(speedPieceConnectAnim - 0.05f);
 
         if (subPiecesOnBoard[currentLeft].parentPiece)
@@ -616,18 +618,32 @@ public class ConnectionManager : MonoBehaviour
             {
                 CursorController.Instance.SnapFollower(cells[cellIndex].transform);
 
-                if (isGoodConnectLeft)
-                {
-                    subPiecesOnBoard[currentLeft].parentPiece.isDuringConnectionAnim = false;
-                    subPiecesOnBoard[leftContested].parentPiece.isDuringConnectionAnim = false;
-                }
+                //if (isGoodConnectLeft)
+                //{
+                //    subPiecesOnBoard[currentLeft].parentPiece.isDuringConnectionAnim = false;
+                //    subPiecesOnBoard[leftContested].parentPiece.isDuringConnectionAnim = false;
+                //}
 
-                if (isGoodConnectRight)
-                {
-                    subPiecesOnBoard[currentRight].parentPiece.isDuringConnectionAnim = false;
-                    subPiecesOnBoard[rightContested].parentPiece.isDuringConnectionAnim = false;
-                }
+                //if (isGoodConnectRight)
+                //{
+                //    subPiecesOnBoard[currentRight].parentPiece.isDuringConnectionAnim = false;
+                //    subPiecesOnBoard[rightContested].parentPiece.isDuringConnectionAnim = false;
+                //}
             }
+        }
+
+        yield return new WaitForSeconds(speedPieceConnectAnim + 0.05f);
+        
+        if (isGoodConnectLeft)
+        {
+            subPiecesOnBoard[currentLeft].parentPiece.isDuringConnectionAnim = false;
+            subPiecesOnBoard[leftContested].parentPiece.isDuringConnectionAnim = false;
+        }
+
+        if (isGoodConnectRight)
+        {
+            subPiecesOnBoard[currentRight].parentPiece.isDuringConnectionAnim = false;
+            subPiecesOnBoard[rightContested].parentPiece.isDuringConnectionAnim = false;
         }
 
     }

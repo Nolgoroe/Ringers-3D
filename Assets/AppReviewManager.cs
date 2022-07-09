@@ -70,12 +70,13 @@ public class AppReviewManager : MonoBehaviour
         {
             UIManager.Instance.reviewUsPanel.SetActive(true);
             ServerRelatedData.instance.hasShowsInitialReviewMessage = true;
-            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ServerRelatedData });
         }
         else
         {
             UIManager.Instance.reviewUsPanelRepeatable.SetActive(true);
         }
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ServerRelatedData });
     }
 
     public void CallRequestReviews()

@@ -747,6 +747,10 @@ public class UIManager : MonoBehaviour
             }
             else
             {
+                if (ServerRelatedData.instance.canShowReviewMessage)
+                {
+                    AppReviewManager.instance.ShowReviewMessage();
+                }
                 //FocusOnArea(ZoneManager.Instance.unlockedZoneID[ZoneManager.Instance.unlockedZoneID.Count - 1]);
             }
 
@@ -777,10 +781,6 @@ public class UIManager : MonoBehaviour
                 }
             }
 
-            if (ServerRelatedData.instance.canShowReviewMessage)
-            {
-                AppReviewManager.instance.ShowReviewMessage();
-            }
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
         }
@@ -802,6 +802,11 @@ public class UIManager : MonoBehaviour
         if (currentCanvas == mainMenu)
         {
             mainMenu.SetActive(false);
+
+            if (ZoneManager.Instance.zonesToUnlock.Count > 0 && !DailyRewardScreen.activeInHierarchy)
+            {
+                ZoneManager.Instance.UnlockLevelViewSequence();
+            }
         }
 
         if (currentCanvas == corruptedZoneScreen)

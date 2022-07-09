@@ -1529,6 +1529,7 @@ public class PlayfabManager : MonoBehaviour
     {
         Debug.LogError("No such user");
         displayMessages.text = "Creating User";
+        Debug.LogError(playerPlayfabUsername);
 
         var request = new RegisterPlayFabUserRequest
         {

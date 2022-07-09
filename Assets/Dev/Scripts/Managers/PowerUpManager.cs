@@ -75,6 +75,8 @@ public class PowerUpManager : MonoBehaviour
 
     public GameObject specialPowerVFXPrefab;
 
+    Coroutine powerBeingUsed = null;
+
     private void Start()
     {
         GameManager.Instance.powerupManager = this;
@@ -238,63 +240,83 @@ public class PowerUpManager : MonoBehaviour
     }
     public void CallJokerCoroutine(PowerupProperties prop)
     {
+        if (powerBeingUsed != null)
+        {
+            StopCoroutine(powerBeingUsed);
+        }
+
         if (TutorialSequence.Instacne.duringSequence)
         {
             if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.JokerTutorial && TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPowerupPhase)
             {
                 TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
-                StartCoroutine(JokerPower(prop));
+                powerBeingUsed = StartCoroutine(JokerPower(prop));
             }
         }
         else
         {
-            StartCoroutine(JokerPower(prop));
+            powerBeingUsed = StartCoroutine(JokerPower(prop));
         }
     }
     public void CallSwitchPowerCoroutine(PowerupProperties prop)
     {
+        if (powerBeingUsed != null)
+        {
+            StopCoroutine(powerBeingUsed);
+        }
+
         if (TutorialSequence.Instacne.duringSequence)
         {
             if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SwapSidesTutorial && TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPowerupPhase)
             {
                 TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
-                StartCoroutine(SwitchPower(prop));
+                powerBeingUsed = StartCoroutine(SwitchPower(prop));
             }
         }
         else
         {
-            StartCoroutine(SwitchPower(prop));
+            powerBeingUsed = StartCoroutine(SwitchPower(prop));
         }
     }
     public void CallPieceBombPowerCoroutine(PowerupProperties prop)
     {
+        if (powerBeingUsed != null)
+        {
+            StopCoroutine(powerBeingUsed);
+        }
+
         //Debug.LogError("TIMES CALLED HERE NOW");
         if (TutorialSequence.Instacne.duringSequence)
         {
             if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.TileBombTutorial && TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPowerupPhase)
             {
                 TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
-                StartCoroutine(PieceBombPower(prop));
+                powerBeingUsed = StartCoroutine(PieceBombPower(prop));
             }
         }
         else
         {
-            StartCoroutine(PieceBombPower(prop));
+            powerBeingUsed = StartCoroutine(PieceBombPower(prop));
         }
     }
     public void CallSliceBombPowerCoroutine(PowerupProperties prop)
     {
+        if (powerBeingUsed != null)
+        {
+            StopCoroutine(powerBeingUsed);
+        }
+
         if (TutorialSequence.Instacne.duringSequence)
         {
             if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SliceBombTutorial && TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPowerupPhase)
             {
                 TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
-                StartCoroutine(SliceBombPower(prop));
+                powerBeingUsed = StartCoroutine(SliceBombPower(prop));
             }
         }
         else
         {
-            StartCoroutine(SliceBombPower(prop));
+            powerBeingUsed = StartCoroutine(SliceBombPower(prop));
         }
     }
     public void CallFourColorPowerCoroutine(PowerupProperties prop)
@@ -314,7 +336,7 @@ public class PowerUpManager : MonoBehaviour
 
         Piece toWorkOn = ObjectToUsePowerUpOn.GetComponent<Piece>();
 
-        if(toWorkOn.leftChild.symbolOfPiece != PieceSymbol.Joker) ///// If 1 of the sub pieces is a joker - so is the other. If the symbol is a joker then the color is awell
+        if(toWorkOn.leftChild.symbolOfPiece != PieceSymbol.Joker && toWorkOn.rightChild.symbolOfPiece != PieceSymbol.Joker) 
         {
 
             if (toWorkOn.partOfBoard /*&& !toWorkOn.isLocked*/)
@@ -766,6 +788,7 @@ public class PowerUpManager : MonoBehaviour
 
     public void CancelPowerup(PowerupProperties prop)
     {
+        StopCoroutine(powerBeingUsed);
         //StopAllCoroutines();
         UIManager.Instance.ActivateUsingPowerupMessage(false);
 

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using UnityEngine.EventSystems;
 
-public class Interactable3D : MonoBehaviour
+public class Interactable3D : MonoBehaviour, IPointerClickHandler
 {
     public bool isTutorialLevel;
     public bool isKeyLevel;
@@ -22,6 +23,12 @@ public class Interactable3D : MonoBehaviour
     {
         NextLevelVFX.SetActive(false);
     }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        ShootEvent();
+    }
+
     public void ShootEvent()
     {
         interactEvent.Invoke();
@@ -215,4 +222,5 @@ public class Interactable3D : MonoBehaviour
 
         transform.name = newName;
     }
+
 }

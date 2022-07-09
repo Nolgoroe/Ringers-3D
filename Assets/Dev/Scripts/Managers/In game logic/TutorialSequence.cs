@@ -760,11 +760,12 @@ public class TutorialSequence : MonoBehaviour
             }
             if (currentSpecificTutorial == SpecificTutorialsEnum.DenScreen)
             {
+                TutorialSaveData.Instance.hasFinishedDen = true;
+
                 TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
                 PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
 
                 Debug.LogError("Den Tutorial Done");
-                TutorialSaveData.Instance.hasFinishedDen = true;
             }
 
             UIManager.Instance.requiredButtonForTutorialPhase = null;

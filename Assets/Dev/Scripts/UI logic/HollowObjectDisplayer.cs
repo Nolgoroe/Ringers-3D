@@ -174,6 +174,14 @@ public class HollowObjectDisplayer : MonoBehaviour
         {
             PlayerManager.Instance.ownedHollowObjects.Add(objectData);
 
+            foreach (CraftingMatsNeeded CMN in craftingMatsForEquipment)
+            {
+                Debug.Log(CMN.mat.ToString());
+                Debug.Log(CMN.amount);
+
+                PlayerManager.Instance.DecreaseNumOfMats(CMN);
+            }
+
             HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
             HollowCraftAndOwnedManager.Instance.RefreshOwnedScreen();
 
