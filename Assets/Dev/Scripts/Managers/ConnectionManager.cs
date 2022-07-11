@@ -3,6 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+[System.Serializable]
+public class CellObjets
+{
+    public List<Cell> possibleCells = new List<Cell>();
+    public CellObjets()
+    {
+        possibleCells = new List<Cell>();
+    }
+}
+
+[System.Serializable]
+public class PossibleCellPathList
+{
+    public List<CellObjets> possibleCellsPath = new List<CellObjets>();
+}
+
+[System.Serializable]
+public class FoundCellPath
+{
+    public List<CellObjets> foundCellPath = new List<CellObjets>();
+    public PieceSymbol leftAnimalSymbolNeeded, rightAnimalSymbolNeeded;
+    public PieceSymbol leftColorNeeded, rightColorNeeded;
+    public bool hasSlice;
+}
 
 public class ConnectionManager : MonoBehaviour
 {
@@ -43,6 +67,19 @@ public class ConnectionManager : MonoBehaviour
 
     public List<PieceSymbol> tempSymbolPiecesStoneFound;
     public int amountStonePiecesInstantiated;
+
+    [Header("Work Zone")]
+    //public List<PossibleCellsList> cellsThatCanConnect = new List<PossibleCellsList>();
+    public PossibleCellPathList cellsThatCanConnect;
+    public FoundCellPath pathsFound;
+
+    public List<Cell> bufferList = new List<Cell>();
+
+    public int mostCurrentListIndex;
+
+    public int numberStepsWanted;
+    public int movesMade;
+    public Cell previousMovedCell;
 
     private void Start()
     {
@@ -712,6 +749,7 @@ public class ConnectionManager : MonoBehaviour
                 return false;
             }
         }
+
         if (currentSide.relevantSlice)
         {
             if (currentSide.relevantSlice.sliceCatagory != SliceCatagory.None)
@@ -1515,4 +1553,142 @@ public class ConnectionManager : MonoBehaviour
         return false; //// Pieces are not the same
     }
 
+
+    [ContextMenu("Try this now")]
+    public void StartLastClipAlgoritm()
+    {
+        cellsThatCanConnect.possibleCellsPath.Clear();
+        pathsFound.foundCellPath.Clear();
+        mostCurrentListIndex = 0;
+
+        foreach (Cell cell in cells)
+        {
+            if (!cell.isFull)
+            {
+                StartCoroutine(RecursiveCheckes(cell));
+
+                break;
+            }
+        }
+
+    }
+
+    public IEnumerator RecursiveCheckes(Cell CurrentEmptyCell)
+    {
+        int mycellIndex = CurrentEmptyCell.cellIndex;
+
+        int leftContested = CheckIntRange((mycellIndex * 2) - 1);
+        int rightContested = CheckIntRange((mycellIndex * 2) + 2);
+
+        yield return new WaitForSeconds(10);
+
+        CheckAllPossibleMovesToEmptyCell(CurrentEmptyCell);
+
+        yield return new WaitForSeconds(5);
+
+        previousMovedCell = CurrentEmptyCell; // remeber the cell that we just made a move with
+    }
+
+    public void CheckAllPossibleMovesToEmptyCell(Cell EmptyCell)
+    {
+        cellsThatCanConnect.possibleCellsPath.Add(new CellObjets());
+        mostCurrentListIndex = cellsThatCanConnect.possibleCellsPath.Count - 1;
+
+        foreach (Cell cellCompareTo in cells)
+        {
+            if(cellCompareTo != previousMovedCell)
+            {
+                if (CheckConnectionsAlgoritm(EmptyCell, cellCompareTo))
+                {
+                    cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells.Add(cellCompareTo);
+                }
+            }
+        }
+
+        if(cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells.Count == 0)
+        {
+            /// we have no moves to make from this index.
+
+            MoveBackInList();
+        }
+
+        if(mostCurrentListIndex >= 0)
+        {
+            movesMade++;
+
+            if (movesMade == numberStepsWanted)
+            {
+                foreach (Cell edgeCell in cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells)
+                {
+                    pathsFound.foundCellPath.Add(new CellObjets());
+                    int lastIndex = pathsFound.foundCellPath.Count - 1;
+
+                    pathsFound.foundCellPath[lastIndex].possibleCells.AddRange(bufferList);
+                    pathsFound.foundCellPath[lastIndex].possibleCells.Add(edgeCell);
+                }
+
+                MoveBackInList();
+
+                if (mostCurrentListIndex >= 0)
+                {
+                    Cell newEmptyCell = cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells[0];
+                    bufferList.Add(newEmptyCell);
+
+                    RecursiveCheckes(newEmptyCell);
+                }
+            }
+            else
+            {
+                Cell newEmptyCell = cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells[0];
+                bufferList.Add(newEmptyCell);
+
+                RecursiveCheckes(newEmptyCell);
+            }
+
+        }
+    }
+
+    void MoveBackInList()
+    {
+        do
+        {
+            cellsThatCanConnect.possibleCellsPath.Remove(cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex]);
+
+            mostCurrentListIndex--;
+            movesMade--;
+
+            if (mostCurrentListIndex >= 0)
+            {
+                cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells.RemoveAt(0);
+                bufferList.RemoveAt(0);
+            }
+            else
+            {
+                break;
+            }
+
+        } while (cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells.Count == 0);
+    }
+
+    bool CheckConnectionsAlgoritm(Cell EmptyCell, Cell checkAgainst)
+    {
+        int mycellIndex = EmptyCell.cellIndex;
+
+        int leftContested = CheckIntRange((mycellIndex * 2) - 1);
+        int rightContested = CheckIntRange((mycellIndex * 2) + 2);
+
+        bool conditionmet;
+        bool isGoodConnect;
+
+        if (CheckSubPieceConnection(subPiecesOnBoard[leftContested], checkAgainst.pieceHeld.rightChild, out conditionmet, out isGoodConnect))
+        {
+            if (CheckSubPieceConnection(subPiecesOnBoard[rightContested], checkAgainst.pieceHeld.leftChild, out conditionmet, out isGoodConnect))
+            {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
 }
