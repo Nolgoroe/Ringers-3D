@@ -14,7 +14,7 @@ GameObject:
   m_Layer: 9
   m_Name: Cell 3
   m_TagString: PieceCell
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -53,6 +53,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 2
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 5778231230796311929}
@@ -60,6 +62,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 4696384799349193967}
+  leftSlice: {fileID: 7760309811530299410}
+  rightSlice: {fileID: 6467334886856692005}
 --- !u!65 &6389442715941580441
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -87,7 +91,7 @@ GameObject:
   m_Layer: 9
   m_Name: Cell 5
   m_TagString: PieceCell
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -126,6 +130,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 4
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 4679270184902242318}
@@ -133,6 +139,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 982404620989343564}
+  leftSlice: {fileID: 1483939612594635998}
+  rightSlice: {fileID: 8754681575605557809}
 --- !u!65 &7211047930119626911
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -160,7 +168,7 @@ GameObject:
   m_Layer: 9
   m_Name: Cell 8
   m_TagString: PieceCell
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -199,6 +207,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 7
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 1902684197609485379}
@@ -206,6 +216,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 1942509321993336185}
+  leftSlice: {fileID: 7600522693413357010}
+  rightSlice: {fileID: 3408395251655521962}
 --- !u!65 &8863490710616979393
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -233,7 +245,7 @@ GameObject:
   m_Layer: 9
   m_Name: Cell 6
   m_TagString: PieceCell
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -272,6 +284,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 5
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 6692842737193151116}
@@ -279,6 +293,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 409643424273495072}
+  leftSlice: {fileID: 8754681575605557809}
+  rightSlice: {fileID: 8031439627347750285}
 --- !u!65 &4870437348745407285
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -306,7 +322,7 @@ GameObject:
   m_Layer: 9
   m_Name: Cell 2
   m_TagString: PieceCell
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -345,6 +361,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 1
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 7731711588630417992}
@@ -352,6 +370,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 6050677835491054806}
+  leftSlice: {fileID: 5785654628768245299}
+  rightSlice: {fileID: 7760309811530299410}
 --- !u!65 &1433387984874192483
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -379,7 +399,7 @@ GameObject:
   m_Layer: 9
   m_Name: Cell 4
   m_TagString: PieceCell
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -418,6 +438,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 3
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 538842224559554249}
@@ -425,6 +447,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 5211329671089579902}
+  leftSlice: {fileID: 6467334886856692005}
+  rightSlice: {fileID: 1483939612594635998}
 --- !u!65 &1505691567839322201
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -452,7 +476,7 @@ GameObject:
   m_Layer: 9
   m_Name: Cell 1
   m_TagString: PieceCell
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -491,6 +515,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 0
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 3868599810952633166}
@@ -498,6 +524,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 5711349801306880857}
+  leftSlice: {fileID: 3408395251655521962}
+  rightSlice: {fileID: 5785654628768245299}
 --- !u!65 &4513575069134658472
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -525,7 +553,7 @@ GameObject:
   m_Layer: 9
   m_Name: Cell 7
   m_TagString: PieceCell
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -564,6 +592,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 6
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 3695877806278028994}
@@ -571,6 +601,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 6740954759157837594}
+  leftSlice: {fileID: 8031439627347750285}
+  rightSlice: {fileID: 7600522693413357010}
 --- !u!65 &4245898387759048076
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5504,7 +5536,7 @@ GameObject:
   m_Layer: 14
   m_Name: Slice 8
   m_TagString: Limiter
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -5969,7 +6001,7 @@ GameObject:
   m_Layer: 14
   m_Name: Slice 1
   m_TagString: Limiter
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -6150,7 +6182,7 @@ GameObject:
   m_Layer: 14
   m_Name: Slice 4
   m_TagString: Limiter
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -11736,7 +11768,7 @@ GameObject:
   m_Layer: 14
   m_Name: Slice 6
   m_TagString: Limiter
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -16960,7 +16992,7 @@ GameObject:
   m_Layer: 14
   m_Name: Slice 5
   m_TagString: Limiter
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -32753,7 +32785,7 @@ GameObject:
   m_Layer: 14
   m_Name: Slice 7
   m_TagString: Limiter
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -43157,7 +43189,7 @@ GameObject:
   m_Layer: 14
   m_Name: Slice 2
   m_TagString: Limiter
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -43219,7 +43251,7 @@ GameObject:
   m_Layer: 14
   m_Name: Slice 3
   m_TagString: Limiter
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

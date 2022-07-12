@@ -77,7 +77,7 @@ public class ClipManager : MonoBehaviour
     public void PopulateSlot(Transform s, int testnum)
     {
         GameObject go = Instantiate(piece, s);
-        go.name = "Piece" + " " + testnum;
+        //go.name = "Piece" + " " + testnum;
         Piece p = go.GetComponent<Piece>();
         p.SetPieces();
     }
@@ -247,6 +247,7 @@ public class ClipManager : MonoBehaviour
             if (p.transform.parent.GetComponent<Cell>())
             {
                 Cell c = p.transform.parent.GetComponent<Cell>();
+                c.isLockedCell = false;
 
                 c.RemovePiece(false);
             }

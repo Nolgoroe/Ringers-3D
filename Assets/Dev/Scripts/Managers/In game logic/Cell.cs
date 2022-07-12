@@ -9,6 +9,9 @@ public class Cell : MonoBehaviour
     public bool isDuringConnectionAnim;
 
     public bool isOuter;
+    public bool isLockedCell;
+    public bool isStoneCell;
+
     public int cellIndex;
     public Piece pieceHeld;
     //public bool isLimited;
@@ -20,6 +23,8 @@ public class Cell : MonoBehaviour
 
     public ParticleSystem highlightParticle;
 
+    public Slice leftSlice;
+    public Slice rightSlice;
     public void AddPiece(Transform followerTarget, bool isNew)
     {
         isFull = true;
@@ -79,7 +84,7 @@ public class Cell : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Moved piece inside ring");
+            //Debug.LogError("Moved piece inside ring");
             GameAnalytics.NewDesignEvent("Pice moved in ring:" + GameManager.Instance.currentLevel.worldName + ":" + "Level " + GameManager.Instance.currentLevel.levelNum);
         }
 
@@ -104,6 +109,7 @@ public class Cell : MonoBehaviour
                 p = go.GetComponent<Piece>();
                 p.SetStonePiece(SPDS);
                 p.isStone = true;
+                isStoneCell = true;
                 pieceHeld = p;
             }
             else
@@ -315,7 +321,7 @@ public class Cell : MonoBehaviour
                 GameManager.Instance.unsuccessfullConnectionCount--;
 
                 pieceHeld.leftChild.isBadConnection = false;
-                int i = ConnectionManager.Instance.CheckIntRange(pieceHeld.leftChild.subPieceIndex - 1);
+                int i = ConnectionManager.Instance.CheckIntRangeSubPieces(pieceHeld.leftChild.subPieceIndex - 1);
 
                 //if (pieceHeld.leftChild.relevantSlice.hasSlice)
                 //{
@@ -373,7 +379,7 @@ public class Cell : MonoBehaviour
                 //}
 
                 pieceHeld.rightChild.isBadConnection = false;
-                int i = ConnectionManager.Instance.CheckIntRange(pieceHeld.rightChild.subPieceIndex + 1);
+                int i = ConnectionManager.Instance.CheckIntRangeSubPieces(pieceHeld.rightChild.subPieceIndex + 1);
 
             }
             else

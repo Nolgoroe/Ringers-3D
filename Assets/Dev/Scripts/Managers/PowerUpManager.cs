@@ -501,6 +501,12 @@ public class PowerUpManager : MonoBehaviour
                 //toWorkOn.transform.parent.GetComponent<Cell>().lockSprite.SetActive(false);
                 //Destroy(toWorkOn.transform.GetChild(0).gameObject); ///WIP
             }
+
+            if (toWorkOn.isStone)
+            {
+                toWorkOn.transform.parent.GetComponent<Cell>().isStoneCell = false;
+            }
+
             yield return new WaitForEndOfFrame();
             GameManager.Instance.currentFilledCellCount--;
 
@@ -560,6 +566,7 @@ public class PowerUpManager : MonoBehaviour
             if (ConnectionManager.Instance.cells[a].pieceHeld.isLocked)
             {
                 ConnectionManager.Instance.cells[a].pieceHeld.isLocked = false;
+                ConnectionManager.Instance.cells[a].isLockedCell = false;
 
                 //Destroy(subPieceL.transform.GetChild(0).gameObject);
                 //ConnectionManager.Instance.cells[a].lockSpriteCellLeft.SetActive(false);
@@ -575,6 +582,8 @@ public class PowerUpManager : MonoBehaviour
             if (ConnectionManager.Instance.cells[b].pieceHeld.isLocked)
             {
                 ConnectionManager.Instance.cells[b].pieceHeld.isLocked = false;
+                ConnectionManager.Instance.cells[b].isLockedCell = false;
+
 
                 //Destroy(subPieceR.transform.GetChild(0).gameObject);
                 //ConnectionManager.Instance.cells[b].lockSpriteCellRight.SetActive(false);

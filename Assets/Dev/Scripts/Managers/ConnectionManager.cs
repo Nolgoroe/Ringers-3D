@@ -23,11 +23,13 @@ public class PossibleCellPathList
 public class EdgePathFoundData
 {
     public List<Cell> foundCells = new List<Cell>();
+    public Cell lastCellToMove;
 
-    public PieceSymbol leftAnimalSymbolNeeded, rightAnimalSymbolNeeded;
-    public PieceColor leftColorNeeded, rightColorNeeded;
+    public PieceSymbol leftAnimalSymbolNeeded;
+    public PieceColor leftColorNeeded;
 
-    public bool leftReleventSlice, rightReleventSlice;
+    public PieceSymbol rightAnimalSymbolNeeded;
+    public PieceColor rightColorNeeded;
 
     public EdgePathFoundData()
     {
@@ -87,13 +89,16 @@ public class ConnectionManager : MonoBehaviour
     public FoundCellPath pathsFound;
 
     public List<Cell> bufferList = new List<Cell>();
-    public SubPiece[] subPiecesOnBoardTempAlgoritm;
+    public List<SubPiece> subPiecesOnBoardTempAlgoritm;
 
     public int mostCurrentListIndex;
 
     public int numberStepsWanted;
     public int movesMade;
-    public Cell previousMovedCell;
+    public float delayTime;
+
+    public List<Cell> previousEmptyCells;
+    public Cell originalMissingCell;
 
     private void Start()
     {
@@ -163,7 +168,7 @@ public class ConnectionManager : MonoBehaviour
 
     public void StartCheckLeft(SubPiece[] supPieceArray, List<Cell> cellList, int cellIndex, bool isOuterCell, bool lastPiece)
     {
-        int leftContested = CheckIntRange((cellIndex * 2) - 1);
+        int leftContested = CheckIntRangeSubPieces((cellIndex * 2) - 1);
         int currentLeft = cellIndex * 2;
 
         if (supPieceArray[leftContested] && subPiecesOnBoard[leftContested].parentPiece.partOfBoard)
@@ -380,7 +385,7 @@ public class ConnectionManager : MonoBehaviour
 
     public void CheckRight(SubPiece[] supPieceArray, List<Cell> cellList, int cellIndex, bool isOuterCell, bool lastPiece)
     {
-        int rightContested = CheckIntRange((cellIndex * 2) + 2);
+        int rightContested = CheckIntRangeSubPieces((cellIndex * 2) + 2);
 
         int currentRight = cellIndex * 2 + 1;
 
@@ -545,14 +550,14 @@ public class ConnectionManager : MonoBehaviour
 
     public void ConnectionManagerAnim(int cellIndex, bool isOuterCell)
     {
-        Debug.LogError("here");
+        //Debug.LogError("here");
         StartCheckLeftConnectAnim(cellIndex, isOuterCell);
 
     }
 
     public void StartCheckLeftConnectAnim(int cellIndex, bool isOuterCell)
     {
-        int leftContested = CheckIntRange((cellIndex * 2) - 1);
+        int leftContested = CheckIntRangeSubPieces((cellIndex * 2) - 1);
         int currentLeft = cellIndex * 2;
 
         bool isGoodConnectLeft = false;
@@ -587,7 +592,7 @@ public class ConnectionManager : MonoBehaviour
 
     public void StartCheckRightConnectAnim(int cellIndex, bool isOuterCell, bool isGoodConnectLeft)
     {
-        int rightContested = CheckIntRange((cellIndex * 2) + 2);
+        int rightContested = CheckIntRangeSubPieces((cellIndex * 2) + 2);
 
         int currentRight = cellIndex * 2 + 1;
 
@@ -620,10 +625,10 @@ public class ConnectionManager : MonoBehaviour
 
     public IEnumerator DoConnectAnim(int cellIndex, bool isGoodConnectLeft, bool isGoodConnectRight)
     {
-        int leftContested = CheckIntRange((cellIndex * 2) - 1);
+        int leftContested = CheckIntRangeSubPieces((cellIndex * 2) - 1);
         int currentLeft = cellIndex * 2;
 
-        int rightContested = CheckIntRange((cellIndex * 2) + 2);
+        int rightContested = CheckIntRangeSubPieces((cellIndex * 2) + 2);
         int currentRight = cellIndex * 2 + 1;
 
         if (isGoodConnectLeft)
@@ -866,7 +871,7 @@ public class ConnectionManager : MonoBehaviour
 
         return result;
     }
-    public int CheckIntRange(int num)
+    public int CheckIntRangeSubPieces(int num)
     {
         if (num < 0)
         {
@@ -880,6 +885,21 @@ public class ConnectionManager : MonoBehaviour
 
         return num;
     }
+    public int CheckIntRangeSubPiecesAlgoritm(int num)
+    {
+        if (num < 0)
+        {
+            return subPiecesOnBoardTempAlgoritm.Count - 1;
+        }
+
+        if (num >= subPiecesOnBoardTempAlgoritm.Count)
+        {
+            return 0;
+        }
+
+        return num;
+    }
+
     public int CheckIntRangeCells(int num)
     {
         if (num < 0)
@@ -1051,6 +1071,7 @@ public class ConnectionManager : MonoBehaviour
         {
             Piece p = c.pieceHeld;
             p.isLocked = true;
+            c.isLockedCell = true;
         }
 
         relevent.lockSpriteHeighlightAnim.SetBool("Lock", true);
@@ -1187,6 +1208,7 @@ public class ConnectionManager : MonoBehaviour
         }
 
         toCheck.pieceHeld.isLocked = false;
+        toCheck.isLockedCell = false;
     }
 
     public bool CheckFulfilledSliceCondition(Slice relevent, CompareResault result, SubPiece a, SubPiece b)
@@ -1584,8 +1606,10 @@ public class ConnectionManager : MonoBehaviour
             if (!cell.isFull)
             {
                 Debug.LogError("Origin cell is: " + cell.name);
+                originalMissingCell = cell;
 
-                StartCoroutine(RecursiveCheckes(cell));
+                //StartCoroutine(RecursiveCheckes(cell));
+                RecursiveCheckes(cell);
 
                 break;
             }
@@ -1595,37 +1619,39 @@ public class ConnectionManager : MonoBehaviour
     
     void InitAlgoritmPiecesData()
     {
-        subPiecesOnBoardTempAlgoritm = subPiecesOnBoard;
+        subPiecesOnBoardTempAlgoritm = new List<SubPiece>();
+        subPiecesOnBoardTempAlgoritm.AddRange(subPiecesOnBoard);
     }
 
-    public IEnumerator RecursiveCheckes(Cell CurrentEmptyCell)
+    public void RecursiveCheckes(Cell CurrentEmptyCell)
     {
+        //Debug.LogError("Started Recursive");
 
-        Debug.LogError("Started Recursive");
+        //yield return new WaitForSeconds(5);
 
-        int mycellIndex = CurrentEmptyCell.cellIndex;
-
-        int leftContested = CheckIntRange((mycellIndex * 2) - 1);
-        int rightContested = CheckIntRange((mycellIndex * 2) + 2);
-
-        yield return new WaitForSeconds(5);
-
-        yield return StartCoroutine(CheckAllPossibleMovesToEmptyCell(CurrentEmptyCell));
-
-        previousMovedCell = CurrentEmptyCell; // remeber the cell that we just made a move with
-
+        //yield return StartCoroutine(CheckAllPossibleMovesToEmptyCell(CurrentEmptyCell));
+        //StartCoroutine(CheckAllPossibleMovesToEmptyCell(CurrentEmptyCell));
+        CheckAllPossibleMovesToEmptyCell(CurrentEmptyCell);
     }
 
-    public IEnumerator CheckAllPossibleMovesToEmptyCell(Cell EmptyCell)
+    public void CheckAllPossibleMovesToEmptyCell(Cell EmptyCell)
     {
+        bool hasFoundOptions = false;
+
         cellsThatCanConnect.possibleCellsPath.Add(new CellsObjetData());
         mostCurrentListIndex = cellsThatCanConnect.possibleCellsPath.Count - 1;
 
-        yield return new WaitForSeconds(5);
+        //yield return new WaitForSeconds(5);
+        Cell previousCell = null;
+
+        if (previousEmptyCells.Count > 0)
+        {
+            previousCell = previousEmptyCells.Last();
+        }
 
         foreach (Cell cellCompareTo in cells)
         {
-            if(cellCompareTo != previousMovedCell && cellCompareTo != EmptyCell)
+            if(cellCompareTo != previousCell && cellCompareTo != EmptyCell && !cellCompareTo.isLockedCell && !cellCompareTo.isStoneCell)
             {
                 if (CheckConnectionsAlgoritm(EmptyCell, cellCompareTo))
                 {
@@ -1634,66 +1660,161 @@ public class ConnectionManager : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(5);
+        //yield return new WaitForSeconds(5);
 
-        if(cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells.Count == 0)
+        //yield return new WaitForSeconds(5);
+
+        if (cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells.Count == 0)
         {
             /// we have no moves to make from this index.
+            hasFoundOptions = false;
 
-            MoveBackInList();
+            //yield return new WaitForSeconds(delayTime);
+
+
+            Debug.LogError("Called from second!!");
+
+            //yield return StartCoroutine(MoveBackInList(EmptyCell));
+            MoveBackInList(EmptyCell);
+
+            //Debug.Break();
+        }
+        else
+        {
+            hasFoundOptions = true;
         }
 
         if(mostCurrentListIndex >= 0)
         {
             movesMade++;
 
+            int tempCheck = 0;
+
             if (movesMade == numberStepsWanted)
             {
-                Cell newEmptyCell = cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells[0];
-                bufferList.Add(newEmptyCell);
-
-                ChangeSubPiecesAlgorithmData(newEmptyCell, EmptyCell);
-                Debug.LogError("Added to buffer!!!");
-
-                yield return new WaitForSeconds(5);
+                //yield return new WaitForSeconds(5);
 
                 foreach (Cell edgeCell in cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells)
                 {
+                    tempCheck++;
+
+                    if (pathsFound.foundCellPath.Count == 50)
+                    {
+                        Debug.LogError("Done with alogoritm, no more needed");
+                        //yield break;
+                        return;
+                    }
+
+
                     pathsFound.foundCellPath.Add(new EdgePathFoundData());
                     int lastIndex = pathsFound.foundCellPath.Count - 1;
 
                     pathsFound.foundCellPath[lastIndex].foundCells.AddRange(bufferList);
                     pathsFound.foundCellPath[lastIndex].foundCells.Add(edgeCell);
+                    pathsFound.foundCellPath[lastIndex].lastCellToMove = edgeCell;
+
+                    //Debug.LogError("Doing this now!!");
+
+                    //yield return new WaitForSeconds(delayTime);
+                    ChangeSubPiecesAlgorithmData(edgeCell, EmptyCell);
+
+                    Debug.LogError("Setting end data path!");
+                    //yield return new WaitForSeconds(delayTime);
+                    //yield return new WaitForSeconds(delayTime);
+
                     SetDataEndPath(edgeCell, lastIndex);
+
+                    //yield return new WaitForSeconds(delayTime);
+                    ChangeSubPiecesAlgorithmData(EmptyCell, edgeCell);
+
                 }
 
-                Debug.LogError("Has enough moves!");
-                yield return new WaitForSeconds(5);
+                //Debug.LogError(tempCheck);
 
-                MoveBackInList();
+                //Debug.LogError("Has enough moves!");
 
-                yield return new WaitForSeconds(5);
+                Debug.LogError("Moving back in list after path!");
+                //yield return new WaitForSeconds(delayTime);
 
-                StartCoroutine(RecursiveCheckes(newEmptyCell));
+                //yield return StartCoroutine(MoveBackInList(EmptyCell));
+                MoveBackInList(EmptyCell);
+
+                if (mostCurrentListIndex >= 0)
+                {
+                    Cell newEmptyCell = cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells[0];
+                    bufferList.Add(newEmptyCell);
+
+
+                    //yield return new WaitForSeconds(delayTime);
+
+                    ChangeSubPiecesAlgorithmData(newEmptyCell, previousEmptyCells.Last());
+
+                    //yield return new WaitForSeconds(delayTime);
+                    //Debug.LogError("Added to buffer!!!");
+
+                    //yield return new WaitForSeconds(5);
+
+                    //StartCoroutine(RecursiveCheckes(newEmptyCell));
+
+                    //previousEmptyCell = EmptyCell; // remeber the cell that we just moved to since we don't want to move from that cell.
+
+                    RecursiveCheckes(newEmptyCell);
+                }
+                else
+                {
+                    Debug.Log("Done with alogoritm, no more options");
+                    //yield break;
+                    return;
+                }
+                //yield return new WaitForSeconds(5);
+
             }
             else
             {
+                if (hasFoundOptions)
+                {
+                    if (previousEmptyCells.Count == 0)
+                    {
+                        previousEmptyCells.Add(originalMissingCell);
+                    }
+                    else
+                    {
+                        previousEmptyCells.Add(EmptyCell); // remeber the cell that we just moved to since we don't want to move from that cell.
+                    }
+                }
+
                 Cell newEmptyCell = cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells[0];
                 bufferList.Add(newEmptyCell);
 
-                ChangeSubPiecesAlgorithmData(newEmptyCell, EmptyCell);
+                Debug.LogError("Updated buffer");
+                //yield return new WaitForSeconds(delayTime);
 
-                Debug.LogError("Added to buffer!");
+                //Debug.LogError("Added to buffer!");
 
-                yield return new WaitForSeconds(5);
+                ChangeSubPiecesAlgorithmData(newEmptyCell, previousEmptyCells.Last());
 
-                StartCoroutine(RecursiveCheckes(newEmptyCell));
+                Debug.LogError("Moved Piece");
+
+                //yield return new WaitForSeconds(delayTime);
+
+                //yield return new WaitForSeconds(5);
+
+                //StartCoroutine(RecursiveCheckes(newEmptyCell));
+
+
+
+                RecursiveCheckes(newEmptyCell);
             }
 
         }
         else
         {
             Debug.LogError("Done!!!");
+
+            if(pathsFound.foundCellPath.Count == 0)
+            {
+                Debug.LogError("Found no options!!");
+            }
         }
     }
 
@@ -1702,32 +1823,68 @@ public class ConnectionManager : MonoBehaviour
         int fromIndex = cellFrom.cellIndex;
         int toIndex = cellTo.cellIndex;
 
-        int CellFromSubPieceLeft = CheckIntRange(fromIndex * 2);
-        int CellFromSubPieceRight = CheckIntRange((fromIndex * 2) + 1);
+        int CellFromSubPieceLeft = CheckIntRangeSubPieces(fromIndex * 2);
+        int CellFromSubPieceRight = CheckIntRangeSubPieces((fromIndex * 2) + 1);
 
-        int CellToSubPieceLeft = CheckIntRange(toIndex * 2);
-        int CellTiSubPieceRight = CheckIntRange((toIndex * 2) + 1);
+        int CellToSubPieceLeft = CheckIntRangeSubPieces(toIndex * 2);
+        int CellToSubPieceRight = CheckIntRangeSubPieces((toIndex * 2) + 1);
 
         subPiecesOnBoardTempAlgoritm[CellToSubPieceLeft] = subPiecesOnBoardTempAlgoritm[CellFromSubPieceLeft];
-        subPiecesOnBoardTempAlgoritm[CellTiSubPieceRight] = subPiecesOnBoardTempAlgoritm[CellFromSubPieceRight];
+        subPiecesOnBoardTempAlgoritm[CellToSubPieceRight] = subPiecesOnBoardTempAlgoritm[CellFromSubPieceRight];
 
         subPiecesOnBoardTempAlgoritm[CellFromSubPieceLeft] = null;
         subPiecesOnBoardTempAlgoritm[CellFromSubPieceRight] = null;
 
+        Transform p = cellFrom.transform.Find("New piece Prefab 23_2_2021(Clone)");
+
+        if(p == null)
+        {
+            Debug.LogError("NO CHILD HERE BUG! " + "Cell From = " + cellFrom.name + " Cell To = " + cellTo.name);
+
+            
+        }
+
+        p.transform.SetParent(cellTo.transform);
+        p.transform.localPosition = Vector3.zero;
+        p.transform.localRotation = Quaternion.identity;
     }
 
-    void MoveBackInList()
+    void MoveBackInList(Cell currentEmptyCell)
     {
         do
         {
             cellsThatCanConnect.possibleCellsPath.Remove(cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex]);
 
+            //yield return new WaitForSeconds(delayTime);
+
             mostCurrentListIndex--;
             movesMade--;
+
+            //yield return new WaitForSeconds(delayTime);
 
             if (mostCurrentListIndex >= 0)
             {
                 cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells.RemoveAt(0);
+
+                //yield return new WaitForSeconds(delayTime);
+
+                if (previousEmptyCells.Count > 0)
+                {
+                    ChangeSubPiecesAlgorithmData(previousEmptyCells.Last(), bufferList.Last());
+                }
+
+                //yield return new WaitForSeconds(delayTime);
+
+                Debug.LogError("Right after move pieces from in list");
+                //Debug.Break();
+
+                if (cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells.Count == 0)
+                {
+                    previousEmptyCells.RemoveAt(previousEmptyCells.Count - 1);
+                }
+
+                //yield return new WaitForSeconds(delayTime);
+
                 bufferList.RemoveAt(bufferList.Count - 1);
             }
             else
@@ -1743,14 +1900,36 @@ public class ConnectionManager : MonoBehaviour
         int mycellIndex = EmptyCell.cellIndex;
         int againstCellIndex = checkAgainst.cellIndex;
 
-        int leftContested = CheckIntRange((mycellIndex * 2) - 1);
-        int rightContested = CheckIntRange((mycellIndex * 2) + 2);
+        int leftContested = CheckIntRangeSubPieces((mycellIndex * 2) - 1);
+        int rightContested = CheckIntRangeSubPieces((mycellIndex * 2) + 2);
 
-        int currentCellLeft = CheckIntRange(againstCellIndex * 2);
-        int currentCellRight = CheckIntRange((againstCellIndex * 2) + 1);
+        int currentCellLeft = CheckIntRangeSubPieces(againstCellIndex * 2);
+        int currentCellRight = CheckIntRangeSubPieces((againstCellIndex * 2) + 1);
 
         bool conditionmet;
         bool isGoodConnect;
+
+        bool adjacentLeft;
+        bool adjacentRight;
+
+        CheckCellAdjecency(EmptyCell, checkAgainst, out adjacentLeft, out adjacentRight);
+
+        if (adjacentLeft)
+        {
+            if (CheckSubPieceConnection(subPiecesOnBoardTempAlgoritm[rightContested], subPiecesOnBoardTempAlgoritm[currentCellRight], out conditionmet, out isGoodConnect))
+            {
+                return true;
+            }
+        }
+
+        if (adjacentRight)
+        {
+            if (CheckSubPieceConnection(subPiecesOnBoardTempAlgoritm[leftContested], subPiecesOnBoardTempAlgoritm[currentCellLeft], out conditionmet, out isGoodConnect))
+            {
+                return true;
+            }
+        }
+
 
         if (CheckSubPieceConnection(subPiecesOnBoardTempAlgoritm[leftContested], subPiecesOnBoardTempAlgoritm[currentCellLeft], out conditionmet, out isGoodConnect))
         {
@@ -1764,29 +1943,80 @@ public class ConnectionManager : MonoBehaviour
 
     }
 
-    void SetDataEndPath(Cell edgeCell, int index)
+    void CheckCellAdjecency(Cell currentEmptyCell, Cell cellToCheck, out bool adjacentLeft, out bool adjacentRight)
     {
-        int mycellIndex = edgeCell.cellIndex;
+        int emptyCellIndex = currentEmptyCell.cellIndex;
+        int cellToCheckIndex = cellToCheck.cellIndex;
 
-        int leftContested = CheckIntRange((mycellIndex * 2) - 1);
-        int rightContested = CheckIntRange((mycellIndex * 2) + 2);
+        adjacentLeft = false;
+        adjacentRight = false;
 
-        pathsFound.foundCellPath[index].leftAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[leftContested].symbolOfPiece;
-        pathsFound.foundCellPath[index].rightAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[rightContested].symbolOfPiece;
-
-        pathsFound.foundCellPath[index].leftColorNeeded = subPiecesOnBoardTempAlgoritm[leftContested].colorOfPiece;
-        pathsFound.foundCellPath[index].rightColorNeeded = subPiecesOnBoardTempAlgoritm[rightContested].colorOfPiece;
-
-
-        if (subPiecesOnBoardTempAlgoritm[leftContested].relevantSlice.hasSlice)
+        if (cellToCheckIndex == CheckIntRangeCells(emptyCellIndex - 1))
         {
-            pathsFound.foundCellPath[index].leftReleventSlice = subPiecesOnBoardTempAlgoritm[leftContested].relevantSlice;
-        } 
-
-        if (subPiecesOnBoardTempAlgoritm[rightContested].relevantSlice.hasSlice)
-        {
-            pathsFound.foundCellPath[index].rightReleventSlice = subPiecesOnBoardTempAlgoritm[rightContested].relevantSlice;
+            adjacentLeft = true;
+            return;
         }
 
+        if (cellToCheckIndex == CheckIntRangeCells(emptyCellIndex + 1))
+        {
+            adjacentRight = true;
+            return;
+        }
+    }
+ 
+    void SetDataEndPath(Cell edgeCell, int index)
+    {
+        int edgeCellIndex = edgeCell.cellIndex;
+        //int emptyCellIndex = emptyCell.cellIndex;
+
+        int leftContested = CheckIntRangeSubPiecesAlgoritm((edgeCellIndex * 2) - 1);
+        int rightContested = CheckIntRangeSubPiecesAlgoritm((edgeCellIndex * 2) + 2);
+
+        //int localLeft = CheckIntRangeSubPiecesAlgoritm(edgeCellIndex * 2);
+        //int localRight = CheckIntRangeSubPiecesAlgoritm((edgeCellIndex * 2) + 1);
+
+        //bool adjacentLeft;
+        //bool adjacentRight;
+
+        //CheckCellAdjecency(emptyCell, edgeCell, out adjacentLeft, out adjacentRight);
+
+        //if (adjacentLeft)
+        //{
+        //    Debug.LogError("Adjacent Left: " + emptyCell.name + " " + edgeCell.name);
+
+        //    pathsFound.foundCellPath[index].leftAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[leftContested].symbolOfPiece;
+        //    pathsFound.foundCellPath[index].leftColorNeeded = subPiecesOnBoardTempAlgoritm[leftContested].colorOfPiece;
+
+        //    pathsFound.foundCellPath[index].rightAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[rightContested].symbolOfPiece;
+        //    pathsFound.foundCellPath[index].rightColorNeeded = subPiecesOnBoardTempAlgoritm[rightContested].colorOfPiece;
+
+        //    return;
+        //}
+        //else if (adjacentRight)
+        //{
+        //    Debug.LogError("Adjacent Right: " + emptyCell.name + " " + edgeCell.name);
+
+
+        //    pathsFound.foundCellPath[index].leftAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[leftContested].symbolOfPiece;
+        //    pathsFound.foundCellPath[index].leftColorNeeded = subPiecesOnBoardTempAlgoritm[leftContested].colorOfPiece;
+
+        //    pathsFound.foundCellPath[index].rightAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[rightContested].symbolOfPiece;
+        //    pathsFound.foundCellPath[index].rightColorNeeded = subPiecesOnBoardTempAlgoritm[rightContested].colorOfPiece;
+
+        //    return;
+
+        //}
+        //else
+        //{
+            //Debug.LogError("Not adjacent: " + emptyCell.name + " " + edgeCell.name);
+
+            pathsFound.foundCellPath[index].leftAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[leftContested].symbolOfPiece;
+            pathsFound.foundCellPath[index].leftColorNeeded = subPiecesOnBoardTempAlgoritm[leftContested].colorOfPiece;
+
+            pathsFound.foundCellPath[index].rightAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[rightContested].symbolOfPiece;
+            pathsFound.foundCellPath[index].rightColorNeeded = subPiecesOnBoardTempAlgoritm[rightContested].colorOfPiece;
+
+            //return;
+        //}
     }
 }
