@@ -108,6 +108,9 @@ public class ConnectionManager : MonoBehaviour
         subPiecesOnBoardTempAlgoritm = new List<SubPiece>();
         previousEmptyCells = new List<Cell>();
         bufferList = new List<Cell>();
+
+        pathsFound.foundCellPath = new List<EdgePathFoundData>();
+        cellsThatCanConnect.possibleCellsPath = new List<CellsObjetData>();
     }
 
     public void SetLevelConnectionData(bool is12Pieces)
