@@ -53,6 +53,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 2
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 5778231230796311929}
@@ -60,6 +62,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 4696384799349193967}
+  leftSlice: {fileID: 0}
+  rightSlice: {fileID: 0}
 --- !u!65 &6389442715941580441
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -126,6 +130,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 4
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 4679270184902242318}
@@ -133,6 +139,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 982404620989343564}
+  leftSlice: {fileID: 0}
+  rightSlice: {fileID: 0}
 --- !u!65 &7211047930119626911
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -199,6 +207,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 7
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 6488103938054424158}
@@ -206,6 +216,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 1942509321993336185}
+  leftSlice: {fileID: 0}
+  rightSlice: {fileID: 0}
 --- !u!65 &8863490710616979393
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -272,6 +284,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 5
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 6692842737193151116}
@@ -279,6 +293,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 409643424273495072}
+  leftSlice: {fileID: 0}
+  rightSlice: {fileID: 0}
 --- !u!65 &4870437348745407285
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -345,6 +361,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 1
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 7731711588630417992}
@@ -352,6 +370,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 6050677835491054806}
+  leftSlice: {fileID: 0}
+  rightSlice: {fileID: 0}
 --- !u!65 &1433387984874192483
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -418,6 +438,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 3
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 538842224559554249}
@@ -425,6 +447,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 5211329671089579902}
+  leftSlice: {fileID: 0}
+  rightSlice: {fileID: 0}
 --- !u!65 &1505691567839322201
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -491,6 +515,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 0
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 3868599810952633166}
@@ -498,6 +524,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 5711349801306880857}
+  leftSlice: {fileID: 0}
+  rightSlice: {fileID: 0}
 --- !u!65 &4513575069134658472
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -564,6 +592,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 6
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 3695877806278028994}
@@ -571,6 +601,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 6740954759157837594}
+  leftSlice: {fileID: 0}
+  rightSlice: {fileID: 0}
 --- !u!65 &4245898387759048076
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -637,6 +669,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 10
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 8481120596566129055}
@@ -644,6 +678,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 1163123353895651415}
+  leftSlice: {fileID: 0}
+  rightSlice: {fileID: 0}
 --- !u!65 &5033828847553672193
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -872,6 +908,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 9
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 3887285372570843423}
@@ -879,6 +917,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 8369977005846501083}
+  leftSlice: {fileID: 0}
+  rightSlice: {fileID: 0}
 --- !u!65 &293611311209234650
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18078,6 +18118,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 11
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 1902684197609485379}
@@ -18085,6 +18127,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 5007910484259945741}
+  leftSlice: {fileID: 0}
+  rightSlice: {fileID: 0}
 --- !u!65 &2212797073825932076
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18263,6 +18307,8 @@ MonoBehaviour:
   isFull: 0
   isDuringConnectionAnim: 0
   isOuter: 0
+  isLockedCell: 0
+  isStoneCell: 0
   cellIndex: 8
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 4823041736978491276}
@@ -18270,6 +18316,8 @@ MonoBehaviour:
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 3122097170707545478}
+  leftSlice: {fileID: 0}
+  rightSlice: {fileID: 0}
 --- !u!65 &1555038456290653471
 BoxCollider:
   m_ObjectHideFlags: 0
