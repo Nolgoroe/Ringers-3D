@@ -297,9 +297,22 @@ public class ClipManager : MonoBehaviour
 
 
         yield return new WaitForSeconds(WaitTimeBeforeIn);
+
         DealAnimClipLogic();
 
         clipCount--;
+
+        if (GameManager.Instance.currentLevel.useLastClipAlgoritm && GameManager.Instance.currentFilledCellCount == GameManager.Instance.currentLevel.cellsCountInLevel - 1)
+        {
+            if (clipCount == 1)
+            {
+                ConnectionManager.Instance.StartLastClipAlgoritm();
+
+                yield return new WaitUntil(() => ConnectionManager.Instance.hasFinishedAlgorithm == true);
+
+                RefreshSlotLastClipAlgoritm(ConnectionManager.Instance.decidedAlgoritmPath);
+            }
+        }
 
         for (int i = clipCount -1; i > -1; i--)
         {
@@ -314,6 +327,25 @@ public class ClipManager : MonoBehaviour
 
         }
         UIManager.Instance.dealButton.interactable = true;
+    }
+
+    public void RefreshSlotLastClipAlgoritm(EdgePathFoundData dataNeeded)
+    {
+        if (dataNeeded.foundCells.Count == 0)
+        {
+            Piece p = slots[clipCount - 1].GetComponentInChildren<Piece>();
+            RerollSlotPieceData(p);
+        }
+        else
+        {
+            Piece p = slots[clipCount - 1].GetComponentInChildren<Piece>();
+            RerollLastSlotPieceAlgoritm(p, dataNeeded);
+        }
+    }
+
+    void RerollLastSlotPieceAlgoritm(Piece p, EdgePathFoundData dataNeeded)
+    {
+        p.SetPiecesSpecificData(dataNeeded);
     }
 
     void playReturnPiecePlaceSound()

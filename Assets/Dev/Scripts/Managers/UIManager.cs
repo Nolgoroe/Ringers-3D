@@ -710,6 +710,7 @@ public class UIManager : MonoBehaviour
             LootManager.Instance.giveKey = false;
             ZoneManager.Instance.ResetZoneManagerData();
             ConnectionManager.Instance.ResetConnectionData();
+            ConnectionManager.Instance.ResetAllLastPieceAlgoritmData();
 
             //foreach (int ID in ZoneManager.Instance.unlockedZoneID)
             //{

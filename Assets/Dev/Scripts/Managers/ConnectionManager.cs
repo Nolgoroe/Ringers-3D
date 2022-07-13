@@ -83,26 +83,31 @@ public class ConnectionManager : MonoBehaviour
     public List<PieceSymbol> tempSymbolPiecesStoneFound;
     public int amountStonePiecesInstantiated;
 
-    [Header("Work Zone")]
-    //public List<PossibleCellsList> cellsThatCanConnect = new List<PossibleCellsList>();
+    [Header("Last clip algoritm zone")]
+
+    public int movesMade;
+    public bool hasFinishedAlgorithm;
+    public float TEMPDelayTime;
+
+    public EdgePathFoundData decidedAlgoritmPath = null;
+
     public PossibleCellPathList cellsThatCanConnect;
     public FoundCellPath pathsFound;
 
-    public List<Cell> bufferList = new List<Cell>();
-    public List<SubPiece> subPiecesOnBoardTempAlgoritm;
-
-    public int mostCurrentListIndex;
-
-    public int numberStepsWanted;
-    public int movesMade;
-    public float delayTime;
-
-    public List<Cell> previousEmptyCells;
-    public Cell originalMissingCell;
+    private List<Cell> bufferList;
+    private List<SubPiece> subPiecesOnBoardTempAlgoritm;
+    private List<Cell> previousEmptyCells;
+    private Cell originalMissingCell;
+    private int mostCurrentListIndex;
 
     private void Start()
     {
         Instance = this;
+
+
+        subPiecesOnBoardTempAlgoritm = new List<SubPiece>();
+        previousEmptyCells = new List<Cell>();
+        bufferList = new List<Cell>();
     }
 
     public void SetLevelConnectionData(bool is12Pieces)
@@ -1590,14 +1595,12 @@ public class ConnectionManager : MonoBehaviour
     }
 
 
-    [ContextMenu("Try this now")]
+
+
+
     public void StartLastClipAlgoritm()
     {
-        cellsThatCanConnect.possibleCellsPath.Clear();
-        pathsFound.foundCellPath.Clear();
-        subPiecesOnBoardTempAlgoritm = null;
-        mostCurrentListIndex = 0;
-        movesMade = 0;
+        ResetAllLastPieceAlgoritmData();
 
         InitAlgoritmPiecesData();
 
@@ -1619,7 +1622,6 @@ public class ConnectionManager : MonoBehaviour
     
     void InitAlgoritmPiecesData()
     {
-        subPiecesOnBoardTempAlgoritm = new List<SubPiece>();
         subPiecesOnBoardTempAlgoritm.AddRange(subPiecesOnBoard);
     }
 
@@ -1630,11 +1632,11 @@ public class ConnectionManager : MonoBehaviour
         //yield return new WaitForSeconds(5);
 
         //yield return StartCoroutine(CheckAllPossibleMovesToEmptyCell(CurrentEmptyCell));
-        //StartCoroutine(CheckAllPossibleMovesToEmptyCell(CurrentEmptyCell));
-        CheckAllPossibleMovesToEmptyCell(CurrentEmptyCell);
+        StartCoroutine(CheckAllPossibleMovesToEmptyCell(CurrentEmptyCell));
+        //CheckAllPossibleMovesToEmptyCell(CurrentEmptyCell);
     }
 
-    public void CheckAllPossibleMovesToEmptyCell(Cell EmptyCell)
+    public IEnumerator CheckAllPossibleMovesToEmptyCell(Cell EmptyCell)
     {
         bool hasFoundOptions = false;
 
@@ -1669,7 +1671,7 @@ public class ConnectionManager : MonoBehaviour
             /// we have no moves to make from this index.
             hasFoundOptions = false;
 
-            //yield return new WaitForSeconds(delayTime);
+            yield return new WaitForSeconds(TEMPDelayTime);
 
 
             Debug.LogError("Called from second!!");
@@ -1690,7 +1692,7 @@ public class ConnectionManager : MonoBehaviour
 
             int tempCheck = 0;
 
-            if (movesMade == numberStepsWanted)
+            if (movesMade == GameManager.Instance.currentLevel.algoritmStepsWanted)
             {
                 //yield return new WaitForSeconds(5);
 
@@ -1698,11 +1700,14 @@ public class ConnectionManager : MonoBehaviour
                 {
                     tempCheck++;
 
-                    if (pathsFound.foundCellPath.Count == 50)
+                    if (pathsFound.foundCellPath.Count == 500)
                     {
                         Debug.LogError("Done with alogoritm, no more needed");
-                        //yield break;
-                        return;
+
+                        decidedAlgoritmPath = ChooseRandomFoundPathAlgo();
+                        hasFinishedAlgorithm = true;
+                        yield break;
+                        //return;
                     }
 
 
@@ -1715,16 +1720,15 @@ public class ConnectionManager : MonoBehaviour
 
                     //Debug.LogError("Doing this now!!");
 
-                    //yield return new WaitForSeconds(delayTime);
+                    yield return new WaitForSeconds(TEMPDelayTime);
                     ChangeSubPiecesAlgorithmData(edgeCell, EmptyCell);
 
                     Debug.LogError("Setting end data path!");
-                    //yield return new WaitForSeconds(delayTime);
-                    //yield return new WaitForSeconds(delayTime);
+                    yield return new WaitForSeconds(TEMPDelayTime);
 
                     SetDataEndPath(edgeCell, lastIndex);
 
-                    //yield return new WaitForSeconds(delayTime);
+                    yield return new WaitForSeconds(TEMPDelayTime);
                     ChangeSubPiecesAlgorithmData(EmptyCell, edgeCell);
 
                 }
@@ -1734,10 +1738,29 @@ public class ConnectionManager : MonoBehaviour
                 //Debug.LogError("Has enough moves!");
 
                 Debug.LogError("Moving back in list after path!");
-                //yield return new WaitForSeconds(delayTime);
+                yield return new WaitForSeconds(TEMPDelayTime);
 
                 //yield return StartCoroutine(MoveBackInList(EmptyCell));
                 MoveBackInList(EmptyCell);
+
+                if (cellsThatCanConnect.possibleCellsPath.Count == 0)
+                {
+                    Debug.LogError("Done with algoritm not reached max options");
+
+                    if(pathsFound.foundCellPath.Count > 0)
+                    {
+                        decidedAlgoritmPath = ChooseRandomFoundPathAlgo();
+                    }
+                    else
+                    {
+                        Debug.LogError("Can't find path - no path in list");
+                    }
+                    ///summon the correct piece here!!!!
+                    hasFinishedAlgorithm = true;
+
+                    //return;
+                    yield break;
+                }
 
                 if (mostCurrentListIndex >= 0)
                 {
@@ -1745,11 +1768,11 @@ public class ConnectionManager : MonoBehaviour
                     bufferList.Add(newEmptyCell);
 
 
-                    //yield return new WaitForSeconds(delayTime);
+                    yield return new WaitForSeconds(TEMPDelayTime);
 
                     ChangeSubPiecesAlgorithmData(newEmptyCell, previousEmptyCells.Last());
 
-                    //yield return new WaitForSeconds(delayTime);
+                    yield return new WaitForSeconds(TEMPDelayTime);
                     //Debug.LogError("Added to buffer!!!");
 
                     //yield return new WaitForSeconds(5);
@@ -1763,8 +1786,8 @@ public class ConnectionManager : MonoBehaviour
                 else
                 {
                     Debug.Log("Done with alogoritm, no more options");
-                    //yield break;
-                    return;
+                    yield break;
+                    //return;
                 }
                 //yield return new WaitForSeconds(5);
 
@@ -1787,7 +1810,7 @@ public class ConnectionManager : MonoBehaviour
                 bufferList.Add(newEmptyCell);
 
                 Debug.LogError("Updated buffer");
-                //yield return new WaitForSeconds(delayTime);
+                yield return new WaitForSeconds(TEMPDelayTime);
 
                 //Debug.LogError("Added to buffer!");
 
@@ -1795,7 +1818,7 @@ public class ConnectionManager : MonoBehaviour
 
                 Debug.LogError("Moved Piece");
 
-                //yield return new WaitForSeconds(delayTime);
+                yield return new WaitForSeconds(TEMPDelayTime);
 
                 //yield return new WaitForSeconds(5);
 
@@ -1811,10 +1834,17 @@ public class ConnectionManager : MonoBehaviour
         {
             Debug.LogError("Done!!!");
 
-            if(pathsFound.foundCellPath.Count == 0)
+            if (pathsFound.foundCellPath.Count > 0)
             {
-                Debug.LogError("Found no options!!");
+                decidedAlgoritmPath = ChooseRandomFoundPathAlgo();
             }
+            else
+            {
+                Debug.LogError("Can't find path - no path in list");
+            }
+
+            hasFinishedAlgorithm = true;
+
         }
     }
 
@@ -1835,7 +1865,16 @@ public class ConnectionManager : MonoBehaviour
         subPiecesOnBoardTempAlgoritm[CellFromSubPieceLeft] = null;
         subPiecesOnBoardTempAlgoritm[CellFromSubPieceRight] = null;
 
-        Transform p = cellFrom.transform.Find("New piece Prefab 23_2_2021(Clone)");
+        Transform p = null;
+
+        if (GameManager.Instance.currentLevel.is12PieceRing)
+        {
+            p = cellFrom.transform.Find("MDL_Tile_12Slots(Clone)");
+        }
+        else
+        {
+            p = cellFrom.transform.Find("New piece Prefab 23_2_2021(Clone)");
+        }
 
         if(p == null)
         {
@@ -1916,26 +1955,47 @@ public class ConnectionManager : MonoBehaviour
 
         if (adjacentLeft)
         {
-            if (CheckSubPieceConnection(subPiecesOnBoardTempAlgoritm[rightContested], subPiecesOnBoardTempAlgoritm[currentCellRight], out conditionmet, out isGoodConnect))
+            if (CheckSubPieceConnectionAlgoritm(false, subPiecesOnBoardTempAlgoritm[rightContested], subPiecesOnBoardTempAlgoritm[currentCellRight], EmptyCell, out conditionmet, out isGoodConnect))
             {
-                return true;
+                if (!conditionmet)
+                {
+
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
 
         if (adjacentRight)
         {
-            if (CheckSubPieceConnection(subPiecesOnBoardTempAlgoritm[leftContested], subPiecesOnBoardTempAlgoritm[currentCellLeft], out conditionmet, out isGoodConnect))
+            if (CheckSubPieceConnectionAlgoritm(true, subPiecesOnBoardTempAlgoritm[leftContested], subPiecesOnBoardTempAlgoritm[currentCellLeft], EmptyCell, out conditionmet, out isGoodConnect))
             {
-                return true;
+                if (!conditionmet)
+                {
+
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
 
 
-        if (CheckSubPieceConnection(subPiecesOnBoardTempAlgoritm[leftContested], subPiecesOnBoardTempAlgoritm[currentCellLeft], out conditionmet, out isGoodConnect))
+        if (CheckSubPieceConnectionAlgoritm(true, subPiecesOnBoardTempAlgoritm[leftContested], subPiecesOnBoardTempAlgoritm[currentCellLeft], EmptyCell, out conditionmet, out isGoodConnect))
         {
-            if (CheckSubPieceConnection(subPiecesOnBoardTempAlgoritm[rightContested], subPiecesOnBoardTempAlgoritm[currentCellRight], out conditionmet, out isGoodConnect))
+            if (CheckSubPieceConnectionAlgoritm(false, subPiecesOnBoardTempAlgoritm[rightContested], subPiecesOnBoardTempAlgoritm[currentCellRight], EmptyCell, out conditionmet, out isGoodConnect))
             {
-                return true;
+                if (!conditionmet)
+                {
+
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
 
@@ -2018,5 +2078,219 @@ public class ConnectionManager : MonoBehaviour
 
             //return;
         //}
+    }
+
+    public bool CheckSubPieceConnectionAlgoritm(bool isLeft, SubPiece currentSide, SubPiece contestedSide, Cell cellTo, out bool conditionMet, out bool isGoodConnect)
+    {
+        conditionMet = true;
+        isGoodConnect = false;
+
+        if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ShapeMatch)
+        {
+            CompareResault result = TotalCheck(currentSide, contestedSide);
+
+            if (result.gSymbolMatch)
+            {
+                isGoodConnect = true;
+            }
+
+            if (isGoodConnect)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ColorMatch)
+        {
+            CompareResault result = TotalCheck(currentSide, contestedSide);
+
+            if (result.gColorMatch)
+            {
+                isGoodConnect = true;
+            }
+
+            if (isGoodConnect)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        if (isLeft)
+        {
+            if (cellTo.leftSlice.sliceCatagory != SliceCatagory.None)
+            {
+                CompareResault result = TotalCheck(currentSide, contestedSide);
+
+                if (result.gColorMatch)
+                {
+                    isGoodConnect = true;
+                }
+
+                if (result.gSymbolMatch)
+                {
+                    isGoodConnect = true;
+                }
+
+                conditionMet = CheckFulfilledSliceCondition(cellTo.leftSlice, result, currentSide, contestedSide);
+
+                if (!cellTo.leftSlice.isLimiter)
+                {
+                    if (isGoodConnect)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (conditionMet)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+            }
+            else
+            {
+                CompareResault result = TotalCheck(currentSide, contestedSide);
+
+                if (result.gColorMatch)
+                {
+                    isGoodConnect = true;
+                }
+
+                if (result.gSymbolMatch)
+                {
+                    isGoodConnect = true;
+                }
+
+                if (isGoodConnect)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+
+            if (cellTo.rightSlice.sliceCatagory != SliceCatagory.None)
+            {
+                CompareResault result = TotalCheck(currentSide, contestedSide);
+
+                if (result.gColorMatch)
+                {
+                    isGoodConnect = true;
+                }
+
+                if (result.gSymbolMatch)
+                {
+                    isGoodConnect = true;
+                }
+
+                conditionMet = CheckFulfilledSliceCondition(cellTo.rightSlice, result, currentSide, contestedSide);
+
+                if (!cellTo.rightSlice.isLimiter)
+                {
+                    if (isGoodConnect)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (conditionMet)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                CompareResault result = TotalCheck(currentSide, contestedSide);
+
+                if (result.gColorMatch)
+                {
+                    isGoodConnect = true;
+                }
+
+                if (result.gSymbolMatch)
+                {
+                    isGoodConnect = true;
+                }
+
+                if (isGoodConnect)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+    }
+
+    public EdgePathFoundData ChooseRandomFoundPathAlgo()
+    {
+        EdgePathFoundData path = null;
+
+        int randomNum = Random.Range(0, pathsFound.foundCellPath.Count);
+
+        path = pathsFound.foundCellPath[randomNum];
+
+        if(path == null)
+        {
+            Debug.LogError("Big problem here");
+            return null;
+        }
+        else
+        {
+            return path;
+        }
+    }
+
+    public void ResetAllLastPieceAlgoritmData()
+    {
+        cellsThatCanConnect.possibleCellsPath.Clear();
+        pathsFound.foundCellPath.Clear();
+        bufferList.Clear();
+        subPiecesOnBoardTempAlgoritm.Clear();
+        previousEmptyCells.Clear();
+
+        mostCurrentListIndex = 0;
+        movesMade = 0;
+
+        originalMissingCell = null;
+        decidedAlgoritmPath = null;
+
+        hasFinishedAlgorithm = false;
     }
 }

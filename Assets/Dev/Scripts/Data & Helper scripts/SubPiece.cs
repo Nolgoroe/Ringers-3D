@@ -99,6 +99,34 @@ public class SubPiece : MonoBehaviour
         }
     }
 
+    public void SetPieceSpecific(PieceSymbol symbol, PieceColor color)
+    {
+        int indexcColor = (int)color;
+        int indexcSymbol = (int)symbol;
+
+        if (color == PieceColor.None)
+        {
+            indexcColor = Random.Range(0, GameManager.Instance.currentLevel.levelAvailableColors.Length);
+            indexcSymbol = (int)symbol;
+        }
+        else if(color == PieceColor.Joker)
+        {
+            indexcColor = Random.Range(0, GameManager.Instance.currentLevel.levelAvailableColors.Length);
+            indexcSymbol = Random.Range(0, GameManager.Instance.currentLevel.levelAvailablesymbols.Length);
+        }
+        else
+        {
+            indexcColor = (int)color;
+            indexcSymbol = (int)symbol;
+        }
+
+        colorOfPiece = color;
+        symbolOfPiece = symbol;
+
+        rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[indexcColor].colorTex[indexcSymbol]);
+        rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[indexcSymbol].symbolTex);
+
+    }
     public void SetStonePiece(stonePieceDataStruct SPDS)
     {
         if (SPDS.randomValues && !SPDS.isNeutral) //sets piece with random color and shape

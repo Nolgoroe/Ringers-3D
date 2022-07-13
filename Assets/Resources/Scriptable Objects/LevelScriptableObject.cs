@@ -90,6 +90,9 @@ public class LevelScriptableObject : ScriptableObject
     public float dealButtonTimer;
     public float damageToBossCompeleRing;
 
+    [Header("Last clip algoritm")]
+    public bool useLastClipAlgoritm;
+    public int algoritmStepsWanted;
 
     [ContextMenu("THIS")]
     public void actionhere()

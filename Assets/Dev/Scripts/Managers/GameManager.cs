@@ -893,7 +893,7 @@ public class GameManager : MonoBehaviour
         ConnectionManager.Instance.cells.Clear();
         ConnectionManager.Instance.tempSymbolPiecesStoneFound.Clear();
         ConnectionManager.Instance.amountStonePiecesInstantiated = 0;
-
+        ConnectionManager.Instance.ResetAllLastPieceAlgoritmData();
 
         CursorController.Instance.tutorialBadConnection = false;
 
@@ -1002,6 +1002,7 @@ public class GameManager : MonoBehaviour
         ConnectionManager.Instance.cells.Clear();
         ConnectionManager.Instance.tempSymbolPiecesStoneFound.Clear();
         ConnectionManager.Instance.amountStonePiecesInstantiated = 0;
+        ConnectionManager.Instance.ResetAllLastPieceAlgoritmData();
 
         if (currentLevel.levelIndexInZone + 1 == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex)
         {
