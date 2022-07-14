@@ -331,7 +331,7 @@ public class ClipManager : MonoBehaviour
 
     public void RefreshSlotLastClipAlgoritm(EdgePathFoundData dataNeeded)
     {
-        if (dataNeeded.foundCells.Count == 0)
+        if (dataNeeded == null || dataNeeded.foundCells.Count == 0)
         {
             Piece p = slots[clipCount - 1].GetComponentInChildren<Piece>();
             RerollSlotPieceData(p);

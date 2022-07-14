@@ -805,7 +805,6 @@ public class PowerUpManager : MonoBehaviour
         currentlyInUse = null;
         HasUsedPowerUp = false;
         layerToHit = new LayerMask();
-        EquipmentData ED = null;
 
         for (int i = 0; i < prop.transform.childCount; i++)
         {

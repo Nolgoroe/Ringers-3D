@@ -10,6 +10,13 @@ public class IconSpritesPerZone
     public Sprite levelDoneSprite, levelFirstTimeIconSprite, nextLevelSprite, grindLevelSprite;
 }
 [Serializable]
+public class IconSpritesPerCondition
+{
+    public bool isTutorial;
+    public bool isAnimal;
+    public Sprite levelDoneSprite, levelFirstTimeIconSprite, nextLevelSprite;
+}
+[Serializable]
 public class AmbientMusicPerZone
 {
     public Zone zone;
@@ -31,6 +38,7 @@ public class ZoneManagerHelpData : MonoBehaviour
     public animalsPerZone[] possibleAnimalsPerZone;
 
     public IconSpritesPerZone[] iconsPerZone;
+    public IconSpritesPerCondition[] iconsPerConditon;
 
     public AmbientMusicPerZone[] musicPerZone;
 
@@ -70,7 +78,7 @@ public class ZoneManagerHelpData : MonoBehaviour
                 {
                     Interactable3D interactable = go.GetComponent<Interactable3D>();
 
-                    if (interactable.currentZoneID == z.id)
+                    if (interactable.connectedLevelScriptableObject.worldNum == z.id)
                     {
                         z.hasUnlockedGrind = true;
                     }

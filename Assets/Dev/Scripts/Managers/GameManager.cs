@@ -686,7 +686,7 @@ public class GameManager : MonoBehaviour
                 {
                     Interactable3D interactable = go.GetComponent<Interactable3D>();
 
-                    if(ZoneManagerHelpData.Instance.currentZoneCheck.id == interactable.currentZoneID)
+                    if(ZoneManagerHelpData.Instance.currentZoneCheck.id == interactable.connectedLevelScriptableObject.worldNum)
                     {
                         if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.grindLevelIndex)
                         {
@@ -739,7 +739,7 @@ public class GameManager : MonoBehaviour
                         {
                             Interactable3D interactable = go.GetComponent<Interactable3D>();
 
-                            if (ZoneManagerHelpData.Instance.currentZoneCheck.id == interactable.currentZoneID)
+                            if (ZoneManagerHelpData.Instance.currentZoneCheck.id == interactable.connectedLevelScriptableObject.worldNum)
                             {
                                 if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.grindLevelIndex)
                                 {

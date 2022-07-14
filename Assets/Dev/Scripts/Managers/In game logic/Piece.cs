@@ -10,8 +10,9 @@ public enum PieceColor
     Yellow,
     Green,
     Pink,
-    None,
-    Joker
+    Neutral,
+    Stone,
+    Joker,
 }
 [System.Serializable]
 public enum PieceSymbol

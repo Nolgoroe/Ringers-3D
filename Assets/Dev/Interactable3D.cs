@@ -10,14 +10,17 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
     public bool isTutorialLevel;
     public bool isKeyLevel;
     public bool isGrindLevel;
+    public bool isAnimalLevel;
+    public bool isBossLevel;
 
-    public int currentZoneID;
     public int NextZoneID;///only if key level
-    public int indexInZone;
-
-    public UnityEvent interactEvent;
+    //public int indexInZone;
 
     public GameObject NextLevelVFX;
+
+    public LevelScriptableObject connectedLevelScriptableObject;
+
+    public UnityEvent interactEvent;
 
     private void Start()
     {
@@ -34,19 +37,53 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
         interactEvent.Invoke();
     }
 
+    public void ChooseTypeLevelLaunch()
+    {
+        if(isTutorialLevel && isKeyLevel)
+        {
+            LaunchKeyAndTutorialLevel();
+            Debug.LogError("Launched tutorial + key level");
+        }
+        else if (isTutorialLevel)
+        {
+            LaunchTutorialLevel();
+            Debug.LogError("Launched tutorial level");
+        }
+        else if (isKeyLevel)
+        {
+            LaunchKeyLevel();
+            Debug.LogError("Launched key level");
+        }
+        else if (isGrindLevel)
+        {
+            LaunchGrindLevel();
+            Debug.LogError("Launched grind level");
+        }
+        else if (isBossLevel)
+        {
+            LaunchBossLevel();
+            Debug.LogError("Launched boss level");
+        }
+        else
+        {
+            LaunchNoramlLevel();
+            Debug.LogError("Launched normal level");
+        }
+    }
+
     public void LaunchNoramlLevel()
     {
-        ZoneManager.Instance.SetCurrentZone(currentZoneID);
+        ZoneManager.Instance.SetCurrentZone(connectedLevelScriptableObject.worldNum);
 
         if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
         {
-            if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (indexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
+            if (connectedLevelScriptableObject.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedLevelScriptableObject.levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
             {
                 GameManager.Instance.levelStarted = true;
                 //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
-                GameManager.Instance.ChooseLevel(indexInZone);
-                GameManager.Instance.setCurrentLevelBG(currentZoneID);
+                GameManager.Instance.ChooseLevel(connectedLevelScriptableObject.levelIndexInZone);
+                GameManager.Instance.setCurrentLevelBG(connectedLevelScriptableObject.worldNum);
                 //GameManager.Instance.CallStartLevel(false);
 
                 TurnOffVFX();
@@ -62,7 +99,7 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
 
     public void LaunchGrindLevel()
     {
-        ZoneManager.Instance.SetCurrentZone(currentZoneID);
+        ZoneManager.Instance.SetCurrentZone(connectedLevelScriptableObject.worldNum);
 
         if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
         {
@@ -71,8 +108,8 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
                 GameManager.Instance.levelStarted = true;
                 //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
-                GameManager.Instance.ChooseLevelGrind(indexInZone);
-                GameManager.Instance.setCurrentLevelBG(currentZoneID);
+                GameManager.Instance.ChooseLevelGrind(connectedLevelScriptableObject.levelIndexInZone);
+                GameManager.Instance.setCurrentLevelBG(connectedLevelScriptableObject.worldNum);
                 //GameManager.Instance.CallStartLevel(false);
 
                 TurnOffVFX();
@@ -87,17 +124,17 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
 
     public void LaunchTutorialLevel()
     {
-        ZoneManager.Instance.SetCurrentZone(currentZoneID);
+        ZoneManager.Instance.SetCurrentZone(connectedLevelScriptableObject.worldNum);
 
         if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
         {
-            if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (indexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
+            if (connectedLevelScriptableObject.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedLevelScriptableObject.levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
             {
                 GameManager.Instance.levelStarted = true;
                 //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
-                GameManager.Instance.ChooseLevel(indexInZone);
-                GameManager.Instance.setCurrentLevelBG(currentZoneID);
+                GameManager.Instance.ChooseLevel(connectedLevelScriptableObject.levelIndexInZone);
+                GameManager.Instance.setCurrentLevelBG(connectedLevelScriptableObject.worldNum);
                 //GameManager.Instance.CallStartLevel(true);
 
                 TurnOffVFX();
@@ -114,18 +151,18 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
 
     public void LaunchKeyLevel()
     {
-        ZoneManager.Instance.CheckZoneAwardedKey(currentZoneID);
+        ZoneManager.Instance.CheckZoneAwardedKey(connectedLevelScriptableObject.worldNum);
         ZoneManager.Instance.SetUnlockZone(NextZoneID);
 
         if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
         {
-            if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (indexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
+            if (connectedLevelScriptableObject.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedLevelScriptableObject.levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
             {
                 GameManager.Instance.levelStarted = true;
                 //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
-                GameManager.Instance.ChooseLevel(indexInZone);
-                GameManager.Instance.setCurrentLevelBG(currentZoneID);
+                GameManager.Instance.ChooseLevel(connectedLevelScriptableObject.levelIndexInZone);
+                GameManager.Instance.setCurrentLevelBG(connectedLevelScriptableObject.worldNum);
                 //GameManager.Instance.CallStartLevel(false);
 
                 TurnOffVFX();
@@ -142,18 +179,18 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
 
     public void LaunchKeyAndTutorialLevel()
     {
-        ZoneManager.Instance.CheckZoneAwardedKey(currentZoneID);
+        ZoneManager.Instance.CheckZoneAwardedKey(connectedLevelScriptableObject.worldNum);
         ZoneManager.Instance.SetUnlockZone(NextZoneID);
 
         if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
         {
-            if (indexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (indexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
+            if (connectedLevelScriptableObject.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedLevelScriptableObject.levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
             {
                 GameManager.Instance.levelStarted = true;
                 //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
-                GameManager.Instance.ChooseLevel(indexInZone);
-                GameManager.Instance.setCurrentLevelBG(currentZoneID);
+                GameManager.Instance.ChooseLevel(connectedLevelScriptableObject.levelIndexInZone);
+                GameManager.Instance.setCurrentLevelBG(connectedLevelScriptableObject.worldNum);
                 //GameManager.Instance.CallStartLevel(true);
 
                 TurnOffVFX();
@@ -168,7 +205,7 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public void LaunchBossLevel(LevelScriptableObject bossLevel)
+    public void LaunchBossLevel()
     {
         if (PlayerManager.Instance.bossTicketCount > 0)
         {
@@ -178,8 +215,8 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
             PlayerManager.Instance.bossTicketCount--;
             ZoneManager.Instance.SetCurrentZone(0);
 
-            BossBattleManager.instance.bossLevelSO = bossLevel;
-            GameManager.Instance.currentLevel = bossLevel;
+            BossBattleManager.instance.bossLevelSO = connectedLevelScriptableObject;
+            GameManager.Instance.currentLevel = connectedLevelScriptableObject;
             GameManager.Instance.setCurrentLevelBG(0);
 
 
@@ -202,11 +239,59 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
     [ContextMenu("Rename")]
     public void RenameObject()
     {
-        string newName = "Level " + indexInZone + " ";
+        string newName = "Level " + connectedLevelScriptableObject.levelIndexInZone + " ";
 
-        if (isTutorialLevel)
+
+        isTutorialLevel = false;
+        isKeyLevel = false;
+        isGrindLevel = false;
+        isAnimalLevel = false;
+        isBossLevel = false;
+
+        if ((connectedLevelScriptableObject.isTutorial || connectedLevelScriptableObject.isSpecificTutorial) && connectedLevelScriptableObject.isKeyLevel)
         {
-            newName += "Tutorial" + " ";
+            isTutorialLevel = true;
+            isKeyLevel = true;
+        }
+
+        if (connectedLevelScriptableObject.isTutorial || connectedLevelScriptableObject.isSpecificTutorial)
+        {
+            isTutorialLevel = true;
+
+        }
+
+        if (connectedLevelScriptableObject.isKeyLevel)
+        {
+            isKeyLevel = true;
+
+        }
+
+        if (connectedLevelScriptableObject.isGrindLevel)
+        {
+            isGrindLevel = true;
+        }
+
+        if (connectedLevelScriptableObject.isAnimalLevel)
+        {
+            isAnimalLevel = true;
+        }
+
+        
+        if (connectedLevelScriptableObject.isBoss)
+        {
+            isBossLevel = true;
+        }
+
+        if (isTutorialLevel || connectedLevelScriptableObject.isSpecificTutorial)
+        {
+            if (connectedLevelScriptableObject.isSpecificTutorial)
+            {
+                newName += "Specific Tutorial" + " " + connectedLevelScriptableObject.specificTutorialEnum;
+            }
+            else
+            {
+                newName += "Tutorial" + " ";
+            }
         }
 
         if (isGrindLevel)
@@ -220,7 +305,19 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
             newName += "Key" + " ";
         }
 
+        if (isAnimalLevel)
+        {
+            newName += "Animal" + " ";
+        }
+
+        if (isBossLevel)
+        {
+            newName += "Boss" + " ";
+        }
+
         transform.name = newName;
+
+        NextZoneID = connectedLevelScriptableObject.worldNum + 1;
     }
 
 }

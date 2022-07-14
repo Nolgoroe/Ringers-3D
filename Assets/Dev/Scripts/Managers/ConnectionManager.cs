@@ -954,7 +954,7 @@ public class ConnectionManager : MonoBehaviour
     }
     public bool EqualColorOrJoker(PieceColor colA, PieceColor colB)/// Colorcheck is to see if we need to check color or symbol
     {
-        if ((colA == colB || (colA == PieceColor.Joker || colB == PieceColor.Joker)) && (colA != PieceColor.None && colB != PieceColor.None))
+        if ((colA == colB || (colA == PieceColor.Joker || colB == PieceColor.Joker)) && (colA != PieceColor.Stone && colB != PieceColor.Stone))
         {
             return true;
         }

@@ -104,10 +104,15 @@ public class SubPiece : MonoBehaviour
         int indexcColor = (int)color;
         int indexcSymbol = (int)symbol;
 
-        if (color == PieceColor.None)
+        if (color == PieceColor.Stone)
         {
             indexcColor = Random.Range(0, GameManager.Instance.currentLevel.levelAvailableColors.Length);
             indexcSymbol = (int)symbol;
+        }
+        else if(color == PieceColor.Neutral)
+        {
+            indexcColor = (int)color;
+            indexcSymbol = Random.Range(0, GameManager.Instance.currentLevel.levelAvailablesymbols.Length);
         }
         else if(color == PieceColor.Joker)
         {
@@ -136,7 +141,7 @@ public class SubPiece : MonoBehaviour
         }
         else if(SPDS.randomValues && SPDS.isNeutral) // sets piece with random shapes - but no color.
         {
-            colorOfPiece = PieceColor.None;
+            colorOfPiece = PieceColor.Stone;
             int indexcSymbol = 0;
 
             if (GameManager.Instance.currentLevel.levelAvailablesymbols.Length > 0)
@@ -184,7 +189,7 @@ public class SubPiece : MonoBehaviour
                 }
                 else
                 {
-                    colorOfPiece = PieceColor.None;
+                    colorOfPiece = PieceColor.Stone;
                 }
 
                 symbolOfPiece = SPDS.symbolOfPieceRight;
@@ -197,7 +202,7 @@ public class SubPiece : MonoBehaviour
                 //r.SetPropertyBlock(mpb);
 
                 //rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
-                if(colorOfPiece == PieceColor.None)
+                if(colorOfPiece == PieceColor.Stone)
                 {
                     rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.corruptedColorsToMatsRight[(int)symbolOfPiece]);
                 }
@@ -216,7 +221,7 @@ public class SubPiece : MonoBehaviour
                 }
                 else
                 {
-                    colorOfPiece = PieceColor.None;
+                    colorOfPiece = PieceColor.Stone;
                 }
 
                 symbolOfPiece = SPDS.symbolOfPieceLeft;
@@ -230,7 +235,7 @@ public class SubPiece : MonoBehaviour
 
                 //rend.material = GameManager.Instance.clipManager.colorsToMats[(int)colorOfPiece].colorMats[(int)symbolOfPiece];
                 
-                if(colorOfPiece == PieceColor.None)
+                if(colorOfPiece == PieceColor.Stone)
                 {
                     rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.corruptedColorsToMatsLeft[(int)symbolOfPiece]);
                 }

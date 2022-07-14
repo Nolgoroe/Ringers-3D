@@ -29,6 +29,7 @@ public class sliceToSpawnDataStruct
 [CreateAssetMenu(fileName = "Level", menuName = "ScriptableObjects/Create Level")]
 public class LevelScriptableObject : ScriptableObject
 {
+    [Header("General Settings")]
     public string worldName;
     public bool isGrindLevel;
     public bool is12PieceRing;
@@ -36,6 +37,7 @@ public class LevelScriptableObject : ScriptableObject
     public bool isBoss;
     public bool isAnimalLevel = true;
     public bool isReleaseAnimalToDen;
+    public bool isKeyLevel;
     public GameObject boardPrefab;
     public GameObject clipPrefab;
 
@@ -63,6 +65,7 @@ public class LevelScriptableObject : ScriptableObject
     public PieceColor[] levelAvailableColors;
     public PieceSymbol[] levelAvailablesymbols;
     public SpecialPowerData[] symbolsNeededForSpecialPowers;
+
 
     [Header("Tutorial Settings")]
     public bool isSpecificTutorial;
