@@ -112,7 +112,7 @@ public class SubPiece : MonoBehaviour
         else if(color == PieceColor.Neutral)
         {
             indexcColor = (int)color;
-            indexcSymbol = Random.Range(0, GameManager.Instance.currentLevel.levelAvailablesymbols.Length);
+            indexcSymbol = (int)symbol;
         }
         else if(color == PieceColor.Joker)
         {
