@@ -14496,7 +14496,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6978359812747975274
 Transform:
   m_ObjectHideFlags: 0
@@ -14781,8 +14781,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.05
-      minScalar: 1
+      scalar: 0.01
+      minScalar: 0.05
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -15243,7 +15243,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.01
+      value: 0.1
       mode: 0
       spread: 0
       speed:
@@ -19294,7 +19294,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.1
@@ -43649,7 +43649,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.9882353, b: 0.85882354, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -44475,8 +44475,8 @@ ParticleSystem:
           inWeight: 0
           outWeight: 0.07439824
         - serializedVersion: 3
-          time: 0.16251135
-          value: 0.00034457445
+          time: 0.014447689
+          value: 0.003967285
           inSlope: 0.19142668
           outSlope: 0.19142668
           tangentMode: 0
@@ -44484,8 +44484,8 @@ ParticleSystem:
           inWeight: 0.15845533
           outWeight: 0.15721998
         - serializedVersion: 3
-          time: 0.45163614
-          value: 0.99002004
+          time: 0.045019925
+          value: 0.9940121
           inSlope: 0.08181182
           outSlope: 0.08181182
           tangentMode: 0
@@ -44797,16 +44797,16 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 1}
+        key0: {r: 1, g: 0.9882353, b: 0.85882354, a: 1}
         key1: {r: 1, g: 1, b: 1, a: 0}
-        key2: {r: 0, g: 0, b: 0, a: 0.39215687}
-        key3: {r: 0, g: 0, b: 0, a: 1}
+        key2: {r: 0, g: 0, b: 0, a: 0}
+        key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0.39215687}
         key5: {r: 0, g: 0, b: 0, a: 0.9465743}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
-        ctime1: 65535
+        ctime1: 12529
         ctime2: 0
         ctime3: 0
         ctime4: 0
@@ -44815,8 +44815,8 @@ ParticleSystem:
         ctime7: 0
         atime0: 10601
         atime1: 65535
-        atime2: 20817
-        atime3: 35081
+        atime2: 65535
+        atime3: 65535
         atime4: 46646
         atime5: 60331
         atime6: 65535
