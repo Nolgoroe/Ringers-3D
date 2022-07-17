@@ -1635,11 +1635,11 @@ public class ConnectionManager : MonoBehaviour
         //yield return new WaitForSeconds(5);
 
         //yield return StartCoroutine(CheckAllPossibleMovesToEmptyCell(CurrentEmptyCell));
-        //StartCoroutine(CheckAllPossibleMovesToEmptyCell(CurrentEmptyCell));
-        CheckAllPossibleMovesToEmptyCell(CurrentEmptyCell);
+        StartCoroutine(CheckAllPossibleMovesToEmptyCell(CurrentEmptyCell));
+        //CheckAllPossibleMovesToEmptyCell(CurrentEmptyCell);
     }
 
-    public void CheckAllPossibleMovesToEmptyCell(Cell EmptyCell)
+    public IEnumerator CheckAllPossibleMovesToEmptyCell(Cell EmptyCell)
     {
 
         if(GameManager.Instance.currentLevel.algoritmStepsWanted == 0)
@@ -1648,7 +1648,8 @@ public class ConnectionManager : MonoBehaviour
 
             hasFinishedAlgorithm = true;
 
-            return;
+            //return;
+            yield break;
         }
 
 
@@ -1658,7 +1659,6 @@ public class ConnectionManager : MonoBehaviour
         cellsThatCanConnect.possibleCellsPath.Add(new CellsObjetData());
         mostCurrentListIndex = cellsThatCanConnect.possibleCellsPath.Count - 1;
 
-        //yield return new WaitForSeconds(5);
         Cell previousCell = null;
 
         if (previousEmptyCells.Count > 0)
@@ -1677,21 +1677,16 @@ public class ConnectionManager : MonoBehaviour
             }
         }
 
-        //yield return new WaitForSeconds(5);
-
-        //yield return new WaitForSeconds(5);
-
         if (cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells.Count == 0)
         {
             /// we have no moves to make from this index.
             hasFoundOptions = false;
 
-            //yield return new WaitForSeconds(TEMPDelayTime);
+            yield return new WaitForSeconds(TEMPDelayTime);
 
 
             Debug.LogError("Called from second!!");
 
-            //yield return StartCoroutine(MoveBackInList(EmptyCell));
             MoveBackInList(EmptyCell);
 
             //Debug.Break();
@@ -1709,8 +1704,6 @@ public class ConnectionManager : MonoBehaviour
 
             if (movesMade == GameManager.Instance.currentLevel.algoritmStepsWanted)
             {
-                //yield return new WaitForSeconds(5);
-
                 foreach (Cell edgeCell in cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells)
                 {
                     tempCheck++;
@@ -1721,8 +1714,8 @@ public class ConnectionManager : MonoBehaviour
 
                         decidedAlgoritmPath = ChooseRandomFoundPathAlgo();
                         hasFinishedAlgorithm = true;
-                        //yield break;
-                        return;
+                        yield break;
+                        //return;
                     }
 
 
@@ -1733,29 +1726,22 @@ public class ConnectionManager : MonoBehaviour
                     pathsFound.foundCellPath[lastIndex].foundCells.Add(edgeCell);
                     pathsFound.foundCellPath[lastIndex].lastCellToMove = edgeCell;
 
-                    //Debug.LogError("Doing this now!!");
-
-                    //yield return new WaitForSeconds(TEMPDelayTime);
+                    yield return new WaitForSeconds(TEMPDelayTime);
                     ChangeSubPiecesAlgorithmData(edgeCell, EmptyCell);
 
                     Debug.LogError("Setting end data path!");
-                    //yield return new WaitForSeconds(TEMPDelayTime);
+                    yield return new WaitForSeconds(TEMPDelayTime);
 
                     SetDataEndPath(edgeCell, lastIndex);
 
-                    //yield return new WaitForSeconds(TEMPDelayTime);
+                    yield return new WaitForSeconds(TEMPDelayTime);
                     ChangeSubPiecesAlgorithmData(EmptyCell, edgeCell);
 
                 }
 
-                //Debug.LogError(tempCheck);
-
-                //Debug.LogError("Has enough moves!");
-
                 Debug.LogError("Moving back in list after path!");
-                //yield return new WaitForSeconds(TEMPDelayTime);
+                yield return new WaitForSeconds(TEMPDelayTime);
 
-                //yield return StartCoroutine(MoveBackInList(EmptyCell));
                 MoveBackInList(EmptyCell);
 
                 if (cellsThatCanConnect.possibleCellsPath.Count == 0)
@@ -1773,8 +1759,8 @@ public class ConnectionManager : MonoBehaviour
                     ///summon the correct piece here!!!!
                     hasFinishedAlgorithm = true;
 
-                    return;
-                    //yield break;
+                    //return;
+                    yield break;
                 }
 
                 if (mostCurrentListIndex >= 0)
@@ -1783,29 +1769,20 @@ public class ConnectionManager : MonoBehaviour
                     bufferList.Add(newEmptyCell);
 
 
-                    //yield return new WaitForSeconds(TEMPDelayTime);
+                    yield return new WaitForSeconds(TEMPDelayTime);
 
                     ChangeSubPiecesAlgorithmData(newEmptyCell, previousEmptyCells.Last());
 
-                    //yield return new WaitForSeconds(TEMPDelayTime);
-                    //Debug.LogError("Added to buffer!!!");
-
-                    //yield return new WaitForSeconds(5);
-
-                    //StartCoroutine(RecursiveCheckes(newEmptyCell));
-
-                    //previousEmptyCell = EmptyCell; // remeber the cell that we just moved to since we don't want to move from that cell.
+                    yield return new WaitForSeconds(TEMPDelayTime);
 
                     RecursiveCheckes(newEmptyCell);
                 }
                 else
                 {
                     Debug.Log("Done with alogoritm, no more options");
-                    //yield break;
-                    return;
+                    yield break;
+                    //return;
                 }
-                //yield return new WaitForSeconds(5);
-
             }
             else
             {
@@ -1825,21 +1802,13 @@ public class ConnectionManager : MonoBehaviour
                 bufferList.Add(newEmptyCell);
 
                 Debug.LogError("Updated buffer");
-                //yield return new WaitForSeconds(TEMPDelayTime);
-
-                //Debug.LogError("Added to buffer!");
+                yield return new WaitForSeconds(TEMPDelayTime);
 
                 ChangeSubPiecesAlgorithmData(newEmptyCell, previousEmptyCells.Last());
 
                 Debug.LogError("Moved Piece");
 
-                //yield return new WaitForSeconds(TEMPDelayTime);
-
-                //yield return new WaitForSeconds(5);
-
-                //StartCoroutine(RecursiveCheckes(newEmptyCell));
-
-
+                yield return new WaitForSeconds(TEMPDelayTime);
 
                 RecursiveCheckes(newEmptyCell);
             }
@@ -1868,11 +1837,11 @@ public class ConnectionManager : MonoBehaviour
         int fromIndex = cellFrom.cellIndex;
         int toIndex = cellTo.cellIndex;
 
-        int CellFromSubPieceLeft = CheckIntRangeSubPieces(fromIndex * 2);
-        int CellFromSubPieceRight = CheckIntRangeSubPieces((fromIndex * 2) + 1);
+        int CellFromSubPieceLeft = CheckIntRangeSubPiecesAlgoritm(fromIndex * 2);
+        int CellFromSubPieceRight = CheckIntRangeSubPiecesAlgoritm((fromIndex * 2) + 1);
 
-        int CellToSubPieceLeft = CheckIntRangeSubPieces(toIndex * 2);
-        int CellToSubPieceRight = CheckIntRangeSubPieces((toIndex * 2) + 1);
+        int CellToSubPieceLeft = CheckIntRangeSubPiecesAlgoritm(toIndex * 2);
+        int CellToSubPieceRight = CheckIntRangeSubPiecesAlgoritm((toIndex * 2) + 1);
 
         subPiecesOnBoardTempAlgoritm[CellToSubPieceLeft] = subPiecesOnBoardTempAlgoritm[CellFromSubPieceLeft];
         subPiecesOnBoardTempAlgoritm[CellToSubPieceRight] = subPiecesOnBoardTempAlgoritm[CellFromSubPieceRight];
@@ -1891,11 +1860,11 @@ public class ConnectionManager : MonoBehaviour
             p = cellFrom.transform.Find("New piece Prefab 23_2_2021(Clone)");
         }
 
-        if(p == null)
+        if (p == null)
         {
             Debug.LogError("NO CHILD HERE BUG! " + "Cell From = " + cellFrom.name + " Cell To = " + cellTo.name);
 
-            
+
         }
 
         p.transform.SetParent(cellTo.transform);
@@ -1954,11 +1923,11 @@ public class ConnectionManager : MonoBehaviour
         int mycellIndex = EmptyCell.cellIndex;
         int againstCellIndex = checkAgainst.cellIndex;
 
-        int leftContested = CheckIntRangeSubPieces((mycellIndex * 2) - 1);
-        int rightContested = CheckIntRangeSubPieces((mycellIndex * 2) + 2);
+        int leftContested = CheckIntRangeSubPiecesAlgoritm((mycellIndex * 2) - 1);
+        int rightContested = CheckIntRangeSubPiecesAlgoritm((mycellIndex * 2) + 2);
 
-        int currentCellLeft = CheckIntRangeSubPieces(againstCellIndex * 2);
-        int currentCellRight = CheckIntRangeSubPieces((againstCellIndex * 2) + 1);
+        int currentCellLeft = CheckIntRangeSubPiecesAlgoritm(againstCellIndex * 2);
+        int currentCellRight = CheckIntRangeSubPiecesAlgoritm((againstCellIndex * 2) + 1);
 
         bool conditionmet;
         bool isGoodConnect;
