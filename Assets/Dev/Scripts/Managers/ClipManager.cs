@@ -7,7 +7,12 @@ public class ClipManager : MonoBehaviour
 {
     public Transform[] slots;
     public GameObject piece;
+    public Mesh tile8RingLeftSubPieceMesh;
+    public Mesh tile8RingRightSubPieceMesh;
+    public Mesh tile12RingLeftSubPieceMesh;
+    public Mesh tile12RingRightSubPieceMesh;
     public GameObject corruptedPiece;
+    public GameObject corruptedPiece12;
     public Transform emptyClip;
     public Transform latestPiece;
 
@@ -18,9 +23,13 @@ public class ClipManager : MonoBehaviour
     //public Texture2D[] gameSymbols;
 
     public ColorsAndMats[] colorsToMats;
+    public SymbolToMat[] symbolToMat;
+    public ColorsAndMats[] colorsToMats12Ring;
+    public SymbolToMat[] symbolToMat12Ring;
     public Texture[] corruptedColorsToMatsLeft;
     public Texture[] corruptedColorsToMatsRight;
-    public SymbolToMat[] symbolToMat;
+    public Texture[] corruptedColorsToMatsLeft12;
+    public Texture[] corruptedColorsToMatsRight12;
 
     //public ColorsAndMats[] corruptedColorsToMats;
     //public SymbolToMat[] corruptedSymbolToMat;
@@ -35,8 +44,10 @@ public class ClipManager : MonoBehaviour
     public float delayClipMove, timeToAnimateMove, WaitTimeBeforeIn, delayDarkenClip, delayBrightenClip, timeToDarkenClip, timeToBrightenClip;
 
     public Vector3 pieceScaleOnBoard;
+    public Vector3 pieceScaleOnBoard12Ring;
 
     public float delaySpecialPowerFirefly;
+
     [Serializable]
     public class ColorsAndMats
     {

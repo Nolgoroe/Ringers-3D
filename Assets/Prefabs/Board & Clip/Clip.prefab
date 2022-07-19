@@ -705,7 +705,17 @@ MonoBehaviour:
   - {fileID: 4740064827136713617}
   - {fileID: 4740064826544045363}
   piece: {fileID: 1645121695642233041, guid: 6b184118881871341aae387bbfbdd34c, type: 3}
+  tile8RingLeftSubPieceMesh: {fileID: -1308064327287094486, guid: 4ad4bb29817ae744fa53ade2dd4d9c35,
+    type: 3}
+  tile8RingRightSubPieceMesh: {fileID: -689406408450205330, guid: 4ad4bb29817ae744fa53ade2dd4d9c35,
+    type: 3}
+  tile12RingLeftSubPieceMesh: {fileID: -1308064327287094486, guid: c6b49a60bb61e9e41859d978de702079,
+    type: 3}
+  tile12RingRightSubPieceMesh: {fileID: -689406408450205330, guid: c6b49a60bb61e9e41859d978de702079,
+    type: 3}
   corruptedPiece: {fileID: 935213622196544231, guid: 24ce61192a7afe54f8c41807caebebc2,
+    type: 3}
+  corruptedPiece12: {fileID: 935213622196544231, guid: 0af88af97de72a440a3fa79b96613a83,
     type: 3}
   emptyClip: {fileID: 0}
   latestPiece: {fileID: 0}
@@ -748,6 +758,55 @@ MonoBehaviour:
     - {fileID: 2800000, guid: ca9389577abcde343b80b059def42a0c, type: 3}
     - {fileID: 2800000, guid: 9844bc32e0e3ff645af11a5f571bca64, type: 3}
     - {fileID: 2800000, guid: a62ac49bb9a02bf419a42268cbe0c6f5, type: 3}
+  symbolToMat:
+  - mat: 0
+    symbolTex: {fileID: 2800000, guid: 4f70e889035fea0488caef79463dbb46, type: 3}
+  - mat: 1
+    symbolTex: {fileID: 2800000, guid: 439faab8c188dd2409a34a79e9ed7736, type: 3}
+  - mat: 2
+    symbolTex: {fileID: 2800000, guid: 53caccc1ec4fc934cb73d2d8ecd8f615, type: 3}
+  - mat: 3
+    symbolTex: {fileID: 2800000, guid: a81236cf42fc5df4fad32321e3db9b48, type: 3}
+  colorsToMats12Ring:
+  - matColor: 0
+    colorTex:
+    - {fileID: 2800000, guid: 0cabb20c340152943bbcef73c2e161be, type: 3}
+    - {fileID: 2800000, guid: 4121ad8f9a11ab34f8f3f8ec37098d97, type: 3}
+    - {fileID: 2800000, guid: 8f81e97b5f994034a8124f85d6f06906, type: 3}
+    - {fileID: 2800000, guid: fe33a8b227486cf4fb5373100363dd59, type: 3}
+  - matColor: 1
+    colorTex:
+    - {fileID: 2800000, guid: a1b1d755bdae9df469f40f33fcc812d1, type: 3}
+    - {fileID: 2800000, guid: 517ef1e3083982243811728532579f28, type: 3}
+    - {fileID: 2800000, guid: 6448bfe9ce3f07e4f9b26f5231a3ede7, type: 3}
+    - {fileID: 2800000, guid: f97f0bc51bde4b541a0073aff796f06f, type: 3}
+  - matColor: 2
+    colorTex:
+    - {fileID: 2800000, guid: d02e121dc6b653645a87a1962aef167f, type: 3}
+    - {fileID: 2800000, guid: 2eaa83e51eb3d0549bddc324b69e23ae, type: 3}
+    - {fileID: 2800000, guid: 1538e5f7c68db284b8f82667020d7805, type: 3}
+    - {fileID: 2800000, guid: 295c170620bb78f48aee6cb0fb645e41, type: 3}
+  - matColor: 3
+    colorTex:
+    - {fileID: 2800000, guid: 0cabeb72708e5fc4e910508b14b3ff78, type: 3}
+    - {fileID: 2800000, guid: 54d669e9c95cba440a6acef0f1e6c79d, type: 3}
+    - {fileID: 2800000, guid: 366115e5d2c74ea4da2dac9ffe2e5c10, type: 3}
+    - {fileID: 2800000, guid: 3f3a9655c54e5374c89ff5eb17653a5b, type: 3}
+  - matColor: 4
+    colorTex:
+    - {fileID: 2800000, guid: ba6aab2d71db00544927d7728ad6b100, type: 3}
+    - {fileID: 2800000, guid: 66d053bd8077f7841b8cdaf60a38afe7, type: 3}
+    - {fileID: 2800000, guid: 911cf9890a6e5a24885a22c6809a5592, type: 3}
+    - {fileID: 2800000, guid: 00b03d02a1ee52e44a85c6593a0bd3c1, type: 3}
+  symbolToMat12Ring:
+  - mat: 0
+    symbolTex: {fileID: 2800000, guid: efbe8ad0a6e919d4a87809beebb81987, type: 3}
+  - mat: 1
+    symbolTex: {fileID: 2800000, guid: bb68e378c514f3f40baabb6662af23d6, type: 3}
+  - mat: 2
+    symbolTex: {fileID: 2800000, guid: d900ed79dc521424fb22c2b9a878fef7, type: 3}
+  - mat: 3
+    symbolTex: {fileID: 2800000, guid: 9b9678266ffaa6c4ba16550b5016f9c6, type: 3}
   corruptedColorsToMatsLeft:
   - {fileID: 2800000, guid: 145ddfbd1257acf4b8393c172f020f5f, type: 3}
   - {fileID: 2800000, guid: d7f52ae1cd9937d49990333949a818bc, type: 3}
@@ -758,15 +817,16 @@ MonoBehaviour:
   - {fileID: 2800000, guid: d9d9bbdbd76ce22478e75e83aeca5962, type: 3}
   - {fileID: 2800000, guid: a7e4888a74e53f5449943376213ad7a9, type: 3}
   - {fileID: 2800000, guid: 4c225e7a39e1c984192f4c9f0b3df6bd, type: 3}
-  symbolToMat:
-  - mat: 0
-    symbolTex: {fileID: 2800000, guid: 4f70e889035fea0488caef79463dbb46, type: 3}
-  - mat: 1
-    symbolTex: {fileID: 2800000, guid: 439faab8c188dd2409a34a79e9ed7736, type: 3}
-  - mat: 2
-    symbolTex: {fileID: 2800000, guid: 53caccc1ec4fc934cb73d2d8ecd8f615, type: 3}
-  - mat: 3
-    symbolTex: {fileID: 2800000, guid: a81236cf42fc5df4fad32321e3db9b48, type: 3}
+  corruptedColorsToMatsLeft12:
+  - {fileID: 2800000, guid: efc45be863496a7499892555d318ddcf, type: 3}
+  - {fileID: 2800000, guid: 530bafd1ec651cf4587ca01c506011b3, type: 3}
+  - {fileID: 2800000, guid: 555a57c7aef758043910e7073883af7b, type: 3}
+  - {fileID: 2800000, guid: 748f327859173354d968bde6d6b54912, type: 3}
+  corruptedColorsToMatsRight12:
+  - {fileID: 2800000, guid: efc45be863496a7499892555d318ddcf, type: 3}
+  - {fileID: 2800000, guid: 530bafd1ec651cf4587ca01c506011b3, type: 3}
+  - {fileID: 2800000, guid: 555a57c7aef758043910e7073883af7b, type: 3}
+  - {fileID: 2800000, guid: 748f327859173354d968bde6d6b54912, type: 3}
   clipCount: 0
   generalPieceMat: {fileID: 2100000, guid: 848a1e192e96a604c882118986286113, type: 2}
   darkTintedColor: {r: 0.16794233, g: 0.2964434, b: 0.3490566, a: 0.50980395}
@@ -783,4 +843,5 @@ MonoBehaviour:
   timeToDarkenClip: 0.5
   timeToBrightenClip: 0.5
   pieceScaleOnBoard: {x: 1, y: 1, z: 1}
+  pieceScaleOnBoard12Ring: {x: 1.25, y: 1.25, z: 1}
   delaySpecialPowerFirefly: 0

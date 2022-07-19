@@ -72,10 +72,10 @@ public class ConnectionManager : MonoBehaviour
     bool playedConnectedSound = false;
     bool nextToOtherpiece = false;
 
-    public float upAmountPieceEffectMaxX, upAmountPieceEffectMinX;
-    public float upAmountPieceEffectMaxY, upAmountPieceEffectMinY;
-    public float upAmountPieceEffectMaxZ, upAmountPieceEffectMinZ;
-    public float speedUpPieceEffect;
+    //public float upAmountPieceEffectMaxX, upAmountPieceEffectMinX;
+    //public float upAmountPieceEffectMaxY, upAmountPieceEffectMinY;
+    //public float upAmountPieceEffectMaxZ, upAmountPieceEffectMinZ;
+    //public float speedUpPieceEffect;
 
 
     public float speedPieceConnectAnim;
@@ -1422,59 +1422,59 @@ public class ConnectionManager : MonoBehaviour
     //    Destroy(relevent.lootIcon.gameObject);
     //}
 
-    public void JumpPiecesEffect(Piece p)
-    {
-        Vector3 originalPosReturnTo = Vector3.zero;
+    //public void JumpPiecesEffect(Piece p)
+    //{
+    //    Vector3 originalPosReturnTo = Vector3.zero;
 
-        foreach (Cell c in cells)
-        {
-            if (c.pieceHeld != null && c.pieceHeld != p && !c.pieceHeld.isLocked && !c.pieceHeld.isStone)
-            {
-                float toMoveZRight = Random.Range(upAmountPieceEffectMinZ, upAmountPieceEffectMaxZ);
-                float toMoveZLeft = Random.Range(upAmountPieceEffectMinZ, upAmountPieceEffectMaxZ);
+    //    foreach (Cell c in cells)
+    //    {
+    //        if (c.pieceHeld != null && c.pieceHeld != p && !c.pieceHeld.isLocked && !c.pieceHeld.isStone)
+    //        {
+    //            float toMoveZRight = Random.Range(upAmountPieceEffectMinZ, upAmountPieceEffectMaxZ);
+    //            float toMoveZLeft = Random.Range(upAmountPieceEffectMinZ, upAmountPieceEffectMaxZ);
 
-                float toMoveXRight = Random.Range(upAmountPieceEffectMinX, upAmountPieceEffectMaxX);
-                float toMoveXLeft = Random.Range(upAmountPieceEffectMinX, upAmountPieceEffectMaxX);
+    //            float toMoveXRight = Random.Range(upAmountPieceEffectMinX, upAmountPieceEffectMaxX);
+    //            float toMoveXLeft = Random.Range(upAmountPieceEffectMinX, upAmountPieceEffectMaxX);
 
-                float toMoveYRight = Random.Range(upAmountPieceEffectMinY, upAmountPieceEffectMaxY);
-                float toMoveYLeft = Random.Range(upAmountPieceEffectMinY, upAmountPieceEffectMaxY);
+    //            float toMoveYRight = Random.Range(upAmountPieceEffectMinY, upAmountPieceEffectMaxY);
+    //            float toMoveYLeft = Random.Range(upAmountPieceEffectMinY, upAmountPieceEffectMaxY);
 
 
-                Vector3 targetPosRight = new Vector3(c.pieceHeld.rightChild.transform.localPosition.x + toMoveXRight, c.pieceHeld.rightChild.transform.localPosition.y + toMoveYRight, c.pieceHeld.rightChild.transform.localPosition.z - toMoveZRight);
-                Vector3 targetPosLeft = new Vector3(c.pieceHeld.leftChild.transform.localPosition.x + toMoveXLeft, c.pieceHeld.leftChild.transform.localPosition.y + toMoveYLeft, c.pieceHeld.leftChild.transform.localPosition.z - toMoveZLeft);
+    //            Vector3 targetPosRight = new Vector3(c.pieceHeld.rightChild.transform.localPosition.x + toMoveXRight, c.pieceHeld.rightChild.transform.localPosition.y + toMoveYRight, c.pieceHeld.rightChild.transform.localPosition.z - toMoveZRight);
+    //            Vector3 targetPosLeft = new Vector3(c.pieceHeld.leftChild.transform.localPosition.x + toMoveXLeft, c.pieceHeld.leftChild.transform.localPosition.y + toMoveYLeft, c.pieceHeld.leftChild.transform.localPosition.z - toMoveZLeft);
 
-                //Debug.Log(c);
-                //Debug.Log(c.pieceHeld);
+    //            //Debug.Log(c);
+    //            //Debug.Log(c.pieceHeld);
 
-                LeanTween.moveLocal(c.pieceHeld.rightChild.gameObject, targetPosRight, speedUpPieceEffect).setEaseOutBack(); // animate
-                LeanTween.moveLocal(c.pieceHeld.leftChild.gameObject, targetPosLeft, speedUpPieceEffect).setEaseOutBack(); // animate
+    //            LeanTween.moveLocal(c.pieceHeld.rightChild.gameObject, targetPosRight, speedUpPieceEffect).setEaseOutBack(); // animate
+    //            LeanTween.moveLocal(c.pieceHeld.leftChild.gameObject, targetPosLeft, speedUpPieceEffect).setEaseOutBack(); // animate
 
-                //yield return new WaitForSeconds(speedUpPieceEffect);
-                originalPosReturnTo = c.pieceHeld.leftChild.transform.localPosition;
-                returnPieceToOriginPosUpEffect(c.pieceHeld.leftChild, originalPosReturnTo);
+    //            //yield return new WaitForSeconds(speedUpPieceEffect);
+    //            originalPosReturnTo = c.pieceHeld.leftChild.transform.localPosition;
+    //            returnPieceToOriginPosUpEffect(c.pieceHeld.leftChild, originalPosReturnTo);
 
-                originalPosReturnTo = c.pieceHeld.rightChild.transform.localPosition;
-                returnPieceToOriginPosUpEffect(c.pieceHeld.rightChild, originalPosReturnTo);
-            }
-        }
-    }
+    //            originalPosReturnTo = c.pieceHeld.rightChild.transform.localPosition;
+    //            returnPieceToOriginPosUpEffect(c.pieceHeld.rightChild, originalPosReturnTo);
+    //        }
+    //    }
+    //}
 
-    public void returnPieceToOriginPosUpEffect(SubPiece p, Vector3 targetPos)
-    {
-        //targetPos = Vector3.zero;
+    //public void returnPieceToOriginPosUpEffect(SubPiece p, Vector3 targetPos)
+    //{
+    //    //targetPos = Vector3.zero;
 
-        //if (p.isRightSubPiece)
-        //{
-        //    targetPos = new Vector3(0.7826648f, 0, 0);
-        //}
-        //else
-        //{
-        //    targetPos = new Vector3(-0.7826648f, 0, 0);
-        //}
+    //    //if (p.isRightSubPiece)
+    //    //{
+    //    //    targetPos = new Vector3(0.7826648f, 0, 0);
+    //    //}
+    //    //else
+    //    //{
+    //    //    targetPos = new Vector3(-0.7826648f, 0, 0);
+    //    //}
 
-        //LeanTween.moveLocal(p.gameObject, targetPos, speedUpPieceEffect).setDelay(speedUpPieceEffect); // animate
-        LeanTween.moveLocal(p.gameObject, targetPos, speedUpPieceEffect);// animate
-    }
+    //    //LeanTween.moveLocal(p.gameObject, targetPos, speedUpPieceEffect).setDelay(speedUpPieceEffect); // animate
+    //    LeanTween.moveLocal(p.gameObject, targetPos, speedUpPieceEffect);// animate
+    //}
 
 
     public void TurnOffAllConnectedVFX()

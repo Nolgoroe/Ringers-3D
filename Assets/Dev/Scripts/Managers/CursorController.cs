@@ -24,7 +24,7 @@ public class CursorController : MonoBehaviour
     public float distanceFromBoard;
     public float rayLength;
     public float radiusCollide;
-    public float piecePickupHeight;
+    //public float piecePickupHeight;
 
     public float pickupSpeed;
     public float moveSpeed;
@@ -729,7 +729,7 @@ public class CursorController : MonoBehaviour
 
             if (GameManager.Instance.currentLevel.is12PieceRing)
             {
-                LeanTween.scale(followerTarget.gameObject, GameManager.Instance.clipManager.pieceScaleOnBoard, pickupSpeed - 0.3f); // animate
+                LeanTween.scale(followerTarget.gameObject, GameManager.Instance.clipManager.pieceScaleOnBoard12Ring, pickupSpeed - 0.3f); // animate
             }
 
             float angle = Mathf.Atan2(gameBoard.transform.position.y - followerTarget.position.y, gameBoard.transform.position.x - followerTarget.position.x) * Mathf.Rad2Deg;
@@ -1194,6 +1194,13 @@ public class CursorController : MonoBehaviour
         if (followerTarget.transform.parent.GetComponent<Cell>())
         {
             followerTarget.transform.parent.GetComponent<Cell>().AddPiece(followerTarget, false);
+        }
+        else
+        {
+            if (GameManager.Instance.currentLevel.is12PieceRing)
+            {
+                //followerTarget.GetComponent<Piece>().TransformTo8RingTile();
+            }
         }
         //else
         //{

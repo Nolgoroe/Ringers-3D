@@ -323,4 +323,47 @@ public class Piece : MonoBehaviour
 
         return false; //// There was no repeat, is same piece = false
     }
+
+    public void TransformTo12RingTile()
+    {
+        MeshFilter meshFilterLeft = leftChild.GetComponent<MeshFilter>();
+        MeshCollider meshColliderLeft = leftChild.GetComponent<MeshCollider>();
+
+        MeshFilter meshFilterRight = rightChild.GetComponent<MeshFilter>();
+        MeshCollider meshColliderRight = rightChild.GetComponent<MeshCollider>();
+
+        Mesh tile12RingLeft = GameManager.Instance.clipManager.tile12RingLeftSubPieceMesh;
+        Mesh tile12RingRight = GameManager.Instance.clipManager.tile12RingRightSubPieceMesh;
+
+        meshFilterLeft.mesh = tile12RingLeft;
+        meshColliderLeft.sharedMesh = tile12RingLeft;
+
+        meshFilterRight.mesh = tile12RingRight;
+        meshColliderRight.sharedMesh = tile12RingRight;
+
+        leftChild.SetPieceAs12RingPiece();
+        rightChild.SetPieceAs12RingPiece();
+    }
+
+    public void TransformTo8RingTile()
+    {
+        MeshFilter meshFilterLeft = leftChild.GetComponent<MeshFilter>();
+        MeshCollider meshColliderLeft = leftChild.GetComponent<MeshCollider>();
+
+        MeshFilter meshFilterRight = rightChild.GetComponent<MeshFilter>();
+        MeshCollider meshColliderRight = rightChild.GetComponent<MeshCollider>();
+
+        Mesh tile8RingLeft = GameManager.Instance.clipManager.tile8RingLeftSubPieceMesh;
+        Mesh tile8RingRight = GameManager.Instance.clipManager.tile8RingRightSubPieceMesh;
+
+        meshFilterLeft.mesh = tile8RingLeft;
+        meshColliderLeft.sharedMesh = tile8RingLeft;
+
+        meshFilterRight.mesh = tile8RingRight;
+        meshColliderRight.sharedMesh = tile8RingRight;
+
+
+        leftChild.SetPieceAs8RingPiece();
+        rightChild.SetPieceAs8RingPiece();
+    }
 }

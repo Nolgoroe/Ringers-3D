@@ -33,7 +33,15 @@ public class Cell : MonoBehaviour
         followerTarget.rotation = followerTarget.parent.rotation;
         pieceHeld = followerTarget.GetComponent<Piece>();
         pieceHeld.partOfBoard = true;
-        pieceHeld.transform.localScale = GameManager.Instance.clipManager.pieceScaleOnBoard;
+
+        if (GameManager.Instance.currentLevel.is12PieceRing)
+        {
+            pieceHeld.transform.localScale = GameManager.Instance.clipManager.pieceScaleOnBoard12Ring;
+        }
+        else
+        {
+            pieceHeld.transform.localScale = GameManager.Instance.clipManager.pieceScaleOnBoard;
+        }
 
         if (!isOuter)
         {
@@ -68,6 +76,11 @@ public class Cell : MonoBehaviour
         {
             GameManager.Instance.currentFilledCellCount++;
 
+            if (GameManager.Instance.currentLevel.is12PieceRing)
+            {
+                pieceHeld.TransformTo12RingTile();
+            }
+
             if (GameManager.Instance.currentLevel.ver1Boss)
             {
                 BossBattleManager.instance.CheckEndLevelBossVersionOne();
@@ -91,7 +104,7 @@ public class Cell : MonoBehaviour
         GameObject go = Instantiate(UIManager.Instance.placePieceVFX, followerTarget);
 
         //StartCoroutine(ConnectionManager.Instance.JumpPiecesEffect(pieceHeld));
-        ConnectionManager.Instance.JumpPiecesEffect(pieceHeld);
+        //ConnectionManager.Instance.JumpPiecesEffect(pieceHeld);
 
         ConnectionManager.Instance.CallConnection(cellIndex, isOuter, false);
     }
@@ -99,7 +112,16 @@ public class Cell : MonoBehaviour
     {
         if (!isFull)
         {
-            GameObject go = Instantiate(GameManager.Instance.clipManager.corruptedPiece, transform);
+            GameObject go = null;
+
+            if (GameManager.Instance.currentLevel.is12PieceRing)
+            {
+                go = Instantiate(GameManager.Instance.clipManager.corruptedPiece12, transform);
+            }
+            else
+            {
+                go = Instantiate(GameManager.Instance.clipManager.corruptedPiece, transform);
+            }
 
             ConnectionManager.Instance.amountStonePiecesInstantiated++;
 
@@ -124,7 +146,15 @@ public class Cell : MonoBehaviour
             p.transform.rotation = p.transform.parent.rotation;
 
             p.partOfBoard = true;
-            p.transform.localScale = GameManager.Instance.clipManager.pieceScaleOnBoard;
+
+            if (GameManager.Instance.currentLevel.is12PieceRing)
+            {
+                p.transform.localScale = GameManager.Instance.clipManager.pieceScaleOnBoard12Ring;
+            }
+            else
+            {
+                p.transform.localScale = GameManager.Instance.clipManager.pieceScaleOnBoard;
+            }
 
             if (!isOuter)
             {
@@ -463,7 +493,15 @@ public class Cell : MonoBehaviour
 
         pieceHeld = p;
         pieceHeld.partOfBoard = true;
-        pieceHeld.transform.localScale = GameManager.Instance.clipManager.pieceScaleOnBoard;
+
+        if (GameManager.Instance.currentLevel.is12PieceRing)
+        {
+            pieceHeld.transform.localScale = GameManager.Instance.clipManager.pieceScaleOnBoard12Ring;
+        }
+        else
+        {
+            pieceHeld.transform.localScale = GameManager.Instance.clipManager.pieceScaleOnBoard;
+        }
 
 
         if (!isOuter)
