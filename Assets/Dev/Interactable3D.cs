@@ -29,7 +29,10 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        ShootEvent();
+        if (!UIManager.Instance.isUsingUI)
+        {
+            ShootEvent();
+        }
     }
 
     public void ShootEvent()

@@ -109,7 +109,7 @@ public class SubPiece : MonoBehaviour
             indexcColor = Random.Range(0, GameManager.Instance.currentLevel.levelAvailableColors.Length);
             indexcSymbol = (int)symbol;
         }
-        else if(color == PieceColor.Neutral)
+        else if(color == PieceColor.General)
         {
             indexcColor = (int)color;
             indexcSymbol = (int)symbol;
@@ -340,7 +340,7 @@ public class SubPiece : MonoBehaviour
         {
             SetPieceAsNormalMat();
 
-            if (GameManager.Instance.currentLevel.is12PieceRing)
+            if (GameManager.Instance.currentLevel.is12PieceRing && parentPiece.partOfBoard)
             {
                 rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats12Ring[randomColor].colorTex[(int)symbolOfPiece]);
                 rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat12Ring[(int)symbolOfPiece].symbolTex);
@@ -442,15 +442,31 @@ public class SubPiece : MonoBehaviour
         int indexcSymbol = (int)symbol;
         symbolOfPiece = symbol;
 
-        if (isRightSubPiece)
+        if (GameManager.Instance.currentLevel.is12PieceRing)
         {
-            rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.corruptedColorsToMatsRight[indexcSymbol]);
-            rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[indexcSymbol].symbolTex);
+            if (isRightSubPiece)
+            {
+                rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.corruptedColorsToMatsRight12[indexcSymbol]);
+                rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat12Ring[indexcSymbol].symbolTex);
+            }
+            else
+            {
+                rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.corruptedColorsToMatsLeft12[indexcSymbol]);
+                rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat12Ring[indexcSymbol].symbolTex);
+            }
         }
         else
         {
-            rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.corruptedColorsToMatsLeft[indexcSymbol]);
-            rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[indexcSymbol].symbolTex);
+            if (isRightSubPiece)
+            {
+                rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.corruptedColorsToMatsRight[indexcSymbol]);
+                rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[indexcSymbol].symbolTex);
+            }
+            else
+            {
+                rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.corruptedColorsToMatsLeft[indexcSymbol]);
+                rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[indexcSymbol].symbolTex);
+            }
         }
 
         //rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[(int)PieceColor.None].colorTex[indexcSymbol]);
@@ -460,8 +476,14 @@ public class SubPiece : MonoBehaviour
 
     public void SetPieceAs12RingPiece()
     {
-        rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats12Ring[randomColor].colorTex[randomSymbol]);
-        rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat12Ring[randomSymbol].symbolTex);
+        randomColor = (int)colorOfPiece;
+        randomSymbol = (int)symbolOfPiece;
+
+        if(symbolOfPiece != PieceSymbol.Joker)
+        {
+            rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats12Ring[randomColor].colorTex[randomSymbol]);
+            rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat12Ring[randomSymbol].symbolTex);
+        }
 
         if (isRightSubPiece)
         {
@@ -474,6 +496,9 @@ public class SubPiece : MonoBehaviour
     }
     public void SetPieceAs8RingPiece()
     {
+        randomColor = (int)colorOfPiece;
+        randomSymbol = (int)symbolOfPiece;
+
         rend.material.SetTexture("Tile_Albedo_Map", GameManager.Instance.clipManager.colorsToMats[randomColor].colorTex[randomSymbol]);
         rend.material.SetTexture("MatchedSymbolTex", GameManager.Instance.clipManager.symbolToMat[randomSymbol].symbolTex);
 
@@ -490,7 +515,14 @@ public class SubPiece : MonoBehaviour
 
     public void SetPieceAsJoker()
     {
-        rend.material = GameManager.Instance.powerupManager.jokerMat;
+        if(GameManager.Instance.currentLevel.is12PieceRing && parentPiece.partOfBoard)
+        {
+            rend.material = GameManager.Instance.powerupManager.jokerMat12TileRing;
+        }
+        else
+        {
+            rend.material = GameManager.Instance.powerupManager.jokerMat;
+        }
     }
 
     public void SetPieceAsNormalMat()

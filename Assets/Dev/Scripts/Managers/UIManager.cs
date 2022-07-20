@@ -236,9 +236,9 @@ public class UIManager : MonoBehaviour
     public TMP_Text bossV2TimerText;
 
     [Header("Inventory Hut and Leaderboard")]
-    public GameObject[] inventoryButtons;
-    public GameObject[] hutButtons;
-    public GameObject[] LeaderboardButtons;
+    public Button[] inventoryButtons;
+    public Button[] hutButtons;
+    public Button[] LeaderboardButtons;
 
     [Header("options screen")]
     public GameObject toMapButton;
@@ -339,17 +339,17 @@ public class UIManager : MonoBehaviour
 
         foreach (var item in inventoryButtons)
         {
-            item.SetActive(false);
+            item.interactable = false;
         }
 
         foreach (var item in hutButtons)
         {
-            item.SetActive(false);
+            item.interactable = false;
         }
 
         foreach (var item in LeaderboardButtons)
         {
-            item.SetActive(false);
+            item.interactable = false;
         }
 
         dragControlsImage.sprite = toggleOnSprite;
@@ -723,7 +723,9 @@ public class UIManager : MonoBehaviour
                     //gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(false);
                     //HudCanvasUIHEIGHLIGHTS.SetActive(true);
                     isUsingUI = true;
-                    TurnOnHutAndInventroyButtons();
+
+                    TurnOnRingersHutAndInventoryButtons();
+
                     TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
                 }
                 else
@@ -2550,16 +2552,16 @@ public class UIManager : MonoBehaviour
         zoneMoveObjectOnMap.anchoredPosition = new Vector3(zoneMoveObjectOnMap.transform.position.x, ZoneManagerHelpData.Instance.unlockPosPerZone[id].y, 0);
     }
 
-    public void TurnOnHutAndInventroyButtons()
-    {
+    public void TurnOnRingersHutAndInventoryButtons()
+    {  
         foreach (var item in inventoryButtons)
         {
-            item.SetActive(true);
+            item.interactable = true;
         }
 
         foreach (var item in hutButtons)
         {
-            item.SetActive(true);
+            item.interactable = true;
         }
     }
 
@@ -2567,7 +2569,7 @@ public class UIManager : MonoBehaviour
     {
         foreach (var item in LeaderboardButtons)
         {
-            item.SetActive(true);
+            item.interactable = true;
         }
     }
 

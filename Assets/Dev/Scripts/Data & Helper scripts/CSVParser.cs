@@ -168,13 +168,13 @@ public class CSVParser : MonoBehaviour
                 //else
                 //{
                     EQ.specificSymbol = (PieceSymbol)Convert.ToInt16(temp[1]);
-                    EQ.specificColor = PieceColor.Neutral;
+                    EQ.specificColor = PieceColor.General;
                 //}
             }
             else
             {
                 EQ.power = (PowerUp)Convert.ToInt16(parsedList[i][1]);
-                EQ.specificColor = PieceColor.Neutral;
+                EQ.specificColor = PieceColor.General;
                 EQ.specificSymbol = PieceSymbol.None;
             }
 

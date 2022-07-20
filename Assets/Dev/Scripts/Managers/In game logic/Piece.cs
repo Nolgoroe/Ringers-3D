@@ -10,7 +10,7 @@ public enum PieceColor
     Yellow,
     Green,
     Pink,
-    Neutral,
+    General,
     Stone,
     Joker,
 }
@@ -22,6 +22,7 @@ public enum PieceSymbol
     Goat,
     Turtle,
     None,
+    General,
     Joker
 }
 
@@ -343,6 +344,20 @@ public class Piece : MonoBehaviour
 
         leftChild.SetPieceAs12RingPiece();
         rightChild.SetPieceAs12RingPiece();
+
+        if(leftChild.symbolOfPiece == PieceSymbol.Joker)
+        {
+            Material mat = leftChild.GetComponent<Renderer>().material;
+
+            mat.SetTexture("Glass_Overlay", GameManager.Instance.powerupManager.ring12TileRingJokerTex);
+        }
+
+        if(rightChild.symbolOfPiece == PieceSymbol.Joker)
+        {
+            Material mat = rightChild.GetComponent<Renderer>().material;
+
+            mat.SetTexture("Glass_Overlay", GameManager.Instance.powerupManager.ring12TileRingJokerTex);
+        }
     }
 
     public void TransformTo8RingTile()

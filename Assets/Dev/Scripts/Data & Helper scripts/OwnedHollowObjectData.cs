@@ -48,7 +48,10 @@ public class OwnedHollowObjectData : MonoBehaviour, IPointerDownHandler, IDragHa
 
     public void OnDrag(PointerEventData eventData)
     {
-        rect.anchoredPosition += eventData.delta;
+        Vector3 pos = eventData.position;
+        pos.z = 5;
+
+        rect.position = Camera.main.ScreenToWorldPoint(pos);
     }
 
 

@@ -303,13 +303,13 @@ public class PlayfabManager : MonoBehaviour
 
         if (TutorialSaveData.Instance.hasFinishedDen)
         {
-            UIManager.Instance.TurnOnHutAndInventroyButtons();
+            UIManager.Instance.TurnOnRingersHutAndInventoryButtons();
         }
 
-        if (ZoneManager.Instance.hasStartedVinebloom)
-        {
-            UIManager.Instance.TurnOnLeaderboardButtons();
-        }
+        //if (ZoneManager.Instance.hasStartedVinebloom)
+        //{
+        //    UIManager.Instance.TurnOnLeaderboardButtons();
+        //}
 
         yield return new WaitForSeconds(2);
 

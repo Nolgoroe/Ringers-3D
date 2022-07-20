@@ -70,6 +70,8 @@ public class PowerUpManager : MonoBehaviour
     //public float offsetYSpecialPowers = 100;
 
     public Material jokerMat;
+    public Material jokerMat12TileRing;
+    public Texture ring12TileRingJokerTex;
 
     Vector3 originalPotionPos = Vector3.zero;
 

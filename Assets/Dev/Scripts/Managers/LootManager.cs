@@ -225,7 +225,7 @@ public class LootManager : MonoBehaviour
                 if (ZoneManagerHelpData.Instance.nextZoneCheck.id == 1)
                 {
                     ZoneManager.Instance.hasStartedVinebloom = true;
-                    UIManager.Instance.TurnOnLeaderboardButtons();
+                    //UIManager.Instance.TurnOnLeaderboardButtons();
                 }
 
                 //ZoneManagerHelpData.Instance.nextZoneCheck.zoneHeader.sprite = Resources.Load<Sprite>(ZoneManagerHelpData.Instance.nextZoneCheck.unlockedZonePath);

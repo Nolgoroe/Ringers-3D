@@ -168,7 +168,7 @@ public class Slice : MonoBehaviour
                     //sr.sprite = GameManager.Instance.sliceManager.lootSliceSymbolDict[sliceSymbol];
                     break;
                 case SliceCatagory.Color:
-                    sliceColor = PieceColor.Neutral;
+                    sliceColor = PieceColor.General;
                     //sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
                     //sr.sprite = GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor];
 
@@ -268,7 +268,7 @@ public class Slice : MonoBehaviour
                     }
                     break;
                 case SliceCatagory.Color:
-                    sliceColor = PieceColor.Neutral;
+                    sliceColor = PieceColor.General;
                     //sr.sprite = GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor];
 
                     //foreach (Renderer r in rend)
@@ -384,7 +384,7 @@ public class Slice : MonoBehaviour
                     //sr.sprite = GameManager.Instance.sliceManager.lootSliceSymbolDict[sliceSymbol];
                     break;
                 case SliceCatagory.Color:
-                    sliceColor = PieceColor.Neutral;
+                    sliceColor = PieceColor.General;
                     //sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
                     matArray.SetTexture("_BaseMap", GameManager.Instance.sliceManager.slicecolorToSprite[sliceColor]);
                     //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
@@ -423,7 +423,7 @@ public class Slice : MonoBehaviour
                     //sr.sprite = GameManager.Instance.sliceManager.lootSliceSymbolDict[sliceSymbol];
                     break;
                 case SliceCatagory.Color:
-                    sliceColor = PieceColor.Neutral;
+                    sliceColor = PieceColor.General;
                     //sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
                     matArray.SetTexture("_BaseMap", GameManager.Instance.sliceManager.slicecolorToSprite[sliceColor]);
                     //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
@@ -594,7 +594,7 @@ public class Slice : MonoBehaviour
 
     public void ResetDate()
     {
-        sliceColor = PieceColor.Neutral;
+        sliceColor = PieceColor.General;
         sliceSymbol = PieceSymbol.None;
         sliceCatagory = SliceCatagory.None;
         isLock = false;
@@ -662,7 +662,7 @@ public class Slice : MonoBehaviour
             }
         }
 
-        if(currentSlice.sliceColor != PieceColor.Neutral)
+        if(currentSlice.sliceColor != PieceColor.General)
         {
             if (currentSlice.sliceColor == compareTo.sliceColor)
             {
