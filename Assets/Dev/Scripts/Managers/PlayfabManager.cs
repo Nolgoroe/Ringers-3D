@@ -298,7 +298,8 @@ public class PlayfabManager : MonoBehaviour
 
         UIManager.Instance.SetCanRepeatLevelsDisplay();
 
-        UIManager.Instance.FocusOnArea(ZoneManager.Instance.unlockedZoneID[ZoneManager.Instance.unlockedZoneID.Count - 1]);
+        //UIManager.Instance.FocusOnArea(ZoneManager.Instance.unlockedZoneID[ZoneManager.Instance.unlockedZoneID.Count - 1]);
+        UIManager.Instance.FocusOnMaxLevelReached();
 
 
         if (TutorialSaveData.Instance.hasFinishedDen)

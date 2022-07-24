@@ -22,7 +22,6 @@ public enum PieceSymbol
     Goat,
     Turtle,
     None,
-    General,
     Joker
 }
 

@@ -219,6 +219,9 @@ public class UIManager : MonoBehaviour
 
     public GameObject activeScreen;
 
+    [Header("Hud Map Screen")]
+    public float focusOffset;
+
     [Header("Review screen")]
     public ImageSwapOnClick[] starImages;
     public GameObject reviewUsPanel;
@@ -2587,4 +2590,78 @@ public class UIManager : MonoBehaviour
 
         ServerRelatedData.instance.appReviewStarsAmountSelected = amount + 1;
     }
+
+    public void FocusOnMaxLevelReached()
+    {
+        RectTransform levelRect = null;
+        RectTransform zoneRect = null;
+
+        levelRect = GetLevelDisplayRef();
+        zoneRect = GetZoneDisplayRef();
+
+        float levelPosRectY = levelRect.anchoredPosition.y;
+        float zonePosRectY = Mathf.Abs(zoneRect.anchoredPosition.y);
+
+        float posY = zonePosRectY - levelPosRectY;
+        posY -= focusOffset;
+
+        Vector3 newPos = new Vector3(zoneMoveObjectOnMap.transform.position.x, posY, zoneMoveObjectOnMap.transform.position.z);
+        zoneMoveObjectOnMap.anchoredPosition = newPos;
+    }
+
+    public RectTransform GetLevelDisplayRef()
+    {
+        RectTransform levelButtonRect = null;
+        int highestLevelReached = PlayerManager.Instance.highestLevelReached;
+
+        if (highestLevelReached == 0)
+        {
+            highestLevelReached = 1;
+        }
+
+        foreach (ButtonsPerZone BPZ in buttonsPerZone)
+        {
+            foreach (GameObject go in BPZ.zone3DButtons)
+            {
+                Interactable3D buttonInteract = go.GetComponent<Interactable3D>();
+
+                if(buttonInteract.connectedLevelScriptableObject.numIndexForLeaderBoard == highestLevelReached)
+                {
+                    levelButtonRect = go.GetComponent<RectTransform>();
+                    return levelButtonRect;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public RectTransform GetZoneDisplayRef()
+    {
+        RectTransform zoneRectPos = null;
+
+        int highestLevelReached = PlayerManager.Instance.highestLevelReached;
+
+        if (highestLevelReached == 0)
+        {
+            highestLevelReached = 1;
+        }
+
+        foreach (ButtonsPerZone BPZ in buttonsPerZone)
+        {
+            foreach (GameObject go in BPZ.zone3DButtons)
+            {
+                Interactable3D buttonInteract = go.GetComponent<Interactable3D>();
+
+                if(buttonInteract.connectedLevelScriptableObject.numIndexForLeaderBoard == highestLevelReached)
+                {
+                    zoneRectPos = BPZ.theZone.GetComponent<RectTransform>();
+                    return zoneRectPos;
+                }
+            }
+        }
+
+        return null;
+    }
+
 }

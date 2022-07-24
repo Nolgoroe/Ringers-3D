@@ -1254,5 +1254,4 @@ public class GameManager : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-
 }
