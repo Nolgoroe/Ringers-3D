@@ -10,11 +10,11 @@ Material:
   m_Name: InnerConnection
   m_Shader: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _ALPHATEST_ON _COLORADDSUBDIFF_ON _FADING_ON
-    _RECEIVE_SHADOWS_OFF _SOFTPARTICLES_ON
+    _SOFTPARTICLES_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 3050
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses:
@@ -23,7 +23,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 373f0fe45649aee43b401f2f27449ac8, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1a7040b337b9b4f4bba3995f53808150, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -95,7 +95,6 @@ Material:
     - _EmissionColor: {r: 2.1435468, g: 2.1435468, b: 2.1435468, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 1, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-  m_BuildTextureStacks: []
 --- !u!114 &8961596603621665941
 MonoBehaviour:
   m_ObjectHideFlags: 11
