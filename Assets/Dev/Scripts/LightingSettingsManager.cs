@@ -27,10 +27,13 @@ public class LightingSettingsManager : MonoBehaviour
 
 
             RenderSettings.subtractiveShadowColor = allLightingSO[0].realtimeShadowColor;
-            RenderSettings.fogColor = allLightingSO[0].fogColor;
-            RenderSettings.fogDensity = allLightingSO[0].fogDensity;
-            RenderSettings.fog = allLightingSO[0].fogON;
 
+            RenderSettings.fog = allLightingSO[0].fogON;
+            RenderSettings.fogColor = allLightingSO[0].fogColor;
+            RenderSettings.fogMode = allLightingSO[0].fodMode;
+            RenderSettings.fogDensity = allLightingSO[0].fogDensity;
+            RenderSettings.fogStartDistance = allLightingSO[0].fogStart;
+            RenderSettings.fogEndDistance = allLightingSO[0].fogEnd;
         }
         else
         {
@@ -45,10 +48,13 @@ public class LightingSettingsManager : MonoBehaviour
 
 
             RenderSettings.subtractiveShadowColor = allLightingSO[zoneID].realtimeShadowColor;
-            RenderSettings.fogColor = allLightingSO[zoneID].fogColor;
-            RenderSettings.fogDensity = allLightingSO[zoneID].fogDensity;
-            RenderSettings.fog = allLightingSO[zoneID].fogON;
 
+            RenderSettings.fog = allLightingSO[zoneID].fogON;
+            RenderSettings.fogColor = allLightingSO[zoneID].fogColor;
+            RenderSettings.fogMode = allLightingSO[zoneID].fodMode;
+            RenderSettings.fogDensity = allLightingSO[zoneID].fogDensity;
+            RenderSettings.fogStartDistance = allLightingSO[zoneID].fogStart;
+            RenderSettings.fogEndDistance = allLightingSO[zoneID].fogEnd;
         }
     }
 
@@ -63,9 +69,13 @@ public class LightingSettingsManager : MonoBehaviour
 
 
         RenderSettings.subtractiveShadowColor = DenLight.realtimeShadowColor;
-        RenderSettings.fogColor = DenLight.fogColor;
-        RenderSettings.fogDensity = DenLight.fogDensity;
+
         RenderSettings.fog = DenLight.fogON;
+        RenderSettings.fogColor = DenLight.fogColor;
+        RenderSettings.fogMode = DenLight.fodMode;
+        RenderSettings.fogDensity = DenLight.fogDensity;
+        RenderSettings.fogStartDistance = DenLight.fogStart;
+        RenderSettings.fogEndDistance = DenLight.fogEnd;
 
     }
 
@@ -80,8 +90,14 @@ public class LightingSettingsManager : MonoBehaviour
 
 
         RenderSettings.subtractiveShadowColor = Color.white;
+
+        RenderSettings.fog = false;
         RenderSettings.fogColor = Color.white;
+        RenderSettings.fogMode = FogMode.Exponential;
         RenderSettings.fogDensity = 0;
+        RenderSettings.fogStartDistance = 0;
+        RenderSettings.fogEndDistance = 300;
+
 
     }
 }

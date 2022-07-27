@@ -806,6 +806,7 @@ public class AnimationManager : MonoBehaviour
         //}
 
         yield return new WaitForSeconds(waitTimeButtonsAppear);
+        UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
 
         if (!GameManager.Instance.currentLevel.isGrindLevel)
         {
@@ -873,7 +874,6 @@ public class AnimationManager : MonoBehaviour
 
 
 
-        UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
 
 
         UIManager.Instance.restartButton.interactable = true;
@@ -973,6 +973,8 @@ public class AnimationManager : MonoBehaviour
 
         GameManager.Instance.WinAfterAnimation();
 
+        UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
+
         if (!GameManager.Instance.currentLevel.isGrindLevel)
         {
             Image backToHubImage = UIManager.Instance.backToHubButton.GetComponent<Image>();
@@ -1013,7 +1015,6 @@ public class AnimationManager : MonoBehaviour
             Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
         }
 
-        UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
 
         UIManager.Instance.restartButton.interactable = true;
         UIManager.Instance.dealButton.interactable = true;
