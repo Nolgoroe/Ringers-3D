@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
+using System.Linq;
 
 [Serializable]
 public class IconSpritesPerZone
@@ -22,6 +24,20 @@ public class AmbientMusicPerZone
     public Zone zone;
     public Sounds levelAmbience;
 }
+
+[Serializable]
+public class ZoneAndObjectToBlurUnblur
+{
+    public Zone zone;
+    public GameObject[] planesToChange;
+    public SpriteRenderer[] BGToChange;
+
+    public Material blurMat;
+    public Material normalMat;
+    public Sprite blurBGSprite;
+    public Sprite normalBGSprite;
+}
+
 public class ZoneManagerHelpData : MonoBehaviour
 {
     public static ZoneManagerHelpData Instance;
@@ -41,6 +57,7 @@ public class ZoneManagerHelpData : MonoBehaviour
     public IconSpritesPerCondition[] iconsPerConditon;
 
     public AmbientMusicPerZone[] musicPerZone;
+    public ZoneAndObjectToBlurUnblur[] blurUnblurPerZone;
 
     public Vector3[] unlockPosPerZone;
 
@@ -111,5 +128,45 @@ public class ZoneManagerHelpData : MonoBehaviour
         UIManager.Instance.updateRubyAndDewDropsCount();
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.ZoneManager, SystemsToSave.ZoneX});
+    }
+
+
+    public void ChangeZoneToBlurryZoneDisplay()
+    {
+        ZoneAndObjectToBlurUnblur ZOB = blurUnblurPerZone.Where(p => p.zone == currentZoneCheck).SingleOrDefault();
+
+        if (ZOB != null)
+        {
+            foreach (GameObject go in ZOB.planesToChange)
+            {
+                MeshRenderer renderer = go.GetComponent<MeshRenderer>();
+
+                renderer.material = ZOB.blurMat;
+            }
+
+            foreach (SpriteRenderer sr in ZOB.BGToChange)
+            {
+                sr.sprite = ZOB.blurBGSprite;
+            }
+        }
+    }
+    public void ChangeZoneToNormalZoneDisplay()
+    {
+        ZoneAndObjectToBlurUnblur ZOB = blurUnblurPerZone.Where(p => p.zone == currentZoneCheck).SingleOrDefault();
+
+        if (ZOB != null)
+        {
+            foreach (GameObject go in ZOB.planesToChange)
+            {
+                MeshRenderer renderer = go.GetComponent<MeshRenderer>();
+
+                renderer.material = ZOB.normalMat;
+            }
+
+            foreach (SpriteRenderer sr in ZOB.BGToChange)
+            {
+                sr.sprite = ZOB.normalBGSprite;
+            }
+        }
     }
 }

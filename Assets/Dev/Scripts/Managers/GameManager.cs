@@ -181,6 +181,8 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.googlePlayButton.SetActive(false);
         UIManager.Instance.switchAccountButton.SetActive(false);
 
+        ZoneManagerHelpData.Instance.ChangeZoneToBlurryZoneDisplay();
+
         if (isTutorial)
         {
             LevelEnded = false;
@@ -451,6 +453,9 @@ public class GameManager : MonoBehaviour
         Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
         LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
+
+        ZoneManagerHelpData.Instance.ChangeZoneToBlurryZoneDisplay();
+
         gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
 
         gameClip.transform.position = new Vector3(gameClip.transform.position.x, 2.65f, gameClip.transform.position.z);
