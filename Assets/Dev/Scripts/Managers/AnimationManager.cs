@@ -303,6 +303,8 @@ public class AnimationManager : MonoBehaviour
         //Destroy(GameManager.Instance.gameBoard.gameObject);
         //GameManager.Instance.gameBoard.gameObject.transform.position = new Vector3(100, 0, 0);
 
+        ZoneManagerHelpData.Instance.ChangeZoneToNormalZoneDisplay();
+
         SpriteRenderer boardSR = GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>();
         boardSR.color = new Color(boardSR.color.r, boardSR.color.g, boardSR.color.b, 0);
 
@@ -574,6 +576,8 @@ public class AnimationManager : MonoBehaviour
             IGSP.gameObject.SetActive(false);
         }
 
+        ZoneManagerHelpData.Instance.ChangeZoneToNormalZoneDisplay();
+
         SpriteRenderer boardSR = GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>();
         boardSR.color = new Color(boardSR.color.r, boardSR.color.g, boardSR.color.b, 0);
 
@@ -777,7 +781,7 @@ public class AnimationManager : MonoBehaviour
             }
             else
             {
-                UIManager.Instance.animalNameText.text = "Tree cleansed!";
+                UIManager.Instance.animalNameText.text = "Corruption cleansed!";
             }
         }
         else
@@ -961,7 +965,7 @@ public class AnimationManager : MonoBehaviour
             }
             else
             {
-                UIManager.Instance.animalNameText.text = "Tree cleansed!";
+                UIManager.Instance.animalNameText.text = "Corruption cleansed!";
             }
         }
 
