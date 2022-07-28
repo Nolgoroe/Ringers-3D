@@ -558,21 +558,8 @@ public class UIManager : MonoBehaviour
             StartCoroutine(SoundManager.Instance.FadeInMapBGMusic());
         }
 
-        //if (!itemForgeCanvas.activeInHierarchy && !leaderboardScreen.activeInHierarchy && !DailyRewardScreen.activeInHierarchy)
-        //{
-        //    //Debug.Log("Here");
-        //    StartCoroutine(SetIsUsingUI(false));
-        //}
-
         updateRubyAndDewDropsCount();
         PlayerManager.Instance.activePowerups.Clear();
-        //PlayerManager.Instance.SavePlayerData();
-        //PlayfabManager.instance.SaveAllGameData();
-
-        //Camera.main.orthographic = true;
-        //GameManager.Instance.secondCam.orthographic = true;
-        //Camera.main.orthographicSize = 9f;
-        //GameManager.Instance.secondCam.orthographicSize = 9f;
 
         Camera.main.transform.rotation = Quaternion.Euler(hubCameraRot);
         GameManager.Instance.secondCam.fieldOfView = 60;
@@ -603,7 +590,6 @@ public class UIManager : MonoBehaviour
             PanZoom pz = Camera.main.GetComponent<PanZoom>();
             tempForClamp.y = Mathf.Clamp(tempForClamp.y, pz.bottomBound, pz.topBound);
 
-            //Camera.main.transform.position = tempForClamp;
             Camera.main.transform.position = new Vector3(0,-1.6f, -3f);
 
             TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, Camera.main.transform.position.y, -0.05f);
@@ -613,6 +599,12 @@ public class UIManager : MonoBehaviour
             Camera.main.transform.position = hubCameraPos;
             TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, Camera.main.transform.position.y, -0.05f);
         }
+
+        FocusOnMaxLevelReached();
+
+
+
+
 
 
         if (currentCanvas == gameplayCanvas)
