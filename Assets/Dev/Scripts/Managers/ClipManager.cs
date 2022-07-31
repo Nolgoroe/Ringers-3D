@@ -291,8 +291,6 @@ public class ClipManager : MonoBehaviour
 
     public IEnumerator DealAnimation()
     {
-        UIManager.Instance.dealButton.interactable = false;
-
         StartCoroutine(DeactivateClip(clipCount - 1));
 
         for (int i = 0; i < clipCount; i++)
@@ -337,6 +335,10 @@ public class ClipManager : MonoBehaviour
             yield return new WaitForSeconds(delayClipMove);
 
         }
+
+        yield return new WaitForSeconds(0.1f);
+
+        GameManager.Instance.powerupManager.canPressDeal = true;
         UIManager.Instance.dealButton.interactable = true;
     }
 

@@ -110,6 +110,8 @@ public class TutorialSequence : MonoBehaviour
 
     public Transform handPosToHub, handPosOpenInventory, handPosOpenInventoryInDen, handPosOpenDen, handPosChangePotionTab, handPosChangeHollowCraftTab, handPosBrewButton, handPosCraftItemButton, handPosCloseInventory;
 
+    //public float delayUnlockAll;
+
     private void Start()
     {
         Instacne = this;
@@ -1104,7 +1106,7 @@ public class TutorialSequence : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
+        for (int i = 0; i < GameManager.Instance.clipManager.clipCount; i++)
         {
             Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
             p.isTutorialLocked = true;

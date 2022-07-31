@@ -79,9 +79,12 @@ public class PowerUpManager : MonoBehaviour
 
     Coroutine powerBeingUsed = null;
 
+    public bool canPressDeal;
+
     private void Start()
     {
         GameManager.Instance.powerupManager = this;
+        canPressDeal = true;
 
         spriteByType = new Dictionary<PowerUp, string>();
         nameTextByType = new Dictionary<PowerUp, string>();
@@ -188,8 +191,10 @@ public class PowerUpManager : MonoBehaviour
     {
         //CameraShake.ShakeOnce();
 
-        if (!UIManager.Instance.isUsingUI)
+        if (!UIManager.Instance.isUsingUI && canPressDeal)
         {
+            UIManager.Instance.dealButton.interactable = false;
+            canPressDeal = false;
             string worldName = GameManager.Instance.currentLevel.worldName;
             string levelNum = GameManager.Instance.currentLevel.levelNum.ToString();
 
