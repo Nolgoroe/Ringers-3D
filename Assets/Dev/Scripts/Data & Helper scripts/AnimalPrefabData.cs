@@ -11,4 +11,6 @@ public class AnimalPrefabData : MonoBehaviour
     public AnimalScriptableObject animalSO;
 
     public MeshRenderer renderer;
+
+    //public Transform tutorialHole;
 }

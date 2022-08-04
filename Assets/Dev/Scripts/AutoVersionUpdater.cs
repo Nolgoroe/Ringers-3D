@@ -92,6 +92,10 @@ public class AutoVersionUpdater : MonoBehaviour
             {
                StartCoroutine(OneToTwo());
             }
+            else if (mostRecentGameVersion == 2)
+            {
+               StartCoroutine(TwoToThree());
+            }
             else
             {
                 PlayfabManager.successfullyDoneWithStep = true;
@@ -121,6 +125,7 @@ public class AutoVersionUpdater : MonoBehaviour
         Debug.Log("Successfull Data Update Zero to one");
         CompareVersions();
     }
+
     IEnumerator OneToTwo()
     {
         // Here change data in local build and then save the game.
@@ -154,6 +159,33 @@ public class AutoVersionUpdater : MonoBehaviour
         CompareVersions();
     }
 
+    IEnumerator TwoToThree()
+    {
+        // Here change data in local build and then save the game.
+
+        mostRecentGameVersion = 3;
+
+        doneWithSubStep = null;
+
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedUpdateZones, OnErrorUpdateZones); // load zones data from server - now with new unique identifier base
+
+        yield return new WaitUntil(() => doneWithSubStep != null);
+
+        doneWithSubStep = null;
+        yield return StartCoroutine(ResetZoneIndexesTwoToThree()); // reset zone indexes to new indexes - we took out zone index 0 - noew we need to make sure the indexes go from 0 - 4 instead of 1 - 5 since we have arrays using the zones id's
+
+        yield return new WaitUntil(() => doneWithSubStep != null);
+        //Debug.LogError("Done with zero to one!");
+
+        doneWithSubStep = null;
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedUpdateTutorialData, OnErrorUpdateTutorialData); // rewrite tutorial data
+
+        yield return new WaitUntil(() => doneWithSubStep != null);
+
+        Debug.Log("Successfull Data Update Two to One!");
+        CompareVersions();
+    }
+
     void OnErrorUpdateTutorialData(PlayFabError error)
     {
         Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
@@ -171,11 +203,11 @@ public class AutoVersionUpdater : MonoBehaviour
         TutorialSaveData.Instance.completedTutorialLevelId.Clear();
         TutorialSaveData.Instance.completedSpecificTutorialLevelId.Clear();
 
-        StartCoroutine(ResetTutorialDataOneToTwo());
+        StartCoroutine(ResetTutorialDataAllZones());
         //ResetTutorialDataOneToTwo();
     }
 
-    IEnumerator ResetTutorialDataOneToTwo()
+    IEnumerator ResetTutorialDataAllZones()
     {
         foreach (int zoneindex in ZoneManager.Instance.unlockedZoneID)
         {
@@ -384,6 +416,23 @@ public class AutoVersionUpdater : MonoBehaviour
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.AllZones });
 
         //Debug.LogError("Now waiting");
+
+        yield return new WaitForSeconds(2);
+        doneWithSubStep = true;
+    }
+    IEnumerator ResetZoneIndexesTwoToThree()
+    {
+
+        ZoneManagerHelpData.Instance.listOfAllZones[0].lastLevelNum = 35;
+
+        ZoneManagerHelpData.Instance.listOfAllZones[0].keyLevelIndex = 35;
+
+        if (ZoneManagerHelpData.Instance.listOfAllZones[ZoneManager.Instance.unlockedZoneID[0]].maxLevelReachedInZone <= 0)
+        {
+            ZoneManagerHelpData.Instance.listOfAllZones[ZoneManager.Instance.unlockedZoneID[0]].maxLevelReachedInZone = 1;
+        }
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.AllZones });
 
         yield return new WaitForSeconds(2);
         doneWithSubStep = true;

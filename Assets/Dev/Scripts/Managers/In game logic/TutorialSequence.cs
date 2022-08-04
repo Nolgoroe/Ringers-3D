@@ -35,9 +35,9 @@ public class Phase
 {
     public bool isClipPhase, isBoardPhase, isPowerupPhase, isSingleCellPhase, isSingleSlice, isHubButtonPhase;
     public bool isOpenInventoryPhase, isPotionTabPhase, isEmptyTouchPhase, isBrewPhase, isBrewDisplayMaterials;
-    public bool isAnimalSymbolCollectionPhase, hasDelay, isAllLocked, isClearScreen, isBoardGone;
+    public bool isAnimalSymbolCollectionPhase, hasDelay, isAllLocked, isClearScreen, isBoardGone, isGameUIGone;
     public bool isOpenDenPhase, isOpenHollowCraftTabPhase, isOpenInventoryInDenPhase, isCraftPhase, isCloseInventoryPhase, isDragHollowItemPhase;
-    public bool dealPhase;
+    public bool dealPhase, isStatuePhase;
 
     public int[] unlockedPowerups;
     public int[] unlockedClips;
@@ -248,7 +248,10 @@ public class TutorialSequence : MonoBehaviour
             
             maskImage.sprite = sprite;
 
-            maskImage.gameObject.SetActive(true);
+            if (!levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].isClearScreen)
+            {
+                maskImage.gameObject.SetActive(true);
+            }
         }
     }
     public void toTextureDenScreen()
@@ -319,9 +322,6 @@ public class TutorialSequence : MonoBehaviour
 
         if (isSpecific)
         {
-            /////// Maybe do this part below better
-            //specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[index].SetActive(true);
-
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].dealPhase)
             {
                 UIManager.Instance.dealButtonHeighlight.SetActive(true);
@@ -513,24 +513,10 @@ public class TutorialSequence : MonoBehaviour
 
         if (!isSpecific)
         {
-            /////// Maybe do this part below better
-            //levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[index].SetActive(true);
-
             if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[index].dealPhase)
             {
-                //for (int i = 0; i < UIManager.Instance.dealButton.transform.childCount; i++)
-                //{
-                //    if (UIManager.Instance.dealButton.transform.GetChild(i).CompareTag("Tile Hole"))
-                //    {
-                //        UIManager.Instance.dealButton.transform.GetChild(i).gameObject.SetActive(true);
-
-                //        activatedHeighlights.Add(UIManager.Instance.dealButton.transform.GetChild(i).gameObject);
-                //    }
-
-                //}
-
                 UIManager.Instance.dealButtonHeighlight.SetActive(true);
-                //UIManager.Instance.dealButtonHeighlight.GetComponent<testScreenResolutionFix>().DoMove();
+
                 activatedHeighlights.Add(UIManager.Instance.dealButtonHeighlight.gameObject);
             }
 
@@ -591,8 +577,6 @@ public class TutorialSequence : MonoBehaviour
                     }
                 }
             }
-
-
             
             if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[index].isAnimalSymbolCollectionPhase)
             {
@@ -618,6 +602,21 @@ public class TutorialSequence : MonoBehaviour
                                 activatedHeighlights.Add(t.GetChild(i).GetChild(k).gameObject);
                             }
                         }
+                    }
+                }
+            }
+
+            if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[index].isStatuePhase)
+            {
+                Transform t = AnimalsManager.Instance.statueToSwap.transform;
+
+                for (int i = 0; i < t.childCount; i++)
+                {
+                    if (t.GetChild(i).CompareTag("Tile Hole"))
+                    {
+                        t.GetChild(i).gameObject.SetActive(true);
+
+                        activatedHeighlights.Add(t.GetChild(i).gameObject);
                     }
                 }
             }
@@ -680,7 +679,7 @@ public class TutorialSequence : MonoBehaviour
         //    ChangePhase(levelSequences, GameManager.Instance.currentLevel.tutorialIndexForList, currentPhaseInSequenceLevels);
         //}
 
-
+        
 
         //clear screen to show it better
         if (currentPhaseInSequenceLevels < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Count())
@@ -688,12 +687,17 @@ public class TutorialSequence : MonoBehaviour
             if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].isClearScreen)
             {
                 maskImage.gameObject.SetActive(false);
-                UIManager.Instance.tutorialCanvasParent.SetActive(false);
+                //UIManager.Instance.tutorialCanvasParent.SetActive(false);
 
                 if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].isAllLocked)
                 {
                     AllLockedLogic(levelSequences, GameManager.Instance.currentLevel.tutorialIndexForList, currentPhaseInSequenceLevels);
                 }
+            }
+            else
+            {
+                maskImage.gameObject.SetActive(true);
+                //UIManager.Instance.tutorialCanvasParent.SetActive(true);
             }
         }
 
@@ -702,16 +706,6 @@ public class TutorialSequence : MonoBehaviour
             if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].hasDelay)
             {
                 yield return new WaitForSeconds(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].delayAmount);
-            }
-        }
-
-        //return screens after clear
-        if (currentPhaseInSequenceLevels < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Count())
-        {
-            if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].isClearScreen)
-            {
-                maskImage.gameObject.SetActive(true);
-                UIManager.Instance.tutorialCanvasParent.SetActive(true);
             }
         }
 
@@ -813,15 +807,6 @@ public class TutorialSequence : MonoBehaviour
         }
     }
 
-    //public void CheckContinuedTutorials()
-    //{
-    //    //// VERY TEMPORARY! CREATE FLAG SYSTEM!
-    //    if(level3TurorialFlag)
-    //    {
-    //        StartSequence(7);
-    //    }
-    //}
-
     public void ChangePhase(Sequence[] tutorialArray, int TutorialIndex, int phaseIndex)
     {
         CursorController.canMovePieces = true;
@@ -845,6 +830,18 @@ public class TutorialSequence : MonoBehaviour
                 //UIManager.Instance.gameplayCanvasBotom.SetActive(true);
                 UIManager.Instance.DecideBottmUIShow(GameManager.Instance.currentLevel.bottomUIToShow);
                 UIManager.Instance.gameplayCanvasTop.SetActive(true);
+            }
+        }
+
+        if (tutorialArray[TutorialIndex].phase[phaseIndex].isGameUIGone)
+        {
+            UIManager.Instance.DecideBottmUIShow(BottomUIToShow.None);
+        }
+        else
+        {
+            if (GameManager.Instance.gameBoard && GameManager.Instance.gameClip)
+            {
+                UIManager.Instance.DecideBottmUIShow(GameManager.Instance.currentLevel.bottomUIToShow);
             }
         }
 
@@ -1166,6 +1163,13 @@ public class TutorialSequence : MonoBehaviour
         activatedBoardParticles.Clear();
 
         GameManager.Instance.powerupManager.PowerupButtonsActivation(true);
+
+
+        GameManager.Instance.gameBoard.SetActive(true);
+        GameManager.Instance.gameClip.SetActive(true);
+        GameManager.Instance.selectedLevelBG.transform.GetChild(0).gameObject.SetActive(true);
+        UIManager.Instance.DecideBottmUIShow(GameManager.Instance.currentLevel.bottomUIToShow);
+        UIManager.Instance.gameplayCanvasTop.SetActive(true);
     }
 
     public IEnumerator DeactivateTutorialScreens(Sequence[] tutorialArray, int index, float timeToWaitTillFade)

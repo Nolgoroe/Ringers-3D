@@ -800,7 +800,6 @@ public class AnimationManager : MonoBehaviour
 
         LeanTween.scale(GameManager.Instance.gameBoard.gameObject, boardScaleTo, timeToScaleBoard);
 
-        CheckShowLootTutorial();
         yield return new WaitForSeconds(timeToScaleBoard + 0.1f);
         GameManager.Instance.WinAfterAnimation();
 
@@ -885,6 +884,8 @@ public class AnimationManager : MonoBehaviour
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
         TutorialSequence.Instacne.CheckDoDenTutorial();
+        //CheckShowLootTutorial();
+        StartCoroutine(CheckShowLootTutorial());
 
         if (!GameManager.Instance.currentLevel.isGrindLevel)
         {
@@ -969,8 +970,6 @@ public class AnimationManager : MonoBehaviour
             }
         }
 
-        CheckShowLootTutorial();
-
         UIManager.Instance.animalNameText.color = new Color(UIManager.Instance.animalNameText.color.r, UIManager.Instance.animalNameText.color.g, UIManager.Instance.animalNameText.color.b, 1);
 
         GameManager.Instance.gameBoard.transform.localScale = boardScaleTo;
@@ -1026,6 +1025,8 @@ public class AnimationManager : MonoBehaviour
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
         TutorialSequence.Instacne.CheckDoDenTutorial();
+        //CheckShowLootTutorial();
+        StartCoroutine(CheckShowLootTutorial());
 
         if (!GameManager.Instance.currentLevel.isGrindLevel)
         {
@@ -1041,8 +1042,9 @@ public class AnimationManager : MonoBehaviour
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
     }
-    private void CheckShowLootTutorial()
+    private IEnumerator CheckShowLootTutorial()
     {
+        yield return new WaitForSeconds(0.5f);
         if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.lootTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard)) /// specificTutorialIndex == 0  is loot tutorial
         {
             //TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.specificTutorialIndex);
