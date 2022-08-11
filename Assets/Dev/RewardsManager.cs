@@ -171,6 +171,8 @@ public class RewardsManager : MonoBehaviour
     [ContextMenu("give daily rewards")]
     public void giveRewardsButton()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         //RewardScreenDisplayDataHelper.Instance.lootPrefabsInstantiated[indexDayToGive].GetComponent<craftingMatDailyRewardsDisplayer>().TurnOFFTodayVFX();
         RewardScreenDisplayDataHelper.Instance.lootPrefabsInstantiated[indexDayToGive].GetComponent<craftingMatDailyRewardsDisplayer>().PlayGiveAnim();
         GiveDailyRewards(indexPack);

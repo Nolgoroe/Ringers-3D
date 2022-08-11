@@ -424,6 +424,8 @@ public class UIManager : MonoBehaviour
     }
     public void EndLevelMessageNo()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         endLevelSureMessage.SetActive(false);
         bGPanelDisableTouch.SetActive(false);
 
@@ -432,6 +434,8 @@ public class UIManager : MonoBehaviour
     }
     public void EndLevelMessageYes()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         endLevelSureMessage.SetActive(false);
         bGPanelDisableTouch.SetActive(false);
 
@@ -445,12 +449,16 @@ public class UIManager : MonoBehaviour
     }
     public void ClipsAboutToEndMessageNo()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         clipsAboutToEndMessage.SetActive(false);
         bGPanelDisableTouch.SetActive(false);
 
     }
     public void ClipsAboutToEndMessageYes()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         clipsAboutToEndMessage.SetActive(false);
         bGPanelDisableTouch.SetActive(false);
         //LootManager.Instance.currentLevelLootToGive.Clear();
@@ -509,6 +517,8 @@ public class UIManager : MonoBehaviour
     }
     public void SureWantToRestartMessageNo(bool withLoot)
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         //isUsingUI = false;
         bGPanelDisableTouch.SetActive(false);
 
@@ -530,6 +540,7 @@ public class UIManager : MonoBehaviour
     public void SureWantToRestartMessageYes(bool withLoot)
     {
         //isUsingUI = false;
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
 
         bGPanelDisableTouch.SetActive(false);
 
@@ -609,6 +620,8 @@ public class UIManager : MonoBehaviour
 
         if (currentCanvas == gameplayCanvas)
         {
+            SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
             GameManager.Instance.levelStarted = false;
             GameManager.Instance.timeStartLevel = "";
             GameManager.Instance.hasRestartedLevel = false;
@@ -920,6 +933,8 @@ public class UIManager : MonoBehaviour
 
     public void CloseWindowNoAdditionalAction(GameObject ToClose)
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         ToClose.SetActive(false);
     }
 
@@ -1180,6 +1195,8 @@ public class UIManager : MonoBehaviour
             return;
         }
 
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         if (returningToHud)
         {
             if (TutorialSequence.Instacne.duringSequence)
@@ -1189,6 +1206,7 @@ public class UIManager : MonoBehaviour
                     return;
                 }
             }
+
             isUsingUI = true;
 
             ToHud(ringersHutDisplay);
@@ -1248,6 +1266,8 @@ public class UIManager : MonoBehaviour
             return;
         }
 
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         OptionsScreen.SetActive(true);
         //isUsingUI = true;
     }
@@ -1258,11 +1278,14 @@ public class UIManager : MonoBehaviour
             return;
         }
 
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         cheatOptionsScreen.SetActive(true);
         //isUsingUI = true;
     }
     public void CloseGame()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
 
         Debug.Log("Saved all data! - close game");
 
@@ -1350,6 +1373,8 @@ public class UIManager : MonoBehaviour
     }
     public void RestartLevelFromLoseScreenUI()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         //isUsingUI = false;
         //gameplayCanvasBotom.SetActive(true);
         bGPanelDisableTouch.SetActive(false);
@@ -1586,18 +1611,24 @@ public class UIManager : MonoBehaviour
     //}
     public void ChangeControlsTap()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         GameManager.Instance.isSecondaryControls = true;
         tapControlsImage.sprite = toggleOnSprite;
         dragControlsImage.sprite = toggleOffSprite;
     }
     public void ChangeControlsDrag()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         GameManager.Instance.isSecondaryControls = false;
         dragControlsImage.sprite = toggleOnSprite;
         tapControlsImage.sprite = toggleOffSprite;
     }
     public void DisableTutorials()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         GameManager.Instance.isDisableTutorials = !GameManager.Instance.isDisableTutorials;
 
         if (GameManager.Instance.isDisableTutorials)
@@ -1660,6 +1691,8 @@ public class UIManager : MonoBehaviour
                 }
             }
 
+            SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
             if (activeScreen)
             {
                 activeScreen.SetActive(false);
@@ -1679,6 +1712,8 @@ public class UIManager : MonoBehaviour
     }
     public void SureWantToResetDataMessage()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         if (activeScreen)
         {
             activeScreen.SetActive(false);
@@ -1759,6 +1794,7 @@ public class UIManager : MonoBehaviour
                     return;
                 }
             }
+            SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
 
             //isUsingUI = true;
             DailyRewardScreen.SetActive(true);
@@ -1892,12 +1928,16 @@ public class UIManager : MonoBehaviour
     }
     public void BuyHollowItemSecondaryScreenYes()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         MissingMaterialsHollowObjectScreen.SetActive(false);
         ClearBuyHollowSecondaryDisplay();
         //isUsingUI = false;
     }
     public void BuyHollowItemSecondaryScreenNo()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         MissingMaterialsHollowObjectScreen.SetActive(false);
         ClearBuyHollowSecondaryDisplay();
         //isUsingUI = false;
@@ -2236,6 +2276,8 @@ public class UIManager : MonoBehaviour
     }
     public void SkipIntroScreens()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         isDuringIntro = false;
         canAdvanceIntro = false;
 
@@ -2380,6 +2422,8 @@ public class UIManager : MonoBehaviour
     }
     public void ReleaseAnimalDenScreenYes()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         //isUsingUI = false;
 
         releaseAnimalToDenScreen.SetActive(false);
@@ -2394,6 +2438,7 @@ public class UIManager : MonoBehaviour
     }
     public void ReleaseAnimalDenScreenNo()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
 
         releaseAnimalToDenScreen.SetActive(false);
     }
@@ -2408,6 +2453,8 @@ public class UIManager : MonoBehaviour
     }
     public void TurnOFFAnimalIsHappyScreen()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         animalIsHappyScreen.SetActive(false);
     }
 
@@ -2464,6 +2511,8 @@ public class UIManager : MonoBehaviour
 
     public void BGOff()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         if (GameManager.Instance.selectedLevelBG.activeInHierarchy)
         {
             GameManager.Instance.selectedLevelBG.SetActive(false);
@@ -2475,6 +2524,8 @@ public class UIManager : MonoBehaviour
     }
     public void HideLevelData()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         if (GameManager.Instance.destroyOutOfLevel.gameObject.activeInHierarchy)
         {
             GameManager.Instance.destroyOutOfLevel.gameObject.SetActive(false);

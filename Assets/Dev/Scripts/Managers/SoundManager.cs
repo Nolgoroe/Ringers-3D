@@ -356,6 +356,8 @@ public class SoundManager : MonoBehaviour
 
     public void MuteUnmuteMusic()
     {
+        PlaySound(Sounds.ButtonPressUI);
+
         LeanTween.cancel(audioSourceAmbience.gameObject);
         LeanTween.cancel(forestSounds.gameObject);
         LeanTween.cancel(normalAmbienceLevel.gameObject);
@@ -392,6 +394,8 @@ public class SoundManager : MonoBehaviour
 
     public void MuteUnmuteSFX()
     {
+        PlaySound(Sounds.ButtonPressUI);
+
         muteSFX = !muteSFX;
 
         if (muteSFX)

@@ -159,18 +159,18 @@ public class CursorController : MonoBehaviour
                     SoundManager.Instance.audioSourceSFX.Stop();
                     UIManager.Instance.UnlockedZoneMessageView.SetActive(false);
                     Debug.Log("THIS IS HOW MANY TIMES");
-                    if (ZoneManager.Instance.zonesToUnlock.Count <= 0)
+                    if (ZoneManager.Instance.zonesToUnlock.Count > 0)
                     {
-                        ZoneManager.CanUnlockZone = false;
+                        ZoneManager.CanUnlockZone = true;
 
-                        StartCoroutine(UIManager.Instance.SetIsUsingUI(false));
+                        StartCoroutine(UIManager.Instance.SetIsUsingUI(true));
 
                         ZoneManager.Instance.UnlockLevelViewSequence();
 
-                        if (ServerRelatedData.instance.canShowReviewMessage)
-                        {
-                            AppReviewManager.instance.ShowReviewMessage();
-                        }
+                        //if (ServerRelatedData.instance.canShowReviewMessage)
+                        //{
+                        //    AppReviewManager.instance.ShowReviewMessage();
+                        //}
                     }
                     else
                     {

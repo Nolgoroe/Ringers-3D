@@ -115,4 +115,14 @@ public class LevelScriptableObject : ScriptableObject
     {
         numIndexForLeaderBoard = 0 + levelNum;
     }
+
+
+    [ContextMenu("THIS is animal")]
+    public void actionhere3()
+    {
+        if(isAnimalLevel)
+        {
+            specificAnimalForLevel = null;
+        }
+    }
 }

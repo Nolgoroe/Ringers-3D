@@ -19,6 +19,7 @@ MonoBehaviour:
   isBoss: 0
   isAnimalLevel: 1
   isReleaseAnimalToDen: 1
+  isKeyLevel: 0
   boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
     type: 3}
   clipPrefab: {fileID: 6183251264102439455, guid: ff432a4cdfd3d8c4ab183be2d82d571e,
@@ -32,8 +33,7 @@ MonoBehaviour:
   RandomSlicePositions: 0
   allowRepeatSlices: 0
   powerupsForLevel: 
-  specificAnimalForLevel: {fileID: 1551197849347798067, guid: 28c87a4768e6cf74490143ebb7881610,
-    type: 3}
+  specificAnimalForLevel: {fileID: 0}
   stoneTiles: []
   slicesToSpawn:
   - sliceToSpawn: 2
@@ -69,3 +69,5 @@ MonoBehaviour:
   timeForLevelInSeconds: 0
   dealButtonTimer: 0
   damageToBossCompeleRing: 0
+  useLastClipAlgoritm: 0
+  algoritmStepsWanted: 0

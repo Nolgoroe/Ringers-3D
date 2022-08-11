@@ -884,6 +884,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartCurrentLevel()
     {
+
         hasRestartedLevel = true;
 
         string worldName = GameManager.Instance.currentLevel.worldName;

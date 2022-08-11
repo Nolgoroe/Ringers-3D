@@ -20,6 +20,8 @@ public class AppReviewManager : MonoBehaviour
 
     public void DontAskAgainClicked()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         ServerRelatedData.instance.hasRatedOnGoogle = !ServerRelatedData.instance.hasRatedOnGoogle;
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ServerRelatedData });

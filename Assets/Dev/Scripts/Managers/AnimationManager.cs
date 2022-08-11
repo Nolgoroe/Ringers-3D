@@ -203,10 +203,12 @@ public class AnimationManager : MonoBehaviour
 
         MoveTopButtonAnim();
 
+        AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Release Animal");
 
         yield return new WaitForSeconds(speedOutTopBottom + 0.1f);
 
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(true);
+
 
         //foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
         //{
@@ -373,7 +375,7 @@ public class AnimationManager : MonoBehaviour
             }
             else
             {
-                AnimalsManager.Instance.statueToSwap.transform.GetChild(0).GetComponent<Animator>().SetBool("Clear Tree", true);
+                AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive");
             }
 
             hasSkippedToAnimalAnim = true;
@@ -515,6 +517,8 @@ public class AnimationManager : MonoBehaviour
 
     public void CallSkipEndLevelAnim()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         StartCoroutine(SkipEndLevelAnimation());
     }
 
@@ -639,10 +643,11 @@ public class AnimationManager : MonoBehaviour
             if (GameManager.Instance.currentLevel.isAnimalLevel)
             {
                 AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
+                AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Release Animal");
             }
             else
             {
-                AnimalsManager.Instance.statueToSwap.transform.GetChild(0).GetComponent<Animator>().SetBool("Clear Tree", true);
+                AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive");
             }
         }
         else
