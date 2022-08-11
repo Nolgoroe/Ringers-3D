@@ -84,6 +84,8 @@ public class ZoneManagerHelpData : MonoBehaviour
 
     public void CheatUnlockAllLevels()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         foreach (Zone z in listOfAllZones)
         {
             z.hasAwardedKey = true;

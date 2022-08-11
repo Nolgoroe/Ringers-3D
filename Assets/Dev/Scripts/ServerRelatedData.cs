@@ -23,6 +23,8 @@ public class ServerRelatedData : MonoBehaviour
 
     public void ToggleCanRepeatLevels()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         canRepeatLevels = !canRepeatLevels;
 
         UIManager.Instance.SetCanRepeatLevelsDisplay();
