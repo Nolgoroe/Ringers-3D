@@ -336,7 +336,7 @@ public class ClipManager : MonoBehaviour
 
         }
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.3f);
 
         GameManager.Instance.powerupManager.canPressDeal = true;
         UIManager.Instance.dealButton.interactable = true;

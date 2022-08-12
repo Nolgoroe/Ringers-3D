@@ -78,7 +78,8 @@ public class TutorialSequence : MonoBehaviour
 
     public GameObject tutorialHandPrefabMove;
     public GameObject tutorialHandPrefabTap;
-    public Vector3 tutorialHandPosClip,tutorialHandPosDealButton, tutorialHandRotationDealButton, tutorialHandPosPowerupOffset;
+    public Vector3 tutorialHandPosClip, tutorialHandPosCellOffset, tutorialHandPosDealButton, tutorialHandRotationDealButton, tutorialHandPosPowerupOffset;
+    public Vector3 tutorialHandRotationPotions;
     public float tutorialHandMoveSpeed, tutorialHandTapSpeed;
 
     public GameObject currentlyActiveTutorialHand;
@@ -248,9 +249,12 @@ public class TutorialSequence : MonoBehaviour
             
             maskImage.sprite = sprite;
 
-            if (!levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].isClearScreen)
+            if (GameManager.Instance.currentLevel.isTutorial)
             {
-                maskImage.gameObject.SetActive(true);
+                if (!levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].isClearScreen)
+                {
+                    maskImage.gameObject.SetActive(true);
+                }
             }
         }
     }
@@ -498,7 +502,7 @@ public class TutorialSequence : MonoBehaviour
                     activatedHeighlights.Add(go);
                 }
 
-                DisplayTutorialHandHoleToHole(specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[currentPhaseInSequenceSpecific].targetTutorialHoles[0], specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[currentPhaseInSequenceSpecific].targetTutorialHoles[1]);
+                DisplayTutorialHandHoleToHole(specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[currentPhaseInSequenceSpecific].targetTutorialHoles[0], specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[currentPhaseInSequenceSpecific].targetTutorialHoles[1], 2);
             }
 
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isBrewDisplayMaterials)
@@ -652,7 +656,7 @@ public class TutorialSequence : MonoBehaviour
 
             if (!GameManager.LevelEnded)
             {
-                UnlockAll();
+                StartCoroutine(UnlockAll());
             }
 
 
@@ -687,17 +691,19 @@ public class TutorialSequence : MonoBehaviour
             if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].isClearScreen)
             {
                 maskImage.gameObject.SetActive(false);
-                //UIManager.Instance.tutorialCanvasParent.SetActive(false);
+                UIManager.Instance.tutorialCanvasParent.SetActive(false);
 
                 if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].isAllLocked)
                 {
                     AllLockedLogic(levelSequences, GameManager.Instance.currentLevel.tutorialIndexForList, currentPhaseInSequenceLevels);
                 }
+
+
             }
             else
             {
                 maskImage.gameObject.SetActive(true);
-                //UIManager.Instance.tutorialCanvasParent.SetActive(true);
+                UIManager.Instance.tutorialCanvasParent.SetActive(true);
             }
         }
 
@@ -706,6 +712,9 @@ public class TutorialSequence : MonoBehaviour
             if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].hasDelay)
             {
                 yield return new WaitForSeconds(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].delayAmount);
+
+                maskImage.gameObject.SetActive(true);
+                UIManager.Instance.tutorialCanvasParent.SetActive(true);
             }
         }
 
@@ -776,7 +785,7 @@ public class TutorialSequence : MonoBehaviour
 
             if (!GameManager.LevelEnded)
             {
-                UnlockAll();
+                StartCoroutine(UnlockAll());
             }
 
             PlayerManager.Instance.checkDoAddPotionsToInventory();
@@ -786,6 +795,8 @@ public class TutorialSequence : MonoBehaviour
 
             return;
         }
+
+        maskImage.gameObject.SetActive(true);
 
         if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific])
         {
@@ -1020,7 +1031,7 @@ public class TutorialSequence : MonoBehaviour
 
         handPosPowerup.z = 0;
 
-        DisplayTutorialHandTap(handPosPowerup + tutorialHandPosPowerupOffset, tutorialHandRotationDealButton, Vector3.one);
+        DisplayTutorialHandTap(handPosPowerup + tutorialHandPosPowerupOffset, tutorialHandRotationPotions, Vector3.one);
     }
     public void SingleCellChosenPhase(Sequence[] tutorialArray, int TutorialIndex, int phaseIndex)
     {
@@ -1125,9 +1136,10 @@ public class TutorialSequence : MonoBehaviour
     //    }
     //}
 
-    public void UnlockAll()
+    public IEnumerator UnlockAll()
     {
-        UIManager.Instance.dealButton.interactable = true;
+        UIManager.Instance.dealButton.interactable = false;
+
         CursorController.canMovePieces = true;
 
         foreach (Cell c in ConnectionManager.Instance.cells)
@@ -1171,6 +1183,9 @@ public class TutorialSequence : MonoBehaviour
         GameManager.Instance.selectedLevelBG.transform.GetChild(0).gameObject.SetActive(true);
         UIManager.Instance.DecideBottmUIShow(GameManager.Instance.currentLevel.bottomUIToShow);
         UIManager.Instance.gameplayCanvasTop.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f);
+        UIManager.Instance.dealButton.interactable = true;
     }
 
     public IEnumerator DeactivateTutorialScreens(Sequence[] tutorialArray, int index, float timeToWaitTillFade)
@@ -1255,7 +1270,7 @@ public class TutorialSequence : MonoBehaviour
         Vector3 pos = GameManager.Instance.clipManager.slots[clipIndex].transform.position + tutorialHandPosClip;
         pos.z = -0.3f;
         
-        Vector3 targetPos = ConnectionManager.Instance.cells[CellIndex].transform.position;
+        Vector3 targetPos = ConnectionManager.Instance.cells[CellIndex].transform.position + tutorialHandPosCellOffset;
         targetPos.z = -0.3f;
 
         GameObject go = Instantiate(tutorialHandPrefabMove, pos, Quaternion.identity);
@@ -1278,13 +1293,15 @@ public class TutorialSequence : MonoBehaviour
         LeanTween.move(go, targetPos, tutorialHandMoveSpeed).setEase(LeanTweenType.easeInOutQuad).setLoopClamp(); // animate
     }
 
-    public void DisplayTutorialHandHoleToHole(GameObject origin, GameObject target)
+    public void DisplayTutorialHandHoleToHole(GameObject origin, GameObject target, float scale)
     {
         Vector3 pos = origin.transform.position;
         //pos.z = -0.3f;
 
         GameObject go = Instantiate(tutorialHandPrefabMove, pos, Quaternion.identity);
         currentlyActiveTutorialHand = go;
+
+        go.transform.localScale = new Vector3(scale, scale, scale);
 
         Vector3 targetPos = target.transform.position;
         //targetPos.z = -0.3f;
@@ -1302,7 +1319,8 @@ public class TutorialSequence : MonoBehaviour
 
         go.transform.localScale = scale;
 
-        LeanTween.rotate(go, new Vector3(rotation.x, rotation.y, rotation.z + 5), tutorialHandTapSpeed).setEase(LeanTweenType.linear).setLoopPingPong();
+        //LeanTween.rotate(go, new Vector3(rotation.x, rotation.y, rotation.z + 5), tutorialHandTapSpeed).setEase(LeanTweenType.linear).setLoopPingPong();
+        LeanTween.rotateAround(go, Vector3.forward, 5, tutorialHandTapSpeed).setEase(LeanTweenType.linear).setLoopPingPong();
     }
 
     public void DisplayTutorialHandTapQuaternion(Vector3 position, Quaternion rotation, Vector3 scale)
@@ -1448,7 +1466,7 @@ public class TutorialSequence : MonoBehaviour
 
         if (!GameManager.LevelEnded)
         {
-            UnlockAll();
+            StartCoroutine(UnlockAll());
         }
 
 
@@ -1482,7 +1500,7 @@ public class TutorialSequence : MonoBehaviour
 
         if (!GameManager.LevelEnded)
         {
-            UnlockAll();
+            StartCoroutine(UnlockAll());
         }
 
         PlayerManager.Instance.checkDoAddPotionsToInventory();

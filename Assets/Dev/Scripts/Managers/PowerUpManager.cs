@@ -216,6 +216,8 @@ public class PowerUpManager : MonoBehaviour
             if (GameManager.Instance.clipManager.clipCount - 1 == 0)
             {
                 UIManager.Instance.DisplayClipsAboutToEndMessage();
+                UIManager.Instance.dealButton.interactable = true;
+                canPressDeal = true;
             }
             else
             {

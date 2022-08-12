@@ -113,7 +113,7 @@ public class LevelScriptableObject : ScriptableObject
     [ContextMenu("THIS Leaderboard")]
     public void actionhere2()
     {
-        numIndexForLeaderBoard = 0 + levelNum;
+        numIndexForLeaderBoard = 115 + levelNum;
     }
 
 
