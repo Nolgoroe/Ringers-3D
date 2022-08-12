@@ -1128,6 +1128,7 @@ public class TutorialSequence : MonoBehaviour
     public void UnlockAll()
     {
         UIManager.Instance.dealButton.interactable = true;
+        CursorController.canMovePieces = true;
 
         foreach (Cell c in ConnectionManager.Instance.cells)
         {
