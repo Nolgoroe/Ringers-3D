@@ -469,6 +469,8 @@ public class UIManager : MonoBehaviour
     }
     public void SureWantToRestartMessage()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         if (TutorialSequence.Instacne.duringSequence)
         {
             return;
@@ -1730,6 +1732,7 @@ public class UIManager : MonoBehaviour
     public void SureWantToResetDataYes()
     {
         //isUsingUI = false;
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
 
         sureWantToResetDataScreen.SetActive(false);
 
@@ -1737,6 +1740,8 @@ public class UIManager : MonoBehaviour
     }
     public void SureWantToResetDataNo()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         //isUsingUI = false;
         activeScreen = null;
 
