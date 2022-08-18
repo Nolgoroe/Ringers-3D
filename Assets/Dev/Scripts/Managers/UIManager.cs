@@ -194,6 +194,7 @@ public class UIManager : MonoBehaviour
 
     public ButtonsPerZone[] buttonsPerZone;
     public InventorySortButtonData[] inventorySortButtons;
+    public InventorySortButtonData[] animalAlbumSortButtons;
     public GameObject[] allTutorialScreens;
     public ImageTextCombo[] introImages;
     //public Sprite[] dewDropsSprites;
@@ -914,6 +915,135 @@ public class UIManager : MonoBehaviour
         }
         //SortMaster.Instance.SortMatInventory(CraftingMatType.Build); //// For now we always open the inventory sorted on gems
     }
+    public void ChangeInventorySortButtonSprites(int buttonID)
+    {
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
+            {
+                return;
+            }
+
+            if (TutorialSequence.Instacne.duringSequence)
+            {
+                if (requiredButtonForTutorialPhase != inventorySortButtons[buttonID - 1])
+                {
+                    return;
+                }
+            }
+        }
+
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
+        foreach (InventorySortButtonData ISBD in inventorySortButtons)
+        {
+            if (ISBD.id != buttonID)
+            {
+                Color c = new Color(ISBD.transformImage.color.r, ISBD.transformImage.color.g, ISBD.transformImage.color.b, 0);
+                ISBD.transformImage.color = c;
+                ISBD.transformImage.sprite = null;
+            }
+            else
+            {
+                Color c = new Color(ISBD.transformImage.color.r, ISBD.transformImage.color.g, ISBD.transformImage.color.b, 255);
+                ISBD.transformImage.color = c;
+                ISBD.transformImage.sprite = ISBD.selectedSprite;
+            }
+        }
+
+        SortMaster.Instance.SortMatInventory((CraftingMatType)buttonID);
+    }
+
+    public void OpenAnimalAlbum()
+    {
+        if(!animalAlbum.activeInHierarchy)
+        {
+            SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
+            if (TutorialSequence.Instacne.duringSequence)
+            {
+                if (requiredButtonForTutorialPhase != openInventoryButttonMap && requiredButtonForTutorialPhase != openInventoryButttonDen)
+                {
+                    return;
+                }
+            }
+
+            if (activeScreen)
+            {
+                activeScreen.SetActive(false);
+            }
+
+            activeScreen = animalAlbum;
+
+
+            foreach (InventorySortButtonData ISBD in animalAlbumSortButtons)
+            {
+                if (ISBD.id != 0)
+                {
+                    Color c = new Color(ISBD.transformImage.color.r, ISBD.transformImage.color.g, ISBD.transformImage.color.b, 0);
+                    ISBD.transformImage.color = c;
+                    ISBD.transformImage.sprite = null;
+                }
+                else
+                {
+                    Color c = new Color(ISBD.transformImage.color.r, ISBD.transformImage.color.g, ISBD.transformImage.color.b, 255);
+                    ISBD.transformImage.color = c;
+                    ISBD.transformImage.sprite = ISBD.selectedSprite;
+                }
+            }
+
+            SortMaster.Instance.SortAnimalsInAlbum(0);
+
+            animalAlbum.SetActive(true);
+        }
+        else
+        {
+            if (!TutorialSequence.Instacne.duringSequence)
+            {
+                animalAlbum.SetActive(false);
+
+                activeScreen = null;
+            }
+        }
+
+    }
+
+    public void ChangeAnimalAlbumSortButtonSprites(int buttonID)
+    {
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
+            {
+                return;
+            }
+
+            if (requiredButtonForTutorialPhase != animalAlbumSortButtons[buttonID])
+            {
+                return;
+            }
+        }
+
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
+        foreach (InventorySortButtonData ISBD in animalAlbumSortButtons)
+        {
+            if (ISBD.id != buttonID)
+            {
+                Color c = new Color(ISBD.transformImage.color.r, ISBD.transformImage.color.g, ISBD.transformImage.color.b, 0);
+                ISBD.transformImage.color = c;
+                ISBD.transformImage.sprite = null;
+            }
+            else
+            {
+                Color c = new Color(ISBD.transformImage.color.r, ISBD.transformImage.color.g, ISBD.transformImage.color.b, 255);
+                ISBD.transformImage.color = c;
+                ISBD.transformImage.sprite = ISBD.selectedSprite;
+            }
+        }
+
+        SortMaster.Instance.SortAnimalsInAlbum(buttonID);
+    }
+
     public void OpenHollowCraftAndOwnedZone()
     {
         hollowCraftAndOwned.SetActive(true);
@@ -1510,19 +1640,6 @@ public class UIManager : MonoBehaviour
             }
         }
     }
-    public void ToggleAnimalAlbum(bool Open)
-    {
-        if (Open)
-        {
-            animalAlbum.SetActive(true);
-            AnimalAlbumManager.Instance.pageNumInspector = 0;
-            AnimalAlbumManager.Instance.ChangePageLogic(0);
-        }
-        else
-        {
-            animalAlbum.SetActive(false);
-        }
-    }
     public void openInventoryTab()
     {
         foreach (InventorySortButtonData ISBD in inventorySortButtons)
@@ -1542,44 +1659,6 @@ public class UIManager : MonoBehaviour
         }
 
         SortMaster.Instance.SortMatInventory(CraftingMatType.Build);
-    }
-    public void ChangeInventorySortButtonSprites(int buttonID)
-    {
-        if (TutorialSequence.Instacne.duringSequence)
-        {
-            if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
-            {
-                return;
-            }
-
-            if (TutorialSequence.Instacne.duringSequence)
-            {
-                if (requiredButtonForTutorialPhase != inventorySortButtons[buttonID - 1])
-                {
-                    return;
-                }
-            }
-        }
-
-        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
-
-        foreach (InventorySortButtonData ISBD in inventorySortButtons)
-        {
-            if (ISBD.id != buttonID)
-            {
-                Color c = new Color(ISBD.transformImage.color.r, ISBD.transformImage.color.g, ISBD.transformImage.color.b, 0);
-                ISBD.transformImage.color = c;
-                ISBD.transformImage.sprite = null;
-            }
-            else
-            {
-                Color c = new Color(ISBD.transformImage.color.r, ISBD.transformImage.color.g, ISBD.transformImage.color.b, 255);
-                ISBD.transformImage.color = c;
-                ISBD.transformImage.sprite = ISBD.selectedSprite;
-            }
-        }
-
-        SortMaster.Instance.SortMatInventory((CraftingMatType)buttonID);
     }
     public void TurnOffGameplayUI()
     {

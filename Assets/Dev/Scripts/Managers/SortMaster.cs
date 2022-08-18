@@ -138,6 +138,10 @@ public class SortMaster : MonoBehaviour
         //Debug.Log(matToSort);
         MaterialsAndForgeManager.Instance.RefreshMaterialBagSort(matToSort);
     }
+    public void SortAnimalsInAlbum(int pageIndex)
+    {
+        AnimalAlbumManager.Instance.ChangePageLogic(pageIndex);
+    }
 
     //public void RefreshAllScreens()
     //{

@@ -12,19 +12,23 @@ public enum AnimalsInGame
     RedFox,
     SandFox,
     BlueFox,
+    PinkFox,
     BrownStag,
     RedStag,
-    LegendaryStag,
+    BlueStag,
+    PinkStag,
     BrownOwl,
     YellowOwl,
-    SimpleHawk,
-    Sheep,
-    Bull,
-    Worm,
-    Zebra,
-    Lion,
-    Giraffe,
-    Panda,
+    BlueOwl,
+    PinkOwl,
+    BrownPikachu,
+    YellowPikachu,
+    BluePikachu,
+    PinkPikachu,
+    BrownCharmander,
+    YellowCharmander,
+    BlueCharmander,
+    PinkCharmander,
     None
 }
 
@@ -50,6 +54,13 @@ public class OwnedAnimalDataSet
 }
 
 [Serializable]
+public class CompletedPageToReward
+{
+    public int completedAnimalPagesID;
+    public bool gaveReward;
+}
+
+[Serializable]
 public class AnimalsManager : MonoBehaviour
 {
     public static AnimalsManager Instance;
@@ -61,6 +72,8 @@ public class AnimalsManager : MonoBehaviour
     public GameObject currentLevelLiveAnimal;
 
     public GameObject statueToSwap;
+
+    public List<CompletedPageToReward> completedAnimalPagesToReward;
 
     string path;
 

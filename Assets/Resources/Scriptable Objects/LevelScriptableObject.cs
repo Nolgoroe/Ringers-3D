@@ -50,6 +50,8 @@ public class LevelScriptableObject : ScriptableObject
 
     public bool RandomSlicePositions;
     public bool allowRepeatSlices;
+    public bool allowRepeatTiles;
+    public bool allowRepeatTileSides;
     public PowerUp[] powerupsForLevel;
     public GameObject specificAnimalForLevel;
 

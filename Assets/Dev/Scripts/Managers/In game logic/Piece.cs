@@ -38,14 +38,30 @@ public class Piece : MonoBehaviour
 
     public void SetPieces()
     {
-        bool isSamePiece = true;
-        //bool isRepeatPieceSides = true;
+        //if(!GameManager.Instance.currentLevel.allowRepeatTiles && !GameManager.Instance.currentLevel.allowRepeatTileSides)
+        //{
 
-        int repeatIndicator = 0;
+        //    return;
+        //}
+
+        int isSamePiece = 0;
+        bool isRepeatPieceSides = true;
+
+        int repeatIndicator = 1;
         rightChild.isRightSubPiece = true; // this needs to be better
 
-        while (isSamePiece /*|| isRepeatPieceSides*/)
+        int repeatBlock = 0;
+
+        while (repeatIndicator > 0)
         {
+            repeatBlock++;
+
+            if(repeatBlock > 100)
+            {
+                Debug.LogError("Bug in tile generation");
+                return;
+            }
+
             if (!GameManager.Instance.isDisableTutorials && (GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial))
             {
                 if (repeatIndicator > 0 || GameManager.Instance.copyOfArrayOfPiecesTutorial.Count <= 0)
@@ -68,12 +84,14 @@ public class Piece : MonoBehaviour
             }
 
             isSamePiece = CheckNoRepeatPieceClip();
-            //isRepeatPieceSides = CheckNoRepeatPieceSidesNormalPiece();
+            Debug.LogError(isSamePiece);
+            isRepeatPieceSides = CheckNoRepeatPieceSidesNormalPiece();
 
 
             if (GameManager.Instance.currentLevel.levelAvailableColors.Length == 1 && GameManager.Instance.currentLevel.levelAvailablesymbols.Length == 1)
             {
-                isSamePiece = false;
+                isSamePiece = 0;
+                isRepeatPieceSides = false;
             }
             else
             {
@@ -99,7 +117,8 @@ public class Piece : MonoBehaviour
 
                             if (same == GameManager.Instance.currentLevel.levelAvailableColors.Length)
                             {
-                                isSamePiece = false;
+                                isSamePiece = 0;
+                                isRepeatPieceSides = false;
                                 break;
                             }
                         }
@@ -133,7 +152,8 @@ public class Piece : MonoBehaviour
 
                             if (same == GameManager.Instance.currentLevel.levelAvailablesymbols.Length)
                             {
-                                isSamePiece = false;
+                                isSamePiece = 0;
+                                isRepeatPieceSides = false;
                                 break;
                             }
                         }
@@ -146,17 +166,32 @@ public class Piece : MonoBehaviour
                 }
             }
 
-            if (isSamePiece /*|| isRepeatPieceSides*/)
+            repeatIndicator = 0;
+
+            if (isSamePiece >= 3 && !GameManager.Instance.currentLevel.allowRepeatTiles)
             {
                 repeatIndicator++;
             }
-            else if(!isSamePiece && !GameManager.Instance.isDisableTutorials && (GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial))
+            
+            if (isSamePiece > 0 && !GameManager.Instance.currentLevel.allowRepeatTiles)
+            {
+                repeatIndicator++;
+            }
+            else if(isRepeatPieceSides && !GameManager.Instance.currentLevel.allowRepeatTileSides)
+            {
+                repeatIndicator++;
+            }
+            else if(isSamePiece == 0 && !isRepeatPieceSides && !GameManager.Instance.isDisableTutorials && (GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial))
             {
                 if (GameManager.Instance.copyOfArrayOfPiecesTutorial.Count > 0)
                 {
                     GameManager.Instance.copyOfArrayOfPiecesTutorial.RemoveAt(0);
                 }
             }
+
+            isRepeatPieceSides = false;
+            isSamePiece = 0;
+
         }
     }
     public void SetPiecesSpecificData(EdgePathFoundData dataNeeded)
@@ -297,9 +332,10 @@ public class Piece : MonoBehaviour
 
     }
 
-    public bool CheckNoRepeatPieceClip()
+    public int CheckNoRepeatPieceClip()
     {
         Piece currectCheckPiece = GetComponent<Piece>();
+        int amount = 0;
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
         {
@@ -313,7 +349,7 @@ public class Piece : MonoBehaviour
 
                     if (isSame)
                     {
-                        return true; //// found a repeat so can't continue, is same piece = true
+                        amount++;
                     }
                 }
 
@@ -321,7 +357,7 @@ public class Piece : MonoBehaviour
 
         }
 
-        return false; //// There was no repeat, is same piece = false
+        return amount;
     }
 
     public void TransformTo12RingTile()

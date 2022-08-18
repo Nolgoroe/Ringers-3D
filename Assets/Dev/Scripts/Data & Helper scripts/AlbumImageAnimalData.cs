@@ -9,9 +9,4 @@ public class AlbumImageAnimalData : MonoBehaviour
     public bool isUnlocked;
 
     public Image animalImage;
-
-    //private void Start()
-    //{
-    //    animalImage = GetComponent<Image>();
-    //}
 }
