@@ -259,7 +259,7 @@ public class UIManager : MonoBehaviour
         startAppLoadingScreen.SetActive(true);/// ony screen we should see at the start
 
 
-        versionText.gameObject.SetActive(false);
+        versionText.gameObject.SetActive(true);
 
         reviewUsPanel.SetActive(false);
         reviewUsPanelRepeatable.SetActive(false);
@@ -2083,7 +2083,7 @@ public class UIManager : MonoBehaviour
 
         if (!isBossLevel)
         {
-            LeanTween.value(fadeIntoLevel, 0, 1, fadeIntoLevelSpeed).setEase(LeanTweenType.linear).setOnComplete(() => GameManager.Instance.ResetDataStartLevel(isTutorialLevel)).setOnUpdate((float val) =>
+            LeanTween.value(fadeIntoLevel, 0, 1, fadeIntoLevelSpeed).setEase(LeanTweenType.linear).setOnComplete(() => GameManager.Instance.ResetDataStartLevel(isTutorialLevel, false)).setOnUpdate((float val) =>
             {
                 Image sr = fadeIntoLevel.GetComponent<Image>();
                 Color newColor = sr.color;
@@ -2564,7 +2564,6 @@ public class UIManager : MonoBehaviour
             cheatOptionsButton.SetActive(true);
             cheatOptionsButtonIngame.SetActive(false);
             bossLevelsParent.SetActive(true);
-            versionText.gameObject.SetActive(true);
         }
     }
 

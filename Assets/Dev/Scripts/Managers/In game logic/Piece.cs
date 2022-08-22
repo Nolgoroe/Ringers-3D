@@ -56,9 +56,9 @@ public class Piece : MonoBehaviour
         {
             repeatBlock++;
 
-            if(repeatBlock > 100)
+            if (repeatBlock > 100)
             {
-                Debug.LogError("Bug in tile generation");
+                Debug.LogError("Bug in tile generation - check boolean values");
                 return;
             }
 
@@ -168,7 +168,7 @@ public class Piece : MonoBehaviour
 
             repeatIndicator = 0;
 
-            if (isSamePiece >= 3 && !GameManager.Instance.currentLevel.allowRepeatTiles)
+            if (isSamePiece >= 3)
             {
                 repeatIndicator++;
             }

@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
     //    }
     //}
 
-    public void StartLevel(bool DoFade)
+    public void StartLevel(bool DoFade, bool isRestart)
     {
         if (DoFade)
         {
@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            ResetDataStartLevel(false);
+            ResetDataStartLevel(false, isRestart);
         }
 
     }
@@ -145,10 +145,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ResetDataStartLevel(bool isTutorial)
+    public void ResetDataStartLevel(bool isTutorial, bool isRestart)
     {
         //if(isTutorial || currentLevel.isSpecificTutorial)
         //{
+
+        if(!isRestart)
+        {
+            AnimationManager.instance.ResetEnterLevelAnimation();
+        }
+
+
 
         timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
@@ -305,7 +312,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                ResetDataStartLevel(false);
+                ResetDataStartLevel(false, false);
             }
         }
         else
@@ -410,8 +417,13 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(SoundManager.Instance.FadeInOnlyLevelVolume(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbience));
             }
         }
+
+        if(currentLevel.showIntroLevelAnimation && !isRestart)
+        {
+            AnimationManager.instance.PopulateRefrences();
+        }
     }
-        
+
     public void ResetDataStartBossLevel()
     {
         timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
@@ -540,7 +552,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            ResetDataStartLevel(true);
+            ResetDataStartLevel(true, false);
         }
 
     }
@@ -682,6 +694,8 @@ public class GameManager : MonoBehaviour
 
             if (currentLevel.isSpecificTutorial)
             {
+                TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(currentLevel.numIndexForLeaderBoard);
+
                 TutorialSequence.Instacne.CheatTutorialClearSpecific();
             }
 
@@ -884,7 +898,6 @@ public class GameManager : MonoBehaviour
 
     public void RestartCurrentLevel()
     {
-
         hasRestartedLevel = true;
 
         string worldName = GameManager.Instance.currentLevel.worldName;
@@ -964,7 +977,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            StartLevel(false);
+            StartLevel(false, true);
         }
     }
 
@@ -1056,7 +1069,7 @@ public class GameManager : MonoBehaviour
         else
         { 
             //StartCoroutine(StartLevel(false));
-            StartLevel(false);
+            StartLevel(false, false);
         }
     }
 

@@ -139,7 +139,6 @@ public class Cell : MonoBehaviour
                 Debug.Log("Faild to create piece");
             }
 
-
             isFull = true;
             p.transform.SetParent(transform);
             p.transform.localPosition = new Vector3(0, 0, -0.2f);

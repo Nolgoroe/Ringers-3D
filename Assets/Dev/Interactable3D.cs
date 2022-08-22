@@ -94,7 +94,7 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
                 //StartCoroutine(SoundManager.Instance.FadeOutMapBGMusic(SoundManager.Instance.timeFadeOutBGMusic, true));
                 SoundManager.Instance.FadeOutMapBGMusic(SoundManager.Instance.timeFadeOutBGMusic, true);
 
-                GameManager.Instance.StartLevel(true);
+                GameManager.Instance.StartLevel(true, false);
             }
 
         }
@@ -119,7 +119,7 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
 
                 SoundManager.Instance.FadeOutMapBGMusic(SoundManager.Instance.timeFadeOutBGMusic, true);
 
-                GameManager.Instance.StartLevel(true);
+                GameManager.Instance.StartLevel(true, false);
             }
 
         }
@@ -173,7 +173,7 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
                 SoundManager.Instance.FadeOutMapBGMusic(SoundManager.Instance.timeFadeOutBGMusic, true);
 
 
-                GameManager.Instance.StartLevel(true);
+                GameManager.Instance.StartLevel(true, false);
 
             }
 

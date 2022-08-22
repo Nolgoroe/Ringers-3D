@@ -662,6 +662,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6183251264102439440}
   - component: {fileID: 172975975331185612}
+  - component: {fileID: 9218379869031553205}
   m_Layer: 0
   m_Name: Clip
   m_TagString: Clip
@@ -837,11 +838,7 @@ MonoBehaviour:
   clipCount: 0
   generalPieceMat: {fileID: 2100000, guid: 848a1e192e96a604c882118986286113, type: 2}
   darkTintedColor: {r: 0.16794233, g: 0.2964434, b: 0.3490566, a: 0.50980395}
-  piecesDealPositionsOut:
-  - {x: 20, y: 3.26, z: 2}
-  - {x: 20, y: 3.26, z: 2}
-  - {x: 20, y: 3.26, z: 2}
-  - {x: 20, y: 3.26, z: 2}
+  piecesDealPositionsOut: {x: 20, y: 6, z: 2}
   delayClipMove: 0.1
   timeToAnimateMove: 0.5
   WaitTimeBeforeIn: 0.3
@@ -852,3 +849,17 @@ MonoBehaviour:
   pieceScaleOnBoard: {x: 1, y: 1, z: 1}
   pieceScaleOnBoard12Ring: {x: 1.25, y: 1.25, z: 1}
   delaySpecialPowerFirefly: 0
+--- !u!114 &9218379869031553205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6183251264102439455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f15969bd3258bb41bc8431eccfa1829, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  opacityLevel: 1
+  childRenderers: []

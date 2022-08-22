@@ -139,6 +139,27 @@ public class AnimationManager : MonoBehaviour
 
     public bool isPlacingDenItem;
 
+    [Header("Enter Level animation")]
+    public float startAnimDelayTime;
+    public SpriteRenderer ring;
+    public SpriteRenderer colorMask;
+    float originalColorMaskAlpha = 0;
+    public float timeToFadeRingAndColormask;
+    public OpacityScript clips;
+    public float timeToFadeClip;
+    public List<SpriteRenderer> locks;
+    public float timeToFadeLocks;
+    public List<Piece> corruptedTiles;
+    public Vector3 scaleToSize;
+    public float MoveLocalYTimeUp;
+    public float MoveLocalYTimeDown;
+    public float MoveLocalToY;
+    public float timeToScaleCorruptedTilesUp;
+    public float timeToScaleCorruptedTilesDown;
+    //public float delayCorruptedTileStart;
+    public List<Slice> slices;
+    public float timeToScaleSlices;
+
     [Header("Other")]
     [Space(30)]
 
@@ -1369,5 +1390,153 @@ public class AnimationManager : MonoBehaviour
         hasSkippedToAnimalAnim = false;
         hasSkippedToAfterAnimalAnim = false;
         hasSkippedToBoardAnim = false;
+    }
+
+
+    public void ResetEnterLevelAnimation()
+    {
+        ring = null;
+        colorMask = null;
+        originalColorMaskAlpha = 0;
+        clips = null;
+        locks.Clear();
+        corruptedTiles.Clear();
+        slices.Clear();
+    }
+
+    public void PopulateRefrences()
+    {
+        ring = GameManager.Instance.gameBoard.transform.GetComponent<SpriteRenderer>();
+
+        colorMask = GameManager.Instance.selectedLevelBG.transform.Find("color mask").GetComponent<SpriteRenderer>();
+        originalColorMaskAlpha = colorMask.color.a;
+
+        clips = GameManager.Instance.gameClip.GetComponent<OpacityScript>();
+
+        SliceManager sliceManager = GameManager.Instance.gameBoard.GetComponent<SliceManager>();
+        for (int i = 0; i < sliceManager.activeLocksLockAnims.Count; i++)
+        {
+            SpriteRenderer renderer = sliceManager.activeLocksLockAnims[i].GetComponent<SpriteRenderer>();
+            locks.Add(renderer);
+
+        }
+
+        Piece[] allPieces = FindObjectsOfType<Piece>();
+
+        for (int i = 0; i < allPieces.Length; i++)
+        {
+            if(allPieces[i].isStone)
+            {
+                corruptedTiles.Add(allPieces[i]);
+            }
+        }
+        slices.AddRange(GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices);
+
+        //corrupted tiles are added when they are instantiated.
+        SetDefaultValuesLevelAnimation();
+    }
+
+    public void SetDefaultValuesLevelAnimation()
+    {
+        ring.color = new Color(ring.color.r, ring.color.g, ring.color.b, 0);
+        colorMask.color = new Color(colorMask.color.r, colorMask.color.g, colorMask.color.b, 0);
+        clips.opacityLevel = 0;
+
+        foreach (var lockObject in locks)
+        {
+            SpriteRenderer lockRenderer = lockObject.GetComponent<SpriteRenderer>();
+
+            lockRenderer.color = new Color(lockRenderer.color.r, lockRenderer.color.g, lockRenderer.color.b, 0);
+        }
+
+        foreach (var tile in corruptedTiles)
+        {
+            tile.transform.localScale = Vector3.zero;
+        }
+
+        foreach (var slice in slices)
+        {
+            slice.transform.localScale = Vector3.zero;
+        }
+
+
+        for (int i = 0; i < GameManager.Instance.clipManager.slots.Count(); i++)
+        {
+            GameObject toMove = GameManager.Instance.clipManager.slots[i].GetChild(1).gameObject;
+
+            toMove.transform.localPosition = GameManager.Instance.clipManager.piecesDealPositionsOut;
+        }
+
+        StartCoroutine(ActivateLevelAnim());
+    }
+
+    IEnumerator ActivateLevelAnim()
+    {
+        UIManager.Instance.restartButton.interactable = false;
+        yield return new WaitForSeconds(startAnimDelayTime);
+
+        LeanTween.value(ring.gameObject, 0f, 1, timeToFadeRingAndColormask).setOnUpdate((float val) =>
+        {
+            Color newColor = ring.color;
+            newColor.a = val;
+            ring.color = newColor;
+        });
+
+        LeanTween.value(colorMask.gameObject, 0f, originalColorMaskAlpha, timeToFadeRingAndColormask).setOnUpdate((float val) =>
+        {
+            Color newColor = colorMask.color;
+            newColor.a = val;
+            colorMask.color = newColor;
+        });
+
+        LeanTween.value(clips.gameObject, 0f, 1, timeToFadeClip).setOnUpdate((float val) =>
+        {
+            clips.opacityLevel = val;
+        });
+
+        foreach (var lockObject in locks)
+        {
+            LeanTween.value(lockObject.gameObject, 0f, 1, timeToFadeLocks).setOnUpdate((float val) =>
+            {
+                Color newColor = lockObject.color;
+                newColor.a = val;
+                lockObject.color = newColor;
+            });
+        }
+
+        yield return new WaitForSeconds(timeToFadeRingAndColormask + 0.01f);
+
+        foreach (var tile in corruptedTiles)
+        {
+            LeanTween.scale(tile.gameObject, scaleToSize, timeToScaleCorruptedTilesUp);
+            LeanTween.moveLocalY(tile.gameObject, MoveLocalToY, MoveLocalYTimeUp);
+            yield return new WaitForSeconds(timeToScaleCorruptedTilesUp + 0.01f);
+            LeanTween.scale(tile.gameObject, Vector3.one, timeToScaleCorruptedTilesDown);
+            LeanTween.moveLocalY(tile.gameObject, 0f, MoveLocalYTimeDown);
+
+            yield return new WaitForSeconds(timeToScaleCorruptedTilesDown + 0.01f);
+        }
+
+        foreach (var slice in slices)
+        {
+            LeanTween.scale(slice.gameObject, new Vector3(1.5f, 1.5f, 1.5f), timeToScaleSlices);
+            yield return new WaitForSeconds(timeToScaleSlices + 0.01f);
+            LeanTween.scale(slice.gameObject, Vector3.one, timeToScaleSlices);
+            yield return new WaitForSeconds(timeToScaleSlices / 10);
+        }
+
+        //yield return new WaitForSeconds(0.5f);
+
+
+        for (int i = 0; i < GameManager.Instance.clipManager.slots.Count(); i++)
+        {
+            GameObject toMove = GameManager.Instance.clipManager.slots[i].GetChild(1).gameObject;
+
+            LeanTween.move(toMove, GameManager.Instance.clipManager.originalPiecePos, 0.5f).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
+
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        UIManager.Instance.restartButton.interactable = true;
     }
 }

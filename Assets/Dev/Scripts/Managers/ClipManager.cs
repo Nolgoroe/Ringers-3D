@@ -40,7 +40,7 @@ public class ClipManager : MonoBehaviour
 
     public Color darkTintedColor;
 
-    public Vector3[] piecesDealPositionsOut;
+    public Vector3 piecesDealPositionsOut;
     public float delayClipMove, timeToAnimateMove, WaitTimeBeforeIn, delayDarkenClip, delayBrightenClip, timeToDarkenClip, timeToBrightenClip;
 
     public Vector3 pieceScaleOnBoard;
@@ -297,7 +297,7 @@ public class ClipManager : MonoBehaviour
         {
             GameObject toMove = slots[i].GetChild(1).gameObject;
 
-            LeanTween.move(toMove, piecesDealPositionsOut[i], timeToAnimateMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
+            LeanTween.move(toMove, piecesDealPositionsOut, timeToAnimateMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
 
             SoundManager.Instance.PlaySound(Sounds.PieceMoveDeal);
 

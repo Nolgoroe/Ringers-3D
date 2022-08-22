@@ -298,7 +298,7 @@ public class BossBattleManager : MonoBehaviour
         {
             GameObject toMove = GameManager.Instance.clipManager.slots[i].GetChild(1).gameObject;
 
-            LeanTween.move(toMove, GameManager.Instance.clipManager.piecesDealPositionsOut[i], GameManager.Instance.clipManager.timeToAnimateMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
+            LeanTween.move(toMove, GameManager.Instance.clipManager.piecesDealPositionsOut, GameManager.Instance.clipManager.timeToAnimateMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
 
             SoundManager.Instance.PlaySound(Sounds.PieceMoveDeal);
 
