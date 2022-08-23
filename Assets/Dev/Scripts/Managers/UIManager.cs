@@ -2083,13 +2083,20 @@ public class UIManager : MonoBehaviour
 
         if (!isBossLevel)
         {
-            LeanTween.value(fadeIntoLevel, 0, 1, fadeIntoLevelSpeed).setEase(LeanTweenType.linear).setOnComplete(() => GameManager.Instance.ResetDataStartLevel(isTutorialLevel, false)).setOnUpdate((float val) =>
+            LeanTween.value(fadeIntoLevel, 0, 1, fadeIntoLevelSpeed).setEase(LeanTweenType.linear).setOnComplete(() => StartCoroutine(GameManager.Instance.ResetDataStartLevel(isTutorialLevel, false))).setOnUpdate((float val) =>
             {
                 Image sr = fadeIntoLevel.GetComponent<Image>();
                 Color newColor = sr.color;
                 newColor.a = val;
                 sr.color = newColor;
             });
+            //LeanTween.value(fadeIntoLevel, 0, 1, fadeIntoLevelSpeed).setEase(LeanTweenType.linear).setOnComplete(() => GameManager.Instance.ResetDataStartLevel(isTutorialLevel, false)).setOnUpdate((float val) =>
+            //{
+            //    Image sr = fadeIntoLevel.GetComponent<Image>();
+            //    Color newColor = sr.color;
+            //    newColor.a = val;
+            //    sr.color = newColor;
+            //});
         }
         else
         {

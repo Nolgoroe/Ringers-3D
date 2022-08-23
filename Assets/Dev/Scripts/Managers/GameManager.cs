@@ -128,7 +128,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            ResetDataStartLevel(false, isRestart);
+            StartCoroutine(ResetDataStartLevel(false, isRestart));
+            //ResetDataStartLevel(false, isRestart);
         }
 
     }
@@ -145,7 +146,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ResetDataStartLevel(bool isTutorial, bool isRestart)
+    public IEnumerator ResetDataStartLevel(bool isTutorial, bool isRestart)
     {
         //if(isTutorial || currentLevel.isSpecificTutorial)
         //{
@@ -277,20 +278,6 @@ public class GameManager : MonoBehaviour
                 PlayerManager.Instance.PopulatePowerUps();
                 powerupManager.instnatiatedZonesCounter = 0;
 
-                if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
-                {
-                    TutorialSequence.Instacne.StartTutorialLevelSequence();
-                }
-
-                if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
-                {
-                    if(currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft)
-                    {
-                        StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
-                        TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
-                    }
-                }
-
                 //if (currentLevel.isSpecificTutorial)
                 //{
                 //    if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
@@ -312,7 +299,8 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                ResetDataStartLevel(false, false);
+                StartCoroutine(ResetDataStartLevel(false, false));
+                //ResetDataStartLevel(false, false);
             }
         }
         else
@@ -386,15 +374,15 @@ public class GameManager : MonoBehaviour
 
             powerupManager.instnatiatedZonesCounter = 0;
 
-            if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
-            {
-                if (currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen)
-                {
-                    //TutorialSequence.Instacne.DisplaySpecificTutorialSequence();
-                    StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
-                    TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
-                }
-            }
+            //if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
+            //{
+            //    if (currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen)
+            //    {
+            //        //TutorialSequence.Instacne.DisplaySpecificTutorialSequence();
+            //        StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
+            //        TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
+            //    }
+            //}
 
             GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
         }
@@ -421,6 +409,41 @@ public class GameManager : MonoBehaviour
         if(currentLevel.showIntroLevelAnimation && !isRestart)
         {
             AnimationManager.instance.PopulateRefrences();
+        }
+
+        if(!isRestart)
+        {
+            yield return new WaitForSeconds(2.5f);
+            if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
+            {
+                TutorialSequence.Instacne.StartTutorialLevelSequence();
+            }
+
+            if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
+            {
+                if (currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft)
+                {
+                    StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
+                    TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
+                }
+            }
+        }
+        else
+        {
+            yield return new WaitForEndOfFrame();
+            if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
+            {
+                TutorialSequence.Instacne.StartTutorialLevelSequence();
+            }
+
+            if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
+            {
+                if (currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft)
+                {
+                    StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
+                    TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
+                }
+            }
         }
     }
 
@@ -552,7 +575,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            ResetDataStartLevel(true, false);
+            StartCoroutine(ResetDataStartLevel(true, false));
+            //ResetDataStartLevel(true, false);
         }
 
     }
