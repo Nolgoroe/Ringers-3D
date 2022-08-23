@@ -20,6 +20,7 @@ MonoBehaviour:
   isAnimalLevel: 0
   isReleaseAnimalToDen: 0
   isKeyLevel: 1
+  showIntroLevelAnimation: 1
   boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
     type: 3}
   clipPrefab: {fileID: 6183251264102439455, guid: ff432a4cdfd3d8c4ab183be2d82d571e,
@@ -32,6 +33,8 @@ MonoBehaviour:
   cellsCountInLevel: 8
   RandomSlicePositions: 1
   allowRepeatSlices: 0
+  allowRepeatTiles: 0
+  allowRepeatTileSides: 0
   powerupsForLevel: 
   specificAnimalForLevel: {fileID: 4102538602839744026, guid: 2d078f20a3e839d46ae45c38a4b5a23a,
     type: 3}
