@@ -151,12 +151,7 @@ public class GameManager : MonoBehaviour
         //if(isTutorial || currentLevel.isSpecificTutorial)
         //{
 
-        if(!isRestart)
-        {
-            AnimationManager.instance.ResetEnterLevelAnimation();
-        }
-
-
+        AnimationManager.instance.ResetEnterLevelAnimation();
 
         timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
@@ -408,10 +403,10 @@ public class GameManager : MonoBehaviour
 
         if(currentLevel.showIntroLevelAnimation && !isRestart)
         {
-            AnimationManager.instance.PopulateRefrences();
+            AnimationManager.instance.PopulateRefrencesEnterLevelAnim();
         }
 
-        if(!isRestart)
+        if(!isRestart && currentLevel.showIntroLevelAnimation)
         {
             yield return new WaitForSeconds(2.5f);
             if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))

@@ -1404,7 +1404,7 @@ public class AnimationManager : MonoBehaviour
         slices.Clear();
     }
 
-    public void PopulateRefrences()
+    public void PopulateRefrencesEnterLevelAnim()
     {
         ring = GameManager.Instance.gameBoard.transform.GetComponent<SpriteRenderer>();
 
@@ -1433,10 +1433,10 @@ public class AnimationManager : MonoBehaviour
         slices.AddRange(GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices);
 
         //corrupted tiles are added when they are instantiated.
-        SetDefaultValuesLevelAnimation();
+        SetDefaultValuesEnterLevelAnimation();
     }
 
-    public void SetDefaultValuesLevelAnimation()
+    public void SetDefaultValuesEnterLevelAnimation()
     {
         ring.color = new Color(ring.color.r, ring.color.g, ring.color.b, 0);
         colorMask.color = new Color(colorMask.color.r, colorMask.color.g, colorMask.color.b, 0);
@@ -1475,28 +1475,31 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.restartButton.interactable = false;
         yield return new WaitForSeconds(startAnimDelayTime);
 
-        LeanTween.value(ring.gameObject, 0f, 1, timeToFadeRingAndColormask).setOnUpdate((float val) =>
+        ring.gameObject.SetActive(true);
+        clips.gameObject.SetActive(true);
+
+        LeanTween.value(ring.gameObject, ring.color.a, 1, timeToFadeRingAndColormask).setOnUpdate((float val) =>
         {
             Color newColor = ring.color;
             newColor.a = val;
             ring.color = newColor;
         });
 
-        LeanTween.value(colorMask.gameObject, 0f, originalColorMaskAlpha, timeToFadeRingAndColormask).setOnUpdate((float val) =>
+        LeanTween.value(colorMask.gameObject, colorMask.color.a, originalColorMaskAlpha, timeToFadeRingAndColormask).setOnUpdate((float val) =>
         {
             Color newColor = colorMask.color;
             newColor.a = val;
             colorMask.color = newColor;
         });
 
-        LeanTween.value(clips.gameObject, 0f, 1, timeToFadeClip).setOnUpdate((float val) =>
+        LeanTween.value(clips.gameObject, clips.opacityLevel, 1, timeToFadeClip).setOnUpdate((float val) =>
         {
             clips.opacityLevel = val;
         });
 
         foreach (var lockObject in locks)
         {
-            LeanTween.value(lockObject.gameObject, 0f, 1, timeToFadeLocks).setOnUpdate((float val) =>
+            LeanTween.value(lockObject.gameObject, lockObject.color.a, 1, timeToFadeLocks).setOnUpdate((float val) =>
             {
                 Color newColor = lockObject.color;
                 newColor.a = val;

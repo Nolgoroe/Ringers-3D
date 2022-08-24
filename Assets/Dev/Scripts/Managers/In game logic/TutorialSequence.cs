@@ -38,6 +38,7 @@ public class Phase
     public bool isAnimalSymbolCollectionPhase, hasDelay, isAllLocked, isClearScreen, isBoardGone, isGameUIGone;
     public bool isOpenDenPhase, isOpenHollowCraftTabPhase, isOpenInventoryInDenPhase, isCraftPhase, isCloseInventoryPhase, isDragHollowItemPhase;
     public bool dealPhase, isStatuePhase;
+    public bool enterAnimationPhase;
 
     public int[] unlockedPowerups;
     public int[] unlockedClips;
@@ -836,9 +837,9 @@ public class TutorialSequence : MonoBehaviour
         {
             if (GameManager.Instance.gameBoard && GameManager.Instance.gameClip)
             {
-                GameManager.Instance.gameBoard.SetActive(true);
-                GameManager.Instance.gameClip.SetActive(true);
-                GameManager.Instance.selectedLevelBG.transform.GetChild(0).gameObject.SetActive(true);
+                //GameManager.Instance.gameBoard.SetActive(true);
+                //GameManager.Instance.gameClip.SetActive(true);
+                //GameManager.Instance.selectedLevelBG.transform.GetChild(0).gameObject.SetActive(true);
                 //UIManager.Instance.gameplayCanvasBotom.SetActive(true);
                 UIManager.Instance.DecideBottmUIShow(GameManager.Instance.currentLevel.bottomUIToShow);
                 UIManager.Instance.gameplayCanvasTop.SetActive(true);
@@ -895,6 +896,11 @@ public class TutorialSequence : MonoBehaviour
         if (tutorialArray[TutorialIndex].phase[phaseIndex].isAllLocked)
         {
             AllLockedLogic(tutorialArray, TutorialIndex, phaseIndex);
+        }
+
+        if (tutorialArray[TutorialIndex].phase[phaseIndex].enterAnimationPhase)
+        {
+            EnterLevelAnimationPhaseLogic();
         }
     }
 
@@ -1518,6 +1524,11 @@ public class TutorialSequence : MonoBehaviour
         //{
         //    screensDeactivateOnTouch.Add(specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific - 1]);
         //}
+    }
+
+    public void EnterLevelAnimationPhaseLogic()
+    {
+        AnimationManager.instance.PopulateRefrencesEnterLevelAnim();
     }
 }
 

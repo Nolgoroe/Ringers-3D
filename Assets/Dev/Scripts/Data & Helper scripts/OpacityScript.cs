@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class OpacityScript : MonoBehaviour
 {
     [Range(0, 1)]
@@ -9,6 +10,23 @@ public class OpacityScript : MonoBehaviour
 
     public SpriteRenderer[] childRenderers;
     private void Update()
+    {
+        childRenderers = GetComponentsInChildren<SpriteRenderer>();
+
+        if (childRenderers.Length > 0)
+        {
+            foreach (SpriteRenderer renderer in childRenderers)
+            {
+                Color color = renderer.color;
+
+                color.a = opacityLevel;
+
+                renderer.color = color;
+            }
+        }
+    }
+
+    private void OnEnable()
     {
         childRenderers = GetComponentsInChildren<SpriteRenderer>();
 
