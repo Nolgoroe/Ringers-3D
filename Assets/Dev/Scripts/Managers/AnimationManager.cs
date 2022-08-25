@@ -1554,6 +1554,7 @@ public class AnimationManager : MonoBehaviour
             LeanTween.scale(tile.gameObject, Vector3.one, timeToScaleCorruptedTilesDown);
             LeanTween.moveLocalY(tile.gameObject, 0f, MoveLocalYTimeDown);
 
+            SoundManager.Instance.PlaySound(Sounds.CorruptedTilePop);
             yield return new WaitForSeconds(timeToScaleCorruptedTilesDown + 0.01f);
         }
 
@@ -1562,11 +1563,14 @@ public class AnimationManager : MonoBehaviour
             LeanTween.scale(slice.gameObject, new Vector3(1.5f, 1.5f, 1.5f), timeToScaleSlices);
             yield return new WaitForSeconds(timeToScaleSlices + 0.01f);
             LeanTween.scale(slice.gameObject, Vector3.one, timeToScaleSlices);
+
+            SoundManager.Instance.PlaySound(Sounds.LimiterPop);
             yield return new WaitForSeconds(timeToScaleSlices / 10);
         }
 
         //yield return new WaitForSeconds(0.5f);
 
+        //SoundManager.Instance.PlaySound(Sounds.TileEnterLevel);
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Count(); i++)
         {

@@ -27,7 +27,10 @@ public enum Sounds
     PotionUse,
     PotionSelect,
     IntroMusic,
-    LastTileSequence
+    LastTileSequence,
+    LimiterPop,
+    CorruptedTilePop,
+    TileEnterLevel
     //// Add all sounds here
 }
 
