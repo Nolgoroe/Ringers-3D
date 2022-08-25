@@ -145,7 +145,7 @@ public class AnimationManager : MonoBehaviour
     public SpriteRenderer colorMask;
     float originalColorMaskAlpha = 0;
     public float timeToFadeRingAndColormask;
-    public OpacityScript clips;
+    public Transform[] clips;
     public float timeToFadeClip;
     public List<SpriteRenderer> locks;
     public float timeToFadeLocks;
@@ -1411,14 +1411,13 @@ public class AnimationManager : MonoBehaviour
         colorMask = GameManager.Instance.selectedLevelBG.transform.Find("color mask").GetComponent<SpriteRenderer>();
         originalColorMaskAlpha = colorMask.color.a;
 
-        clips = GameManager.Instance.gameClip.GetComponent<OpacityScript>();
+        clips = GameManager.Instance.clipManager.slots;
 
         SliceManager sliceManager = GameManager.Instance.gameBoard.GetComponent<SliceManager>();
         for (int i = 0; i < sliceManager.activeLocksLockAnims.Count; i++)
         {
             SpriteRenderer renderer = sliceManager.activeLocksLockAnims[i].GetComponent<SpriteRenderer>();
             locks.Add(renderer);
-
         }
 
         Piece[] allPieces = FindObjectsOfType<Piece>();
@@ -1438,9 +1437,17 @@ public class AnimationManager : MonoBehaviour
 
     public void SetDefaultValuesEnterLevelAnimation()
     {
-        ring.color = new Color(ring.color.r, ring.color.g, ring.color.b, 0);
+        //ring.color = new Color(ring.color.r, ring.color.g, ring.color.b, 0);
+        ring.material.SetFloat("_DissolveSprite", 0.6f);
+
+        foreach (var clip in clips)
+        {
+            SpriteRenderer renderer = clip.GetComponent<SpriteRenderer>();
+
+            renderer.material.SetFloat("_DissolveSprite", 0.6f);
+        }
+
         colorMask.color = new Color(colorMask.color.r, colorMask.color.g, colorMask.color.b, 0);
-        clips.opacityLevel = 0;
 
         foreach (var lockObject in locks)
         {
@@ -1473,28 +1480,51 @@ public class AnimationManager : MonoBehaviour
     IEnumerator ActivateLevelAnim()
     {
         UIManager.Instance.restartButton.interactable = false;
+
+        ZoneManagerHelpData.Instance.ChangeZoneToNormalZoneDisplay();
+
         yield return new WaitForSeconds(startAnimDelayTime);
 
         ring.gameObject.SetActive(true);
-        clips.gameObject.SetActive(true);
 
-        LeanTween.value(ring.gameObject, ring.color.a, 1, timeToFadeRingAndColormask).setOnUpdate((float val) =>
+        foreach (var clip in clips)
         {
-            Color newColor = ring.color;
-            newColor.a = val;
-            ring.color = newColor;
+            clip.gameObject.SetActive(true);
+        }
+
+
+
+        float startDissolve = ring.material.GetFloat("_DissolveSprite");
+        float endDissolve = 1.5f;
+
+
+        LeanTween.value(ring.gameObject, startDissolve, endDissolve, timeToFadeRingAndColormask).setOnUpdate((float val) =>
+        {
+            ring.material.SetFloat("_DissolveSprite", val);
         });
+
+
+        foreach (var clip in clips)
+        {
+            SpriteRenderer renderer = clip.GetComponent<SpriteRenderer>();
+
+            float startDissolveClip = renderer.material.GetFloat("_DissolveSprite");
+            float endDissolveClip = 1.5f;
+            LeanTween.value(clip.gameObject, startDissolveClip, endDissolveClip, timeToFadeClip).setOnUpdate((float val) =>
+            {
+                renderer.material.SetFloat("_DissolveSprite", val);
+            });
+        }
+
+
+
+
 
         LeanTween.value(colorMask.gameObject, colorMask.color.a, originalColorMaskAlpha, timeToFadeRingAndColormask).setOnUpdate((float val) =>
         {
             Color newColor = colorMask.color;
             newColor.a = val;
             colorMask.color = newColor;
-        });
-
-        LeanTween.value(clips.gameObject, clips.opacityLevel, 1, timeToFadeClip).setOnUpdate((float val) =>
-        {
-            clips.opacityLevel = val;
         });
 
         foreach (var lockObject in locks)
@@ -1508,6 +1538,8 @@ public class AnimationManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(timeToFadeRingAndColormask + 0.01f);
+
+        ZoneManagerHelpData.Instance.ChangeZoneToBlurryZoneDisplay();
 
         foreach (var tile in corruptedTiles)
         {
