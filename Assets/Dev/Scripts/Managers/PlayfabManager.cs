@@ -492,7 +492,7 @@ public class PlayfabManager : MonoBehaviour
 
         timeToWaitForDailyRewardSeconds = Convert.ToInt32(result.Data["TimeToWaitForDailySeconds_New"]);
 
-        RewardsManager.Instance.timeLeftToGiveDailyLoot = timeToWaitForDailyRewardSeconds;
+        //RewardsManager.Instance.timeLeftToGiveDailyLoot = timeToWaitForDailyRewardSeconds;
 
         successfullyDoneWithStep = true;
     }

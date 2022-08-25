@@ -46,9 +46,9 @@ public class RewardsManager : MonoBehaviour
 
         if (savedDateTime != "" && !canGiveDaily)
         {
-            TimeSpan deltaDateTime = Convert.ToDateTime(savedDateTime) - currentTime;
+            TimeSpan deltaDateTime = currentTime - Convert.ToDateTime(savedDateTime);
 
-            timeLeftToGiveDailyLoot -= -((float)deltaDateTime.TotalSeconds % PlayfabManager.instance.timeToWaitForDailyRewardSeconds);
+            timeLeftToGiveDailyLoot -= ((float)deltaDateTime.TotalSeconds % PlayfabManager.instance.timeToWaitForDailyRewardSeconds);
 
 
             if(timeLeftToGiveDailyLoot < 0)
