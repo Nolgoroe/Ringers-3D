@@ -64,17 +64,18 @@ public class Piece : MonoBehaviour
 
             if (!GameManager.Instance.isDisableTutorials && (GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial))
             {
-                if (repeatIndicator > 0 || GameManager.Instance.copyOfArrayOfPiecesTutorial.Count <= 0)
-                {
-                    rightChild.SetPiece();
-                    leftChild.SetPiece();
-
-                    repeatIndicator = 0;
-                }
-                else
+                if(GameManager.Instance.copyOfArrayOfPiecesTutorial.Count > 0)
                 {
                     rightChild.SetPieceTutorial(true);
                     leftChild.SetPieceTutorial(false);
+                }
+                else
+                {
+                    if (repeatIndicator > 0)
+                    {
+                        rightChild.SetPiece();
+                        leftChild.SetPiece();
+                    }
                 }
             }
             else

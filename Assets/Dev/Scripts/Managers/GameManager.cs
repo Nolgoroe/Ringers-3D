@@ -184,7 +184,14 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.googlePlayButton.SetActive(false);
         UIManager.Instance.switchAccountButton.SetActive(false);
 
-        ZoneManagerHelpData.Instance.ChangeZoneToBlurryZoneDisplay();
+        if (isRestart)
+        {
+            ZoneManagerHelpData.Instance.ChangeZoneToBlurryZoneDisplay();
+        }
+        else
+        {
+            ZoneManagerHelpData.Instance.ChangeZoneToNormalZoneDisplay();
+        }
 
         if (isTutorial)
         {
@@ -484,7 +491,7 @@ public class GameManager : MonoBehaviour
 
         LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
 
-        ZoneManagerHelpData.Instance.ChangeZoneToBlurryZoneDisplay();
+        ZoneManagerHelpData.Instance.ChangeZoneToNormalZoneDisplay();
 
         gameClip = Instantiate(clipPrefab, destroyOutOfLevel);
 
@@ -555,9 +562,9 @@ public class GameManager : MonoBehaviour
             selectedLevelBG = levelBGModels[backgroundID];
         }
 
-        if(selectedLevelBG.transform.Find("color mask"))
+        if(selectedLevelBG.transform.Find("RingMask"))
         {
-            selectedLevelBG.transform.Find("color mask").gameObject.SetActive(true); //// put this someplace better in the future
+            selectedLevelBG.transform.Find("RingMask").gameObject.SetActive(true); //// put this someplace better in the future
         }
     }
 
@@ -945,9 +952,9 @@ public class GameManager : MonoBehaviour
 
         powerupManager.ResetData();
 
-        if (selectedLevelBG.transform.Find("color mask"))
+        if (selectedLevelBG.transform.Find("RingMask"))
         {
-            selectedLevelBG.transform.Find("color mask").gameObject.SetActive(true); //// put this someplace better in the future
+            selectedLevelBG.transform.Find("RingMask").gameObject.SetActive(true); //// put this someplace better in the future
         }
 
         if (!isDisableTutorials && (currentLevel.isTutorial || currentLevel.isSpecificTutorial))
@@ -1073,9 +1080,9 @@ public class GameManager : MonoBehaviour
 
         ChooseLevel(currentLevel.levelIndexInZone + 1/*, currentLevel.worldName*/);
 
-        if (selectedLevelBG.transform.Find("color mask"))
+        if (selectedLevelBG.transform.Find("RingMask"))
         {
-            selectedLevelBG.transform.Find("color mask").gameObject.SetActive(true); //// put this someplace better in the future
+            selectedLevelBG.transform.Find("RingMask").gameObject.SetActive(true); //// put this someplace better in the future
         }
 
         if (nextIsTutorial)

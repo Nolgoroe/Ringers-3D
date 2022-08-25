@@ -250,13 +250,13 @@ public class TutorialSequence : MonoBehaviour
             
             maskImage.sprite = sprite;
 
-            if (GameManager.Instance.currentLevel.isTutorial)
-            {
-                if (!levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].isClearScreen)
-                {
-                    maskImage.gameObject.SetActive(true);
-                }
-            }
+            //if (GameManager.Instance.currentLevel.isTutorial)
+            //{
+            //    if (!levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].isClearScreen)
+            //    {
+            //        maskImage.gameObject.SetActive(true);
+            //    }
+            //}
         }
     }
     public void toTextureDenScreen()
@@ -704,7 +704,7 @@ public class TutorialSequence : MonoBehaviour
             }
             else
             {
-                maskImage.gameObject.SetActive(true);
+                //maskImage.gameObject.SetActive(true);
                 UIManager.Instance.tutorialCanvasParent.SetActive(true);
             }
         }
@@ -798,7 +798,7 @@ public class TutorialSequence : MonoBehaviour
             return;
         }
 
-        maskImage.gameObject.SetActive(true);
+        //maskImage.gameObject.SetActive(true);
 
         if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific])
         {
@@ -832,6 +832,7 @@ public class TutorialSequence : MonoBehaviour
             //UIManager.Instance.gameplayCanvasBotom.SetActive(false);
             UIManager.Instance.DecideBottmUIShow(GameManager.Instance.currentLevel.bottomUIToShow);
             UIManager.Instance.gameplayCanvasTop.SetActive(false);
+            maskImage.gameObject.SetActive(false);
         }
         else
         {
@@ -843,6 +844,7 @@ public class TutorialSequence : MonoBehaviour
                 //UIManager.Instance.gameplayCanvasBotom.SetActive(true);
                 UIManager.Instance.DecideBottmUIShow(GameManager.Instance.currentLevel.bottomUIToShow);
                 UIManager.Instance.gameplayCanvasTop.SetActive(true);
+                maskImage.gameObject.SetActive(true);
             }
         }
 

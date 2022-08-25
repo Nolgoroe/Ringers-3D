@@ -381,7 +381,7 @@ public class AnimationManager : MonoBehaviour
 
         UIManager.Instance.TurnOffGameplayUI();
         UIManager.Instance.InGameUiScreens.SetActive(true);
-        GameManager.Instance.selectedLevelBG.transform.Find("color mask").gameObject.SetActive(false);
+        GameManager.Instance.selectedLevelBG.transform.Find("RingMask").gameObject.SetActive(false);
 
         if (!noWaitAnimal)
         {
@@ -642,7 +642,7 @@ public class AnimationManager : MonoBehaviour
 
         //turnOff = null;
 
-        GameManager.Instance.selectedLevelBG.transform.Find("color mask").gameObject.SetActive(false);
+        GameManager.Instance.selectedLevelBG.transform.Find("RingMask").gameObject.SetActive(false);
 
         //fadeImageEndLevel.gameObject.SetActive(false);
 
@@ -1408,7 +1408,7 @@ public class AnimationManager : MonoBehaviour
     {
         ring = GameManager.Instance.gameBoard.transform.GetComponent<SpriteRenderer>();
 
-        colorMask = GameManager.Instance.selectedLevelBG.transform.Find("color mask").GetComponent<SpriteRenderer>();
+        colorMask = GameManager.Instance.selectedLevelBG.transform.Find("RingMask").GetComponent<SpriteRenderer>();
         originalColorMaskAlpha = colorMask.color.a;
 
         clips = GameManager.Instance.clipManager.slots;
@@ -1487,9 +1487,14 @@ public class AnimationManager : MonoBehaviour
 
         ring.gameObject.SetActive(true);
 
-        foreach (var clip in clips)
+        if (clips.Length > 0)
         {
-            clip.gameObject.SetActive(true);
+            clips[0].transform.parent.gameObject.SetActive(true);
+
+            foreach (var clip in clips)
+            {
+                clip.gameObject.SetActive(true);
+            }
         }
 
 

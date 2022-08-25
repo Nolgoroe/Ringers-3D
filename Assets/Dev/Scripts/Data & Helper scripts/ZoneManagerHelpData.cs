@@ -29,7 +29,8 @@ public class AmbientMusicPerZone
 public class ZoneAndObjectToBlurUnblur
 {
     public Zone zone;
-    public GameObject[] planesToChange;
+    public GameObject[] planesToChangeFront;
+    public GameObject[] planesToChangeMiddle;
     public SpriteRenderer[] BGToChange;
 
     public Material blurMat;
@@ -139,7 +140,14 @@ public class ZoneManagerHelpData : MonoBehaviour
 
         if (ZOB != null)
         {
-            foreach (GameObject go in ZOB.planesToChange)
+            foreach (GameObject go in ZOB.planesToChangeFront)
+            {
+                MeshRenderer renderer = go.GetComponent<MeshRenderer>();
+
+                renderer.material = ZOB.blurMat;
+            }
+
+            foreach (GameObject go in ZOB.planesToChangeMiddle)
             {
                 MeshRenderer renderer = go.GetComponent<MeshRenderer>();
 
@@ -158,7 +166,14 @@ public class ZoneManagerHelpData : MonoBehaviour
 
         if (ZOB != null)
         {
-            foreach (GameObject go in ZOB.planesToChange)
+            foreach (GameObject go in ZOB.planesToChangeFront)
+            {
+                MeshRenderer renderer = go.GetComponent<MeshRenderer>();
+
+                renderer.material = ZOB.normalMat;
+            }
+
+            foreach (GameObject go in ZOB.planesToChangeMiddle)
             {
                 MeshRenderer renderer = go.GetComponent<MeshRenderer>();
 
