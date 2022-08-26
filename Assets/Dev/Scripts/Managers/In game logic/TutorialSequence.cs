@@ -169,7 +169,6 @@ public class TutorialSequence : MonoBehaviour
 
         if (!GameManager.Instance.isDisableTutorials)
         {
-
             DeactivateAllTutorialScreens();
 
             //GameManager.Instance.powerupManager.PowerupButtonsActivation(false);
@@ -1193,6 +1192,10 @@ public class TutorialSequence : MonoBehaviour
         UIManager.Instance.DecideBottmUIShow(GameManager.Instance.currentLevel.bottomUIToShow);
         UIManager.Instance.gameplayCanvasTop.SetActive(true);
 
+        UIManager.Instance.restartButton.interactable = true;
+        UIManager.Instance.optionsButtonIngame.interactable = true;
+        UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
+
         yield return new WaitForSeconds(0.5f);
         UIManager.Instance.dealButton.interactable = true;
     }
@@ -1374,7 +1377,7 @@ public class TutorialSequence : MonoBehaviour
             Destroy(currentlyActiveTutorialHand.gameObject);
         }
 
-        maskImage.gameObject.SetActive(false);
+        //maskImage.gameObject.SetActive(false);
     }
 
     public void CheckDoPotionTutorial()
@@ -1384,6 +1387,7 @@ public class TutorialSequence : MonoBehaviour
             if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
             {
                 //UIManager.Instance.gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(true);
+                maskImage.gameObject.SetActive(true);
                 UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
                 //TutorialSequence.Instacne.DisplaySpecificTutorialSequence();
                 currentSpecificTutorial = GameManager.Instance.currentLevel.specificTutorialEnum;
@@ -1399,6 +1403,7 @@ public class TutorialSequence : MonoBehaviour
             {
                 //UIManager.Instance.gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(true);
                 UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+                maskImage.gameObject.SetActive(true);
                 //TutorialSequence.Instacne.DisplaySpecificTutorialSequence();
                 currentSpecificTutorial = GameManager.Instance.currentLevel.specificTutorialEnum;
                 StartCoroutine(DisplaySpecificTutorialSequence());

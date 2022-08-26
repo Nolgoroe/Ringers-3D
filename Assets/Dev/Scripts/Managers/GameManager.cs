@@ -408,14 +408,18 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if(currentLevel.showIntroLevelAnimation && !isRestart)
-        {
-            AnimationManager.instance.PopulateRefrencesEnterLevelAnim();
-        }
-
         if(!isRestart && currentLevel.showIntroLevelAnimation)
         {
+            AnimationManager.instance.PopulateRefrencesEnterLevelAnim();
+
             yield return new WaitForSeconds(2.5f);
+
+            // these become false in the animation progress to prevent player actions
+            // so we enable them after this time.
+            UIManager.Instance.restartButton.interactable = true;
+            UIManager.Instance.optionsButtonIngame.interactable = true;
+            UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
+
             if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
             {
                 TutorialSequence.Instacne.StartTutorialLevelSequence();
@@ -432,6 +436,12 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            // these become false in the animation progress to prevent player actions
+            // so we enable them after this time.
+            UIManager.Instance.restartButton.interactable = true;
+            UIManager.Instance.optionsButtonIngame.interactable = true;
+            UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
+
             yield return new WaitForEndOfFrame();
             if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
             {

@@ -1480,6 +1480,8 @@ public class AnimationManager : MonoBehaviour
     IEnumerator ActivateLevelAnim()
     {
         UIManager.Instance.restartButton.interactable = false;
+        UIManager.Instance.optionsButtonIngame.interactable = false;
+        UIManager.Instance.cheatOptionsButtonIngame.interactable = false;
 
         ZoneManagerHelpData.Instance.ChangeZoneToNormalZoneDisplay();
 
@@ -1580,7 +1582,5 @@ public class AnimationManager : MonoBehaviour
 
             yield return new WaitForSeconds(0.1f);
         }
-
-        UIManager.Instance.restartButton.interactable = true;
     }
 }

@@ -51,7 +51,6 @@ public class UIManager : MonoBehaviour
     public GameObject animalAlbum;
     public GameObject OptionsScreen;
     public GameObject cheatOptionsButton;
-    public GameObject cheatOptionsButtonIngame;
     public GameObject cheatOptionsScreen;
     public GameObject wardrobe;
     public GameObject usingPowerupText;
@@ -163,6 +162,8 @@ public class UIManager : MonoBehaviour
     public Button nextLevelFromWinScreen;
     public Button restartGrindLevel;
     public Button restartButton;
+    public Button optionsButtonIngame;
+    public Button cheatOptionsButtonIngame;
     public Button skipAnimationButton;
     public Button getDailyLootButton;
     public Button dealButton;
@@ -282,7 +283,7 @@ public class UIManager : MonoBehaviour
         leaderboardScreen.SetActive(false);
         OptionsScreen.SetActive(false);
         cheatOptionsButton.SetActive(false);
-        cheatOptionsButtonIngame.SetActive(false);
+        cheatOptionsButtonIngame.gameObject.SetActive(false);
         cheatOptionsScreen.SetActive(false);
         ringersHutDisplay.SetActive(false);
         ringersHutUICanvas.SetActive(false);
@@ -683,7 +684,7 @@ public class UIManager : MonoBehaviour
             if (ServerRelatedData.instance.isAdmin)
             {
                 cheatOptionsButton.SetActive(true);
-                cheatOptionsButtonIngame.SetActive(false);
+                cheatOptionsButtonIngame.gameObject.SetActive(false);
             }
 
             cheatOptionsScreen.SetActive(false);
@@ -1671,7 +1672,7 @@ public class UIManager : MonoBehaviour
         if (ServerRelatedData.instance.isAdmin)
         {
             cheatOptionsButton.SetActive(false);
-            cheatOptionsButtonIngame.SetActive(false);
+            cheatOptionsButtonIngame.gameObject.SetActive(false);
         }
     }
     public void TurnOnGameplayUI()
@@ -1686,7 +1687,7 @@ public class UIManager : MonoBehaviour
         if (ServerRelatedData.instance.isAdmin)
         {
             cheatOptionsButton.SetActive(false);
-            cheatOptionsButtonIngame.SetActive(true);
+            cheatOptionsButtonIngame.gameObject.SetActive(true);
         }
     }
     //public void RefreshDewDropsDisplay(int spriteIndex)
@@ -2569,7 +2570,7 @@ public class UIManager : MonoBehaviour
         if (ServerRelatedData.instance.isAdmin)
         {
             cheatOptionsButton.SetActive(true);
-            cheatOptionsButtonIngame.SetActive(false);
+            cheatOptionsButtonIngame.gameObject.SetActive(false);
             bossLevelsParent.SetActive(true);
         }
     }
