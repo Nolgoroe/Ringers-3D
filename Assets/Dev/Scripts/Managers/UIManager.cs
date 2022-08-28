@@ -93,8 +93,6 @@ public class UIManager : MonoBehaviour
     public GameObject fadeIntoLevel;
     public GameObject introScreenParent;
     public GameObject TEMPBgIntro;
-    public GameObject IntroSkipButton;
-    public GameObject IntroTapToContinue;
     public GameObject placePieceVFX;
     public GameObject dealButtonVFX;
     public GameObject startAppLoadingScreen;
@@ -186,6 +184,8 @@ public class UIManager : MonoBehaviour
 
     public Button requiredButtonForTutorialPhase;
 
+    public CanvasGroup IntroSkipButton;
+    public CanvasGroup IntroTapToContinue;
 
     public ScrollRect forgeScrollRectView;
     public ScrollRect mapScrollRect;
@@ -2159,20 +2159,14 @@ public class UIManager : MonoBehaviour
         effect.gameObject.SetActive(true);
         effect.Play();
 
-        LeanTween.value(IntroSkipButton, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        LeanTween.value(IntroSkipButton.gameObject, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
         {
-            Image sr = IntroSkipButton.GetComponent<Image>();
-            Color newColor = sr.color;
-            newColor.a = val;
-            sr.color = newColor;
+            IntroSkipButton.alpha = val;
         });
 
-        LeanTween.value(IntroTapToContinue, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+        LeanTween.value(IntroTapToContinue.gameObject, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
         {
-            TMP_Text sr = IntroTapToContinue.GetComponent<TMP_Text>();
-            Color newColor = sr.color;
-            newColor.a = val;
-            sr.color = newColor;
+            IntroTapToContinue.alpha = val;
         });
 
         foreach (ImageTextCombo ITC in introImages)
@@ -2220,20 +2214,14 @@ public class UIManager : MonoBehaviour
                 sr.color = newColor;
             });
 
-            LeanTween.value(IntroSkipButton, 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+            LeanTween.value(IntroSkipButton.gameObject, 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
             {
-                Image sr = IntroSkipButton.GetComponent<Image>();
-                Color newColor = sr.color;
-                newColor.a = val;
-                sr.color = newColor;
+                IntroSkipButton.alpha = val;
             });
 
-            LeanTween.value(IntroTapToContinue, 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+            LeanTween.value(IntroTapToContinue.gameObject, 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
             {
-                TMP_Text sr = IntroTapToContinue.GetComponent<TMP_Text>();
-                Color newColor = sr.color;
-                newColor.a = val;
-                sr.color = newColor;
+                IntroTapToContinue.alpha = val;
             });
 
             //foreach (GameObject go in introImages[introImageIndex].textObjects)
@@ -2329,20 +2317,14 @@ public class UIManager : MonoBehaviour
                 //    sr.color = newColor;
                 //});
 
-                LeanTween.value(IntroSkipButton, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+                LeanTween.value(IntroSkipButton.gameObject, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
                 {
-                    Image sr = IntroSkipButton.GetComponent<Image>();
-                    Color newColor = sr.color;
-                    newColor.a = val;
-                    sr.color = newColor;
+                    IntroSkipButton.alpha = val;
                 });
 
-                LeanTween.value(IntroTapToContinue, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
+                LeanTween.value(IntroTapToContinue.gameObject, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
                 {
-                    TMP_Text sr = IntroTapToContinue.GetComponent<TMP_Text>();
-                    Color newColor = sr.color;
-                    newColor.a = val;
-                    sr.color = newColor;
+                    IntroTapToContinue.alpha = val;
                 });
 
                 TextMeshProEffect effect = introImages[introImageIndex].textObjects[introImageTextIndex].GetComponent<TextMeshProEffect>();
