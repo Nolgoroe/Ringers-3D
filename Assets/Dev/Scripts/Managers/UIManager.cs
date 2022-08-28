@@ -2316,7 +2316,7 @@ public class UIManager : MonoBehaviour
                 //    newColor.a = val;
                 //    sr.color = newColor;
                 //});
-
+                 
                 LeanTween.value(IntroSkipButton.gameObject, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
                 {
                     IntroSkipButton.alpha = val;
