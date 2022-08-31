@@ -30,7 +30,13 @@ public enum Sounds
     LastTileSequence,
     LimiterPop,
     CorruptedTilePop,
-    TileEnterLevel
+    TileEnterLevel,
+    FoxRelease,
+    StagRelease,
+    OwlRelease,
+    RiveRelease,
+    RiveRootRelease,
+    RingAppear
     //// Add all sounds here
 }
 

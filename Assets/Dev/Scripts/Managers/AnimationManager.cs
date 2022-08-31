@@ -224,7 +224,11 @@ public class AnimationManager : MonoBehaviour
 
         MoveTopButtonAnim();
 
-        AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Release Animal");
+        if(GameManager.Instance.currentLevel.isAnimalLevel)
+        {
+            SoundManager.Instance.PlaySound(Sounds.RiveRootRelease);
+            AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Release Animal");
+        }
 
         yield return new WaitForSeconds(speedOutTopBottom + 0.1f);
 
@@ -392,11 +396,20 @@ public class AnimationManager : MonoBehaviour
         {
             if (GameManager.Instance.currentLevel.isAnimalLevel)
             {
+                SoundsPerAnimal SPA = AnimalManagerDataHelper.instance.soundsPerAnimalEnum.Where(p => p.animalEnum == AnimalsManager.Instance.currentLevelAnimal).SingleOrDefault();
+
+                if(SPA != null)
+                {
+                    SoundManager.Instance.PlaySound(SPA.soundClipToPlay);
+                }
+
                 AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
+
             }
             else
             {
                 AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive");
+                SoundManager.Instance.PlaySound(Sounds.RiveRelease);
             }
 
             hasSkippedToAnimalAnim = true;
@@ -663,12 +676,21 @@ public class AnimationManager : MonoBehaviour
         {
             if (GameManager.Instance.currentLevel.isAnimalLevel)
             {
+                SoundsPerAnimal SPA = AnimalManagerDataHelper.instance.soundsPerAnimalEnum.Where(p => p.animalEnum == AnimalsManager.Instance.currentLevelAnimal).SingleOrDefault();
+
+                if (SPA != null)
+                {
+                    SoundManager.Instance.PlaySound(SPA.soundClipToPlay);
+                }
+
                 AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
                 AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Release Animal");
+
             }
             else
             {
                 AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive");
+                SoundManager.Instance.PlaySound(Sounds.RiveRelease);
             }
         }
         else
@@ -898,11 +920,6 @@ public class AnimationManager : MonoBehaviour
 
         yield return new WaitForSeconds(fadeInTimeButtons + 0.1f);
         ConnectionManager.Instance.TurnOffAllConnectedVFX();
-
-
-
-
-
 
 
         UIManager.Instance.restartButton.interactable = true;
@@ -1500,17 +1517,16 @@ public class AnimationManager : MonoBehaviour
         }
 
 
-
+        //fade ring
         float startDissolve = ring.material.GetFloat("_DissolveSprite");
         float endDissolve = 1.5f;
-
-
+        SoundManager.Instance.PlaySound(Sounds.RingAppear);
         LeanTween.value(ring.gameObject, startDissolve, endDissolve, timeToFadeRingAndColormask).setOnUpdate((float val) =>
         {
             ring.material.SetFloat("_DissolveSprite", val);
         });
 
-
+        //fade clips
         foreach (var clip in clips)
         {
             SpriteRenderer renderer = clip.GetComponent<SpriteRenderer>();
@@ -1572,7 +1588,6 @@ public class AnimationManager : MonoBehaviour
 
         //yield return new WaitForSeconds(0.5f);
 
-        //SoundManager.Instance.PlaySound(Sounds.TileEnterLevel);
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Count(); i++)
         {
@@ -1582,5 +1597,7 @@ public class AnimationManager : MonoBehaviour
 
             yield return new WaitForSeconds(0.1f);
         }
+        SoundManager.Instance.PlaySound(Sounds.TileEnterLevel);
+
     }
 }

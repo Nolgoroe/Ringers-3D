@@ -18,6 +18,13 @@ public class TreePrefabPerZone
     public GameObject treePrefab;
 }
 
+[Serializable]
+public class SoundsPerAnimal
+{
+    public AnimalsInGame animalEnum;
+    public Sounds soundClipToPlay;
+}
+
 public class AnimalManagerDataHelper : MonoBehaviour
 {
     public static AnimalManagerDataHelper instance;
@@ -25,6 +32,8 @@ public class AnimalManagerDataHelper : MonoBehaviour
     public List<AnimalDenDataChecker> animalDataCheckTo;
 
     public TreePrefabPerZone[] treesPerZone;
+
+    public SoundsPerAnimal[] soundsPerAnimalEnum;
 
     private void Awake()
     {
