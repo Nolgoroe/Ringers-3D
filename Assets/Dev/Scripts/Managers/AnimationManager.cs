@@ -926,7 +926,7 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.dealButton.interactable = true;
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
-        TutorialSequence.Instacne.CheckDoDenTutorial();
+        //TutorialSequence.Instacne.CheckDoDenTutorial();
         //CheckShowLootTutorial();
         StartCoroutine(CheckShowLootTutorial());
 
@@ -1067,7 +1067,7 @@ public class AnimationManager : MonoBehaviour
 
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
-        TutorialSequence.Instacne.CheckDoDenTutorial();
+        //TutorialSequence.Instacne.CheckDoDenTutorial();
         //CheckShowLootTutorial();
         StartCoroutine(CheckShowLootTutorial());
 
