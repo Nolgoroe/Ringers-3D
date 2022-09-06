@@ -37,7 +37,7 @@ public class Phase
     public bool isOpenInventoryPhase, isPotionTabPhase, isEmptyTouchPhase, isBrewPhase, isBrewDisplayMaterials;
     public bool isAnimalSymbolCollectionPhase, hasDelay, isAllLocked, isClearScreen, isBoardGone, isGameUIGone;
     public bool isOpenDenPhase, isOpenHollowCraftTabPhase, isOpenInventoryInDenPhase, isCraftPhase, isCloseInventoryPhase, isDragHollowItemPhase;
-    public bool dealPhase, isStatuePhase;
+    public bool dealPhase, isStatuePhase, isAnimalAlbumPhase, isAnimalAlbumStagTabPhase, isAnimalAlbumAllTabsPhase;
     public bool enterAnimationPhase;
 
     public int[] unlockedPowerups;
@@ -69,8 +69,9 @@ public enum SpecificTutorialsEnum
     SliceBombTutorial,
     JokerTutorial,
     TileBombTutorial,
+    AnimalAlbum,
     ColorMatch,
-    ShapeMatch
+    ShapeMatch,
 
 }
 public class TutorialSequence : MonoBehaviour
@@ -110,7 +111,7 @@ public class TutorialSequence : MonoBehaviour
 
     public List<GameObject> screensDeactivateOnTouch;
 
-    public Transform handPosToHub, handPosOpenInventory, handPosOpenInventoryInDen, handPosOpenDen, handPosChangePotionTab, handPosChangeHollowCraftTab, handPosBrewButton, handPosCraftItemButton, handPosCloseInventory;
+    public Transform handPosToHub, handPosOpenInventory, handPosOpenInventoryInDen, handPosOpenDen, handPosOpenAnimalAlbum, handPosClickAnimalTab, handPosChangePotionTab, handPosChangeHollowCraftTab, handPosBrewButton, handPosCraftItemButton, handPosCloseInventory;
 
     //public float delayUnlockAll;
 
@@ -437,6 +438,33 @@ public class TutorialSequence : MonoBehaviour
                 UIManager.Instance.openDenButtonHeighlight.SetActive(true);
                 activatedHeighlights.Add(UIManager.Instance.openDenButtonHeighlight.gameObject);
                 DisplayTutorialHandTapQuaternion(handPosOpenDen.position, handPosOpenDen.rotation, handPosOpenDen.localScale);
+            }
+
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isAnimalAlbumPhase)
+            {
+                UIManager.Instance.requiredButtonForTutorialPhase = UIManager.Instance.openAnimalAlbumButttonMap;
+
+                UIManager.Instance.openAnimalAlbumButtonHeighlight.SetActive(true);
+                activatedHeighlights.Add(UIManager.Instance.openAnimalAlbumButtonHeighlight.gameObject);
+                DisplayTutorialHandTapQuaternion(handPosOpenAnimalAlbum.position, handPosOpenAnimalAlbum.rotation, handPosOpenAnimalAlbum.localScale);
+            }
+
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isAnimalAlbumStagTabPhase)
+            {
+                UIManager.Instance.requiredButtonForTutorialPhase = UIManager.Instance.animalAlbumStagTabButton;
+
+                UIManager.Instance.animalAlbumStagTabButtonHeighlight.SetActive(true);
+                activatedHeighlights.Add(UIManager.Instance.animalAlbumStagTabButtonHeighlight.gameObject);
+                DisplayTutorialHandTapQuaternion(handPosClickAnimalTab.position, handPosClickAnimalTab.rotation, handPosClickAnimalTab.localScale);
+            }
+
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isAnimalAlbumAllTabsPhase)
+            {
+                foreach (var sortButton in UIManager.Instance.animalAlbumSortButtons)
+                {
+                    sortButton.highlightObject.SetActive(true);
+                    activatedHeighlights.Add(sortButton.highlightObject.gameObject);
+                }
             }
 
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isPotionTabPhase)
@@ -773,6 +801,16 @@ public class TutorialSequence : MonoBehaviour
                 PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
 
                 Debug.LogError("Den Tutorial Done");
+            }
+
+            if (currentSpecificTutorial == SpecificTutorialsEnum.AnimalAlbum)
+            {
+                TutorialSaveData.Instance.hasFinishedAnimalAlbum = true;
+
+                TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
+                PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+
+                Debug.LogError("Animal Album Tutorial Done");
             }
 
             UIManager.Instance.requiredButtonForTutorialPhase = null;
@@ -1390,6 +1428,19 @@ public class TutorialSequence : MonoBehaviour
                 maskImage.gameObject.SetActive(true);
                 UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
                 //TutorialSequence.Instacne.DisplaySpecificTutorialSequence();
+                currentSpecificTutorial = GameManager.Instance.currentLevel.specificTutorialEnum;
+                StartCoroutine(DisplaySpecificTutorialSequence());
+            }
+        }
+    }
+    public void CheckDoAnimalAlbumTutorial()
+    {
+        if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
+        {
+            if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.AnimalAlbum)
+            {
+                maskImage.gameObject.SetActive(true);
+                UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
                 currentSpecificTutorial = GameManager.Instance.currentLevel.specificTutorialEnum;
                 StartCoroutine(DisplaySpecificTutorialSequence());
             }

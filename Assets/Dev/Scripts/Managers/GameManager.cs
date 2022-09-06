@@ -427,7 +427,7 @@ public class GameManager : MonoBehaviour
 
             if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
             {
-                if (currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft)
+                if (currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.AnimalAlbum)
                 {
                     StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
                     TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
@@ -450,7 +450,7 @@ public class GameManager : MonoBehaviour
 
             if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
             {
-                if (currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft)
+                if (currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.AnimalAlbum)
                 {
                     StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
                     TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
@@ -730,7 +730,7 @@ public class GameManager : MonoBehaviour
 
             if (currentLevel.isSpecificTutorial)
             {
-                TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(currentLevel.numIndexForLeaderBoard);
+                //TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(currentLevel.numIndexForLeaderBoard);
 
                 TutorialSequence.Instacne.CheatTutorialClearSpecific();
             }
@@ -823,7 +823,7 @@ public class GameManager : MonoBehaviour
                     PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
                 }
 
-                if (currentLevel.isSpecificTutorial && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft)
+                if (currentLevel.isSpecificTutorial && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.AnimalAlbum)
                 {
                     TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(currentLevel.numIndexForLeaderBoard);
                     PlayerManager.Instance.CheckTransformTempPowersToActualPowers();

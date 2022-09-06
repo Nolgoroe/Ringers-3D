@@ -307,6 +307,11 @@ public class PlayfabManager : MonoBehaviour
             UIManager.Instance.TurnOnRingersHutAndInventoryButtons();
         }
 
+        if (TutorialSaveData.Instance.hasFinishedAnimalAlbum)
+        {
+            UIManager.Instance.TurnOnAnimalAlbumButtons();
+        }
+
         //if (ZoneManager.Instance.hasStartedVinebloom)
         //{
         //    UIManager.Instance.TurnOnLeaderboardButtons();

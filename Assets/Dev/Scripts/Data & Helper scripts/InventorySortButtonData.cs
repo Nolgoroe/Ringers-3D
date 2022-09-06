@@ -8,4 +8,5 @@ public class InventorySortButtonData : MonoBehaviour
     public Sprite selectedSprite;
     public int id;
     public Image transformImage;
+    public GameObject highlightObject;
 }

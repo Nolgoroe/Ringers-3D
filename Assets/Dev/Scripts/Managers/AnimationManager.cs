@@ -890,7 +890,7 @@ public class AnimationManager : MonoBehaviour
 
         if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
         {
-            if (GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen)
+            if (GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.AnimalAlbum)
             {
                 LeanTween.value(UIManager.Instance.nextLevelFromWinScreen.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
                 {
@@ -926,6 +926,7 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.dealButton.interactable = true;
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
+        TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
         //TutorialSequence.Instacne.CheckDoDenTutorial();
         //CheckShowLootTutorial();
         StartCoroutine(CheckShowLootTutorial());
@@ -1041,7 +1042,7 @@ public class AnimationManager : MonoBehaviour
 
         if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
         {
-            if (GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen)
+            if (GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.AnimalAlbum)
             {
                 Image nextLevelButtonImage = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>();
                 nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 1);
@@ -1067,6 +1068,7 @@ public class AnimationManager : MonoBehaviour
 
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
+        TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
         //TutorialSequence.Instacne.CheckDoDenTutorial();
         //CheckShowLootTutorial();
         StartCoroutine(CheckShowLootTutorial());
@@ -1090,12 +1092,9 @@ public class AnimationManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.lootTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard)) /// specificTutorialIndex == 0  is loot tutorial
         {
-            //TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.specificTutorialIndex);
             LootManager.Instance.rubiesToRecieveInLevel = 8;
             StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
-            //TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add((int)GameManager.Instance.currentLevel.specificTutorialEnum);
             TutorialSequence.Instacne.currentSpecificTutorial = SpecificTutorialsEnum.lootTutorial;
-            //TutorialSaveData.Instance.SaveTutorialSaveData();
         }
     }
     public void ZoomIntoCorruptArea(int ID)

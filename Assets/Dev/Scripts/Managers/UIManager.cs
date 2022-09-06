@@ -69,6 +69,8 @@ public class UIManager : MonoBehaviour
     public GameObject openInventoryButtonHeighlight;
     public GameObject openInventoryButtonHeighlightDenScreen;
     public GameObject openDenButtonHeighlight;
+    public GameObject openAnimalAlbumButtonHeighlight;
+    public GameObject animalAlbumStagTabButtonHeighlight;
     public GameObject potionTabHeighlight;
     public GameObject hollowCraftTabHeighlight;
     public GameObject toHubButtonHeighlight;
@@ -172,6 +174,8 @@ public class UIManager : MonoBehaviour
     public Button openInventoryButttonMap;
     public Button openLeaderboardButttonMap;
     public Button openDenButttonMap;
+    public Button openAnimalAlbumButttonMap;
+    public Button animalAlbumStagTabButton;
     public Button returnToMapButttonDen;
     public Button openLeaderboardButttonDen;
     public Button openInventoryButttonDen;
@@ -244,6 +248,7 @@ public class UIManager : MonoBehaviour
     public Button[] inventoryButtons;
     public Button[] hutButtons;
     public Button[] LeaderboardButtons;
+    public Button[] animalAlbumButtons;
 
     [Header("options screen")]
     public GameObject toMapButton;
@@ -353,6 +358,11 @@ public class UIManager : MonoBehaviour
         }
 
         foreach (var item in LeaderboardButtons)
+        {
+            item.interactable = false;
+        }
+
+        foreach (var item in animalAlbumButtons)
         {
             item.interactable = false;
         }
@@ -723,20 +733,22 @@ public class UIManager : MonoBehaviour
             ConnectionManager.Instance.ResetConnectionData();
             ConnectionManager.Instance.ResetAllLastPieceAlgoritmData();
 
-            //foreach (int ID in ZoneManager.Instance.unlockedZoneID)
-            //{
-            //    ZoneManagerHelpData.Instance.listOfAllZones[ID].SaveZone();
-            //}
 
             if (TutorialSequence.Instacne.duringSequence)
             {
-                if (GameManager.Instance.currentLevel.isSpecificTutorial && (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft || GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen))
+                if (GameManager.Instance.currentLevel.isSpecificTutorial)
                 {
-                    //gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(false);
-                    //HudCanvasUIHEIGHLIGHTS.SetActive(true);
                     isUsingUI = true;
 
-                    TurnOnRingersHutAndInventoryButtons();
+                    if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.AnimalAlbum)
+                    {
+                        TurnOnAnimalAlbumButtons();
+                    }
+
+                    if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft || GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
+                    {
+                        TurnOnRingersHutAndInventoryButtons();
+                    }
 
                     TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
                 }
@@ -765,7 +777,6 @@ public class UIManager : MonoBehaviour
                 {
                     AppReviewManager.instance.ShowReviewMessage();
                 }
-                //FocusOnArea(ZoneManager.Instance.unlockedZoneID[ZoneManager.Instance.unlockedZoneID.Count - 1]);
             }
 
             UnlockLevels();
@@ -963,7 +974,7 @@ public class UIManager : MonoBehaviour
 
             if (TutorialSequence.Instacne.duringSequence)
             {
-                if (requiredButtonForTutorialPhase != openInventoryButttonMap && requiredButtonForTutorialPhase != openInventoryButttonDen)
+                if (requiredButtonForTutorialPhase != openAnimalAlbumButttonMap)
                 {
                     return;
                 }
@@ -996,6 +1007,14 @@ public class UIManager : MonoBehaviour
             SortMaster.Instance.SortAnimalsInAlbum(0);
 
             animalAlbum.SetActive(true);
+
+            if (TutorialSequence.Instacne.duringSequence)
+            {
+                if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.AnimalAlbum)
+                {
+                    TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                }
+            }
         }
         else
         {
@@ -1013,12 +1032,7 @@ public class UIManager : MonoBehaviour
     {
         if (TutorialSequence.Instacne.duringSequence)
         {
-            if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
-            {
-                return;
-            }
-
-            if (requiredButtonForTutorialPhase != animalAlbumSortButtons[buttonID])
+            if (requiredButtonForTutorialPhase.gameObject != animalAlbumSortButtons[buttonID].gameObject)
             {
                 return;
             }
@@ -1043,6 +1057,15 @@ public class UIManager : MonoBehaviour
         }
 
         SortMaster.Instance.SortAnimalsInAlbum(buttonID);
+
+
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.AnimalAlbum)
+            {
+                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            }
+        }
     }
 
     public void OpenHollowCraftAndOwnedZone()
@@ -1544,13 +1567,6 @@ public class UIManager : MonoBehaviour
                         }
                     }
                 }
-
-                //BPZ.theZone.zoneGrindLevel.GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelFirstTimeColor); // 3D map
-
-                //BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconSprite);
-                //BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIconSprite;
-                //BPZ.theZone.zoneGrindLevel.GetComponent<Image>().sprite = ISPZ.grindLevelSprite;
-                //BPZ.theZone.zoneGrindLevel.GetComponent<Button>().interactable = true;
             }
 
             for (int i = 0; i < BPZ.zone3DButtons.Length; i++)
@@ -1571,7 +1587,6 @@ public class UIManager : MonoBehaviour
                 }
                 else
                 {
-                    //BPZ.zone3DButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIconSprite;
                     BPZ.zone3DButtons[i].GetComponent<Image>().sprite = ISPZ.levelFirstTimeIconSprite;
                 }
             }
@@ -1584,11 +1599,7 @@ public class UIManager : MonoBehaviour
                 }
 
                 if (i + 1 != BPZ.theZone.maxLevelReachedInZone)
-                {
-                    //BPZ.zone3DButtons[i].GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelDoneColor); //3D map
-
-                    //BPZ.zone3DButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelDoneSprite);
-                    
+                {                    
                     if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isAnimalLevel)
                     {
                         IconSpritesPerCondition ISPC = ZoneManagerHelpData.Instance.iconsPerConditon.Where(p => p.isAnimal).SingleOrDefault();
@@ -1603,19 +1614,11 @@ public class UIManager : MonoBehaviour
                     }
                     else
                     {
-                        //BPZ.zone3DButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelDoneSprite;
                         BPZ.zone3DButtons[i].GetComponent<Image>().sprite = ISPZ.levelDoneSprite;
                     }
-                    //BPZ.zone3DButtons[i].GetComponent<Renderer>().material.color = BPZ.theZone.levelDoneColor;
-                    //BPZ.zoneButtons[i].interactable = false; //// Disable levels that have already been completed
-                    //BPZ.zone3DButtons[i].interactable = true; /// temp for testing - isn't button anymore
                 }
                 else
                 {
-                    //BPZ.zone3DButtons[i].GetComponent<Renderer>().material.SetColor("_BaseColor", BPZ.theZone.levelFirstTimeColor); 3D map
-
-                    //BPZ.zone3DButtons[i].GetComponent<Image>().sprite = Resources.Load<Sprite>(BPZ.theZone.levelFirstTimeIconSprite);
-
                     BPZ.zone3DButtons[i].GetComponent<Interactable3D>().TurnOnVFX();
                     
                     if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isAnimalLevel)
@@ -1632,10 +1635,8 @@ public class UIManager : MonoBehaviour
                     }
                     else
                     {
-                        //BPZ.zone3DButtons[i].GetComponent<Image>().sprite = BPZ.theZone.levelFirstTimeIconSprite;
                         BPZ.zone3DButtons[i].GetComponent<Image>().sprite = ISPZ.nextLevelSprite;
                     }
-                    //BPZ.zone3DButtons[i].interactable = true; // isn't button anymore
                 }
 
             }
@@ -2690,6 +2691,13 @@ public class UIManager : MonoBehaviour
     public void TurnOnLeaderboardButtons()
     {
         foreach (var item in LeaderboardButtons)
+        {
+            item.interactable = true;
+        }
+    }
+    public void TurnOnAnimalAlbumButtons()
+    {
+        foreach (var item in animalAlbumButtons)
         {
             item.interactable = true;
         }
