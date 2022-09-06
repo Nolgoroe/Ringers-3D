@@ -412,7 +412,6 @@ public class UIManager : MonoBehaviour
     public void PlayButton()
     {
         ToHud(mainMenu);
-        //ZoneManager.Instance.UnlockLevelViewSequence();
         UnlockLevels();
 
         GameManager.Instance.clickedPlayButton = true;
@@ -645,7 +644,6 @@ public class UIManager : MonoBehaviour
                 SoundManager.Instance.CancelLeantweensSound();
                 SoundManager.Instance.CancelCoRoutinesSound();
 
-                //StartCoroutine(SoundManager.Instance.FadeOutAmbientMusicLevel(SoundManager.Instance.timeFadeOutAmbienceLevel, true));
                 SoundManager.Instance.CallFadeOutAmbientMusicLevel(SoundManager.Instance.timeFadeOutAmbienceLevel, true);
             }
 
@@ -657,12 +655,6 @@ public class UIManager : MonoBehaviour
 
             AnimationManager.instance.StopAllCoroutines();
             AnimationManager.instance.ResetAllSkipData();
-
-            //if (AnimationManager.instance.endAnimToWinScreen != null)
-            //{
-            //    StopCoroutine(AnimationManager.instance.endAnimToWinScreen);
-            //    AnimationManager.instance.endAnimToWinScreen = null;
-            //}
 
             if (GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial)
             {
@@ -701,10 +693,8 @@ public class UIManager : MonoBehaviour
             youWinScreen.SetActive(false);
             bGPanelDisableTouch.SetActive(false);
 
-            //youLoseText.SetActive(false);
             loseScreen.SetActive(false);
             tutorialCanvasLevels.SetActive(false);
-            //blackLevelBG.SetActive(false);
             ResetTopAndBottomPos();
 
             foreach (GameObject go in allTutorialScreens)
@@ -1664,8 +1654,6 @@ public class UIManager : MonoBehaviour
     }
     public void TurnOffGameplayUI()
     {
-        //blackLevelBG.SetActive(false);
-        //gameplayCanvasBotom.SetActive(false);
         DecideBottmUIShow(GameManager.Instance.currentLevel.bottomUIToShow);
         gameplayCanvasTop.SetActive(false);
         InGameUiScreens.SetActive(false);
@@ -1678,8 +1666,6 @@ public class UIManager : MonoBehaviour
     }
     public void TurnOnGameplayUI()
     {
-        //blackLevelBG.SetActive(true);
-        //gameplayCanvasBotom.SetActive(true);
         DecideBottmUIShow(GameManager.Instance.currentLevel.bottomUIToShow);
         gameplayCanvasTop.SetActive(true);
         InGameUiScreens.SetActive(true);
@@ -1691,10 +1677,6 @@ public class UIManager : MonoBehaviour
             cheatOptionsButtonIngame.gameObject.SetActive(true);
         }
     }
-    //public void RefreshDewDropsDisplay(int spriteIndex)
-    //{
-    //    dewDropsImage.sprite = dewDropsSprites[spriteIndex];
-    //}
     public void ChangeControlsTap()
     {
         SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
@@ -1785,7 +1767,6 @@ public class UIManager : MonoBehaviour
             }
 
             activeScreen = leaderboardScreen;
-            //isUsingUI = true;
 
             PlayfabManager.instance.GetLeaderboard();
         }
@@ -1793,7 +1774,6 @@ public class UIManager : MonoBehaviour
         {
             leaderboardScreen.SetActive(false);
             activeScreen = null;
-            //isUsingUI = false;
         }
     }
     public void SureWantToResetDataMessage()
@@ -1812,7 +1792,6 @@ public class UIManager : MonoBehaviour
     }
     public void SureWantToResetDataYes()
     {
-        //isUsingUI = false;
         SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
 
         sureWantToResetDataScreen.SetActive(false);
@@ -1823,7 +1802,6 @@ public class UIManager : MonoBehaviour
     {
         SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
 
-        //isUsingUI = false;
         activeScreen = null;
 
         sureWantToResetDataScreen.SetActive(false);
@@ -1840,21 +1818,16 @@ public class UIManager : MonoBehaviour
         activeScreen = sureWantToLogOutScreen;
         sureWantToLogOutScreen.SetActive(true);
 
-        //DateTime timeToSave = PlayfabManager.instance.currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
         StartCoroutine(PlayfabManager.instance.GetServerCurrentTimeUpdated());
     }
     public void SureWantToLogOutYes()
     {
-        //isUsingUI = false;
-
         sureWantToLogOutScreen.SetActive(false);
 
         PlayfabManager.instance.LogOut();
     }
     public void SureWantToLogOutNo()
     {
-        //isUsingUI = false;
-
         activeScreen = null;
 
         sureWantToLogOutScreen.SetActive(false);
@@ -1865,7 +1838,6 @@ public class UIManager : MonoBehaviour
         {
             if (!isUsingUI)
             {
-            //    isUsingUI = true;
                 DailyRewardScreen.SetActive(true);
 
                 activeScreen = DailyRewardScreen;
@@ -1885,7 +1857,6 @@ public class UIManager : MonoBehaviour
             }
             SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
 
-            //isUsingUI = true;
             DailyRewardScreen.SetActive(true);
 
             activeScreen = DailyRewardScreen;
@@ -1897,25 +1868,9 @@ public class UIManager : MonoBehaviour
     }
     void DeactivateDailyRewardScreen()
     {
-        //yield return new WaitForSeconds(1);
-        //isUsingUI = false;
         closeWindow(DailyRewardScreen);
         ZoneManager.Instance.UnlockLevelViewSequence();
     }
-    //public void DisplayCantBuyPotionScreen()
-    //{
-    //    cantBuyPotionCraftScreen.SetActive(true);
-    //}
-
-    //public void DisplayCantBuyPotionText(int amount)
-    //{
-    //    cantBuyPotionText.text = "Rubies needed: " + PlayerManager.Instance.rubyCount + "/" + amount;
-    //}
-
-    //public void CantBuyPotionScreenOK()
-    //{
-    //    cantBuyPotionCraftScreen.SetActive(false);
-    //}
     public void DisplayBuyPotionScreen()
     {
         MissingMaterialsPotionCraftScreen.SetActive(true);
@@ -1973,7 +1928,6 @@ public class UIManager : MonoBehaviour
     public void DisplayBuyHollowSecondaryScreen()
     {
         MissingMaterialsHollowObjectScreen.SetActive(true);
-        //isUsingUI = true;
     }
     public void DisplayHollowScreenRubyCostText(int amount, bool canbuy)
     {
@@ -2021,7 +1975,6 @@ public class UIManager : MonoBehaviour
 
         MissingMaterialsHollowObjectScreen.SetActive(false);
         ClearBuyHollowSecondaryDisplay();
-        //isUsingUI = false;
     }
     public void BuyHollowItemSecondaryScreenNo()
     {
@@ -2029,7 +1982,6 @@ public class UIManager : MonoBehaviour
 
         MissingMaterialsHollowObjectScreen.SetActive(false);
         ClearBuyHollowSecondaryDisplay();
-        //isUsingUI = false;
     }
     public void DisplayBuyHollowItemNeeded(List<CraftingMatsNeededToRubies> INmaterialsNeedToBuyHollow)
     {
@@ -2092,13 +2044,6 @@ public class UIManager : MonoBehaviour
                 newColor.a = val;
                 sr.color = newColor;
             });
-            //LeanTween.value(fadeIntoLevel, 0, 1, fadeIntoLevelSpeed).setEase(LeanTweenType.linear).setOnComplete(() => GameManager.Instance.ResetDataStartLevel(isTutorialLevel, false)).setOnUpdate((float val) =>
-            //{
-            //    Image sr = fadeIntoLevel.GetComponent<Image>();
-            //    Color newColor = sr.color;
-            //    newColor.a = val;
-            //    sr.color = newColor;
-            //});
         }
         else
         {
@@ -2146,13 +2091,6 @@ public class UIManager : MonoBehaviour
             sr.color = newColor;
         });
 
-        //LeanTween.value(introImages[0].textObjects[0], 0, 1, speedFadeInIntro + offsetTimeForFirstPage).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-        //{
-        //    TMP_Text sr = introImages[0].textObjects[0].GetComponent<TMP_Text>();
-        //    Color newColor = sr.color;
-        //    newColor.a = val;
-        //    sr.color = newColor;
-        //});
 
         yield return new WaitForSeconds(speedFadeInIntro + offsetTimeForFirstPage);
 
@@ -2225,8 +2163,6 @@ public class UIManager : MonoBehaviour
                 IntroTapToContinue.alpha = val;
             });
 
-            //foreach (GameObject go in introImages[introImageIndex].textObjects)
-            //{
 
             LeanTween.value(introImages[introImageIndex].textObjects[introImages[introImageIndex].textObjects.Count() - 1], 1, 0, speedFadeOutIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
             {
@@ -2236,7 +2172,6 @@ public class UIManager : MonoBehaviour
                 sr.color = newColor;
             });
 
-            //}
             pageFlipped = true;
             introImageTextIndex = 0;
         }
@@ -2267,13 +2202,6 @@ public class UIManager : MonoBehaviour
             effect.gameObject.SetActive(true);
             effect.Play();
 
-            //LeanTween.value(introImages[introImageIndex].textObjects[introImageTextIndex], 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-            //{
-            //    TMP_Text sr = introImages[introImageIndex].textObjects[introImageTextIndex].GetComponent<TMP_Text>();
-            //    Color newColor = sr.color;
-            //    newColor.a = val;
-            //    sr.color = newColor;
-            //});
         }
 
 
@@ -2309,15 +2237,7 @@ public class UIManager : MonoBehaviour
                 yield break;
             }
             else
-            {
-                //LeanTween.value(introImages[introImageIndex].imageObject, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-                //{
-                //    Image sr = introImages[introImageIndex].imageObject.GetComponent<Image>();
-                //    Color newColor = sr.color;
-                //    newColor.a = val;
-                //    sr.color = newColor;
-                //});
-                 
+            {                 
                 LeanTween.value(IntroSkipButton.gameObject, 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
                 {
                     IntroSkipButton.alpha = val;
@@ -2331,15 +2251,6 @@ public class UIManager : MonoBehaviour
                 TextMeshProEffect effect = introImages[introImageIndex].textObjects[introImageTextIndex].GetComponent<TextMeshProEffect>();
                 effect.gameObject.SetActive(true);
                 effect.Play();
-
-                //LeanTween.value(introImages[introImageIndex].textObjects[introImageTextIndex], 0, 1, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-                //{
-                //    TMP_Text sr = introImages[introImageIndex].textObjects[introImageTextIndex].GetComponent<TMP_Text>();
-                //    Color newColor = sr.color;
-                //    newColor.a = val;
-                //    sr.color = newColor;
-                //});
-
             }
 
             yield return new WaitForSeconds(speedFadeInIntro);
@@ -2378,14 +2289,6 @@ public class UIManager : MonoBehaviour
                 CanvasGroup group = introScreenParent.GetComponent<CanvasGroup>();
                 group.alpha = val;
             });
-
-            //LeanTween.value(TEMPBgIntro, 1, 0, speedFadeInIntro).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-            //{
-            //    Image sr = TEMPBgIntro.GetComponent<Image>();
-            //    Color newColor = sr.color;
-            //    newColor.a = val;
-            //    sr.color = newColor;
-            //});
         }
 
         yield return new WaitForSeconds(speedFadeOutIntro + 0.1f);
@@ -2502,8 +2405,6 @@ public class UIManager : MonoBehaviour
     {
         SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
 
-        //isUsingUI = false;
-
         releaseAnimalToDenScreen.SetActive(false);
 
         ToHud(gameplayCanvas);
@@ -2555,6 +2456,7 @@ public class UIManager : MonoBehaviour
             cheatOptionsButton.SetActive(true);
             cheatOptionsButtonIngame.gameObject.SetActive(false);
             bossLevelsParent.SetActive(true);
+            ZoneManagerHelpData.Instance.testZone.SetActive(true);
         }
     }
 
@@ -2620,15 +2522,6 @@ public class UIManager : MonoBehaviour
 
     public void ShowAreYouSureQuitScreen()
     {
-        //DateTime timeToSave = PlayfabManager.instance.currentTimeReference.Add(TimeReferenceDataScript.GetTimeElapsed());
-
-
-
-        //Debug.Log(timeToSave + "Pause time!");
-
-        //RewardsManager.Instance.UpdateQuitTime(timeToSave);
-        //DewDropsManager.Instance.UpdateQuitTime(timeToSave);
-
         StartCoroutine(PlayfabManager.instance.GetServerCurrentTimeUpdated());
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ALL });

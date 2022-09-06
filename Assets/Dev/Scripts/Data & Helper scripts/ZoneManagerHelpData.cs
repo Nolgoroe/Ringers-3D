@@ -64,10 +64,12 @@ public class ZoneManagerHelpData : MonoBehaviour
 
     public List<GameObject> zoneGrindLevelPerZone;
 
+    public GameObject testZone;
     private void Start()
     {
-        Instance = this;    
+        Instance = this;
 
+        testZone.SetActive(false);
 
         ZoneManager.Instance.ActivateLevelDisplay();
         currentZoneName = null;

@@ -38,6 +38,7 @@ public class LevelScriptableObject : ScriptableObject
     public bool isAnimalLevel = true;
     public bool isReleaseAnimalToDen;
     public bool isKeyLevel;
+    public bool isTestLevel;
     public bool showIntroLevelAnimation;
     public GameObject boardPrefab;
     public GameObject clipPrefab;
@@ -58,10 +59,6 @@ public class LevelScriptableObject : ScriptableObject
 
     public stonePieceDataStruct[] stoneTiles;
     public sliceToSpawnDataStruct[] slicesToSpawn;
-    //public SliceCatagory[] slicesToSpawn;
-    //public bool[] lockSlices;
-    //public bool[] lootSlices;
-    //public bool[] limiterSlices;
     public LootPacks[] RewardBags;
 
 

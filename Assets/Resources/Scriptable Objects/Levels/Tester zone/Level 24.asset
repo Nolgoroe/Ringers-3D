@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f245e6ade46975b42912a0bdcd673818, type: 3}
+  m_Name: Level 24
+  m_EditorClassIdentifier: 
+  worldName: Tester zone
+  isGrindLevel: 0
+  is12PieceRing: 0
+  isDoubleRing: 0
+  isBoss: 0
+  isAnimalLevel: 0
+  isReleaseAnimalToDen: 0
+  isKeyLevel: 0
+  isTestLevel: 1
+  showIntroLevelAnimation: 1
+  boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
+    type: 3}
+  clipPrefab: {fileID: 6183251264102439455, guid: ff432a4cdfd3d8c4ab183be2d82d571e,
+    type: 3}
+  levelNum: 24
+  worldNum: 5
+  levelIndexInZone: 24
+  numIndexForLeaderBoard: 24
+  tutorialIndexForList: -1
+  cellsCountInLevel: 8
+  RandomSlicePositions: 0
+  allowRepeatSlices: 0
+  allowRepeatTiles: 0
+  allowRepeatTileSides: 0
+  powerupsForLevel: 
+  specificAnimalForLevel: {fileID: 4102538602839744026, guid: 2d078f20a3e839d46ae45c38a4b5a23a,
+    type: 3}
+  stoneTiles: []
+  slicesToSpawn:
+  - sliceToSpawn: 3
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
+  - sliceToSpawn: 1
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
+  RewardBags: 0600000007000000
+  levelAvailableColors: 040000000300000002000000
+  levelAvailablesymbols: 0000000001000000
+  symbolsNeededForSpecialPowers: []
+  isSpecificTutorial: 0
+  isTutorial: 0
+  specificTutorialEnum: 0
+  bottomUIToShow: 0
+  arrayOfPieces: []
+  specificSliceSpots: 0000000004000000
+  specificSlicesShapes: 
+  specificSlicesColors: 
+  BossHealth: 0
+  isRandomPieces: 0
+  specificPiecesIndex: 
+  rubyRewardNoDefeat: 0
+  rubyRewardDefeat: 0
+  ver1Boss: 0
+  timeForLevelInSeconds: 0
+  dealButtonTimer: 0
+  damageToBossCompeleRing: 0
+  useLastClipAlgoritm: 1
+  algoritmStepsWanted: 0

@@ -83,15 +83,12 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
             if (connectedLevelScriptableObject.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedLevelScriptableObject.levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
             {
                 GameManager.Instance.levelStarted = true;
-                //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
                 GameManager.Instance.ChooseLevel(connectedLevelScriptableObject.levelIndexInZone);
                 GameManager.Instance.setCurrentLevelBG(connectedLevelScriptableObject.worldNum);
-                //GameManager.Instance.CallStartLevel(false);
 
                 TurnOffVFX();
 
-                //StartCoroutine(SoundManager.Instance.FadeOutMapBGMusic(SoundManager.Instance.timeFadeOutBGMusic, true));
                 SoundManager.Instance.FadeOutMapBGMusic(SoundManager.Instance.timeFadeOutBGMusic, true);
 
                 GameManager.Instance.StartLevel(true, false);
@@ -109,11 +106,9 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
             if (ZoneManagerHelpData.Instance.currentZoneCheck.hasUnlockedGrind)
             {
                 GameManager.Instance.levelStarted = true;
-                //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
                 GameManager.Instance.ChooseLevelGrind(connectedLevelScriptableObject.levelIndexInZone);
                 GameManager.Instance.setCurrentLevelBG(connectedLevelScriptableObject.worldNum);
-                //GameManager.Instance.CallStartLevel(false);
 
                 TurnOffVFX();
 
@@ -134,11 +129,9 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
             if (connectedLevelScriptableObject.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedLevelScriptableObject.levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
             {
                 GameManager.Instance.levelStarted = true;
-                //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
                 GameManager.Instance.ChooseLevel(connectedLevelScriptableObject.levelIndexInZone);
                 GameManager.Instance.setCurrentLevelBG(connectedLevelScriptableObject.worldNum);
-                //GameManager.Instance.CallStartLevel(true);
 
                 TurnOffVFX();
 
@@ -190,11 +183,9 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
             if (connectedLevelScriptableObject.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedLevelScriptableObject.levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
             {
                 GameManager.Instance.levelStarted = true;
-                //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
                 GameManager.Instance.ChooseLevel(connectedLevelScriptableObject.levelIndexInZone);
                 GameManager.Instance.setCurrentLevelBG(connectedLevelScriptableObject.worldNum);
-                //GameManager.Instance.CallStartLevel(true);
 
                 TurnOffVFX();
 

@@ -235,22 +235,9 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(true);
 
 
-        //foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
-        //{
-        //    MoveSubPiece(SP);
-
-        //    if (!noWaitPieces)
-        //    {
-        //        yield return new WaitForSeconds(waitBetweenPieceMove);
-        //    }
-        //}
 
         ConnectionManager.Instance.TurnOffAllConnectedVFX();
 
-        //yield return new WaitForSeconds(speedOutTopBottom + 0.1f);
-        //boardScreenshot = Instantiate(GameManager.Instance.gameBoard, new Vector3(100, 0, 0), Quaternion.identity);
-        //boardScreenshot.transform.SetParent(GameManager.Instance.destroyOutOfLevel);
-        //yield return new WaitForSeconds(0.1f);
 
         if (!GameManager.Instance.currentLevel.isGrindLevel)
         {
@@ -273,62 +260,13 @@ public class AnimationManager : MonoBehaviour
 
 
 
-        //yield return new WaitForSeconds(waitTimeParticlesStart);
-
-        //foreach (Cell C in ConnectionManager.Instance.cells)
-        //{
-        //    ActivateParticleEffectsMiddle(C.pieceHeld.midPiece);
-        //    if (!noWaitParticles)
-        //    {
-        //        yield return new WaitForSeconds(waitBetweenPieceMove);
-        //    }
-        //}
-
         if (!noWaitDissolve)
         {
             yield return new WaitForSeconds(waitTimeDissolveTiles);
         }
 
-        ////// Dissolve Tiles Here
-        //StartCoroutine(DissolveTiles());
 
         yield return new WaitUntil(() => dissolveStart == true);
-
-        //yield return new WaitForSeconds(waitTimePullIn);
-
-
-        //for (int i = 0; i < ConnectionManager.Instance.subPiecesOnBoard.Length; i++)
-        //{
-
-        //    int rand = UnityEngine.Random.Range(0, tempSubPieceArray.Count);
-
-        //    PullIn(tempSubPieceArray[rand]);
-
-        //    tempSubPieceArray.RemoveAt(rand);
-
-        //    if (!noWaitPullIn)
-        //    {
-        //        yield return new WaitForSeconds(UnityEngine.Random.Range(minMaxWaitPullInPieces.a, minMaxWaitPullInPieces.b));
-        //    }
-        //}
-
-        //yield return new WaitForSeconds(waitTimeFadeIn);
-        ////fadeImageEndLevel.gameObject.SetActive(true);
-
-        //LeanTween.value(fadeImageEndLevel.gameObject, 0f, 1, fadingSpeedGameplay).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-        //{
-        //    Image sr = fadeImageEndLevel;
-        //    Color newColor = sr.color;
-        //    newColor.a = val;
-        //    sr.color = newColor;
-        //});
-
-
-        //yield return new WaitForSeconds(waitTimeWinScreen);
-
-
-        //Destroy(GameManager.Instance.gameBoard.gameObject);
-        //GameManager.Instance.gameBoard.gameObject.transform.position = new Vector3(100, 0, 0);
 
         ZoneManagerHelpData.Instance.ChangeZoneToNormalZoneDisplay();
 
@@ -357,31 +295,8 @@ public class AnimationManager : MonoBehaviour
             cell.pieceHeld.gameObject.SetActive(false);
         }
 
-        //yield return new WaitForSeconds(waitTimeBoardFadeIn);
 
         Destroy(GameManager.Instance.gameClip.gameObject);
-
-        //foreach (GameObject GO in turnOff)
-        //{
-        //    GO.SetActive(true);
-        //}
-
-        //turnOff = null;
-
-        //GameManager.Instance.WinAfterAnimation();
-        //MoveBoardScreenshotToPosition(boardScreenshot);
-        //UnDissolveTiles();
-
-
-        //yield return new WaitForSeconds(waitTimeFadeOut);
-
-        //LeanTween.value(fadeImageEndLevel.gameObject, 1, 0, fadingSpeedGameplay).setEase(LeanTweenType.easeInOutQuad).setOnUpdate((float val) =>
-        //{
-        //    Image sr = fadeImageEndLevel;
-        //    Color newColor = sr.color;
-        //    newColor.a = val;
-        //    sr.color = newColor;
-        //});
 
         UIManager.Instance.TurnOffGameplayUI();
         UIManager.Instance.InGameUiScreens.SetActive(true);
@@ -415,12 +330,6 @@ public class AnimationManager : MonoBehaviour
             hasSkippedToAnimalAnim = true;
         }
 
-
-        //yield return new WaitForSeconds(waitTimeFadeOut);
-
-        //yield return new WaitUntil((() => fadeImageEndLevel.color.a <= 0.1f));
-        //fadeImageEndLevel.gameObject.SetActive(false);
-
         UIManager.Instance.restartButton.interactable = true;
         UIManager.Instance.dealButton.interactable = true;
 
@@ -428,19 +337,6 @@ public class AnimationManager : MonoBehaviour
         {
             StartCoroutine(AfterAnimalAnimation());
         }
-
-        //PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
-
-        //yield return new WaitForSeconds(4f);
-
-        //UnDissolveTiles(false);
-
-       // yield return new WaitForSeconds(0.1f); //unDissolve time
-        //MoveBoardScreenshotToPosition(boardScreenshot);
-        //UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
-        //GameManager.Instance.WinAfterAnimation();
-        //CheckShowLootTutorial();
-        //TutorialSequence.Instacne.CheckDoPotionTutorial();
     }
 
     private void MoveTopButtonAnim()
@@ -717,19 +613,11 @@ public class AnimationManager : MonoBehaviour
 
         if (hasSkippedToAfterAnimalAnim)
         {
-            //if (endAnimToWinScreen != null)
-            //{
-            //    StopCoroutine(endAnimToWinScreen);
-            //}
-            //hasSkippedToAfterAnimalAnim = false;
-
 
             StopCoroutine("AfterAnimalAnimation");
 
             SkipBoardAnim();
 
-
-            //endAnimToWinScreen = null;
             yield break;
         }
         else
@@ -851,11 +739,6 @@ public class AnimationManager : MonoBehaviour
         yield return new WaitForSeconds(timeToScaleBoard + 0.1f);
         GameManager.Instance.WinAfterAnimation();
 
-        //if(LootManager.Instance.rubiesToRecieveInLevel > 0 || LootManager.Instance.craftingMatsLootForLevel.Count > 0)
-        //{
-        //    yield return new WaitUntil(() => LootManager.Instance.finishedGivingLoot == true);
-        //}
-
         yield return new WaitForSeconds(waitTimeButtonsAppear);
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
 
@@ -911,12 +794,6 @@ public class AnimationManager : MonoBehaviour
                 image.color = newColor;
             });
         }
-        //if (!isSkip)
-        //{
-        //    yield return new WaitForSeconds(4);
-        //}
-
-        //UnDissolveTiles(true);
 
         yield return new WaitForSeconds(fadeInTimeButtons + 0.1f);
         ConnectionManager.Instance.TurnOffAllConnectedVFX();
@@ -927,8 +804,8 @@ public class AnimationManager : MonoBehaviour
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
         TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
-        //TutorialSequence.Instacne.CheckDoDenTutorial();
-        //CheckShowLootTutorial();
+        //TutorialSequence.Instacne.CheckDoDenTutorial(); //temp keep here
+
         StartCoroutine(CheckShowLootTutorial());
 
         if (!GameManager.Instance.currentLevel.isGrindLevel)
@@ -936,27 +813,26 @@ public class AnimationManager : MonoBehaviour
             UIManager.Instance.CheckTurnOnReleaseAnimalScreen();
         }
 
-        //hasSkippedToAfterAnimalAnim = false;
 
-        Debug.LogError("Reached end of After animal");
+
+        ///check bar progress here for test levels
+        /// this might change places depending on where we want it in animation
+        if(GameManager.Instance.currentLevel.isTestLevel)
+        {
+            // progress bar and check to see if reched max.. if we did - what to do with loot?
+        }
+
+
+        Debug.LogError("Reached end of end level sequence");
         endLevelAnimationON = false;
-
-        //ResetAllSkipData();
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
     }
 
     public void SkipBoardAnim()
     {
-        //StopCoroutine(endAnimToWinScreen);
-
         endLevelAnimationON = true;
         hasSkippedToBoardAnim = true;
-
-        //if (turnOff == null)
-        //{
-        //    turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
-        //}
 
         GameManager.Instance.gameBoard.transform.position = new Vector3(0, 1.55f, 0);
         GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>().enabled = true;
@@ -987,7 +863,6 @@ public class AnimationManager : MonoBehaviour
                 cell.pieceHeld.gameObject.SetActive(true);
             }
         }
-
 
 
         UIManager.Instance.youWinScreen.SetActive(true);
@@ -1037,7 +912,6 @@ public class AnimationManager : MonoBehaviour
             CanvasGroup restartGrind = UIManager.Instance.restartGrindLevel.GetComponent<CanvasGroup>();
 
             restartGrind.alpha = 1;
-            //restartGrind.color = new Color(restartGrind.color.r, restartGrind.color.g, restartGrind.color.b, 1);
         }
 
         if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
@@ -1069,8 +943,7 @@ public class AnimationManager : MonoBehaviour
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
         TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
-        //TutorialSequence.Instacne.CheckDoDenTutorial();
-        //CheckShowLootTutorial();
+        //TutorialSequence.Instacne.CheckDoDenTutorial(); // temp keep here
         StartCoroutine(CheckShowLootTutorial());
 
         if (!GameManager.Instance.currentLevel.isGrindLevel)
@@ -1078,12 +951,17 @@ public class AnimationManager : MonoBehaviour
             UIManager.Instance.CheckTurnOnReleaseAnimalScreen();
         }
 
-        Debug.LogError("Reached end of skip board");
+        ///check bar progress here for test levels
+        /// this might change places depending on where we want it in animation
+        if (GameManager.Instance.currentLevel.isTestLevel)
+        {
+            // progress bar and check to see if reched max.. if we did - what to do with loot?
+        }
 
-        //hasSkippedToBoardAnim = false;
+        Debug.LogError("Reached end of sequence - skipped board");
+
         endLevelAnimationON = false;
 
-        //ResetAllSkipData();
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
     }
