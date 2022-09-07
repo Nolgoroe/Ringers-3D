@@ -29,7 +29,7 @@ public class AlbumImageAnimalData : MonoBehaviour
         }
     }
 
-    private void AfterReveal()
+    public void AfterReveal()
     {
         hiddenAnimal.SetActive(false);
     }

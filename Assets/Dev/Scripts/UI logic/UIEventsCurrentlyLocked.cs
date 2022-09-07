@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class UIEventsCurrentlyLocked : MonoBehaviour, IPointerClickHandler
 {
     public GameObject connectedUIScreen;
-    bool isInventory, isAlbum, isDen;
+    public bool isInventory, isAlbum, isDen;
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!UIManager.Instance.isUsingUI)

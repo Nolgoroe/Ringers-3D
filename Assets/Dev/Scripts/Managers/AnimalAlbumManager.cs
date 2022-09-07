@@ -129,6 +129,7 @@ public class AnimalAlbumManager : MonoBehaviour
             else
             {
                 data.TransferToRevealedImmediate();
+                data.AfterReveal();
             }
             //data.animalImage.sprite = animalEnumToSprite[data.imageAnimalEnum];
 
