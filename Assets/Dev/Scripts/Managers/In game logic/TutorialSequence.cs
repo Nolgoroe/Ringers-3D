@@ -788,9 +788,6 @@ public class TutorialSequence : MonoBehaviour
             {
                 TutorialSaveData.Instance.hasFinishedPotion = true;
 
-                TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
-                PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
-
                 Debug.LogError("Potions should work now");
                 MaterialsAndForgeManager.Instance.ResetPotionDataAfterTutorial();
             }
@@ -799,9 +796,6 @@ public class TutorialSequence : MonoBehaviour
             {
                 TutorialSaveData.Instance.hasFinishedDen = true;
 
-                TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
-                PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
-
                 Debug.LogError("Den Tutorial Done");
             }
 
@@ -809,10 +803,13 @@ public class TutorialSequence : MonoBehaviour
             {
                 TutorialSaveData.Instance.hasFinishedAnimalAlbum = true;
 
+                Debug.LogError("Animal Album Tutorial Done");
+            }
+
+            if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
+            {
                 TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
                 PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
-
-                Debug.LogError("Animal Album Tutorial Done");
             }
 
             UIManager.Instance.requiredButtonForTutorialPhase = null;
@@ -1523,7 +1520,10 @@ public class TutorialSequence : MonoBehaviour
             Destroy(currentlyActiveTutorialHand.gameObject);
         }
 
-        TutorialSaveData.Instance.completedTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
+        if(!TutorialSaveData.Instance.completedTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
+        {
+            TutorialSaveData.Instance.completedTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
+        }
         //TutorialSaveData.Instance.SaveTutorialSaveData();
 
         maskImage.gameObject.SetActive(false);

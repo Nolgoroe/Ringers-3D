@@ -43,6 +43,11 @@ public class AnimalAlbumManager : MonoBehaviour
     int currentPageNum = 0;
 
     public float revealAnimalSpeed;
+
+    public int minRubyRewardClearPage;
+    public int maxRubyRewardClearPage;
+
+    bool hasChangedSaveData;
     void Start()
     {
         Instance = this;
@@ -77,6 +82,7 @@ public class AnimalAlbumManager : MonoBehaviour
 
     public void ChangePageLogic(int pageNumber)
     {
+        hasChangedSaveData = false;
         currentPageNum = pageNumber;
 
         if (currentActivePage.pageGO != null)
@@ -96,7 +102,11 @@ public class AnimalAlbumManager : MonoBehaviour
             StartCoroutine(CheckHasAnimal(pageToPageImages[pageNumber].pageImages[i]));
         }
 
-
+        if(hasChangedSaveData)
+        {
+            hasChangedSaveData = false;
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.animalManager });
+        }
     }
 
     public IEnumerator CheckHasAnimal(AlbumImageAnimalData data)
@@ -111,6 +121,8 @@ public class AnimalAlbumManager : MonoBehaviour
 
             if (!AnimalsManager.Instance.revealedAnimalsInAlbum.Contains(data.imageAnimalEnum))
             {
+                hasChangedSaveData = true;
+
                 AnimalsManager.Instance.revealedAnimalsInAlbum.Add(data.imageAnimalEnum);
                 data.TransferToRevealed();
             }
@@ -128,8 +140,12 @@ public class AnimalAlbumManager : MonoBehaviour
             //data.animalImage.sprite = animalEnumToSpriteLocked[data.imageAnimalEnum];
         }
 
-        yield return new WaitForSeconds(revealAnimalSpeed + 0.1f);
-        if(pageToPageImages[currentPageNum].page.ownedAnimalsCount == 4)
+        if(hasChangedSaveData)
+        {
+            yield return new WaitForSeconds(revealAnimalSpeed + 0.1f);
+        }
+
+        if (pageToPageImages[currentPageNum].page.ownedAnimalsCount == 4)
         {
             CompletedPageToReward CPTR = AnimalsManager.Instance.completedAnimalPagesToReward.Where(p => p.completedAnimalPagesID == currentPageNum).FirstOrDefault();
 
@@ -141,12 +157,30 @@ public class AnimalAlbumManager : MonoBehaviour
 
                 AnimalsManager.Instance.completedAnimalPagesToReward.Add(newCPTR);
                 giveRewardButton.gameObject.SetActive(true);
+
                 Debug.LogError("Do the completed combo thing here");
+                PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.animalManager });
+
             }
+            else
+            {
+                if (!CPTR.gaveReward)
+                {
+                    giveRewardButton.gameObject.SetActive(true);
+                }
+                else
+                {
+                    giveRewardButton.gameObject.SetActive(false);
+                }
+            }
+        }
+        else
+        {
+            CompletedPageToReward CPTR = AnimalsManager.Instance.completedAnimalPagesToReward.Where(p => p.completedAnimalPagesID == currentPageNum).FirstOrDefault();
+            giveRewardButton.gameObject.SetActive(false);
         }
 
 
-        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.animalManager });
     }
 
     public void GiveReward()
@@ -158,8 +192,22 @@ public class AnimalAlbumManager : MonoBehaviour
             CPTR.gaveReward = true;
             giveRewardButton.gameObject.SetActive(false);
 
-            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.animalManager });
+            int randomNumRecieve = GetAmountOfRubyRewardClearAlbumPage();
+            PlayerManager.Instance.AddRubies(randomNumRecieve);
+            UIManager.Instance.ShowAnimalAlbumGiveLoot(randomNumRecieve);
+
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.animalManager, SystemsToSave.Player});
+
+
+
             Debug.LogError("gave reward");
         }
+    }
+
+    private int GetAmountOfRubyRewardClearAlbumPage()
+    {
+        int randomNum = UnityEngine.Random.Range(minRubyRewardClearPage, maxRubyRewardClearPage);
+
+        return randomNum;
     }
 }

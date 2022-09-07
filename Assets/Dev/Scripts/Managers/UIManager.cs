@@ -244,6 +244,10 @@ public class UIManager : MonoBehaviour
     public TMP_Text bossDamageDoneText;
     public TMP_Text bossV2TimerText;
 
+    [Header("Animal Album")]
+    public GameObject getRewardScreen;
+    public TMP_Text rubyAmountText;
+
     [Header("Inventory Hut and Leaderboard")]
     public Button[] inventoryButtons;
     public Button[] hutButtons;
@@ -344,6 +348,7 @@ public class UIManager : MonoBehaviour
         bossLevelsParent.SetActive(false);
         disconnectedFromInternetScreen.SetActive(false);
         quitGameScreen.SetActive(false);
+        getRewardScreen.SetActive(false);
         activeScreen = null;
 
 
@@ -2684,4 +2689,11 @@ public class UIManager : MonoBehaviour
         return null;
     }
 
+
+    public void ShowAnimalAlbumGiveLoot(int amount)
+    {
+        activeScreen = getRewardScreen;
+        getRewardScreen.SetActive(true);
+        rubyAmountText.text = amount.ToString();
+    }
 }

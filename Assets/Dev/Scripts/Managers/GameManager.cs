@@ -349,6 +349,7 @@ public class GameManager : MonoBehaviour
 
         if(!isRestart && currentLevel.showIntroLevelAnimation)
         {
+
             AnimationManager.instance.PopulateRefrencesEnterLevelAnim();
 
             yield return new WaitForSeconds(2.5f);
@@ -358,6 +359,8 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.restartButton.interactable = true;
             UIManager.Instance.optionsButtonIngame.interactable = true;
             UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
+            UIManager.Instance.dealButton.interactable = true;
+            GameManager.Instance.powerupManager.PowerupButtonsActivation(true);
 
             if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
             {
@@ -729,13 +732,20 @@ public class GameManager : MonoBehaviour
 
                 if (currentLevel.isTutorial)
                 {
-                    TutorialSaveData.Instance.completedTutorialLevelId.Add(currentLevel.numIndexForLeaderBoard);
-                    PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+                    if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
+                    {
+                        TutorialSaveData.Instance.completedTutorialLevelId.Add(currentLevel.numIndexForLeaderBoard);
+                        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+                    }
                 }
 
                 if (currentLevel.isSpecificTutorial && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.AnimalAlbum)
                 {
-                    TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(currentLevel.numIndexForLeaderBoard);
+                    if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
+                    {
+                        TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(currentLevel.numIndexForLeaderBoard);
+                    }
+
                     PlayerManager.Instance.CheckTransformTempPowersToActualPowers();
                     PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
                 }

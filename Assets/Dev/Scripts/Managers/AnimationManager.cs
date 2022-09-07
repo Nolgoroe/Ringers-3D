@@ -967,10 +967,11 @@ public class AnimationManager : MonoBehaviour
     }
     private IEnumerator CheckShowLootTutorial()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.lootTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard)) /// specificTutorialIndex == 0  is loot tutorial
         {
             LootManager.Instance.rubiesToRecieveInLevel = 8;
+            TutorialSequence.Instacne.maskImage.gameObject.SetActive(true);
             StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
             TutorialSequence.Instacne.currentSpecificTutorial = SpecificTutorialsEnum.lootTutorial;
         }
@@ -1376,6 +1377,8 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.restartButton.interactable = false;
         UIManager.Instance.optionsButtonIngame.interactable = false;
         UIManager.Instance.cheatOptionsButtonIngame.interactable = false;
+        UIManager.Instance.dealButton.interactable = false;
+        GameManager.Instance.powerupManager.PowerupButtonsActivation(false);
 
         ZoneManagerHelpData.Instance.ChangeZoneToNormalZoneDisplay();
 

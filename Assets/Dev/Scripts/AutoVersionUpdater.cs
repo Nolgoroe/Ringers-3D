@@ -233,12 +233,26 @@ public class AutoVersionUpdater : MonoBehaviour
 
                 if(AZAL.levelsInZone[i].isTutorial)
                 {
-                    TutorialSaveData.Instance.completedTutorialLevelId.Add(AZAL.levelsInZone[i].numIndexForLeaderBoard);
+                    if (!TutorialSaveData.Instance.completedTutorialLevelId.Contains(AZAL.levelsInZone[i].numIndexForLeaderBoard))
+                    {
+                        TutorialSaveData.Instance.completedTutorialLevelId.Add(AZAL.levelsInZone[i].numIndexForLeaderBoard);
+
+                        if(AZAL.levelsInZone[i].specificTutorialEnum != SpecificTutorialsEnum.None)
+                        {
+                            if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(AZAL.levelsInZone[i].numIndexForLeaderBoard))
+                            {
+                                TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(AZAL.levelsInZone[i].numIndexForLeaderBoard);
+                            }
+                        }
+                    }
                 }
                 
                 if(AZAL.levelsInZone[i].isSpecificTutorial)
                 {
-                    TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(AZAL.levelsInZone[i].numIndexForLeaderBoard);
+                    if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(AZAL.levelsInZone[i].numIndexForLeaderBoard))
+                    {
+                        TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(AZAL.levelsInZone[i].numIndexForLeaderBoard);
+                    }
                 }
                 
 
