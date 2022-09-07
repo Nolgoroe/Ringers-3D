@@ -91,6 +91,11 @@ public class ZoneManagerHelpData : MonoBehaviour
 
         foreach (Zone z in listOfAllZones)
         {
+            if(z.isTestZone)
+            {
+                continue;
+            }
+
             z.hasAwardedKey = true;
             z.isUnlocked = true;
 

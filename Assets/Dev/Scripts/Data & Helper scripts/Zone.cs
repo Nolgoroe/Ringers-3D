@@ -13,7 +13,7 @@ public class Zone : MonoBehaviour
     public int keyLevelIndex;
     public int grindLevelIndex;
     public string zoneName;
-    public bool hasAwardedKey, isUnlocked, hasUnlockedGrind;
+    public bool hasAwardedKey, isUnlocked, hasUnlockedGrind, isTestZone;
 
     public int maxLevelReachedInZone;
     public int lastLevelNum;

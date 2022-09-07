@@ -786,6 +786,8 @@ public class TutorialSequence : MonoBehaviour
         {
             if (currentSpecificTutorial == SpecificTutorialsEnum.PotionCraft)
             {
+                TutorialSaveData.Instance.hasFinishedPotion = true;
+
                 TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
                 PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
 

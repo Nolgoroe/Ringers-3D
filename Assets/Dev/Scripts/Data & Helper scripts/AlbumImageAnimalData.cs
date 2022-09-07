@@ -8,5 +8,44 @@ public class AlbumImageAnimalData : MonoBehaviour
     public AnimalsInGame imageAnimalEnum;
     public bool isUnlocked;
 
-    public Image animalImage;
+    public GameObject hiddenAnimal, RevealedAnimal;
+
+    public Image[] imagesToReveal;
+
+    public void TransferToRevealed()
+    {
+        //we want both of them to always be displayed together when animation is started
+        hiddenAnimal.SetActive(true);
+        RevealedAnimal.SetActive(true);
+
+        foreach (Image image in imagesToReveal)
+        {
+            LeanTween.value(image.gameObject, 0.75f, 1.5f, AnimalAlbumManager.Instance.revealAnimalSpeed).setOnComplete(AfterReveal).setOnUpdate((float val) =>
+            {
+                Material mat = image.material;
+
+                mat.SetFloat("_DissolveSprite", val);
+            });
+        }
+    }
+
+    private void AfterReveal()
+    {
+        hiddenAnimal.SetActive(false);
+    }
+
+    public void TransferToRevealedImmediate()
+    {
+        //we want both of them to always be displayed together when animation is started
+        hiddenAnimal.SetActive(true);
+        RevealedAnimal.SetActive(true);
+
+
+        foreach (Image image in imagesToReveal)
+        {
+            Material mat = image.material;
+
+            mat.SetFloat("_DissolveSprite", 1.5f);
+        }
+    }
 }

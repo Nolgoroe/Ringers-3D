@@ -15,8 +15,8 @@ public enum AnimalsInGame
     PinkFox,
     BrownStag,
     RedStag,
-    BlueStag,
-    PinkStag,
+    OrangeStag,
+    YellowStag,
     BrownOwl,
     YellowOwl,
     BlueOwl,
@@ -74,6 +74,7 @@ public class AnimalsManager : MonoBehaviour
     public GameObject statueToSwap;
 
     public List<CompletedPageToReward> completedAnimalPagesToReward;
+    public List<AnimalsInGame> revealedAnimalsInAlbum;
 
     string path;
 

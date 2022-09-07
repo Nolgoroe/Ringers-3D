@@ -14,7 +14,7 @@ public class TutorialSaveData : MonoBehaviour
     public bool hasFinishedIntro = false;
     public bool hasFinishedDen = false;
     public bool hasFinishedAnimalAlbum = false;
-    //public bool hasFinishedPotion = false;
+    public bool hasFinishedPotion = false;
     //public bool completedLootTutorial;
 
     string path;

@@ -42,6 +42,7 @@ public class AnimalAlbumManager : MonoBehaviour
 
     int currentPageNum = 0;
 
+    public float revealAnimalSpeed;
     void Start()
     {
         Instance = this;
@@ -92,23 +93,13 @@ public class AnimalAlbumManager : MonoBehaviour
         for (int i = 0; i < pageToPageImages[pageNumber].pageImages.Length; i++)
         {
             pageToPageImages[pageNumber].pageImages[i].imageAnimalEnum = pageToPageImages[pageNumber].page.animalsInPage[i];
-            CheckHasAnimal(pageToPageImages[pageNumber].pageImages[i]);
+            StartCoroutine(CheckHasAnimal(pageToPageImages[pageNumber].pageImages[i]));
         }
 
-        CompletedPageToReward CPTR = AnimalsManager.Instance.completedAnimalPagesToReward.Where(p => p.completedAnimalPagesID == pageNumber).FirstOrDefault();
-
-        if(CPTR != null && !CPTR.gaveReward)
-        {
-            giveRewardButton.gameObject.SetActive(true);
-        }
-        else
-        {
-            giveRewardButton.gameObject.SetActive(false);
-        }
 
     }
 
-    public void CheckHasAnimal(AlbumImageAnimalData data)
+    public IEnumerator CheckHasAnimal(AlbumImageAnimalData data)
     {
 
         OwnedAnimalDataSet OADS = AnimalsManager.Instance.unlockedAnimals.Where(p => p.animalEnum == data.imageAnimalEnum).FirstOrDefault();
@@ -117,15 +108,27 @@ public class AnimalAlbumManager : MonoBehaviour
         if (OADS != null)
         {
             data.isUnlocked = true;
-            data.animalImage.sprite = animalEnumToSprite[data.imageAnimalEnum];
+
+            if (!AnimalsManager.Instance.revealedAnimalsInAlbum.Contains(data.imageAnimalEnum))
+            {
+                AnimalsManager.Instance.revealedAnimalsInAlbum.Add(data.imageAnimalEnum);
+                data.TransferToRevealed();
+            }
+            else
+            {
+                data.TransferToRevealedImmediate();
+            }
+            //data.animalImage.sprite = animalEnumToSprite[data.imageAnimalEnum];
+
             pageToPageImages[currentPageNum].page.ownedAnimalsCount++;
         }
         else
         {
             data.isUnlocked = false;
-            data.animalImage.sprite = animalEnumToSpriteLocked[data.imageAnimalEnum];
+            //data.animalImage.sprite = animalEnumToSpriteLocked[data.imageAnimalEnum];
         }
 
+        yield return new WaitForSeconds(revealAnimalSpeed + 0.1f);
         if(pageToPageImages[currentPageNum].page.ownedAnimalsCount == 4)
         {
             CompletedPageToReward CPTR = AnimalsManager.Instance.completedAnimalPagesToReward.Where(p => p.completedAnimalPagesID == currentPageNum).FirstOrDefault();
@@ -137,11 +140,13 @@ public class AnimalAlbumManager : MonoBehaviour
                 newCPTR.completedAnimalPagesID = currentPageNum;
 
                 AnimalsManager.Instance.completedAnimalPagesToReward.Add(newCPTR);
+                giveRewardButton.gameObject.SetActive(true);
                 Debug.LogError("Do the completed combo thing here");
-
-                PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.animalManager });
             }
         }
+
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.animalManager });
     }
 
     public void GiveReward()
