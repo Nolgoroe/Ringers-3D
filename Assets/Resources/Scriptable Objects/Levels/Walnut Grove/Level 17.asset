@@ -20,6 +20,7 @@ MonoBehaviour:
   isAnimalLevel: 0
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
+  isTestLevel: 0
   showIntroLevelAnimation: 1
   boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
     type: 3}
@@ -31,7 +32,7 @@ MonoBehaviour:
   numIndexForLeaderBoard: 17
   tutorialIndexForList: 4
   cellsCountInLevel: 8
-  RandomSlicePositions: 0
+  RandomSlicePositions: 1
   allowRepeatSlices: 0
   allowRepeatTiles: 0
   allowRepeatTileSides: 0
@@ -44,24 +45,20 @@ MonoBehaviour:
     isLock: 0
     isLoot: 1
     isLimiter: 1
-  RewardBags: 
-  levelAvailableColors: 0000000001000000
-  levelAvailablesymbols: 010000000200000003000000
+  - sliceToSpawn: 3
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
+  RewardBags: 0100000002000000
+  levelAvailableColors: 000000000100000003000000
+  levelAvailablesymbols: 000000000200000003000000
   symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
-  isTutorial: 1
+  isTutorial: 0
   specificTutorialEnum: 1
   bottomUIToShow: 2
-  arrayOfPieces:
-  - colorOfPieceRight: 0
-    symbolOfPieceRight: 2
-    colorOfPieceLeft: 0
-    symbolOfPieceLeft: 3
-  - colorOfPieceRight: 0
-    symbolOfPieceRight: 1
-    colorOfPieceLeft: 1
-    symbolOfPieceLeft: 2
-  specificSliceSpots: 01000000
+  arrayOfPieces: []
+  specificSliceSpots: 
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0
