@@ -48,4 +48,18 @@ public class AlbumImageAnimalData : MonoBehaviour
             mat.SetFloat("_DissolveSprite", 1.5f);
         }
     }
+
+    public void ResetTransferDataImmediate()
+    {
+        hiddenAnimal.SetActive(true);
+        RevealedAnimal.SetActive(false);
+
+
+        foreach (Image image in imagesToReveal)
+        {
+            Material mat = image.material;
+
+            mat.SetFloat("_DissolveSprite", 0.75f);
+        }
+    }
 }

@@ -138,6 +138,7 @@ public class AnimalAlbumManager : MonoBehaviour
         else
         {
             data.isUnlocked = false;
+            data.ResetTransferDataImmediate();
             //data.animalImage.sprite = animalEnumToSpriteLocked[data.imageAnimalEnum];
         }
 
