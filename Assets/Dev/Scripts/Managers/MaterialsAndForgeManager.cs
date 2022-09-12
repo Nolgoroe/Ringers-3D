@@ -113,9 +113,11 @@ public class MaterialsAndForgeManager : MonoBehaviour
 
                 CraftingMatDisplayer CMD = go.GetComponent<CraftingMatDisplayer>();
 
-                //CMD.materialImage.texture = Resources.Load(materialSpriteByName[CM.mat]) as Texture2D;
                 CMD.materialImage.sprite = LootManager.Instance.allMaterialSprites[(int)CM.mat];
                 CMD.materialCount.text = CM.amount.ToString();
+                CMD.craftingMatEnum = CM.mat;
+
+                CMD.CheckShowPointInterestList(CM.mat);
             }
         }
     }
@@ -178,7 +180,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
         //    Destroy(EQ.gameObject);
         //}
 
-        FillCorruptionDevices(GameManager.Instance.csvParser.allCorruptedDevicesInGame);
+        //FillCorruptionDevices(GameManager.Instance.csvParser.allCorruptedDevicesInGame);
     }
 
     public void ResetPotionDataAfterTutorial()

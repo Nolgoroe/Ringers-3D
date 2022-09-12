@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Linq;
 
 [Serializable]
 public enum CraftingMats
@@ -146,6 +147,11 @@ public class LootToRecieve
     }
 }
 
+[System.Serializable]
+public class ListLootChest
+{
+    public List<LootPacks> lootPacksForChest;
+}
 public class LootManager : MonoBehaviour
 {
     public static LootManager Instance;
@@ -184,6 +190,12 @@ public class LootManager : MonoBehaviour
     public int rubiesToRecieveInLevel;
 
     public bool finishedGivingLoot;
+
+    //TEMP
+    public List<ListLootChest> chestLootPacks;
+    public int rubiesToGiveChest;
+    public List<LootToRecieve> materialsToGiveChest;
+    public List<CraftingMats> tempDataListChest;
 
     private void Start()
     {
@@ -269,8 +281,12 @@ public class LootManager : MonoBehaviour
                 Debug.Log("materials recieved " + LTR.type);
                 SoundManager.Instance.PlaySound(Sounds.ItemPop);
 
+                pointsOfInterestSaveData.instance.AddToPointsOfInterest(LTR.type);
+
                 yield return new WaitForSeconds(AnimationManager.instance.DelayBetweenLootAppear);
             }
+
+            InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.inventory);
         }
 
         finishedGivingLoot = true;
@@ -346,6 +362,83 @@ public class LootManager : MonoBehaviour
         foreach (Transform t in winScreenLootDisplayContent)
         {
             Destroy(t.gameObject);
+        }
+    }
+
+    [ContextMenu("Unpack Chest")]
+    public void UnpackChestLoot()
+    {
+        int randomChest = UnityEngine.Random.Range(0, chestLootPacks.Count);
+        Debug.LogError(randomChest);
+        foreach (LootPacks lootpack in chestLootPacks[randomChest].lootPacksForChest)
+        {
+            switch (lootpack.ToString()[0])
+            {
+
+                case 'R':
+                    UnpackToRubiesChest(lootpack);
+                    break;
+
+                case 'L':
+                    UnpackToMaterialsChest(lootpack);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
+    private void UnpackToRubiesChest(LootPacks pack)
+    {
+        int[] valuesToRecieve;
+
+        RewardBag rewardBagByLootPack = new RewardBag();
+
+        rewardBagByLootPack = lootpackEnumToRewardBag[pack];
+
+        valuesToRecieve = rewardBagByLootPack.minMaxValues;
+
+        int randomNum = UnityEngine.Random.Range(valuesToRecieve[0], valuesToRecieve[1] + 1);
+
+        rubiesToGiveChest += randomNum;
+    }
+
+    private void UnpackToMaterialsChest(LootPacks pack)
+    {
+        RewardBag rewardBagByLootPack = new RewardBag();
+
+        rewardBagByLootPack = lootpackEnumToRewardBag[pack];
+
+        List<CraftingMats> craftingMatsFromTables = new List<CraftingMats>();
+
+        for (int i = 0; i < rewardBagByLootPack.Pack.Count; i++)
+        {
+            craftingMatsFromTables.AddRange(itemTableToListOfMats[rewardBagByLootPack.Pack[i]]);
+
+            int chance = UnityEngine.Random.Range(1, 101);
+
+            if (chance > rewardBagByLootPack.chancesPerItemTable[i])
+            {
+                craftingMatsFromTables.Clear();
+            }
+            else
+            {
+                int randomMat = UnityEngine.Random.Range(0, craftingMatsFromTables.Count);
+
+                LootToRecieve LTR = new LootToRecieve(craftingMatsFromTables[randomMat], UnityEngine.Random.Range(1, 6));
+
+                if (!tempDataListChest.Contains(LTR.type))
+                {
+                    materialsToGiveChest.Add(LTR);
+                    tempDataListChest.Add(LTR.type);
+                }
+                else
+                {
+                    LootToRecieve LTR_exsists = materialsToGiveChest.Where(p => p.type == LTR.type).Single();
+                    LTR_exsists.amount += LTR.amount;
+                }
+            }
         }
     }
 }

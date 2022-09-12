@@ -2461,7 +2461,7 @@ public class UIManager : MonoBehaviour
             cheatOptionsButton.SetActive(true);
             cheatOptionsButtonIngame.gameObject.SetActive(false);
             bossLevelsParent.SetActive(true);
-            //ZoneManagerHelpData.Instance.testZone.SetActive(true);
+            ZoneManagerHelpData.Instance.testZone.SetActive(true);
         }
     }
 

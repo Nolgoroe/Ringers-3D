@@ -31,6 +31,16 @@ public enum AnimalsInGame
     PinkCharmander,
     None
 }
+[Serializable]
+public enum AnimalTypesInGame
+{
+    Fox,
+    Stag,
+    Owl,
+    Pikachu,
+    Charmander,
+    None
+}
 
 [Serializable]
 public class animalsPerZone
@@ -49,6 +59,7 @@ public class SummonedAnimalsData
 [Serializable]
 public class OwnedAnimalDataSet
 {
+    public AnimalTypesInGame animalTypeEnum;
     public AnimalsInGame animalEnum;
     public ObjectHollowType hollowBelongsTo;
 }
@@ -108,8 +119,13 @@ public class AnimalsManager : MonoBehaviour
             OwnedAnimalDataSet newData = new OwnedAnimalDataSet();
             newData.animalEnum = toUnclock;
             newData.hollowBelongsTo = APD.animalSO.hollowBelongTo;
+            newData.animalTypeEnum = APD.animalSO.animalType;
 
             unlockedAnimals.Add(newData);
+
+            InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.AnimalAlbum);
+            InterestPointsManager.instance.PointsOfInterestAnimalAlbumSort();
+
             //SaveAnimalData();
         }
         else

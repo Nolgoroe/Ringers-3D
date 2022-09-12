@@ -140,7 +140,14 @@ public class SortMaster : MonoBehaviour
     }
     public void SortAnimalsInAlbum(int pageIndex)
     {
+        UIManager.Instance.animalAlbumSortButtons[pageIndex].GetComponent<PointOfInterest>().HideInterestPointImage();
+        
         AnimalAlbumManager.Instance.ChangePageLogic(pageIndex);
+
+        if (!InterestPointsManager.instance.CheckAdditionalPointsOfInterestAnimalAlbum())
+        {
+            InterestPointsManager.instance.TurnOffPointsOfInterestDisplay(TypesPointOfInterest.AnimalAlbum);
+        }
     }
 
     //public void RefreshAllScreens()

@@ -302,7 +302,7 @@ public class PlayfabManager : MonoBehaviour
         UIManager.Instance.FocusOnMaxLevelReached();
 
 
-        if (TutorialSaveData.Instance.hasFinishedDen)
+        if (TutorialSaveData.Instance.hasFinishedDen || TutorialSaveData.Instance.hasFinishedPotion)
         {
             UIManager.Instance.TurnOnRingersHutAndInventoryButtons();
         }

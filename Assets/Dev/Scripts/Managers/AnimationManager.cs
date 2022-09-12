@@ -819,6 +819,8 @@ public class AnimationManager : MonoBehaviour
         /// this might change places depending on where we want it in animation
         if(GameManager.Instance.currentLevel.isTestLevel)
         {
+            Debug.LogError("end of end level sequence! adding to counter");
+
             // progress bar and check to see if reched max.. if we did - what to do with loot?
         }
 
@@ -953,8 +955,9 @@ public class AnimationManager : MonoBehaviour
 
         ///check bar progress here for test levels
         /// this might change places depending on where we want it in animation
-        if (GameManager.Instance.currentLevel.isTestLevel)
+        if(GameManager.Instance.currentLevel.isTestLevel)
         {
+            Debug.LogError("Skipped now! adding to counter");
             // progress bar and check to see if reched max.. if we did - what to do with loot?
         }
 

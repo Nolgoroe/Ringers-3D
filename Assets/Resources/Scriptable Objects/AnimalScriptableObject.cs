@@ -13,5 +13,6 @@ public class AnimalScriptableObject : ScriptableObject
     public int ID;
     public AnimalRarity rarity;
     public ObjectHollowType hollowBelongTo;
+    public AnimalTypesInGame animalType;
     public bool isUsedInCrafting;
 }

@@ -5,14 +5,16 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.Linq;
+using UnityEngine.EventSystems;
 
-public class CraftingMatDisplayer : MonoBehaviour
+public class CraftingMatDisplayer : MonoBehaviour, IPointerClickHandler
 {
     public Image materialImage;
-    //public Image textBG;
     public TMP_Text materialCount;
 
     public GameObject parentObject;
+
+    public CraftingMats craftingMatEnum;
 
     public void SetImageAndMaterialCount(Sprite icon, CraftingMats matEnum,string amountNeeded)
     {
@@ -32,6 +34,8 @@ public class CraftingMatDisplayer : MonoBehaviour
         materialCount.text = amountHas + "/" + amountNeeded;
 
         parentObject = transform.parent.gameObject;
+
+        craftingMatEnum = matEnum;
     }
 
     public void CheckIfHasEnough(CraftingMats matEnum, int amountRequired)
@@ -103,5 +107,30 @@ public class CraftingMatDisplayer : MonoBehaviour
 
 
         //textBG.color = new Color(textBG.color.r, textBG.color.g, textBG.color.b,1);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (pointsOfInterestSaveData.instance.inventoryPointOfInterest.Contains(craftingMatEnum))
+        {
+            GetComponent<PointOfInterest>().HideInterestPointImage();
+
+            pointsOfInterestSaveData.instance.inventoryPointOfInterest.Remove(craftingMatEnum);
+
+            if(pointsOfInterestSaveData.instance.inventoryPointOfInterest.Count <= 0)
+            {
+                InterestPointsManager.instance.TurnOffPointsOfInterestDisplay(TypesPointOfInterest.inventory);
+            }
+
+            InterestPointsManager.instance.PointsOfInterestInventorySort();
+        }
+    }
+
+    public void CheckShowPointInterestList(CraftingMats matEnum)
+    {
+        if (pointsOfInterestSaveData.instance.inventoryPointOfInterest.Contains(matEnum))
+        {
+            GetComponent<PointOfInterest>().ShowInterestPointImage();
+        }
     }
 }

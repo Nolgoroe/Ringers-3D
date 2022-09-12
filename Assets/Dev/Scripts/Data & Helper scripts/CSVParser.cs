@@ -344,6 +344,6 @@ public class CSVParser : MonoBehaviour
             //PlayerManager.Instance.ownedCorruptDevices.Add(CDD);
         }
 
-        MaterialsAndForgeManager.Instance.FillCorruptionDevices(allCorruptedDevicesInGame);
+        //MaterialsAndForgeManager.Instance.FillCorruptionDevices(allCorruptedDevicesInGame);
     }
 }
