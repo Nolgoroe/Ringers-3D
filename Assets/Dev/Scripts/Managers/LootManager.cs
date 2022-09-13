@@ -287,6 +287,8 @@ public class LootManager : MonoBehaviour
             }
 
             InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.inventory);
+
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.InterestPontSaveData});
         }
 
         finishedGivingLoot = true;

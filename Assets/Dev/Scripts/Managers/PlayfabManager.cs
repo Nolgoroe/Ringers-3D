@@ -29,6 +29,7 @@ public enum SystemsToSave
     ServerRelatedData,
     BossesSaveData,
     AllZones,
+    InterestPontSaveData,
     ALL
 }
 
@@ -266,7 +267,7 @@ public class PlayfabManager : MonoBehaviour
             RewardsManager.Instance.UpdateCurrentTime(currentTimeReference);
             DewDropsManager.Instance.UpdateCurrentTime(currentTimeReference);
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
 
         yield return StartCoroutine(GetDailyRewardsData());
 
@@ -316,6 +317,16 @@ public class PlayfabManager : MonoBehaviour
         //{
         //    UIManager.Instance.TurnOnLeaderboardButtons();
         //}
+
+        if(InterestPointsManager.instance.CheckAdditionalPointsOfInterestAnimalAlbum())
+        {
+            InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.AnimalAlbum);
+        }
+
+        if(InterestPointsManager.instance.CheckAdditionalPointsOfInterestInventory())
+        {
+            InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.inventory);
+        }
 
         yield return new WaitForSeconds(2);
 
@@ -623,6 +634,12 @@ public class PlayfabManager : MonoBehaviour
             JsonUtility.FromJsonOverwrite(result.Data["Bosses Save Data"].Value, BossesSaveDataManager.instance);
         }
 
+        // interest points Data
+        if (result.Data != null && result.Data.ContainsKey("Interest points save data"))
+        {
+            JsonUtility.FromJsonOverwrite(result.Data["Interest points save data"].Value, pointsOfInterestSaveData.instance);
+        }
+
         successfullyDoneWithStep = true;
     }
 
@@ -751,6 +768,11 @@ public class PlayfabManager : MonoBehaviour
                     //Bosses Save Data
                     savedData = JsonUtility.ToJson(BossesSaveDataManager.instance);
                     SendDataToBeSavedJson(savedData, SystemsToSave.BossesSaveData, "");
+                    break;
+                case SystemsToSave.InterestPontSaveData:
+                    //points of interest Save Data
+                    savedData = JsonUtility.ToJson(pointsOfInterestSaveData.instance);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.InterestPontSaveData, "");
                     break;
                 case SystemsToSave.ALL:
                     SaveAllGameData();
@@ -989,6 +1011,15 @@ public class PlayfabManager : MonoBehaviour
                     Data = new Dictionary<string, string>()
                     {
                         { "Bosses Save Data", saveData }
+                    }
+                };
+                break;
+            case SystemsToSave.InterestPontSaveData:
+                request = new UpdateUserDataRequest
+                {
+                    Data = new Dictionary<string, string>()
+                    {
+                        { "Interest points save data", saveData }
                     }
                 };
                 break;

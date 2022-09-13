@@ -60,6 +60,11 @@ public class InterestPointsManager : MonoBehaviour
         {
             PointsOfInterestInventorySort();
         }
+
+        if(type == TypesPointOfInterest.AnimalAlbum)
+        {
+            PointsOfInterestAnimalAlbumSort();
+        }
     }
     public void TurnOffPointsOfInterestDisplay(TypesPointOfInterest type)
     {
@@ -134,6 +139,14 @@ public class InterestPointsManager : MonoBehaviour
             }
         }
 
+        return false;
+    }
+    public bool CheckAdditionalPointsOfInterestInventory()
+    {
+        if(pointsOfInterestSaveData.instance.inventoryPointOfInterest.Count > 0)
+        {
+            return true;
+        }
         return false;
     }
 }

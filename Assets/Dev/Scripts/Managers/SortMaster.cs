@@ -150,20 +150,9 @@ public class SortMaster : MonoBehaviour
         }
     }
 
-    //public void RefreshAllScreens()
-    //{
-    //    //MaterialsAndForgeManager.Instance.PopulateMaterialBagAll();
-    //    //HollowCraftAndOwnedManager.Instance.FillCraftScreen(GameManager.Instance.csvParser.allHollowCraftObjectsInGame);
-    //    //HollowCraftAndOwnedManager.Instance.FillOwnedScreen();
-    //    //MaterialsAndForgeManager.Instance.FillForge(GameManager.Instance.csvParser.allEquipmentInGame);
-    //    MaterialsAndForgeManager.Instance.FillCorruptionDevices(GameManager.Instance.csvParser.allCorruptedDevicesInGame);
-
-    //}
-
     public void RefreshAllForgeScreens()
     {
         MaterialsAndForgeManager.Instance.RefreshMaterialBag();
-        //MaterialsAndForgeManager.Instance.RefreshForge();
         MaterialsAndForgeManager.Instance.RefreshCorruptionDevices();
 
         HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();

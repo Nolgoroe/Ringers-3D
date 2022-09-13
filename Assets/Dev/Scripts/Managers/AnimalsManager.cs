@@ -124,7 +124,6 @@ public class AnimalsManager : MonoBehaviour
             unlockedAnimals.Add(newData);
 
             InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.AnimalAlbum);
-            InterestPointsManager.instance.PointsOfInterestAnimalAlbumSort();
 
             //SaveAnimalData();
         }

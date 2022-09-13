@@ -1121,6 +1121,8 @@ public class UIManager : MonoBehaviour
 
             itemBag.SetActive(true);
 
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.InterestPontSaveData });
+
         }
 
         if (ToClose == OptionsScreen)
