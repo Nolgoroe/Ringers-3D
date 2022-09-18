@@ -12,6 +12,7 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
     public bool isGrindLevel;
     public bool isAnimalLevel;
     public bool isBossLevel;
+    public bool isTestLevel;
 
     public int NextZoneID;///only if key level
     //public int indexInZone;
@@ -42,7 +43,11 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
 
     public void ChooseTypeLevelLaunch()
     {
-        if(isTutorialLevel && isKeyLevel)
+        if(isTestLevel)
+        {
+            SetTestLevelData();
+        }
+        else if(isTutorialLevel && isKeyLevel)
         {
             LaunchKeyAndTutorialLevel();
             Debug.LogError("Launched tutorial + key level");
@@ -92,6 +97,22 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
                 SoundManager.Instance.FadeOutMapBGMusic(SoundManager.Instance.timeFadeOutBGMusic, true);
 
                 GameManager.Instance.StartLevel(true, false);
+            }
+
+        }
+    }
+    public void SetTestLevelData()
+    {
+        ZoneManager.Instance.SetCurrentZone(connectedLevelScriptableObject.worldNum);
+
+        if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
+        {
+            if (connectedLevelScriptableObject.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedLevelScriptableObject.levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
+            {
+                GameManager.Instance.ChooseLevel(connectedLevelScriptableObject.levelIndexInZone);
+                GameManager.Instance.setCurrentLevelBG(connectedLevelScriptableObject.worldNum);
+
+                UIManager.Instance.ShowTestLevelDataDisplay();
             }
 
         }

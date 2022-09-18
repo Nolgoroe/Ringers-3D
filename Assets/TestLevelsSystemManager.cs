@@ -16,9 +16,16 @@ public class TestLevelsSystemManager : MonoBehaviour
 
     public float barAnimateSpeed;
 
+
+    public Slider starSliderTestLevelMapDisplay;
+    public Transform starsParentMapDisplay;
+
     void Start()
     {
         instance = this;
+
+
+        InstantiateBarStarsMapDisplay();
     }
 
     public void InitTestLevel()
@@ -48,6 +55,19 @@ public class TestLevelsSystemManager : MonoBehaviour
             }
         }
     }
+    private void InstantiateBarStarsMapDisplay()
+    {
+        starSliderTestLevelMapDisplay.maxValue = numOfSections;
+
+        if (numOfSections > 1)
+        {
+            //we start from 1 since the "chest" is already considerd a "section"
+            for (int i = 1; i < numOfSections; i++)
+            {
+                Instantiate(starPrefab, starsParentMapDisplay);
+            }
+        }
+    }
 
     public void UpdateBarValue()
     {
@@ -56,6 +76,10 @@ public class TestLevelsSystemManager : MonoBehaviour
             StarSlider.value = val;
         });
 
+    }
+    public void UpdateBarValueOnMap()
+    {
+        starSliderTestLevelMapDisplay.value = TestLevelsSystemManagerSaveData.instance.CompletedCount;
     }
 
     private void ActivateStarOrChest(int index)
@@ -68,6 +92,7 @@ public class TestLevelsSystemManager : MonoBehaviour
             LootManager.Instance.UnpackChestLoot();
 
             TestLevelsSystemManagerSaveData.instance.ResetData();
+            UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
             return;
         }
 
@@ -85,5 +110,18 @@ public class TestLevelsSystemManager : MonoBehaviour
         {
             Destroy(starsParent.GetChild(i).gameObject);
         }
+    }
+
+
+    //called by button
+    public void LaunchTestLevel()
+    {
+        UIManager.Instance.testLevelsDataScreen.SetActive(false);
+
+        GameManager.Instance.levelStarted = true;
+
+        SoundManager.Instance.FadeOutMapBGMusic(SoundManager.Instance.timeFadeOutBGMusic, true);
+
+        GameManager.Instance.StartLevel(true, false);
     }
 }

@@ -742,6 +742,18 @@ public class AnimationManager : MonoBehaviour
         yield return new WaitForSeconds(waitTimeButtonsAppear);
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
 
+
+        ///check bar progress here for test levels
+        /// this might change places depending on where we want it in animation
+        if (GameManager.Instance.currentLevel.isTestLevel)
+        {
+            Debug.LogError("end of end level sequence! adding to counter");
+
+            TestLevelsSystemManagerSaveData.instance.AddToChestBar();
+        }
+
+        yield return new WaitForSeconds(TestLevelsSystemManager.instance.barAnimateSpeed + 0.1f);
+
         if (!GameManager.Instance.currentLevel.isGrindLevel)
         {
             LeanTween.value(UIManager.Instance.backToHubButton.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
@@ -811,18 +823,6 @@ public class AnimationManager : MonoBehaviour
         if (!GameManager.Instance.currentLevel.isGrindLevel)
         {
             UIManager.Instance.CheckTurnOnReleaseAnimalScreen();
-        }
-
-
-
-        ///check bar progress here for test levels
-        /// this might change places depending on where we want it in animation
-        if(GameManager.Instance.currentLevel.isTestLevel)
-        {
-            Debug.LogError("end of end level sequence! adding to counter");
-
-            TestLevelsSystemManagerSaveData.instance.AddToChestBar();
-            // progress bar and check to see if reched max.. if we did - what to do with loot?
         }
 
 
@@ -900,6 +900,15 @@ public class AnimationManager : MonoBehaviour
 
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
 
+        ///check bar progress here for test levels
+        /// this might change places depending on where we want it in animation
+        if (GameManager.Instance.currentLevel.isTestLevel)
+        {
+            Debug.LogError("Skipped now! adding to counter");
+
+            TestLevelsSystemManagerSaveData.instance.AddToChestBar();
+        }
+
         if (!GameManager.Instance.currentLevel.isGrindLevel)
         {
             Image backToHubImage = UIManager.Instance.backToHubButton.GetComponent<Image>();
@@ -954,15 +963,6 @@ public class AnimationManager : MonoBehaviour
             UIManager.Instance.CheckTurnOnReleaseAnimalScreen();
         }
 
-        ///check bar progress here for test levels
-        /// this might change places depending on where we want it in animation
-        if(GameManager.Instance.currentLevel.isTestLevel)
-        {
-            Debug.LogError("Skipped now! adding to counter");
-
-            TestLevelsSystemManagerSaveData.instance.AddToChestBar();
-            // progress bar and check to see if reched max.. if we did - what to do with loot?
-        }
 
         Debug.LogError("Reached end of sequence - skipped board");
 

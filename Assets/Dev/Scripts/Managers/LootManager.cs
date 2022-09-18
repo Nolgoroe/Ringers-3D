@@ -391,7 +391,7 @@ public class LootManager : MonoBehaviour
         }
 
 
-        //GiveLootFromChest();
+        GiveLootFromChest();
     }
 
     private void UnpackToRubiesChest(LootPacks pack)
@@ -451,7 +451,7 @@ public class LootManager : MonoBehaviour
     {
         bool gaveLoot = false;
 
-        if (rubiesToRecieveInLevel > 0)
+        if (rubiesToGiveChest > 0)
         {
             gaveLoot = true;
 
@@ -461,11 +461,11 @@ public class LootManager : MonoBehaviour
 
             PlayerManager.Instance.AddRubies(rubiesToGiveChest);
 
-            Debug.Log("Rubies Recieved chest: " + rubiesToGiveChest);
+            Debug.LogError("Rubies Recieved chest: " + rubiesToGiveChest);
 
         }
 
-        if (craftingMatsLootForLevel.Count > 0)
+        if (materialsToGiveChest.Count > 0)
         {
             gaveLoot = true;
 
@@ -477,7 +477,7 @@ public class LootManager : MonoBehaviour
 
                 PlayerManager.Instance.AddMaterials(LTR.type, LTR.amount); //////// Figure out how to get amount from outside dynamically
 
-                Debug.Log("materials recieved chest: " + LTR.type);
+                Debug.LogError("materials recieved chest: " + LTR.type);
 
                 pointsOfInterestSaveData.instance.AddToPointsOfInterest(LTR.type);
             }
@@ -494,6 +494,7 @@ public class LootManager : MonoBehaviour
 
         //finishedGivingLoot = true;
         materialsToGiveChest.Clear();
+        rubiesToGiveChest = 0;
         tempDataListChest.Clear();
     }
 }

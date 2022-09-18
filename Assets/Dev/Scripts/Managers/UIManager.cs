@@ -260,6 +260,12 @@ public class UIManager : MonoBehaviour
     public GameObject googlePlayButton;
     public GameObject switchAccountButton;
 
+    [Header("Test Levels Data Display")]
+    public GameObject testLevelsDataScreen;
+    public TMP_Text levelNumText;
+    public TMP_Text levelDifficultyText;
+    public TMP_Text zoneNameText;
+
     private void Start()
     {
         Instance = this;
@@ -350,6 +356,8 @@ public class UIManager : MonoBehaviour
         disconnectedFromInternetScreen.SetActive(false);
         quitGameScreen.SetActive(false);
         getRewardScreen.SetActive(false);
+        testLevelsDataScreen.SetActive(false);
+
         activeScreen = null;
 
 
@@ -2698,5 +2706,20 @@ public class UIManager : MonoBehaviour
         activeScreen = getRewardScreen;
         getRewardScreen.SetActive(true);
         rubyAmountText.text = amount.ToString();
+    }
+
+    public void ShowTestLevelDataDisplay()
+    {
+        SetTestLevelDataDisplayData();
+        testLevelsDataScreen.SetActive(true);
+    }
+
+    public void SetTestLevelDataDisplayData()
+    {
+        levelNumText.text = "Level " + GameManager.Instance.currentLevel.levelIndexInZone.ToString();
+        levelDifficultyText.text = GameManager.Instance.currentLevel.levelDifficulty.ToString();
+        zoneNameText.text = GameManager.Instance.currentLevel.worldName;
+
+        TestLevelsSystemManager.instance.UpdateBarValueOnMap();
     }
 }

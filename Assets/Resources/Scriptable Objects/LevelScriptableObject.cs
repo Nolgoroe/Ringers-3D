@@ -26,6 +26,12 @@ public class sliceToSpawnDataStruct
 
 }
 
+public enum LevelDifficulty
+{
+    Noraml,
+    Hard
+}
+
 [CreateAssetMenu(fileName = "Level", menuName = "ScriptableObjects/Create Level")]
 public class LevelScriptableObject : ScriptableObject
 {
@@ -49,6 +55,7 @@ public class LevelScriptableObject : ScriptableObject
     public int numIndexForLeaderBoard;
     public int tutorialIndexForList;
     public int cellsCountInLevel;
+    public LevelDifficulty levelDifficulty;
 
     public bool RandomSlicePositions;
     public bool allowRepeatSlices;
