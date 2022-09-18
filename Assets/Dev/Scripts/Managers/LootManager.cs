@@ -389,6 +389,9 @@ public class LootManager : MonoBehaviour
                     break;
             }
         }
+
+
+        //GiveLootFromChest();
     }
 
     private void UnpackToRubiesChest(LootPacks pack)
@@ -442,5 +445,55 @@ public class LootManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void GiveLootFromChest()
+    {
+        bool gaveLoot = false;
+
+        if (rubiesToRecieveInLevel > 0)
+        {
+            gaveLoot = true;
+
+            //display the loot
+            //StartCoroutine(DisplayLootGoldRubyToPlayer(rubiesToRecieveInLevel, rubySprite));
+            //SoundManager.Instance.PlaySound(Sounds.ItemPop);
+
+            PlayerManager.Instance.AddRubies(rubiesToGiveChest);
+
+            Debug.Log("Rubies Recieved chest: " + rubiesToGiveChest);
+
+        }
+
+        if (craftingMatsLootForLevel.Count > 0)
+        {
+            gaveLoot = true;
+
+            foreach (LootToRecieve LTR in materialsToGiveChest)
+            {
+                //display the loot
+                //StartCoroutine(DisplayLootMaterialsToPlayer(LTR.amount, LTR.type));
+                //SoundManager.Instance.PlaySound(Sounds.ItemPop);
+
+                PlayerManager.Instance.AddMaterials(LTR.type, LTR.amount); //////// Figure out how to get amount from outside dynamically
+
+                Debug.Log("materials recieved chest: " + LTR.type);
+
+                pointsOfInterestSaveData.instance.AddToPointsOfInterest(LTR.type);
+            }
+
+            InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.inventory);
+
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.InterestPontSaveData });
+        }
+
+        if(gaveLoot)
+        {
+            PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+        }
+
+        //finishedGivingLoot = true;
+        materialsToGiveChest.Clear();
+        tempDataListChest.Clear();
     }
 }

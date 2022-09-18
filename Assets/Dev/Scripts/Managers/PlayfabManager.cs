@@ -30,6 +30,7 @@ public enum SystemsToSave
     BossesSaveData,
     AllZones,
     InterestPontSaveData,
+    TestLevelsSystemManagerSaveData,
     ALL
 }
 
@@ -640,6 +641,18 @@ public class PlayfabManager : MonoBehaviour
             JsonUtility.FromJsonOverwrite(result.Data["Interest points save data"].Value, pointsOfInterestSaveData.instance);
         }
 
+        // interest points Data
+        if (result.Data != null && result.Data.ContainsKey("Interest points save data"))
+        {
+            JsonUtility.FromJsonOverwrite(result.Data["Interest points save data"].Value, pointsOfInterestSaveData.instance);
+        }
+
+        // Test Levels System Manager Save Data
+        if (result.Data != null && result.Data.ContainsKey("Test Levels System Manager Save Data"))
+        {
+            JsonUtility.FromJsonOverwrite(result.Data["Test Levels System Manager Save Data"].Value, TestLevelsSystemManagerSaveData.instance);
+        }
+
         successfullyDoneWithStep = true;
     }
 
@@ -774,6 +787,11 @@ public class PlayfabManager : MonoBehaviour
                     savedData = JsonUtility.ToJson(pointsOfInterestSaveData.instance);
                     SendDataToBeSavedJson(savedData, SystemsToSave.InterestPontSaveData, "");
                     break;
+                case SystemsToSave.TestLevelsSystemManagerSaveData:
+                    //Test Levels System Manager Save Data
+                    savedData = JsonUtility.ToJson(TestLevelsSystemManagerSaveData.instance);
+                    SendDataToBeSavedJson(savedData, SystemsToSave.TestLevelsSystemManagerSaveData, "");
+                    break;
                 case SystemsToSave.ALL:
                     SaveAllGameData();
                     break;
@@ -894,6 +912,14 @@ public class PlayfabManager : MonoBehaviour
         //Bosses Save Data
         savedData = JsonUtility.ToJson(BossesSaveDataManager.instance);
         SendDataToBeSavedJson(savedData, SystemsToSave.BossesSaveData, "");
+
+        //points of interest Save Data
+        savedData = JsonUtility.ToJson(pointsOfInterestSaveData.instance);
+        SendDataToBeSavedJson(savedData, SystemsToSave.InterestPontSaveData, "");
+
+        //Test Levels System Manager Save Data
+        savedData = JsonUtility.ToJson(TestLevelsSystemManagerSaveData.instance);
+        SendDataToBeSavedJson(savedData, SystemsToSave.TestLevelsSystemManagerSaveData, "");
 
         GooglePlayConnectManager.instance.statusText.text = "Done.";
 
@@ -1020,6 +1046,15 @@ public class PlayfabManager : MonoBehaviour
                     Data = new Dictionary<string, string>()
                     {
                         { "Interest points save data", saveData }
+                    }
+                };
+                break;
+            case SystemsToSave.TestLevelsSystemManagerSaveData:
+                request = new UpdateUserDataRequest
+                {
+                    Data = new Dictionary<string, string>()
+                    {
+                        { "Test Levels System Manager Save Data", saveData }
                     }
                 };
                 break;

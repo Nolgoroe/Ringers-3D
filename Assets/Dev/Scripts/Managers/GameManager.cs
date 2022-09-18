@@ -332,6 +332,16 @@ public class GameManager : MonoBehaviour
         SoundManager.Instance.CancelLeantweensSound();
         SoundManager.Instance.CancelCoRoutinesSound();
 
+        if(currentLevel.isTestLevel)
+        {
+            TestLevelsSystemManager.instance.InitTestLevel();
+        }
+        else
+        {
+            UIManager.Instance.gameplayCanvasTop.SetActive(true);
+            UIManager.Instance.gameplayCanvasTopTestLevels.SetActive(false);
+        }
+
         if (!SoundManager.Instance.normalAmbienceLevel.isPlaying)
         {
             Debug.Log("Change music");

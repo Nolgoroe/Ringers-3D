@@ -39,6 +39,7 @@ public class UIManager : MonoBehaviour
     public bool isUsingUI;
 
     public GameObject mainMenu, worldGameObject, hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
+    public GameObject gameplayCanvasTopTestLevels;
     public GameObject InGameUiScreens;
     //public GameObject blackBagBG;
     public GameObject zoomInCorruptedBlack;

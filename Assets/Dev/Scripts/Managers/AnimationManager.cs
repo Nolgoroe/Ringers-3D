@@ -821,6 +821,7 @@ public class AnimationManager : MonoBehaviour
         {
             Debug.LogError("end of end level sequence! adding to counter");
 
+            TestLevelsSystemManagerSaveData.instance.AddToChestBar();
             // progress bar and check to see if reched max.. if we did - what to do with loot?
         }
 
@@ -958,6 +959,8 @@ public class AnimationManager : MonoBehaviour
         if(GameManager.Instance.currentLevel.isTestLevel)
         {
             Debug.LogError("Skipped now! adding to counter");
+
+            TestLevelsSystemManagerSaveData.instance.AddToChestBar();
             // progress bar and check to see if reched max.. if we did - what to do with loot?
         }
 
