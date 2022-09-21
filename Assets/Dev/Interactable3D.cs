@@ -107,7 +107,7 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
 
         if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
         {
-            if (connectedLevelScriptableObject.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedLevelScriptableObject.levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
+            if (connectedLevelScriptableObject.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
             {
                 GameManager.Instance.ChooseLevel(connectedLevelScriptableObject.levelIndexInZone);
                 GameManager.Instance.setCurrentLevelBG(connectedLevelScriptableObject.worldNum);
