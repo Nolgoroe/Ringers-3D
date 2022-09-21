@@ -2473,6 +2473,19 @@ public class UIManager : MonoBehaviour
             cheatOptionsButtonIngame.gameObject.SetActive(false);
             bossLevelsParent.SetActive(true);
             ZoneManagerHelpData.Instance.testZone.SetActive(true);
+
+            foreach (Button button in inventoryButtons)
+            {
+                button.interactable = true;
+            }
+
+            foreach (Button button in animalAlbumButtons)
+            {
+                button.interactable = true;
+            }
+
+            TutorialSaveData.Instance.hasFinishedPotion = true;
+            TutorialSaveData.Instance.hasFinishedAnimalAlbum = true;
         }
     }
 
@@ -2708,9 +2721,15 @@ public class UIManager : MonoBehaviour
         rubyAmountText.text = amount.ToString();
     }
 
-    public void ShowTestLevelDataDisplay()
+    public IEnumerator ShowTestLevelDataDisplay()
     {
         SetTestLevelDataDisplayData();
+
+        TestLevelsSystemManager.instance.ResetDisplayMap();
+
+        yield return new WaitForEndOfFrame();
+        TestLevelsSystemManager.instance.InstantiateBarStarsMapDisplay();
+
         testLevelsDataScreen.SetActive(true);
     }
 
@@ -2719,6 +2738,7 @@ public class UIManager : MonoBehaviour
         levelNumText.text = "Level " + GameManager.Instance.currentLevel.levelIndexInZone.ToString();
         levelDifficultyText.text = GameManager.Instance.currentLevel.levelDifficulty.ToString();
         zoneNameText.text = GameManager.Instance.currentLevel.worldName;
+        TestLevelsSystemManager.instance.starSliderTestLevelMapDisplay.maxValue = TestLevelsSystemManager.instance.numOfSections;
 
         TestLevelsSystemManager.instance.UpdateBarValueOnMap();
     }

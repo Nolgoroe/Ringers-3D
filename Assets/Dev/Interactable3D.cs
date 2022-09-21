@@ -112,7 +112,7 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
                 GameManager.Instance.ChooseLevel(connectedLevelScriptableObject.levelIndexInZone);
                 GameManager.Instance.setCurrentLevelBG(connectedLevelScriptableObject.worldNum);
 
-                UIManager.Instance.ShowTestLevelDataDisplay();
+                StartCoroutine(UIManager.Instance.ShowTestLevelDataDisplay());
             }
 
         }

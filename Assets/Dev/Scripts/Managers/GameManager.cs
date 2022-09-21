@@ -334,7 +334,7 @@ public class GameManager : MonoBehaviour
 
         if(currentLevel.isTestLevel)
         {
-            TestLevelsSystemManager.instance.InitTestLevel();
+            StartCoroutine(TestLevelsSystemManager.instance.InitTestLevel());
         }
         else
         {

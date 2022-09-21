@@ -25,15 +25,17 @@ public class TestLevelsSystemManager : MonoBehaviour
         instance = this;
 
 
-        InstantiateBarStarsMapDisplay();
     }
 
-    public void InitTestLevel()
+    public IEnumerator InitTestLevel()
     {
+        StarSlider.maxValue = numOfSections;
+
         ShowRelaventUI();
+        yield return new WaitForEndOfFrame();
         InstantiateBarStars();
 
-        StarSlider.maxValue = numOfSections;
+        ActivateStarOrChestLevel(TestLevelsSystemManagerSaveData.instance.CompletedCount);
     }
 
     private void ShowRelaventUI()
@@ -51,27 +53,29 @@ public class TestLevelsSystemManager : MonoBehaviour
             //we start from 1 since the "chest" is already considerd a "section"
             for (int i = 1; i < numOfSections; i++)
             {
-                Instantiate(starPrefab, starsParent);
+                GameObject go = Instantiate(starPrefab, starsParent);
+                go.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
     }
-    private void InstantiateBarStarsMapDisplay()
+    public void InstantiateBarStarsMapDisplay()
     {
-        starSliderTestLevelMapDisplay.maxValue = numOfSections;
-
         if (numOfSections > 1)
         {
             //we start from 1 since the "chest" is already considerd a "section"
             for (int i = 1; i < numOfSections; i++)
             {
-                Instantiate(starPrefab, starsParentMapDisplay);
+                GameObject go = Instantiate(starPrefab, starsParentMapDisplay);
+                go.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
+
+        ActivateStarOrChestMap();
     }
 
     public void UpdateBarValue()
     {
-        LeanTween.value(StarSlider.gameObject, StarSlider.value, StarSlider.value + 1, barAnimateSpeed).setOnComplete(() => ActivateStarOrChest((int)StarSlider.value)).setOnUpdate((float val) =>
+        LeanTween.value(StarSlider.gameObject, StarSlider.value, StarSlider.value + 1, barAnimateSpeed).setOnComplete(() => ActivateStarOrChestLevel((int)StarSlider.value)).setOnUpdate((float val) =>
         {
             StarSlider.value = val;
         });
@@ -82,7 +86,7 @@ public class TestLevelsSystemManager : MonoBehaviour
         starSliderTestLevelMapDisplay.value = TestLevelsSystemManagerSaveData.instance.CompletedCount;
     }
 
-    private void ActivateStarOrChest(int index)
+    private void ActivateStarOrChestLevel(int index)
     {
         if (index >= numOfSections)
         {
@@ -96,10 +100,23 @@ public class TestLevelsSystemManager : MonoBehaviour
             return;
         }
 
-        if (starsParent.childCount > 0)
+        for (int i = 0; i < TestLevelsSystemManagerSaveData.instance.CompletedCount; i++)
         {
-            // animate stars here
-            Debug.LogError("Activated Star: " + starsParent.GetChild(index - 1).name);
+            if (starsParent.childCount > 0)
+            {
+                starsParent.GetChild(i).GetChild(0).gameObject.SetActive(true);
+            }
+        }
+
+    }
+    private void ActivateStarOrChestMap()
+    {
+        for (int i = 0; i < TestLevelsSystemManagerSaveData.instance.CompletedCount; i++)
+        {
+            if (starsParentMapDisplay.childCount > 0)
+            {
+                starsParentMapDisplay.GetChild(i).GetChild(0).gameObject.SetActive(true);
+            }
         }
     }
 
@@ -109,6 +126,14 @@ public class TestLevelsSystemManager : MonoBehaviour
         for (int i = 0; i < starsParent.childCount; i++)
         {
             Destroy(starsParent.GetChild(i).gameObject);
+        }
+    }
+    public void ResetDisplayMap()
+    {
+        starSliderTestLevelMapDisplay.value = TestLevelsSystemManagerSaveData.instance.CompletedCount;
+        for (int i = 0; i < starsParentMapDisplay.childCount; i++)
+        {
+            Destroy(starsParentMapDisplay.GetChild(i).gameObject);
         }
     }
 

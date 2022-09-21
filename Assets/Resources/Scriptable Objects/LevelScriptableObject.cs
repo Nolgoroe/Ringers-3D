@@ -28,7 +28,7 @@ public class sliceToSpawnDataStruct
 
 public enum LevelDifficulty
 {
-    Noraml,
+    Normal,
     Hard
 }
 
