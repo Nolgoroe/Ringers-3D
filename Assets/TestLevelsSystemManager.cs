@@ -8,6 +8,7 @@ public class TestLevelsSystemManager : MonoBehaviour
     public static TestLevelsSystemManager instance;
 
     public int numOfSections;
+    public float barWidth;
     public GameObject starPrefab;
 
     public Transform starsParent;
@@ -50,11 +51,18 @@ public class TestLevelsSystemManager : MonoBehaviour
     {
         if(numOfSections > 1)
         {
+            float amout = barWidth / (numOfSections);
+
             //we start from 1 since the "chest" is already considerd a "section"
             for (int i = 1; i < numOfSections; i++)
             {
                 GameObject go = Instantiate(starPrefab, starsParent);
-                go.transform.GetChild(0).gameObject.SetActive(false);
+                RectTransform starRect = go.GetComponent<RectTransform>();
+                starRect.anchoredPosition = new Vector2(amout * i, 0);
+
+                ImageSwapHelper swapHelper = go.GetComponent<ImageSwapHelper>();
+
+                swapHelper.SetDeActivatedChild();
             }
         }
     }
@@ -62,11 +70,18 @@ public class TestLevelsSystemManager : MonoBehaviour
     {
         if (numOfSections > 1)
         {
+            float amout = barWidth / (numOfSections );
+
             //we start from 1 since the "chest" is already considerd a "section"
             for (int i = 1; i < numOfSections; i++)
             {
                 GameObject go = Instantiate(starPrefab, starsParentMapDisplay);
-                go.transform.GetChild(0).gameObject.SetActive(false);
+                RectTransform starRect = go.GetComponent<RectTransform>();
+                starRect.anchoredPosition = new Vector2(amout * i, 0);
+
+                ImageSwapHelper swapHelper = go.GetComponent<ImageSwapHelper>();
+
+                swapHelper.SetDeActivatedChild();
             }
         }
 
@@ -104,7 +119,9 @@ public class TestLevelsSystemManager : MonoBehaviour
         {
             if (starsParent.childCount > 0)
             {
-                starsParent.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                ImageSwapHelper swapHelper = starsParent.GetChild(i).GetComponent<ImageSwapHelper>();
+
+                swapHelper.SetActivatedChild();
             }
         }
 
@@ -115,7 +132,9 @@ public class TestLevelsSystemManager : MonoBehaviour
         {
             if (starsParentMapDisplay.childCount > 0)
             {
-                starsParentMapDisplay.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                ImageSwapHelper swapHelper = starsParentMapDisplay.GetChild(i).GetComponent<ImageSwapHelper>();
+
+                swapHelper.SetActivatedChild();
             }
         }
     }

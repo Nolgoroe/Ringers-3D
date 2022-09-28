@@ -30,8 +30,9 @@ MonoBehaviour:
   worldNum: 5
   levelIndexInZone: 23
   numIndexForLeaderBoard: 23
-  tutorialIndexForList: -1
+  tutorialIndexForList: 0
   cellsCountInLevel: 8
+  levelDifficulty: 0
   RandomSlicePositions: 0
   allowRepeatSlices: 0
   allowRepeatTiles: 0
@@ -45,24 +46,24 @@ MonoBehaviour:
     isLock: 0
     isLoot: 1
     isLimiter: 1
-  RewardBags: 0600000007000000
+  - sliceToSpawn: 2
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
+  - sliceToSpawn: 0
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
+  RewardBags: 0100000002000000
   levelAvailableColors: 030000000000000001000000
-  levelAvailablesymbols: 0000000001000000
+  levelAvailablesymbols: 000000000100000002000000
   symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
   isTutorial: 0
   specificTutorialEnum: 0
-  bottomUIToShow: 0
-  arrayOfPieces:
-  - colorOfPieceRight: 0
-    symbolOfPieceRight: 1
-    colorOfPieceLeft: 2
-    symbolOfPieceLeft: 1
-  - colorOfPieceRight: 1
-    symbolOfPieceRight: 1
-    colorOfPieceLeft: 0
-    symbolOfPieceLeft: 0
-  specificSliceSpots: 01000000
+  bottomUIToShow: 2
+  arrayOfPieces: []
+  specificSliceSpots: 000000000400000005000000
   specificSlicesShapes: 
   specificSlicesColors: 00000000
   BossHealth: 0
