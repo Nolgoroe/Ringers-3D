@@ -36,7 +36,8 @@ public enum Sounds
     OwlRelease,
     RiveRelease,
     RiveRootRelease,
-    RingAppear
+    RingAppear,
+    AlbumAnimalAppear
     //// Add all sounds here
 }
 

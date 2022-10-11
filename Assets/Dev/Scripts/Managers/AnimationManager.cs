@@ -68,6 +68,7 @@ public class AnimationManager : MonoBehaviour
     public float offsetWaitTimeInPieces;
     public float delayBetweenPiecesAppear;
     public float fadeInTimeTextSuccess;
+    public float fadeInTimeRingAndBar;
     public float fadeInTimeTextAnimalName;
     public float fadeInTimeButtons;
     public float timeToScaleBoard;
@@ -221,7 +222,6 @@ public class AnimationManager : MonoBehaviour
         }
 
 
-
         MoveTopButtonAnim();
 
         if(GameManager.Instance.currentLevel.isAnimalLevel)
@@ -270,8 +270,10 @@ public class AnimationManager : MonoBehaviour
 
         ZoneManagerHelpData.Instance.ChangeZoneToNormalZoneDisplay();
 
+        //fade out board and bar
         SpriteRenderer boardSR = GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>();
         boardSR.color = new Color(boardSR.color.r, boardSR.color.g, boardSR.color.b, 0);
+        TestLevelsSystemManager.instance.StarSlider.GetComponent<CanvasGroup>().alpha = 0;
 
         foreach (Slice slice in GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices)
         {
@@ -343,11 +345,13 @@ public class AnimationManager : MonoBehaviour
     {
         GameObject clip = GameManager.Instance.gameClip;
         GameObject topZone = UIManager.Instance.gameplayCanvasTop;
+        GameObject topZoneBar = TestLevelsSystemManager.instance.StarSlider.gameObject;
         GameObject bottomeZone = UIManager.Instance.gameplayCanvasBotom;
 
         LeanTween.move(clip, new Vector3(clip.transform.position.x, clip.transform.position.y + 2.2f, clip.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
 
         LeanTween.move(topZone, new Vector3(topZone.transform.position.x, topZone.transform.position.y + 1f, topZone.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
+        LeanTween.move(topZoneBar, new Vector3(topZoneBar.transform.position.x, topZoneBar.transform.position.y + 1f, topZoneBar.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
 
         LeanTween.move(bottomeZone, new Vector3(bottomeZone.transform.position.x, bottomeZone.transform.position.y - 1f, bottomeZone.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
     }
@@ -514,6 +518,7 @@ public class AnimationManager : MonoBehaviour
 
         SpriteRenderer boardSR = GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>();
         boardSR.color = new Color(boardSR.color.r, boardSR.color.g, boardSR.color.b, 0);
+        TestLevelsSystemManager.instance.StarSlider.GetComponent<CanvasGroup>().alpha = 0;
 
         foreach (Slice slice in GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices)
         {
@@ -613,7 +618,6 @@ public class AnimationManager : MonoBehaviour
 
         if (hasSkippedToAfterAnimalAnim)
         {
-
             StopCoroutine("AfterAnimalAnimation");
 
             SkipBoardAnim();
@@ -648,13 +652,60 @@ public class AnimationManager : MonoBehaviour
         }
         ///summon VFX HERE
         ///
-        GameManager.Instance.gameBoard.transform.position = new Vector3(0, 1.55f, 0);
-        GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>().enabled = true;
+
+        UIManager.Instance.youWinScreen.SetActive(true);
+
+        LeanTween.value(UIManager.Instance.sucessText.gameObject, 0f, 1, fadeInTimeTextSuccess).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        {
+            TMP_Text succesText = UIManager.Instance.sucessText;
+            Color newColor = succesText.color;
+            newColor.a = val;
+            succesText.color = newColor;
+        });
+
+        LeanTween.scale(UIManager.Instance.flowerUIMask, flowerUIScaleTo, timeToScaleUIFlowers);
+
+        yield return new WaitForSeconds(fadeInTimeTextSuccess - 0.1f);
 
         turnOff = null;
 
+
+        GameManager.Instance.gameBoard.transform.position = new Vector3(0, 1.55f, 0);
+        GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>().enabled = true;
+
         SpriteRenderer boardSR = GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>();
-        boardSR.color = new Color(boardSR.color.r, boardSR.color.g, boardSR.color.b, 1);
+        boardSR.color = new Color(boardSR.color.r, boardSR.color.g, boardSR.color.b, 0);
+
+        TestLevelsSystemManager.instance.StarSlider.GetComponent<RectTransform>().anchoredPosition = new Vector2(-20, -90);
+        CanvasGroup barCanvasGroup = TestLevelsSystemManager.instance.StarSlider.GetComponent<CanvasGroup>();
+        barCanvasGroup.alpha = 0;
+
+        LeanTween.value(boardSR.gameObject, 0f, 1, fadeInTimeRingAndBar).setOnUpdate((float val) =>
+        {
+            Color newColor = boardSR.color;
+            newColor.a = val;
+            boardSR.color = newColor;
+        });
+
+        LeanTween.value(barCanvasGroup.gameObject, 0f, 1, fadeInTimeRingAndBar).setOnUpdate((float val) =>
+        {
+            barCanvasGroup.alpha = val;
+        });
+
+
+        GameManager.Instance.gameBoard.transform.localScale = boardScaleTo;
+
+        Vector3 originalScale = GameManager.Instance.gameBoard.transform.localScale;
+
+        LeanTween.scale(GameManager.Instance.gameBoard, boardScaleToAppear, timeToScaleBoardAppearGrow);
+
+        //yield return new WaitForSeconds(timeToScaleBoardAppearGrow);
+
+        LeanTween.scale(GameManager.Instance.gameBoard, originalScale, timeToScaleBoardAppearBackOriginal);
+
+        //yield return new WaitForSeconds(waitTimeInPieces + 0.5f);
+
+        yield return new WaitForSeconds(fadeInTimeRingAndBar + 0.1f);
 
         foreach (Slice slice in GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices)
         {
@@ -671,18 +722,10 @@ public class AnimationManager : MonoBehaviour
             goSR.color = new Color(goSR.color.r, goSR.color.g, goSR.color.b, 1);
         }
 
-        GameManager.Instance.gameBoard.transform.localScale = boardScaleTo;
-
-        Vector3 originalScale = GameManager.Instance.gameBoard.transform.localScale;
-
-        LeanTween.scale(GameManager.Instance.gameBoard, boardScaleToAppear, timeToScaleBoardAppearGrow);
-
-        yield return new WaitForSeconds(timeToScaleBoardAppearGrow);
-
-        LeanTween.scale(GameManager.Instance.gameBoard, originalScale, timeToScaleBoardAppearBackOriginal);
-
-        yield return new WaitForSeconds(waitTimeInPieces + 0.5f);
-
+        if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+        {
+            TestLevelsSystemManagerSaveData.instance.AddToChestBar();
+        }
 
         foreach (Cell cell in ConnectionManager.Instance.cells)
         {
@@ -693,19 +736,6 @@ public class AnimationManager : MonoBehaviour
             }
         }
 
-        UIManager.Instance.youWinScreen.SetActive(true);
-
-        LeanTween.value(UIManager.Instance.sucessText.gameObject, 0f, 1, fadeInTimeTextSuccess).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
-        {
-            TMP_Text succesText = UIManager.Instance.sucessText;
-            Color newColor = succesText.color;
-            newColor.a = val;
-            succesText.color = newColor;
-        });
-
-        LeanTween.scale(UIManager.Instance.flowerUIMask, flowerUIScaleTo, timeToScaleUIFlowers);
-
-        yield return new WaitForSeconds(fadeInTimeTextSuccess + 0.1f);
 
         string animalName = Regex.Replace(AnimalsManager.Instance.currentLevelAnimal.ToString(), "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
 
@@ -736,6 +766,8 @@ public class AnimationManager : MonoBehaviour
 
         LeanTween.scale(GameManager.Instance.gameBoard.gameObject, boardScaleTo, timeToScaleBoard);
 
+
+
         yield return new WaitForSeconds(timeToScaleBoard + 0.1f);
         GameManager.Instance.WinAfterAnimation();
 
@@ -745,12 +777,13 @@ public class AnimationManager : MonoBehaviour
 
         ///check bar progress here for test levels
         /// this might change places depending on where we want it in animation
-        if (GameManager.Instance.currentLevel.isTestLevel)
-        {
-            Debug.LogError("end of end level sequence! adding to counter");
+        //if (GameManager.Instance.currentLevel.isTestLevel)
+        //{
+        //    Debug.LogError("end of end level sequence! adding to counter");
 
-            TestLevelsSystemManagerSaveData.instance.AddToChestBar();
-        }
+        //    TestLevelsSystemManagerSaveData.instance.AddToChestBar();
+        //}
+
 
         yield return new WaitForSeconds(TestLevelsSystemManager.instance.barAnimateSpeed + 0.1f);
 
@@ -814,8 +847,11 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.restartButton.interactable = true;
         UIManager.Instance.dealButton.interactable = true;
 
-        TutorialSequence.Instacne.CheckDoPotionTutorial();
-        TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
+        if(!TestLevelsSystemManagerSaveData.instance.canGetChest)
+        {
+            TutorialSequence.Instacne.CheckDoPotionTutorial();
+            TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
+        }
         //TutorialSequence.Instacne.CheckDoDenTutorial(); //temp keep here
 
         StartCoroutine(CheckShowLootTutorial());
@@ -842,6 +878,10 @@ public class AnimationManager : MonoBehaviour
 
         SpriteRenderer boardSR = GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>();
         boardSR.color = new Color(boardSR.color.r, boardSR.color.g, boardSR.color.b, 1);
+
+        TestLevelsSystemManager.instance.StarSlider.GetComponent<RectTransform>().anchoredPosition = new Vector2(-20, -90);
+        CanvasGroup barCanvasGroup = TestLevelsSystemManager.instance.StarSlider.GetComponent<CanvasGroup>();
+        barCanvasGroup.alpha = 1;
 
         foreach (Slice slice in GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices)
         {
@@ -896,18 +936,24 @@ public class AnimationManager : MonoBehaviour
 
         GameManager.Instance.gameBoard.transform.localScale = boardScaleTo;
 
+        if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+        {
+            TestLevelsSystemManagerSaveData.instance.AddToChestBar();
+        }
+
         GameManager.Instance.WinAfterAnimation();
 
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(false);
 
         ///check bar progress here for test levels
         /// this might change places depending on where we want it in animation
-        if (GameManager.Instance.currentLevel.isTestLevel)
-        {
-            Debug.LogError("Skipped now! adding to counter");
+        //if (GameManager.Instance.currentLevel.isTestLevel)
+        //{
+        //    Debug.LogError("Skipped now! adding to counter");
 
-            TestLevelsSystemManagerSaveData.instance.AddToChestBar();
-        }
+        //    TestLevelsSystemManagerSaveData.instance.AddToChestBar();
+        //}
+
 
         if (!GameManager.Instance.currentLevel.isGrindLevel)
         {
@@ -952,9 +998,12 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.restartButton.interactable = true;
         UIManager.Instance.dealButton.interactable = true;
 
+        if (!TestLevelsSystemManagerSaveData.instance.canGetChest)
+        {
+            TutorialSequence.Instacne.CheckDoPotionTutorial();
+            TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
+        }
 
-        TutorialSequence.Instacne.CheckDoPotionTutorial();
-        TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
         //TutorialSequence.Instacne.CheckDoDenTutorial(); // temp keep here
         StartCoroutine(CheckShowLootTutorial());
 

@@ -7,6 +7,8 @@ public class TestLevelsSystemManagerSaveData : MonoBehaviour
     public static TestLevelsSystemManagerSaveData instance;
     public int CompletedCount;
 
+    public bool canGetChest;
+
     private void Start()
     {
         instance = this;

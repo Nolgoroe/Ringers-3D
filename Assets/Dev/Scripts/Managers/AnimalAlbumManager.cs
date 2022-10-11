@@ -104,6 +104,8 @@ public class AnimalAlbumManager : MonoBehaviour
 
         if(hasChangedSaveData)
         {
+            SoundManager.Instance.PlaySound(Sounds.AlbumAnimalAppear);
+
             hasChangedSaveData = false;
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.animalManager });
         }

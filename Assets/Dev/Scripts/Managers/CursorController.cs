@@ -89,6 +89,16 @@ public class CursorController : MonoBehaviour
         //    }
         //}
 
+        if(TestLevelsSystemManagerSaveData.instance.canGetChest)
+        {
+            if (Input.touchCount > 0)
+            {
+                TestLevelsSystemManagerSaveData.instance.canGetChest = false;
+                TestLevelsSystemManager.instance.chestAnimator.SetTrigger("TappedChest");
+                LootManager.Instance.UnpackChestLoot();
+                return;
+            }
+        }
 
         if (UIManager.isDuringIntro && UIManager.canAdvanceIntro)
         {
@@ -179,8 +189,6 @@ public class CursorController : MonoBehaviour
                 }
             }
         } // detect deactivate unlocked level vfx
-
-
 
         if (GameManager.Instance.levelStarted && !UIManager.Instance.isUsingUI && !GameManager.Instance.isSecondaryControls && !PowerUpManager.IsUsingPowerUp)
         {

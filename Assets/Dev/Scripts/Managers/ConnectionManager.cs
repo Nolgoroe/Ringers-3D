@@ -293,10 +293,10 @@ public class ConnectionManager : MonoBehaviour
 
                             supPieceArray[currentLeft].relevantSlice.fulfilledCondition = true;
 
-                            if (supPieceArray[currentLeft].relevantSlice.isLoot)
-                            {
-                                GiveLootFromConnections(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
-                            }
+                            //if (supPieceArray[currentLeft].relevantSlice.isLoot)
+                            //{
+                            //    GiveLootFromConnections(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
+                            //}
 
                             if (supPieceArray[currentLeft].relevantSlice.isLock)
                             {
@@ -338,10 +338,10 @@ public class ConnectionManager : MonoBehaviour
 
                             supPieceArray[currentLeft].relevantSlice.fulfilledCondition = true;
 
-                            if (supPieceArray[currentLeft].relevantSlice.isLoot)
-                            {
-                                GiveLootFromConnections(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
-                            }
+                            //if (supPieceArray[currentLeft].relevantSlice.isLoot)
+                            //{
+                            //    GiveLootFromConnections(supPieceArray[currentLeft].relevantSlice, supPieceArray[currentLeft].relevantSlice.isLimiter);
+                            //}
 
                             if (supPieceArray[currentLeft].relevantSlice.isLock)
                             {
@@ -490,10 +490,10 @@ public class ConnectionManager : MonoBehaviour
                         //}
 
                         supPieceArray[currentRight].relevantSlice.fulfilledCondition = true;
-                        if (supPieceArray[currentRight].relevantSlice.isLoot)
-                        {
-                            GiveLootFromConnections(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
-                        }
+                        //if (supPieceArray[currentRight].relevantSlice.isLoot)
+                        //{
+                        //    GiveLootFromConnections(supPieceArray[currentRight].relevantSlice, supPieceArray[currentRight].relevantSlice.isLimiter);
+                        //}
 
                         if (supPieceArray[currentRight].relevantSlice.isLock)
                         {

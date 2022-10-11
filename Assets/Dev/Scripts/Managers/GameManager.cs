@@ -332,15 +332,17 @@ public class GameManager : MonoBehaviour
         SoundManager.Instance.CancelLeantweensSound();
         SoundManager.Instance.CancelCoRoutinesSound();
 
-        if(currentLevel.isTestLevel)
-        {
-            StartCoroutine(TestLevelsSystemManager.instance.InitTestLevel());
-        }
-        else
-        {
-            UIManager.Instance.gameplayCanvasTop.SetActive(true);
-            UIManager.Instance.gameplayCanvasTopTestLevels.SetActive(false);
-        }
+        StartCoroutine(TestLevelsSystemManager.instance.InitTestLevel());
+
+        //if (currentLevel.isTestLevel)
+        //{
+        //    StartCoroutine(TestLevelsSystemManager.instance.InitTestLevel());
+        //}
+        //else
+        //{
+        //    UIManager.Instance.gameplayCanvasTop.SetActive(true);
+        //    UIManager.Instance.gameplayCanvasTopTestLevels.SetActive(false);
+        //}
 
         if (!SoundManager.Instance.normalAmbienceLevel.isPlaying)
         {
@@ -863,6 +865,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.isUsingUI = false;
 
         DestroyAllLevelChildern();
+        LootManager.Instance.DestroyAllChestLootData();
         LootManager.Instance.ResetLevelLootData();
         ConnectionManager.Instance.cells.Clear();
         ConnectionManager.Instance.tempSymbolPiecesStoneFound.Clear();
@@ -958,6 +961,7 @@ public class GameManager : MonoBehaviour
         TutorialSequence.Instacne.activatedHeighlights.Clear();
 
         DestroyAllLevelChildern();
+        LootManager.Instance.DestroyAllChestLootData();
         LootManager.Instance.DestoryWinScreenDisplyedLoot();
 
         LootManager.Instance.ResetLevelLootData();

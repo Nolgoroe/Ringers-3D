@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
     public bool isUsingUI;
 
     public GameObject mainMenu, worldGameObject, hudCanvasUI, itemForgeCanvas, gameplayCanvas, gameplayCanvasTop, ringersHutDisplay, ringersHutUICanvas, hollowCraftAndOwned;
-    public GameObject gameplayCanvasTopTestLevels;
+    //public GameObject gameplayCanvasTopTestLevels;
     public GameObject InGameUiScreens;
     //public GameObject blackBagBG;
     public GameObject zoomInCorruptedBlack;
@@ -730,6 +730,7 @@ public class UIManager : MonoBehaviour
             }
 
             GameManager.Instance.DestroyAllLevelChildern();
+            LootManager.Instance.DestroyAllChestLootData();
 
             LootManager.Instance.ResetLevelLootData();
             LootManager.Instance.giveKey = false;
@@ -2721,7 +2722,7 @@ public class UIManager : MonoBehaviour
         rubyAmountText.text = amount.ToString();
     }
 
-    public IEnumerator ShowTestLevelDataDisplay()
+    public IEnumerator LaunchLevelDisplay()
     {
         SetTestLevelDataDisplayData();
 

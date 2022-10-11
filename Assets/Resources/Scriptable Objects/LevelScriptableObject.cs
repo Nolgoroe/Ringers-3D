@@ -44,7 +44,7 @@ public class LevelScriptableObject : ScriptableObject
     public bool isAnimalLevel = true;
     public bool isReleaseAnimalToDen;
     public bool isKeyLevel;
-    public bool isTestLevel;
+    //public bool isTestLevel;
     public bool showIntroLevelAnimation;
     public GameObject boardPrefab;
     public GameObject clipPrefab;

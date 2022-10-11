@@ -21,31 +21,35 @@ public class TestLevelsSystemManager : MonoBehaviour
     public Slider starSliderTestLevelMapDisplay;
     public Transform starsParentMapDisplay;
 
+    public Interactable3D selectedLevelButton;
+
+    public GameObject chestPrefab;
+    public Animator chestAnimator;
     void Start()
     {
         instance = this;
-
-
     }
 
     public IEnumerator InitTestLevel()
     {
         StarSlider.maxValue = numOfSections;
 
-        ShowRelaventUI();
+        //ShowRelaventUI();
+        ResetDisplay();
         yield return new WaitForEndOfFrame();
         InstantiateBarStars();
 
         ActivateStarOrChestLevel(TestLevelsSystemManagerSaveData.instance.CompletedCount);
+
     }
 
-    private void ShowRelaventUI()
-    {
-        ResetDisplay();
+    //private void ShowRelaventUI()
+    //{
+    //    ResetDisplay();
 
-        UIManager.Instance.gameplayCanvasTop.SetActive(false);
-        UIManager.Instance.gameplayCanvasTopTestLevels.SetActive(true);
-    }
+    //    UIManager.Instance.gameplayCanvasTop.SetActive(false);
+    //    UIManager.Instance.gameplayCanvasTopTestLevels.SetActive(true);
+    //}
 
     private void InstantiateBarStars()
     {
@@ -107,10 +111,12 @@ public class TestLevelsSystemManager : MonoBehaviour
         {
             Debug.LogError("Giving Chest");
 
-            //animate chest here
-            LootManager.Instance.UnpackChestLoot();
+            chestAnimator = Instantiate(chestPrefab).GetComponent<Animator>();
+            LootManager.Instance.parentChestLoot = chestAnimator.transform;
 
-            TestLevelsSystemManagerSaveData.instance.ResetData();
+            //animate chest here
+            TestLevelsSystemManagerSaveData.instance.canGetChest = true;
+
             UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
             return;
         }
@@ -160,12 +166,15 @@ public class TestLevelsSystemManager : MonoBehaviour
     //called by button
     public void LaunchTestLevel()
     {
-        UIManager.Instance.testLevelsDataScreen.SetActive(false);
+        selectedLevelButton.ChooseTypeLevelLaunch();
 
-        GameManager.Instance.levelStarted = true;
+        //UIManager.Instance.testLevelsDataScreen.SetActive(false);
 
-        SoundManager.Instance.FadeOutMapBGMusic(SoundManager.Instance.timeFadeOutBGMusic, true);
+        //GameManager.Instance.levelStarted = true;
 
-        GameManager.Instance.StartLevel(true, false);
+        //SoundManager.Instance.FadeOutMapBGMusic(SoundManager.Instance.timeFadeOutBGMusic, true);
+
+        //GameManager.Instance.StartLevel(true, false);
     }
+
 }

@@ -159,6 +159,7 @@ public class LootManager : MonoBehaviour
     public GameObject keyPrefab;
 
     public GameObject lootDisplayPrefab;
+    public GameObject lootDisplayPrefabChest;
     public Transform winScreenLootDisplayContent;
 
     public Sprite /*goldSprite,*/ rubySprite;
@@ -196,6 +197,14 @@ public class LootManager : MonoBehaviour
     public int rubiesToGiveChest;
     public List<LootToRecieve> materialsToGiveChest;
     public List<CraftingMats> tempDataListChest;
+
+    [Header("Chest Loot Animations")]
+    public Transform[] chestLootPosition;
+    public Transform parentChestLoot;
+    public float animationSpeedChestLoot;
+    public float timeBetweenLoots;
+    public float openChestTime;
+    private int currentChestLootPos;
 
     private void Start()
     {
@@ -359,6 +368,38 @@ public class LootManager : MonoBehaviour
         LeanTween.scale(go, AnimationManager.instance.lootScaleTo, AnimationManager.instance.timeToScaleLoot).setEaseLinear();
     }
 
+    public void DisplayLootFromChest(int count, Sprite sprite)
+    {
+        currentChestLootPos++;
+
+        GameObject go = Instantiate(lootDisplayPrefabChest, parentChestLoot);
+
+        craftingMatDisplayerChestLoot CMD = go.GetComponent<craftingMatDisplayerChestLoot>();
+
+        CMD.spriteRenderer.sprite = sprite;
+        CMD.materialCount.text = count.ToString();
+        CMD.materialCount.color = Color.white;
+
+
+        LeanTween.move(go, chestLootPosition[currentChestLootPos], animationSpeedChestLoot).setOnComplete(() => go.transform.parent = chestLootPosition[currentChestLootPos].transform);
+    }
+
+    public void DisplayLootFromChest(int count, CraftingMats CM)
+    {
+        currentChestLootPos++;
+
+        GameObject go = Instantiate(lootDisplayPrefabChest, parentChestLoot);
+
+        craftingMatDisplayerChestLoot CMD = go.GetComponent<craftingMatDisplayerChestLoot>();
+
+        CMD.spriteRenderer.sprite = allMaterialSprites[(int)CM];
+        CMD.materialCount.text = count.ToString();
+        CMD.materialCount.color = Color.white;
+
+        LeanTween.move(go, chestLootPosition[currentChestLootPos], animationSpeedChestLoot).setOnComplete(() => go.transform.parent = chestLootPosition[currentChestLootPos].transform);
+
+    }
+
     public void DestoryWinScreenDisplyedLoot()
     {
         foreach (Transform t in winScreenLootDisplayContent)
@@ -370,6 +411,8 @@ public class LootManager : MonoBehaviour
     [ContextMenu("Unpack Chest")]
     public void UnpackChestLoot()
     {
+        currentChestLootPos = -1;
+
         int randomChest = UnityEngine.Random.Range(0, chestLootPacks.Count);
         Debug.LogError(randomChest);
         foreach (LootPacks lootpack in chestLootPacks[randomChest].lootPacksForChest)
@@ -391,7 +434,7 @@ public class LootManager : MonoBehaviour
         }
 
 
-        GiveLootFromChest();
+        StartCoroutine(GiveLootFromChest());
     }
 
     private void UnpackToRubiesChest(LootPacks pack)
@@ -447,9 +490,11 @@ public class LootManager : MonoBehaviour
         }
     }
 
-    private void GiveLootFromChest()
+    private IEnumerator GiveLootFromChest()
     {
         bool gaveLoot = false;
+
+        yield return new WaitForSeconds(openChestTime);
 
         if (rubiesToGiveChest > 0)
         {
@@ -457,12 +502,15 @@ public class LootManager : MonoBehaviour
 
             //display the loot
             //StartCoroutine(DisplayLootGoldRubyToPlayer(rubiesToRecieveInLevel, rubySprite));
-            //SoundManager.Instance.PlaySound(Sounds.ItemPop);
+
+            DisplayLootFromChest(rubiesToGiveChest, rubySprite);
+            SoundManager.Instance.PlaySound(Sounds.ItemPop);
 
             PlayerManager.Instance.AddRubies(rubiesToGiveChest);
 
             Debug.LogError("Rubies Recieved chest: " + rubiesToGiveChest);
 
+            yield return new WaitForSeconds(timeBetweenLoots);
         }
 
         if (materialsToGiveChest.Count > 0)
@@ -473,13 +521,17 @@ public class LootManager : MonoBehaviour
             {
                 //display the loot
                 //StartCoroutine(DisplayLootMaterialsToPlayer(LTR.amount, LTR.type));
-                //SoundManager.Instance.PlaySound(Sounds.ItemPop);
+
+                DisplayLootFromChest(LTR.amount, LTR.type);
+                SoundManager.Instance.PlaySound(Sounds.ItemPop);
 
                 PlayerManager.Instance.AddMaterials(LTR.type, LTR.amount); //////// Figure out how to get amount from outside dynamically
 
                 Debug.LogError("materials recieved chest: " + LTR.type);
 
                 pointsOfInterestSaveData.instance.AddToPointsOfInterest(LTR.type);
+
+                yield return new WaitForSeconds(timeBetweenLoots);
             }
 
             InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.inventory);
@@ -492,9 +544,32 @@ public class LootManager : MonoBehaviour
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
         }
 
+        yield return new WaitForSeconds(0.1f);
         //finishedGivingLoot = true;
         materialsToGiveChest.Clear();
         rubiesToGiveChest = 0;
+        currentChestLootPos = 0;
         tempDataListChest.Clear();
+
+        parentChestLoot.GetComponent<Animator>().SetTrigger("FinishedLootDisplay");
+        parentChestLoot = null;
+
+        TestLevelsSystemManagerSaveData.instance.ResetData();
+
+        yield return new WaitForSeconds(2);
+
+        TutorialSequence.Instacne.CheckDoPotionTutorial();
+        TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
+    }
+
+    public void DestroyAllChestLootData()
+    {
+        foreach (Transform lootPos in chestLootPosition)
+        {
+            for (int i = 0; i < lootPos.childCount; i++)
+            {
+                Destroy(lootPos.GetChild(i).gameObject);
+            }
+        }
     }
 }
