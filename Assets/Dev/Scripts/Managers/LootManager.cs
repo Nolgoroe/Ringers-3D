@@ -413,24 +413,26 @@ public class LootManager : MonoBehaviour
     {
         currentChestLootPos = -1;
 
-        int randomChest = UnityEngine.Random.Range(0, chestLootPacks.Count);
-        Debug.LogError(randomChest);
-        foreach (LootPacks lootpack in chestLootPacks[randomChest].lootPacksForChest)
+        foreach (ListLootChest listLoot in chestLootPacks)
         {
-            switch (lootpack.ToString()[0])
+            foreach (LootPacks lootPack in listLoot.lootPacksForChest)
             {
+                switch (lootPack.ToString()[0])
+                {
+                    case 'R':
+                        UnpackToRubiesChest(lootPack);
+                        break;
 
-                case 'R':
-                    UnpackToRubiesChest(lootpack);
-                    break;
+                    case 'L':
+                        UnpackToMaterialsChest(lootPack);
+                        break;
 
-                case 'L':
-                    UnpackToMaterialsChest(lootpack);
-                    break;
-
-                default:
-                    break;
+                    default:
+                        Debug.LogError("Error in chest loot here");
+                        break;
+                }
             }
+
         }
 
 
@@ -571,5 +573,7 @@ public class LootManager : MonoBehaviour
                 Destroy(lootPos.GetChild(i).gameObject);
             }
         }
+
+        chestLootPacks = null;
     }
 }

@@ -62,7 +62,7 @@ public class LevelScriptableObject : ScriptableObject
     public bool allowRepeatTiles;
     public bool allowRepeatTileSides;
     public PowerUp[] powerupsForLevel;
-    public GameObject specificAnimalForLevel;
+    //public GameObject specificAnimalForLevel;
 
     public stonePieceDataStruct[] stoneTiles;
     public sliceToSpawnDataStruct[] slicesToSpawn;
@@ -123,13 +123,4 @@ public class LevelScriptableObject : ScriptableObject
         numIndexForLeaderBoard = 115 + levelNum;
     }
 
-
-    [ContextMenu("THIS is animal")]
-    public void actionhere3()
-    {
-        if(isAnimalLevel)
-        {
-            specificAnimalForLevel = null;
-        }
-    }
 }

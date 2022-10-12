@@ -10,17 +10,17 @@ using System.IO;
 public enum AnimalsInGame
 {
     RedFox,
-    SandFox,
-    BlueFox,
-    PinkFox,
+    YellowFox,
+    WhiteFox,
+    OrangeFox,
     BrownStag,
-    RedStag,
+    PinkStag,
     OrangeStag,
     YellowStag,
     BrownOwl,
     YellowOwl,
-    BlueOwl,
-    PinkOwl,
+    GreyOwl,
+    WhiteOwl,
     BrownPikachu,
     YellowPikachu,
     BluePikachu,
@@ -106,6 +106,14 @@ public class AnimalsManager : MonoBehaviour
         spawnedDenAnimals = false;
 
         SpawnAllAnimalsInDenStartApplication();
+    }
+
+    public void ResetAnimalManagerData()
+    {
+        currentLevelAnimal = AnimalsInGame.None;
+        currentLevelLiveAnimal = null;
+        statueToSwap = null;
+        spawnedDenAnimals = false;
     }
 
     public void CheckUnlockAnimal(AnimalsInGame toUnclock)

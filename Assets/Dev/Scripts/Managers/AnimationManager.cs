@@ -224,12 +224,6 @@ public class AnimationManager : MonoBehaviour
 
         MoveTopButtonAnim();
 
-        if(GameManager.Instance.currentLevel.isAnimalLevel)
-        {
-            SoundManager.Instance.PlaySound(Sounds.RiveRootRelease);
-            AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Release Animal");
-        }
-
         yield return new WaitForSeconds(speedOutTopBottom + 0.1f);
 
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(true);
@@ -313,19 +307,30 @@ public class AnimationManager : MonoBehaviour
         {
             if (GameManager.Instance.currentLevel.isAnimalLevel)
             {
-                SoundsPerAnimal SPA = AnimalManagerDataHelper.instance.soundsPerAnimalEnum.Where(p => p.animalEnum == AnimalsManager.Instance.currentLevelAnimal).SingleOrDefault();
-
-                if(SPA != null)
+                // on the last animation - if it's animal - we don't have rive to clear, we destroy the statue
+                if (TestLevelsSystemManagerSaveData.instance.CompletedCount + 1 != GameManager.Instance.currentCluster.clusterLevels.Length)
                 {
-                    SoundManager.Instance.PlaySound(SPA.soundClipToPlay);
+                    Debug.LogError("1 more in animal release");
+
+                    SoundManager.Instance.PlaySound(Sounds.RiveRootRelease);
+
+                    AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive " + TestLevelsSystemManagerSaveData.instance.CompletedCount);
                 }
+                else
+                {
+                    SoundsPerAnimal SPA = AnimalManagerDataHelper.instance.soundsPerAnimalEnum.Where(p => p.animalEnum == AnimalsManager.Instance.currentLevelAnimal).SingleOrDefault();
 
-                AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
+                    if (SPA != null)
+                    {
+                        SoundManager.Instance.PlaySound(SPA.soundClipToPlay);
+                    }
 
+                    AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
+                }
             }
             else
             {
-                AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive");
+                AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive " + TestLevelsSystemManagerSaveData.instance.CompletedCount);
                 SoundManager.Instance.PlaySound(Sounds.RiveRelease);
             }
 
@@ -577,20 +582,29 @@ public class AnimationManager : MonoBehaviour
         {
             if (GameManager.Instance.currentLevel.isAnimalLevel)
             {
-                SoundsPerAnimal SPA = AnimalManagerDataHelper.instance.soundsPerAnimalEnum.Where(p => p.animalEnum == AnimalsManager.Instance.currentLevelAnimal).SingleOrDefault();
-
-                if (SPA != null)
+                if (TestLevelsSystemManagerSaveData.instance.CompletedCount != GameManager.Instance.currentCluster.clusterLevels.Length)
                 {
-                    SoundManager.Instance.PlaySound(SPA.soundClipToPlay);
+                    Debug.LogError("1 more in animal release");
+
+                    SoundManager.Instance.PlaySound(Sounds.RiveRootRelease);
+
+                    AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive " + TestLevelsSystemManagerSaveData.instance.CompletedCount);
                 }
+                else
+                {
+                    SoundsPerAnimal SPA = AnimalManagerDataHelper.instance.soundsPerAnimalEnum.Where(p => p.animalEnum == AnimalsManager.Instance.currentLevelAnimal).SingleOrDefault();
 
-                AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
-                AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Release Animal");
+                    if (SPA != null)
+                    {
+                        SoundManager.Instance.PlaySound(SPA.soundClipToPlay);
+                    }
 
+                    AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
+                }
             }
             else
             {
-                AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive");
+                AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive " + TestLevelsSystemManagerSaveData.instance.CompletedCount);
                 SoundManager.Instance.PlaySound(Sounds.RiveRelease);
             }
         }

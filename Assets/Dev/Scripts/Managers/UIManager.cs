@@ -2724,6 +2724,8 @@ public class UIManager : MonoBehaviour
 
     public IEnumerator LaunchLevelDisplay()
     {
+        TestLevelsSystemManager.instance.numOfSections = GameManager.Instance.currentCluster.clusterLevels.Length;
+
         SetTestLevelDataDisplayData();
 
         TestLevelsSystemManager.instance.ResetDisplayMap();

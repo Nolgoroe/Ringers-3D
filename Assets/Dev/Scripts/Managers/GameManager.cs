@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     //public LightingSettingsManager lightSettingsManager;
 
     public LevelScriptableObject currentLevel;
+    public ClusterScriptableObject currentCluster;
     public string timeStartLevel;
 
     public CSVParser csvParser;
@@ -135,6 +136,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator ResetDataStartLevel(bool isTutorial, bool isRestart)
     {
         AnimationManager.instance.ResetEnterLevelAnimation();
+        AnimalsManager.Instance.ResetAnimalManagerData();
 
         timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
@@ -160,7 +162,7 @@ public class GameManager : MonoBehaviour
 
         UIManager.Instance.PrepareObjectForEndBoardAnim();
         LootManager.Instance.finishedGivingLoot = false;
-
+        LootManager.Instance.chestLootPacks = currentCluster.chestLootPacksCluster;
 
         UIManager.Instance.toMapButton.SetActive(true);
         UIManager.Instance.googlePlayButton.SetActive(false);
@@ -235,11 +237,18 @@ public class GameManager : MonoBehaviour
                     if (data != null)
                     {
                         AnimalsManager.Instance.currentLevelAnimal = data.animalType;
+
                     }
                     else
                     {
                         Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
                     }
+
+                    if(AnimalsManager.Instance.statueToSwap)
+                    {
+                        AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Set Rive " + TestLevelsSystemManagerSaveData.instance.CompletedCount);
+                    }
+
                 }
 
                 InstantiateStonePieces();
@@ -314,10 +323,16 @@ public class GameManager : MonoBehaviour
                 if (data != null)
                 {
                     AnimalsManager.Instance.currentLevelAnimal = data.animalType;
+
                 }
                 else
                 {
                     Debug.Log("NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA - OR STATUE IS GRIND STATE/TREE STATUE");
+                }
+
+                if (AnimalsManager.Instance.statueToSwap)
+                {
+                    AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Set Rive " + TestLevelsSystemManagerSaveData.instance.CompletedCount);
                 }
             }
 
@@ -372,7 +387,7 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.optionsButtonIngame.interactable = true;
             UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
             UIManager.Instance.dealButton.interactable = true;
-            GameManager.Instance.powerupManager.PowerupButtonsActivation(true);
+            powerupManager.PowerupButtonsActivation(true);
 
             if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
             {
@@ -551,9 +566,9 @@ public class GameManager : MonoBehaviour
     {
         ZoneManagerHelpData ZMHD = ZoneManagerHelpData.Instance;
 
-        if (currentLevel.specificAnimalForLevel)
+        if (currentCluster.specificClsuterStatue)
         {
-            GameObject go = currentLevel.specificAnimalForLevel;
+            GameObject go = currentCluster.specificClsuterStatue;
 
             if (go)
             {
@@ -613,10 +628,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SetZoneName(string zoneName)
-    {
-
-    }
     public void ChooseLevel(int levelNum)
     {
         currentLevel = Instantiate((LevelScriptableObject)Resources.Load("Scriptable Objects/Levels/" + ZoneManagerHelpData.Instance.currentZoneName + "/Level " + levelNum));

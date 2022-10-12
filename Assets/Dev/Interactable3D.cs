@@ -14,11 +14,12 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
     public bool isBossLevel;
 
     public int NextZoneID;///only if key level
-    //public int indexInZone;
+    public int indexInCluster;
 
     public GameObject NextLevelVFX;
 
     public LevelScriptableObject connectedLevelScriptableObject;
+    public ClusterScriptableObject connectedClusterScriptableObject;
 
     public UnityEvent interactEvent;
 
@@ -44,15 +45,15 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
     {
         TestLevelsSystemManager.instance.selectedLevelButton = this;
 
-        ZoneManager.Instance.SetCurrentZone(connectedLevelScriptableObject.worldNum);
+        ZoneManager.Instance.SetCurrentZone(connectedClusterScriptableObject.clusterLevels[indexInCluster].worldNum);
 
         if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
         {
-            if (connectedLevelScriptableObject.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedLevelScriptableObject.levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
+            if (connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
             {
-                GameManager.Instance.ChooseLevel(connectedLevelScriptableObject.levelIndexInZone);
-                GameManager.Instance.setCurrentLevelBG(connectedLevelScriptableObject.worldNum);
-
+                GameManager.Instance.ChooseLevel(connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone);
+                GameManager.Instance.setCurrentLevelBG(connectedClusterScriptableObject.clusterLevels[indexInCluster].worldNum);
+                GameManager.Instance.currentCluster = connectedClusterScriptableObject;
                 StartCoroutine(UIManager.Instance.LaunchLevelDisplay());
             }
 
@@ -97,16 +98,13 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
 
     public void LaunchNoramlLevel()
     {
-        ZoneManager.Instance.SetCurrentZone(connectedLevelScriptableObject.worldNum);
+        ZoneManager.Instance.SetCurrentZone(connectedClusterScriptableObject.clusterLevels[indexInCluster].worldNum);
 
         if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
         {
-            if (connectedLevelScriptableObject.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedLevelScriptableObject.levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
+            if (connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
             {
                 GameManager.Instance.levelStarted = true;
-
-                GameManager.Instance.ChooseLevel(connectedLevelScriptableObject.levelIndexInZone);
-                GameManager.Instance.setCurrentLevelBG(connectedLevelScriptableObject.worldNum);
 
                 TurnOffVFX();
 
@@ -143,16 +141,13 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
 
     public void LaunchTutorialLevel()
     {
-        ZoneManager.Instance.SetCurrentZone(connectedLevelScriptableObject.worldNum);
+        ZoneManager.Instance.SetCurrentZone(connectedClusterScriptableObject.clusterLevels[indexInCluster].worldNum);
 
         if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
         {
-            if (connectedLevelScriptableObject.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedLevelScriptableObject.levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
+            if (connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
             {
                 GameManager.Instance.levelStarted = true;
-
-                GameManager.Instance.ChooseLevel(connectedLevelScriptableObject.levelIndexInZone);
-                GameManager.Instance.setCurrentLevelBG(connectedLevelScriptableObject.worldNum);
 
                 TurnOffVFX();
 
@@ -168,19 +163,14 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
 
     public void LaunchKeyLevel()
     {
-        ZoneManager.Instance.CheckZoneAwardedKey(connectedLevelScriptableObject.worldNum);
+        ZoneManager.Instance.CheckZoneAwardedKey(connectedClusterScriptableObject.clusterLevels[indexInCluster].worldNum);
         ZoneManager.Instance.SetUnlockZone(NextZoneID);
 
         if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
         {
-            if (connectedLevelScriptableObject.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedLevelScriptableObject.levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
+            if (connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
             {
                 GameManager.Instance.levelStarted = true;
-                //GameManager.Instance.timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
-
-                GameManager.Instance.ChooseLevel(connectedLevelScriptableObject.levelIndexInZone);
-                GameManager.Instance.setCurrentLevelBG(connectedLevelScriptableObject.worldNum);
-                //GameManager.Instance.CallStartLevel(false);
 
                 TurnOffVFX();
 
@@ -196,17 +186,14 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
 
     public void LaunchKeyAndTutorialLevel()
     {
-        ZoneManager.Instance.CheckZoneAwardedKey(connectedLevelScriptableObject.worldNum);
+        ZoneManager.Instance.CheckZoneAwardedKey(connectedClusterScriptableObject.clusterLevels[indexInCluster].worldNum);
         ZoneManager.Instance.SetUnlockZone(NextZoneID);
 
         if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
         {
-            if (connectedLevelScriptableObject.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedLevelScriptableObject.levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
+            if (connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
             {
                 GameManager.Instance.levelStarted = true;
-
-                GameManager.Instance.ChooseLevel(connectedLevelScriptableObject.levelIndexInZone);
-                GameManager.Instance.setCurrentLevelBG(connectedLevelScriptableObject.worldNum);
 
                 TurnOffVFX();
 
@@ -254,7 +241,7 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
     [ContextMenu("Rename")]
     public void RenameObject()
     {
-        string newName = "Level " + connectedLevelScriptableObject.levelIndexInZone + " ";
+        string newName = "Level " + connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone + " ";
 
 
         isTutorialLevel = false;
@@ -263,45 +250,56 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
         isAnimalLevel = false;
         isBossLevel = false;
 
-        if ((connectedLevelScriptableObject.isTutorial || connectedLevelScriptableObject.isSpecificTutorial) && connectedLevelScriptableObject.isKeyLevel)
+        //string[] array = transform.name.Split(' ');
+        //foreach (string token in array)
+        //{
+        //    bool good = int.TryParse(token, out int num);
+        //    if(good)
+        //    {
+        //        indexInZone = num;
+        //        break;
+        //    }
+        //}
+
+        if ((connectedClusterScriptableObject.clusterLevels[indexInCluster].isTutorial || connectedClusterScriptableObject.clusterLevels[indexInCluster].isSpecificTutorial) && connectedClusterScriptableObject.clusterLevels[indexInCluster].isKeyLevel)
         {
             isTutorialLevel = true;
             isKeyLevel = true;
         }
 
-        if (connectedLevelScriptableObject.isTutorial || connectedLevelScriptableObject.isSpecificTutorial)
+        if (connectedClusterScriptableObject.clusterLevels[indexInCluster].isTutorial || connectedClusterScriptableObject.clusterLevels[indexInCluster].isSpecificTutorial)
         {
             isTutorialLevel = true;
 
         }
 
-        if (connectedLevelScriptableObject.isKeyLevel)
+        if (connectedClusterScriptableObject.clusterLevels[indexInCluster].isKeyLevel)
         {
             isKeyLevel = true;
 
         }
 
-        if (connectedLevelScriptableObject.isGrindLevel)
+        if (connectedClusterScriptableObject.clusterLevels[indexInCluster].isGrindLevel)
         {
             isGrindLevel = true;
         }
 
-        if (connectedLevelScriptableObject.isAnimalLevel)
+        if (connectedClusterScriptableObject.clusterLevels[indexInCluster].isAnimalLevel)
         {
             isAnimalLevel = true;
         }
 
         
-        if (connectedLevelScriptableObject.isBoss)
+        if (connectedClusterScriptableObject.clusterLevels[indexInCluster].isBoss)
         {
             isBossLevel = true;
         }
 
-        if (isTutorialLevel || connectedLevelScriptableObject.isSpecificTutorial)
+        if (isTutorialLevel || connectedClusterScriptableObject.clusterLevels[indexInCluster].isSpecificTutorial)
         {
-            if (connectedLevelScriptableObject.isSpecificTutorial)
+            if (connectedClusterScriptableObject.clusterLevels[indexInCluster].isSpecificTutorial)
             {
-                newName += "Specific Tutorial" + " " + connectedLevelScriptableObject.specificTutorialEnum;
+                newName += "Specific Tutorial" + " " + connectedClusterScriptableObject.clusterLevels[indexInCluster].specificTutorialEnum;
             }
             else
             {
@@ -332,7 +330,6 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
 
         transform.name = newName;
 
-        NextZoneID = connectedLevelScriptableObject.worldNum + 1;
+        NextZoneID = connectedClusterScriptableObject.clusterLevels[indexInCluster].worldNum + 1;
     }
-
 }

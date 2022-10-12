@@ -10,7 +10,6 @@ public enum AnimalRarity { Noraml, Rare, Exotic, None}
 public class AnimalScriptableObject : ScriptableObject
 {
     public string animalName;
-    public int ID;
     public AnimalRarity rarity;
     public ObjectHollowType hollowBelongTo;
     public AnimalTypesInGame animalType;
