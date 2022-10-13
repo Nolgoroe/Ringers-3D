@@ -328,11 +328,6 @@ public class AnimationManager : MonoBehaviour
                     AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
                 }
             }
-            else
-            {
-                AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive " + TestLevelsSystemManagerSaveData.instance.CompletedCount);
-                SoundManager.Instance.PlaySound(Sounds.RiveRelease);
-            }
 
             hasSkippedToAnimalAnim = true;
         }

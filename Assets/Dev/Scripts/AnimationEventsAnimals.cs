@@ -15,14 +15,22 @@ public class AnimationEventsAnimals : MonoBehaviour
 
     public void ShakeAnimalStatue()
     {
-        if (AnimalsManager.Instance.statueToSwap.GetComponent<CameraShake>())
+        if (GameManager.Instance.currentLevel.isAnimalLevel)
         {
-            AnimalsManager.Instance.statueToSwap.GetComponent<CameraShake>().ShakeOnce();
-        }
+            if (AnimalsManager.Instance.statueToSwap.GetComponent<CameraShake>())
+            {
+                AnimalsManager.Instance.statueToSwap.GetComponent<CameraShake>().ShakeOnce();
+            }
 
-        if (AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>())
+            if (AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>())
+            {
+                AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>().renderer.materials[0].EnableKeyword("_EMISSION");
+            }
+        }
+        else
         {
-            AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>().renderer.materials[0].EnableKeyword("_EMISSION");
+            AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive " + TestLevelsSystemManagerSaveData.instance.CompletedCount);
+            SoundManager.Instance.PlaySound(Sounds.RiveRelease);
         }
     }
     public void DestroySelf()
