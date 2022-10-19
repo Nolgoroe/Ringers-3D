@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ImageSwapHelper : MonoBehaviour
 {
-    public Image objectImage;
     public GameObject deActivatedChild, activatedChild;
 
     public void SetActivatedChild()
@@ -18,5 +17,10 @@ public class ImageSwapHelper : MonoBehaviour
     {
         activatedChild.SetActive(false);
         deActivatedChild.SetActive(true);
+    }
+    public void ActivateAnimation()
+    {
+        GetComponent<Animator>().enabled = true;
+        GetComponent<Animator>().SetTrigger("Activate Star");
     }
 }

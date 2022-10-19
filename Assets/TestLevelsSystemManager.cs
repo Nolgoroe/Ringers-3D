@@ -39,7 +39,8 @@ public class TestLevelsSystemManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
         InstantiateBarStars();
 
-        ActivateStarOrChestLevel(TestLevelsSystemManagerSaveData.instance.CompletedCount);
+        yield return new WaitForEndOfFrame();
+        InitLevelStars();
 
     }
 
@@ -105,6 +106,18 @@ public class TestLevelsSystemManager : MonoBehaviour
         starSliderTestLevelMapDisplay.value = TestLevelsSystemManagerSaveData.instance.CompletedCount;
     }
 
+    private void InitLevelStars()
+    {
+        for (int i = 0; i < TestLevelsSystemManagerSaveData.instance.CompletedCount; i++)
+        {
+            if (starsParent.childCount > 0)
+            {
+                ImageSwapHelper swapHelper = starsParent.GetChild(i).GetComponent<ImageSwapHelper>();
+
+                swapHelper.SetActivatedChild();
+            }
+        }
+    }
     private void ActivateStarOrChestLevel(int index)
     {
         if (index >= numOfSections)
@@ -127,10 +140,16 @@ public class TestLevelsSystemManager : MonoBehaviour
             {
                 ImageSwapHelper swapHelper = starsParent.GetChild(i).GetComponent<ImageSwapHelper>();
 
-                swapHelper.SetActivatedChild();
+                if (i == TestLevelsSystemManagerSaveData.instance.CompletedCount - 1)
+                {
+                    swapHelper.ActivateAnimation();
+                }
+                else
+                {
+                    swapHelper.SetActivatedChild();
+                }
             }
         }
-
     }
     private void ActivateStarOrChestMap()
     {
