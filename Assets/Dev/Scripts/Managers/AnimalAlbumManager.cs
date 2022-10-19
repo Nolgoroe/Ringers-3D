@@ -32,11 +32,11 @@ public class AnimalAlbumManager : MonoBehaviour
     //public Page[] pages;
     public Page currentActivePage;
 
-    public Sprite[] animalSprites;
-    public Sprite[] animalSpritesLocked;
+    //public Sprite[] animalSprites;
+    //public Sprite[] animalSpritesLocked;
 
-    public Dictionary<AnimalsInGame, Sprite> animalEnumToSprite;
-    public Dictionary<AnimalsInGame, Sprite> animalEnumToSpriteLocked;
+    //public Dictionary<AnimalsInGame, Sprite> animalEnumToSprite;
+    //public Dictionary<AnimalsInGame, Sprite> animalEnumToSpriteLocked;
 
     public Button giveRewardButton;
 
@@ -52,24 +52,24 @@ public class AnimalAlbumManager : MonoBehaviour
     {
         Instance = this;
 
-        animalEnumToSprite = new Dictionary<AnimalsInGame, Sprite>();
-        animalEnumToSpriteLocked = new Dictionary<AnimalsInGame, Sprite>();
+        //animalEnumToSprite = new Dictionary<AnimalsInGame, Sprite>();
+        //animalEnumToSpriteLocked = new Dictionary<AnimalsInGame, Sprite>();
 
-        for (int i = 0; i < System.Enum.GetValues(typeof(AnimalsInGame)).Length; i++)
-        {
-            if((AnimalsInGame)i != AnimalsInGame.None)
-            {
-                animalEnumToSprite.Add((AnimalsInGame)i, animalSprites[i]);
-            }
-        }
+        //for (int i = 0; i < System.Enum.GetValues(typeof(AnimalsInGame)).Length; i++)
+        //{
+        //    if((AnimalsInGame)i != AnimalsInGame.None)
+        //    {
+        //        animalEnumToSprite.Add((AnimalsInGame)i, animalSprites[i]);
+        //    }
+        //}
 
-        for (int i = 0; i < System.Enum.GetValues(typeof(AnimalsInGame)).Length; i++)
-        {
-            if((AnimalsInGame)i != AnimalsInGame.None)
-            {
-                animalEnumToSpriteLocked.Add((AnimalsInGame)i, animalSpritesLocked[i]);
-            }
-        }
+        //for (int i = 0; i < System.Enum.GetValues(typeof(AnimalsInGame)).Length; i++)
+        //{
+        //    if((AnimalsInGame)i != AnimalsInGame.None)
+        //    {
+        //        animalEnumToSpriteLocked.Add((AnimalsInGame)i, animalSpritesLocked[i]);
+        //    }
+        //}
 
         foreach (PageToPageImages item in pageToPageImages)
         {
@@ -98,7 +98,7 @@ public class AnimalAlbumManager : MonoBehaviour
 
         for (int i = 0; i < pageToPageImages[pageNumber].pageImages.Length; i++)
         {
-            pageToPageImages[pageNumber].pageImages[i].imageAnimalEnum = pageToPageImages[pageNumber].page.animalsInPage[i];
+            //pageToPageImages[pageNumber].pageImages[i].imageAnimalEnum = pageToPageImages[pageNumber].page.animalsInPage[i];
             StartCoroutine(CheckHasAnimal(pageToPageImages[pageNumber].pageImages[i]));
         }
 
@@ -139,9 +139,18 @@ public class AnimalAlbumManager : MonoBehaviour
         }
         else
         {
-            data.isUnlocked = false;
-            data.ResetTransferDataImmediate();
-            //data.animalImage.sprite = animalEnumToSpriteLocked[data.imageAnimalEnum];
+            if (AnimalsManager.Instance.revealedAnimalsInAlbum.Contains(data.imageAnimalEnum))
+            {
+                data.TransferToRevealedImmediate();
+                data.AfterReveal();
+                pageToPageImages[currentPageNum].page.ownedAnimalsCount++;
+            }
+            else
+            {
+                data.isUnlocked = false;
+                data.ResetTransferDataImmediate();
+                //data.animalImage.sprite = animalEnumToSpriteLocked[data.imageAnimalEnum];
+            }
         }
 
         if(hasChangedSaveData)
@@ -183,8 +192,6 @@ public class AnimalAlbumManager : MonoBehaviour
             CompletedPageToReward CPTR = AnimalsManager.Instance.completedAnimalPagesToReward.Where(p => p.completedAnimalPagesID == currentPageNum).FirstOrDefault();
             giveRewardButton.gameObject.SetActive(false);
         }
-
-
     }
 
     public void GiveReward()

@@ -37,7 +37,7 @@ public class AlbumImageAnimalData : MonoBehaviour
     public void TransferToRevealedImmediate()
     {
         //we want both of them to always be displayed together when animation is started
-        hiddenAnimal.SetActive(true);
+        //hiddenAnimal.SetActive(true);
         RevealedAnimal.SetActive(true);
 
 
