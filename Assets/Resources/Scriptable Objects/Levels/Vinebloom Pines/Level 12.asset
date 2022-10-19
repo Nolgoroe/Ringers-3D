@@ -20,7 +20,6 @@ MonoBehaviour:
   isAnimalLevel: 0
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
-  isTestLevel: 0
   showIntroLevelAnimation: 1
   boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
     type: 3}
@@ -38,15 +37,9 @@ MonoBehaviour:
   allowRepeatTiles: 0
   allowRepeatTileSides: 0
   powerupsForLevel: 
-  specificAnimalForLevel: {fileID: 4102538602839744026, guid: 2d078f20a3e839d46ae45c38a4b5a23a,
-    type: 3}
   stoneTiles: []
   slicesToSpawn:
   - sliceToSpawn: 1
-    isLock: 0
-    isLoot: 1
-    isLimiter: 1
-  - sliceToSpawn: 1
     isLock: 1
     isLoot: 1
     isLimiter: 1
@@ -56,18 +49,22 @@ MonoBehaviour:
     isLimiter: 1
   - sliceToSpawn: 1
     isLock: 1
+    isLoot: 1
+    isLimiter: 1
+  - sliceToSpawn: 1
+    isLock: 0
     isLoot: 1
     isLimiter: 1
   RewardBags: 060000000700000008000000
   levelAvailableColors: 0000000001000000020000000300000004000000
   levelAvailablesymbols: 0300000001000000
   symbolsNeededForSpecialPowers: []
-  isSpecificTutorial: 0
+  isSpecificTutorial: 1
   isTutorial: 0
-  specificTutorialEnum: 0
+  specificTutorialEnum: 4
   bottomUIToShow: 2
   arrayOfPieces: []
-  specificSliceSpots: 000000000100000004000000
+  specificSliceSpots: 00000000020000000400000006000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0

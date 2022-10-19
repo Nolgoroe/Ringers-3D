@@ -1597,7 +1597,7 @@ public class TutorialSequence : MonoBehaviour
 
     public void EnterLevelAnimationPhaseLogic()
     {
-        AnimationManager.instance.PopulateRefrencesEnterLevelAnim();
+        StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim());
     }
 }
 

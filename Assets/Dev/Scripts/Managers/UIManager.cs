@@ -1579,16 +1579,23 @@ public class UIManager : MonoBehaviour
             for (int i = 0; i < BPZ.zone3DButtons.Length; i++)
             {
                 
-                if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isAnimalLevel)
+                if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isChest)
                 {
-                    IconSpritesPerCondition ISPC = ZoneManagerHelpData.Instance.iconsPerConditon.Where(p => p.isAnimal).SingleOrDefault();
+                    IconSpritesPerCondition ISPC = ZoneManagerHelpData.Instance.iconsPerConditon.Where(p => p.isChest).SingleOrDefault();
 
                     BPZ.zone3DButtons[i].GetComponent<Image>().sprite = ISPC.levelFirstTimeIconSprite;
+
 
                 }
                 else if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isTutorialLevel)
                 {
                     IconSpritesPerCondition ISPC = ZoneManagerHelpData.Instance.iconsPerConditon.Where(p => p.isTutorial).SingleOrDefault();
+
+                    BPZ.zone3DButtons[i].GetComponent<Image>().sprite = ISPC.levelFirstTimeIconSprite;
+                }
+                else if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isAnimalLevel)
+                {
+                    IconSpritesPerCondition ISPC = ZoneManagerHelpData.Instance.iconsPerConditon.Where(p => p.isAnimal).SingleOrDefault();
 
                     BPZ.zone3DButtons[i].GetComponent<Image>().sprite = ISPC.levelFirstTimeIconSprite;
                 }
@@ -1607,15 +1614,22 @@ public class UIManager : MonoBehaviour
 
                 if (i + 1 != BPZ.theZone.maxLevelReachedInZone)
                 {                    
-                    if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isAnimalLevel)
+                    if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isChest)
                     {
-                        IconSpritesPerCondition ISPC = ZoneManagerHelpData.Instance.iconsPerConditon.Where(p => p.isAnimal).SingleOrDefault();
+                        IconSpritesPerCondition ISPC = ZoneManagerHelpData.Instance.iconsPerConditon.Where(p => p.isChest).SingleOrDefault();
 
                         BPZ.zone3DButtons[i].GetComponent<Image>().sprite = ISPC.levelDoneSprite;
+
                     }
                     else if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isTutorialLevel)
                     {
                         IconSpritesPerCondition ISPC = ZoneManagerHelpData.Instance.iconsPerConditon.Where(p => p.isTutorial).SingleOrDefault();
+
+                        BPZ.zone3DButtons[i].GetComponent<Image>().sprite = ISPC.levelDoneSprite;
+                    }
+                    else if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isAnimalLevel)
+                    {
+                        IconSpritesPerCondition ISPC = ZoneManagerHelpData.Instance.iconsPerConditon.Where(p => p.isAnimal).SingleOrDefault();
 
                         BPZ.zone3DButtons[i].GetComponent<Image>().sprite = ISPC.levelDoneSprite;
                     }
@@ -1628,15 +1642,22 @@ public class UIManager : MonoBehaviour
                 {
                     BPZ.zone3DButtons[i].GetComponent<Interactable3D>().TurnOnVFX();
                     
-                    if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isAnimalLevel)
+                    if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isChest)
                     {
-                        IconSpritesPerCondition ISPC = ZoneManagerHelpData.Instance.iconsPerConditon.Where(p => p.isAnimal).SingleOrDefault();
+                        IconSpritesPerCondition ISPC = ZoneManagerHelpData.Instance.iconsPerConditon.Where(p => p.isChest).SingleOrDefault();
 
                         BPZ.zone3DButtons[i].GetComponent<Image>().sprite = ISPC.nextLevelSprite;
+
                     }
                     else if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isTutorialLevel)
                     {
                         IconSpritesPerCondition ISPC = ZoneManagerHelpData.Instance.iconsPerConditon.Where(p => p.isTutorial).SingleOrDefault();
+
+                        BPZ.zone3DButtons[i].GetComponent<Image>().sprite = ISPC.nextLevelSprite;
+                    }
+                    else if (BPZ.zone3DButtons[i].GetComponent<Interactable3D>().isAnimalLevel)
+                    {
+                        IconSpritesPerCondition ISPC = ZoneManagerHelpData.Instance.iconsPerConditon.Where(p => p.isAnimal).SingleOrDefault();
 
                         BPZ.zone3DButtons[i].GetComponent<Image>().sprite = ISPC.nextLevelSprite;
                     }
@@ -2578,7 +2599,10 @@ public class UIManager : MonoBehaviour
     }
     private void NoBottomUI()
     {
-        gameplayCanvasBotom.SetActive(false);
+        //gameplayCanvasBotom.SetActive(false);
+        gameplayCanvasBotomDeal.SetActive(false);
+        gameplayCanvasBotomPotions.SetActive(false);
+
     }
     private void BottomUIOnlyDeal()
     {

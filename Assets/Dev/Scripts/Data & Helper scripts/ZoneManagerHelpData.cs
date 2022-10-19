@@ -16,6 +16,7 @@ public class IconSpritesPerCondition
 {
     public bool isTutorial;
     public bool isAnimal;
+    public bool isChest;
     public Sprite levelDoneSprite, levelFirstTimeIconSprite, nextLevelSprite;
 }
 [Serializable]

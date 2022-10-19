@@ -146,7 +146,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 81c8f03eb3e835643aabf25eaa531f65, type: 3}
-  m_Color: {r: 1, g: 0.9497658, b: 0.3962264, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -311,7 +311,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c0f106d25779f8941b2deb0418baf553, type: 3}
-  m_Color: {r: 1, g: 0.9271174, b: 0.5471698, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -410,6 +410,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 541562024449650342, guid: bfbc54dd8fe771d43b39ac71b8511b39,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 541562024449650342, guid: bfbc54dd8fe771d43b39ac71b8511b39,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 541562024449650342, guid: bfbc54dd8fe771d43b39ac71b8511b39,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 541562024449650342, guid: bfbc54dd8fe771d43b39ac71b8511b39,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 49.1
       objectReference: {fileID: 0}
@@ -462,6 +477,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EF_StarAppear_LevelBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 3109722933597726652, guid: bfbc54dd8fe771d43b39ac71b8511b39,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfbc54dd8fe771d43b39ac71b8511b39, type: 3}

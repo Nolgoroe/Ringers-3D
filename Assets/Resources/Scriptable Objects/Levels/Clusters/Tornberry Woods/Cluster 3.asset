@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a2a0f1ba9a582e4db10d29417d63495, type: 3}
   m_Name: Cluster 3
   m_EditorClassIdentifier: 
-  clusterLevels: []
-  chestLootPacksCluster: []
-  specificClsuterStatue: {fileID: 4102538602839744026, guid: 2d078f20a3e839d46ae45c38a4b5a23a,
+  clusterLevels:
+  - {fileID: 11400000, guid: eef784282496ba143bb3691613b432e4, type: 2}
+  - {fileID: 11400000, guid: 67a9160daa899934d9ae517fbbfe80c6, type: 2}
+  - {fileID: 11400000, guid: 0a16639f67442154f8ba20d4dc51a5dc, type: 2}
+  chestLootPacksCluster:
+  - lootPacksForChest: 0b0000000b0000000c0000000c000000
+  specificClsuterStatue: {fileID: 4102538602839744026, guid: 7835f2b1a8599b14fa99c1c7aef72321,
     type: 3}

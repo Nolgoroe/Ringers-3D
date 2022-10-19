@@ -377,7 +377,7 @@ public class GameManager : MonoBehaviour
         if(!isRestart && currentLevel.showIntroLevelAnimation)
         {
 
-            AnimationManager.instance.PopulateRefrencesEnterLevelAnim();
+            StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim());
 
             yield return new WaitForSeconds(2.5f);
 

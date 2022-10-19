@@ -31,15 +31,22 @@ MonoBehaviour:
   numIndexForLeaderBoard: 57
   tutorialIndexForList: 0
   cellsCountInLevel: 8
+  levelDifficulty: 0
   RandomSlicePositions: 0
   allowRepeatSlices: 0
   allowRepeatTiles: 0
   allowRepeatTileSides: 0
   powerupsForLevel: 
-  specificAnimalForLevel: {fileID: 4102538602839744026, guid: 2d078f20a3e839d46ae45c38a4b5a23a,
-    type: 3}
   stoneTiles: []
-  slicesToSpawn: []
+  slicesToSpawn:
+  - sliceToSpawn: 1
+    isLock: 1
+    isLoot: 1
+    isLimiter: 1
+  - sliceToSpawn: 0
+    isLock: 1
+    isLoot: 1
+    isLimiter: 1
   RewardBags: 0700000008000000
   levelAvailableColors: 0000000001000000020000000300000004000000
   levelAvailablesymbols: 000000000100000002000000
@@ -49,7 +56,7 @@ MonoBehaviour:
   specificTutorialEnum: 0
   bottomUIToShow: 2
   arrayOfPieces: []
-  specificSliceSpots: 
+  specificSliceSpots: 0500000006000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0

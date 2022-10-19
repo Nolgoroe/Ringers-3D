@@ -1363,7 +1363,7 @@ public class AnimationManager : MonoBehaviour
         slices.Clear();
     }
 
-    public void PopulateRefrencesEnterLevelAnim()
+    public IEnumerator PopulateRefrencesEnterLevelAnim()
     {
         ring = GameManager.Instance.gameBoard.transform.GetComponent<SpriteRenderer>();
 
@@ -1378,6 +1378,8 @@ public class AnimationManager : MonoBehaviour
             SpriteRenderer renderer = sliceManager.activeLocksLockAnims[i].GetComponent<SpriteRenderer>();
             locks.Add(renderer);
         }
+
+        yield return new WaitForEndOfFrame();
 
         Piece[] allPieces = FindObjectsOfType<Piece>();
 

@@ -12,6 +12,7 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
     public bool isGrindLevel;
     public bool isAnimalLevel;
     public bool isBossLevel;
+    public bool isChest;
 
     public int NextZoneID;///only if key level
     public int indexInCluster;
@@ -241,7 +242,6 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
     [ContextMenu("Rename")]
     public void RenameObject()
     {
-        string newName = "Level " + connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone + " ";
 
 
         isTutorialLevel = false;
@@ -249,17 +249,18 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
         isGrindLevel = false;
         isAnimalLevel = false;
         isBossLevel = false;
+        isChest = false;
+        indexInCluster = -1;
 
-        //string[] array = transform.name.Split(' ');
-        //foreach (string token in array)
-        //{
-        //    bool good = int.TryParse(token, out int num);
-        //    if(good)
-        //    {
-        //        indexInZone = num;
-        //        break;
-        //    }
-        //}
+        for (int i = 0; i < connectedClusterScriptableObject.clusterLevels.Length; i++)
+        {
+            if (connectedClusterScriptableObject.clusterLevels[i] == connectedLevelScriptableObject)
+            {
+                indexInCluster = i;
+            }
+        }
+
+        string newName = "Level " + connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone + " ";
 
         if ((connectedClusterScriptableObject.clusterLevels[indexInCluster].isTutorial || connectedClusterScriptableObject.clusterLevels[indexInCluster].isSpecificTutorial) && connectedClusterScriptableObject.clusterLevels[indexInCluster].isKeyLevel)
         {
@@ -295,37 +296,53 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
             isBossLevel = true;
         }
 
+        if (connectedClusterScriptableObject.clusterLevels[indexInCluster].isBoss)
+        {
+            isBossLevel = true;
+        }
+
+        if(connectedLevelScriptableObject == connectedClusterScriptableObject.clusterLevels[connectedClusterScriptableObject.clusterLevels.Length - 1])
+        {
+            isChest = true;
+        }
+
         if (isTutorialLevel || connectedClusterScriptableObject.clusterLevels[indexInCluster].isSpecificTutorial)
         {
             if (connectedClusterScriptableObject.clusterLevels[indexInCluster].isSpecificTutorial)
             {
-                newName += "Specific Tutorial" + " " + connectedClusterScriptableObject.clusterLevels[indexInCluster].specificTutorialEnum;
+                newName += " Specific Tutorial" + " " + connectedClusterScriptableObject.clusterLevels[indexInCluster].specificTutorialEnum;
             }
             else
             {
-                newName += "Tutorial" + " ";
+                newName += " Tutorial" + " ";
             }
         }
 
+
         if (isGrindLevel)
         {
-            newName += "Grind" + " ";
+            newName += " Grind" + " ";
 
         }
 
         if (isKeyLevel)
         {
-            newName += "Key" + " ";
+            newName += " Key" + " ";
         }
 
         if (isAnimalLevel)
         {
-            newName += "Animal" + " ";
+            newName += " Animal" + " ";
         }
 
         if (isBossLevel)
         {
-            newName += "Boss" + " ";
+            newName += " Boss" + " ";
+        }
+
+        if (isChest)
+        {
+            newName += " is chest";
         }
 
         transform.name = newName;
