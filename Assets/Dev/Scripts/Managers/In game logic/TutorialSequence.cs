@@ -35,7 +35,7 @@ public class Phase
 {
     public bool isClipPhase, isBoardPhase, isPowerupPhase, isSingleCellPhase, isSingleSlice, isHubButtonPhase;
     public bool isOpenInventoryPhase, isPotionTabPhase, isEmptyTouchPhase, isBrewPhase, isBrewDisplayMaterials;
-    public bool isAnimalSymbolCollectionPhase, hasDelay, isAllLocked, isClearScreen, isBoardGone, isGameUIGone;
+    public bool isAnimalSymbolCollectionPhase, hasDelay, hasDelayAfter, isAllLocked, isClearScreen, isBoardGone, isGameUIGone;
     public bool isOpenDenPhase, isOpenHollowCraftTabPhase, isOpenInventoryInDenPhase, isCraftPhase, isCloseInventoryPhase, isDragHollowItemPhase;
     public bool dealPhase, isStatuePhase, isAnimalAlbumPhase, isAnimalAlbumStagTabPhase, isAnimalAlbumAllTabsPhase;
     public bool enterAnimationPhase;
@@ -113,6 +113,7 @@ public class TutorialSequence : MonoBehaviour
 
     public Transform handPosToHub, handPosOpenInventory, handPosOpenInventoryInDen, handPosOpenDen, handPosOpenAnimalAlbum, handPosClickAnimalTab, handPosChangePotionTab, handPosChangeHollowCraftTab, handPosBrewButton, handPosCraftItemButton, handPosCloseInventory;
 
+    bool inDelay = false;
     //public float delayUnlockAll;
 
     private void Start()
@@ -663,6 +664,7 @@ public class TutorialSequence : MonoBehaviour
 
     public IEnumerator IncrementCurrentPhaseInSequence()
     {
+        if (inDelay) yield break;
 
         if (currentlyActiveTutorialHand)
         {
@@ -738,10 +740,11 @@ public class TutorialSequence : MonoBehaviour
 
         if (currentPhaseInSequenceLevels < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Count())
         {
-            if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].hasDelay)
+            if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].hasDelay && !inDelay)
             {
+                inDelay = true;
                 yield return new WaitForSeconds(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].delayAmount);
-
+                inDelay = false;
                 maskImage.gameObject.SetActive(true);
                 UIManager.Instance.tutorialCanvasParent.SetActive(true);
             }
@@ -767,6 +770,18 @@ public class TutorialSequence : MonoBehaviour
             ChangePhase(levelSequences, GameManager.Instance.currentLevel.tutorialIndexForList, currentPhaseInSequenceLevels);
         }
 
+
+        if (currentPhaseInSequenceLevels < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Count())
+        {
+            if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].hasDelayAfter && !inDelay)
+            {
+                inDelay = true;
+                yield return new WaitForSeconds(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].delayAmount);
+                inDelay = false;
+                maskImage.gameObject.SetActive(true);
+                UIManager.Instance.tutorialCanvasParent.SetActive(true);
+            }
+        }
 
         yield return null;
         ///maskImage.sprite = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].sprites[currentPhaseInSequence]; /// NEW

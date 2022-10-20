@@ -295,7 +295,10 @@ public class LootManager : MonoBehaviour
                 yield return new WaitForSeconds(AnimationManager.instance.DelayBetweenLootAppear);
             }
 
-            InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.inventory);
+            if(TutorialSaveData.Instance.hasFinishedPotion)
+            {
+                InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.inventory);
+            }
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.InterestPontSaveData});
         }
@@ -387,6 +390,11 @@ public class LootManager : MonoBehaviour
     public void DisplayLootFromChest(int count, CraftingMats CM)
     {
         currentChestLootPos++;
+
+        if(currentChestLootPos >= chestLootPosition.Length)
+        {
+            currentChestLootPos -= currentChestLootPos;
+        }
 
         GameObject go = Instantiate(lootDisplayPrefabChest, parentChestLoot);
 
@@ -536,7 +544,10 @@ public class LootManager : MonoBehaviour
                 yield return new WaitForSeconds(timeBetweenLoots);
             }
 
-            InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.inventory);
+            if (TutorialSaveData.Instance.hasFinishedPotion)
+            {
+                InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.inventory);
+            }
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.InterestPontSaveData });
         }

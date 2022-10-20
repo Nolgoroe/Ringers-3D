@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 2899418069445986866}
   - component: {fileID: 3468024876750569583}
   - component: {fileID: 4615568642636295180}
+  - component: {fileID: 5625422832208393890}
   m_Layer: 8
   m_Name: Right_Wing_Tile
   m_TagString: Untagged
@@ -201,6 +202,20 @@ MonoBehaviour:
   Duration: 0.3
   Speed: 7
   ResetPosition: 1
+--- !u!64 &5625422832208393890
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1195596336532265732}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -689406408450205330, guid: e52cf1d5b9090984e87aab2f9d410c00, type: 3}
 --- !u!1 &3068606960102724387
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,6 +229,7 @@ GameObject:
   - component: {fileID: 3558589555346742633}
   - component: {fileID: 7826278899879025292}
   - component: {fileID: 6792694086947790925}
+  - component: {fileID: 1631057034222357951}
   m_Layer: 8
   m_Name: Left_Wing_Tile
   m_TagString: Untagged
@@ -319,3 +335,17 @@ MonoBehaviour:
   Duration: 0.3
   Speed: 7
   ResetPosition: 1
+--- !u!64 &1631057034222357951
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068606960102724387}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -1308064327287094486, guid: e52cf1d5b9090984e87aab2f9d410c00, type: 3}

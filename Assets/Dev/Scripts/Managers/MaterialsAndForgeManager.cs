@@ -118,7 +118,32 @@ public class MaterialsAndForgeManager : MonoBehaviour
                 CMD.craftingMatEnum = CM.mat;
 
                 CMD.CheckShowPointInterestList(CM.mat);
+
+                RemoveBulkFromPointsOfInterestInventory(CMD, type);
             }
+        }
+    }
+
+    public void RemoveBulkFromPointsOfInterestInventory(CraftingMatDisplayer CMD, CraftingMatType type)
+    {
+        CMD.GetComponent<PointOfInterest>().HideInterestPointImage();
+
+        if (pointsOfInterestSaveData.instance.inventoryPointOfInterest.Contains(CMD.craftingMatEnum))
+        {
+            pointsOfInterestSaveData.instance.inventoryPointOfInterest.Remove(CMD.craftingMatEnum);
+        }
+
+        foreach (InventorySortButtonData sortButton in UIManager.Instance.inventorySortButtons)
+        {
+            if (sortButton.id == (int)type)
+            {
+                sortButton.GetComponent<PointOfInterest>().HideInterestPointImage();
+            }
+        }
+
+        if (pointsOfInterestSaveData.instance.inventoryPointOfInterest.Count <= 0)
+        {
+            InterestPointsManager.instance.TurnOffPointsOfInterestDisplay(TypesPointOfInterest.inventory);
         }
     }
 

@@ -476,6 +476,13 @@ public class SubPiece : MonoBehaviour
 
     public void SetPieceAs12RingPiece()
     {
+        if (colorOfPiece == PieceColor.Joker)
+        {
+            SetPieceScaleAndPosJoker12Ring(1);
+
+            return;
+        }
+
         randomColor = (int)colorOfPiece;
         randomSymbol = (int)symbolOfPiece;
 
@@ -496,6 +503,11 @@ public class SubPiece : MonoBehaviour
     }
     public void SetPieceAs8RingPiece()
     {
+        if (colorOfPiece == PieceColor.Joker)
+        {
+            return;
+        }
+
         randomColor = (int)colorOfPiece;
         randomSymbol = (int)symbolOfPiece;
 
@@ -528,6 +540,33 @@ public class SubPiece : MonoBehaviour
     public void SetPieceAsNormalMat()
     {
         rend.material = GameManager.Instance.clipManager.generalPieceMat;
+    }
+
+    public void SetPieceScaleAndPosJoker8Ring(float scale)
+    {
+        transform.localScale = new Vector3(scale, scale, scale);
+
+        if (isRightSubPiece)
+        {
+            transform.localPosition = new Vector3(0.7826648f, transform.localPosition.y, transform.localPosition.z);
+        }
+        else
+        {
+            transform.localPosition = new Vector3(-0.7826648f, transform.localPosition.y, transform.localPosition.z);
+        }
+    }
+    public void SetPieceScaleAndPosJoker12Ring(float scale)
+    {
+        transform.localScale = new Vector3(scale, scale, scale);
+
+        if (isRightSubPiece)
+        {
+            transform.localPosition = new Vector3(0.6181985f, 0, 0);
+        }
+        else
+        {
+            transform.localPosition = new Vector3(-0.6181985f, 0, 0);
+        }
     }
 
     public IEnumerator DissolveSubPiece(float dissolveSpeedMaskCrack, float waitTimeBeforeFillGlow, float fillGlowSpeed, float waitTimeBeforeFinalGlow, float finalGlowSpeed)

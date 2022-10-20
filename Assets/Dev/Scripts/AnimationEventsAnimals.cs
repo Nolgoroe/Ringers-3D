@@ -29,12 +29,28 @@ public class AnimationEventsAnimals : MonoBehaviour
         }
         else
         {
-            AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive " + TestLevelsSystemManagerSaveData.instance.CompletedCount);
-            SoundManager.Instance.PlaySound(Sounds.RiveRelease);
+            AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive " + GameManager.Instance.currentIndexInCluster);
+            Debug.LogError("here 4");
+
+            if (TestLevelsSystemManagerSaveData.instance.CompletedCount + 1 == GameManager.Instance.currentCluster.clusterLevels.Length)
+            {
+                SoundManager.Instance.PlaySound(Sounds.RiveRelease);
+            }
+            else
+            {
+                SoundManager.Instance.PlaySound(Sounds.RiveRootRelease);
+            }
+
+            AnimationManager.instance.hasPlayedRelaseSound = true;
         }
     }
     public void DestroySelf()
     {
         Destroy(gameObject);
+    }
+
+    public void ActivateBackToHudButton()
+    {
+        UIManager.Instance.backToHubButton.interactable = true;
     }
 }

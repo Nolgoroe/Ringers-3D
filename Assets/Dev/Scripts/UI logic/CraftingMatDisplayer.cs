@@ -117,7 +117,7 @@ public class CraftingMatDisplayer : MonoBehaviour, IPointerClickHandler
 
             pointsOfInterestSaveData.instance.inventoryPointOfInterest.Remove(craftingMatEnum);
 
-            if(pointsOfInterestSaveData.instance.inventoryPointOfInterest.Count <= 0)
+            if (pointsOfInterestSaveData.instance.inventoryPointOfInterest.Count <= 0)
             {
                 InterestPointsManager.instance.TurnOffPointsOfInterestDisplay(TypesPointOfInterest.inventory);
             }

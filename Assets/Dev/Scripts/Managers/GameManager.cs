@@ -77,6 +77,8 @@ public class GameManager : MonoBehaviour
 
     public bool hasRestartedLevel;
 
+    public int currentIndexInCluster = -1;
+
     private void Awake()
     {
         Instance = this;
@@ -137,6 +139,11 @@ public class GameManager : MonoBehaviour
     {
         AnimationManager.instance.ResetEnterLevelAnimation();
         AnimalsManager.Instance.ResetAnimalManagerData();
+
+        if(!isRestart)
+        {
+            StartCoroutine(TestLevelsSystemManager.instance.InitTestLevel());
+        }
 
         timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
@@ -246,7 +253,7 @@ public class GameManager : MonoBehaviour
 
                     if(AnimalsManager.Instance.statueToSwap)
                     {
-                        AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Set Rive " + TestLevelsSystemManagerSaveData.instance.CompletedCount);
+                        AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Set Rive " + currentIndexInCluster);
                     }
 
                 }
@@ -332,7 +339,7 @@ public class GameManager : MonoBehaviour
 
                 if (AnimalsManager.Instance.statueToSwap)
                 {
-                    AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Set Rive " + TestLevelsSystemManagerSaveData.instance.CompletedCount);
+                    AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Set Rive " + currentIndexInCluster);
                 }
             }
 
@@ -346,8 +353,6 @@ public class GameManager : MonoBehaviour
 
         SoundManager.Instance.CancelLeantweensSound();
         SoundManager.Instance.CancelCoRoutinesSound();
-
-        StartCoroutine(TestLevelsSystemManager.instance.InitTestLevel());
 
         //if (currentLevel.isTestLevel)
         //{
@@ -847,8 +852,9 @@ public class GameManager : MonoBehaviour
 
             if (currentLevel.levelIndexInZone != ZoneManagerHelpData.Instance.currentZoneCheck.lastLevelNum)
             {
-
+                UIManager.Instance.nextLevelFromWinScreen.interactable = true;
                 UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
+
             }
             else
             {
@@ -940,8 +946,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void NextLevelFromWinScreen()
+    public void CallNextLevelFromWinScreen()
     {
+        StartCoroutine(NextLevelFromWinScreen());
+    }
+    public IEnumerator NextLevelFromWinScreen()
+    {
+        StartCoroutine(UIManager.Instance.FadeInLevelNoLaunch());
+        yield return new WaitForSeconds(UIManager.Instance.fadeIntoLevelDelay);
+
         hasRestartedLevel = false;
 
         AnimationManager.instance.ResetAllSkipData();
@@ -1008,6 +1021,7 @@ public class GameManager : MonoBehaviour
         bool nextIsTutorial = CheckNextLevelIsTutorial(currentLevel.levelNum + 1);
 
         ChooseLevel(currentLevel.levelIndexInZone + 1);
+        currentIndexInCluster++;
 
         if (selectedLevelBG.transform.Find("RingMask"))
         {

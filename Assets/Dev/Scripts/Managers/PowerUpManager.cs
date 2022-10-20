@@ -363,6 +363,22 @@ public class PowerUpManager : MonoBehaviour
                 toWorkOn.rightChild.symbolOfPiece = PieceSymbol.Joker;
                 toWorkOn.rightChild.colorOfPiece = PieceColor.Joker;
 
+                if (toWorkOn.isStone)
+                {
+                    if (GameManager.Instance.currentLevel.is12PieceRing)
+                    {
+                        toWorkOn.TransformTo12RingTile();
+                        toWorkOn.leftChild.SetPieceScaleAndPosJoker12Ring(1);
+                        toWorkOn.rightChild.SetPieceScaleAndPosJoker12Ring(1);
+                    }
+                    else
+                    {
+                        toWorkOn.TransformTo8RingTile();
+                        toWorkOn.leftChild.SetPieceScaleAndPosJoker8Ring(1);
+                        toWorkOn.rightChild.SetPieceScaleAndPosJoker8Ring(1);
+                    }
+                }
+
                 toWorkOn.leftChild.SetPieceAsJoker();
                 toWorkOn.rightChild.SetPieceAsJoker();
 
@@ -384,6 +400,22 @@ public class PowerUpManager : MonoBehaviour
                 toWorkOn.rightChild.symbolOfPiece = PieceSymbol.Joker;
                 toWorkOn.rightChild.colorOfPiece = PieceColor.Joker;
 
+                if (toWorkOn.isStone)
+                {
+                    if (GameManager.Instance.currentLevel.is12PieceRing)
+                    {
+                        toWorkOn.TransformTo12RingTile();
+                        toWorkOn.leftChild.SetPieceScaleAndPosJoker12Ring(1);
+                        toWorkOn.rightChild.SetPieceScaleAndPosJoker12Ring(1);
+                    }
+                    else
+                    {
+                        toWorkOn.TransformTo8RingTile();
+                        toWorkOn.leftChild.SetPieceScaleAndPosJoker8Ring(1);
+                        toWorkOn.rightChild.SetPieceScaleAndPosJoker8Ring(1);
+                    }
+                }
+
                 toWorkOn.leftChild.SetPieceAsJoker();
                 toWorkOn.rightChild.SetPieceAsJoker();
 
@@ -391,6 +423,8 @@ public class PowerUpManager : MonoBehaviour
                 GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion:" + "Joker potion");
             }
 
+            toWorkOn.isLocked = false;
+            toWorkOn.isStone = false;
 
             ShakePiecePowerUp(toWorkOn.gameObject);
 

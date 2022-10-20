@@ -501,21 +501,18 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        if (!isUsingUI)
+        bGPanelDisableTouch.SetActive(true);
+
+        //isUsingUI = true;
+
+        if (LootManager.Instance.rubiesToRecieveInLevel > 0 || LootManager.Instance.craftingMatsLootForLevel.Count > 0)
         {
-            bGPanelDisableTouch.SetActive(true);
-
-            //isUsingUI = true;
-
-            if (LootManager.Instance.rubiesToRecieveInLevel > 0 || LootManager.Instance.craftingMatsLootForLevel.Count > 0)
-            {
-                sureWantToRestartWithLoot.SetActive(true);
-                DisplayRestartLoot();
-            }
-            else
-            {
-                sureWantToRestartNoLoot.SetActive(true);
-            }
+            sureWantToRestartWithLoot.SetActive(true);
+            DisplayRestartLoot();
+        }
+        else
+        {
+            sureWantToRestartNoLoot.SetActive(true);
         }
     }
     private void DisplayRestartLoot()
@@ -559,6 +556,8 @@ public class UIManager : MonoBehaviour
             sureWantToRestartNoLoot.SetActive(false);
         }
 
+        OptionsScreen.SetActive(false);
+
         //if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
         //{
         //    TutorialSequence.Instacne.TurnOnTutorialScreensAfterRestart();
@@ -580,6 +579,7 @@ public class UIManager : MonoBehaviour
         {
             sureWantToRestartNoLoot.SetActive(false);
         }
+        OptionsScreen.SetActive(false);
 
         GameManager.Instance.RestartCurrentLevel();
     }
@@ -2097,6 +2097,33 @@ public class UIManager : MonoBehaviour
 
 
         LeanTween.value(fadeIntoLevel, 1, 0, fadeIntoLevelSpeed).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        {
+            Image sr = fadeIntoLevel.GetComponent<Image>();
+            Color newColor = sr.color;
+            newColor.a = val;
+            sr.color = newColor;
+        });
+
+        yield return new WaitForSeconds(fadeIntoLevelSpeed + 0.1f);
+        fadeIntoLevel.SetActive(false);
+    }
+
+    public IEnumerator FadeInLevelNoLaunch()
+    {
+        fadeIntoLevel.SetActive(true);
+
+        LeanTween.value(fadeIntoLevel, 0, 1, fadeIntoLevelSpeed).setOnUpdate((float val) =>
+        {
+            Image sr = fadeIntoLevel.GetComponent<Image>();
+            Color newColor = sr.color;
+            newColor.a = val;
+            sr.color = newColor;
+        });
+
+        yield return new WaitForSeconds(fadeIntoLevelDelay);
+
+
+        LeanTween.value(fadeIntoLevel, 1, 0, fadeIntoLevelSpeed).setOnUpdate((float val) =>
         {
             Image sr = fadeIntoLevel.GetComponent<Image>();
             Color newColor = sr.color;

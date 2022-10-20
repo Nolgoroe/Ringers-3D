@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class pointsOfInterestSaveData : MonoBehaviour
 {
@@ -20,5 +21,4 @@ public class pointsOfInterestSaveData : MonoBehaviour
         {
             inventoryPointOfInterest.Add(craftingMatEnum);
         }
-    }
-}
+    }}

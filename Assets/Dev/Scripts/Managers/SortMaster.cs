@@ -144,9 +144,12 @@ public class SortMaster : MonoBehaviour
         
         AnimalAlbumManager.Instance.ChangePageLogic(pageIndex);
 
-        if (!InterestPointsManager.instance.CheckAdditionalPointsOfInterestAnimalAlbum())
+        if (InterestPointsManager.instance.CheckAdditionalPointsOfInterestAnimalAlbum())
         {
-            InterestPointsManager.instance.TurnOffPointsOfInterestDisplay(TypesPointOfInterest.AnimalAlbum);
+            if (TutorialSaveData.Instance.hasFinishedAnimalAlbum)
+            {
+                InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.AnimalAlbum);
+            }
         }
     }
 

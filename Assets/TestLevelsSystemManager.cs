@@ -38,9 +38,9 @@ public class TestLevelsSystemManager : MonoBehaviour
         ResetDisplay();
         yield return new WaitForEndOfFrame();
         InstantiateBarStars();
-
-        yield return new WaitForEndOfFrame();
         InitLevelStars();
+
+        //yield return new WaitForEndOfFrame();
 
     }
 
@@ -130,7 +130,7 @@ public class TestLevelsSystemManager : MonoBehaviour
             //animate chest here
             TestLevelsSystemManagerSaveData.instance.canGetChest = true;
 
-            UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+            //UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
             return;
         }
 
@@ -151,9 +151,15 @@ public class TestLevelsSystemManager : MonoBehaviour
             }
         }
     }
+    public bool isGiveChest(int index)
+    {
+        return index >= numOfSections;
+    }
     private void ActivateStarOrChestMap()
     {
-        for (int i = 0; i < TestLevelsSystemManagerSaveData.instance.CompletedCount; i++)
+        int amountToCheck = TestLevelsSystemManagerSaveData.instance.CompletedCount == numOfSections ? numOfSections - 1 : TestLevelsSystemManagerSaveData.instance.CompletedCount;
+        
+        for (int i = 0; i < amountToCheck; i++)
         {
             if (starsParentMapDisplay.childCount > 0)
             {

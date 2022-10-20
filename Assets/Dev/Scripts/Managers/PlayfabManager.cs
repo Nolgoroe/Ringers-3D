@@ -321,12 +321,18 @@ public class PlayfabManager : MonoBehaviour
 
         if(InterestPointsManager.instance.CheckAdditionalPointsOfInterestAnimalAlbum())
         {
-            InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.AnimalAlbum);
+            if (TutorialSaveData.Instance.hasFinishedAnimalAlbum)
+            {
+                InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.AnimalAlbum);
+            }
         }
 
-        if(InterestPointsManager.instance.CheckAdditionalPointsOfInterestInventory())
+        if (InterestPointsManager.instance.CheckAdditionalPointsOfInterestInventory())
         {
-            InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.inventory);
+            if (TutorialSaveData.Instance.hasFinishedPotion)
+            {
+                InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.inventory);
+            }
         }
 
         yield return new WaitForSeconds(2);
