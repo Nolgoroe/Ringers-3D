@@ -173,6 +173,8 @@ public class AnimationManager : MonoBehaviour
     public bool endLevelAnimationON;
     public bool hasGivenChest = false;
     public bool hasPlayedRelaseSound = false;
+
+    Coroutine AfterAnimalAnimationCoroutine;
     void Start()
     {
         instance = this;
@@ -212,6 +214,9 @@ public class AnimationManager : MonoBehaviour
         hasGivenChest = false;
         hasPlayedRelaseSound = false;
         endLevelAnimationON = true;
+        AfterAnimalAnimationCoroutine = null;
+        UIManager.Instance.skipAnimationButton.interactable = true;
+
         turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
 
 
@@ -344,320 +349,22 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.restartButton.interactable = true;
         UIManager.Instance.dealButton.interactable = true;
 
-        if (GameManager.Instance.currentLevel.isGrindLevel)
-        {
-            StartCoroutine(AfterAnimalAnimation());
-        }
-    }
-
-    private void MoveTopButtonAnim()
-    {
-        GameObject clip = GameManager.Instance.gameClip;
-        GameObject topZone = UIManager.Instance.gameplayCanvasTop;
-        GameObject topZoneBar = TestLevelsSystemManager.instance.StarSlider.gameObject;
-        GameObject bottomeZone = UIManager.Instance.gameplayCanvasBotom;
-
-        LeanTween.move(clip, new Vector3(clip.transform.position.x, clip.transform.position.y + 2.2f, clip.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
-
-        LeanTween.move(topZone, new Vector3(topZone.transform.position.x, topZone.transform.position.y + 1f, topZone.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
-        LeanTween.move(topZoneBar, new Vector3(topZoneBar.transform.position.x, topZoneBar.transform.position.y + 1f, topZoneBar.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
-
-        LeanTween.move(bottomeZone, new Vector3(bottomeZone.transform.position.x, bottomeZone.transform.position.y - 1f, bottomeZone.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
-    }
-
-    private void SkipMoveTopBottom()
-    {
-        GameObject clip = GameManager.Instance.gameClip;
-        GameObject topZone = UIManager.Instance.gameplayCanvasTop;
-        GameObject bottomeZone = UIManager.Instance.gameplayCanvasBotom;
-
-        if (clip)
-        {
-            clip.transform.position = new Vector3(clip.transform.position.x, clip.transform.position.y + 2.2f, clip.transform.position.z);
-        }
-
-        if (topZone)
-        {
-            topZone.transform.position = new Vector3(topZone.transform.position.x, topZone.transform.position.y + 1f, topZone.transform.position.z);
-        }
-
-        if (bottomeZone)
-        {
-            bottomeZone.transform.position = new Vector3(bottomeZone.transform.position.x, bottomeZone.transform.position.y - 1f, bottomeZone.transform.position.z);
-        }
-    }
-
-    public void MoveSubPiece(SubPiece toMove)
-    {
-        if(toMove.subPieceIndex % 2 != 0)
-        {
-            LeanTween.move(toMove.gameObject, new Vector3(toMove.transform.localPosition.x + 0.4f, toMove.transform.localPosition.y + 0.8f, toMove.transform.localPosition.z), speedPieceMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
-        }
-        else
-        {
-            LeanTween.move(toMove.gameObject, new Vector3(toMove.transform.localPosition.x, toMove.transform.localPosition.y + 0.85f, toMove.transform.localPosition.z), speedPieceMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
-        }
-    }
-
-    public void MoveBoardScreenshotToPosition(GameObject board)
-    {
-        board.transform.position = new Vector3(-0.002f, 1.636f, 0.055f);
-
-        board.transform.localScale = new Vector3(0.07f, 0.07f, 0.07f);
-
-    }
-
-    //public void ActivateParticleEffectsMiddle(GameObject midPiece)
-    //{
-    //    Instantiate(midPieceParticle, midPiece.transform);
-    //}
-
-    public void PullIn(SubPiece toMove)
-    {
-        LeanTween.move(toMove.gameObject, GameManager.Instance.gameBoard.transform.position, speedPieceMove).setEase(LeanTweenType.easeInOutQuad); // animate
-    }
-
-    [ContextMenu("Disslove Tiles")]
-    public IEnumerator DissolveTiles()
-    {
-        dissolveStart = false;
-
-        foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
-        {
-            StartCoroutine(SP.DissolveSubPiece(dissolveSpeedMaskCrack, waitTimeBeforeFillGlow,fillGlowSpeed, waitTimeBeforeFinalGlow, finalGlowSpeed));
-        }
-
-        yield return new WaitForSeconds(completeDissolveAnimTime);
-        dissolveStart = true;
-    }
-
-    public void UnDissolveTiles(bool isImmidiate)
-    {
-        if (isImmidiate)
-        {
-            foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
-            {
-                //Material mat = SP.GetComponent<Renderer>().material;
-                //mat.SetFloat("Dissolve_Amount", 0.24f);
-                if (SP)
-                {
-                    SP.UnDissolveSubPiece();
-                }
-
-            }
-        }
-        else
-        {
-            foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
-            {
-                if (SP)
-                {
-                    SP.UnDissolveSubPiece();
-                }
-            }
-        }
-    }
-
-    public void CallSkipEndLevelAnim()
-    {
-        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
-
-        StartCoroutine(SkipEndLevelAnimation());
-    }
-
-    public IEnumerator SkipEndLevelAnimation()
-    {
-        hasGivenChest = false;
-        endLevelAnimationON = true;
-        //StopCoroutine(endAnimToAnimal);
-        StopAllCoroutines();
-        //LeanTween.cancelAll();
-
-        if (hasSkippedToAnimalAnim)
-        {
-            //hasSkippedToAnimalAnim = false;
-
-            StartCoroutine(AfterAnimalAnimation());
-
-            StopCoroutine("SkipEndLevelAnimation");
-
-            //Debug.LogError("HERE");
-            //endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation(true));
-            //if (AnimalsManager.Instance.currentLevelLiveAnimal)
-            //{
-            //    Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
-            //}
-
-            yield break;
-        }
-        else
-        {
-            hasSkippedToAnimalAnim = true;
-            UIManager.Instance.skipAnimationButton.gameObject.SetActive(true);
-            //endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation(false));
-        }
-
-        SoundManager.Instance.audioSourceSFX.Stop();
-
-        //if (endAnimToAnimal != null)
+        //if (GameManager.Instance.currentLevel.isGrindLevel)
         //{
-        //    StopCoroutine(endAnimToAnimal);
-        //    LeanTween.cancelAll();
+        //    StartCoroutine(AfterAnimalAnimation());
         //}
-
-        SkipMoveTopBottom();
-
-        if (destroyOnSkipEndLevel == null)
-        {
-            destroyOnSkipEndLevel = GameObject.FindGameObjectsWithTag("DestroyOnSkipEndLevel");
-        }
-
-        foreach (GameObject go in destroyOnSkipEndLevel)
-        {
-            Destroy(go);
-        }
-
-        destroyOnSkipEndLevel = null;
-
-        foreach (InGameSpecialPowerUp IGSP in GameManager.Instance.powerupManager.specialPowerupsInGame)
-        {
-            IGSP.gameObject.SetActive(false);
-        }
-
-        ZoneManagerHelpData.Instance.ChangeZoneToNormalZoneDisplay();
-
-        SpriteRenderer boardSR = GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>();
-        boardSR.color = new Color(boardSR.color.r, boardSR.color.g, boardSR.color.b, 0);
-        TestLevelsSystemManager.instance.StarSlider.GetComponent<CanvasGroup>().alpha = 0;
-
-        foreach (Slice slice in GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices)
-        {
-            if (slice.child)
-            {
-                SpriteRenderer sliceSR = slice.child.GetComponent<SpriteRenderer>();
-                sliceSR.color = new Color(sliceSR.color.r, sliceSR.color.g, sliceSR.color.b, 0);
-            }
-        }
-
-        foreach (GameObject go in GameManager.Instance.gameBoard.GetComponent<SliceManager>().activeLocksLockAnims)
-        {
-            SpriteRenderer goSR = go.GetComponent<SpriteRenderer>();
-            goSR.color = new Color(goSR.color.r, goSR.color.g, goSR.color.b, 0);
-        }
-
-        UnDissolveTiles(false);
-
-        foreach (Cell cell in ConnectionManager.Instance.cells)
-        {
-            if (cell.pieceHeld)
-            {
-                cell.pieceHeld.gameObject.SetActive(false);
-            }
-        }
-
-        ConnectionManager.Instance.TurnOffAllConnectedVFX();
-
-
-        GameManager.Instance.sliceManager.endLevelAnimVFX.SetActive(false);
-        //foreach (GameObject GO in turnOff)
-        //{
-        //    GO.SetActive(true);
-        //}
-
-        //turnOff = null;
-
-        GameManager.Instance.selectedLevelBG.transform.Find("RingMask").gameObject.SetActive(false);
-
-        //fadeImageEndLevel.gameObject.SetActive(false);
-
-
-        if (GameManager.Instance.gameBoard.gameObject)
-        {
-            //Destroy(GameManager.Instance.gameBoard.gameObject);
-            Destroy(GameManager.Instance.gameClip.gameObject);
-        }
-
-        //UIManager.Instance.restartButton.interactable = false;
-
-        UIManager.Instance.TurnOffGameplayUI();
-
-        UIManager.Instance.InGameUiScreens.SetActive(true);
-
-        if (!GameManager.Instance.currentLevel.isGrindLevel)
-        {
-            if (GameManager.Instance.currentLevel.isAnimalLevel)
-            {
-                if (TestLevelsSystemManagerSaveData.instance.CompletedCount + 1 != GameManager.Instance.currentCluster.clusterLevels.Length)
-                {
-                    Debug.LogError("1 more in animal release");
-
-                    if (!hasPlayedRelaseSound)
-                    {
-                        SoundManager.Instance.PlaySound(Sounds.RiveRootRelease);
-                    }
-
-                    AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive " + GameManager.Instance.currentIndexInCluster);
-                    Debug.LogError("here 3");
-
-                }
-                else
-                {
-                    SoundsPerAnimal SPA = AnimalManagerDataHelper.instance.soundsPerAnimalEnum.Where(p => p.animalEnum == AnimalsManager.Instance.currentLevelAnimal).SingleOrDefault();
-
-                    if (SPA != null)
-                    {
-                        SoundManager.Instance.PlaySound(SPA.soundClipToPlay);
-                    }
-
-                    AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
-                }
-            }
-            else
-            {
-                AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive " + GameManager.Instance.currentIndexInCluster);
-                Debug.LogError("here");
-
-                if(TestLevelsSystemManagerSaveData.instance.CompletedCount + 1 == GameManager.Instance.currentCluster.clusterLevels.Length)
-                {
-                    if(!hasPlayedRelaseSound)
-                    {
-                        SoundManager.Instance.PlaySound(Sounds.RiveRelease);
-                    }
-                }
-                else
-                {
-                    if (!hasPlayedRelaseSound)
-                    {
-                        SoundManager.Instance.PlaySound(Sounds.RiveRootRelease);
-                    }
-                }
-            }
-        }
-        else
-        {
-           StartCoroutine(AfterAnimalAnimation());
-        }
-
-        //TutorialSequence.Instacne.CheckDoPotionTutorial();
-
-        //hasSkippedToAnimalAnim = false;
-
-        Debug.LogError("Reached end of skip");
-        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
     }
 
-    public void CallAfterAnimalAnimation()
-    {
-        StartCoroutine(AfterAnimalAnimation());
-
-    }
     public IEnumerator AfterAnimalAnimation()
     {
+        Debug.LogError("IN HERE NOW AFTER ANIMAL ANIM");
         endLevelAnimationON = true;
+        UIManager.Instance.skipAnimationButton.interactable = false;
 
         if (hasSkippedToAfterAnimalAnim)
         {
-            StopCoroutine("AfterAnimalAnimation");
+            StopCoroutine(AfterAnimalAnimationCoroutine);
+            //StopCoroutine("AfterAnimalAnimation");
 
             SkipBoardAnim();
 
@@ -763,10 +470,11 @@ public class AnimationManager : MonoBehaviour
 
         if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
         {
-            if(!hasGivenChest)
+            if (!hasGivenChest)
             {
                 hasGivenChest = true;
                 TestLevelsSystemManagerSaveData.instance.AddToChestBar();
+                Debug.LogError("HERE AND NOW");
             }
         }
 
@@ -901,7 +609,7 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.restartButton.interactable = true;
         UIManager.Instance.dealButton.interactable = true;
 
-        if(!TestLevelsSystemManagerSaveData.instance.canGetChest && !hasGivenChest)
+        if (!TestLevelsSystemManagerSaveData.instance.canGetChest && !hasGivenChest)
         {
             TutorialSequence.Instacne.CheckDoPotionTutorial();
             TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
@@ -916,10 +624,327 @@ public class AnimationManager : MonoBehaviour
         }
 
 
-        Debug.LogError("Reached end of end level sequence");
+        //Debug.LogError("Reached end of end level sequence");
         endLevelAnimationON = false;
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+    }
+
+    private void MoveTopButtonAnim()
+    {
+        GameObject clip = GameManager.Instance.gameClip;
+        GameObject topZone = UIManager.Instance.gameplayCanvasTop;
+        GameObject topZoneBar = TestLevelsSystemManager.instance.StarSlider.gameObject;
+        GameObject bottomeZone = UIManager.Instance.gameplayCanvasBotom;
+
+        LeanTween.move(clip, new Vector3(clip.transform.position.x, clip.transform.position.y + 2.2f, clip.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
+
+        LeanTween.move(topZone, new Vector3(topZone.transform.position.x, topZone.transform.position.y + 1f, topZone.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
+        LeanTween.move(topZoneBar, new Vector3(topZoneBar.transform.position.x, topZoneBar.transform.position.y + 1f, topZoneBar.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
+
+        LeanTween.move(bottomeZone, new Vector3(bottomeZone.transform.position.x, bottomeZone.transform.position.y - 1f, bottomeZone.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
+    }
+
+    private void SkipMoveTopBottom()
+    {
+        GameObject clip = GameManager.Instance.gameClip;
+        GameObject topZone = UIManager.Instance.gameplayCanvasTop;
+        GameObject bottomeZone = UIManager.Instance.gameplayCanvasBotom;
+
+        if (clip)
+        {
+            clip.transform.position = new Vector3(clip.transform.position.x, clip.transform.position.y + 2.2f, clip.transform.position.z);
+        }
+
+        if (topZone)
+        {
+            topZone.transform.position = new Vector3(topZone.transform.position.x, topZone.transform.position.y + 1f, topZone.transform.position.z);
+        }
+
+        if (bottomeZone)
+        {
+            bottomeZone.transform.position = new Vector3(bottomeZone.transform.position.x, bottomeZone.transform.position.y - 1f, bottomeZone.transform.position.z);
+        }
+    }
+
+    public void MoveSubPiece(SubPiece toMove)
+    {
+        if(toMove.subPieceIndex % 2 != 0)
+        {
+            LeanTween.move(toMove.gameObject, new Vector3(toMove.transform.localPosition.x + 0.4f, toMove.transform.localPosition.y + 0.8f, toMove.transform.localPosition.z), speedPieceMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
+        }
+        else
+        {
+            LeanTween.move(toMove.gameObject, new Vector3(toMove.transform.localPosition.x, toMove.transform.localPosition.y + 0.85f, toMove.transform.localPosition.z), speedPieceMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
+        }
+    }
+
+    public void MoveBoardScreenshotToPosition(GameObject board)
+    {
+        board.transform.position = new Vector3(-0.002f, 1.636f, 0.055f);
+
+        board.transform.localScale = new Vector3(0.07f, 0.07f, 0.07f);
+
+    }
+
+    //public void ActivateParticleEffectsMiddle(GameObject midPiece)
+    //{
+    //    Instantiate(midPieceParticle, midPiece.transform);
+    //}
+
+    public void PullIn(SubPiece toMove)
+    {
+        LeanTween.move(toMove.gameObject, GameManager.Instance.gameBoard.transform.position, speedPieceMove).setEase(LeanTweenType.easeInOutQuad); // animate
+    }
+
+    [ContextMenu("Disslove Tiles")]
+    public IEnumerator DissolveTiles()
+    {
+        dissolveStart = false;
+
+        foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
+        {
+            StartCoroutine(SP.DissolveSubPiece(dissolveSpeedMaskCrack, waitTimeBeforeFillGlow,fillGlowSpeed, waitTimeBeforeFinalGlow, finalGlowSpeed));
+        }
+
+        yield return new WaitForSeconds(completeDissolveAnimTime);
+        dissolveStart = true;
+    }
+
+    public void UnDissolveTiles(bool isImmidiate)
+    {
+        if (isImmidiate)
+        {
+            foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
+            {
+                //Material mat = SP.GetComponent<Renderer>().material;
+                //mat.SetFloat("Dissolve_Amount", 0.24f);
+                if (SP)
+                {
+                    SP.UnDissolveSubPiece();
+                }
+
+            }
+        }
+        else
+        {
+            foreach (SubPiece SP in ConnectionManager.Instance.subPiecesOnBoard)
+            {
+                if (SP)
+                {
+                    SP.UnDissolveSubPiece();
+                }
+            }
+        }
+    }
+
+    public void CallSkipEndLevelAnim()
+    {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
+        StartCoroutine(SkipEndLevelAnimation());
+    }
+
+    public IEnumerator SkipEndLevelAnimation()
+    {
+        hasGivenChest = false;
+        hasPlayedRelaseSound = false;
+        endLevelAnimationON = true;
+        UIManager.Instance.skipAnimationButton.interactable = true;
+
+        Debug.LogError("TEST NOW 1");
+
+        if (AfterAnimalAnimationCoroutine != null)
+        {
+            StopCoroutine(AfterAnimalAnimationCoroutine);
+        }
+
+        AfterAnimalAnimationCoroutine = null;
+        //StopCoroutine(endAnimToAnimal);
+        StopAllCoroutines();
+        //LeanTween.cancelAll();
+
+        if (hasSkippedToAnimalAnim)
+        {
+            //hasSkippedToAnimalAnim = false;
+
+            //StopCoroutine("SkipEndLevelAnimation");
+
+            //StartCoroutine(AfterAnimalAnimation());
+            AfterAnimalAnimationCoroutine = StartCoroutine("AfterAnimalAnimation");
+
+            UIManager.Instance.skipAnimationButton.interactable = false;
+
+            Debug.LogError("TEST NOW 2");
+            //Debug.LogError("HERE");
+            //endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation(true));
+            //if (AnimalsManager.Instance.currentLevelLiveAnimal)
+            //{
+            //    Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
+            //}
+
+            yield break;
+        }
+        else
+        {
+            hasSkippedToAnimalAnim = true;
+            UIManager.Instance.skipAnimationButton.gameObject.SetActive(true);
+            //endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation(false));
+        }
+
+        SoundManager.Instance.audioSourceSFX.Stop();
+
+        //if (endAnimToAnimal != null)
+        //{
+        //    StopCoroutine(endAnimToAnimal);
+        //    LeanTween.cancelAll();
+        //}
+
+        SkipMoveTopBottom();
+
+        if (destroyOnSkipEndLevel == null)
+        {
+            destroyOnSkipEndLevel = GameObject.FindGameObjectsWithTag("DestroyOnSkipEndLevel");
+        }
+
+        foreach (GameObject go in destroyOnSkipEndLevel)
+        {
+            Destroy(go);
+        }
+
+        destroyOnSkipEndLevel = null;
+
+        foreach (InGameSpecialPowerUp IGSP in GameManager.Instance.powerupManager.specialPowerupsInGame)
+        {
+            IGSP.gameObject.SetActive(false);
+        }
+
+        ZoneManagerHelpData.Instance.ChangeZoneToNormalZoneDisplay();
+
+        SpriteRenderer boardSR = GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>();
+        boardSR.color = new Color(boardSR.color.r, boardSR.color.g, boardSR.color.b, 0);
+        TestLevelsSystemManager.instance.StarSlider.GetComponent<CanvasGroup>().alpha = 0;
+
+        foreach (Slice slice in GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices)
+        {
+            if (slice.child)
+            {
+                SpriteRenderer sliceSR = slice.child.GetComponent<SpriteRenderer>();
+                sliceSR.color = new Color(sliceSR.color.r, sliceSR.color.g, sliceSR.color.b, 0);
+            }
+        }
+
+        foreach (GameObject go in GameManager.Instance.gameBoard.GetComponent<SliceManager>().activeLocksLockAnims)
+        {
+            SpriteRenderer goSR = go.GetComponent<SpriteRenderer>();
+            goSR.color = new Color(goSR.color.r, goSR.color.g, goSR.color.b, 0);
+        }
+
+        UnDissolveTiles(false);
+
+        foreach (Cell cell in ConnectionManager.Instance.cells)
+        {
+            if (cell.pieceHeld)
+            {
+                cell.pieceHeld.gameObject.SetActive(false);
+            }
+        }
+
+        ConnectionManager.Instance.TurnOffAllConnectedVFX();
+
+
+        GameManager.Instance.sliceManager.endLevelAnimVFX.SetActive(false);
+        //foreach (GameObject GO in turnOff)
+        //{
+        //    GO.SetActive(true);
+        //}
+
+        //turnOff = null;
+
+        GameManager.Instance.selectedLevelBG.transform.Find("RingMask").gameObject.SetActive(false);
+
+        //fadeImageEndLevel.gameObject.SetActive(false);
+
+
+        if (GameManager.Instance.gameBoard.gameObject)
+        {
+            //Destroy(GameManager.Instance.gameBoard.gameObject);
+            Destroy(GameManager.Instance.gameClip.gameObject);
+        }
+
+        //UIManager.Instance.restartButton.interactable = false;
+
+        UIManager.Instance.TurnOffGameplayUI();
+
+        UIManager.Instance.InGameUiScreens.SetActive(true);
+
+        if (!GameManager.Instance.currentLevel.isGrindLevel)
+        {
+            if (GameManager.Instance.currentLevel.isAnimalLevel)
+            {
+                if (TestLevelsSystemManagerSaveData.instance.CompletedCount + 1 != GameManager.Instance.currentCluster.clusterLevels.Length)
+                {
+                    //Debug.LogError("1 more in animal release");
+
+                    if (!hasPlayedRelaseSound)
+                    {
+                        SoundManager.Instance.PlaySound(Sounds.RiveRootRelease);
+                    }
+
+                    AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive " + GameManager.Instance.currentIndexInCluster);
+                    //Debug.LogError("here 3");
+
+                }
+                else
+                {
+                    SoundsPerAnimal SPA = AnimalManagerDataHelper.instance.soundsPerAnimalEnum.Where(p => p.animalEnum == AnimalsManager.Instance.currentLevelAnimal).SingleOrDefault();
+
+                    if (SPA != null)
+                    {
+                        SoundManager.Instance.PlaySound(SPA.soundClipToPlay);
+                    }
+
+                    AnimalsManager.Instance.CheckUnlockAnimal(AnimalsManager.Instance.currentLevelAnimal);
+                }
+            }
+            else
+            {
+                AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive " + GameManager.Instance.currentIndexInCluster);
+                Debug.LogError("here");
+
+                if(TestLevelsSystemManagerSaveData.instance.CompletedCount + 1 == GameManager.Instance.currentCluster.clusterLevels.Length)
+                {
+                    if(!hasPlayedRelaseSound)
+                    {
+                        //SoundManager.Instance.PlaySound(Sounds.RiveRelease);
+                    }
+                }
+                else
+                {
+                    if (!hasPlayedRelaseSound)
+                    {
+                        //SoundManager.Instance.PlaySound(Sounds.RiveRootRelease);
+                    }
+                }
+            }
+        }
+        //else
+        //{
+        //   StartCoroutine(AfterAnimalAnimation());
+        //}
+
+        //TutorialSequence.Instacne.CheckDoPotionTutorial();
+
+        //hasSkippedToAnimalAnim = false;
+
+        //Debug.LogError("Reached end of skip");
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
+    }
+
+    public void CallAfterAnimalAnimation()
+    {
+        //StartCoroutine(AfterAnimalAnimation());
+        AfterAnimalAnimationCoroutine = StartCoroutine("AfterAnimalAnimation");
     }
 
     public void SkipBoardAnim()
@@ -996,6 +1021,7 @@ public class AnimationManager : MonoBehaviour
             {
                 hasGivenChest = true;
                 TestLevelsSystemManagerSaveData.instance.AddToChestBar();
+                Debug.LogError("HERE AND NOW");
             }
         }
 

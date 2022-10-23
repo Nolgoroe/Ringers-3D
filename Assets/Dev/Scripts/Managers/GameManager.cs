@@ -381,6 +381,11 @@ public class GameManager : MonoBehaviour
 
         if(!isRestart && currentLevel.showIntroLevelAnimation)
         {
+            UIManager.Instance.restartButton.interactable = false;
+            UIManager.Instance.optionsButtonIngame.interactable = false;
+            UIManager.Instance.cheatOptionsButtonIngame.interactable = false;
+            UIManager.Instance.dealButton.interactable = false;
+            powerupManager.PowerupButtonsActivation(false);
 
             StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim());
 

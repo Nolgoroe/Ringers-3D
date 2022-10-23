@@ -16,9 +16,11 @@ public class TestLevelsSystemManagerSaveData : MonoBehaviour
 
     public void AddToChestBar()
     {
+        Debug.LogError("CHEST BAR!!!");
+
         CompletedCount++;
 
-        TestLevelsSystemManager.instance.UpdateBarValue();
+        StartCoroutine(TestLevelsSystemManager.instance.UpdateBarValue());
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TestLevelsSystemManagerSaveData });
     }

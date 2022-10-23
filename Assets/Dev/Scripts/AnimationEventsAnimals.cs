@@ -34,11 +34,11 @@ public class AnimationEventsAnimals : MonoBehaviour
 
             if (TestLevelsSystemManagerSaveData.instance.CompletedCount + 1 == GameManager.Instance.currentCluster.clusterLevels.Length)
             {
-                SoundManager.Instance.PlaySound(Sounds.RiveRelease);
+                //SoundManager.Instance.PlaySound(Sounds.RiveRelease);
             }
             else
             {
-                SoundManager.Instance.PlaySound(Sounds.RiveRootRelease);
+                //SoundManager.Instance.PlaySound(Sounds.RiveRootRelease);
             }
 
             AnimationManager.instance.hasPlayedRelaseSound = true;
@@ -52,5 +52,10 @@ public class AnimationEventsAnimals : MonoBehaviour
     public void ActivateBackToHudButton()
     {
         UIManager.Instance.backToHubButton.interactable = true;
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        SoundManager.Instance.PlaySound(clip);
     }
 }

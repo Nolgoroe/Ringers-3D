@@ -85,7 +85,7 @@ public class Piece : MonoBehaviour
             }
 
             isSamePiece = CheckNoRepeatPieceClip();
-            Debug.LogError(isSamePiece);
+            //Debug.LogError(isSamePiece);
             isRepeatPieceSides = CheckNoRepeatPieceSidesNormalPiece();
 
 

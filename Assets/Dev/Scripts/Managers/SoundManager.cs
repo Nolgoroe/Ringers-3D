@@ -99,6 +99,10 @@ public class SoundManager : MonoBehaviour
         int ran = Random.Range(0, (enumToSound[soundEnum].Length));
         audioSourceSFX.PlayOneShot(enumToSound[soundEnum][ran]);
     }
+    public void PlaySound(AudioClip soundClip)
+    {
+        audioSourceSFX.PlayOneShot(soundClip);
+    }
 
     public void PlaySoundChangeVolume(Sounds soundEnum, float Volume)
     {

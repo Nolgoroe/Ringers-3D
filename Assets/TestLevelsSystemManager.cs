@@ -32,12 +32,16 @@ public class TestLevelsSystemManager : MonoBehaviour
 
     public IEnumerator InitTestLevel()
     {
+        LeanTween.cancel(StarSlider.gameObject);
+
         StarSlider.maxValue = numOfSections;
 
         //ShowRelaventUI();
         ResetDisplay();
         yield return new WaitForEndOfFrame();
         InstantiateBarStars();
+
+        yield return new WaitForEndOfFrame();
         InitLevelStars();
 
         //yield return new WaitForEndOfFrame();
@@ -93,13 +97,16 @@ public class TestLevelsSystemManager : MonoBehaviour
         ActivateStarOrChestMap();
     }
 
-    public void UpdateBarValue()
+    public IEnumerator UpdateBarValue()
     {
-        LeanTween.value(StarSlider.gameObject, StarSlider.value, StarSlider.value + 1, barAnimateSpeed).setOnComplete(() => ActivateStarOrChestLevel((int)StarSlider.value)).setOnUpdate((float val) =>
+        LeanTween.value(StarSlider.gameObject, StarSlider.value, StarSlider.value + 1, barAnimateSpeed).setOnUpdate((float val) =>
         {
             StarSlider.value = val;
         });
 
+        yield return new WaitForSeconds(barAnimateSpeed + 0.1f);
+
+        ActivateStarOrChestLevel(TestLevelsSystemManagerSaveData.instance.CompletedCount);
     }
     public void UpdateBarValueOnMap()
     {
@@ -120,7 +127,7 @@ public class TestLevelsSystemManager : MonoBehaviour
     }
     private void ActivateStarOrChestLevel(int index)
     {
-        if (index >= numOfSections)
+        if (index == numOfSections)
         {
             Debug.LogError("Giving Chest");
 

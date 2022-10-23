@@ -69,32 +69,32 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
         if (isTutorialLevel && isKeyLevel)
         {
             LaunchKeyAndTutorialLevel();
-            Debug.LogError("Launched tutorial + key level");
+            //Debug.LogError("Launched tutorial + key level");
         }
         else if (isTutorialLevel)
         {
             LaunchTutorialLevel();
-            Debug.LogError("Launched tutorial level");
+            //Debug.LogError("Launched tutorial level");
         }
         else if (isKeyLevel)
         {
             LaunchKeyLevel();
-            Debug.LogError("Launched key level");
+            //Debug.LogError("Launched key level");
         }
         else if (isGrindLevel)
         {
             LaunchGrindLevel();
-            Debug.LogError("Launched grind level");
+            //Debug.LogError("Launched grind level");
         }
         else if (isBossLevel)
         {
             LaunchBossLevel();
-            Debug.LogError("Launched boss level");
+            //Debug.LogError("Launched boss level");
         }
         else
         {
             LaunchNoramlLevel();
-            Debug.LogError("Launched normal level");
+            //Debug.LogError("Launched normal level");
         }
     }
 

@@ -151,6 +151,13 @@ public class SortMaster : MonoBehaviour
                 InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.AnimalAlbum);
             }
         }
+        else
+        {
+            if (TutorialSaveData.Instance.hasFinishedAnimalAlbum)
+            {
+                InterestPointsManager.instance.TurnOffPointsOfInterestDisplay(TypesPointOfInterest.AnimalAlbum);
+            }
+        }
     }
 
     public void RefreshAllForgeScreens()

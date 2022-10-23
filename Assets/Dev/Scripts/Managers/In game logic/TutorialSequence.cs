@@ -284,7 +284,7 @@ public class TutorialSequence : MonoBehaviour
 
     public void RecreateRenderTexture(bool isDen)
     {
-        Debug.LogError("IN HERE NOW");
+        //Debug.LogError("IN HERE NOW");
         //secondCam.targetTexture.Release();
         //yield return new WaitForEndOfFrame();
 

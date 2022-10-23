@@ -233,7 +233,6 @@ public class LootManager : MonoBehaviour
 
         if (giveKey)
         {
-            Instantiate(keyPrefab, GameManager.Instance.destroyOutOfLevel);
             ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey = true;
 
             if (ZoneManagerHelpData.Instance.nextZoneCheck)
@@ -265,7 +264,7 @@ public class LootManager : MonoBehaviour
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneManager, SystemsToSave.AllZones });
 
-            giveKey = false;
+            //giveKey = false;
         }
 
         if (rubiesToRecieveInLevel > 0)
@@ -322,6 +321,15 @@ public class LootManager : MonoBehaviour
 
     }
 
+    public void CheckGiveKey()
+    {
+        if(giveKey)
+        {
+            Instantiate(keyPrefab, GameManager.Instance.destroyOutOfLevel);
+
+            giveKey = false;
+        }
+    }
     public void ResetLevelLootData()
     {
         //currentLevelLootToGive.Clear();
@@ -569,10 +577,11 @@ public class LootManager : MonoBehaviour
 
         TestLevelsSystemManagerSaveData.instance.ResetData();
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.7f);
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
         TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
+        CheckGiveKey();
     }
 
     public void DestroyAllChestLootData()

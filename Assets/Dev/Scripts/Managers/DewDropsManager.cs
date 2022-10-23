@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
-
+using System.Globalization;
 
 public class DewDropsManager : MonoBehaviour
 {
@@ -59,11 +59,12 @@ public class DewDropsManager : MonoBehaviour
         StopAllCoroutines();
         if (savedDateTime != "" && PlayerManager.Instance.collectedDewDrops < maxDrops)
         {
-            
             //Debug.Log("has previos save time: " + savedDateTime);
             TimeSpan deltaDateTime = currentTime - Convert.ToDateTime(savedDateTime);
+            //DateTime saved = DateTime.ParseExact(savedDateTime, formats, CultureInfo.CurrentCulture);
+            //TimeSpan deltaDateTime = currentTime - saved;
 
-            //Debug.Log("THIS IS THE DELTA TIME: " + deltaDateTime);
+            Debug.LogError("THIS IS THE DELTA TIME: " + deltaDateTime);
 
             GiveElapsedTimeDewDrops(deltaDateTime);
         }
@@ -96,7 +97,7 @@ public class DewDropsManager : MonoBehaviour
             {
                 timeLeftToGiveDrop = (timeTillGiveDrewDropStatic * 60) + timeLeftToGiveDrop;
 
-                savedDateTime = DateTime.Now.ToString();
+                savedDateTime = currentTime.ToString();
 
                 Debug.LogError("GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
                 GiveDrop(1);
