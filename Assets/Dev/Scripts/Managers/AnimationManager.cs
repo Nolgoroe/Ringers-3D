@@ -667,7 +667,7 @@ public class AnimationManager : MonoBehaviour
             UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
 
             //UIManager.Instance.backToHubButton.gameObject.SetActive(false);
-            if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+            if (GameManager.Instance.currentLevel.levelIndexInZone + 1 == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
             {
                 UIManager.Instance.backToHubButton.interactable = false;
             }
@@ -1198,7 +1198,7 @@ public class AnimationManager : MonoBehaviour
 
             //UIManager.Instance.backToHubButton.gameObject.SetActive(false);
 
-            if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+            if (GameManager.Instance.currentLevel.levelIndexInZone + 1 == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
             {
                 UIManager.Instance.backToHubButton.interactable = false;
             }

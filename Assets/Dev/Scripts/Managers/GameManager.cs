@@ -76,7 +76,6 @@ public class GameManager : MonoBehaviour
     public Camera secondCam;
 
     public bool hasRestartedLevel;
-    public bool isChestLevel;
 
     public int currentIndexInCluster = -1;
 
@@ -384,6 +383,7 @@ public class GameManager : MonoBehaviour
 
         if(!isRestart && currentLevel.showIntroLevelAnimation)
         {
+            UIManager.Instance.isUsingUI = true; //used to disable pickup pieces
             UIManager.Instance.restartButton.interactable = false;
             UIManager.Instance.optionsButtonIngame.interactable = false;
             UIManager.Instance.cheatOptionsButtonIngame.interactable = false;
@@ -396,6 +396,7 @@ public class GameManager : MonoBehaviour
 
             // these become false in the animation progress to prevent player actions
             // so we enable them after this time.
+            UIManager.Instance.isUsingUI = false; //used to disable pickup pieces
             UIManager.Instance.restartButton.interactable = true;
             UIManager.Instance.optionsButtonIngame.interactable = true;
             UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
