@@ -211,17 +211,20 @@ public class AnimationManager : MonoBehaviour
 
     public IEnumerator StartEndLevelAnim()
     {
-        hasGivenChest = false;
+        //hasGivenChest = false;
         hasPlayedRelaseSound = false;
         endLevelAnimationON = true;
         AfterAnimalAnimationCoroutine = null;
-        UIManager.Instance.skipAnimationButton.interactable = true;
+        UIManager.Instance.nextLevelFromWinScreen.interactable = false;
+        UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+        UIManager.Instance.backToHubButton.interactable = false;
+        //UIManager.Instance.backToHubButton.gameObject.SetActive(false);
 
         turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
 
 
-        UIManager.Instance.restartButton.interactable = false;
-        UIManager.Instance.dealButton.interactable = false;
+        UIManager.Instance.optionsButtonIngame.interactable = false;
+        UIManager.Instance.cheatOptionsButtonIngame.interactable = false;
 
         tempSubPieceArray.AddRange(ConnectionManager.Instance.subPiecesOnBoard);
 
@@ -234,6 +237,8 @@ public class AnimationManager : MonoBehaviour
         MoveTopButtonAnim();
 
         yield return new WaitForSeconds(speedOutTopBottom + 0.1f);
+
+        UIManager.Instance.skipAnimationButton.interactable = true;
 
         UIManager.Instance.skipAnimationButton.gameObject.SetActive(true);
 
@@ -254,9 +259,16 @@ public class AnimationManager : MonoBehaviour
 
 
 
-        foreach (GameObject GO in turnOff)
+        if(turnOff != null && turnOff.Length > 0)
         {
-            GO.SetActive(false);
+            foreach (GameObject GO in turnOff)
+            {
+                GO.SetActive(false);
+            }
+        }
+        else
+        {
+            Debug.LogError("THIS IS A BUG");
         }
 
         GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>().enabled = false;
@@ -357,9 +369,17 @@ public class AnimationManager : MonoBehaviour
 
     public IEnumerator AfterAnimalAnimation()
     {
+        yield return new WaitForEndOfFrame();
+
         Debug.LogError("IN HERE NOW AFTER ANIMAL ANIM");
         endLevelAnimationON = true;
-        UIManager.Instance.skipAnimationButton.interactable = false;
+        //UIManager.Instance.skipAnimationButton.interactable = false;
+
+        UIManager.Instance.nextLevelFromWinScreen.interactable = false;
+        UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+
+        //UIManager.Instance.backToHubButton.gameObject.SetActive(false);
+        UIManager.Instance.backToHubButton.interactable = false;
 
         if (hasSkippedToAfterAnimalAnim)
         {
@@ -374,8 +394,6 @@ public class AnimationManager : MonoBehaviour
         {
             hasSkippedToAfterAnimalAnim = true;
         }
-
-        SoundManager.Instance.PlaySound(Sounds.LevelWin);
 
 
         if (turnOff != null)
@@ -478,6 +496,8 @@ public class AnimationManager : MonoBehaviour
             }
         }
 
+                SoundManager.Instance.PlaySound(Sounds.LevelWin);
+
         foreach (Cell cell in ConnectionManager.Instance.cells)
         {
             if (cell.pieceHeld)
@@ -494,7 +514,14 @@ public class AnimationManager : MonoBehaviour
         {
             if (GameManager.Instance.currentLevel.isAnimalLevel)
             {
-                UIManager.Instance.animalNameText.text = animalName + " Released!";
+                if (TestLevelsSystemManagerSaveData.instance.CompletedCount == GameManager.Instance.currentCluster.clusterLevels.Length)
+                {
+                    UIManager.Instance.animalNameText.text = animalName + " Released!";
+                }
+                else
+                {
+                    UIManager.Instance.animalNameText.text = "Corruption cleansed!";
+                }
             }
             else
             {
@@ -567,16 +594,20 @@ public class AnimationManager : MonoBehaviour
             });
         }
 
-        if (TestLevelsSystemManager.instance.isGiveChest(TestLevelsSystemManagerSaveData.instance.CompletedCount))
+        UIManager.Instance.backToHubButton.gameObject.SetActive(true);
+
+        if (TestLevelsSystemManager.instance.isGiveChest(GameManager.Instance.currentIndexInCluster + 1))
         {
             Image nextLevelButtonImage = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>();
             nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 0);
 
-            UIManager.Instance.backToHubButton.interactable = false;
-            UIManager.Instance.nextLevelFromWinScreen.interactable = false;
+            //UIManager.Instance.backToHubButton.interactable = false;
+            //UIManager.Instance.nextLevelFromWinScreen.interactable = false;
         }
         else
         {
+            UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
+
             if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
             {
                 if (GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.AnimalAlbum)
@@ -600,6 +631,8 @@ public class AnimationManager : MonoBehaviour
                     image.color = newColor;
                 });
             }
+
+            //UIManager.Instance.backToHubButton.interactable = true;
         }
 
         yield return new WaitForSeconds(fadeInTimeButtons + 0.1f);
@@ -624,8 +657,33 @@ public class AnimationManager : MonoBehaviour
         }
 
 
-        //Debug.LogError("Reached end of end level sequence");
+        Debug.LogError("Reached end of end level sequence");
         endLevelAnimationON = false;
+
+
+        if (TestLevelsSystemManager.instance.isGiveChest(GameManager.Instance.currentIndexInCluster + 1))
+        {
+            UIManager.Instance.nextLevelFromWinScreen.interactable = false;
+            UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+
+            //UIManager.Instance.backToHubButton.gameObject.SetActive(false);
+            if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+            {
+                UIManager.Instance.backToHubButton.interactable = false;
+            }
+            else
+            {
+                UIManager.Instance.backToHubButton.interactable = true;
+            }
+        }
+        else
+        {
+            UIManager.Instance.nextLevelFromWinScreen.interactable = true;
+            UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
+
+            UIManager.Instance.backToHubButton.gameObject.SetActive(true);
+            UIManager.Instance.backToHubButton.interactable = true;
+        }
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
     }
@@ -747,10 +805,18 @@ public class AnimationManager : MonoBehaviour
 
     public IEnumerator SkipEndLevelAnimation()
     {
-        hasGivenChest = false;
         hasPlayedRelaseSound = false;
         endLevelAnimationON = true;
         UIManager.Instance.skipAnimationButton.interactable = true;
+
+        UIManager.Instance.nextLevelFromWinScreen.interactable = false;
+        UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+
+        //UIManager.Instance.backToHubButton.gameObject.SetActive(false);
+        UIManager.Instance.backToHubButton.interactable = false;
+
+        UIManager.Instance.optionsButtonIngame.interactable = false;
+        UIManager.Instance.cheatOptionsButtonIngame.interactable = false;
 
         Debug.LogError("TEST NOW 1");
 
@@ -763,6 +829,7 @@ public class AnimationManager : MonoBehaviour
         //StopCoroutine(endAnimToAnimal);
         StopAllCoroutines();
         //LeanTween.cancelAll();
+        //yield return new WaitForEndOfFrame();
 
         if (hasSkippedToAnimalAnim)
         {
@@ -773,7 +840,7 @@ public class AnimationManager : MonoBehaviour
             //StartCoroutine(AfterAnimalAnimation());
             AfterAnimalAnimationCoroutine = StartCoroutine("AfterAnimalAnimation");
 
-            UIManager.Instance.skipAnimationButton.interactable = false;
+            //UIManager.Instance.skipAnimationButton.interactable = false;
 
             Debug.LogError("TEST NOW 2");
             //Debug.LogError("HERE");
@@ -1003,7 +1070,14 @@ public class AnimationManager : MonoBehaviour
         {
             if (GameManager.Instance.currentLevel.isAnimalLevel)
             {
-                UIManager.Instance.animalNameText.text = animalName + " Released!";
+                if (TestLevelsSystemManagerSaveData.instance.CompletedCount == GameManager.Instance.currentCluster.clusterLevels.Length)
+                {
+                    UIManager.Instance.animalNameText.text = animalName + " Released!";
+                }
+                else
+                {
+                    UIManager.Instance.animalNameText.text = "Corruption cleansed!";
+                }
             }
             else
             {
@@ -1056,16 +1130,19 @@ public class AnimationManager : MonoBehaviour
             restartGrind.alpha = 1;
         }
 
-        if (TestLevelsSystemManager.instance.isGiveChest(TestLevelsSystemManagerSaveData.instance.CompletedCount))
+        if (TestLevelsSystemManager.instance.isGiveChest(GameManager.Instance.currentIndexInCluster + 1))
         {
             Image nextLevelButtonImage = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>();
             nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 0);
 
-            UIManager.Instance.backToHubButton.interactable = false;
-            UIManager.Instance.nextLevelFromWinScreen.interactable = false;
+            //UIManager.Instance.backToHubButton.interactable = false;
+            //UIManager.Instance.nextLevelFromWinScreen.interactable = false;
         }
         else
         {
+            //UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
+            //UIManager.Instance.backToHubButton.interactable = true;
+
             if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
             {
                 if (GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.AnimalAlbum)
@@ -1080,6 +1157,8 @@ public class AnimationManager : MonoBehaviour
                 nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 1);
             }
         }
+
+        UIManager.Instance.backToHubButton.gameObject.SetActive(true);
 
         ConnectionManager.Instance.TurnOffAllConnectedVFX();
 
@@ -1112,6 +1191,30 @@ public class AnimationManager : MonoBehaviour
 
         endLevelAnimationON = false;
 
+        if (TestLevelsSystemManager.instance.isGiveChest(GameManager.Instance.currentIndexInCluster + 1))
+        {
+            UIManager.Instance.nextLevelFromWinScreen.interactable = false;
+            UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+
+            //UIManager.Instance.backToHubButton.gameObject.SetActive(false);
+
+            if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+            {
+                UIManager.Instance.backToHubButton.interactable = false;
+            }
+            else
+            {
+                UIManager.Instance.backToHubButton.interactable = true;
+            }
+        }
+        else
+        {
+            UIManager.Instance.nextLevelFromWinScreen.interactable = true;
+            UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
+
+            UIManager.Instance.backToHubButton.gameObject.SetActive(true);
+            UIManager.Instance.backToHubButton.interactable = true;
+        }
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
     }

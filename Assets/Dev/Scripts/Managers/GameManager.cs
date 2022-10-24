@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
     public Camera secondCam;
 
     public bool hasRestartedLevel;
+    public bool isChestLevel;
 
     public int currentIndexInCluster = -1;
 
@@ -140,7 +141,9 @@ public class GameManager : MonoBehaviour
         AnimationManager.instance.ResetEnterLevelAnimation();
         AnimalsManager.Instance.ResetAnimalManagerData();
 
-        if(!isRestart)
+        AnimationManager.instance.hasGivenChest = false;
+
+        if (!isRestart)
         {
             StartCoroutine(TestLevelsSystemManager.instance.InitTestLevel());
         }
@@ -857,8 +860,8 @@ public class GameManager : MonoBehaviour
 
             if (currentLevel.levelIndexInZone != ZoneManagerHelpData.Instance.currentZoneCheck.lastLevelNum)
             {
-                UIManager.Instance.nextLevelFromWinScreen.interactable = true;
-                UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
+                //UIManager.Instance.nextLevelFromWinScreen.interactable = true;
+                //UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
 
             }
             else
@@ -953,6 +956,7 @@ public class GameManager : MonoBehaviour
 
     public void CallNextLevelFromWinScreen()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
         StartCoroutine(NextLevelFromWinScreen());
     }
     public IEnumerator NextLevelFromWinScreen()

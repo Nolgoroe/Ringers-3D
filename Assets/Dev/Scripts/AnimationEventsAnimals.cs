@@ -51,11 +51,23 @@ public class AnimationEventsAnimals : MonoBehaviour
 
     public void ActivateBackToHudButton()
     {
+        //if (TestLevelsSystemManager.instance.isGiveChest(GameManager.Instance.currentIndexInCluster + 1))
+        //{
+        //    UIManager.Instance.nextLevelFromWinScreen.interactable = false;
+        //    UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+        //}
+        //else
+        //{
+        //    UIManager.Instance.nextLevelFromWinScreen.interactable = true;
+        //    UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
+        //}
+        UIManager.Instance.backToHubButton.gameObject.SetActive(true);
         UIManager.Instance.backToHubButton.interactable = true;
     }
 
     public void PlaySound(AudioClip clip)
     {
+        Debug.LogError("TESTING");
         SoundManager.Instance.PlaySound(clip);
     }
 }

@@ -291,6 +291,9 @@ public class ClipManager : MonoBehaviour
 
     public IEnumerator DealAnimation()
     {
+        UIManager.Instance.optionsButtonIngame.interactable = false;
+        UIManager.Instance.cheatOptionsButtonIngame.interactable = false;
+
         StartCoroutine(DeactivateClip(clipCount - 1));
 
         for (int i = 0; i < clipCount; i++)
@@ -340,6 +343,9 @@ public class ClipManager : MonoBehaviour
 
         GameManager.Instance.powerupManager.canPressDeal = true;
         UIManager.Instance.dealButton.interactable = true;
+
+        UIManager.Instance.optionsButtonIngame.interactable = true;
+        UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
     }
 
     public void RefreshSlotLastClipAlgoritm(EdgePathFoundData dataNeeded)

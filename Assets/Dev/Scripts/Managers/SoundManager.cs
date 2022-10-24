@@ -37,7 +37,11 @@ public enum Sounds
     RiveRelease,
     RiveRootRelease,
     RingAppear,
-    AlbumAnimalAppear
+    AlbumAnimalAppear,
+    ChestAppear,
+    ChestOpen,
+    ChestClose,
+    GiveChestItem
     //// Add all sounds here
 }
 
@@ -57,6 +61,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource audioSourceAmbience;
 
     public EnumAndClip[] soundsForGame;
+    public AudioClip[] soundForChestBar;
 
     public Dictionary<Sounds, AudioClip[]> enumToSound;
 

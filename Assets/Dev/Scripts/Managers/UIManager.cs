@@ -157,6 +157,8 @@ public class UIManager : MonoBehaviour
     public TMP_Text animalReleaseToDenText;
     public TMP_Text animalIsHappyText;
     public TMP_Text SystemUpdaterScreenText;
+    public TMP_Text TEMPTextBarBug;
+    public TMP_Text TEMPTexthasGivenChest;
     //public TMP_Text cantBuyPotionText;
 
     //public Button commitButton;
@@ -421,7 +423,11 @@ public class UIManager : MonoBehaviour
         {
             boardScale.text = "No board";
         }
-        
+
+        TEMPTextBarBug.text = "Testing bug system: " + TestLevelsSystemManagerSaveData.instance.CompletedCount.ToString();
+        TEMPTexthasGivenChest.text = "Has given chest: " + AnimationManager.instance.hasGivenChest.ToString();
+
+
     }
     public void PlayButton()
     {

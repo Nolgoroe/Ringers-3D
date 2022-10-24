@@ -391,8 +391,8 @@ public class LootManager : MonoBehaviour
         CMD.materialCount.text = count.ToString();
         CMD.materialCount.color = Color.white;
 
-
         LeanTween.move(go, chestLootPosition[currentChestLootPos], animationSpeedChestLoot).setOnComplete(() => go.transform.parent = chestLootPosition[currentChestLootPos].transform);
+        SoundManager.Instance.PlaySound(Sounds.GiveChestItem);
     }
 
     public void DisplayLootFromChest(int count, CraftingMats CM)
@@ -413,7 +413,7 @@ public class LootManager : MonoBehaviour
         CMD.materialCount.color = Color.white;
 
         LeanTween.move(go, chestLootPosition[currentChestLootPos], animationSpeedChestLoot).setOnComplete(() => go.transform.parent = chestLootPosition[currentChestLootPos].transform);
-
+        SoundManager.Instance.PlaySound(Sounds.GiveChestItem);
     }
 
     public void DestoryWinScreenDisplyedLoot()
@@ -567,6 +567,9 @@ public class LootManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
         //finishedGivingLoot = true;
+
+        SoundManager.Instance.PlaySound(Sounds.ChestClose);
+
         materialsToGiveChest.Clear();
         rubiesToGiveChest = 0;
         currentChestLootPos = 0;

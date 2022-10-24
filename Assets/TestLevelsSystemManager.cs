@@ -99,6 +99,8 @@ public class TestLevelsSystemManager : MonoBehaviour
 
     public IEnumerator UpdateBarValue()
     {
+        DecideSoundToPlayChestBar();
+
         LeanTween.value(StarSlider.gameObject, StarSlider.value, StarSlider.value + 1, barAnimateSpeed).setOnUpdate((float val) =>
         {
             StarSlider.value = val;
@@ -158,6 +160,21 @@ public class TestLevelsSystemManager : MonoBehaviour
             }
         }
     }
+
+    public void DecideSoundToPlayChestBar()
+    {
+        int tempNum = TestLevelsSystemManagerSaveData.instance.CompletedCount - 1;
+
+        if (TestLevelsSystemManagerSaveData.instance.CompletedCount == numOfSections)
+        {
+            SoundManager.Instance.PlaySound(Sounds.ChestAppear);
+        }
+        else
+        {
+            SoundManager.Instance.PlaySound(SoundManager.Instance.soundForChestBar[tempNum]);
+        }
+    }
+
     public bool isGiveChest(int index)
     {
         return index >= numOfSections;
@@ -179,6 +196,7 @@ public class TestLevelsSystemManager : MonoBehaviour
 
     public void ResetDisplay()
     {
+        StarSlider.gameObject.SetActive(true);
         StarSlider.value = TestLevelsSystemManagerSaveData.instance.CompletedCount;
         for (int i = 0; i < starsParent.childCount; i++)
         {

@@ -91,8 +91,10 @@ public class CursorController : MonoBehaviour
 
         if(TestLevelsSystemManagerSaveData.instance.canGetChest)
         {
-            if (Input.touchCount > 0)
+            if (Input.touchCount == 1)
             {
+                SoundManager.Instance.PlaySound(Sounds.ChestOpen);
+
                 TestLevelsSystemManagerSaveData.instance.canGetChest = false;
                 TestLevelsSystemManager.instance.chestAnimator.SetTrigger("TappedChest");
                 LootManager.Instance.UnpackChestLoot();
