@@ -77,6 +77,8 @@ public class GameManager : MonoBehaviour
 
     public bool hasRestartedLevel;
 
+    public bool hasFinishedShowingDialogue;
+
     public int currentIndexInCluster = -1;
 
     private void Awake()
@@ -137,6 +139,13 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator ResetDataStartLevel(bool isTutorial, bool isRestart)
     {
+        //if(currentLevel.levelStartDialogueSO)
+        //{
+        //    currentLevel.levelStartDialogueSO.
+        //}
+        //yield return new WaitUntil(() => hasFinishedShowingDialogue == true);
+
+
         AnimationManager.instance.ResetEnterLevelAnimation();
         AnimalsManager.Instance.ResetAnimalManagerData();
 

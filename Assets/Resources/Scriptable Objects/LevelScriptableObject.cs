@@ -104,6 +104,10 @@ public class LevelScriptableObject : ScriptableObject
     public bool useLastClipAlgoritm;
     public int algoritmStepsWanted;
 
+    [Header("Dialogue Data")]
+    public DialogueScriptableObject levelStartDialogueSO;
+    public DialogueScriptableObject levelEndDialogueSO;
+
     [ContextMenu("THIS")]
     public void actionhere()
     {
