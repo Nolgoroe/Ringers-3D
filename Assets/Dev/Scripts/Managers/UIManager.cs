@@ -268,9 +268,20 @@ public class UIManager : MonoBehaviour
     public TMP_Text levelDifficultyText;
     public TMP_Text zoneNameText;
 
+    [Header("Dialogue ")]
+    public GameObject dialogueMainGameobject;
+    public Transform DialogueParent;
+    public Button continueDialogueButton;
+    public Button endDialogueButton;
+    public Button skipButton;
+    public float textSpeed;
+    public Coroutine textCoroutine;
+
     private void Start()
     {
         Instance = this;
+
+        textCoroutine = null;
 
         isDuringIntro = false;
         canAdvanceIntro = true;
@@ -359,6 +370,7 @@ public class UIManager : MonoBehaviour
         quitGameScreen.SetActive(false);
         getRewardScreen.SetActive(false);
         testLevelsDataScreen.SetActive(false);
+        dialogueMainGameobject.SetActive(false);
 
         activeScreen = null;
 
@@ -2801,5 +2813,49 @@ public class UIManager : MonoBehaviour
         TestLevelsSystemManager.instance.starSliderTestLevelMapDisplay.maxValue = TestLevelsSystemManager.instance.numOfSections;
 
         TestLevelsSystemManager.instance.UpdateBarValueOnMap();
+    }
+
+    public void CallTypewriterText(DialogueScriptableObject dialogueRef, int index, TMP_Text textRef)
+    {
+        textCoroutine = StartCoroutine(TypewriterText(dialogueRef, index, textRef));
+    }
+
+    IEnumerator TypewriterText(DialogueScriptableObject dialogueRef, int index, TMP_Text textRef)
+    {
+        string fullText = dialogueRef.allEntries[index].conversationBlock;
+
+        string currentText = "";
+        for (int i = 0; i < fullText.Length + 1; i++)
+        {
+            currentText = fullText.Substring(0, i);
+            textRef.text = currentText;
+            yield return new WaitForSeconds(textSpeed);
+        }
+
+        textCoroutine = null;
+        dialogueRef.LaunchEndEventsEntry(index);
+    }
+
+    public void CallContinueDialogueSequence()
+    {
+        if (GameManager.Instance.currentIndexInDialogue == GameManager.Instance.currentDialogue.allEntries.Length)
+        {
+            Debug.LogError("HEZZE");
+        }
+        else
+        {
+            GameManager.Instance.currentDialogue.onClickOnScreen?.Invoke();
+        }
+
+    }
+
+    public void CallEndDialogueSequence()
+    {
+        if(textCoroutine != null)
+        {
+            StopCoroutine(textCoroutine);
+        }
+
+        GameManager.Instance.currentDialogue.EndAllDialogue();
     }
 }

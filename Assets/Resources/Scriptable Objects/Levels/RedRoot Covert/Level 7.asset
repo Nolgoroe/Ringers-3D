@@ -17,7 +17,7 @@ MonoBehaviour:
   is12PieceRing: 1
   isDoubleRing: 0
   isBoss: 0
-  isAnimalLevel: 0
+  isAnimalLevel: 1
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
   showIntroLevelAnimation: 1
@@ -31,13 +31,12 @@ MonoBehaviour:
   numIndexForLeaderBoard: 92
   tutorialIndexForList: 0
   cellsCountInLevel: 12
+  levelDifficulty: 0
   RandomSlicePositions: 0
   allowRepeatSlices: 0
   allowRepeatTiles: 0
   allowRepeatTileSides: 0
   powerupsForLevel: 
-  specificAnimalForLevel: {fileID: 4102538602839744026, guid: 2d078f20a3e839d46ae45c38a4b5a23a,
-    type: 3}
   stoneTiles:
   - cellIndex: 0
     randomValues: 1
@@ -82,3 +81,5 @@ MonoBehaviour:
   damageToBossCompeleRing: 0
   useLastClipAlgoritm: 0
   algoritmStepsWanted: 0
+  levelStartDialogueSO: {fileID: 0}
+  levelEndDialogueSO: {fileID: 0}

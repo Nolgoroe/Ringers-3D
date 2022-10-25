@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     //public LightingSettingsManager lightSettingsManager;
 
     public LevelScriptableObject currentLevel;
+    public DialogueScriptableObject currentDialogue;
     public ClusterScriptableObject currentCluster;
     public string timeStartLevel;
 
@@ -80,6 +81,7 @@ public class GameManager : MonoBehaviour
     public bool hasFinishedShowingDialogue;
 
     public int currentIndexInCluster = -1;
+    public int currentIndexInDialogue = -1;
 
     private void Awake()
     {
@@ -139,13 +141,6 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator ResetDataStartLevel(bool isTutorial, bool isRestart)
     {
-        //if(currentLevel.levelStartDialogueSO)
-        //{
-        //    currentLevel.levelStartDialogueSO.
-        //}
-        //yield return new WaitUntil(() => hasFinishedShowingDialogue == true);
-
-
         AnimationManager.instance.ResetEnterLevelAnimation();
         AnimalsManager.Instance.ResetAnimalManagerData();
 
@@ -390,7 +385,27 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if(!isRestart && currentLevel.showIntroLevelAnimation)
+
+
+
+        currentDialogue = null;
+        currentIndexInDialogue = 0;
+
+        if (currentLevel.levelStartDialogueSO)
+        {
+            currentDialogue = currentLevel.levelStartDialogueSO;
+
+            currentLevel.levelStartDialogueSO.InitDialogue();
+
+            yield return new WaitUntil(() => hasFinishedShowingDialogue == true);
+        }
+
+
+
+
+
+
+        if (!isRestart && currentLevel.showIntroLevelAnimation)
         {
             UIManager.Instance.isUsingUI = true; //used to disable pickup pieces
             UIManager.Instance.restartButton.interactable = false;
