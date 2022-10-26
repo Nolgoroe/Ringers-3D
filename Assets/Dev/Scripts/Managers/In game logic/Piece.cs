@@ -340,7 +340,7 @@ public class Piece : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
         {
-            Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
+            Piece p = GameManager.Instance.clipManager.slots[i].GetComponent<ClipHolder>().heldPiece;
 
             if (p)
             {

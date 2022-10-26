@@ -276,6 +276,7 @@ public class UIManager : MonoBehaviour
     public Button skipButton;
     public float textSpeed;
     public Coroutine textCoroutine;
+    public ScrollRect dialogueScroller;
 
     private void Start()
     {
@@ -2851,11 +2852,15 @@ public class UIManager : MonoBehaviour
 
     public void CallEndDialogueSequence()
     {
-        if(textCoroutine != null)
+        //Debug.Break();
+
+        if (textCoroutine != null)
         {
             StopCoroutine(textCoroutine);
         }
 
-        GameManager.Instance.currentDialogue.EndAllDialogue();
+
+        StartCoroutine(GameManager.Instance.currentDialogue.EndAllDialogue());
+
     }
 }

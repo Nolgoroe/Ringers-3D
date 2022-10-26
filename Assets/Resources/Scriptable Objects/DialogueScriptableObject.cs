@@ -80,12 +80,15 @@ public class DialogueScriptableObject : ScriptableObject
         LaunchStartingEventsEntry(GameManager.Instance.currentIndexInDialogue);
     }
 
-    public void EndAllDialogue()
+    public IEnumerator EndAllDialogue()
     {
-        LaunchEndEventGeneral();
-
         GameManager.Instance.hasFinishedShowingDialogue = true;
         UIManager.Instance.dialogueMainGameobject.SetActive(false);
+
+        yield return new WaitForEndOfFrame();
+
+        LaunchEndEventGeneral();
+
     }
 
     public void ClearDialogueParent()
@@ -97,13 +100,17 @@ public class DialogueScriptableObject : ScriptableObject
 
         UIManager.Instance.isUsingUI = false;
 
+        GameManager.Instance.hasFinishedShowingDialogue = true;
         GameManager.Instance.currentDialogue = null;
-        GameManager.Instance.currentIndexInDialogue = 0;
+        GameManager.Instance.currentIndexInDialogue = -1;
+        GameManager.Instance.currentDialogueMultiplier = -1;
+        GameManager.Instance.currentDialogueHeightValue = -1;
 
         UIManager.Instance.continueDialogueButton.gameObject.SetActive(false);
         UIManager.Instance.endDialogueButton.gameObject.SetActive(false);
         UIManager.Instance.skipButton.gameObject.SetActive(false);
 
+        UIManager.Instance.dialogueScroller.content.localPosition = Vector3.zero;
     }
 
     public void InstantiateDialoguePrefab(int index)
@@ -113,18 +120,22 @@ public class DialogueScriptableObject : ScriptableObject
         UIManager.Instance.skipButton.gameObject.SetActive(true);
 
         RectTransform rect = null;
+
         switch (allEntries[index].dialogueType)
         {
             case DialogueType.Dialogue:
+
+                GameManager.Instance.currentDialogueMultiplier++;
+
                 switch (allEntries[index].dialogueSide)
                 {
                     case DialogueSide.right:
                         rect = Instantiate(dialogueEntryRightPrefab, UIManager.Instance.DialogueParent).GetComponent<RectTransform>();
-                        rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y - index * 300);
+                        rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y - GameManager.Instance.currentDialogueMultiplier * 300);
                         break;
                     case DialogueSide.left:
                         rect = Instantiate(dialogueEntryLeftPrefab, UIManager.Instance.DialogueParent).GetComponent<RectTransform>();
-                        rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y - index * 300);
+                        rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y - GameManager.Instance.currentDialogueMultiplier * 300);
                         break;
                     default:
                         break;
@@ -132,19 +143,28 @@ public class DialogueScriptableObject : ScriptableObject
 
                 if (rect)
                 {
+                    GameManager.Instance.currentDialogueHeightValue = rect.anchoredPosition.y;
                     SetDialogueEntryData(rect.gameObject, index);
+
+                    CheckAutoScrollDialogue();
                 }
                 break;
             case DialogueType.Image:
+
+                GameManager.Instance.currentDialogueMultiplier += 2;
+
                 rect = Instantiate(imageEntryPrefab, UIManager.Instance.DialogueParent).GetComponent<RectTransform>();
-                rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y - index * 300);
+                rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, rect.anchoredPosition.y - GameManager.Instance.currentDialogueMultiplier * 233);
 
                 if (rect)
                 {
+                    GameManager.Instance.currentDialogueHeightValue = rect.anchoredPosition.y;
                     SetImageEntryData(rect.gameObject, index);
+
+                    CheckAutoScrollDialogue();
                 }
 
-                LaunchEndEventsEntry(index);
+                LaunchEndEventsEntry(index); //launches the end events of the entry
 
                 break;
             default:
@@ -184,7 +204,7 @@ public class DialogueScriptableObject : ScriptableObject
     public void IncrementPhaseInDialogue()
     {
         GameManager.Instance.currentIndexInDialogue++;
-
+         
         if (GameManager.Instance.currentIndexInDialogue == GameManager.Instance.currentDialogue.allEntries.Length)
         {
             ActiavteEndDialogueButton();
@@ -192,6 +212,17 @@ public class DialogueScriptableObject : ScriptableObject
         else
         {
             ActiavteContinueDialogueButton();
+        }
+    }
+
+    public void CheckAutoScrollDialogue()
+    {
+        if(GameManager.Instance.currentDialogueHeightValue <= -300)
+        {
+            Vector3 currentPos = UIManager.Instance.dialogueScroller.content.anchoredPosition;
+            Vector3 target = new Vector3(currentPos.x, currentPos.y + 300, currentPos.z);
+
+            LeanTween.moveLocal(UIManager.Instance.dialogueScroller.content.gameObject, target, 1);
         }
     }
 }

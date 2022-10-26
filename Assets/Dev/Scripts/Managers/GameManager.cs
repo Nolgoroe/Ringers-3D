@@ -78,10 +78,14 @@ public class GameManager : MonoBehaviour
 
     public bool hasRestartedLevel;
 
-    public bool hasFinishedShowingDialogue;
 
     public int currentIndexInCluster = -1;
+
+    [Header("Dialogue")]
     public int currentIndexInDialogue = -1;
+    public int currentDialogueMultiplier = -1;
+    public float currentDialogueHeightValue = -1;
+    public bool hasFinishedShowingDialogue;
 
     private void Awake()
     {
@@ -146,11 +150,6 @@ public class GameManager : MonoBehaviour
 
         AnimationManager.instance.hasGivenChest = false;
 
-        if (!isRestart)
-        {
-            StartCoroutine(TestLevelsSystemManager.instance.InitTestLevel());
-        }
-
         timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
 
         if (copyOfArrayOfPiecesTutorial == null)
@@ -190,11 +189,43 @@ public class GameManager : MonoBehaviour
             ZoneManagerHelpData.Instance.ChangeZoneToNormalZoneDisplay();
         }
 
+        LevelEnded = false;
+        levelStarted = true;
+
+        UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
+        UIManager.Instance.TurnOnGameplayUI();
+        UIManager.Instance.dealButton.interactable = true;
+        UIManager.Instance.ActivateGmaeplayCanvas();
+
+        Camera.main.transform.position = inGameCamPos;
+        TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, -0.05f);
+        Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
+
+
+        if (selectedLevelBG)
+        {
+            selectedLevelBG.SetActive(true);
+
+            AnimalPrefabData data = InstantiateAnimals(selectedLevelBG);
+
+            if (data != null)
+            {
+                AnimalsManager.Instance.currentLevelAnimal = data.animalType;
+
+            }
+            else
+            {
+                Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
+            }
+
+            if (AnimalsManager.Instance.statueToSwap)
+            {
+                AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Set Rive " + currentIndexInCluster);
+            }
+        }
+
         if (isTutorial)
         {
-            LevelEnded = false;
-            levelStarted = true;
-
             if (!isDisableTutorials)
             {
                 powerupManager.ClearTutorialPowerups();// Make sure there are no leftoever tutorial powerups
@@ -204,10 +235,10 @@ public class GameManager : MonoBehaviour
                     numAnimalsOnBoard[i].amount = 0;
                 }
 
-                UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
-                UIManager.Instance.TurnOnGameplayUI();
-                UIManager.Instance.dealButton.interactable = true;
-                UIManager.Instance.ActivateGmaeplayCanvas();
+                //UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
+                //UIManager.Instance.TurnOnGameplayUI();
+                //UIManager.Instance.dealButton.interactable = true;
+                //UIManager.Instance.ActivateGmaeplayCanvas();
 
                 if (AnimationManager.instance.endLevelAnimationON)
                 {
@@ -215,9 +246,9 @@ public class GameManager : MonoBehaviour
                     AnimationManager.instance.endLevelAnimationON = false;
                 }
 
-                Camera.main.transform.position = inGameCamPos;
-                TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, -0.05f);
-                Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
+                //Camera.main.transform.position = inGameCamPos;
+                //TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, -0.05f);
+                //Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
 
                 LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
@@ -241,28 +272,28 @@ public class GameManager : MonoBehaviour
 
                 powerupManager.InstantiateSpecialPowers();
 
-                if (selectedLevelBG)
-                {
-                    selectedLevelBG.SetActive(true);
+                //if (selectedLevelBG)
+                //{
+                //    selectedLevelBG.SetActive(true);
 
-                    AnimalPrefabData data = InstantiateAnimals(selectedLevelBG);
+                //    AnimalPrefabData data = InstantiateAnimals(selectedLevelBG);
 
-                    if (data != null)
-                    {
-                        AnimalsManager.Instance.currentLevelAnimal = data.animalType;
+                //    if (data != null)
+                //    {
+                //        AnimalsManager.Instance.currentLevelAnimal = data.animalType;
 
-                    }
-                    else
-                    {
-                        Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
-                    }
+                //    }
+                //    else
+                //    {
+                //        Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
+                //    }
 
-                    if(AnimalsManager.Instance.statueToSwap)
-                    {
-                        AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Set Rive " + currentIndexInCluster);
-                    }
+                //    if(AnimalsManager.Instance.statueToSwap)
+                //    {
+                //        AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Set Rive " + currentIndexInCluster);
+                //    }
 
-                }
+                //}
 
                 InstantiateStonePieces();
 
@@ -283,8 +314,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            LevelEnded = false;
-            levelStarted = true;
             TutorialSequence.Instacne.DisableTutorialSequence(); //// Make sure tutorial is disabled
             powerupManager.ClearTutorialPowerups(); /// Make sure there are no leftover powerups
 
@@ -293,14 +322,14 @@ public class GameManager : MonoBehaviour
                 numAnimalsOnBoard[i].amount = 0;
             }
 
-            UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
-            UIManager.Instance.TurnOnGameplayUI();
-            UIManager.Instance.dealButton.interactable = true;
-            UIManager.Instance.ActivateGmaeplayCanvas();
+            //UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
+            //UIManager.Instance.TurnOnGameplayUI();
+            //UIManager.Instance.dealButton.interactable = true;
+            //UIManager.Instance.ActivateGmaeplayCanvas();
 
-            Camera.main.transform.position = inGameCamPos;
-            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, -0.05f);
-            Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
+            //Camera.main.transform.position = inGameCamPos;
+            //TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, -0.05f);
+            //Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
 
             LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
@@ -327,27 +356,27 @@ public class GameManager : MonoBehaviour
             powerupManager.InstantiateSpecialPowers();
 
 
-            if (selectedLevelBG)
-            {
-                selectedLevelBG.SetActive(true);
+            //if (selectedLevelBG)
+            //{
+            //    selectedLevelBG.SetActive(true);
 
-                AnimalPrefabData data = InstantiateAnimals(selectedLevelBG);
+            //    AnimalPrefabData data = InstantiateAnimals(selectedLevelBG);
 
-                if (data != null)
-                {
-                    AnimalsManager.Instance.currentLevelAnimal = data.animalType;
+            //    if (data != null)
+            //    {
+            //        AnimalsManager.Instance.currentLevelAnimal = data.animalType;
 
-                }
-                else
-                {
-                    Debug.Log("NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA - OR STATUE IS GRIND STATE/TREE STATUE");
-                }
+            //    }
+            //    else
+            //    {
+            //        Debug.Log("NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA - OR STATUE IS GRIND STATE/TREE STATUE");
+            //    }
 
-                if (AnimalsManager.Instance.statueToSwap)
-                {
-                    AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Set Rive " + currentIndexInCluster);
-                }
-            }
+            //    if (AnimalsManager.Instance.statueToSwap)
+            //    {
+            //        AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Set Rive " + currentIndexInCluster);
+            //    }
+            //}
 
             InstantiateStonePieces();
 
@@ -387,12 +416,16 @@ public class GameManager : MonoBehaviour
 
 
 
-
-        currentDialogue = null;
-        currentIndexInDialogue = 0;
-
         if (currentLevel.levelStartDialogueSO)
         {
+            AnimationManager.instance.SetInLevelValuesimmediateForDialogue();
+
+            currentDialogue = null;
+            currentIndexInDialogue = 0;
+            currentDialogueMultiplier = -1;
+            currentDialogueHeightValue = -1;
+            UIManager.Instance.dialogueScroller.content.localPosition = Vector3.zero;
+
             currentDialogue = currentLevel.levelStartDialogueSO;
 
             currentLevel.levelStartDialogueSO.InitDialogue();
@@ -400,8 +433,12 @@ public class GameManager : MonoBehaviour
             yield return new WaitUntil(() => hasFinishedShowingDialogue == true);
         }
 
+        AnimationManager.instance.ResetEnterLevelAnimation();
 
-
+        if (!isRestart)
+        {
+            StartCoroutine(TestLevelsSystemManager.instance.InitTestLevel());
+        }
 
 
 
@@ -414,7 +451,7 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.dealButton.interactable = false;
             powerupManager.PowerupButtonsActivation(false);
 
-            StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim());
+            StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim(true));
 
             yield return new WaitForSeconds(2.5f);
 
@@ -449,7 +486,9 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.optionsButtonIngame.interactable = true;
             UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
 
+            StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim(false));
             yield return new WaitForEndOfFrame();
+
             if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
             {
                 TutorialSequence.Instacne.StartTutorialLevelSequence();
@@ -710,8 +749,6 @@ public class GameManager : MonoBehaviour
     {
         if (cheat)
         {
-            SoundManager.Instance.PlaySound(Sounds.LastTileSequence);
-
             LevelEnded = true;
 
             if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex && !ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey)
@@ -757,6 +794,7 @@ public class GameManager : MonoBehaviour
             }
             TutorialSequence.Instacne.activatedHeighlights.Clear();
 
+
             AnimationManager.instance.StartEndLevelAnimSequence(true); ///// loot is given here
 
             return true;
@@ -765,8 +803,6 @@ public class GameManager : MonoBehaviour
         {
             if (currentFilledCellCount == currentLevel.cellsCountInLevel && unsuccessfullConnectionCount == 0 && unsuccessfullSlicesCount == 0)
             {
-                SoundManager.Instance.PlaySound(Sounds.LastTileSequence);
-
                 if (ZoneManagerHelpData.Instance.currentZoneCheck)
                 {
                     if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex && !ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey)

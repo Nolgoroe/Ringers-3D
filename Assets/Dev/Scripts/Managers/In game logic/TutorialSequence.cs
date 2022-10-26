@@ -968,32 +968,33 @@ public class TutorialSequence : MonoBehaviour
 
     public void ClipPhaseLogic(Sequence[] tutorialArray, int TutorialIndex, int phaseIndex)
     {
-            UIManager.Instance.dealButton.interactable = false;
+        UIManager.Instance.dealButton.interactable = false;
 
-            foreach (Cell c in ConnectionManager.Instance.cells)
+        foreach (Cell c in ConnectionManager.Instance.cells)
+        {
+            if (c.isFull)
             {
-                if (c.isFull)
-                {
-                    c.pieceHeld.isTutorialLocked = true;
-                }
+                c.pieceHeld.isTutorialLocked = true;
             }
+        }
 
-            for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
+        for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
+        {
+
+            Piece p = GameManager.Instance.clipManager.slots[i].GetComponent<ClipHolder>().heldPiece;
+
+            //for (int k = 0; k < levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[currentPhaseInSequence].unlockedClips.Length; k++)
+            //{
+            if (tutorialArray[TutorialIndex].phase[phaseIndex].unlockedClips.Contains(i)/*[k]*/)
             {
-                Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
-
-                //for (int k = 0; k < levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[currentPhaseInSequence].unlockedClips.Length; k++)
-                //{
-                if (tutorialArray[TutorialIndex].phase[phaseIndex].unlockedClips.Contains(i)/*[k]*/)
-                {
-                    p.isTutorialLocked = false;
-                }
-                else
-                {
-                    p.isTutorialLocked = true;
-                }
-                //}
+                p.isTutorialLocked = false;
             }
+            else
+            {
+                p.isTutorialLocked = true;
+            }
+            //}
+        }
 
         int clipID = tutorialArray[TutorialIndex].phase[phaseIndex].unlockedClips[0];
         int cellID = tutorialArray[TutorialIndex].phase[phaseIndex].targetCells[0];
@@ -1006,7 +1007,7 @@ public class TutorialSequence : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
         {
-            Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
+            Piece p = GameManager.Instance.clipManager.slots[i].GetComponent<ClipHolder>().heldPiece;
 
             p.isTutorialLocked = true;
         }
@@ -1054,7 +1055,7 @@ public class TutorialSequence : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
         {
-            Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
+            Piece p = GameManager.Instance.clipManager.slots[i].GetComponent<ClipHolder>().heldPiece;
 
             p.isTutorialLocked = true;
         }
@@ -1079,7 +1080,7 @@ public class TutorialSequence : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
         {
-            Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
+            Piece p = GameManager.Instance.clipManager.slots[i].GetComponent<ClipHolder>().heldPiece;
 
             p.isTutorialLocked = true;
         }
@@ -1108,7 +1109,7 @@ public class TutorialSequence : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
         {
-            Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
+            Piece p = GameManager.Instance.clipManager.slots[i].GetComponent<ClipHolder>().heldPiece;
 
             p.isTutorialLocked = true;
         }
@@ -1133,7 +1134,7 @@ public class TutorialSequence : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
         {
-            Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
+            Piece p = GameManager.Instance.clipManager.slots[i].GetComponent<ClipHolder>().heldPiece;
 
             p.isTutorialLocked = true;
         }
@@ -1166,7 +1167,7 @@ public class TutorialSequence : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
         {
-            Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
+            Piece p = GameManager.Instance.clipManager.slots[i].GetComponent<ClipHolder>().heldPiece;
             p.isTutorialLocked = true;
         }
     }
@@ -1185,7 +1186,8 @@ public class TutorialSequence : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.clipManager.clipCount; i++)
         {
-            Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
+            //Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
+            Piece p = GameManager.Instance.clipManager.slots[i].GetComponent<ClipHolder>().heldPiece;
             p.isTutorialLocked = true;
         }
     }
@@ -1221,7 +1223,7 @@ public class TutorialSequence : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
         {
-            Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
+            Piece p = GameManager.Instance.clipManager.slots[i].GetComponent<ClipHolder>().heldPiece;
 
             if (p)
             {
@@ -1612,7 +1614,7 @@ public class TutorialSequence : MonoBehaviour
 
     public void EnterLevelAnimationPhaseLogic()
     {
-        StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim());
+        StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim(true));
     }
 }
 

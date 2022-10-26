@@ -91,6 +91,11 @@ public class ClipManager : MonoBehaviour
         //go.name = "Piece" + " " + testnum;
         Piece p = go.GetComponent<Piece>();
         p.SetPieces();
+
+        ClipHolder CH = s.GetComponent<ClipHolder>();
+        CH.heldPiece = p;
+
+        //go.SetActive(false);
     }
 
     public void RerollSlotPieceData(Piece p)

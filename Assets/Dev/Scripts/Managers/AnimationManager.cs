@@ -211,6 +211,8 @@ public class AnimationManager : MonoBehaviour
 
     public IEnumerator StartEndLevelAnim()
     {
+        SoundManager.Instance.PlaySound(Sounds.LastTileSequence);
+
         //hasGivenChest = false;
         hasPlayedRelaseSound = false;
         endLevelAnimationON = true;
@@ -329,7 +331,7 @@ public class AnimationManager : MonoBehaviour
             if (GameManager.Instance.currentLevel.isAnimalLevel)
             {
                 // on the last animation - if it's animal - we don't have rive to clear, we destroy the statue
-                if (TestLevelsSystemManagerSaveData.instance.CompletedCount + 1 != GameManager.Instance.currentCluster.clusterLevels.Length)
+                if (TestLevelsSystemManagerSaveData.instance.CompletedCount + 1 != GameManager.Instance.currentCluster.clusterLevels.Length && GameManager.Instance.currentIndexInCluster != GameManager.Instance.currentCluster.clusterLevels.Length - 1)
                 {
                     Debug.LogError("1 more in animal release");
 
@@ -369,6 +371,23 @@ public class AnimationManager : MonoBehaviour
 
     public IEnumerator AfterAnimalAnimation()
     {
+
+        if (GameManager.Instance.currentLevel.levelEndDialogueSO)
+        {
+            GameManager.Instance.currentDialogue = null;
+            GameManager.Instance.currentIndexInDialogue = 0;
+            GameManager.Instance.currentDialogueMultiplier = -1;
+            GameManager.Instance.currentDialogueHeightValue = -1;
+            UIManager.Instance.dialogueScroller.content.localPosition = Vector3.zero;
+
+            GameManager.Instance.currentDialogue = GameManager.Instance.currentLevel.levelEndDialogueSO;
+
+            GameManager.Instance.currentLevel.levelEndDialogueSO.InitDialogue();
+
+            yield return new WaitUntil(() => GameManager.Instance.hasFinishedShowingDialogue == true);
+        }
+
+
         yield return new WaitForEndOfFrame();
 
         Debug.LogError("IN HERE NOW AFTER ANIMAL ANIM");
@@ -496,7 +515,7 @@ public class AnimationManager : MonoBehaviour
             }
         }
 
-                SoundManager.Instance.PlaySound(Sounds.LevelWin);
+        SoundManager.Instance.PlaySound(Sounds.LevelWin);
 
         foreach (Cell cell in ConnectionManager.Instance.cells)
         {
@@ -566,7 +585,7 @@ public class AnimationManager : MonoBehaviour
         yield return new WaitForSeconds(TestLevelsSystemManager.instance.barAnimateSpeed + 0.1f);
 
         if (!GameManager.Instance.currentLevel.isGrindLevel)
-        {
+        { 
             LeanTween.value(UIManager.Instance.backToHubButton.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
             {
                 Image image = UIManager.Instance.backToHubButton.GetComponent<Image>();
@@ -805,6 +824,23 @@ public class AnimationManager : MonoBehaviour
 
     public IEnumerator SkipEndLevelAnimation()
     {
+        //if (GameManager.Instance.currentLevel.levelEndDialogueSO)
+        //{
+        //    GameManager.Instance.currentDialogue = null;
+        //    GameManager.Instance.currentIndexInDialogue = 0;
+        //    GameManager.Instance.currentDialogueMultiplier = -1;
+        //    GameManager.Instance.currentDialogueHeightValue = -1;
+        //    UIManager.Instance.dialogueScroller.content.localPosition = Vector3.zero;
+
+        //    GameManager.Instance.currentDialogue = GameManager.Instance.currentLevel.levelEndDialogueSO;
+
+        //    GameManager.Instance.currentLevel.levelEndDialogueSO.InitDialogue();
+
+        //    yield return new WaitUntil(() => GameManager.Instance.hasFinishedShowingDialogue == true);
+        //}
+
+        SoundManager.Instance.PlaySound(Sounds.LastTileSequence);
+
         hasPlayedRelaseSound = false;
         endLevelAnimationON = true;
         UIManager.Instance.skipAnimationButton.interactable = true;
@@ -949,7 +985,7 @@ public class AnimationManager : MonoBehaviour
         {
             if (GameManager.Instance.currentLevel.isAnimalLevel)
             {
-                if (TestLevelsSystemManagerSaveData.instance.CompletedCount + 1 != GameManager.Instance.currentCluster.clusterLevels.Length)
+                if (TestLevelsSystemManagerSaveData.instance.CompletedCount + 1 != GameManager.Instance.currentCluster.clusterLevels.Length && GameManager.Instance.currentIndexInCluster != GameManager.Instance.currentCluster.clusterLevels.Length - 1)
                 {
                     //Debug.LogError("1 more in animal release");
 
@@ -1552,7 +1588,37 @@ public class AnimationManager : MonoBehaviour
         slices.Clear();
     }
 
-    public IEnumerator PopulateRefrencesEnterLevelAnim()
+    public void PopulateRefrencesEnterLevelAnimNoAfterAction()
+    {
+        //ring = GameManager.Instance.gameBoard.transform.GetComponent<SpriteRenderer>();
+
+        //colorMask = GameManager.Instance.selectedLevelBG.transform.Find("RingMask").GetComponent<SpriteRenderer>();
+        //originalColorMaskAlpha = colorMask.color.a;
+
+        //clips = GameManager.Instance.clipManager.slots;
+
+        SliceManager sliceManager = GameManager.Instance.gameBoard.GetComponent<SliceManager>();
+        for (int i = 0; i < sliceManager.activeLocksLockAnims.Count; i++)
+        {
+            SpriteRenderer renderer = sliceManager.activeLocksLockAnims[i].GetComponent<SpriteRenderer>();
+            locks.Add(renderer);
+        }
+
+        Piece[] allPieces = FindObjectsOfType<Piece>();
+
+        for (int i = 0; i < allPieces.Length; i++)
+        {
+            if (allPieces[i].isStone)
+            {
+                corruptedTiles.Add(allPieces[i]);
+            }
+
+            //allPieces[i].gameObject.SetActive(false);
+        }
+        slices.AddRange(GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices);
+    }
+
+    public IEnumerator PopulateRefrencesEnterLevelAnim(bool isAutoContinue)
     {
         ring = GameManager.Instance.gameBoard.transform.GetComponent<SpriteRenderer>();
 
@@ -1578,20 +1644,33 @@ public class AnimationManager : MonoBehaviour
             {
                 corruptedTiles.Add(allPieces[i]);
             }
+
+            //allPieces[i].gameObject.SetActive(false);
         }
         slices.AddRange(GameManager.Instance.gameBoard.GetComponent<SliceManager>().fullSlices);
 
         //corrupted tiles are added when they are instantiated.
-        SetDefaultValuesEnterLevelAnimation();
+
+        if(isAutoContinue)
+        {
+            SetDefaultValuesEnterLevelAnimation();
+        }
+        else
+        {
+            SetInLevelValuesimmediate();
+        }
     }
 
     public void SetDefaultValuesEnterLevelAnimation()
     {
+        ring.gameObject.SetActive(true);
+
         //ring.color = new Color(ring.color.r, ring.color.g, ring.color.b, 0);
-        ring.material.SetFloat("_DissolveSprite", 0.6f);
+        ring.material.SetFloat("_DissolveSprite", 0.4f);
 
         foreach (var clip in clips)
         {
+            clip.gameObject.SetActive(true);
             SpriteRenderer renderer = clip.GetComponent<SpriteRenderer>();
 
             renderer.material.SetFloat("_DissolveSprite", 0.6f);
@@ -1612,7 +1691,7 @@ public class AnimationManager : MonoBehaviour
         }
 
         foreach (var slice in slices)
-        {
+        { 
             slice.transform.localScale = Vector3.zero;
         }
 
@@ -1627,6 +1706,78 @@ public class AnimationManager : MonoBehaviour
         StartCoroutine(ActivateLevelAnim());
     }
 
+    public void SetInLevelValuesimmediate()
+    {
+        ring = GameManager.Instance.gameBoard.transform.GetComponent<SpriteRenderer>();
+
+        ring.material.SetFloat("_DissolveSprite", 1.5f);
+
+        foreach (var clip in clips)
+        {
+            SpriteRenderer renderer = clip.GetComponent<SpriteRenderer>();
+
+            renderer.material.SetFloat("_DissolveSprite", 1.5f);
+        }
+
+        colorMask.color = new Color(colorMask.color.r, colorMask.color.g, colorMask.color.b, 1);
+
+        foreach (var lockObject in locks)
+        {
+            SpriteRenderer lockRenderer = lockObject.GetComponent<SpriteRenderer>();
+
+            lockRenderer.color = new Color(lockRenderer.color.r, lockRenderer.color.g, lockRenderer.color.b, 1);
+        }
+
+        foreach (var tile in corruptedTiles)
+        {
+            tile.transform.localScale = Vector3.one;
+        }
+
+        foreach (var slice in slices)
+        {
+            slice.transform.localScale = Vector3.one;
+        }
+
+        for (int i = 0; i < GameManager.Instance.clipManager.slots.Count(); i++)
+        {
+            GameObject toMove = GameManager.Instance.clipManager.slots[i].GetChild(1).gameObject;
+            toMove.SetActive(true);
+            //toMove.transform.localPosition = GameManager.Instance.clipManager.piecesDealPositionsOut;
+        }
+
+    }
+
+    public void SetInLevelValuesimmediateForDialogue()
+    {
+        PopulateRefrencesEnterLevelAnimNoAfterAction();
+
+        TestLevelsSystemManager.instance.StarSlider.gameObject.SetActive(false);
+
+        foreach (Transform slot in GameManager.Instance.clipManager.slots)
+        {
+            Piece p = slot.GetComponent<ClipHolder>().heldPiece;
+            p.gameObject.SetActive(false);
+        }
+
+        foreach (var lockObject in locks)
+        {
+            SpriteRenderer lockRenderer = lockObject.GetComponent<SpriteRenderer>();
+
+            lockRenderer.color = new Color(lockRenderer.color.r, lockRenderer.color.g, lockRenderer.color.b, 0);
+        }
+
+        foreach (var tile in corruptedTiles)
+        {
+            tile.transform.localScale = Vector3.zero;
+        }
+
+        foreach (var slice in slices)
+        {
+            slice.transform.localScale = Vector3.zero;
+        }
+
+
+    }
     IEnumerator ActivateLevelAnim()
     {
         UIManager.Instance.restartButton.interactable = false;
@@ -1727,7 +1878,7 @@ public class AnimationManager : MonoBehaviour
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Count(); i++)
         {
             GameObject toMove = GameManager.Instance.clipManager.slots[i].GetChild(1).gameObject;
-
+            toMove.SetActive(true);
             LeanTween.move(toMove, GameManager.Instance.clipManager.originalPiecePos, 0.5f).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
 
             yield return new WaitForSeconds(0.1f);
