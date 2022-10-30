@@ -18,4 +18,7 @@ public class DialogueObjectRefrences : MonoBehaviour
     [Header("Image Entry")]
     public SpriteRenderer spriteImageRenderer;
 
+
+    [Header("General")]
+    public GameObject arrowObject;
 }

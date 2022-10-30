@@ -277,7 +277,12 @@ public class UIManager : MonoBehaviour
     public float textSpeed;
     public Coroutine textCoroutine;
     public ScrollRect dialogueScroller;
-
+    public float maxDownLimit;
+    public float timeToScroll;
+    public float heightScrollToAdd;
+    public float startingHeight;
+    public float dialogueEntryOffsetAdd;
+    public float imageEntryOffsetAdd;
     private void Start()
     {
         Instance = this;
@@ -2104,7 +2109,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            LeanTween.value(fadeIntoLevel, 0, 1, fadeIntoLevelSpeed).setEase(LeanTweenType.linear).setOnComplete(() => GameManager.Instance.ResetDataStartBossLevel()).setOnUpdate((float val) =>
+            LeanTween.value(fadeIntoLevel, 0, 1, fadeIntoLevelSpeed).setEase(LeanTweenType.linear).setOnComplete(() => StartCoroutine(GameManager.Instance.ResetDataStartBossLevel())).setOnUpdate((float val) =>
             {
                 Image sr = fadeIntoLevel.GetComponent<Image>();
                 Color newColor = sr.color;
@@ -2583,6 +2588,8 @@ public class UIManager : MonoBehaviour
     {
         bossWellDoneScreen.SetActive(false);
         bossWinScreen.SetActive(false);
+
+        ToHud(gameplayCanvas);
     }
 
     public void BGOff()

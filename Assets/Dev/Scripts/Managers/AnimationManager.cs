@@ -379,6 +379,7 @@ public class AnimationManager : MonoBehaviour
             GameManager.Instance.currentDialogueMultiplier = -1;
             GameManager.Instance.currentDialogueHeightValue = -1;
             UIManager.Instance.dialogueScroller.content.localPosition = Vector3.zero;
+            GameManager.Instance.latestEntry = null;
 
             GameManager.Instance.currentDialogue = GameManager.Instance.currentLevel.levelEndDialogueSO;
 
@@ -1608,7 +1609,7 @@ public class AnimationManager : MonoBehaviour
 
         for (int i = 0; i < allPieces.Length; i++)
         {
-            if (allPieces[i].isStone)
+            if (allPieces[i].isStone || allPieces[i].partOfBoard)
             {
                 corruptedTiles.Add(allPieces[i]);
             }
@@ -1640,7 +1641,7 @@ public class AnimationManager : MonoBehaviour
 
         for (int i = 0; i < allPieces.Length; i++)
         {
-            if(allPieces[i].isStone)
+            if (allPieces[i].isStone || allPieces[i].partOfBoard)
             {
                 corruptedTiles.Add(allPieces[i]);
             }

@@ -700,14 +700,20 @@ public class ConnectionManager : MonoBehaviour
         
         if (isGoodConnectLeft)
         {
-            subPiecesOnBoard[currentLeft].parentPiece.isDuringConnectionAnim = false;
-            subPiecesOnBoard[leftContested].parentPiece.isDuringConnectionAnim = false;
+            if(subPiecesOnBoard[currentLeft] != null)
+            {
+                subPiecesOnBoard[currentLeft].parentPiece.isDuringConnectionAnim = false;
+                subPiecesOnBoard[leftContested].parentPiece.isDuringConnectionAnim = false;
+            }
         }
 
         if (isGoodConnectRight)
         {
-            subPiecesOnBoard[currentRight].parentPiece.isDuringConnectionAnim = false;
-            subPiecesOnBoard[rightContested].parentPiece.isDuringConnectionAnim = false;
+            if (subPiecesOnBoard[currentRight] != null)
+            {
+                subPiecesOnBoard[currentRight].parentPiece.isDuringConnectionAnim = false;
+                subPiecesOnBoard[rightContested].parentPiece.isDuringConnectionAnim = false;
+            }
         }
 
     }

@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
     public int currentDialogueMultiplier = -1;
     public float currentDialogueHeightValue = -1;
     public bool hasFinishedShowingDialogue;
+    public DialogueObjectRefrences latestEntry;
 
     private void Awake()
     {
@@ -139,7 +140,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            ResetDataStartBossLevel();
+            StartCoroutine(ResetDataStartBossLevel());
         }
     }
 
@@ -425,6 +426,7 @@ public class GameManager : MonoBehaviour
             currentDialogueMultiplier = -1;
             currentDialogueHeightValue = -1;
             UIManager.Instance.dialogueScroller.content.localPosition = Vector3.zero;
+            latestEntry = null;
 
             currentDialogue = currentLevel.levelStartDialogueSO;
 
@@ -505,9 +507,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ResetDataStartBossLevel()
+    public IEnumerator ResetDataStartBossLevel()
     {
         timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
+
+        AnimationManager.instance.ResetEnterLevelAnimation();
+        AnimalsManager.Instance.ResetAnimalManagerData();
 
         if (currentLevel.ver1Boss)
         {
@@ -590,6 +595,97 @@ public class GameManager : MonoBehaviour
         SoundManager.Instance.CancelCoRoutinesSound();
 
         StartCoroutine(SoundManager.Instance.FadeInAmbientMusicLevel(Sounds.LevelAmbience));
+
+
+
+        if (currentLevel.levelStartDialogueSO)
+        {
+            AnimationManager.instance.SetInLevelValuesimmediateForDialogue();
+
+            currentDialogue = null;
+            currentIndexInDialogue = 0;
+            currentDialogueMultiplier = -1;
+            currentDialogueHeightValue = -1;
+            UIManager.Instance.dialogueScroller.content.localPosition = Vector3.zero;
+            latestEntry = null;
+
+            currentDialogue = currentLevel.levelStartDialogueSO;
+
+            currentLevel.levelStartDialogueSO.InitDialogue();
+
+            yield return new WaitUntil(() => hasFinishedShowingDialogue == true);
+        }
+
+        AnimationManager.instance.ResetEnterLevelAnimation();
+
+        //if (!isRestart)
+        //{
+        //    StartCoroutine(TestLevelsSystemManager.instance.InitTestLevel());
+        //}
+
+
+        if (/*!isRestart &&*/ currentLevel.showIntroLevelAnimation)
+        {
+            UIManager.Instance.isUsingUI = true; //used to disable pickup pieces
+            UIManager.Instance.restartButton.interactable = false;
+            UIManager.Instance.optionsButtonIngame.interactable = false;
+            UIManager.Instance.cheatOptionsButtonIngame.interactable = false;
+            UIManager.Instance.dealButton.interactable = false;
+            powerupManager.PowerupButtonsActivation(false);
+
+            StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim(true));
+
+            yield return new WaitForSeconds(2.5f);
+
+            // these become false in the animation progress to prevent player actions
+            // so we enable them after this time.
+            UIManager.Instance.isUsingUI = false; //used to disable pickup pieces
+            UIManager.Instance.restartButton.interactable = true;
+            UIManager.Instance.optionsButtonIngame.interactable = true;
+            UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
+            UIManager.Instance.dealButton.interactable = true;
+            powerupManager.PowerupButtonsActivation(true);
+
+            if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
+            {
+                TutorialSequence.Instacne.StartTutorialLevelSequence();
+            }
+
+            if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
+            {
+                if (currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.AnimalAlbum)
+                {
+                    StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
+                    TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
+                }
+            }
+        }
+        else
+        {
+            // these become false in the animation progress to prevent player actions
+            // so we enable them after this time.
+            UIManager.Instance.restartButton.interactable = true;
+            UIManager.Instance.optionsButtonIngame.interactable = true;
+            UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
+
+            StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim(false));
+            yield return new WaitForEndOfFrame();
+
+            if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
+            {
+                TutorialSequence.Instacne.StartTutorialLevelSequence();
+            }
+
+            if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
+            {
+                if (currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.AnimalAlbum)
+                {
+                    StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
+                    TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
+                }
+            }
+        }
+
 
         GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
 
