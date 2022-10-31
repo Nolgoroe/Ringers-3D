@@ -786,6 +786,7 @@ GameObject:
   - component: {fileID: 5279552107289559809}
   - component: {fileID: 5279552107289559810}
   - component: {fileID: 5279552107289559811}
+  - component: {fileID: 8310051956920092837}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -809,8 +810,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 8.121358, y: 2.8420854}
+  m_AnchoredPosition: {x: -0.166, y: 0.264}
+  m_SizeDelta: {x: 8.892795, y: 2.5917635}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5279552107289559809
 CanvasRenderer:
@@ -878,8 +879,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'This is a test dialogue bla bla bla bla bla bla bla bla bla bla bla bla
-    bla bla bla bla bla bla bla '
+  m_text: "<i>text</i> \ntext lol"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
   m_sharedMaterial: {fileID: -133505132751289448, guid: f5bf3a8788bf3c44d998747e591b5f55,
@@ -907,7 +907,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 6.85
+  m_fontSize: 10
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -952,6 +952,57 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
+--- !u!114 &8310051956920092837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5279552107289559821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6f31fa26b868604483df4f19c00a991, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 2
+  DurationInSeconds: 2.5
+  Amplitude: 0
+  CharacterDurationRatio: 0.1
+  CharactersPerDuration: 0
+  Gradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0.860907, b: 0, a: 0}
+    key1: {r: 1, g: 0.860907, b: 0, a: 1}
+    key2: {r: 1, g: 0.860907, b: 0, a: 1}
+    key3: {r: 0, g: 0.4627451, b: 1, a: 0}
+    key4: {r: 0, g: 0.4627451, b: 1, a: 0}
+    key5: {r: 0.010991462, g: 0.058810916, b: 0.1792453, a: 0}
+    key6: {r: 0.022990137, g: 0.45531058, b: 0.9693971, a: 0}
+    key7: {r: 0, g: 0.4627451, b: 1, a: 0}
+    ctime0: 386
+    ctime1: 65535
+    ctime2: 10216
+    ctime3: 65535
+    ctime4: 65535
+    ctime5: 34275
+    ctime6: 50931
+    ctime7: 65535
+    atime0: 0
+    atime1: 31418
+    atime2: 65535
+    atime3: 65342
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  Mix: 0
+  AutoPlay: 1
+  Repeat: 0
+  ForWords: 
+  IsFinished: 0
 --- !u!1 &5279552107422559801
 GameObject:
   m_ObjectHideFlags: 0

@@ -41,7 +41,8 @@ public enum Sounds
     ChestAppear,
     ChestOpen,
     ChestClose,
-    GiveChestItem
+    GiveChestItem,
+    BoarRelease,
     //// Add all sounds here
 }
 

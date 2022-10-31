@@ -274,15 +274,17 @@ public class UIManager : MonoBehaviour
     public Button continueDialogueButton;
     public Button endDialogueButton;
     public Button skipButton;
-    public float textSpeed;
-    public Coroutine textCoroutine;
     public ScrollRect dialogueScroller;
+    public Coroutine textCoroutine;
+    public float textSpeed;
     public float maxDownLimit;
     public float timeToScroll;
     public float heightScrollToAdd;
     public float startingHeight;
     public float dialogueEntryOffsetAdd;
     public float imageEntryOffsetAdd;
+
+    public NpcNametagCombo[] npcNametagsCombos;
     private void Start()
     {
         Instance = this;
@@ -1335,6 +1337,11 @@ public class UIManager : MonoBehaviour
             }
         }
 
+        if (MaterialsAndForgeManager.Instance.equipmentInBrewScreen.Count <= 0)
+        {
+            return;
+        }
+
         SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
         SoundManager.Instance.PlaySound(Sounds.PageFlip);
 
@@ -1352,7 +1359,11 @@ public class UIManager : MonoBehaviour
 
 
         Brewery.GetComponent<BreweryDisplayLogic>().GetAllAnchorPositions();
-        Brewery.GetComponent<BreweryDisplayLogic>().SetSelectedPotion(MaterialsAndForgeManager.Instance.equipmentInBrewScreen[0]);
+
+        if(MaterialsAndForgeManager.Instance.equipmentInBrewScreen.Count > 0)
+        {
+            Brewery.GetComponent<BreweryDisplayLogic>().SetSelectedPotion(MaterialsAndForgeManager.Instance.equipmentInBrewScreen[0]);
+        }
 
         if (TutorialSequence.Instacne.duringSequence)
         {
@@ -2823,26 +2834,26 @@ public class UIManager : MonoBehaviour
         TestLevelsSystemManager.instance.UpdateBarValueOnMap();
     }
 
-    public void CallTypewriterText(DialogueScriptableObject dialogueRef, int index, TMP_Text textRef)
-    {
-        textCoroutine = StartCoroutine(TypewriterText(dialogueRef, index, textRef));
-    }
+    //public void CallTypewriterText(DialogueScriptableObject dialogueRef, int index, TMP_Text textRef)
+    //{
+    //    textCoroutine = StartCoroutine(TypewriterText(dialogueRef, index, textRef));
+    //}
 
-    IEnumerator TypewriterText(DialogueScriptableObject dialogueRef, int index, TMP_Text textRef)
-    {
-        string fullText = dialogueRef.allEntries[index].conversationBlock;
+    //IEnumerator TypewriterText(DialogueScriptableObject dialogueRef, int index, TMP_Text textRef)
+    //{
+    //    string fullText = dialogueRef.allEntries[index].conversationBlock;
 
-        string currentText = "";
-        for (int i = 0; i < fullText.Length + 1; i++)
-        {
-            currentText = fullText.Substring(0, i);
-            textRef.text = currentText;
-            yield return new WaitForSeconds(textSpeed);
-        }
+    //    string currentText = "";
+    //    for (int i = 0; i < fullText.Length + 1; i++)
+    //    {
+    //        currentText = fullText.Substring(0, i);
+    //        textRef.text = currentText;
+    //        yield return new WaitForSeconds(textSpeed);
+    //    }
 
-        textCoroutine = null;
-        dialogueRef.LaunchEndEventsEntry(index);
-    }
+    //    textCoroutine = null;
+    //    dialogueRef.LaunchEndEventsEntry(index);
+    //}
 
     public void CallContinueDialogueSequence()
     {

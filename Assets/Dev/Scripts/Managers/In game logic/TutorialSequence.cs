@@ -1445,6 +1445,13 @@ public class TutorialSequence : MonoBehaviour
 
     public void CheckDoPotionTutorial()
     {
+        if(GameManager.Instance.isDisableTutorials)
+        {
+            TutorialSaveData.Instance.hasFinishedPotion = true;
+
+            return;
+        }
+
         if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
         {
             if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
@@ -1460,6 +1467,14 @@ public class TutorialSequence : MonoBehaviour
     }
     public void CheckDoAnimalAlbumTutorial()
     {
+        if (GameManager.Instance.isDisableTutorials)
+        {
+            TutorialSaveData.Instance.hasFinishedAnimalAlbum = true;
+
+            return;
+        }
+
+
         if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
         {
             if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.AnimalAlbum)
@@ -1473,6 +1488,14 @@ public class TutorialSequence : MonoBehaviour
     }
     public void CheckDoDenTutorial()
     {
+        if (GameManager.Instance.isDisableTutorials)
+        {
+            TutorialSaveData.Instance.hasFinishedDen = true;
+
+            return;
+        }
+
+
         if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
         {
             if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)

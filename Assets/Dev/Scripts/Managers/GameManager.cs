@@ -225,93 +225,86 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (isTutorial)
+        if (isTutorial && !isDisableTutorials)
         {
-            if (!isDisableTutorials)
+            powerupManager.ClearTutorialPowerups();// Make sure there are no leftoever tutorial powerups
+
+            for (int i = 0; i < numAnimalsOnBoard.Length; i++)
             {
-                powerupManager.ClearTutorialPowerups();// Make sure there are no leftoever tutorial powerups
-
-                for (int i = 0; i < numAnimalsOnBoard.Length; i++)
-                {
-                    numAnimalsOnBoard[i].amount = 0;
-                }
-
-                //UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
-                //UIManager.Instance.TurnOnGameplayUI();
-                //UIManager.Instance.dealButton.interactable = true;
-                //UIManager.Instance.ActivateGmaeplayCanvas();
-
-                if (AnimationManager.instance.endLevelAnimationON)
-                {
-                    Debug.LogError("CHECK THIS PROBLEM");
-                    AnimationManager.instance.endLevelAnimationON = false;
-                }
-
-                //Camera.main.transform.position = inGameCamPos;
-                //TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, -0.05f);
-                //Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
-
-
-                LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
-
-                gameClip = Instantiate(currentLevel.clipPrefab, destroyOutOfLevel);
-
-                gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
-                sliceManager = gameBoard.GetComponent<SliceManager>();
-
-                clipManager.Init();
-                sliceManager.Init();
-                cursorControl.Init();
-
-
-                ConnectionManager.Instance.GrabCellList(gameBoard.transform);
-                ConnectionManager.Instance.SetLevelConnectionData(currentLevel.is12PieceRing);
-
-                sliceManager.SpawnSlicesTutorial(currentLevel.slicesToSpawn.Length);
-
-                PlayerManager.Instance.HandleItemCooldowns();
-
-                powerupManager.InstantiateSpecialPowers();
-
-                //if (selectedLevelBG)
-                //{
-                //    selectedLevelBG.SetActive(true);
-
-                //    AnimalPrefabData data = InstantiateAnimals(selectedLevelBG);
-
-                //    if (data != null)
-                //    {
-                //        AnimalsManager.Instance.currentLevelAnimal = data.animalType;
-
-                //    }
-                //    else
-                //    {
-                //        Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
-                //    }
-
-                //    if(AnimalsManager.Instance.statueToSwap)
-                //    {
-                //        AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Set Rive " + currentIndexInCluster);
-                //    }
-
-                //}
-
-                InstantiateStonePieces();
-
-                TutorialSequence.Instacne.activatedHeighlights.Clear();
-                TutorialSequence.Instacne.activatedBoardParticles.Clear();
-
-
-                PlayerManager.Instance.PopulatePowerUps();
-                powerupManager.instnatiatedZonesCounter = 0;
-
-
-                GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
+                numAnimalsOnBoard[i].amount = 0;
             }
-            else
+
+            //UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
+            //UIManager.Instance.TurnOnGameplayUI();
+            //UIManager.Instance.dealButton.interactable = true;
+            //UIManager.Instance.ActivateGmaeplayCanvas();
+
+            if (AnimationManager.instance.endLevelAnimationON)
             {
-                StartCoroutine(ResetDataStartLevel(false, false));
+                Debug.LogError("CHECK THIS PROBLEM");
+                AnimationManager.instance.endLevelAnimationON = false;
             }
+
+            //Camera.main.transform.position = inGameCamPos;
+            //TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, -0.05f);
+            //Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
+
+
+            LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
+
+            gameClip = Instantiate(currentLevel.clipPrefab, destroyOutOfLevel);
+
+            gameBoard = Instantiate(currentLevel.boardPrefab, destroyOutOfLevel);
+            sliceManager = gameBoard.GetComponent<SliceManager>();
+
+            clipManager.Init();
+            sliceManager.Init();
+            cursorControl.Init();
+
+
+            ConnectionManager.Instance.GrabCellList(gameBoard.transform);
+            ConnectionManager.Instance.SetLevelConnectionData(currentLevel.is12PieceRing);
+
+            sliceManager.SpawnSlicesTutorial(currentLevel.slicesToSpawn.Length);
+
+            PlayerManager.Instance.HandleItemCooldowns();
+
+            powerupManager.InstantiateSpecialPowers();
+
+            //if (selectedLevelBG)
+            //{
+            //    selectedLevelBG.SetActive(true);
+
+            //    AnimalPrefabData data = InstantiateAnimals(selectedLevelBG);
+
+            //    if (data != null)
+            //    {
+            //        AnimalsManager.Instance.currentLevelAnimal = data.animalType;
+
+            //    }
+            //    else
+            //    {
+            //        Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
+            //    }
+
+            //    if(AnimalsManager.Instance.statueToSwap)
+            //    {
+            //        AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Set Rive " + currentIndexInCluster);
+            //    }
+
+            //}
+
+            InstantiateStonePieces();
+
+            TutorialSequence.Instacne.activatedHeighlights.Clear();
+            TutorialSequence.Instacne.activatedBoardParticles.Clear();
+
+
+            PlayerManager.Instance.PopulatePowerUps();
+            powerupManager.instnatiatedZonesCounter = 0;
+
+
+            GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, currentLevel.worldName, currentLevel.levelIndexInZone.ToString());
         }
         else
         {
@@ -435,7 +428,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitUntil(() => hasFinishedShowingDialogue == true);
         }
 
-        AnimationManager.instance.ResetEnterLevelAnimation();
+        //AnimationManager.instance.ResetEnterLevelAnimation();
 
         if (!isRestart)
         {
@@ -616,7 +609,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitUntil(() => hasFinishedShowingDialogue == true);
         }
 
-        AnimationManager.instance.ResetEnterLevelAnimation();
+        //AnimationManager.instance.ResetEnterLevelAnimation();
 
         //if (!isRestart)
         //{

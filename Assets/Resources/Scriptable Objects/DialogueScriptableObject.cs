@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Linq;
 using UnityEngine.Events;
 
 public enum DialogueSide
@@ -18,15 +19,34 @@ public enum DialogueType
     None
 }
 
+public enum NPCs
+{
+    Fox,
+    Crow,
+    camilien,
+    Buttercup,
+    Bramble,
+    None
+}
+
+[Serializable]
+public class NpcNametagCombo
+{
+    public NPCs npcType;
+    public Sprite potrtaitSprite;
+    public Sprite nameTagSprite;
+}
+
 [Serializable]
 public class EntryData
 {
+    public NPCs npcType;
     public DialogueSide dialogueSide = DialogueSide.None;
     public DialogueType dialogueType = DialogueType.None;
     public Sprite imageEntrySprite;
-    public Sprite dialogueEntryPortraitSprite;
-    public Sprite dialogueEntryNameBGSprite;
-    public Sprite dialogueTextBGSprite;
+    //public Sprite dialogueEntryPortraitSprite;
+    //public Sprite dialogueEntryNameBGSprite;
+    //public Sprite dialogueTextBGSprite;
 
     public string displayName;
     [TextArea(5, 5)]
@@ -154,6 +174,8 @@ public class DialogueScriptableObject : ScriptableObject
 
                     CheckAutoScrollDialogue();
                 }
+
+                LaunchEndEventsEntry(index);
                 break;
             case DialogueType.Image:
 
@@ -182,16 +204,25 @@ public class DialogueScriptableObject : ScriptableObject
     private void SetDialogueEntryData(GameObject dialogueRef, int index)
     {
         DialogueObjectRefrences refs = dialogueRef.GetComponent<DialogueObjectRefrences>();
-        refs.portraitRenderer.sprite = allEntries[index].dialogueEntryPortraitSprite;
-        refs.textBGRender.sprite = allEntries[index].dialogueTextBGSprite;
-        refs.nameBGRenderer.sprite = allEntries[index].dialogueEntryNameBGSprite;
+        //refs.textBGRender.sprite = allEntries[index].dialogueTextBGSprite;
+
+        NpcNametagCombo combo = UIManager.Instance.npcNametagsCombos.Where(p => p.npcType == allEntries[index].npcType).SingleOrDefault();
+        
+        if(combo == null)
+        {
+            Debug.LogError("Error loading dialogue");
+            return;
+        }
+        
+        refs.portraitRenderer.sprite = combo.potrtaitSprite;
+        refs.nameBGRenderer.sprite = combo.nameTagSprite;
         refs.textObject.text = "";
         refs.nameText.text = allEntries[index].displayName;
+        refs.textObject.text = allEntries[index].conversationBlock;
 
         GameManager.Instance.latestEntry = refs;
 
-        UIManager.Instance.CallTypewriterText(this, index, refs.textObject);
-
+        //UIManager.Instance.CallTypewriterText(this, index, refs.textObject);
     }
     private void SetImageEntryData(GameObject dialogueRef, int index)
     {

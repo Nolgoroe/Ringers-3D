@@ -10,20 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb37c72a3d890734cac59d7259db805e, type: 3}
-  m_Name: Dialogue 1
+  m_Name: 2.20
   m_EditorClassIdentifier: 
   allEntries:
-  - dialogueSide: 1
+  - npcType: 1
+    dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
-    dialogueEntryPortraitSprite: {fileID: -521023800781358761, guid: cf0ab54bede1acb47b9b5ee62277f14e,
-      type: 3}
-    dialogueEntryNameBGSprite: {fileID: -6791580143694470055, guid: 6c431fdd73316714ab2e7789c50352e5,
-      type: 3}
-    dialogueTextBGSprite: {fileID: 21300000, guid: 88b584d8e6478744aade8a1eea3dc5c3,
-      type: 3}
-    displayName: Avishyke
-    conversationBlock: This is a test this is a test hazsdjhgsasje
+    displayName: Crow
+    conversationBlock: Fox! I think I found something! Over here, behind this rock!
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -52,17 +47,13 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - dialogueSide: 0
-    dialogueType: 0
-    imageEntrySprite: {fileID: 0}
-    dialogueEntryPortraitSprite: {fileID: 8168983129260953082, guid: cf0ab54bede1acb47b9b5ee62277f14e,
+  - npcType: 5
+    dialogueSide: 2
+    dialogueType: 1
+    imageEntrySprite: {fileID: -5857006659821504489, guid: 7427fd7d6df2e1c47810df5881704679,
       type: 3}
-    dialogueEntryNameBGSprite: {fileID: 6750473956777772542, guid: 6c431fdd73316714ab2e7789c50352e5,
-      type: 3}
-    dialogueTextBGSprite: {fileID: 21300000, guid: 88b584d8e6478744aade8a1eea3dc5c3,
-      type: 3}
-    displayName: Alonske
-    conversationBlock: bugedi bugedo
+    displayName: 
+    conversationBlock: 
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -102,15 +93,13 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - dialogueSide: 2
-    dialogueType: 1
-    imageEntrySprite: {fileID: -5857006659821504489, guid: 7427fd7d6df2e1c47810df5881704679,
-      type: 3}
-    dialogueEntryPortraitSprite: {fileID: 0}
-    dialogueEntryNameBGSprite: {fileID: 0}
-    dialogueTextBGSprite: {fileID: 0}
-    displayName: Danske
-    conversationBlock: 
+  - npcType: 0
+    dialogueSide: 1
+    dialogueType: 0
+    imageEntrySprite: {fileID: 0}
+    displayName: Fox
+    conversationBlock: This is defintly lynx's fur!It looks like she was heading
+      out of the grove to Vinebloom Pines.
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -150,17 +139,12 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - dialogueSide: 0
+  - npcType: 0
+    dialogueSide: 1
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
-    dialogueEntryPortraitSprite: {fileID: -8093539855887346860, guid: cf0ab54bede1acb47b9b5ee62277f14e,
-      type: 3}
-    dialogueEntryNameBGSprite: {fileID: -730929634454814255, guid: 6c431fdd73316714ab2e7789c50352e5,
-      type: 3}
-    dialogueTextBGSprite: {fileID: 21300000, guid: 88b584d8e6478744aade8a1eea3dc5c3,
-      type: 3}
-    displayName: Danske
-    conversationBlock: Beluga
+    displayName: Fox
+    conversationBlock: We'll have to ask the Fir spirit permission to pass through.
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -171,6 +155,51 @@ MonoBehaviour:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 3
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    entryEndEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: ActiavteContinueDialogueButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 11400000}
+          m_MethodName: IncrementPhaseInDialogue
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - npcType: 1
+    dialogueSide: 0
+    dialogueType: 0
+    imageEntrySprite: {fileID: 0}
+    displayName: Crow
+    conversationBlock: That means we need to collect some Tree Sap.
+    entryStartEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: InstantiateDialoguePrefab
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 4
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0

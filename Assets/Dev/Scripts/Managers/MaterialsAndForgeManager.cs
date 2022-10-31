@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public class MaterialsAndForgeManager : MonoBehaviour
 {
@@ -41,10 +42,53 @@ public class MaterialsAndForgeManager : MonoBehaviour
         //}
     }
 
-    public void FillBrewScreen(List<EquipmentData> equipment)
+    public void Init()
     {
-        foreach (EquipmentData EQ in equipment)
+        StartCoroutine(FillBrewScreen(PlayerManager.Instance.unlockedPowerups));
+    }
+
+    [ContextMenu("UnlockPotion")]
+    public void UnlockPotion(PowerUp potionType)
+    {
+        if(!PlayerManager.Instance.unlockedPowerups.Contains(potionType))
         {
+            PlayerManager.Instance.unlockedPowerups.Add(potionType);
+        }
+
+
+        EquipmentData EQ = GameManager.Instance.csvParser.allEquipmentInGame.Where(p => p.power == potionType).SingleOrDefault();
+        if (EQ == null)
+        {
+            Debug.LogError("Error potions here");
+            return;
+        }
+
+        StartCoroutine(FillBrewScreen(PlayerManager.Instance.unlockedPowerups));
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+    }
+
+    public IEnumerator FillBrewScreen(List<PowerUp> powerTypes)
+    {
+        equipmentInBrewScreen.Clear();
+
+        foreach (Transform EQ in brewScreenPotionContentZone)
+        {
+            Destroy(EQ.gameObject);
+        }
+
+        yield return new WaitForEndOfFrame();
+
+        foreach (PowerUp power in powerTypes)
+        {
+            EquipmentData EQ = GameManager.Instance.csvParser.allEquipmentInGame.Where(p => p.power == power).SingleOrDefault();
+            
+            if(EQ == null)
+            {
+                Debug.LogError("Error potions here");
+                yield break;
+            }
+            
             GameObject go = Instantiate(brewScreeneDisplayerPrefab, brewScreenPotionContentZone);
             EquipmentDisplayer ED = go.GetComponent<EquipmentDisplayer>();
 
@@ -77,6 +121,41 @@ public class MaterialsAndForgeManager : MonoBehaviour
             equipmentInBrewScreen.Add(ED);
             //ED.SpawnMaterialsNeeded(EQ.mats);
         }
+
+        //foreach (EquipmentData EQ in equipment)
+        //{
+        //    GameObject go = Instantiate(brewScreeneDisplayerPrefab, brewScreenPotionContentZone);
+        //    EquipmentDisplayer ED = go.GetComponent<EquipmentDisplayer>();
+
+        //    ED.itemName.text = EQ.name;
+        //    ED.data = EQ;
+
+        //    switch (EQ.scopeOfUses)
+        //    {
+        //        case 0:
+        //            ED.usageCount.text = EQ.numOfUses.ToString() + " Per Day";
+        //            break;
+        //        case 1:
+        //            ED.usageCount.text = EQ.numOfUses.ToString() + " Per Match";
+        //            break;
+        //        case -1:
+        //            ED.usageCount.text = EQ.numOfUses.ToString() + " FUCK YOU";
+        //            Debug.LogError("WTFFFFFFFFFFFFFFFFFFF");
+        //            break;
+        //        default:
+        //            Debug.LogError("dOes NOt ExiSt BiaTch");
+        //            break;
+        //    }
+        //    string tmp = GameManager.Instance.powerupManager.spriteByType[EQ.power];
+        //    //ED.powerUp.texture = Resources.Load(tmp) as Texture2D;
+        //    ED.itemImage.texture = Resources.Load(EQ.spritePath)as Texture2D;
+
+        //    ED.name = ED.itemName.text;
+
+
+        //    equipmentInBrewScreen.Add(ED);
+        //    //ED.SpawnMaterialsNeeded(EQ.mats);
+        //}
     }
 
     public void PopulateMaterialBagAll()
@@ -164,14 +243,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
     [ContextMenu("Refresh Forge")]
     public void RefreshForge()
     {
-        equipmentInBrewScreen.Clear();
-
-        foreach (Transform EQ in brewScreenPotionContentZone)
-        {
-            Destroy(EQ.gameObject);
-        }
-
-        FillBrewScreen(GameManager.Instance.csvParser.allEquipmentInGame);
+        StartCoroutine(FillBrewScreen(PlayerManager.Instance.unlockedPowerups));
     }
 
 

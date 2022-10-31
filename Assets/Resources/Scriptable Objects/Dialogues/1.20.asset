@@ -10,20 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb37c72a3d890734cac59d7259db805e, type: 3}
-  m_Name: Dialogue 2
+  m_Name: 1.20
   m_EditorClassIdentifier: 
   allEntries:
-  - dialogueSide: 1
+  - npcType: 0
+    dialogueSide: 1
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
-    dialogueEntryPortraitSprite: {fileID: 21300000, guid: d44e465b48e88204f8f811423bb8c9a0,
-      type: 3}
-    dialogueEntryNameBGSprite: {fileID: 21300000, guid: 053805dfb10d2614cb711844a96fdbcc,
-      type: 3}
-    dialogueTextBGSprite: {fileID: 21300000, guid: 18b4a764540dab64db669c3da748405e,
-      type: 3}
-    displayName: Avishyke
-    conversationBlock: This is the end
+    displayName: Fox
+    conversationBlock: 'I think it''s finally dead, Crow. '
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -52,17 +47,13 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - dialogueSide: 1
+  - npcType: 1
+    dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
-    dialogueEntryPortraitSprite: {fileID: 21300000, guid: d44e465b48e88204f8f811423bb8c9a0,
-      type: 3}
-    dialogueEntryNameBGSprite: {fileID: 21300000, guid: 053805dfb10d2614cb711844a96fdbcc,
-      type: 3}
-    dialogueTextBGSprite: {fileID: 21300000, guid: 18b4a764540dab64db669c3da748405e,
-      type: 3}
-    displayName: Alonske
-    conversationBlock: end end
+    displayName: Crow
+    conversationBlock: Phew, I can't believe we've done it. This was harder than
+      I thought!
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -102,15 +93,13 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - dialogueSide: 2
-    dialogueType: 1
-    imageEntrySprite: {fileID: -5857006659821504489, guid: 7427fd7d6df2e1c47810df5881704679,
-      type: 3}
-    dialogueEntryPortraitSprite: {fileID: 0}
-    dialogueEntryNameBGSprite: {fileID: 0}
-    dialogueTextBGSprite: {fileID: 0}
-    displayName: Danske
-    conversationBlock: 
+  - npcType: 0
+    dialogueSide: 1
+    dialogueType: 0
+    imageEntrySprite: {fileID: 0}
+    displayName: Fox
+    conversationBlock: The Rive is getting stonger, sister. It took us multiple spell
+      rings to defeat it this time.
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -121,56 +110,6 @@ MonoBehaviour:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 2
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    entryEndEvents:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11400000}
-          m_MethodName: ActiavteContinueDialogueButton
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 11400000}
-          m_MethodName: IncrementPhaseInDialogue
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - dialogueSide: 0
-    dialogueType: 0
-    imageEntrySprite: {fileID: 0}
-    dialogueEntryPortraitSprite: {fileID: 21300000, guid: d44e465b48e88204f8f811423bb8c9a0,
-      type: 3}
-    dialogueEntryNameBGSprite: {fileID: 21300000, guid: 053805dfb10d2614cb711844a96fdbcc,
-      type: 3}
-    dialogueTextBGSprite: {fileID: 21300000, guid: 18b4a764540dab64db669c3da748405e,
-      type: 3}
-    displayName: Danske
-    conversationBlock: END
-    entryStartEvents:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11400000}
-          m_MethodName: InstantiateDialoguePrefab
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 3
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0

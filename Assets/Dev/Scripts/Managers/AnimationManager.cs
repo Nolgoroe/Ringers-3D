@@ -1621,6 +1621,10 @@ public class AnimationManager : MonoBehaviour
 
     public IEnumerator PopulateRefrencesEnterLevelAnim(bool isAutoContinue)
     {
+        ResetEnterLevelAnimation();
+
+        yield return new WaitForEndOfFrame();
+
         ring = GameManager.Instance.gameBoard.transform.GetComponent<SpriteRenderer>();
 
         colorMask = GameManager.Instance.selectedLevelBG.transform.Find("RingMask").GetComponent<SpriteRenderer>();

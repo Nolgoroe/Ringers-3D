@@ -21,10 +21,10 @@ public enum AnimalsInGame
     YellowOwl,
     GreyOwl,
     WhiteOwl,
-    BrownPikachu,
-    YellowPikachu,
-    BluePikachu,
-    PinkPikachu,
+    BrownBoar,
+    DarkBoar,
+    OrangeBoar,
+    WhiteBoar,
     BrownCharmander,
     YellowCharmander,
     BlueCharmander,
@@ -37,7 +37,7 @@ public enum AnimalTypesInGame
     Fox,
     Stag,
     Owl,
-    Pikachu,
+    Boar,
     Charmander,
     None
 }

@@ -24,6 +24,7 @@ public class PlayerManager : MonoBehaviour
     public int bossTicketCount;
 
     public List<PowerUp> activePowerups;
+    public List<PowerUp> unlockedPowerups;
 
     public List<CraftingMatEntry> craftingMatsInInventory;
 

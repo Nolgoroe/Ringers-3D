@@ -209,7 +209,7 @@ public class CSVParser : MonoBehaviour
         }
 
 
-        MaterialsAndForgeManager.Instance.FillBrewScreen(allEquipmentInGame);
+        //MaterialsAndForgeManager.Instance.FillBrewScreen(PlayerManager.Instance.unlockedPowerups);
     }
     public void TranslateToHollowObjects(List<string[]> parsedList)
     {
