@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
     public int currentDialogueMultiplier = -1;
     public float currentDialogueHeightValue = -1;
     public bool hasFinishedShowingDialogue;
+    public bool previousWasImage;
     public DialogueObjectRefrences latestEntry;
 
     private void Awake()
@@ -417,7 +418,7 @@ public class GameManager : MonoBehaviour
             currentDialogue = null;
             currentIndexInDialogue = 0;
             currentDialogueMultiplier = -1;
-            currentDialogueHeightValue = -1;
+            currentDialogueHeightValue = UIManager.Instance.startingHeight;
             UIManager.Instance.dialogueScroller.content.localPosition = Vector3.zero;
             latestEntry = null;
 
@@ -598,7 +599,7 @@ public class GameManager : MonoBehaviour
             currentDialogue = null;
             currentIndexInDialogue = 0;
             currentDialogueMultiplier = -1;
-            currentDialogueHeightValue = -1;
+            currentDialogueHeightValue = UIManager.Instance.startingHeight;
             UIManager.Instance.dialogueScroller.content.localPosition = Vector3.zero;
             latestEntry = null;
 

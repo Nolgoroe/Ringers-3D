@@ -377,7 +377,7 @@ public class AnimationManager : MonoBehaviour
             GameManager.Instance.currentDialogue = null;
             GameManager.Instance.currentIndexInDialogue = 0;
             GameManager.Instance.currentDialogueMultiplier = -1;
-            GameManager.Instance.currentDialogueHeightValue = -1;
+            GameManager.Instance.currentDialogueHeightValue = UIManager.Instance.startingHeight;
             UIManager.Instance.dialogueScroller.content.localPosition = Vector3.zero;
             GameManager.Instance.latestEntry = null;
 

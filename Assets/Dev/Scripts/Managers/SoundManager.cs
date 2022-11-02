@@ -43,6 +43,7 @@ public enum Sounds
     ChestClose,
     GiveChestItem,
     BoarRelease,
+    DialogueAppear,
     //// Add all sounds here
 }
 

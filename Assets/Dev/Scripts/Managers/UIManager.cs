@@ -281,7 +281,9 @@ public class UIManager : MonoBehaviour
     public float timeToScroll;
     public float heightScrollToAdd;
     public float startingHeight;
-    public float dialogueEntryOffsetAdd;
+    public float dialogueEntryOffsetAddLeft;
+    public float dialogueEntryOffsetAddRight;
+    public float dialogueEntryOffsetAddAfterImage;
     public float imageEntryOffsetAdd;
 
     public NpcNametagCombo[] npcNametagsCombos;

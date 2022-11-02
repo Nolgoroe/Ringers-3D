@@ -153,15 +153,22 @@ public class DialogueScriptableObject : ScriptableObject
 
                 GameManager.Instance.currentDialogueMultiplier++;
 
+                float offsetYAfterImage = 0;
+
+                if (GameManager.Instance.previousWasImage)
+                {
+                    offsetYAfterImage = UIManager.Instance.dialogueEntryOffsetAddAfterImage;
+                }
+
                 switch (allEntries[index].dialogueSide)
                 {
                     case DialogueSide.right:
                         rect = Instantiate(dialogueEntryRightPrefab, UIManager.Instance.DialogueParent).GetComponent<RectTransform>();
-                        rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, UIManager.Instance.startingHeight - GameManager.Instance.currentDialogueMultiplier * UIManager.Instance.dialogueEntryOffsetAdd);
+                        rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, GameManager.Instance.currentDialogueHeightValue - /*GameManager.Instance.currentDialogueMultiplier **/ (offsetYAfterImage + UIManager.Instance.dialogueEntryOffsetAddRight));
                         break;
                     case DialogueSide.left:
                         rect = Instantiate(dialogueEntryLeftPrefab, UIManager.Instance.DialogueParent).GetComponent<RectTransform>();
-                        rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, UIManager.Instance.startingHeight - GameManager.Instance.currentDialogueMultiplier * UIManager.Instance.dialogueEntryOffsetAdd);
+                        rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, GameManager.Instance.currentDialogueHeightValue - /*GameManager.Instance.currentDialogueMultiplier **/ (offsetYAfterImage + UIManager.Instance.dialogueEntryOffsetAddLeft));
                         break;
                     default:
                         break;
@@ -176,13 +183,15 @@ public class DialogueScriptableObject : ScriptableObject
                 }
 
                 LaunchEndEventsEntry(index);
+
+                GameManager.Instance.previousWasImage = false;
                 break;
             case DialogueType.Image:
 
                 GameManager.Instance.currentDialogueMultiplier ++;
 
                 rect = Instantiate(imageEntryPrefab, UIManager.Instance.DialogueParent).GetComponent<RectTransform>();
-                rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, UIManager.Instance.startingHeight - GameManager.Instance.currentDialogueMultiplier * UIManager.Instance.imageEntryOffsetAdd);
+                rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, GameManager.Instance.currentDialogueHeightValue - /*GameManager.Instance.currentDialogueMultiplier **/ UIManager.Instance.imageEntryOffsetAdd);
 
                 if (rect)
                 {
@@ -194,6 +203,8 @@ public class DialogueScriptableObject : ScriptableObject
 
                 LaunchEndEventsEntry(index); //launches the end events of the entry
 
+
+                GameManager.Instance.previousWasImage = true;
                 break;
             default:
                 break;
