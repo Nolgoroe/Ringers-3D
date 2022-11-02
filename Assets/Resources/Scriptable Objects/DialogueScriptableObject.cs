@@ -147,6 +147,8 @@ public class DialogueScriptableObject : ScriptableObject
 
         RectTransform rect = null;
 
+        SoundManager.Instance.PlaySound(Sounds.DialogueAppear);
+
         switch (allEntries[index].dialogueType)
         {
             case DialogueType.Dialogue:
