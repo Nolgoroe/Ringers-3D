@@ -208,6 +208,10 @@ public class SoundManager : MonoBehaviour
     {
         audioSourceAmbience.Stop();
     }
+    public void StopSFXOneshots()
+    {
+        audioSourceSFX.Stop();
+    }
     
     public void CallFadeOutAmbientMusicLevel(float time, bool isStop)
     {

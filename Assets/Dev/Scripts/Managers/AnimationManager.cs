@@ -681,23 +681,34 @@ public class AnimationManager : MonoBehaviour
         endLevelAnimationON = false;
 
 
-        if (TestLevelsSystemManager.instance.isGiveChest(GameManager.Instance.currentIndexInCluster + 1))
+        if (TestLevelsSystemManager.instance.isGiveChest(TestLevelsSystemManagerSaveData.instance.CompletedCount))
         {
             UIManager.Instance.nextLevelFromWinScreen.interactable = false;
             UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
 
-            //UIManager.Instance.backToHubButton.gameObject.SetActive(false);
-            if (GameManager.Instance.currentLevel.levelIndexInZone + 1 == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
-            {
-                UIManager.Instance.backToHubButton.interactable = false;
-            }
-            else
-            {
-                UIManager.Instance.backToHubButton.interactable = true;
-            }
+            UIManager.Instance.backToHubButton.interactable = false;
+            //if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+            //{
+            //    UIManager.Instance.backToHubButton.interactable = false;
+            //}
+            //else
+            //{
+            //    UIManager.Instance.backToHubButton.interactable = true;
+            //}
         }
         else
         {
+            //if (GameManager.Instance.currentLevel.levelIndexInZone + 1 == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+            //{
+            //    UIManager.Instance.nextLevelFromWinScreen.interactable = false;
+            //    UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+            //}
+            //else
+            //{
+            //    UIManager.Instance.nextLevelFromWinScreen.interactable = true;
+            //    UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
+            //}
+
             UIManager.Instance.nextLevelFromWinScreen.interactable = true;
             UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
 
@@ -840,8 +851,9 @@ public class AnimationManager : MonoBehaviour
         //    yield return new WaitUntil(() => GameManager.Instance.hasFinishedShowingDialogue == true);
         //}
 
-        SoundManager.Instance.PlaySound(Sounds.LastTileSequence);
+        //SoundManager.Instance.PlaySound(Sounds.LastTileSequence);
 
+        SoundManager.Instance.StopSFXOneshots();
         hasPlayedRelaseSound = false;
         endLevelAnimationON = true;
         UIManager.Instance.skipAnimationButton.interactable = true;
@@ -1228,24 +1240,35 @@ public class AnimationManager : MonoBehaviour
 
         endLevelAnimationON = false;
 
-        if (TestLevelsSystemManager.instance.isGiveChest(GameManager.Instance.currentIndexInCluster + 1))
+        if (TestLevelsSystemManager.instance.isGiveChest(TestLevelsSystemManagerSaveData.instance.CompletedCount))
         {
             UIManager.Instance.nextLevelFromWinScreen.interactable = false;
             UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
 
-            //UIManager.Instance.backToHubButton.gameObject.SetActive(false);
+            UIManager.Instance.backToHubButton.interactable = false;
 
-            if (GameManager.Instance.currentLevel.levelIndexInZone + 1 == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
-            {
-                UIManager.Instance.backToHubButton.interactable = false;
-            }
-            else
-            {
-                UIManager.Instance.backToHubButton.interactable = true;
-            }
+            //if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+            //{
+            //    UIManager.Instance.backToHubButton.interactable = false;
+            //}
+            //else
+            //{
+            //    UIManager.Instance.backToHubButton.interactable = true;
+            //}
         }
         else
         {
+            //if (GameManager.Instance.currentLevel.levelIndexInZone + 1 == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+            //{
+            //    UIManager.Instance.nextLevelFromWinScreen.interactable = false;
+            //    UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+            //}
+            //else
+            //{
+            //    UIManager.Instance.nextLevelFromWinScreen.interactable = true;
+            //    UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
+            //}
+
             UIManager.Instance.nextLevelFromWinScreen.interactable = true;
             UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
 

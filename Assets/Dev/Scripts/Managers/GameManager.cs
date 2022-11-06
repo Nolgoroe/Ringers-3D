@@ -1107,6 +1107,8 @@ public class GameManager : MonoBehaviour
 
     public void CallNextLevelFromWinScreen()
     {
+        SoundManager.Instance.StopSFXOneshots();
+
         SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
         StartCoroutine(NextLevelFromWinScreen());
     }

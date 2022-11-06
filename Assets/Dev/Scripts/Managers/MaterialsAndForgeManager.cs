@@ -25,6 +25,10 @@ public class MaterialsAndForgeManager : MonoBehaviour
     //public string[] materialPaths;
 
     //public Transform[] matTypeCatagorieParents;
+
+
+    public PowerUp currentTest;
+
     private void Start()
     {
         Instance = this;
@@ -48,6 +52,11 @@ public class MaterialsAndForgeManager : MonoBehaviour
     }
 
     [ContextMenu("UnlockPotion")]
+    public void callUnlockPotion()
+    {
+        UnlockPotion(currentTest);
+    }
+
     public void UnlockPotion(PowerUp potionType)
     {
         if(!PlayerManager.Instance.unlockedPowerups.Contains(potionType))
