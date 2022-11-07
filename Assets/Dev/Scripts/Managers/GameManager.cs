@@ -431,11 +431,17 @@ public class GameManager : MonoBehaviour
 
         //AnimationManager.instance.ResetEnterLevelAnimation();
 
-        if (!isRestart)
+        if (currentLevel.isTimerLevel)
         {
-            StartCoroutine(TestLevelsSystemManager.instance.InitTestLevel());
+            TimerLevelManager.instance.InitTimer();
         }
-
+        else
+        {
+            if (!isRestart)
+            {
+                StartCoroutine(TestLevelsSystemManager.instance.InitTestLevel());
+            }
+        }
 
 
         if (!isRestart && currentLevel.showIntroLevelAnimation)
@@ -962,15 +968,28 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                UIManager.Instance.DisplayEndLevelMessage();
-
-                Debug.Log("You Lose");
-
-                LevelEnded = false;
+                LoseLevel();
 
                 return false;
             }
         }
+    }
+
+    public void LoseLevel()
+    {
+        UIManager.Instance.DisplayEndLevelMessage();
+
+        Debug.Log("You Lose");
+
+        LevelEnded = false;
+    }
+    public void LoseTimedLevel()
+    {
+        UIManager.Instance.DisplayLoseScreen();
+
+        Debug.Log("You Lose");
+
+        LevelEnded = false;
     }
 
     public void LoseLevelAction()
@@ -1029,7 +1048,7 @@ public class GameManager : MonoBehaviour
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.ZoneX, SystemsToSave.ZoneManager, SystemsToSave.Player, SystemsToSave.animalManager });
     }
 
-    public void RestartCurrentLevel()
+    public IEnumerator RestartCurrentLevel()
     {
         hasRestartedLevel = true;
 
@@ -1054,6 +1073,14 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.bGPanelDisableTouch.SetActive(false);
         UIManager.Instance.ResetTopAndBottomPos();
         UIManager.Instance.PrepareObjectForEndBoardAnim();
+
+        if (currentLevel.isTimerLevel)
+        {
+            TimerLevelManager.instance.DeactivateAll();
+            //StartCoroutine(TimerLevelManager.instance.DeactivateAll());
+        }
+
+        yield return new WaitForEndOfFrame();
 
         LootManager.Instance.DestoryWinScreenDisplyedLoot();
         powerupManager.DestroySpecialPowersObjects();
@@ -1181,6 +1208,20 @@ public class GameManager : MonoBehaviour
         }
 
         bool nextIsTutorial = CheckNextLevelIsTutorial(currentLevel.levelNum + 1);
+
+        if(currentLevel.isTimerLevel)
+        {
+            TimerLevelManager.instance.DeactivateAll();
+        }
+
+        yield return new WaitForEndOfFrame();
+
+        TestLevelsSystemManager.instance.SetDeactivatedLevelData();
+
+
+
+
+
 
         ChooseLevel(currentLevel.levelIndexInZone + 1);
         currentIndexInCluster++;

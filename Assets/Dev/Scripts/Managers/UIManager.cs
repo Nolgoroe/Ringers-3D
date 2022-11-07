@@ -609,7 +609,8 @@ public class UIManager : MonoBehaviour
         }
         OptionsScreen.SetActive(false);
 
-        GameManager.Instance.RestartCurrentLevel();
+        //GameManager.Instance.RestartCurrentLevel();
+        StartCoroutine(GameManager.Instance.RestartCurrentLevel());
     }
     public void ChangeZoneName(string name, int levelID)
     {
@@ -675,7 +676,17 @@ public class UIManager : MonoBehaviour
 
         if (currentCanvas == gameplayCanvas)
         {
+
             SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
+
+            if (GameManager.Instance.currentLevel.isTimerLevel)
+            {
+                TimerLevelManager.instance.DeactivateAll();
+            }
+
+            TestLevelsSystemManager.instance.SetDeactivatedLevelData();
+
 
             GameManager.Instance.levelStarted = false;
             GameManager.Instance.timeStartLevel = "";
@@ -2821,14 +2832,31 @@ public class UIManager : MonoBehaviour
         TestLevelsSystemManager.instance.ResetDisplayMap();
 
         yield return new WaitForEndOfFrame();
-        TestLevelsSystemManager.instance.InstantiateBarStarsMapDisplay();
+
+        if (GameManager.Instance.currentLevel.isTimerLevel)
+        {
+            TestLevelsSystemManager.instance.SetDeactivatedmapData();
+        }
+        else
+        {
+            TestLevelsSystemManager.instance.InstantiateBarStarsMapDisplay();
+        }
+
 
         testLevelsDataScreen.SetActive(true);
     }
 
     public void SetTestLevelDataDisplayData()
     {
-        levelNumText.text = "Level " + GameManager.Instance.currentLevel.levelIndexInZone.ToString();
+        if(GameManager.Instance.currentLevel.isTimerLevel)
+        {
+            levelNumText.text = "Boss Level ";
+        }
+        else
+        {
+            levelNumText.text = "Level " + GameManager.Instance.currentLevel.levelIndexInZone.ToString();
+        }
+
         levelDifficultyText.text = GameManager.Instance.currentLevel.levelDifficulty.ToString();
         zoneNameText.text = GameManager.Instance.currentLevel.worldName;
         TestLevelsSystemManager.instance.starSliderTestLevelMapDisplay.maxValue = TestLevelsSystemManager.instance.numOfSections;
@@ -2881,6 +2909,13 @@ public class UIManager : MonoBehaviour
 
 
         StartCoroutine(GameManager.Instance.currentDialogue.EndAllDialogue());
+
+    }
+
+
+    public void CallRestartCurrentLevel()
+    {
+        StartCoroutine(GameManager.Instance.RestartCurrentLevel());
 
     }
 }

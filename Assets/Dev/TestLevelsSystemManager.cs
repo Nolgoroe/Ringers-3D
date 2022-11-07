@@ -206,6 +206,8 @@ public class TestLevelsSystemManager : MonoBehaviour
     }
     public void ResetDisplayMap()
     {
+        starSliderTestLevelMapDisplay.gameObject.SetActive(true);
+
         starSliderTestLevelMapDisplay.value = TestLevelsSystemManagerSaveData.instance.CompletedCount;
         for (int i = 0; i < starsParentMapDisplay.childCount; i++)
         {
@@ -228,4 +230,12 @@ public class TestLevelsSystemManager : MonoBehaviour
         //GameManager.Instance.StartLevel(true, false);
     }
 
+    public void SetDeactivatedLevelData()
+    {
+        StarSlider.gameObject.SetActive(false);
+    }
+    public void SetDeactivatedmapData()
+    {
+        starSliderTestLevelMapDisplay.gameObject.SetActive(false);
+    }
 }

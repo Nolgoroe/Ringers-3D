@@ -50,11 +50,23 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
 
         if (ZoneManagerHelpData.Instance.currentZoneCheck.isUnlocked)
         {
-            if (connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || (connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels))
+            //TEMP HERE
+            if (connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone 
+                || (connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels)
+                || connectedLevelScriptableObject.isTimerLevel)
             {
                 GameManager.Instance.currentIndexInCluster = indexInCluster;
                 GameManager.Instance.currentCluster = connectedClusterScriptableObject;
-                GameManager.Instance.ChooseLevel(connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone);
+
+                if(connectedLevelScriptableObject.isTimerLevel)
+                {
+                    GameManager.Instance.currentLevel = connectedClusterScriptableObject.clusterLevels[0];
+                }
+                else
+                {
+                    GameManager.Instance.ChooseLevel(connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone);
+                }
+
                 GameManager.Instance.setCurrentLevelBG(connectedClusterScriptableObject.clusterLevels[indexInCluster].worldNum);
                 StartCoroutine(UIManager.Instance.LaunchLevelDisplay());
             }

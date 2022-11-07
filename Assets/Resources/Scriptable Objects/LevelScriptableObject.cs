@@ -41,6 +41,7 @@ public class LevelScriptableObject : ScriptableObject
     public bool is12PieceRing;
     public bool isDoubleRing;
     public bool isBoss;
+    public bool isTimerLevel;
     public bool isAnimalLevel = true;
     public bool isReleaseAnimalToDen;
     public bool isKeyLevel;
@@ -107,6 +108,9 @@ public class LevelScriptableObject : ScriptableObject
     [Header("Dialogue Data")]
     public DialogueScriptableObject levelStartDialogueSO;
     public DialogueScriptableObject levelEndDialogueSO;
+
+    [Header("Timer Level Data")]
+    public float timeForLevel;
 
     [ContextMenu("THIS")]
     public void actionhere()
