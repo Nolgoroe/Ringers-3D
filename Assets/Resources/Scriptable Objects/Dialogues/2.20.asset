@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allEntries:
   - npcType: 1
-    dialogueSide: 0
+    dialogueSide: 1
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
     displayName: Crow
@@ -47,7 +47,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - npcType: 5
+  - npcType: 6
     dialogueSide: 2
     dialogueType: 1
     imageEntrySprite: {fileID: -5857006659821504489, guid: 7427fd7d6df2e1c47810df5881704679,
@@ -94,11 +94,11 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - npcType: 0
-    dialogueSide: 1
+    dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
     displayName: Fox
-    conversationBlock: This is defintly lynx's fur!It looks like she was heading
+    conversationBlock: This is defintly lynx's fur! It looks like she was heading
       out of the grove to Vinebloom Pines.
     entryStartEvents:
       m_PersistentCalls:
@@ -140,7 +140,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - npcType: 0
-    dialogueSide: 1
+    dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
     displayName: Fox
@@ -185,7 +185,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - npcType: 1
-    dialogueSide: 0
+    dialogueSide: 1
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
     displayName: Crow

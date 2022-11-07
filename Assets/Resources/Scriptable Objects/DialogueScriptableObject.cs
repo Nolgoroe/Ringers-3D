@@ -23,9 +23,10 @@ public enum NPCs
 {
     Fox,
     Crow,
-    camilien,
     Buttercup,
     Bramble,
+    GreatFirSpirit,
+    Chameleon,
     None
 }
 
