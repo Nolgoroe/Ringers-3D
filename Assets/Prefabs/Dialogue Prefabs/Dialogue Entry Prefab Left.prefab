@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.53, y: -0.7}
+  m_AnchoredPosition: {x: 4.53, y: -1.09}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1349034699320380870
@@ -65,7 +65,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1370583499833566800}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5279552106400219590}
   - component: {fileID: 5279552106400219589}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Portrait
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,13 +258,13 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 201
-  m_Sprite: {fileID: 8168983129260953082, guid: cf0ab54bede1acb47b9b5ee62277f14e,
+  m_Sprite: {fileID: 5774427340679750088, guid: 900b2bb6d8d7f5240a3e48378fb19998,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.2185714, y: 1.2185714}
+  m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -379,7 +379,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5279552106592207075}
   - component: {fileID: 5279552106592207074}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -394,7 +394,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5279552106592207084}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.39999998, y: 0.59999996, z: 0}
+  m_LocalPosition: {x: 0.39999998, y: 0.7041, z: 0}
   m_LocalScale: {x: 0.20000002, y: 0.20000002, z: 0.19999999}
   m_Children:
   - {fileID: 5279552106562547972}
@@ -446,7 +446,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 10.24, y: 5.12}
+  m_Size: {x: 10.24, y: 6.1606493}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -487,8 +487,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.0029999912, y: 0.015000001}
+  m_SizeDelta: {x: 0.24687302, y: 0.030069977}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5279552106754086552
 CanvasRenderer:
@@ -516,7 +516,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -133505132751289448, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
+  - {fileID: -5248868205574178538, guid: 863a88f6c39ed444abfb3c07a960a795, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -558,8 +558,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Avishy
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
-  m_sharedMaterial: {fileID: -133505132751289448, guid: f5bf3a8788bf3c44d998747e591b5f55,
+  m_fontAsset: {fileID: 11400000, guid: 863a88f6c39ed444abfb3c07a960a795, type: 2}
+  m_sharedMaterial: {fileID: -5248868205574178538, guid: 863a88f6c39ed444abfb3c07a960a795,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -738,7 +738,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5279552107152810480}
   - component: {fileID: 5279552107152810487}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Name BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -753,8 +753,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5279552107152810481}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.29999998, y: 1.0999999, z: 0}
-  m_LocalScale: {x: 0.39999998, y: 0.39999998, z: 0.39999998}
+  m_LocalPosition: {x: -0.1608, y: 1.2464, z: 0}
+  m_LocalScale: {x: 0.46802035, y: 0.46684754, z: 0.39999998}
   m_Children:
   - {fileID: 5279552106784905564}
   m_Father: {fileID: 1370583499833566800}
@@ -847,8 +847,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.114, y: 0.156}
-  m_SizeDelta: {x: 8.996785, y: 2.8077383}
+  m_AnchoredPosition: {x: -0.274, y: 0.045}
+  m_SizeDelta: {x: 8.685975, y: 3.4411063}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5279552107289559809
 CanvasRenderer:
@@ -876,7 +876,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -133505132751289448, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
+  - {fileID: -5248868205574178538, guid: 863a88f6c39ed444abfb3c07a960a795, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -918,16 +918,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: "<i>text</i> \ntext lol"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
-  m_sharedMaterial: {fileID: -133505132751289448, guid: f5bf3a8788bf3c44d998747e591b5f55,
+  m_fontAsset: {fileID: 11400000, guid: 863a88f6c39ed444abfb3c07a960a795, type: 2}
+  m_sharedMaterial: {fileID: -5248868205574178538, guid: 863a88f6c39ed444abfb3c07a960a795,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280041054
-  m_fontColor: {r: 0.36862746, g: 0.24394815, b: 0.11095686, a: 1}
+    rgba: 4279051867
+  m_fontColor: {r: 0.3584906, g: 0.14716099, b: 0.050729793, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1051,7 +1051,7 @@ GameObject:
   - component: {fileID: 1404948877843426125}
   - component: {fileID: 1105262298594342547}
   - component: {fileID: 1452619970053805381}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Dialogue Entry Prefab Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}

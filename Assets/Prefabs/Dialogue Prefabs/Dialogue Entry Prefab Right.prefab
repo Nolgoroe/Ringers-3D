@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.53, y: -0.7}
+  m_AnchoredPosition: {x: 4.6, y: -1.18}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1177344587042856446
@@ -359,7 +359,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8421400552277861570}
   - component: {fileID: 8421400552277861571}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Portrait
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -419,13 +419,13 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 201
-  m_Sprite: {fileID: 8168983129260953082, guid: cf0ab54bede1acb47b9b5ee62277f14e,
+  m_Sprite: {fileID: -4372248953765610512, guid: 900b2bb6d8d7f5240a3e48378fb19998,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.2185714, y: 1.2185714}
+  m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -442,7 +442,7 @@ GameObject:
   - component: {fileID: 5467521784452859179}
   - component: {fileID: 31359964740177168}
   - component: {fileID: 2207036306269644027}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Dialogue Entry Prefab Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -543,8 +543,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.005, y: 0.01}
+  m_SizeDelta: {x: 0.22046077, y: 0.031786114}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8421400552561317252
 CanvasRenderer:
@@ -572,7 +572,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -133505132751289448, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
+  - {fileID: -5248868205574178538, guid: 863a88f6c39ed444abfb3c07a960a795, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -614,8 +614,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Avishy
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
-  m_sharedMaterial: {fileID: -133505132751289448, guid: f5bf3a8788bf3c44d998747e591b5f55,
+  m_fontAsset: {fileID: 11400000, guid: 863a88f6c39ed444abfb3c07a960a795, type: 2}
+  m_sharedMaterial: {fileID: -5248868205574178538, guid: 863a88f6c39ed444abfb3c07a960a795,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -640,7 +640,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3.25
+  m_fontSize: 3.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -695,7 +695,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8421400553520998102}
   - component: {fileID: 8421400553520998103}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -710,7 +710,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8421400553520998101}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.39999998, y: 0.59999996, z: 0}
+  m_LocalPosition: {x: -0.39999998, y: 0.7, z: 0}
   m_LocalScale: {x: 0.20000002, y: 0.20000002, z: 0.19999999}
   m_Children:
   - {fileID: 8421400552055519417}
@@ -762,7 +762,7 @@ SpriteRenderer:
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 10.24, y: 5.12}
+  m_Size: {x: 10.24, y: 6.1451507}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -778,7 +778,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8421400553614625475}
   - component: {fileID: 8421400553614625476}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Name BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -793,8 +793,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8421400553614625474}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0799999, y: 1.0999999, z: 0}
-  m_LocalScale: {x: 0.39999998, y: 0.39999998, z: 0.39999998}
+  m_LocalPosition: {x: -0.958, y: 1.289, z: 0}
+  m_LocalScale: {x: 0.46802035, y: 0.46684754, z: 0.39999998}
   m_Children:
   - {fileID: 8421400552262581287}
   m_Father: {fileID: 4400520855091693125}
@@ -887,8 +887,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.166, y: 0.264}
-  m_SizeDelta: {x: 8.892795, y: 2.807738}
+  m_AnchoredPosition: {x: -0.166, y: 0.232}
+  m_SizeDelta: {x: 8.892795, y: 3.5121753}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8421400554193719072
 CanvasRenderer:
@@ -916,7 +916,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -133505132751289448, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
+  - {fileID: -5248868205574178538, guid: 863a88f6c39ed444abfb3c07a960a795, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -958,16 +958,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: ' i am a test i am a test i am a test i am a test'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
-  m_sharedMaterial: {fileID: -133505132751289448, guid: f5bf3a8788bf3c44d998747e591b5f55,
+  m_fontAsset: {fileID: 11400000, guid: 863a88f6c39ed444abfb3c07a960a795, type: 2}
+  m_sharedMaterial: {fileID: -5248868205574178538, guid: 863a88f6c39ed444abfb3c07a960a795,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280041054
-  m_fontColor: {r: 0.36862746, g: 0.24313726, b: 0.10980392, a: 1}
+    rgba: 4279051867
+  m_fontColor: {r: 0.35686275, g: 0.14901961, b: 0.050980393, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1089,7 +1089,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4400520855091693125}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
