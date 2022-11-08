@@ -9,12 +9,8 @@ public class TimerLevelManager : MonoBehaviour
     public GameObject timerObject;
     public Transform timerParent;
 
-    public Color targetColor;
-
-    public float timeToPingPong;
+    //public float timeToPingPong;
     public float extraTimeOnLose;
-
-    public float maxIntense;
 
     public SpriteRenderer timeManagerRenderer;
 
@@ -26,7 +22,7 @@ public class TimerLevelManager : MonoBehaviour
     public float timeBetweenIntervals;
     public List<SpriteRenderer> tileRenderes;
 
-    public List<SpriteRenderer> ToPingPongColor;
+    //public List<SpriteRenderer> ToPingPongColor;
 
     private void Awake()
     {
@@ -69,10 +65,10 @@ public class TimerLevelManager : MonoBehaviour
             }
 
 
-            if (currentIndex >= 6)
-            {
-                //PingPongColor();
-            }
+            //if (currentIndex >= 6)
+            //{
+            //    //PingPongColor();
+            //}
 
             //if (currentIndex > 6)
             //{
@@ -96,7 +92,7 @@ public class TimerLevelManager : MonoBehaviour
         summonedTimerObject = Instantiate(timerObject, timerParent);
         TimerObjectRefrencer summonedTimer = summonedTimerObject.GetComponent<TimerObjectRefrencer>();
 
-        ToPingPongColor.Add(summonedTimer.sandClockRenderer);
+        //ToPingPongColor.Add(summonedTimer.sandClockRenderer);
         //ToPingPongColor.AddRange(summonedTimer.tileRenderes);
 
         tileRenderes.AddRange(summonedTimer.tileRenderes);
@@ -108,7 +104,7 @@ public class TimerLevelManager : MonoBehaviour
 
     private void TweenTile(int currentIndex)
     {
-        ToPingPongColor.Add(tileRenderes[currentIndex]);
+        //ToPingPongColor.Add(tileRenderes[currentIndex]);
 
         LeanTween.value(tileRenderes[currentIndex].gameObject, 0f, 1, timeBetweenIntervals).setOnUpdate((float val) =>
         {
@@ -119,14 +115,14 @@ public class TimerLevelManager : MonoBehaviour
         });
 
     }
-    private void PingPongColor()
-    {
-        for (int i = 0; i < ToPingPongColor.Count; i++)
-        {
-            ColorPingPongEffect effect = ToPingPongColor[i].GetComponent<ColorPingPongEffect>();
-            effect.PingPongColorNormal(timeManagerRenderer.color);
-        }
-    }
+    //private void PingPongColor()
+    //{
+    //    for (int i = 0; i < ToPingPongColor.Count; i++)
+    //    {
+    //        ColorPingPongEffect effect = ToPingPongColor[i].GetComponent<ColorPingPongEffect>();
+    //        effect.PingPongColorNormal(timeManagerRenderer.color);
+    //    }
+    //}
     //private void PingPongColorSpecificIndex(int index)
     //{
     //    ColorPingPongEffect effect = ToPingPongColor[index].GetComponent<ColorPingPongEffect>();
@@ -136,10 +132,10 @@ public class TimerLevelManager : MonoBehaviour
     public void DeactivateAll()
     {
 
-        for (int i = 0; i < ToPingPongColor.Count; i++)
-        {
-            LeanTween.cancel(ToPingPongColor[i].gameObject);
-        }
+        //for (int i = 0; i < ToPingPongColor.Count; i++)
+        //{
+        //    LeanTween.cancel(ToPingPongColor[i].gameObject);
+        //}
 
         Destroy(summonedTimerObject.gameObject);
 
@@ -151,15 +147,15 @@ public class TimerLevelManager : MonoBehaviour
         currentTime = 0;
         timeBetweenIntervals = 0;
 
-        ToPingPongColor.Clear();
-
-        timeManagerRenderer.color = Color.white;
+        //ToPingPongColor.Clear();
 
         LeanTween.cancel(gameObject);
     }
 
     void BeginColorTween()
     {
-        LeanTween.value(gameObject, Color.white, targetColor, timeToPingPong).setLoopPingPong();
+        summonedTimerObject.GetComponent<Animator>().SetTrigger("ColorTween");
+
+        //LeanTween.value(gameObject, Color.white, targetColor, timeToPingPong).setLoopPingPong();
     }
 }
