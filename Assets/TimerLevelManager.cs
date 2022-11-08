@@ -14,6 +14,8 @@ public class TimerLevelManager : MonoBehaviour
     public float timeToPingPong;
     public float extraTimeOnLose;
 
+    public float maxIntense;
+
     public SpriteRenderer timeManagerRenderer;
 
     [Header("Resetable Data")]
@@ -70,7 +72,7 @@ public class TimerLevelManager : MonoBehaviour
 
             if (currentIndex >= 6)
             {
-                PingPongColor();
+                //PingPongColor();
             }
 
             //if (currentIndex > 6)
@@ -135,9 +137,9 @@ public class TimerLevelManager : MonoBehaviour
     public void DeactivateAll()
     {
 
-        for (int i = 0; i < tileRenderes.Count; i++)
+        for (int i = 0; i < ToPingPongColor.Count; i++)
         {
-            LeanTween.cancel(tileRenderes[i].gameObject);
+            LeanTween.cancel(ToPingPongColor[i].gameObject);
         }
 
         Destroy(summonedTimerObject.gameObject);
