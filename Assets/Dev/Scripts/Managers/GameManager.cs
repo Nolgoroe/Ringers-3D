@@ -947,6 +947,11 @@ public class GameManager : MonoBehaviour
 
                 LevelEnded = true;
 
+                if(currentLevel.isTimerLevel)
+                {
+                    TimerLevelManager.instance.isActive = false;
+                }
+
                 powerupManager.CheckTurnTempPowerToPermaPower();
                 AnimationManager.instance.StartEndLevelAnimSequence(false); ///// loot is given here
 

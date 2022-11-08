@@ -20,7 +20,7 @@ public class TimerLevelManager : MonoBehaviour
 
     [Header("Resetable Data")]
     public GameObject summonedTimerObject;
-    bool isActive;
+    public bool isActive;
     public int currentIndex;
     public float currentTime;
     public float timeBetweenIntervals;
@@ -44,7 +44,6 @@ public class TimerLevelManager : MonoBehaviour
     {
         if (isActive)
         {
-
             if(currentIndex < 8)
             {
                 currentTime += Time.deltaTime;

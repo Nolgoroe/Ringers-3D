@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f245e6ade46975b42912a0bdcd673818, type: 3}
-  m_Name: Level 21
+  m_Name: Level 21 - timed
   m_EditorClassIdentifier: 
   worldName: Vinebloom Pines
   isGrindLevel: 0
   is12PieceRing: 0
   isDoubleRing: 0
   isBoss: 0
-  isTimerLevel: 0
-  isAnimalLevel: 1
+  isTimerLevel: 1
+  isAnimalLevel: 0
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
   showIntroLevelAnimation: 1
@@ -81,4 +81,4 @@ MonoBehaviour:
   algoritmStepsWanted: 0
   levelStartDialogueSO: {fileID: 0}
   levelEndDialogueSO: {fileID: 11400000, guid: ee38d27e2a1d19d42b7cd534e5b2ea30, type: 2}
-  timeForLevel: 0
+  timeForLevel: 120

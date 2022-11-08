@@ -374,6 +374,8 @@ public class AnimationManager : MonoBehaviour
 
         if (GameManager.Instance.currentLevel.levelEndDialogueSO)
         {
+            yield return new WaitForSeconds(0.8f);
+
             GameManager.Instance.currentDialogue = null;
             GameManager.Instance.currentIndexInDialogue = 0;
             GameManager.Instance.currentDialogueMultiplier = -1;
@@ -732,6 +734,14 @@ public class AnimationManager : MonoBehaviour
         LeanTween.move(topZoneBar, new Vector3(topZoneBar.transform.position.x, topZoneBar.transform.position.y + 1f, topZoneBar.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
 
         LeanTween.move(bottomeZone, new Vector3(bottomeZone.transform.position.x, bottomeZone.transform.position.y - 1f, bottomeZone.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
+    
+        if(GameManager.Instance.currentLevel.isTimerLevel)
+        {
+            GameObject topZoneTimedPrefab = TimerLevelManager.instance.summonedTimerObject.gameObject;
+
+            LeanTween.move(topZoneTimedPrefab, new Vector3(topZoneTimedPrefab.transform.position.x, topZoneTimedPrefab.transform.position.y + 1f, topZoneTimedPrefab.transform.position.z), speedOutTopBottom).setEase(LeanTweenType.easeInOutQuad); // animate
+
+        }
     }
 
     private void SkipMoveTopBottom()
