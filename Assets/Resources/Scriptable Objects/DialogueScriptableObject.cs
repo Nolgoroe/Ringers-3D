@@ -131,6 +131,7 @@ public class DialogueScriptableObject : ScriptableObject
         GameManager.Instance.currentIndexInDialogue = -1;
         GameManager.Instance.currentDialogueMultiplier = -1;
         GameManager.Instance.currentDialogueHeightValue = -1;
+        GameManager.Instance.currentHeightAdded = -1;
         GameManager.Instance.latestEntry = null;
 
         UIManager.Instance.continueDialogueButton.gameObject.SetActive(false);
@@ -168,10 +169,14 @@ public class DialogueScriptableObject : ScriptableObject
                     case DialogueSide.right:
                         rect = Instantiate(dialogueEntryRightPrefab, UIManager.Instance.DialogueParent).GetComponent<RectTransform>();
                         rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, GameManager.Instance.currentDialogueHeightValue - /*GameManager.Instance.currentDialogueMultiplier **/ (offsetYAfterImage + UIManager.Instance.dialogueEntryOffsetAddRight));
+
+                        UIManager.Instance.heightScrollToAdd = offsetYAfterImage + UIManager.Instance.dialogueEntryOffsetAddRight;
                         break;
                     case DialogueSide.left:
                         rect = Instantiate(dialogueEntryLeftPrefab, UIManager.Instance.DialogueParent).GetComponent<RectTransform>();
                         rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, GameManager.Instance.currentDialogueHeightValue - /*GameManager.Instance.currentDialogueMultiplier **/ (offsetYAfterImage + UIManager.Instance.dialogueEntryOffsetAddLeft));
+
+                        UIManager.Instance.heightScrollToAdd = offsetYAfterImage + UIManager.Instance.dialogueEntryOffsetAddLeft;
                         break;
                     default:
                         break;
@@ -179,10 +184,11 @@ public class DialogueScriptableObject : ScriptableObject
 
                 if (rect)
                 {
-                    GameManager.Instance.currentDialogueHeightValue = rect.anchoredPosition.y;
                     SetDialogueEntryData(rect.gameObject, index);
 
                     CheckAutoScrollDialogue();
+
+                    GameManager.Instance.currentDialogueHeightValue = rect.anchoredPosition.y;
                 }
 
                 LaunchEndEventsEntry(index);
@@ -196,12 +202,15 @@ public class DialogueScriptableObject : ScriptableObject
                 rect = Instantiate(imageEntryPrefab, UIManager.Instance.DialogueParent).GetComponent<RectTransform>();
                 rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, GameManager.Instance.currentDialogueHeightValue - /*GameManager.Instance.currentDialogueMultiplier **/ UIManager.Instance.imageEntryOffsetAdd);
 
+                UIManager.Instance.heightScrollToAdd = UIManager.Instance.imageEntryOffsetAdd;
+
                 if (rect)
                 {
-                    GameManager.Instance.currentDialogueHeightValue = rect.anchoredPosition.y;
                     SetImageEntryData(rect.gameObject, index);
 
                     CheckAutoScrollDialogue();
+
+                    GameManager.Instance.currentDialogueHeightValue = rect.anchoredPosition.y;
                 }
 
                 LaunchEndEventsEntry(index); //launches the end events of the entry
@@ -273,10 +282,13 @@ public class DialogueScriptableObject : ScriptableObject
 
     public void CheckAutoScrollDialogue()
     {
-        if(GameManager.Instance.currentDialogueHeightValue <= UIManager.Instance.maxDownLimit)
+
+        if (GameManager.Instance.currentDialogueHeightValue <= UIManager.Instance.maxDownLimit)
         {
+            GameManager.Instance.currentHeightAdded += UIManager.Instance.heightScrollToAdd;
+
             Vector3 currentPos = UIManager.Instance.dialogueScroller.content.anchoredPosition;
-            Vector3 target = new Vector3(currentPos.x, currentPos.y + UIManager.Instance.heightScrollToAdd, currentPos.z);
+            Vector3 target = new Vector3(currentPos.x, GameManager.Instance.currentHeightAdded + UIManager.Instance.startingHeight, currentPos.z);
 
             LeanTween.moveLocal(UIManager.Instance.dialogueScroller.content.gameObject, target, UIManager.Instance.timeToScroll);
         }

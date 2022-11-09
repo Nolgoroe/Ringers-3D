@@ -379,6 +379,7 @@ public class AnimationManager : MonoBehaviour
             GameManager.Instance.currentDialogue = null;
             GameManager.Instance.currentIndexInDialogue = 0;
             GameManager.Instance.currentDialogueMultiplier = -1;
+            GameManager.Instance.currentHeightAdded = -1;
             GameManager.Instance.currentDialogueHeightValue = UIManager.Instance.startingHeight;
             UIManager.Instance.dialogueScroller.content.localPosition = Vector3.zero;
             GameManager.Instance.latestEntry = null;
@@ -1072,7 +1073,6 @@ public class AnimationManager : MonoBehaviour
         //StartCoroutine(AfterAnimalAnimation());
         AfterAnimalAnimationCoroutine = StartCoroutine("AfterAnimalAnimation");
     }
-
     public void SkipBoardAnim()
     {
         endLevelAnimationON = true;

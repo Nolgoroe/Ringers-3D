@@ -13,7 +13,7 @@ public class AnimationEventsAnimals : MonoBehaviour
         }
     }
 
-    public void ShakeAnimalStatue()
+    public void ShakeAnimalStatue() //this is when the particles hit the level "object" - the name shake animal statue is bad
     {
         if (GameManager.Instance.currentLevel.isAnimalLevel)
         {
@@ -26,6 +26,10 @@ public class AnimationEventsAnimals : MonoBehaviour
             {
                 AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>().renderer.materials[0].EnableKeyword("_EMISSION");
             }
+        }
+        else if (GameManager.Instance.currentLevel.isTimerLevel)
+        {
+            CallAfterAnimalAnimation();
         }
         else
         {

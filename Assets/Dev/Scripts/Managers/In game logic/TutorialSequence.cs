@@ -114,6 +114,8 @@ public class TutorialSequence : MonoBehaviour
     public Transform handPosToHub, handPosOpenInventory, handPosOpenInventoryInDen, handPosOpenDen, handPosOpenAnimalAlbum, handPosClickAnimalTab, handPosChangePotionTab, handPosChangeHollowCraftTab, handPosBrewButton, handPosCraftItemButton, handPosCloseInventory;
 
     bool inDelay = false;
+
+    public float delayAppearOnStartLevel;
     //public float delayUnlockAll;
 
     private void Start()
@@ -126,6 +128,8 @@ public class TutorialSequence : MonoBehaviour
 
     public void StartTutorialLevelSequence() /// ONLY for level tutorials
     {
+        SoundManager.Instance.PlaySound(Sounds.DialogueAppear);
+
         if (!GameManager.Instance.isDisableTutorials)
         {
             DeactivateAllTutorialScreens();
@@ -167,6 +171,8 @@ public class TutorialSequence : MonoBehaviour
 
     public IEnumerator DisplaySpecificTutorialSequence() /// for anything not levels - like loot tutorial, crafting tutorial or powerups
     {
+        SoundManager.Instance.PlaySound(Sounds.DialogueAppear);
+
         yield return new WaitForEndOfFrame();
 
         if (!GameManager.Instance.isDisableTutorials)
@@ -758,7 +764,11 @@ public class TutorialSequence : MonoBehaviour
             }
 
             levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[currentPhaseInSequenceLevels].SetActive(true);
-            levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[currentPhaseInSequenceLevels].transform.GetChild(0).gameObject.SetActive(true);
+            
+            if(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[currentPhaseInSequenceLevels].transform.childCount > 0)
+            {
+                levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].screens[currentPhaseInSequenceLevels].transform.GetChild(0).gameObject.SetActive(true);
+            }
         }
 
 
@@ -873,7 +883,11 @@ public class TutorialSequence : MonoBehaviour
             }
 
             specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific].SetActive(true);
-            specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific].transform.GetChild(0).gameObject.SetActive(true);
+
+            if(specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific].transform.childCount > 0)
+            {
+                specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific].transform.GetChild(0).gameObject.SetActive(true);
+            }
         }
 
 

@@ -85,6 +85,7 @@ public class GameManager : MonoBehaviour
     public int currentIndexInDialogue = -1;
     public int currentDialogueMultiplier = -1;
     public float currentDialogueHeightValue = -1;
+    public float currentHeightAdded = -1;
     public bool hasFinishedShowingDialogue;
     public bool previousWasImage;
     public DialogueObjectRefrences latestEntry;
@@ -220,7 +221,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
             }
 
-            if (AnimalsManager.Instance.statueToSwap)
+            if (AnimalsManager.Instance.statueToSwap && !currentLevel.isTimerLevel)
             {
                 AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Set Rive " + currentIndexInCluster);
             }
@@ -418,6 +419,7 @@ public class GameManager : MonoBehaviour
             currentDialogue = null;
             currentIndexInDialogue = 0;
             currentDialogueMultiplier = -1;
+            currentHeightAdded = -1;
             currentDialogueHeightValue = UIManager.Instance.startingHeight;
             UIManager.Instance.dialogueScroller.content.localPosition = Vector3.zero;
             latestEntry = null;
@@ -437,10 +439,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (!isRestart)
-            {
-                StartCoroutine(TestLevelsSystemManager.instance.InitTestLevel());
-            }
+            StartCoroutine(TestLevelsSystemManager.instance.InitTestLevel());
         }
 
 
@@ -466,6 +465,8 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.dealButton.interactable = true;
             powerupManager.PowerupButtonsActivation(true);
 
+            yield return new WaitForSeconds(TutorialSequence.Instacne.delayAppearOnStartLevel);
+
             if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
             {
                 TutorialSequence.Instacne.StartTutorialLevelSequence();
@@ -489,7 +490,9 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
 
             StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim(false));
-            yield return new WaitForEndOfFrame();
+            //yield return new WaitForEndOfFrame();
+
+            yield return new WaitForSeconds(TutorialSequence.Instacne.delayAppearOnStartLevel);
 
             if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
             {
@@ -605,6 +608,7 @@ public class GameManager : MonoBehaviour
             currentDialogue = null;
             currentIndexInDialogue = 0;
             currentDialogueMultiplier = -1;
+            currentHeightAdded = -1;
             currentDialogueHeightValue = UIManager.Instance.startingHeight;
             UIManager.Instance.dialogueScroller.content.localPosition = Vector3.zero;
             latestEntry = null;
@@ -646,6 +650,8 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.dealButton.interactable = true;
             powerupManager.PowerupButtonsActivation(true);
 
+            yield return new WaitForSeconds(TutorialSequence.Instacne.delayAppearOnStartLevel);
+
             if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
             {
                 TutorialSequence.Instacne.StartTutorialLevelSequence();
@@ -669,7 +675,9 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
 
             StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim(false));
-            yield return new WaitForEndOfFrame();
+            //yield return new WaitForEndOfFrame();
+
+            yield return new WaitForSeconds(TutorialSequence.Instacne.delayAppearOnStartLevel);
 
             if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
             {

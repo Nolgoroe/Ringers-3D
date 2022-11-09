@@ -132,10 +132,10 @@ public class TimerLevelManager : MonoBehaviour
     public void DeactivateAll()
     {
 
-        //for (int i = 0; i < ToPingPongColor.Count; i++)
-        //{
-        //    LeanTween.cancel(ToPingPongColor[i].gameObject);
-        //}
+        for (int i = 0; i < tileRenderes.Count; i++)
+        {
+            LeanTween.cancel(tileRenderes[i].gameObject);
+        }
 
         Destroy(summonedTimerObject.gameObject);
 
