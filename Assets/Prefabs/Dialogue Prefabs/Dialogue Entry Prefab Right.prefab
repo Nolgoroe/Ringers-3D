@@ -572,7 +572,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5248868205574178538, guid: 863a88f6c39ed444abfb3c07a960a795, type: 2}
+  - {fileID: 2490241923332753511, guid: 05b1f12750f3f644189d47c06dd41e07, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -614,8 +614,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Avishy
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 863a88f6c39ed444abfb3c07a960a795, type: 2}
-  m_sharedMaterial: {fileID: -5248868205574178538, guid: 863a88f6c39ed444abfb3c07a960a795,
+  m_fontAsset: {fileID: 11400000, guid: 05b1f12750f3f644189d47c06dd41e07, type: 2}
+  m_sharedMaterial: {fileID: 2490241923332753511, guid: 05b1f12750f3f644189d47c06dd41e07,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -640,7 +640,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3.15
+  m_fontSize: 2.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -916,7 +916,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5248868205574178538, guid: 863a88f6c39ed444abfb3c07a960a795, type: 2}
+  - {fileID: 2490241923332753511, guid: 05b1f12750f3f644189d47c06dd41e07, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -956,10 +956,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ' i am a test i am a test i am a test i am a test'
+  m_text: "<i>text</i> \ntext lol"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 863a88f6c39ed444abfb3c07a960a795, type: 2}
-  m_sharedMaterial: {fileID: -5248868205574178538, guid: 863a88f6c39ed444abfb3c07a960a795,
+  m_fontAsset: {fileID: 11400000, guid: 05b1f12750f3f644189d47c06dd41e07, type: 2}
+  m_sharedMaterial: {fileID: 2490241923332753511, guid: 05b1f12750f3f644189d47c06dd41e07,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -967,7 +967,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4279051867
-  m_fontColor: {r: 0.35686275, g: 0.14901961, b: 0.050980393, a: 1}
+  m_fontColor: {r: 0.3584906, g: 0.14716099, b: 0.050729793, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -989,14 +989,14 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 3
-  m_fontSizeMax: 5
+  m_fontSizeMax: 8
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -50
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
