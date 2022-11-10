@@ -939,7 +939,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.034, y: 0.182}
+  m_AnchoredPosition: {x: 0.128, y: 0.428}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &185206078946938922
@@ -1378,6 +1378,7 @@ GameObject:
   - component: {fileID: 8856915743050350781}
   - component: {fileID: 7411731773378369864}
   - component: {fileID: 5250719371077582332}
+  - component: {fileID: 3386232532862314488}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1401,7 +1402,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -48.7, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7411731773378369864
@@ -1433,8 +1434,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Tap to open
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f5bf3a8788bf3c44d998747e591b5f55, type: 2}
-  m_sharedMaterial: {fileID: -133505132751289448, guid: f5bf3a8788bf3c44d998747e591b5f55,
+  m_fontAsset: {fileID: 11400000, guid: 05b1f12750f3f644189d47c06dd41e07, type: 2}
+  m_sharedMaterial: {fileID: 2490241923332753511, guid: 05b1f12750f3f644189d47c06dd41e07,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1459,14 +1460,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1501,6 +1502,57 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3386232532862314488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7964266477482496365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6f31fa26b868604483df4f19c00a991, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 0
+  DurationInSeconds: 3
+  Amplitude: 0.01
+  CharacterDurationRatio: 1
+  CharactersPerDuration: 0
+  Gradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 0.39215687}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0.39215687}
+    key3: {r: 0, g: 0, b: 0, a: 1}
+    key4: {r: 0, g: 0, b: 0, a: 0.39215687}
+    key5: {r: 0, g: 0, b: 0, a: 0.9465743}
+    key6: {r: 0, g: 0, b: 0, a: 0.39215687}
+    key7: {r: 0, g: 0, b: 0, a: 0.78431374}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 9638
+    atime2: 21395
+    atime3: 34117
+    atime4: 46646
+    atime5: 56669
+    atime6: 65535
+    atime7: 65535
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 7
+  Mix: 0
+  AutoPlay: 1
+  Repeat: 0
+  ForWords: 
+  IsFinished: 0
 --- !u!1 &8647726985608767614
 GameObject:
   m_ObjectHideFlags: 0
@@ -2001,15 +2053,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7835468941851445935}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &7725806415395433796 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2e3772d7e08940d4298ab2d982b7c461,
-    type: 3}
-  m_PrefabInstance: {fileID: 7835468941851445935}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2909832180751755977 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4962088892109693030, guid: 2e3772d7e08940d4298ab2d982b7c461,
+    type: 3}
+  m_PrefabInstance: {fileID: 7835468941851445935}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7725806415395433796 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2e3772d7e08940d4298ab2d982b7c461,
     type: 3}
   m_PrefabInstance: {fileID: 7835468941851445935}
   m_PrefabAsset: {fileID: 0}
