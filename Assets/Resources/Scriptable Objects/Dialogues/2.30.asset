@@ -18,8 +18,8 @@ MonoBehaviour:
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
     displayName: Crow
-    conversationBlock: Uhh, we've been walking around here for hours and still haven't
-      seen anything to point us to Lynx.
+    conversationBlock: Uhh, we've been walking  for hours and still haven't seen
+      anything to point us to Lynx.
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -53,8 +53,7 @@ MonoBehaviour:
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
     displayName: Fox
-    conversationBlock: 'I''m so worried... It''s like she evaporated. I don''t get
-      it, she clearly went this way. Everything we found points here. '
+    conversationBlock: I'm so worried... It's like she evaporated.
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -94,13 +93,13 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - npcType: 1
-    dialogueSide: 1
+  - npcType: 0
+    dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
-    displayName: Crow
-    conversationBlock: 'I''m sure she''s okay. You know Lynx can see things no one
-      else can. She must have been looking for something around here.  '
+    displayName: Fox
+    conversationBlock: ' I don''t get it, she clearly went this way. Everything we
+      found points here. '
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -145,8 +144,8 @@ MonoBehaviour:
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
     displayName: Crow
-    conversationBlock: Wait, Fox! Old Bramble lives close by! I denfintly remember
-      this tree from when we came to visit her with grandma. Maybe she saw Lynx.
+    conversationBlock: I'm sure she's okay. You know Lynx can see things no one else
+      can.
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -157,6 +156,142 @@ MonoBehaviour:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 3
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    entryEndEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: ActiavteContinueDialogueButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 11400000}
+          m_MethodName: IncrementPhaseInDialogue
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - npcType: 1
+    dialogueSide: 1
+    dialogueType: 0
+    imageEntrySprite: {fileID: 0}
+    displayName: Crow
+    conversationBlock: 'She must have been looking for something around here.  '
+    entryStartEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: InstantiateDialoguePrefab
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 4
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    entryEndEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: ActiavteContinueDialogueButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 11400000}
+          m_MethodName: IncrementPhaseInDialogue
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - npcType: 1
+    dialogueSide: 1
+    dialogueType: 0
+    imageEntrySprite: {fileID: 0}
+    displayName: Crow
+    conversationBlock: 'Wait, Fox! Old Bramble lives close by! '
+    entryStartEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: InstantiateDialoguePrefab
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 5
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    entryEndEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: ActiavteContinueDialogueButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 11400000}
+          m_MethodName: IncrementPhaseInDialogue
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - npcType: 1
+    dialogueSide: 1
+    dialogueType: 0
+    imageEntrySprite: {fileID: 0}
+    displayName: Crow
+    conversationBlock: 'I denfintly remember this tree from when we came to visit
+      her with grandma. '
+    entryStartEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: InstantiateDialoguePrefab
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 6
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
@@ -202,7 +337,52 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 4
+            m_IntArgument: 7
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    entryEndEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: ActiavteContinueDialogueButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 11400000}
+          m_MethodName: IncrementPhaseInDialogue
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - npcType: 0
+    dialogueSide: 0
+    dialogueType: 0
+    imageEntrySprite: {fileID: 0}
+    displayName: Fox
+    conversationBlock: Maybe she saw Lynx! It's worth a try...
+    entryStartEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: InstantiateDialoguePrefab
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 8
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0

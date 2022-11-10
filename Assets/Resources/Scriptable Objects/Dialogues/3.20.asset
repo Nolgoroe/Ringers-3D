@@ -99,9 +99,8 @@ MonoBehaviour:
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
     displayName: Bramble
-    conversationBlock: Crow, Fox! Two of my favorite rugrats! I haven't seen you
-      here since Lynx's Fest Of Age. Where is that furry mutt? Aren't you three always
-      together?
+    conversationBlock: 'Crow, Fox! Two of my favorite rugrats! I haven''t seen you
+      here since Lynx''s Fest Of Age. '
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -141,14 +140,12 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - npcType: 0
+  - npcType: 3
     dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
-    displayName: Fox
-    conversationBlock: Auntie Bramble! We're so happy to see you! Lynx dissapeared!
-      We've ben lookin for her for a few days now and the traces we found lead us
-      here.
+    displayName: Brumble
+    conversationBlock: Where is that furry mutt? Aren't you three always together?
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -188,12 +185,12 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - npcType: 3
+  - npcType: 0
     dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
-    displayName: Bramble
-    conversationBlock: Sweet mother Birch!
+    displayName: Fox
+    conversationBlock: 'Auntie Bramble! We''re so happy to see you! Lynx dissapeared! '
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -233,12 +230,13 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - npcType: 1
-    dialogueSide: 1
+  - npcType: 0
+    dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
-    displayName: Crow
-    conversationBlock: We really need all the help we can get.
+    displayName: Fox
+    conversationBlock: We've ben lookin for her for a few days now and the traces
+      we found led us here.
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -283,8 +281,7 @@ MonoBehaviour:
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
     displayName: Bramble
-    conversationBlock: Well, one thing I can do is teach you my famous joker potion
-      reciepe, but you'll have to prove you're ready.
+    conversationBlock: Sweet mother Birch!
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -295,6 +292,142 @@ MonoBehaviour:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 6
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    entryEndEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: ActiavteContinueDialogueButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 11400000}
+          m_MethodName: IncrementPhaseInDialogue
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - npcType: 1
+    dialogueSide: 1
+    dialogueType: 0
+    imageEntrySprite: {fileID: 0}
+    displayName: Crow
+    conversationBlock: We really need all the help we can get.
+    entryStartEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: InstantiateDialoguePrefab
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 7
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    entryEndEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: ActiavteContinueDialogueButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 11400000}
+          m_MethodName: IncrementPhaseInDialogue
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - npcType: 3
+    dialogueSide: 0
+    dialogueType: 0
+    imageEntrySprite: {fileID: 0}
+    displayName: Bramble
+    conversationBlock: Well, one thing I can do is teach you my famous joker potion
+      reciepe.
+    entryStartEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: InstantiateDialoguePrefab
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 8
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    entryEndEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: ActiavteContinueDialogueButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 11400000}
+          m_MethodName: IncrementPhaseInDialogue
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - npcType: 3
+    dialogueSide: 0
+    dialogueType: 0
+    imageEntrySprite: {fileID: 0}
+    displayName: Bramble
+    conversationBlock: But... You'll have to prove you're ready.
+    entryStartEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: InstantiateDialoguePrefab
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 9
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
@@ -340,7 +473,7 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 7
+            m_IntArgument: 10
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0

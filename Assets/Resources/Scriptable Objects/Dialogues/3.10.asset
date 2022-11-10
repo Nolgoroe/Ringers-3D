@@ -54,7 +54,7 @@ MonoBehaviour:
     imageEntrySprite: {fileID: 0}
     displayName: Buttercup
     conversationBlock: 'I thought I heard a familiar voice. Hello, little orchid
-      petals! I see you have been dealing with these Rive bulbes as well. '
+      petals! '
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -94,14 +94,12 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - npcType: 0
+  - npcType: 2
     dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
-    displayName: Fox
-    conversationBlock: 'Ringer Buttercup, it''s so lovely to see you! We''ve been
-      fighting The Rive for days now but it never seems to go away. These bulbs just
-      keep popping out of nowhere!  '
+    displayName: Buttercup
+    conversationBlock: 'I see you have been dealing with these Rive bulbes as well. '
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -141,13 +139,12 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - npcType: 2
+  - npcType: 0
     dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
-    displayName: Buttercup
-    conversationBlock: 'I''ve got just the thing! I''ve been working on this potion
-      recipe and it has been helping me to complete rings much faster when I''m casting. '
+    displayName: Fox
+    conversationBlock: ' It''s terrible! These bulbs just keep popping out of nowhere!  '
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -192,9 +189,8 @@ MonoBehaviour:
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
     displayName: Buttercup
-    conversationBlock: Though most of the time i've been using it to switch my hair
-      with flower petals. It Makes me feel so much more absorbent. It's like I'm
-      one with the Sun.
+    conversationBlock: I've got just the thing! I've been working on this potion
+      recipe for a while.
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -234,12 +230,13 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - npcType: 6
-    dialogueSide: 2
-    dialogueType: 1
-    imageEntrySprite: {fileID: 21300000, guid: 4b0be0d00a448d44ba05b1ab4bb97387, type: 3}
-    displayName: 
-    conversationBlock: 
+  - npcType: 2
+    dialogueSide: 0
+    dialogueType: 0
+    imageEntrySprite: {fileID: 0}
+    displayName: Buttercup
+    conversationBlock: 'It has been helping me to complete rings much faster when
+      casting. '
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -250,6 +247,144 @@ MonoBehaviour:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 5
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    entryEndEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: ActiavteContinueDialogueButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 11400000}
+          m_MethodName: IncrementPhaseInDialogue
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - npcType: 6
+    dialogueSide: 2
+    dialogueType: 1
+    imageEntrySprite: {fileID: 21300000, guid: 4b0be0d00a448d44ba05b1ab4bb97387, type: 3}
+    displayName: 
+    conversationBlock: Though most of the time i've been using it to switch my hair
+      with flower petals.
+    entryStartEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: InstantiateDialoguePrefab
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 6
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    entryEndEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: ActiavteContinueDialogueButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 11400000}
+          m_MethodName: IncrementPhaseInDialogue
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - npcType: 2
+    dialogueSide: 0
+    dialogueType: 0
+    imageEntrySprite: {fileID: 0}
+    displayName: Buttercup
+    conversationBlock: Though most of the time i've been using it to switch my hair
+      with flower petals.
+    entryStartEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: InstantiateDialoguePrefab
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 7
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    entryEndEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: ActiavteContinueDialogueButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 11400000}
+          m_MethodName: IncrementPhaseInDialogue
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - npcType: 2
+    dialogueSide: 0
+    dialogueType: 0
+    imageEntrySprite: {fileID: 0}
+    displayName: Buttercup
+    conversationBlock: ' It Makes me feel so much more absorbent. It''s like I''m
+      one with the Sun.'
+    entryStartEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: InstantiateDialoguePrefab
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 8
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0

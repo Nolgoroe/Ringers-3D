@@ -144,9 +144,7 @@ MonoBehaviour:
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
     displayName: Bramble
-    conversationBlock: 'There''s one more thing I can tell you, girls. Even when
-      Lynx''s tracks disapear from above the earth there are some who see their traces
-      down below. '
+    conversationBlock: There's one more thing I can tell you, girls.
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -191,8 +189,8 @@ MonoBehaviour:
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
     displayName: Bramble
-    conversationBlock: 'My friend Rowan up north in Redroot Covert sees with his
-      roots things that are invisible to the eye. '
+    conversationBlock: 'Even when Lynx''s tracks disapear from above the earth, some
+      can see their traces down below. '
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -203,6 +201,52 @@ MonoBehaviour:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 4
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    entryEndEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: ActiavteContinueDialogueButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 11400000}
+          m_MethodName: IncrementPhaseInDialogue
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - npcType: 3
+    dialogueSide: 0
+    dialogueType: 0
+    imageEntrySprite: {fileID: 0}
+    displayName: Bramble
+    conversationBlock: My friend Rowan is up north in Redroot Covert. I have a feeling
+      he can help you.
+    entryStartEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: InstantiateDialoguePrefab
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 5
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
