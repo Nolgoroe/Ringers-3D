@@ -649,8 +649,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.147, y: 0.44999996}
-  m_SizeDelta: {x: 8.939506, y: 3.4411063}
+  m_AnchoredPosition: {x: -0.147, y: 0.26}
+  m_SizeDelta: {x: 8.939506, y: 3.94002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5279552107289559809
 CanvasRenderer:
@@ -718,7 +718,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<i>text</i> \ntext lol"
+  m_text: "<i>text</i> \ntext lol\nasdasdasd\nasdaasdasdasd"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 05b1f12750f3f644189d47c06dd41e07, type: 2}
   m_sharedMaterial: {fileID: 2490241923332753511, guid: 05b1f12750f3f644189d47c06dd41e07,
@@ -804,7 +804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 2
-  DurationInSeconds: 2.5
+  DurationInSeconds: 0
   Amplitude: 0
   CharacterDurationRatio: 0.1
   CharactersPerDuration: 0
