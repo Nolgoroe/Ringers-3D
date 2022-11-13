@@ -325,7 +325,7 @@ public class LootManager : MonoBehaviour
     {
         if(giveKey)
         {
-            Instantiate(keyPrefab, GameManager.Instance.destroyOutOfLevel);
+            //Instantiate(keyPrefab, GameManager.Instance.destroyOutOfLevel);
 
             giveKey = false;
         }
@@ -521,8 +521,8 @@ public class LootManager : MonoBehaviour
             //display the loot
             //StartCoroutine(DisplayLootGoldRubyToPlayer(rubiesToRecieveInLevel, rubySprite));
 
-            DisplayLootFromChest(rubiesToGiveChest, rubySprite);
-            SoundManager.Instance.PlaySound(Sounds.ItemPop);
+            //DisplayLootFromChest(rubiesToGiveChest, rubySprite);
+            //SoundManager.Instance.PlaySound(Sounds.ItemPop);
 
             PlayerManager.Instance.AddRubies(rubiesToGiveChest);
 
@@ -540,8 +540,8 @@ public class LootManager : MonoBehaviour
                 //display the loot
                 //StartCoroutine(DisplayLootMaterialsToPlayer(LTR.amount, LTR.type));
 
-                DisplayLootFromChest(LTR.amount, LTR.type);
-                SoundManager.Instance.PlaySound(Sounds.ItemPop);
+                //DisplayLootFromChest(LTR.amount, LTR.type);
+                //SoundManager.Instance.PlaySound(Sounds.ItemPop);
 
                 PlayerManager.Instance.AddMaterials(LTR.type, LTR.amount); //////// Figure out how to get amount from outside dynamically
 
@@ -565,8 +565,38 @@ public class LootManager : MonoBehaviour
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
         }
 
+        //TestLevelsSystemManagerSaveData.instance.ResetData();
+
+        CheckGiveKey();
+    }
+
+    public IEnumerator DisplayLootFromChest()
+    {
+        yield return new WaitForSeconds(1.1f);
+        if (rubiesToGiveChest > 0)
+        {
+            DisplayLootFromChest(rubiesToGiveChest, rubySprite);
+            SoundManager.Instance.PlaySound(Sounds.ItemPop);
+
+            yield return new WaitForSeconds(timeBetweenLoots);
+        }
+
+        if (materialsToGiveChest.Count > 0)
+        {
+            foreach (LootToRecieve LTR in materialsToGiveChest)
+            {
+                DisplayLootFromChest(LTR.amount, LTR.type);
+                SoundManager.Instance.PlaySound(Sounds.ItemPop);
+
+                yield return new WaitForSeconds(timeBetweenLoots);
+            }
+
+        }
+
+        parentChestLoot.GetComponent<Animator>().SetTrigger("FinishedLootDisplay");
+        parentChestLoot = null;
+
         yield return new WaitForSeconds(0.1f);
-        //finishedGivingLoot = true;
 
         SoundManager.Instance.PlaySound(Sounds.ChestClose);
 
@@ -575,18 +605,11 @@ public class LootManager : MonoBehaviour
         currentChestLootPos = 0;
         tempDataListChest.Clear();
 
-        parentChestLoot.GetComponent<Animator>().SetTrigger("FinishedLootDisplay");
-        parentChestLoot = null;
-
-        TestLevelsSystemManagerSaveData.instance.ResetData();
-
         yield return new WaitForSeconds(1.7f);
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
         TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
-        CheckGiveKey();
     }
-
     public void DestroyAllChestLootData()
     {
         foreach (Transform lootPos in chestLootPosition)

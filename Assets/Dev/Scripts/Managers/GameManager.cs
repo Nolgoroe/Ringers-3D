@@ -435,7 +435,15 @@ public class GameManager : MonoBehaviour
 
         if (currentLevel.isTimerLevel)
         {
-            TimerLevelManager.instance.InitTimer();
+            if(isRestart)
+            {
+                TimerLevelManager.instance.InitTimer();
+                TimerLevelManager.instance.StartTimer();
+            }
+            else
+            {
+                TimerLevelManager.instance.InitTimer();
+            }
         }
         else
         {
@@ -489,7 +497,6 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.optionsButtonIngame.interactable = true;
             UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
 
-            StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim(false));
             //yield return new WaitForEndOfFrame();
 
             yield return new WaitForSeconds(TutorialSequence.Instacne.delayAppearOnStartLevel);
@@ -498,14 +505,17 @@ public class GameManager : MonoBehaviour
             {
                 TutorialSequence.Instacne.StartTutorialLevelSequence();
             }
-
-            if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
+            else if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
             {
                 if (currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.AnimalAlbum)
                 {
                     StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
                     TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
                 }
+            }
+            else
+            {
+                StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim(false));
             }
         }
     }
@@ -674,7 +684,6 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.optionsButtonIngame.interactable = true;
             UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
 
-            StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim(false));
             //yield return new WaitForEndOfFrame();
 
             yield return new WaitForSeconds(TutorialSequence.Instacne.delayAppearOnStartLevel);
@@ -683,14 +692,17 @@ public class GameManager : MonoBehaviour
             {
                 TutorialSequence.Instacne.StartTutorialLevelSequence();
             }
-
-            if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
+            else if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
             {
                 if (currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && currentLevel.specificTutorialEnum != SpecificTutorialsEnum.AnimalAlbum)
                 {
                     StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
                     TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
                 }
+            }
+            else
+            {
+                StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim(false));
             }
         }
 
@@ -854,6 +866,11 @@ public class GameManager : MonoBehaviour
         if (cheat)
         {
             LevelEnded = true;
+
+            if (currentLevel.isTimerLevel)
+            {
+                TimerLevelManager.instance.isActive = false;
+            }
 
             if (currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.keyLevelIndex && !ZoneManagerHelpData.Instance.currentZoneCheck.hasAwardedKey)
             {

@@ -53,6 +53,7 @@ public class UIManager : MonoBehaviour
     public GameObject OptionsScreen;
     public GameObject cheatOptionsButton;
     public GameObject cheatOptionsScreen;
+    public GameObject inLevelSettings;
     public GameObject wardrobe;
     public GameObject usingPowerupText;
     public GameObject youWinScreen, loseScreen/*, youLoseText*/;
@@ -60,6 +61,7 @@ public class UIManager : MonoBehaviour
     public GameObject clipsAboutToEndMessage;
     public GameObject sureWantToRestartWithLoot;
     public GameObject sureWantToRestartNoLoot;
+    public GameObject sureWantToLeaveLevel;
     public GameObject corruptedZoneScreen;
     public GameObject corruptedZoneSureMessage;
     public GameObject hudCanvasUIBottomZoneMainMap;
@@ -220,6 +222,7 @@ public class UIManager : MonoBehaviour
     public static bool canAdvanceIntro;
 
 
+    bool levelSettingsOpen = false;
 
     PanZoom PZ;
 
@@ -286,6 +289,15 @@ public class UIManager : MonoBehaviour
     public float dialogueEntryOffsetAddAfterImage;
     public float imageEntryOffsetAdd;
 
+    [Header("Sound")]
+    public Image musicIconButtonLevel;
+    public Image SFXIconButtonLevel;
+    public Image musicIconButton, SFXIconButton;
+    public Sprite musicIconOnLevel, musicIconOffLevel;
+    public Sprite SFXIconOnLevel, SFXIconOffLevel;
+    public Sprite musicIconOn, musicIconOff;
+    public Sprite SFXIconOn, SFXIconOff;
+
     public NpcNametagCombo[] npcNametagsCombos;
     private void Start()
     {
@@ -338,6 +350,7 @@ public class UIManager : MonoBehaviour
         clipsAboutToEndMessage.SetActive(false);
         sureWantToRestartWithLoot.SetActive(false);
         sureWantToRestartNoLoot.SetActive(false);
+        sureWantToLeaveLevel.SetActive(false);
         loseScreen.SetActive(false);
         //blackLevelBG.SetActive(false);
         zoomInCorruptedBlack.SetActive(false);
@@ -381,6 +394,7 @@ public class UIManager : MonoBehaviour
         getRewardScreen.SetActive(false);
         testLevelsDataScreen.SetActive(false);
         dialogueMainGameobject.SetActive(false);
+        inLevelSettings.SetActive(false);
 
         activeScreen = null;
 
@@ -463,6 +477,8 @@ public class UIManager : MonoBehaviour
         gameplayCanvas.SetActive(true);
         worldGameObject.SetActive(false);
         hudCanvasUI.SetActive(false);
+
+        levelSettingsOpen = false;
     }
     public void ToMainMenu()
     {
@@ -543,6 +559,39 @@ public class UIManager : MonoBehaviour
             sureWantToRestartNoLoot.SetActive(true);
         }
     }
+
+    public void SureWantToLeaveLevelMessage()
+    {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            return;
+        }
+
+        bGPanelDisableTouch.SetActive(true);
+
+        sureWantToLeaveLevel.SetActive(true);
+    }
+    public void SureWantToLeaveLevelMessageNo()
+    {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
+        bGPanelDisableTouch.SetActive(false);
+        sureWantToLeaveLevel.SetActive(false);
+
+        DisableInLevelSettings();
+    }
+    public void SureWantToLeaveLevelMessageYes()
+    {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
+        bGPanelDisableTouch.SetActive(false);
+        sureWantToLeaveLevel.SetActive(false);
+        DisableInLevelSettings();
+
+        ToHud(gameplayCanvas);
+    }
     private void DisplayRestartLoot()
     {
         if (LootManager.Instance.rubiesToRecieveInLevel > 0)
@@ -584,7 +633,8 @@ public class UIManager : MonoBehaviour
             sureWantToRestartNoLoot.SetActive(false);
         }
 
-        OptionsScreen.SetActive(false);
+        //OptionsScreen.SetActive(false);
+        DisableInLevelSettings();
 
         //if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
         //{
@@ -607,7 +657,9 @@ public class UIManager : MonoBehaviour
         {
             sureWantToRestartNoLoot.SetActive(false);
         }
-        OptionsScreen.SetActive(false);
+
+        //OptionsScreen.SetActive(false);
+        DisableInLevelSettings();
 
         //GameManager.Instance.RestartCurrentLevel();
         StartCoroutine(GameManager.Instance.RestartCurrentLevel());
@@ -794,7 +846,7 @@ public class UIManager : MonoBehaviour
                         TurnOnRingersHutAndInventoryButtons();
                     }
 
-                    TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                    StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
                 }
                 else
                 {
@@ -950,7 +1002,7 @@ public class UIManager : MonoBehaviour
                     //HudCanvasUIHEIGHLIGHTS.SetActive(false);
                     //ItemAndForgeBagHEIGHLIGHTS.SetActive(true);
 
-                    TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                    StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
                 }
             }
         }
@@ -1056,7 +1108,7 @@ public class UIManager : MonoBehaviour
             {
                 if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.AnimalAlbum)
                 {
-                    TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                    StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
                 }
             }
         }
@@ -1107,7 +1159,7 @@ public class UIManager : MonoBehaviour
         {
             if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.AnimalAlbum)
             {
-                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
             }
         }
     }
@@ -1228,7 +1280,7 @@ public class UIManager : MonoBehaviour
         {
             if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
             {
-                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
             }
         }
 
@@ -1280,7 +1332,7 @@ public class UIManager : MonoBehaviour
 
             if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
             {
-                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
 
 
                 matsInventoryButton.GetComponent<Button>().interactable = true;
@@ -1382,7 +1434,7 @@ public class UIManager : MonoBehaviour
         {
             if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
             {
-                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
             }
         }
 
@@ -1464,7 +1516,7 @@ public class UIManager : MonoBehaviour
                 //HudCanvasUIHEIGHLIGHTS.SetActive(false);
                 //ItemAndForgeBagHEIGHLIGHTS.SetActive(true);
 
-                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
 
             }
         }
@@ -1481,6 +1533,26 @@ public class UIManager : MonoBehaviour
 
         OptionsScreen.SetActive(true);
         //isUsingUI = true;
+    }
+    public void OpenLevelSettings()
+    {
+        if (TutorialSequence.Instacne.duringSequence)
+        {
+            return;
+        }
+
+        levelSettingsOpen = !levelSettingsOpen;
+
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
+        if (levelSettingsOpen)
+        {
+            inLevelSettings.SetActive(true);
+        }
+        else
+        {
+            inLevelSettings.SetActive(false);
+        }
     }
     public void OpenCheatOptions()
     {
@@ -2917,5 +2989,37 @@ public class UIManager : MonoBehaviour
     {
         StartCoroutine(GameManager.Instance.RestartCurrentLevel());
 
+    }
+
+    private void DisableInLevelSettings()
+    {
+        levelSettingsOpen = false;
+        inLevelSettings.SetActive(false);
+
+    }
+
+    public void SetMusicOffIcons()
+    {
+        musicIconButtonLevel.sprite = musicIconOffLevel;
+
+        musicIconButton.sprite = musicIconOff;
+    }
+    public void SetMusicOnIcons()
+    {
+        musicIconButtonLevel.sprite = musicIconOnLevel;
+
+        musicIconButton.sprite = musicIconOn;
+    }
+    public void SetSFXOffIcons()
+    {
+        SFXIconButtonLevel.sprite = SFXIconOffLevel;
+
+        SFXIconButton.sprite = SFXIconOff;
+    }
+    public void SetSFXOnIcons()
+    {
+        SFXIconButtonLevel.sprite = SFXIconOnLevel;
+
+        SFXIconButton.sprite = SFXIconOn;
     }
 }

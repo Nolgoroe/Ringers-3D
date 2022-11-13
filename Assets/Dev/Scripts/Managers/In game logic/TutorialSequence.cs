@@ -37,8 +37,10 @@ public class Phase
     public bool isOpenInventoryPhase, isPotionTabPhase, isEmptyTouchPhase, isBrewPhase, isBrewDisplayMaterials;
     public bool isAnimalSymbolCollectionPhase, hasDelay, hasDelayAfter, isAllLocked, isClearScreen, isBoardGone, isGameUIGone;
     public bool isOpenDenPhase, isOpenHollowCraftTabPhase, isOpenInventoryInDenPhase, isCraftPhase, isCloseInventoryPhase, isDragHollowItemPhase;
+    public bool isTimedLevelTimerShowPhase;
     public bool dealPhase, isStatuePhase, isAnimalAlbumPhase, isAnimalAlbumStagTabPhase, isAnimalAlbumAllTabsPhase;
     public bool enterAnimationPhase;
+    public bool autoProgressAfterDelay;
 
     public int[] unlockedPowerups;
     public int[] unlockedClips;
@@ -70,9 +72,9 @@ public enum SpecificTutorialsEnum
     JokerTutorial,
     TileBombTutorial,
     AnimalAlbum,
-    ColorMatch,
-    ShapeMatch,
-
+    BossTimedLevel,
+    ColorMatch, // always last
+    ShapeMatch, // always last
 }
 public class TutorialSequence : MonoBehaviour
 {
@@ -128,8 +130,6 @@ public class TutorialSequence : MonoBehaviour
 
     public void StartTutorialLevelSequence() /// ONLY for level tutorials
     {
-        SoundManager.Instance.PlaySound(Sounds.DialogueAppear);
-
         if (!GameManager.Instance.isDisableTutorials)
         {
             DeactivateAllTutorialScreens();
@@ -171,8 +171,6 @@ public class TutorialSequence : MonoBehaviour
 
     public IEnumerator DisplaySpecificTutorialSequence() /// for anything not levels - like loot tutorial, crafting tutorial or powerups
     {
-        SoundManager.Instance.PlaySound(Sounds.DialogueAppear);
-
         yield return new WaitForEndOfFrame();
 
         if (!GameManager.Instance.isDisableTutorials)
@@ -191,7 +189,7 @@ public class TutorialSequence : MonoBehaviour
 
             currentPhaseInSequenceSpecific = -1; /// it goes up by one in function so it actually starts at 0
             duringSequence = true;
-            IncrementPhaseInSpecificTutorial();
+            StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
 
             //currentPhaseInSequence = 0;
             //duringSequence = true;
@@ -548,6 +546,12 @@ public class TutorialSequence : MonoBehaviour
                     activatedHeighlights.Add(g);
                 }
             }
+
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isTimedLevelTimerShowPhase)
+            {
+                TimerLevelManager.instance.summonedTimerObject.timerHeighlight.SetActive(true);
+                activatedHeighlights.Add(TimerLevelManager.instance.summonedTimerObject.timerHeighlight.gameObject);
+            }
         }
 
         if (!isSpecific)
@@ -672,6 +676,8 @@ public class TutorialSequence : MonoBehaviour
     {
         if (inDelay) yield break;
 
+        SoundManager.Instance.PlaySound(Sounds.DialogueAppear);
+
         if (currentlyActiveTutorialHand)
         {
             Destroy(currentlyActiveTutorialHand.gameObject);
@@ -771,8 +777,6 @@ public class TutorialSequence : MonoBehaviour
             }
         }
 
-
-
         if (currentPhaseInSequenceLevels + 1 <= levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].EndPhaseID)
         {
             Debug.Log("ARRIVED HERE");
@@ -793,13 +797,26 @@ public class TutorialSequence : MonoBehaviour
             }
         }
 
+        if (currentPhaseInSequenceLevels < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Count())
+        {
+            if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].autoProgressAfterDelay)
+            {
+                StartCoroutine(IncrementCurrentPhaseInSequence());
+            }
+        }
+
+
         yield return null;
         ///maskImage.sprite = levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList - 1].sprites[currentPhaseInSequence]; /// NEW
 
     }
 
-    public void IncrementPhaseInSpecificTutorial()
+    public IEnumerator IncrementPhaseInSpecificTutorial()
     {
+        if (inDelay) yield break;
+
+        SoundManager.Instance.PlaySound(Sounds.DialogueAppear);
+
         currentPhaseInSequenceSpecific++;
 
         if (currentlyActiveTutorialHand)
@@ -831,6 +848,11 @@ public class TutorialSequence : MonoBehaviour
                 Debug.LogError("Animal Album Tutorial Done");
             }
 
+            if(currentSpecificTutorial == SpecificTutorialsEnum.BossTimedLevel)
+            {
+                TimerLevelManager.instance.StartTimer();
+            }
+
             if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
             {
                 TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
@@ -843,8 +865,7 @@ public class TutorialSequence : MonoBehaviour
             currentSpecificTutorial = SpecificTutorialsEnum.None;
             maskImage.gameObject.SetActive(false);
             duringSequence = false;
-            activatedHeighlights.Clear();
-            activatedBoardParticles.Clear();
+
 
             if (!GameManager.LevelEnded)
             {
@@ -856,10 +877,8 @@ public class TutorialSequence : MonoBehaviour
 
             DeactivateAllTutorialScreens();
 
-            return;
+            yield break;
         }
-
-        //maskImage.gameObject.SetActive(true);
 
         //clear screen to show it better
         if (currentPhaseInSequenceSpecific < specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase.Count())
@@ -867,13 +886,26 @@ public class TutorialSequence : MonoBehaviour
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[currentPhaseInSequenceSpecific].isClearScreen)
             {
                 maskImage.gameObject.SetActive(false);
-                //UIManager.Instance.tutorialCanvasParent.SetActive(false);
             }
             else
             {
                 UIManager.Instance.tutorialCanvasParent.SetActive(true);
             }
         }
+
+
+        if (currentPhaseInSequenceSpecific < specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase.Count())
+        {
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[currentPhaseInSequenceSpecific].hasDelay && !inDelay)
+            {
+                inDelay = true;
+                yield return new WaitForSeconds(specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[currentPhaseInSequenceSpecific].delayAmount);
+                inDelay = false;
+                maskImage.gameObject.SetActive(true);
+                UIManager.Instance.tutorialCanvasParent.SetActive(true);
+            }
+        }
+
 
         if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens[currentPhaseInSequenceSpecific])
         {
@@ -896,6 +928,27 @@ public class TutorialSequence : MonoBehaviour
             Debug.Log("ARRIVED HERE");
             StartCoroutine(SelectReleventHeighlights(currentPhaseInSequenceSpecific, true));
             ChangePhase(specificTutorials, (int)GameManager.Instance.currentLevel.specificTutorialEnum - 1, currentPhaseInSequenceSpecific);
+        }
+
+
+        if (currentPhaseInSequenceSpecific < specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase.Count())
+        {
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[currentPhaseInSequenceSpecific].hasDelayAfter && !inDelay)
+            {
+                inDelay = true;
+                yield return new WaitForSeconds(specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[currentPhaseInSequenceSpecific].delayAmount);
+                inDelay = false;
+                maskImage.gameObject.SetActive(true);
+                UIManager.Instance.tutorialCanvasParent.SetActive(true);
+            }
+        }
+
+        if (currentPhaseInSequenceSpecific < specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase.Count())
+        {
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[currentPhaseInSequenceSpecific].autoProgressAfterDelay)
+            {
+                StartCoroutine(IncrementPhaseInSpecificTutorial());
+            }
         }
     }
 
@@ -1433,7 +1486,8 @@ public class TutorialSequence : MonoBehaviour
     {
         //if(GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.None)
         //{
-        if(GameManager.Instance.currentLevel.isSpecificTutorial || GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.lootTutorial)
+
+        if (GameManager.Instance.currentLevel.isSpecificTutorial || GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.lootTutorial)
         {
             foreach (GameObject go in specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].screens) /// THESE ARE ALL THE TEXT POPUPS
             {
@@ -1567,7 +1621,7 @@ public class TutorialSequence : MonoBehaviour
     {
         if (isSpecificTutorial)
         {
-            IncrementPhaseInSpecificTutorial();
+            StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
         }
         else
         {

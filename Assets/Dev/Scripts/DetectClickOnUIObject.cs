@@ -14,7 +14,7 @@ public class DetectClickOnUIObject : MonoBehaviour, IPointerClickHandler
 
     private void OnEnable()
     {
-        if (toClose)
+        if (toClose && UIManager.Instance)
         {
             StartCoroutine(UIManager.Instance.SetIsUsingUI(true));
         }

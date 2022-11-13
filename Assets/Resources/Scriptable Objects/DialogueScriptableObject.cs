@@ -103,6 +103,8 @@ public class DialogueScriptableObject : ScriptableObject
         UIManager.Instance.isUsingUI = true;
         UIManager.Instance.dialogueMainGameobject.SetActive(true);
 
+        LaunchStartingEventsGeneral();
+
         LaunchStartingEventsEntry(GameManager.Instance.currentIndexInDialogue);
     }
 

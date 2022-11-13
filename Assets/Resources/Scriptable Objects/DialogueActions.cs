@@ -14,4 +14,13 @@ public class DialogueActions : ScriptableObject
     {
         MaterialsAndForgeManager.Instance.UnlockPotion(PowerUp.Joker);
     }
+
+    public void DeactivateAllGameplayUI()
+    {
+        UIManager.Instance.gameplayCanvas.SetActive(false);
+    }
+    public void ActivateAllGameplayUI()
+    {
+        UIManager.Instance.gameplayCanvas.SetActive(true);
+    }
 }

@@ -15,7 +15,8 @@ public class TimerLevelManager : MonoBehaviour
     public SpriteRenderer timeManagerRenderer;
 
     [Header("Resetable Data")]
-    public GameObject summonedTimerObject;
+    //public GameObject summonedTimerObject;
+    public TimerObjectRefrencer summonedTimerObject;
     public bool isActive;
     public int currentIndex;
     public float currentTime;
@@ -89,13 +90,17 @@ public class TimerLevelManager : MonoBehaviour
     {
         timeBetweenIntervals = GameManager.Instance.currentLevel.timeForLevel / 8;
 
-        summonedTimerObject = Instantiate(timerObject, timerParent);
-        TimerObjectRefrencer summonedTimer = summonedTimerObject.GetComponent<TimerObjectRefrencer>();
+        summonedTimerObject = Instantiate(timerObject, timerParent).GetComponent<TimerObjectRefrencer>();
+        //TimerObjectRefrencer summonedTimer = summonedTimerObject.GetComponent<TimerObjectRefrencer>();
 
         //ToPingPongColor.Add(summonedTimer.sandClockRenderer);
         //ToPingPongColor.AddRange(summonedTimer.tileRenderes);
 
-        tileRenderes.AddRange(summonedTimer.tileRenderes);
+    }
+
+    public void StartTimer()
+    {
+        tileRenderes.AddRange(summonedTimerObject.tileRenderes);
 
         isActive = true;
 
@@ -106,7 +111,7 @@ public class TimerLevelManager : MonoBehaviour
     {
         //ToPingPongColor.Add(tileRenderes[currentIndex]);
 
-        LeanTween.value(tileRenderes[currentIndex].gameObject, 0f, 1, timeBetweenIntervals).setOnUpdate((float val) =>
+        LeanTween.value(tileRenderes[currentIndex].gameObject, 0f, 1, 0.7f).setOnUpdate((float val) =>
         {
             SpriteRenderer renderer = tileRenderes[currentIndex];
             Color newColor = renderer.color;

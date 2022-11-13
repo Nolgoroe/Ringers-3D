@@ -93,11 +93,16 @@ public class CursorController : MonoBehaviour
         {
             if (Input.touchCount == 1)
             {
-                SoundManager.Instance.PlaySound(Sounds.ChestOpen);
 
                 TestLevelsSystemManagerSaveData.instance.canGetChest = false;
                 TestLevelsSystemManager.instance.chestAnimator.SetTrigger("TappedChest");
-                LootManager.Instance.UnpackChestLoot();
+
+                SoundManager.Instance.PlaySound(Sounds.ChestOpen);
+
+                StartCoroutine(LootManager.Instance.DisplayLootFromChest());
+
+                PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TestLevelsSystemManagerSaveData });
+                //LootManager.Instance.UnpackChestLoot();
                 return;
             }
         }
@@ -1075,7 +1080,7 @@ public class CursorController : MonoBehaviour
                                         GameManager.Instance.clipManager.PopulateSlot(clipParent, 10);
                                     }
 
-                                    TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                                    StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
                                 }
                                 else
                                 {

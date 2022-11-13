@@ -192,7 +192,7 @@ public class EquipmentDisplayer : MonoBehaviour
             {
                 if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isBrewPhase)
                 {
-                    TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                    StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
                 }
             }
 

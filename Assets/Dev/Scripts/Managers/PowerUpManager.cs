@@ -258,7 +258,7 @@ public class PowerUpManager : MonoBehaviour
         {
             if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.JokerTutorial && TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPowerupPhase)
             {
-                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
                 powerBeingUsed = StartCoroutine(JokerPower(prop));
             }
         }
@@ -278,7 +278,7 @@ public class PowerUpManager : MonoBehaviour
         {
             if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SwapSidesTutorial && TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPowerupPhase)
             {
-                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
                 powerBeingUsed = StartCoroutine(SwitchPower(prop));
             }
         }
@@ -299,7 +299,7 @@ public class PowerUpManager : MonoBehaviour
         {
             if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.TileBombTutorial && TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPowerupPhase)
             {
-                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
                 powerBeingUsed = StartCoroutine(PieceBombPower(prop));
             }
         }
@@ -319,7 +319,7 @@ public class PowerUpManager : MonoBehaviour
         {
             if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SliceBombTutorial && TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPowerupPhase)
             {
-                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
                 powerBeingUsed = StartCoroutine(SliceBombPower(prop));
             }
         }
@@ -433,7 +433,7 @@ public class PowerUpManager : MonoBehaviour
 
             if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.JokerTutorial)
             {
-                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
             }
             Debug.Log("Joker");
         }
@@ -512,7 +512,7 @@ public class PowerUpManager : MonoBehaviour
 
             if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SwapSidesTutorial)
             {
-                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
             }
 
             Debug.Log("Switch");
@@ -564,7 +564,7 @@ public class PowerUpManager : MonoBehaviour
 
             if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.TileBombTutorial)
             {
-                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
             }
 
         }
@@ -704,7 +704,7 @@ public class PowerUpManager : MonoBehaviour
 
         if (TutorialSequence.Instacne.currentSpecificTutorial == SpecificTutorialsEnum.SliceBombTutorial)
         {
-            TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+            StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
         }
 
         Debug.Log("Slice Bomb");

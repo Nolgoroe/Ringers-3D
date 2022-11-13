@@ -74,4 +74,10 @@ public class AnimationEventsAnimals : MonoBehaviour
         Debug.LogError("TESTING");
         SoundManager.Instance.PlaySound(clip);
     }
+
+    public void ResetChestDataAndGiveLoot()
+    {
+        LootManager.Instance.UnpackChestLoot();
+        TestLevelsSystemManagerSaveData.instance.ResetData();
+    }
 }

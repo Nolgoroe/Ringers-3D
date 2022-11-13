@@ -44,7 +44,7 @@ public class HollowZoneSlot : MonoBehaviour
         {
             if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
             {
-                TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial();
+                StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
             }
         }
 

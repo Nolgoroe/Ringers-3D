@@ -392,7 +392,8 @@ public class SoundManager : MonoBehaviour
 
         if (muteMusic)
         {
-            musicToggle.isOn = false;
+            UIManager.Instance.SetMusicOffIcons();
+            //musicToggle.isOn = false;
             audioSourceAmbience.volume = 0;
             forestSounds.volume = 0;
             normalAmbienceLevel.volume = 0;
@@ -400,7 +401,8 @@ public class SoundManager : MonoBehaviour
         }
         else
         {
-            musicToggle.isOn = true;
+            //musicToggle.isOn = true;
+            UIManager.Instance.SetMusicOnIcons();
 
             audioSourceAmbience.volume = 1;
             hudBGMuisc.volume = 1;
@@ -425,13 +427,16 @@ public class SoundManager : MonoBehaviour
 
         if (muteSFX)
         {
-            SFXToggle.isOn = false;
+            UIManager.Instance.SetSFXOffIcons();
+
+            //SFXToggle.isOn = false;
 
             audioSourceSFX.volume = 0;
         }
         else
         {
-            SFXToggle.isOn = true;
+            //SFXToggle.isOn = true;
+            UIManager.Instance.SetSFXOnIcons();
 
             audioSourceSFX.volume = 1;
         }

@@ -374,7 +374,7 @@ public class AnimationManager : MonoBehaviour
 
         if (GameManager.Instance.currentLevel.levelEndDialogueSO)
         {
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(1.2f);
 
             GameManager.Instance.currentDialogue = null;
             GameManager.Instance.currentIndexInDialogue = 0;
@@ -1005,7 +1005,8 @@ public class AnimationManager : MonoBehaviour
 
         UIManager.Instance.InGameUiScreens.SetActive(true);
 
-        if (!GameManager.Instance.currentLevel.isGrindLevel)
+        
+        if (!GameManager.Instance.currentLevel.isTimerLevel)
         {
             if (GameManager.Instance.currentLevel.isAnimalLevel)
             {
@@ -1055,10 +1056,10 @@ public class AnimationManager : MonoBehaviour
                 }
             }
         }
-        //else
-        //{
-        //   StartCoroutine(AfterAnimalAnimation());
-        //}
+        else
+        {
+            StartCoroutine(AfterAnimalAnimation());
+        }
 
         //TutorialSequence.Instacne.CheckDoPotionTutorial();
 
