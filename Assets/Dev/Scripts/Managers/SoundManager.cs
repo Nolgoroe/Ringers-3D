@@ -45,6 +45,7 @@ public enum Sounds
     BoarRelease,
     DialogueAppear,
     DialogueStages,
+    SuccessTextAppear,
     //// Add all sounds here
 }
 

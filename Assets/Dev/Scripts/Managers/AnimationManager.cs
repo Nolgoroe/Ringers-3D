@@ -440,6 +440,8 @@ public class AnimationManager : MonoBehaviour
 
         UIManager.Instance.youWinScreen.SetActive(true);
 
+        SoundManager.Instance.PlaySound(Sounds.SuccessTextAppear);
+
         LeanTween.value(UIManager.Instance.sucessText.gameObject, 0f, 1, fadeInTimeTextSuccess).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
         {
             TMP_Text succesText = UIManager.Instance.sucessText;
