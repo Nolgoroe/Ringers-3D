@@ -151,6 +151,8 @@ public class GameManager : MonoBehaviour
         AnimationManager.instance.ResetEnterLevelAnimation();
         AnimalsManager.Instance.ResetAnimalManagerData();
 
+        yield return new WaitForEndOfFrame();
+
         AnimationManager.instance.hasGivenChest = false;
 
         timeStartLevel = DateTime.Now.ToString("HH:mm:ss");
@@ -501,6 +503,7 @@ public class GameManager : MonoBehaviour
 
             yield return new WaitForSeconds(TutorialSequence.Instacne.delayAppearOnStartLevel);
 
+
             if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
             {
                 TutorialSequence.Instacne.StartTutorialLevelSequence();
@@ -511,6 +514,10 @@ public class GameManager : MonoBehaviour
                 {
                     StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
                     TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
+                }
+                else
+                {
+                    StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim(false));
                 }
             }
             else
@@ -526,6 +533,8 @@ public class GameManager : MonoBehaviour
 
         AnimationManager.instance.ResetEnterLevelAnimation();
         AnimalsManager.Instance.ResetAnimalManagerData();
+
+        yield return new WaitForEndOfFrame();
 
         if (currentLevel.ver1Boss)
         {

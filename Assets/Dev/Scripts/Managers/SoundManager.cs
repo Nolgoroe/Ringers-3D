@@ -44,6 +44,7 @@ public enum Sounds
     GiveChestItem,
     BoarRelease,
     DialogueAppear,
+    DialogueStages,
     //// Add all sounds here
 }
 

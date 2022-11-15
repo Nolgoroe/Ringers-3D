@@ -1547,10 +1547,12 @@ public class UIManager : MonoBehaviour
 
         if (levelSettingsOpen)
         {
+            isUsingUI = true;
             inLevelSettings.SetActive(true);
         }
         else
         {
+            isUsingUI = false;
             inLevelSettings.SetActive(false);
         }
     }
@@ -2993,6 +2995,8 @@ public class UIManager : MonoBehaviour
 
     private void DisableInLevelSettings()
     {
+        isUsingUI = false;
+
         levelSettingsOpen = false;
         inLevelSettings.SetActive(false);
 

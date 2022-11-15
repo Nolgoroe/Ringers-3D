@@ -151,8 +151,14 @@ public class DialogueScriptableObject : ScriptableObject
 
         RectTransform rect = null;
 
-        SoundManager.Instance.PlaySound(Sounds.DialogueAppear);
-
+        if (GameManager.Instance.currentIndexInDialogue == 0)
+        {
+            SoundManager.Instance.PlaySound(Sounds.DialogueAppear);
+        }
+        else
+        {
+            SoundManager.Instance.PlaySound(Sounds.DialogueStages);
+        }
         switch (allEntries[index].dialogueType)
         {
             case DialogueType.Dialogue:

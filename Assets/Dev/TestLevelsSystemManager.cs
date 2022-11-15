@@ -178,7 +178,7 @@ public class TestLevelsSystemManager : MonoBehaviour
 
     public bool isGiveChest(int index)
     {
-        return index >= numOfSections;
+        return index >= numOfSections - 1;
     }
     private void ActivateStarOrChestMap()
     {

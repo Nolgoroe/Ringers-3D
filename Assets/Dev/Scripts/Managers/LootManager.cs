@@ -605,7 +605,7 @@ public class LootManager : MonoBehaviour
         currentChestLootPos = 0;
         tempDataListChest.Clear();
 
-        yield return new WaitForSeconds(1.7f);
+        yield return new WaitForSeconds(2f);
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
         TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();

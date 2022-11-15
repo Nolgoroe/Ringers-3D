@@ -52,8 +52,8 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
         {
             //TEMP HERE
             if (connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone 
-                || (connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone && ServerRelatedData.instance.canRepeatLevels)
-                || connectedLevelScriptableObject.isTimerLevel)
+                || (connectedClusterScriptableObject.clusterLevels[indexInCluster].levelIndexInZone < ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone 
+                && ServerRelatedData.instance.canRepeatLevels))
             {
                 GameManager.Instance.currentIndexInCluster = indexInCluster;
                 GameManager.Instance.currentCluster = connectedClusterScriptableObject;
