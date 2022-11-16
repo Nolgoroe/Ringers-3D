@@ -855,8 +855,11 @@ public class TutorialSequence : MonoBehaviour
 
             if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
             {
-                TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
-                PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+                if(GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen || GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft || GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.AnimalAlbum)
+                {
+                    TutorialSaveData.Instance.completedSpecificTutorialLevelId.Add(GameManager.Instance.currentLevel.numIndexForLeaderBoard);
+                    PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+                }
             }
 
             UIManager.Instance.requiredButtonForTutorialPhase = null;
@@ -1144,6 +1147,8 @@ public class TutorialSequence : MonoBehaviour
     public void PowerUpPhase(Sequence[] tutorialArray, int TutorialIndex, int phaseIndex)
     {
         UIManager.Instance.dealButton.interactable = false;
+
+        GameManager.Instance.powerupManager.PowerupButtonsActivation(true);
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
         {
