@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 using System.Linq;
 using UnityEngine.Events;
+using TMPro;
 
 public enum DialogueSide
 {
@@ -34,6 +35,7 @@ public enum NPCs
 public class NpcNametagCombo
 {
     public NPCs npcType;
+    public GameObject nameTagObject;
     public Sprite potrtaitSprite;
     public Sprite nameTagSprite;
 }
@@ -145,6 +147,10 @@ public class DialogueScriptableObject : ScriptableObject
 
     public void InstantiateDialoguePrefab(int index)
     {
+
+        DialogueSide side = DialogueSide.None;
+
+
         UIManager.Instance.continueDialogueButton.gameObject.SetActive(false);
         UIManager.Instance.endDialogueButton.gameObject.SetActive(false);
         UIManager.Instance.skipButton.gameObject.SetActive(true);
@@ -175,12 +181,18 @@ public class DialogueScriptableObject : ScriptableObject
                 switch (allEntries[index].dialogueSide)
                 {
                     case DialogueSide.right:
+
+                        side = DialogueSide.right;
+
                         rect = Instantiate(dialogueEntryRightPrefab, UIManager.Instance.DialogueParent).GetComponent<RectTransform>();
                         rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, GameManager.Instance.currentDialogueHeightValue - /*GameManager.Instance.currentDialogueMultiplier **/ (offsetYAfterImage + UIManager.Instance.dialogueEntryOffsetAddRight));
 
                         UIManager.Instance.heightScrollToAdd = offsetYAfterImage + UIManager.Instance.dialogueEntryOffsetAddRight;
                         break;
                     case DialogueSide.left:
+
+                        side = DialogueSide.left;
+
                         rect = Instantiate(dialogueEntryLeftPrefab, UIManager.Instance.DialogueParent).GetComponent<RectTransform>();
                         rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, GameManager.Instance.currentDialogueHeightValue - /*GameManager.Instance.currentDialogueMultiplier **/ (offsetYAfterImage + UIManager.Instance.dialogueEntryOffsetAddLeft));
 
@@ -192,7 +204,7 @@ public class DialogueScriptableObject : ScriptableObject
 
                 if (rect)
                 {
-                    SetDialogueEntryData(rect.gameObject, index);
+                    SetDialogueEntryData(rect.gameObject, index, side);
 
                     CheckAutoScrollDialogue();
 
@@ -232,7 +244,7 @@ public class DialogueScriptableObject : ScriptableObject
 
     }
 
-    private void SetDialogueEntryData(GameObject dialogueRef, int index)
+    private void SetDialogueEntryData(GameObject dialogueRef, int index, DialogueSide side)
     {
         DialogueObjectRefrences refs = dialogueRef.GetComponent<DialogueObjectRefrences>();
         //refs.textBGRender.sprite = allEntries[index].dialogueTextBGSprite;
@@ -244,7 +256,9 @@ public class DialogueScriptableObject : ScriptableObject
             Debug.LogError("Error loading dialogue");
             return;
         }
-        
+
+        CreateNameTagByNPC(refs, combo, side);
+
         refs.portraitRenderer.sprite = combo.potrtaitSprite;
         refs.nameBGRenderer.sprite = combo.nameTagSprite;
         refs.textObject.text = "";
@@ -265,6 +279,30 @@ public class DialogueScriptableObject : ScriptableObject
 
         //image entry has no display we need to change
         GameManager.Instance.latestEntry = null;
+    }
+
+    private void CreateNameTagByNPC(DialogueObjectRefrences dialogueRef, NpcNametagCombo combo, DialogueSide side)
+    {
+        GameObject go = Instantiate(combo.nameTagObject, dialogueRef.textBoxParent);
+
+        if(go)
+        {
+            dialogueRef.nameBGRenderer = go.GetComponent<SpriteRenderer>();
+
+            if(go.transform.childCount > 0)
+            {
+                dialogueRef.nameText = go.transform.GetChild(0).GetComponent<TMP_Text>();
+            }
+
+            if(side == DialogueSide.left)
+            {
+                go.transform.localPosition = new Vector3(-0.25f, go.transform.localPosition.y, go.transform.localPosition.z);
+            }
+            else
+            {
+                go.transform.localPosition = new Vector3(-1, go.transform.localPosition.y, go.transform.localPosition.z);
+            }
+        }
     }
 
     public void ActiavteContinueDialogueButton()

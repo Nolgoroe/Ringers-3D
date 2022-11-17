@@ -288,7 +288,8 @@ public class UIManager : MonoBehaviour
     public float dialogueEntryOffsetAddRight;
     public float dialogueEntryOffsetAddAfterImage;
     public float imageEntryOffsetAdd;
-
+    public NpcNametagCombo[] npcNametagsCombos;
+    
     [Header("Sound")]
     public Image musicIconButtonLevel;
     public Image SFXIconButtonLevel;
@@ -298,7 +299,6 @@ public class UIManager : MonoBehaviour
     public Sprite musicIconOn, musicIconOff;
     public Sprite SFXIconOn, SFXIconOff;
 
-    public NpcNametagCombo[] npcNametagsCombos;
     private void Start()
     {
         Instance = this;

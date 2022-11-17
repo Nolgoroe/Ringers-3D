@@ -12,8 +12,9 @@ public class DialogueObjectRefrences : MonoBehaviour
     public SpriteRenderer nameBGRenderer;
 
     public TMP_Text textObject; 
-    public TMP_Text nameText; 
+    public TMP_Text nameText;
 
+    public Transform textBoxParent;
 
     [Header("Image Entry")]
     public SpriteRenderer spriteImageRenderer;
