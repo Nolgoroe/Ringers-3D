@@ -17,6 +17,7 @@ public class IconSpritesPerCondition
     public bool isTutorial;
     public bool isAnimal;
     public bool isChest;
+    public bool isTimedLevel;
     public Sprite levelDoneSprite, levelFirstTimeIconSprite, nextLevelSprite;
 }
 [Serializable]
@@ -66,6 +67,8 @@ public class ZoneManagerHelpData : MonoBehaviour
     public List<GameObject> zoneGrindLevelPerZone;
 
     public GameObject testZone;
+
+    //public Sprite bossLevelSpriteFirstTime, bossLevelSpriteDone;
     private void Start()
     {
         Instance = this;

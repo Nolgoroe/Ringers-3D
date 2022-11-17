@@ -33,7 +33,7 @@ public class AnimationEventsAnimals : MonoBehaviour
         }
         else if (GameManager.Instance.currentLevel.isTimerLevel)
         {
-            CallAfterAnimalAnimation();
+            //CallAfterAnimalAnimation();
         }
         else
         {

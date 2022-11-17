@@ -12,6 +12,7 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
     public bool isGrindLevel;
     public bool isAnimalLevel;
     public bool isBossLevel;
+    public bool isTimed;
     public bool isChest;
 
     public int NextZoneID;///only if key level
@@ -262,6 +263,7 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
         isGrindLevel = false;
         isAnimalLevel = false;
         isBossLevel = false;
+        isTimed = false;
         isChest = false;
         indexInCluster = -1;
 
@@ -309,9 +311,9 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
             isBossLevel = true;
         }
 
-        if (connectedClusterScriptableObject.clusterLevels[indexInCluster].isBoss)
+        if (connectedClusterScriptableObject.clusterLevels[indexInCluster].isTimerLevel)
         {
-            isBossLevel = true;
+            isTimed = true;
         }
 
         if(connectedLevelScriptableObject == connectedClusterScriptableObject.clusterLevels[connectedClusterScriptableObject.clusterLevels.Length - 1])
@@ -351,6 +353,11 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
         if (isBossLevel)
         {
             newName += " Boss" + " ";
+        }
+
+        if (isTimed)
+        {
+            newName += " Timed" + " ";
         }
 
         if (isChest)

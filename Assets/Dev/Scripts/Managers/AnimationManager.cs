@@ -363,10 +363,12 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.restartButton.interactable = true;
         UIManager.Instance.dealButton.interactable = true;
 
-        //if (GameManager.Instance.currentLevel.isGrindLevel)
-        //{
-        //    StartCoroutine(AfterAnimalAnimation());
-        //}
+        if (GameManager.Instance.currentLevel.isTimerLevel)
+        {
+            yield return new WaitForSeconds(0.3f);
+
+            StartCoroutine(AfterAnimalAnimation());
+        }
     }
 
     public IEnumerator AfterAnimalAnimation()
@@ -628,7 +630,7 @@ public class AnimationManager : MonoBehaviour
 
         UIManager.Instance.backToHubButton.gameObject.SetActive(true);
 
-        if (TestLevelsSystemManager.instance.isGiveChest(GameManager.Instance.currentIndexInCluster))
+        if (TestLevelsSystemManager.instance.isGiveChest(GameManager.Instance.currentIndexInCluster) && !GameManager.Instance.currentLevel.isTimerLevel)
         {
             Image nextLevelButtonImage = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>();
             nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 0);
@@ -643,27 +645,15 @@ public class AnimationManager : MonoBehaviour
         }
         else
         {
-            UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
-            UIManager.Instance.nextLevelFromWinScreen.interactable = true;
-
-            UIManager.Instance.backToHubButton.gameObject.SetActive(true);
-            UIManager.Instance.backToHubButton.interactable = true;
-
-            if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
+            if (GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft
+                && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen
+                && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.AnimalAlbum
+                && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.BossTimedLevel)
             {
-                if (GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.AnimalAlbum)
-                {
-                    LeanTween.value(UIManager.Instance.nextLevelFromWinScreen.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
-                    {
-                        Image image = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>(); ;
-                        Color newColor = image.color;
-                        newColor.a = val;
-                        image.color = newColor;
-                    });
-                }
-            }
-            else
-            {
+                UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
+                UIManager.Instance.nextLevelFromWinScreen.interactable = true;
+
+
                 LeanTween.value(UIManager.Instance.nextLevelFromWinScreen.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
                 {
                     Image image = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>(); ;
@@ -672,6 +662,25 @@ public class AnimationManager : MonoBehaviour
                     image.color = newColor;
                 });
             }
+            else
+            {
+                UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+                UIManager.Instance.nextLevelFromWinScreen.interactable = false;
+
+
+                //LeanTween.value(UIManager.Instance.nextLevelFromWinScreen.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+                //{
+                //    Image image = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>(); ;
+                //    Color newColor = image.color;
+                //    newColor.a = val;
+                //    image.color = newColor;
+                //});
+            }
+
+
+
+            UIManager.Instance.backToHubButton.gameObject.SetActive(true);
+            UIManager.Instance.backToHubButton.interactable = true;
 
             LeanTween.value(UIManager.Instance.backToHubButton.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
             {
@@ -1246,7 +1255,7 @@ public class AnimationManager : MonoBehaviour
             restartGrind.alpha = 1;
         }
 
-        if (TestLevelsSystemManager.instance.isGiveChest(GameManager.Instance.currentIndexInCluster))
+        if (TestLevelsSystemManager.instance.isGiveChest(GameManager.Instance.currentIndexInCluster) && !GameManager.Instance.currentLevel.isTimerLevel)
         {
             UIManager.Instance.nextLevelFromWinScreen.interactable = false;
             UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
