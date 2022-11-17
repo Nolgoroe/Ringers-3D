@@ -23,9 +23,12 @@ public class AnimationEventsAnimals : MonoBehaviour
                 AnimalsManager.Instance.statueToSwap.GetComponent<CameraShake>().ShakeOnce();
             }
 
-            if (AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>())
+            if (GameManager.Instance.currentIndexInCluster == GameManager.Instance.currentCluster.clusterLevels.Length - 1)
             {
-                AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>().renderer.materials[0].EnableKeyword("_EMISSION");
+                if (AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>())
+                {
+                    AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>().renderer.materials[0].EnableKeyword("_EMISSION");
+                }
             }
         }
         else if (GameManager.Instance.currentLevel.isTimerLevel)
