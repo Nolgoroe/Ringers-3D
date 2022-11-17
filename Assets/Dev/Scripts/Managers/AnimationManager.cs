@@ -1238,22 +1238,22 @@ public class AnimationManager : MonoBehaviour
         //}
 
 
-        if (!GameManager.Instance.currentLevel.isGrindLevel)
-        {
-            Image backToHubImage = UIManager.Instance.backToHubButton.GetComponent<Image>();
+        //if (!GameManager.Instance.currentLevel.isGrindLevel)
+        //{
+        //    Image backToHubImage = UIManager.Instance.backToHubButton.GetComponent<Image>();
 
-            backToHubImage.color = new Color(backToHubImage.color.r, backToHubImage.color.g, backToHubImage.color.b, 1);
-        }
-        else
-        {
-            Image backToHubImage = UIManager.Instance.backToHubButton.GetComponent<Image>();
+        //    backToHubImage.color = new Color(backToHubImage.color.r, backToHubImage.color.g, backToHubImage.color.b, 1);
+        //}
+        //else
+        //{
+        //    Image backToHubImage = UIManager.Instance.backToHubButton.GetComponent<Image>();
 
-            backToHubImage.color = new Color(backToHubImage.color.r, backToHubImage.color.g, backToHubImage.color.b, 1);
+        //    backToHubImage.color = new Color(backToHubImage.color.r, backToHubImage.color.g, backToHubImage.color.b, 1);
 
-            CanvasGroup restartGrind = UIManager.Instance.restartGrindLevel.GetComponent<CanvasGroup>();
+        //    CanvasGroup restartGrind = UIManager.Instance.restartGrindLevel.GetComponent<CanvasGroup>();
 
-            restartGrind.alpha = 1;
-        }
+        //    restartGrind.alpha = 1;
+        //}
 
         if (TestLevelsSystemManager.instance.isGiveChest(GameManager.Instance.currentIndexInCluster) && !GameManager.Instance.currentLevel.isTimerLevel)
         {
@@ -1281,6 +1281,9 @@ public class AnimationManager : MonoBehaviour
 
             Image nextLevelButtonImage = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>();
             nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 1);
+
+            Image backToHubImage = UIManager.Instance.backToHubButton.GetComponent<Image>();
+            backToHubImage.color = new Color(backToHubImage.color.r, backToHubImage.color.g, backToHubImage.color.b, 1);
 
             //if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
             //{

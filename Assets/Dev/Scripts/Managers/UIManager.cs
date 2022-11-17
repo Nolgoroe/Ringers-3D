@@ -2673,8 +2673,8 @@ public class UIManager : MonoBehaviour
                 button.interactable = true;
             }
 
-            TutorialSaveData.Instance.hasFinishedPotion = true;
-            TutorialSaveData.Instance.hasFinishedAnimalAlbum = true;
+            //TutorialSaveData.Instance.hasFinishedPotion = true;
+            //TutorialSaveData.Instance.hasFinishedAnimalAlbum = true;
         }
     }
 
