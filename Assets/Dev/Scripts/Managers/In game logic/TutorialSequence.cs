@@ -676,7 +676,7 @@ public class TutorialSequence : MonoBehaviour
     {
         if (inDelay) yield break;
 
-        SoundManager.Instance.PlaySound(Sounds.DialogueAppear);
+        SoundManager.Instance.PlaySound(Sounds.DialogueStages);
 
         if (currentlyActiveTutorialHand)
         {
@@ -815,7 +815,7 @@ public class TutorialSequence : MonoBehaviour
     {
         if (inDelay) yield break;
 
-        SoundManager.Instance.PlaySound(Sounds.DialogueAppear);
+        SoundManager.Instance.PlaySound(Sounds.DialogueStages);
 
         currentPhaseInSequenceSpecific++;
 

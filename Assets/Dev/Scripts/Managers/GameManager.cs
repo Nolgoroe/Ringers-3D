@@ -184,6 +184,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.toMapButton.SetActive(true);
         UIManager.Instance.googlePlayButton.SetActive(false);
         UIManager.Instance.switchAccountButton.SetActive(false);
+        UIManager.Instance.inLevelSettings.SetActive(false);
 
         if (isRestart)
         {
@@ -1198,7 +1199,16 @@ public class GameManager : MonoBehaviour
 
         if (AnimalsManager.Instance.currentLevelLiveAnimal)
         {
-            Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
+            AnimalPrefabData APD = AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
+
+            if (APD.animalSO.animalType == AnimalTypesInGame.Owl)
+            {
+                Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.transform.GetChild(1).gameObject);
+            }
+            else
+            {
+                Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
+            }
         }
 
         foreach (GameObject go in TutorialSequence.Instacne.activatedHeighlights)

@@ -251,6 +251,9 @@ public class DialogueScriptableObject : ScriptableObject
         refs.nameText.text = allEntries[index].displayName;
         refs.textObject.text = allEntries[index].conversationBlock;
 
+        //refs.nameText.fontSizeMin = 25;
+        //refs.nameText.fontSizeMax = 25;
+
         GameManager.Instance.latestEntry = refs;
 
         //UIManager.Instance.CallTypewriterText(this, index, refs.textObject);

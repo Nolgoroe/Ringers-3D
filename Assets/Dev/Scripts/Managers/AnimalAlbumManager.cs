@@ -21,7 +21,6 @@ public class PageToPageImages
 {
     public Page page;
     public AlbumImageAnimalData[] pageImages;
-
 }
 public class AnimalAlbumManager : MonoBehaviour
 {
@@ -39,6 +38,7 @@ public class AnimalAlbumManager : MonoBehaviour
     //public Dictionary<AnimalsInGame, Sprite> animalEnumToSpriteLocked;
 
     public Button giveRewardButton;
+    public GameObject presentIcon;
 
     int currentPageNum = 0;
 
@@ -180,10 +180,12 @@ public class AnimalAlbumManager : MonoBehaviour
                 if (!CPTR.gaveReward)
                 {
                     giveRewardButton.gameObject.SetActive(true);
+                    presentIcon.SetActive(true);
                 }
                 else
                 {
                     giveRewardButton.gameObject.SetActive(false);
+                    presentIcon.SetActive(false);
                 }
             }
         }
@@ -191,6 +193,7 @@ public class AnimalAlbumManager : MonoBehaviour
         {
             CompletedPageToReward CPTR = AnimalsManager.Instance.completedAnimalPagesToReward.Where(p => p.completedAnimalPagesID == currentPageNum).FirstOrDefault();
             giveRewardButton.gameObject.SetActive(false);
+            presentIcon.SetActive(true);
         }
     }
 
@@ -202,6 +205,7 @@ public class AnimalAlbumManager : MonoBehaviour
         {
             CPTR.gaveReward = true;
             giveRewardButton.gameObject.SetActive(false);
+            presentIcon.SetActive(false);
 
             int randomNumRecieve = GetAmountOfRubyRewardClearAlbumPage();
             PlayerManager.Instance.AddRubies(randomNumRecieve);

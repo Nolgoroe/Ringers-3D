@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AnimationEventsAnimals : MonoBehaviour
 {
@@ -65,6 +66,15 @@ public class AnimationEventsAnimals : MonoBehaviour
         //    UIManager.Instance.nextLevelFromWinScreen.interactable = true;
         //    UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
         //}
+
+        LeanTween.value(UIManager.Instance.backToHubButton.gameObject, 0f, 1, AnimationManager.instance.fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        {
+            Image image = UIManager.Instance.backToHubButton.GetComponent<Image>();
+            Color newColor = image.color;
+            newColor.a = val;
+            image.color = newColor;
+        });
+
         UIManager.Instance.backToHubButton.gameObject.SetActive(true);
         UIManager.Instance.backToHubButton.interactable = true;
     }

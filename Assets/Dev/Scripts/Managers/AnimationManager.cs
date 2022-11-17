@@ -432,9 +432,18 @@ public class AnimationManager : MonoBehaviour
 
         if (AnimalsManager.Instance.currentLevelLiveAnimal)
         {
-            Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
-            AnimalsManager.Instance.currentLevelLiveAnimal.SetActive(false);
+            AnimalPrefabData APD = AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
+
+            if (APD.animalSO.animalType == AnimalTypesInGame.Owl)
+            {
+                Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.transform.GetChild(1).gameObject);
+            }
+            else
+            {
+                Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
+            }
         }
+
         ///summon VFX HERE
         ///
 
@@ -509,7 +518,7 @@ public class AnimationManager : MonoBehaviour
             goSR.color = new Color(goSR.color.r, goSR.color.g, goSR.color.b, 1);
         }
 
-        if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+        if (!GameManager.Instance.currentLevel.isTimerLevel && GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
         {
             if (!hasGivenChest)
             {
@@ -588,34 +597,34 @@ public class AnimationManager : MonoBehaviour
 
         yield return new WaitForSeconds(TestLevelsSystemManager.instance.barAnimateSpeed + 0.1f);
 
-        if (!GameManager.Instance.currentLevel.isGrindLevel)
-        { 
-            LeanTween.value(UIManager.Instance.backToHubButton.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
-            {
-                Image image = UIManager.Instance.backToHubButton.GetComponent<Image>();
-                Color newColor = image.color;
-                newColor.a = val;
-                image.color = newColor;
-            });
-        }
-        else
-        {
-            LeanTween.value(UIManager.Instance.backToHubButton.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
-            {
-                Image image = UIManager.Instance.backToHubButton.GetComponent<Image>();
-                Color newColor = image.color;
-                newColor.a = val;
-                image.color = newColor;
-            });
+        //if (!GameManager.Instance.currentLevel.isGrindLevel)
+        //{ 
+        //    LeanTween.value(UIManager.Instance.backToHubButton.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        //    {
+        //        Image image = UIManager.Instance.backToHubButton.GetComponent<Image>();
+        //        Color newColor = image.color;
+        //        newColor.a = val;
+        //        image.color = newColor;
+        //    });
+        //}
+        //else
+        //{
+        //    LeanTween.value(UIManager.Instance.backToHubButton.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        //    {
+        //        Image image = UIManager.Instance.backToHubButton.GetComponent<Image>();
+        //        Color newColor = image.color;
+        //        newColor.a = val;
+        //        image.color = newColor;
+        //    });
 
-            LeanTween.value(UIManager.Instance.restartGrindLevel.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
-            {
-                CanvasGroup image = UIManager.Instance.restartGrindLevel.GetComponent<CanvasGroup>();
-                float num = image.alpha;
-                num = val;
-                image.alpha = num;
-            });
-        }
+        //    LeanTween.value(UIManager.Instance.restartGrindLevel.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+        //    {
+        //        CanvasGroup image = UIManager.Instance.restartGrindLevel.GetComponent<CanvasGroup>();
+        //        float num = image.alpha;
+        //        num = val;
+        //        image.alpha = num;
+        //    });
+        //}
 
         UIManager.Instance.backToHubButton.gameObject.SetActive(true);
 
@@ -635,9 +644,7 @@ public class AnimationManager : MonoBehaviour
         else
         {
             UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
-
             UIManager.Instance.nextLevelFromWinScreen.interactable = true;
-            UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
 
             UIManager.Instance.backToHubButton.gameObject.SetActive(true);
             UIManager.Instance.backToHubButton.interactable = true;
@@ -665,6 +672,14 @@ public class AnimationManager : MonoBehaviour
                     image.color = newColor;
                 });
             }
+
+            LeanTween.value(UIManager.Instance.backToHubButton.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
+            {
+                Image image = UIManager.Instance.backToHubButton.GetComponent<Image>();
+                Color newColor = image.color;
+                newColor.a = val;
+                image.color = newColor;
+            });
 
             //UIManager.Instance.backToHubButton.interactable = true;
         }
@@ -1190,7 +1205,7 @@ public class AnimationManager : MonoBehaviour
 
 
 
-        if (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+        if (!GameManager.Instance.currentLevel.isTimerLevel && GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
         {
             if(!hasGivenChest)
             {
@@ -1278,10 +1293,19 @@ public class AnimationManager : MonoBehaviour
         ConnectionManager.Instance.TurnOffAllConnectedVFX();
 
 
-        if (AnimalsManager.Instance.currentLevelLiveAnimal)
-        {
-            Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
-        }
+        //if (AnimalsManager.Instance.currentLevelLiveAnimal)
+        //{
+        //    AnimalPrefabData APD = AnimalsManager.Instance.statueToSwap.GetComponent<AnimalPrefabData>();
+
+        //    if (APD.animalSO.animalType == AnimalTypesInGame.Owl)
+        //    {
+        //        Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.transform.GetChild(1).gameObject);
+        //    }
+        //    else
+        //    {
+        //        Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
+        //    }
+        //}
 
 
         UIManager.Instance.restartButton.interactable = true;
@@ -1677,9 +1701,17 @@ public class AnimationManager : MonoBehaviour
             locks.Add(renderer);
         }
 
-        Piece[] allPieces = FindObjectsOfType<Piece>();
+        List<Piece> allPieces = new List<Piece>();
 
-        for (int i = 0; i < allPieces.Length; i++)
+        foreach (var cell in ConnectionManager.Instance.cells)
+        {
+            if (cell.isFull)
+            {
+                allPieces.Add(cell.pieceHeld);
+            }
+        }
+
+        for (int i = 0; i < allPieces.Count; i++)
         {
             if (allPieces[i].isStone || allPieces[i].partOfBoard)
             {
@@ -1711,11 +1743,20 @@ public class AnimationManager : MonoBehaviour
             locks.Add(renderer);
         }
 
+        List<Piece> allPieces = new List<Piece>();
+
+        foreach (var cell in ConnectionManager.Instance.cells)
+        {
+            if(cell.isFull)
+            {
+                allPieces.Add(cell.pieceHeld);
+            }
+        }
+
         yield return new WaitForEndOfFrame();
 
-        Piece[] allPieces = FindObjectsOfType<Piece>();
 
-        for (int i = 0; i < allPieces.Length; i++)
+        for (int i = 0; i < allPieces.Count; i++)
         {
             if (allPieces[i].isStone || allPieces[i].partOfBoard)
             {

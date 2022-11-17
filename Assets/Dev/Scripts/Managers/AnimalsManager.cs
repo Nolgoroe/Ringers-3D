@@ -197,6 +197,7 @@ public class AnimalsManager : MonoBehaviour
 
         statueToSwap.SetActive(false);
 
+
         GameObject go = Instantiate(APD.animatedPrefab, statueToSwap.transform.parent);
 
         currentLevelLiveAnimal = go;
