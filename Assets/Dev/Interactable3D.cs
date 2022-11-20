@@ -45,6 +45,8 @@ public class Interactable3D : MonoBehaviour, IPointerClickHandler
 
     public void LaunchLevelDisplayData()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         TestLevelsSystemManager.instance.selectedLevelButton = this;
 
         ZoneManager.Instance.SetCurrentZone(connectedClusterScriptableObject.clusterLevels[indexInCluster].worldNum);

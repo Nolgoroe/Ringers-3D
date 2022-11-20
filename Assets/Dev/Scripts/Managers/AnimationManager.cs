@@ -175,6 +175,9 @@ public class AnimationManager : MonoBehaviour
     public bool hasPlayedRelaseSound = false;
 
     IEnumerator AfterAnimalAnimationCoroutine;
+
+
+    private bool hasShowsEndLevelDialogue;
     void Start()
     {
         instance = this;
@@ -211,6 +214,7 @@ public class AnimationManager : MonoBehaviour
 
     public IEnumerator StartEndLevelAnim()
     {
+        hasShowsEndLevelDialogue = false;
         SoundManager.Instance.PlaySound(Sounds.LastTileSequence);
 
         //hasGivenChest = false;
@@ -398,8 +402,9 @@ public class AnimationManager : MonoBehaviour
             hasSkippedToAfterAnimalAnim = true;
         }
 
-        if (GameManager.Instance.currentLevel.levelEndDialogueSO)
+        if (GameManager.Instance.currentLevel.levelEndDialogueSO && !hasShowsEndLevelDialogue)
         {
+            hasShowsEndLevelDialogue = true;
             GameManager.Instance.currentDialogue = null;
             GameManager.Instance.currentIndexInDialogue = 0;
             GameManager.Instance.currentDialogueMultiplier = -1;
@@ -1188,8 +1193,9 @@ public class AnimationManager : MonoBehaviour
 
 
 
-        if (GameManager.Instance.currentLevel.levelEndDialogueSO)
+        if (GameManager.Instance.currentLevel.levelEndDialogueSO && !hasShowsEndLevelDialogue)
         {
+            hasShowsEndLevelDialogue = true;
             GameManager.Instance.currentDialogue = null;
             GameManager.Instance.currentIndexInDialogue = 0;
             GameManager.Instance.currentDialogueMultiplier = -1;
@@ -1273,14 +1279,17 @@ public class AnimationManager : MonoBehaviour
             //UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
             //UIManager.Instance.backToHubButton.interactable = true;
 
-            UIManager.Instance.nextLevelFromWinScreen.interactable = true;
-            UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
+            if(!GameManager.Instance.currentLevel.isTimerLevel)
+            {
+                UIManager.Instance.nextLevelFromWinScreen.interactable = true;
+                UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
+
+                Image nextLevelButtonImage = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>();
+                nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 1);
+            }
 
             UIManager.Instance.backToHubButton.gameObject.SetActive(true);
             UIManager.Instance.backToHubButton.interactable = true;
-
-            Image nextLevelButtonImage = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>();
-            nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 1);
 
             Image backToHubImage = UIManager.Instance.backToHubButton.GetComponent<Image>();
             backToHubImage.color = new Color(backToHubImage.color.r, backToHubImage.color.g, backToHubImage.color.b, 1);

@@ -792,8 +792,8 @@ public class TutorialSequence : MonoBehaviour
                 inDelay = true;
                 yield return new WaitForSeconds(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].delayAmount);
                 inDelay = false;
-                maskImage.gameObject.SetActive(true);
-                UIManager.Instance.tutorialCanvasParent.SetActive(true);
+                //maskImage.gameObject.SetActive(true);
+                //UIManager.Instance.tutorialCanvasParent.SetActive(true);
             }
         }
 

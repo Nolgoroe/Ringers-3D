@@ -219,6 +219,8 @@ public class TestLevelsSystemManager : MonoBehaviour
     //called by button
     public void LaunchTestLevel()
     {
+        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
+
         selectedLevelButton.ChooseTypeLevelLaunch();
 
         //UIManager.Instance.testLevelsDataScreen.SetActive(false);

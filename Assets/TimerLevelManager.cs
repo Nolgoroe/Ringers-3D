@@ -25,6 +25,7 @@ public class TimerLevelManager : MonoBehaviour
 
     //public List<SpriteRenderer> ToPingPongColor;
 
+    IEnumerator loseLevenIenum;
     private void Awake()
     {
         instance = this;
@@ -60,7 +61,8 @@ public class TimerLevelManager : MonoBehaviour
 
                     if (currentIndex == 8)
                     {
-                        StartCoroutine(LostTimedLevel());
+                        loseLevenIenum = LostTimedLevel();
+                        StartCoroutine(loseLevenIenum);
                     }
                 }
             }
@@ -157,6 +159,16 @@ public class TimerLevelManager : MonoBehaviour
         LeanTween.cancel(gameObject);
     }
 
+    public void DeactivateTimer()
+    {
+        isActive = false;
+
+        if(loseLevenIenum != null)
+        {
+            StopCoroutine(loseLevenIenum);
+            loseLevenIenum = null;
+        }
+    }
     void BeginColorTween()
     {
         summonedTimerObject.GetComponent<Animator>().SetTrigger("ColorTween");

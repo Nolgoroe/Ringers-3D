@@ -441,7 +441,7 @@ public class GameManager : MonoBehaviour
             if(isRestart)
             {
                 TimerLevelManager.instance.InitTimer();
-                TimerLevelManager.instance.StartTimer();
+                //TimerLevelManager.instance.StartTimer();
             }
             else
             {
@@ -984,7 +984,7 @@ public class GameManager : MonoBehaviour
 
                 if(currentLevel.isTimerLevel)
                 {
-                    TimerLevelManager.instance.isActive = false;
+                    TimerLevelManager.instance.DeactivateTimer();
                 }
 
                 powerupManager.CheckTurnTempPowerToPermaPower();
