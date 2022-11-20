@@ -1149,20 +1149,6 @@ MonoBehaviour:
       m_Height: 43
     m_Scale: 1
     m_AtlasIndex: 0
-  - m_Index: 668
-    m_Metrics:
-      m_Width: 49.234375
-      m_Height: 13.671875
-      m_HorizontalBearingX: 1.703125
-      m_HorizontalBearingY: 12.328125
-      m_HorizontalAdvance: 52.65625
-    m_GlyphRect:
-      m_X: 10
-      m_Y: 10
-      m_Width: 50
-      m_Height: 15
-    m_Scale: 1
-    m_AtlasIndex: 0
   - m_Index: 97
     m_Metrics:
       m_Width: 38.875
@@ -1174,6 +1160,20 @@ MonoBehaviour:
       m_X: 962
       m_Y: 400
       m_Width: 40
+      m_Height: 15
+    m_Scale: 1
+    m_AtlasIndex: 0
+  - m_Index: 668
+    m_Metrics:
+      m_Width: 49.234375
+      m_Height: 13.671875
+      m_HorizontalBearingX: 1.703125
+      m_HorizontalBearingY: 12.328125
+      m_HorizontalAdvance: 52.65625
+    m_GlyphRect:
+      m_X: 10
+      m_Y: 10
+      m_Width: 50
       m_Height: 15
     m_Scale: 1
     m_AtlasIndex: 0
@@ -1483,12 +1483,12 @@ MonoBehaviour:
     m_GlyphIndex: 93
     m_Scale: 1
   - m_ElementType: 1
-    m_Unicode: 8230
-    m_GlyphIndex: 668
-    m_Scale: 1
-  - m_ElementType: 1
     m_Unicode: 126
     m_GlyphIndex: 97
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 8230
+    m_GlyphIndex: 668
     m_Scale: 1
   m_AtlasTextures:
   - {fileID: -5913225228349446283}
@@ -2181,7 +2181,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Baloo2-SemiBold Atlas Material
   m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: UNDERLAY_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -2228,8 +2228,8 @@ Material:
     - _FaceUVSpeedY: 0
     - _GlowInner: 0.05
     - _GlowOffset: 0
-    - _GlowOuter: 0.05
-    - _GlowPower: 0.75
+    - _GlowOuter: 0.697
+    - _GlowPower: 0.162
     - _GradientScale: 10
     - _LightAngle: 3.1416
     - _MaskSoftnessX: 0
@@ -2267,7 +2267,7 @@ Material:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
     - _EnvMatrixRotation: {r: 0, g: 0, b: 0, a: 0}
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
-    - _GlowColor: {r: 0, g: 1, b: 0, a: 0.5}
+    - _GlowColor: {r: 16, g: 11.282731, b: 0, a: 0.5}
     - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}
