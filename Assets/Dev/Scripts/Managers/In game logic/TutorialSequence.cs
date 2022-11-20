@@ -41,6 +41,7 @@ public class Phase
     public bool dealPhase, isStatuePhase, isAnimalAlbumPhase, isAnimalAlbumStagTabPhase, isAnimalAlbumAllTabsPhase;
     public bool enterAnimationPhase;
     public bool autoProgressAfterDelay;
+    public bool fadeInMask;
 
     public int[] unlockedPowerups;
     public int[] unlockedClips;
@@ -53,6 +54,7 @@ public class Phase
     public GameObject[] targetTutorialHoles;
 
     public float delayAmount;
+    public float darkenBGTime;
 }
 [System.Serializable]
 public class OutLineData
@@ -752,13 +754,21 @@ public class TutorialSequence : MonoBehaviour
 
         if (currentPhaseInSequenceLevels < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Count())
         {
+            if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].fadeInMask)
+            {
+                FadeInMaskAction(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].darkenBGTime);
+            }
+        }
+
+        if (currentPhaseInSequenceLevels < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Count())
+        {
             if (levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].hasDelay && !inDelay)
             {
                 inDelay = true;
                 yield return new WaitForSeconds(levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[currentPhaseInSequenceLevels].delayAmount);
                 inDelay = false;
-                maskImage.gameObject.SetActive(true);
-                UIManager.Instance.tutorialCanvasParent.SetActive(true);
+                //maskImage.gameObject.SetActive(true);
+                //UIManager.Instance.tutorialCanvasParent.SetActive(true);
             }
         }
 
@@ -796,6 +806,7 @@ public class TutorialSequence : MonoBehaviour
                 //UIManager.Instance.tutorialCanvasParent.SetActive(true);
             }
         }
+
 
         if (currentPhaseInSequenceLevels < levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase.Count())
         {
@@ -896,6 +907,13 @@ public class TutorialSequence : MonoBehaviour
             }
         }
 
+        if (currentPhaseInSequenceSpecific < specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase.Count())
+        {
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[currentPhaseInSequenceSpecific].fadeInMask)
+            {
+                FadeInMaskAction(specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[currentPhaseInSequenceSpecific].darkenBGTime);
+            }
+        }
 
         if (currentPhaseInSequenceSpecific < specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase.Count())
         {
@@ -904,8 +922,8 @@ public class TutorialSequence : MonoBehaviour
                 inDelay = true;
                 yield return new WaitForSeconds(specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[currentPhaseInSequenceSpecific].delayAmount);
                 inDelay = false;
-                maskImage.gameObject.SetActive(true);
-                UIManager.Instance.tutorialCanvasParent.SetActive(true);
+                //maskImage.gameObject.SetActive(true);
+                //UIManager.Instance.tutorialCanvasParent.SetActive(true);
             }
         }
 
@@ -941,8 +959,8 @@ public class TutorialSequence : MonoBehaviour
                 inDelay = true;
                 yield return new WaitForSeconds(specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[currentPhaseInSequenceSpecific].delayAmount);
                 inDelay = false;
-                maskImage.gameObject.SetActive(true);
-                UIManager.Instance.tutorialCanvasParent.SetActive(true);
+                //maskImage.gameObject.SetActive(true);
+                //UIManager.Instance.tutorialCanvasParent.SetActive(true);
             }
         }
 
@@ -1711,6 +1729,22 @@ public class TutorialSequence : MonoBehaviour
     public void EnterLevelAnimationPhaseLogic()
     {
         StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim(true));
+    }
+
+    private void FadeInMaskAction(float time)
+    {
+        SpriteRenderer maskImageBG = maskImage.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        maskImageBG.color = new Color(maskImageBG.color.r, maskImageBG.color.g, maskImageBG.color.b, 0);
+
+        maskImage.gameObject.SetActive(true); // the main parent
+
+        LeanTween.value(maskImageBG.gameObject, 0, 0.9f, time).setOnUpdate((float val) =>
+        {
+            Color newColor = maskImageBG.color;
+            newColor.a = val;
+            maskImageBG.color = newColor;
+        });
+
     }
 }
 
