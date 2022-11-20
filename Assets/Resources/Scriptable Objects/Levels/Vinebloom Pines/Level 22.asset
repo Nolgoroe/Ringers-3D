@@ -17,10 +17,11 @@ MonoBehaviour:
   is12PieceRing: 0
   isDoubleRing: 0
   isBoss: 0
+  isTimerLevel: 0
   isAnimalLevel: 0
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
-  showIntroLevelAnimation: 1
+  showIntroLevelAnimation: 0
   boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
     type: 3}
   clipPrefab: {fileID: 6183251264102439455, guid: ff432a4cdfd3d8c4ab183be2d82d571e,
@@ -36,7 +37,7 @@ MonoBehaviour:
   allowRepeatSlices: 0
   allowRepeatTiles: 0
   allowRepeatTileSides: 0
-  powerupsForLevel: 
+  powerupsForLevel: 01000000
   stoneTiles: []
   slicesToSpawn:
   - sliceToSpawn: 1
@@ -51,9 +52,9 @@ MonoBehaviour:
   levelAvailableColors: 0000000001000000020000000300000004000000
   levelAvailablesymbols: 000000000100000002000000
   symbolsNeededForSpecialPowers: []
-  isSpecificTutorial: 0
+  isSpecificTutorial: 1
   isTutorial: 0
-  specificTutorialEnum: 0
+  specificTutorialEnum: 6
   bottomUIToShow: 2
   arrayOfPieces: []
   specificSliceSpots: 0500000006000000
@@ -72,3 +73,4 @@ MonoBehaviour:
   algoritmStepsWanted: 0
   levelStartDialogueSO: {fileID: 0}
   levelEndDialogueSO: {fileID: 0}
+  timeForLevel: 0

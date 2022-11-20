@@ -21,7 +21,7 @@ MonoBehaviour:
   isAnimalLevel: 1
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
-  showIntroLevelAnimation: 0
+  showIntroLevelAnimation: 1
   boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
     type: 3}
   clipPrefab: {fileID: 6183251264102439455, guid: ff432a4cdfd3d8c4ab183be2d82d571e,
@@ -37,7 +37,7 @@ MonoBehaviour:
   allowRepeatSlices: 0
   allowRepeatTiles: 0
   allowRepeatTileSides: 0
-  powerupsForLevel: 01000000
+  powerupsForLevel: 
   stoneTiles: []
   slicesToSpawn:
   - sliceToSpawn: 2
@@ -52,9 +52,9 @@ MonoBehaviour:
   levelAvailableColors: 0000000001000000020000000300000004000000
   levelAvailablesymbols: 00000000010000000200000003000000
   symbolsNeededForSpecialPowers: []
-  isSpecificTutorial: 1
+  isSpecificTutorial: 0
   isTutorial: 0
-  specificTutorialEnum: 6
+  specificTutorialEnum: 0
   bottomUIToShow: 2
   arrayOfPieces: []
   specificSliceSpots: 0300000004000000
