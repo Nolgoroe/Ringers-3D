@@ -38,6 +38,7 @@ public class NpcNametagCombo
     public GameObject nameTagObject;
     public Sprite potrtaitSprite;
     public Sprite nameTagSprite;
+    public float LeftSideXpos, rightSideXpos;
 }
 
 [Serializable]
@@ -296,11 +297,11 @@ public class DialogueScriptableObject : ScriptableObject
 
             if(side == DialogueSide.left)
             {
-                go.transform.localPosition = new Vector3(-0.25f, go.transform.localPosition.y, go.transform.localPosition.z);
+                go.transform.localPosition = new Vector3(combo.LeftSideXpos, go.transform.localPosition.y, go.transform.localPosition.z);
             }
             else
             {
-                go.transform.localPosition = new Vector3(-1, go.transform.localPosition.y, go.transform.localPosition.z);
+                go.transform.localPosition = new Vector3(combo.rightSideXpos, go.transform.localPosition.y, go.transform.localPosition.z);
             }
         }
     }
