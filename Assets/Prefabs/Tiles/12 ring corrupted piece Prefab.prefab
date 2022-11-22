@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4303140220193645502}
   - component: {fileID: 4821654569466740894}
   - component: {fileID: 7430792020032122358}
+  - component: {fileID: 6753473358750395197}
   m_Layer: 10
   m_Name: 12 ring corrupted piece Prefab
   m_TagString: MainPiece
@@ -83,6 +84,25 @@ MonoBehaviour:
   Duration: 0.3
   Speed: 7
   ResetPosition: 1
+--- !u!95 &6753473358750395197
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935213622196544231}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0e600bf64cc116746ad0e43ba44e7231, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1195596336532265732
 GameObject:
   m_ObjectHideFlags: 0

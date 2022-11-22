@@ -278,6 +278,7 @@ GameObject:
   - component: {fileID: 5400071253778827981}
   - component: {fileID: 5400071253778827983}
   - component: {fileID: 5400071253778827980}
+  - component: {fileID: 2999172317730445078}
   m_Layer: 10
   m_Name: MDL_Tile_12Slots
   m_TagString: MainPiece
@@ -349,3 +350,22 @@ MonoBehaviour:
   Duration: 0.3
   Speed: 7
   ResetPosition: 1
+--- !u!95 &2999172317730445078
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5400071253778827978}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0e600bf64cc116746ad0e43ba44e7231, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
