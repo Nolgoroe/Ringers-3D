@@ -63,7 +63,10 @@ public class MaterialsAndForgeManager : MonoBehaviour
         {
             PlayerManager.Instance.unlockedPowerups.Add(potionType);
         }
-
+        else
+        {
+            return;
+        }
 
         EquipmentData EQ = GameManager.Instance.csvParser.allEquipmentInGame.Where(p => p.power == potionType).SingleOrDefault();
         if (EQ == null)

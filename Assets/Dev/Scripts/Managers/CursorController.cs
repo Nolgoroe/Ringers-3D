@@ -993,7 +993,7 @@ public class CursorController : MonoBehaviour
                 }
                 else
                 {
-                    ReturnHome();
+                    ReturnTileHome();
                     return; 
                 }
 
@@ -1030,7 +1030,7 @@ public class CursorController : MonoBehaviour
             {
                 if (followerTarget)
                 {
-                    ReturnHome();
+                    ReturnTileHome();
                 }
             }
 
@@ -1096,7 +1096,7 @@ public class CursorController : MonoBehaviour
 
                                     GameManager.Instance.clipManager.emptyClip = clipParent;
                                     GameManager.Instance.clipManager.latestPiece = followerTarget;
-                                    ReturnHome();
+                                    ReturnTileHome();
                                 }
 
                                 if (!isFromClip && cell != previousCell)
@@ -1106,7 +1106,7 @@ public class CursorController : MonoBehaviour
                             }
                             else
                             {
-                                ReturnHome();
+                                ReturnTileHome();
                             }
 
 
@@ -1115,7 +1115,7 @@ public class CursorController : MonoBehaviour
                         }
                         else
                         {
-                            ReturnHome();
+                            ReturnTileHome();
                         }
                     }
                 }
@@ -1166,7 +1166,7 @@ public class CursorController : MonoBehaviour
 
                                 GameManager.Instance.clipManager.emptyClip = clipParent;
                                 GameManager.Instance.clipManager.latestPiece = followerTarget;
-                                ReturnHome();
+                                ReturnTileHome();
                             }
 
                             if (!isFromClip && cell != previousCell)
@@ -1176,7 +1176,7 @@ public class CursorController : MonoBehaviour
                         }
                         else
                         {
-                            ReturnHome();
+                            ReturnTileHome();
                         }
 
 
@@ -1185,7 +1185,7 @@ public class CursorController : MonoBehaviour
                     }
                     else
                     {
-                        ReturnHome();
+                        ReturnTileHome();
                     }
                 }
             }
@@ -1194,11 +1194,11 @@ public class CursorController : MonoBehaviour
         {
             if (followerTarget)
             {
-                ReturnHome();
+                ReturnTileHome();
             }
         }
     }
-    public void ReturnHome()
+    public void ReturnTileHome()
     {
         Vector3 home = GameManager.Instance.clipManager.piece.transform.position;
         followerTarget.localPosition = home;
@@ -1221,6 +1221,15 @@ public class CursorController : MonoBehaviour
         //{
         //    previousHeighlightChosen.GetComponent<Cell>().RemoveToSubPiecesOnBoardTemp();
         //}
+
+        if (previousHeighlightChosen != null)
+        {
+            previousHeighlightChosen.GetComponent<Cell>().TurnOffHighlighParticle();
+            previousHeighlightChosen.GetComponent<Cell>().RemoveToSubPiecesOnBoardTemp();
+            ConnectionManager.Instance.NullifyReleventSliceAnim(followerTarget.GetComponent<Piece>());
+
+            previousHeighlightChosen = null;
+        }
 
         followerTarget = null;
     }

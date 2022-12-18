@@ -744,10 +744,10 @@ public class GameManager : MonoBehaviour
             selectedLevelBG = levelBGModels[backgroundID];
         }
 
-        if(selectedLevelBG.transform.Find("RingMask"))
-        {
-            selectedLevelBG.transform.Find("RingMask").gameObject.SetActive(true); //// put this someplace better in the future
-        }
+        //if(selectedLevelBG.transform.Find("RingMask"))
+        //{
+        //    selectedLevelBG.transform.Find("RingMask").gameObject.SetActive(true); //// put this someplace better in the future
+        //}
     }
 
     public void StartTutorialLevel(bool DoFade)
@@ -1021,7 +1021,12 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("You Lose");
 
-        LevelEnded = false;
+        if(CursorController.Instance.followerTarget != null)
+        {
+            CursorController.Instance.ReturnTileHome();
+        }
+
+        LevelEnded = true;
     }
     public void LoseTimedLevel()
     {
@@ -1029,7 +1034,12 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("You Lose");
 
-        LevelEnded = false;
+        if (CursorController.Instance.followerTarget != null)
+        {
+            CursorController.Instance.ReturnTileHome();
+        }
+
+        LevelEnded = true;
     }
 
     public void LoseLevelAction()

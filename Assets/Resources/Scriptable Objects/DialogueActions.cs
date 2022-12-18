@@ -14,10 +14,18 @@ public class DialogueActions : ScriptableObject
     {
         MaterialsAndForgeManager.Instance.UnlockPotion(PowerUp.Joker);
     }
+    public void GiveSliceBombPotion()
+    {
+        MaterialsAndForgeManager.Instance.UnlockPotion(PowerUp.SliceBomb);
+    }
+    public void GiveTileBombPotion()
+    {
+        MaterialsAndForgeManager.Instance.UnlockPotion(PowerUp.PieceBomb);
+    }
 
     public void DeactivateAllGameplayUI()
     {
-        UIManager.Instance.gameplayCanvas.SetActive(false);
+        UIManager.Instance.DeactivateOnDialogueStart();
     }
     public void ActivateAllGameplayUI()
     {

@@ -609,6 +609,11 @@ public class LootManager : MonoBehaviour
 
         TutorialSequence.Instacne.CheckDoPotionTutorial();
         TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
+
+        if (GameManager.Instance.currentLevel.powerupsForLevel.Count() > 0)
+        {
+            MaterialsAndForgeManager.Instance.UnlockPotion(GameManager.Instance.currentLevel.powerupsForLevel[0]);
+        }
     }
     public void DestroyAllChestLootData()
     {

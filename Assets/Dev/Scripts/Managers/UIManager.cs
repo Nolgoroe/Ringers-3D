@@ -729,6 +729,11 @@ public class UIManager : MonoBehaviour
         if (currentCanvas == gameplayCanvas)
         {
 
+            if (GameManager.Instance.currentLevel.isTimerLevel)
+            {
+                TimerLevelManager.instance.DeactivateTimer();
+            }
+
             SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
 
 
@@ -2260,7 +2265,7 @@ public class UIManager : MonoBehaviour
             sr.color = newColor;
         });
 
-        yield return new WaitForSeconds(fadeIntoLevelDelay);
+        yield return new WaitForSeconds(fadeIntoLevelDelay + 0.2f);
 
 
         LeanTween.value(fadeIntoLevel, 1, 0, fadeIntoLevelSpeed).setOnUpdate((float val) =>
@@ -3043,5 +3048,13 @@ public class UIManager : MonoBehaviour
         SFXIconButtonLevel.sprite = SFXIconOnLevel;
 
         SFXIconButton.sprite = SFXIconOn;
+    }
+
+    public void DeactivateOnDialogueStart()
+    {
+        GameManager.Instance.selectedLevelBG.transform.GetChild(0).gameObject.SetActive(false);
+
+        gameplayCanvas.SetActive(false);
+        skipAnimationButton.gameObject.SetActive(false);
     }
 }

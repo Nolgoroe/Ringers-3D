@@ -25,6 +25,7 @@ public class GooglePlayConnectManager : MonoBehaviour
 
     string googlePlayerID;
 
+    public GameObject parentObjectForText;
     private void Start()
     {
         instance = this;

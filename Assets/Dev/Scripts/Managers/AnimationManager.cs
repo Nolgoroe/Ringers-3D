@@ -710,6 +710,11 @@ public class AnimationManager : MonoBehaviour
             TutorialSequence.Instacne.CheckDoPotionTutorial();
             TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
         }
+
+        if(GameManager.Instance.currentLevel.powerupsForLevel.Count() > 0)
+        {
+            MaterialsAndForgeManager.Instance.UnlockPotion(GameManager.Instance.currentLevel.powerupsForLevel[0]);
+        }
         //TutorialSequence.Instacne.CheckDoDenTutorial(); //temp keep here
 
         StartCoroutine(CheckShowLootTutorial());
@@ -1338,6 +1343,11 @@ public class AnimationManager : MonoBehaviour
             TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
         }
 
+        if (GameManager.Instance.currentLevel.powerupsForLevel.Count() > 0)
+        {
+            MaterialsAndForgeManager.Instance.UnlockPotion(GameManager.Instance.currentLevel.powerupsForLevel[0]);
+        }
+
         //TutorialSequence.Instacne.CheckDoDenTutorial(); // temp keep here
         StartCoroutine(CheckShowLootTutorial());
 
@@ -1815,6 +1825,7 @@ public class AnimationManager : MonoBehaviour
             renderer.material.SetFloat("_DissolveSprite", 0.6f);
         }
 
+        colorMask.gameObject.SetActive(true);
         colorMask.color = new Color(colorMask.color.r, colorMask.color.g, colorMask.color.b, 0);
 
         foreach (var lockObject in locks)
@@ -1858,7 +1869,7 @@ public class AnimationManager : MonoBehaviour
             renderer.material.SetFloat("_DissolveSprite", 1.5f);
         }
 
-        colorMask.color = new Color(colorMask.color.r, colorMask.color.g, colorMask.color.b, 1);
+        colorMask.color = new Color(colorMask.color.r, colorMask.color.g, colorMask.color.b, originalColorMaskAlpha);
 
         foreach (var lockObject in locks)
         {

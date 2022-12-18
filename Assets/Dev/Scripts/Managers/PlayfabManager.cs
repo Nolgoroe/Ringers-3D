@@ -344,6 +344,8 @@ public class PlayfabManager : MonoBehaviour
             UIManager.Instance.PlayButton();
         }
 
+        GooglePlayConnectManager.instance.parentObjectForText.SetActive(false);
+
         UIManager.Instance.startAppLoadingScreen.SetActive(false);
 
         SaveGameData(new SystemsToSave[] { SystemsToSave.ALL});
@@ -353,6 +355,7 @@ public class PlayfabManager : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         InvokeRepeating("UpdateAndSaveTimeSensitiveData", 1, 5);
+
     }
 
     private void CheckLoginWithGP()
@@ -1463,9 +1466,11 @@ public class PlayfabManager : MonoBehaviour
     {
         ClearSystemMessage();
 
+        displayMessages.text = "Logging in!";
+
         /// check here if we have the connected with google play saved on local device - that is our only way to know if this device has 
         /// already connected to google play BEFORE we login to playfab....
-        
+
         if (ServerRelatedData.instance.hasConnectedWithGooglePlay)/* if we know from the saved data that we have already connected to google play from this device*/
         {
             // login with google play.
