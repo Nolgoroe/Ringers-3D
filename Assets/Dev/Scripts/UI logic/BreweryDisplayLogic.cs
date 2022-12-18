@@ -159,7 +159,7 @@ public class BreweryDisplayLogic : MonoBehaviour
     {
         if(PlayerManager.Instance.rubyCount >= rubiesNeededToBuyPotion)
         {
-            GameAnalytics.NewDesignEvent("BoughtPotions:" + selectedPotion.name);
+           // GameAnalytics.NewDesignEvent("BoughtPotions:" + selectedPotion.name);
 
             PlayerManager.Instance.rubyCount -= rubiesNeededToBuyPotion;
 
