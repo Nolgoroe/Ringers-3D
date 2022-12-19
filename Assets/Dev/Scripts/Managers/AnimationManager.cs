@@ -525,7 +525,7 @@ public class AnimationManager : MonoBehaviour
             goSR.color = new Color(goSR.color.r, goSR.color.g, goSR.color.b, 1);
         }
 
-        if (!GameManager.Instance.currentLevel.isTimerLevel && GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+        if (!GameManager.Instance.currentLevel.isTimerLevel && (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || ServerRelatedData.instance.isAdmin))
         {
             if (!hasGivenChest)
             {
@@ -635,8 +635,10 @@ public class AnimationManager : MonoBehaviour
 
         UIManager.Instance.backToHubButton.gameObject.SetActive(true);
 
-        if (TestLevelsSystemManager.instance.isGiveChest(GameManager.Instance.currentIndexInCluster) && !GameManager.Instance.currentLevel.isTimerLevel)
+        if (TestLevelsSystemManager.instance.isGiveChest(TestLevelsSystemManagerSaveData.instance.CompletedCount) && !GameManager.Instance.currentLevel.isTimerLevel)
         {
+            Debug.LogError(TestLevelsSystemManagerSaveData.instance.CompletedCount);
+
             Image nextLevelButtonImage = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>();
             nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 0);
 
@@ -1225,9 +1227,9 @@ public class AnimationManager : MonoBehaviour
 
 
 
-        if (!GameManager.Instance.currentLevel.isTimerLevel && GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone)
+        if (!GameManager.Instance.currentLevel.isTimerLevel && (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || ServerRelatedData.instance.isAdmin))
         {
-            if(!hasGivenChest)
+            if (!hasGivenChest)
             {
                 hasGivenChest = true;
                 TestLevelsSystemManagerSaveData.instance.AddToChestBar();
@@ -1266,8 +1268,9 @@ public class AnimationManager : MonoBehaviour
         //    restartGrind.alpha = 1;
         //}
 
-        if (TestLevelsSystemManager.instance.isGiveChest(GameManager.Instance.currentIndexInCluster) && !GameManager.Instance.currentLevel.isTimerLevel)
+        if (TestLevelsSystemManager.instance.isGiveChest(TestLevelsSystemManagerSaveData.instance.CompletedCount) && !GameManager.Instance.currentLevel.isTimerLevel)
         {
+            Debug.LogError(TestLevelsSystemManagerSaveData.instance.CompletedCount);
             UIManager.Instance.nextLevelFromWinScreen.interactable = false;
             UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
 

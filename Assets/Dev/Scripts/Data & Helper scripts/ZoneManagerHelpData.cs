@@ -141,6 +141,8 @@ public class ZoneManagerHelpData : MonoBehaviour
 
         UIManager.Instance.updateRubyAndDewDropsCount();
 
+        MaterialsAndForgeManager.Instance.UnlockAllPotions();
+
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.ZoneManager, SystemsToSave.ZoneX});
     }
 

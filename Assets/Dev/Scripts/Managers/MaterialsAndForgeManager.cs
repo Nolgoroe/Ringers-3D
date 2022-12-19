@@ -79,6 +79,28 @@ public class MaterialsAndForgeManager : MonoBehaviour
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
     }
+    
+    public void UnlockAllPotions()
+    {
+        for (int i = 0; i < GameManager.Instance.csvParser.allEquipmentInGame.Count(); i++)
+        {
+            PowerUp potionType = GameManager.Instance.csvParser.allEquipmentInGame[i].power;
+
+            if (!PlayerManager.Instance.unlockedPowerups.Contains(potionType))
+            {
+                PlayerManager.Instance.unlockedPowerups.Add(potionType);
+            }
+
+            EquipmentData EQ = GameManager.Instance.csvParser.allEquipmentInGame[i];
+            if (EQ == null)
+            {
+                Debug.LogError("Error potions here in UNLOCK ALL");
+                return;
+            }
+        }
+
+        StartCoroutine(FillBrewScreen(PlayerManager.Instance.unlockedPowerups));
+    }
 
     public IEnumerator FillBrewScreen(List<PowerUp> powerTypes)
     {
