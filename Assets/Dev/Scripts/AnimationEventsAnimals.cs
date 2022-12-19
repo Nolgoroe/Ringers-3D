@@ -91,6 +91,5 @@ public class AnimationEventsAnimals : MonoBehaviour
     public void ResetChestDataAndGiveLoot()
     {
         LootManager.Instance.UnpackChestLoot();
-        TestLevelsSystemManagerSaveData.instance.ResetData();
     }
 }

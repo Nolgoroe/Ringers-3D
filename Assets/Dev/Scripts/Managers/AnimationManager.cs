@@ -649,6 +649,8 @@ public class AnimationManager : MonoBehaviour
 
             //UIManager.Instance.backToHubButton.interactable = false;
             //UIManager.Instance.nextLevelFromWinScreen.interactable = false;
+
+            TestLevelsSystemManagerSaveData.instance.ResetData();
         }
         else
         {
@@ -1281,6 +1283,8 @@ public class AnimationManager : MonoBehaviour
 
             //UIManager.Instance.backToHubButton.interactable = false;
             //UIManager.Instance.nextLevelFromWinScreen.interactable = false;
+
+            TestLevelsSystemManagerSaveData.instance.ResetData();
         }
         else
         {
