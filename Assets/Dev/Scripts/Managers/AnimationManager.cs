@@ -602,7 +602,7 @@ public class AnimationManager : MonoBehaviour
         //}
 
 
-        yield return new WaitForSeconds(TestLevelsSystemManager.instance.barAnimateSpeed + 0.1f);
+        yield return new WaitForSeconds(TestLevelsSystemManager.instance.barAnimateSpeed + 0.3f);
 
         //if (!GameManager.Instance.currentLevel.isGrindLevel)
         //{ 
@@ -1269,6 +1269,8 @@ public class AnimationManager : MonoBehaviour
 
         //    restartGrind.alpha = 1;
         //}
+
+        yield return new WaitForSeconds(TestLevelsSystemManager.instance.barAnimateSpeed + 0.3f);
 
         if (TestLevelsSystemManager.instance.isGiveChest(TestLevelsSystemManagerSaveData.instance.CompletedCount) && !GameManager.Instance.currentLevel.isTimerLevel)
         {

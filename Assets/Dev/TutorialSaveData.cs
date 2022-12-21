@@ -30,6 +30,14 @@ public class TutorialSaveData : MonoBehaviour
 
     }
 
+    public void ResetTutorialDataCheat()
+    {
+        completedTutorialLevelId.Clear();
+        completedSpecificTutorialLevelId.Clear();
+
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
+    }
+
     //[ContextMenu("Save Tutorial Save Data")]
     //public void SaveTutorialSaveData()
     //{

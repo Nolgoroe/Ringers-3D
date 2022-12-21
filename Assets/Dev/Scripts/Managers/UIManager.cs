@@ -2019,13 +2019,19 @@ public class UIManager : MonoBehaviour
     {
         if (ZoneManager.Instance.unlockedZoneID.Count > 1 && RewardsManager.Instance.canGiveDaily)
         {
-            if (!isUsingUI)
-            {
+            //if (!isUsingUI)
+            //{
                 DailyRewardScreen.SetActive(true);
 
                 activeScreen = DailyRewardScreen;
-            }
+            //}
         }
+    }
+    public void DisplayDailyRewardsScreenCheat()
+    {
+        DailyRewardScreen.SetActive(true);
+
+        activeScreen = DailyRewardScreen;
     }
     public void DisplayDailyRewardsScreenNoCondition()
     {
@@ -2678,6 +2684,8 @@ public class UIManager : MonoBehaviour
                 button.interactable = true;
             }
 
+
+            ServerRelatedData.instance.canRepeatLevels = true;
             //TutorialSaveData.Instance.hasFinishedPotion = true;
             //TutorialSaveData.Instance.hasFinishedAnimalAlbum = true;
         }

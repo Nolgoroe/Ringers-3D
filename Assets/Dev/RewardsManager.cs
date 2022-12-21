@@ -262,4 +262,11 @@ public class RewardsManager : MonoBehaviour
 
         //Debug.Log("Debug 4 " + savedDateTime);
     }
+
+    public void ResetDailyRewardTimer()
+    {
+        timeLeftToGiveDailyLoot = 0;
+        UIManager.Instance.DisplayDailyRewardsScreenCheat();
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.RewardsManager });
+    }
 }

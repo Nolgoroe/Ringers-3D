@@ -118,7 +118,17 @@ public class TestLevelsSystemManager : MonoBehaviour
 
     private void InitLevelStars()
     {
-        for (int i = 0; i < TestLevelsSystemManagerSaveData.instance.CompletedCount; i++)
+        //for (int i = 0; i < TestLevelsSystemManagerSaveData.instance.CompletedCount; i++)
+        //{
+        //    if (starsParent.childCount > 0)
+        //    {
+        //        ImageSwapHelper swapHelper = starsParent.GetChild(i).GetComponent<ImageSwapHelper>();
+
+        //        swapHelper.SetActivatedChild();
+        //    }
+        //}
+
+        for (int i = 0; i < GameManager.Instance.currentIndexInCluster; i++)
         {
             if (starsParent.childCount > 0)
             {
@@ -182,9 +192,19 @@ public class TestLevelsSystemManager : MonoBehaviour
     }
     private void ActivateStarOrChestMap()
     {
-        int amountToCheck = TestLevelsSystemManagerSaveData.instance.CompletedCount == numOfSections ? numOfSections - 1 : TestLevelsSystemManagerSaveData.instance.CompletedCount;
-        
-        for (int i = 0; i < amountToCheck; i++)
+        //int amountToCheck = TestLevelsSystemManagerSaveData.instance.CompletedCount == numOfSections ? numOfSections - 1 : TestLevelsSystemManagerSaveData.instance.CompletedCount;
+
+        //for (int i = 0; i < amountToCheck; i++)
+        //{
+        //    if (starsParentMapDisplay.childCount > 0)
+        //    {
+        //        ImageSwapHelper swapHelper = starsParentMapDisplay.GetChild(i).GetComponent<ImageSwapHelper>();
+
+        //        swapHelper.SetActivatedChild();
+        //    }
+        //}
+
+        for (int i = 0; i < GameManager.Instance.currentIndexInCluster; i++)
         {
             if (starsParentMapDisplay.childCount > 0)
             {
@@ -198,7 +218,10 @@ public class TestLevelsSystemManager : MonoBehaviour
     public void ResetDisplay()
     {
         StarSlider.gameObject.SetActive(true);
-        StarSlider.value = TestLevelsSystemManagerSaveData.instance.CompletedCount;
+        //StarSlider.value = TestLevelsSystemManagerSaveData.instance.CompletedCount;
+        StarSlider.value = GameManager.Instance.currentIndexInCluster;
+
+        TestLevelsSystemManagerSaveData.instance.CompletedCount = GameManager.Instance.currentIndexInCluster;
         for (int i = 0; i < starsParent.childCount; i++)
         {
             Destroy(starsParent.GetChild(i).gameObject);
@@ -208,7 +231,10 @@ public class TestLevelsSystemManager : MonoBehaviour
     {
         starSliderTestLevelMapDisplay.gameObject.SetActive(true);
 
-        starSliderTestLevelMapDisplay.value = TestLevelsSystemManagerSaveData.instance.CompletedCount;
+        //starSliderTestLevelMapDisplay.value = TestLevelsSystemManagerSaveData.instance.CompletedCount;
+        starSliderTestLevelMapDisplay.value = GameManager.Instance.currentIndexInCluster;
+
+        TestLevelsSystemManagerSaveData.instance.CompletedCount = GameManager.Instance.currentIndexInCluster;
         for (int i = 0; i < starsParentMapDisplay.childCount; i++)
         {
             Destroy(starsParentMapDisplay.GetChild(i).gameObject);

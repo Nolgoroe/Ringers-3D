@@ -216,6 +216,14 @@ public class DewDropsManager : MonoBehaviour
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.DewDrops});
     }
 
+    public void GiveDropCheat(int amount)
+    {
+        PlayerManager.Instance.collectedDewDrops += amount;
+        UIManager.Instance.dewDropsText.text = PlayerManager.Instance.collectedDewDrops.ToString();
+        PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.DewDrops });
+
+    }
+
     public void UpdateCurrentTime(DateTime time)
     {
         currentTime = time;

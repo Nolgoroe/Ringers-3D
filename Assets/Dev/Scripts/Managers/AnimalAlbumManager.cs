@@ -225,4 +225,5 @@ public class AnimalAlbumManager : MonoBehaviour
 
         return randomNum;
     }
+
 }

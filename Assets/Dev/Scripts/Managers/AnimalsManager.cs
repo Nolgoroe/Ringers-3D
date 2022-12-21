@@ -360,4 +360,26 @@ public class AnimalsManager : MonoBehaviour
 
         return true;
     }
+
+
+    public void CheatClearAnimalAlbumPage()
+    {
+        CompletedPageToReward CPTR = completedAnimalPagesToReward.Where(p => p.completedAnimalPagesID == AnimalAlbumManager.Instance.currentActivePage.pageID).FirstOrDefault();
+
+        if(CPTR != null)
+        {
+            completedAnimalPagesToReward.Remove(CPTR);
+        }
+
+        for (int i = revealedAnimalsInAlbum.Count() - 1; i >= 0; i--)
+        {
+            for (int j = 0; j < AnimalAlbumManager.Instance.currentActivePage.animalsInPage.Count(); j++)
+            {
+                if (AnimalAlbumManager.Instance.currentActivePage.animalsInPage.Contains(revealedAnimalsInAlbum[i]))
+                {
+                    revealedAnimalsInAlbum.RemoveAt(i);
+                }
+            }
+        }
+    }
 }
