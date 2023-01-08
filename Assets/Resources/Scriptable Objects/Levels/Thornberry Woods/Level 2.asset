@@ -17,6 +17,7 @@ MonoBehaviour:
   is12PieceRing: 0
   isDoubleRing: 0
   isBoss: 0
+  isTimerLevel: 0
   isAnimalLevel: 0
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
@@ -32,7 +33,7 @@ MonoBehaviour:
   tutorialIndexForList: 0
   cellsCountInLevel: 8
   levelDifficulty: 0
-  RandomSlicePositions: 1
+  RandomSlicePositions: 0
   allowRepeatSlices: 0
   allowRepeatTiles: 0
   allowRepeatTileSides: 0
@@ -66,7 +67,7 @@ MonoBehaviour:
   specificTutorialEnum: 0
   bottomUIToShow: 2
   arrayOfPieces: []
-  specificSliceSpots: 
+  specificSliceSpots: 00000000010000000200000003000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0
@@ -82,3 +83,4 @@ MonoBehaviour:
   algoritmStepsWanted: 0
   levelStartDialogueSO: {fileID: 0}
   levelEndDialogueSO: {fileID: 0}
+  timeForLevel: 0

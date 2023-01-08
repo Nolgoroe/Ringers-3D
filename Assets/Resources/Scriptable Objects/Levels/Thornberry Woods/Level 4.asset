@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldName: Thornberry Woods
   isGrindLevel: 0
-  is12PieceRing: 0
+  is12PieceRing: 1
   isDoubleRing: 0
   isBoss: 0
   isTimerLevel: 0
@@ -22,7 +22,7 @@ MonoBehaviour:
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
   showIntroLevelAnimation: 1
-  boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
+  boardPrefab: {fileID: 6382559071292991177, guid: 9fa6c7e47566ca141a795f93ffbccf9b,
     type: 3}
   clipPrefab: {fileID: 6183251264102439455, guid: ff432a4cdfd3d8c4ab183be2d82d571e,
     type: 3}
@@ -31,15 +31,27 @@ MonoBehaviour:
   levelIndexInZone: 4
   numIndexForLeaderBoard: 119
   tutorialIndexForList: 0
-  cellsCountInLevel: 8
+  cellsCountInLevel: 12
   levelDifficulty: 0
-  RandomSlicePositions: 1
+  RandomSlicePositions: 0
   allowRepeatSlices: 0
   allowRepeatTiles: 0
   allowRepeatTileSides: 0
   powerupsForLevel: 
   stoneTiles: []
   slicesToSpawn:
+  - sliceToSpawn: 0
+    isLock: 1
+    isLoot: 1
+    isLimiter: 1
+  - sliceToSpawn: 3
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
+  - sliceToSpawn: 2
+    isLock: 1
+    isLoot: 1
+    isLimiter: 1
   - sliceToSpawn: 2
     isLock: 1
     isLoot: 1
@@ -48,7 +60,7 @@ MonoBehaviour:
     isLock: 0
     isLoot: 1
     isLimiter: 1
-  - sliceToSpawn: 3
+  - sliceToSpawn: 0
     isLock: 1
     isLoot: 1
     isLimiter: 1
@@ -57,13 +69,13 @@ MonoBehaviour:
   levelAvailablesymbols: 00000000010000000200000003000000
   symbolsNeededForSpecialPowers:
   - symbol: 0
-    amount: 3
+    amount: 4
   isSpecificTutorial: 0
   isTutorial: 0
   specificTutorialEnum: 0
   bottomUIToShow: 2
   arrayOfPieces: []
-  specificSliceSpots: 
+  specificSliceSpots: 000000000100000002000000060000000700000008000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0
