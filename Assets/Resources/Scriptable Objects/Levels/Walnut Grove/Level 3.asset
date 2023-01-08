@@ -30,7 +30,7 @@ MonoBehaviour:
   worldNum: 0
   levelIndexInZone: 3
   numIndexForLeaderBoard: 3
-  tutorialIndexForList: 0
+  tutorialIndexForList: 1
   cellsCountInLevel: 8
   levelDifficulty: 0
   RandomSlicePositions: 0
@@ -39,25 +39,25 @@ MonoBehaviour:
   allowRepeatTileSides: 0
   powerupsForLevel: 
   stoneTiles: []
-  slicesToSpawn: []
+  slicesToSpawn:
+  - sliceToSpawn: 3
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
+  - sliceToSpawn: 3
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
   RewardBags: 
   levelAvailableColors: 0400000001000000
   levelAvailablesymbols: 04000000
   symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
-  isTutorial: 0
+  isTutorial: 1
   specificTutorialEnum: 10
   bottomUIToShow: 1
-  arrayOfPieces:
-  - colorOfPieceRight: 3
-    symbolOfPieceRight: 3
-    colorOfPieceLeft: 2
-    symbolOfPieceLeft: 2
-  - colorOfPieceRight: 2
-    symbolOfPieceRight: 3
-    colorOfPieceLeft: 3
-    symbolOfPieceLeft: 2
-  specificSliceSpots: 
+  arrayOfPieces: []
+  specificSliceSpots: 0000000004000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0

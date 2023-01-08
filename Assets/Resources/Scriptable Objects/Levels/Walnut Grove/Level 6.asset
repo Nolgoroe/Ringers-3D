@@ -39,7 +39,15 @@ MonoBehaviour:
   allowRepeatTileSides: 0
   powerupsForLevel: 
   stoneTiles: []
-  slicesToSpawn: []
+  slicesToSpawn:
+  - sliceToSpawn: 3
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
+  - sliceToSpawn: 3
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
   RewardBags: 
   levelAvailableColors: 000000000200000003000000
   levelAvailablesymbols: 0300000002000000
@@ -57,7 +65,7 @@ MonoBehaviour:
     symbolOfPieceRight: 2
     colorOfPieceLeft: 1
     symbolOfPieceLeft: 1
-  specificSliceSpots: 
+  specificSliceSpots: 0100000005000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0

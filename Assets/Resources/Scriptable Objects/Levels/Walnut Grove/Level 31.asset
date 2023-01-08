@@ -33,7 +33,7 @@ MonoBehaviour:
   tutorialIndexForList: 0
   cellsCountInLevel: 8
   levelDifficulty: 0
-  RandomSlicePositions: 1
+  RandomSlicePositions: 0
   allowRepeatSlices: 0
   allowRepeatTiles: 0
   allowRepeatTileSides: 0
@@ -41,7 +41,7 @@ MonoBehaviour:
   stoneTiles: []
   slicesToSpawn:
   - sliceToSpawn: 2
-    isLock: 0
+    isLock: 1
     isLoot: 1
     isLimiter: 1
   - sliceToSpawn: 3
@@ -57,7 +57,7 @@ MonoBehaviour:
   specificTutorialEnum: 0
   bottomUIToShow: 2
   arrayOfPieces: []
-  specificSliceSpots: 
+  specificSliceSpots: 0000000003000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0
@@ -71,6 +71,7 @@ MonoBehaviour:
   damageToBossCompeleRing: 0
   useLastClipAlgoritm: 1
   algoritmStepsWanted: 0
-  levelStartDialogueSO: {fileID: 0}
-  levelEndDialogueSO: {fileID: 11400000, guid: 5a2a2917711172249afd51f24a77e31f, type: 2}
+  levelStartDialogueSO: {fileID: 11400000, guid: 5a2a2917711172249afd51f24a77e31f,
+    type: 2}
+  levelEndDialogueSO: {fileID: 0}
   timeForLevel: 0

@@ -392,7 +392,7 @@ public class PlayfabManager : MonoBehaviour
                 new StatisticUpdate
                 {
                     StatisticName = "Farthest level",
-                    Value = highestLevelReached,
+                    Value = highestLevelReached
                 },
             }
         };

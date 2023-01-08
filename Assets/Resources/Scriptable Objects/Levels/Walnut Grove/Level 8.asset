@@ -30,27 +30,31 @@ MonoBehaviour:
   worldNum: 0
   levelIndexInZone: 8
   numIndexForLeaderBoard: 8
-  tutorialIndexForList: 3
+  tutorialIndexForList: 0
   cellsCountInLevel: 8
   levelDifficulty: 0
   RandomSlicePositions: 0
   allowRepeatSlices: 0
   allowRepeatTiles: 0
   allowRepeatTileSides: 0
-  powerupsForLevel: 
+  powerupsForLevel: 00000000
   stoneTiles: []
   slicesToSpawn:
-  - sliceToSpawn: 0
+  - sliceToSpawn: 3
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
+  - sliceToSpawn: 3
     isLock: 0
     isLoot: 1
     isLimiter: 1
   RewardBags: 01000000
-  levelAvailableColors: 0300000004000000
+  levelAvailableColors: 030000000400000001000000
   levelAvailablesymbols: 000000000100000002000000
   symbolsNeededForSpecialPowers: []
-  isSpecificTutorial: 0
-  isTutorial: 1
-  specificTutorialEnum: 0
+  isSpecificTutorial: 1
+  isTutorial: 0
+  specificTutorialEnum: 2
   bottomUIToShow: 2
   arrayOfPieces:
   - colorOfPieceRight: 3
@@ -61,7 +65,7 @@ MonoBehaviour:
     symbolOfPieceRight: 2
     colorOfPieceLeft: 4
     symbolOfPieceLeft: 0
-  specificSliceSpots: 01000000
+  specificSliceSpots: 0100000005000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0
@@ -75,7 +79,7 @@ MonoBehaviour:
   damageToBossCompeleRing: 0
   useLastClipAlgoritm: 1
   algoritmStepsWanted: 0
-  levelStartDialogueSO: {fileID: 11400000, guid: 28146b694a8ee2a44b082390040d146f,
+  levelStartDialogueSO: {fileID: 11400000, guid: 0757ece45f507c14d9dd6e3d9bda2eef,
     type: 2}
   levelEndDialogueSO: {fileID: 0}
   timeForLevel: 0
