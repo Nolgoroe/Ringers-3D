@@ -17,7 +17,8 @@ MonoBehaviour:
   is12PieceRing: 0
   isDoubleRing: 0
   isBoss: 0
-  isAnimalLevel: 0
+  isTimerLevel: 0
+  isAnimalLevel: 1
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
   showIntroLevelAnimation: 1
@@ -26,33 +27,39 @@ MonoBehaviour:
   clipPrefab: {fileID: 6183251264102439455, guid: ff432a4cdfd3d8c4ab183be2d82d571e,
     type: 3}
   levelNum: 7
-  worldNum: 1
+  worldNum: 2
   levelIndexInZone: 7
-  numIndexForLeaderBoard: 42
+  numIndexForLeaderBoard: 72
   tutorialIndexForList: 0
   cellsCountInLevel: 8
   levelDifficulty: 0
-  RandomSlicePositions: 1
+  RandomSlicePositions: 0
   allowRepeatSlices: 0
   allowRepeatTiles: 0
   allowRepeatTileSides: 0
   powerupsForLevel: 
-  stoneTiles: []
+  stoneTiles:
+  - cellIndex: 0
+    randomValues: 1
+    isNeutral: 1
+    colorOfPieceRight: 0
+    symbolOfPieceRight: 0
+    colorOfPieceLeft: 0
+    symbolOfPieceLeft: 0
+  - cellIndex: 4
+    randomValues: 1
+    isNeutral: 1
+    colorOfPieceRight: 0
+    symbolOfPieceRight: 0
+    colorOfPieceLeft: 0
+    symbolOfPieceLeft: 0
   slicesToSpawn:
-  - sliceToSpawn: 2
+  - sliceToSpawn: 0
     isLock: 0
     isLoot: 1
     isLimiter: 1
-  - sliceToSpawn: 2
-    isLock: 0
-    isLoot: 1
-    isLimiter: 1
-  - sliceToSpawn: 2
-    isLock: 0
-    isLoot: 1
-    isLimiter: 1
-  RewardBags: 060000000700000008000000
-  levelAvailableColors: 0000000001000000030000000400000002000000
+  RewardBags: 0a0000000b000000
+  levelAvailableColors: 00000000010000000200000003000000
   levelAvailablesymbols: 000000000100000002000000
   symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
@@ -60,7 +67,7 @@ MonoBehaviour:
   specificTutorialEnum: 0
   bottomUIToShow: 2
   arrayOfPieces: []
-  specificSliceSpots: 010000000300000006000000
+  specificSliceSpots: 03000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0
@@ -76,3 +83,4 @@ MonoBehaviour:
   algoritmStepsWanted: 0
   levelStartDialogueSO: {fileID: 0}
   levelEndDialogueSO: {fileID: 0}
+  timeForLevel: 0

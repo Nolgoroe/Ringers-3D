@@ -436,10 +436,17 @@ public class AutoVersionUpdater : MonoBehaviour
     }
     IEnumerator ResetZoneIndexesTwoToThree()
     {
-
         ZoneManagerHelpData.Instance.listOfAllZones[0].lastLevelNum = 35;
+        ZoneManagerHelpData.Instance.listOfAllZones[1].lastLevelNum = 30;
+        ZoneManagerHelpData.Instance.listOfAllZones[2].lastLevelNum = 20;
+        ZoneManagerHelpData.Instance.listOfAllZones[3].lastLevelNum = 30;
+        ZoneManagerHelpData.Instance.listOfAllZones[4].lastLevelNum = 15;
 
         ZoneManagerHelpData.Instance.listOfAllZones[0].keyLevelIndex = 35;
+        ZoneManagerHelpData.Instance.listOfAllZones[1].keyLevelIndex = 30;
+        ZoneManagerHelpData.Instance.listOfAllZones[2].keyLevelIndex = 20;
+        ZoneManagerHelpData.Instance.listOfAllZones[3].keyLevelIndex = 30;
+        ZoneManagerHelpData.Instance.listOfAllZones[4].keyLevelIndex = 15;
 
         if (ZoneManagerHelpData.Instance.listOfAllZones[ZoneManager.Instance.unlockedZoneID[0]].maxLevelReachedInZone <= 0)
         {
