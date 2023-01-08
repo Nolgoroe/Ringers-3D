@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f245e6ade46975b42912a0bdcd673818, type: 3}
-  m_Name: Level 16
+  m_Name: Level 18
   m_EditorClassIdentifier: 
-  worldName: Greymoss Bog
+  worldName: Thornberry Woods
   isGrindLevel: 0
   is12PieceRing: 0
   isDoubleRing: 0
   isBoss: 0
+  isTimerLevel: 0
   isAnimalLevel: 1
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
@@ -25,10 +26,10 @@ MonoBehaviour:
     type: 3}
   clipPrefab: {fileID: 6183251264102439455, guid: ff432a4cdfd3d8c4ab183be2d82d571e,
     type: 3}
-  levelNum: 16
+  levelNum: 18
   worldNum: 2
-  levelIndexInZone: 16
-  numIndexForLeaderBoard: 81
+  levelIndexInZone: 18
+  numIndexForLeaderBoard: 83
   tutorialIndexForList: 0
   cellsCountInLevel: 8
   levelDifficulty: 0
@@ -38,7 +39,7 @@ MonoBehaviour:
   allowRepeatTileSides: 0
   powerupsForLevel: 
   stoneTiles:
-  - cellIndex: 3
+  - cellIndex: 2
     randomValues: 1
     isNeutral: 1
     colorOfPieceRight: 0
@@ -46,11 +47,11 @@ MonoBehaviour:
     colorOfPieceLeft: 0
     symbolOfPieceLeft: 0
   slicesToSpawn:
-  - sliceToSpawn: 1
-    isLock: 0
+  - sliceToSpawn: 0
+    isLock: 1
     isLoot: 1
     isLimiter: 1
-  - sliceToSpawn: 1
+  - sliceToSpawn: 3
     isLock: 0
     isLoot: 1
     isLimiter: 1
@@ -63,7 +64,7 @@ MonoBehaviour:
   specificTutorialEnum: 0
   bottomUIToShow: 2
   arrayOfPieces: []
-  specificSliceSpots: 0600000001000000
+  specificSliceSpots: 0400000007000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0
@@ -79,3 +80,4 @@ MonoBehaviour:
   algoritmStepsWanted: 0
   levelStartDialogueSO: {fileID: 0}
   levelEndDialogueSO: {fileID: 0}
+  timeForLevel: 0

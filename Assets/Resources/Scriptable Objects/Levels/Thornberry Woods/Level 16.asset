@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f245e6ade46975b42912a0bdcd673818, type: 3}
-  m_Name: Grind Level 8
+  m_Name: Level 16
   m_EditorClassIdentifier: 
-  worldName: Greymoss Bog
-  isGrindLevel: 1
+  worldName: Thornberry Woods
+  isGrindLevel: 0
   is12PieceRing: 0
   isDoubleRing: 0
   isBoss: 0
-  isAnimalLevel: 0
+  isTimerLevel: 0
+  isAnimalLevel: 1
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
   showIntroLevelAnimation: 1
@@ -25,10 +26,10 @@ MonoBehaviour:
     type: 3}
   clipPrefab: {fileID: 6183251264102439455, guid: ff432a4cdfd3d8c4ab183be2d82d571e,
     type: 3}
-  levelNum: 8
+  levelNum: 16
   worldNum: 2
-  levelIndexInZone: 8
-  numIndexForLeaderBoard: 73
+  levelIndexInZone: 16
+  numIndexForLeaderBoard: 81
   tutorialIndexForList: 0
   cellsCountInLevel: 8
   levelDifficulty: 0
@@ -38,7 +39,7 @@ MonoBehaviour:
   allowRepeatTileSides: 0
   powerupsForLevel: 
   stoneTiles:
-  - cellIndex: 0
+  - cellIndex: 3
     randomValues: 1
     isNeutral: 1
     colorOfPieceRight: 0
@@ -54,8 +55,8 @@ MonoBehaviour:
     isLock: 0
     isLoot: 1
     isLimiter: 1
-  RewardBags: 0c0000000d000000
-  levelAvailableColors: 00000000010000000200000003000000
+  RewardBags: 0e0000000f000000
+  levelAvailableColors: 0000000001000000020000000300000004000000
   levelAvailablesymbols: 000000000100000002000000
   symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
@@ -63,7 +64,7 @@ MonoBehaviour:
   specificTutorialEnum: 0
   bottomUIToShow: 2
   arrayOfPieces: []
-  specificSliceSpots: 0300000006000000
+  specificSliceSpots: 0600000001000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0
@@ -79,3 +80,4 @@ MonoBehaviour:
   algoritmStepsWanted: 0
   levelStartDialogueSO: {fileID: 0}
   levelEndDialogueSO: {fileID: 0}
+  timeForLevel: 0

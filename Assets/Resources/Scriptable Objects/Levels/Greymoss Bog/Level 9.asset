@@ -14,32 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldName: Greymoss Bog
   isGrindLevel: 0
-  is12PieceRing: 0
+  is12PieceRing: 1
   isDoubleRing: 0
   isBoss: 0
   isTimerLevel: 0
   isAnimalLevel: 0
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
-  showIntroLevelAnimation: 0
-  boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
+  showIntroLevelAnimation: 1
+  boardPrefab: {fileID: 6382559071292991177, guid: 9fa6c7e47566ca141a795f93ffbccf9b,
     type: 3}
   clipPrefab: {fileID: 6183251264102439455, guid: ff432a4cdfd3d8c4ab183be2d82d571e,
     type: 3}
   levelNum: 9
-  worldNum: 2
+  worldNum: 4
   levelIndexInZone: 9
-  numIndexForLeaderBoard: 74
+  numIndexForLeaderBoard: 124
   tutorialIndexForList: 0
-  cellsCountInLevel: 8
+  cellsCountInLevel: 12
   levelDifficulty: 0
   RandomSlicePositions: 0
   allowRepeatSlices: 0
   allowRepeatTiles: 0
   allowRepeatTileSides: 0
-  powerupsForLevel: 02000000
+  powerupsForLevel: 
   stoneTiles:
-  - cellIndex: 0
+  - cellIndex: 9
     randomValues: 1
     isNeutral: 1
     colorOfPieceRight: 0
@@ -55,16 +55,38 @@ MonoBehaviour:
     isLock: 0
     isLoot: 1
     isLimiter: 1
-  RewardBags: 0c0000000d000000
-  levelAvailableColors: 00000000010000000200000003000000
+  - sliceToSpawn: 2
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
+  - sliceToSpawn: 3
+    isLock: 1
+    isLoot: 1
+    isLimiter: 1
+  - sliceToSpawn: 2
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
+  - sliceToSpawn: 2
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
+  - sliceToSpawn: 2
+    isLock: 0
+    isLoot: 1
+    isLimiter: 1
+  RewardBags: 
+  levelAvailableColors: 0000000001000000020000000300000004000000
   levelAvailablesymbols: 000000000100000002000000
-  symbolsNeededForSpecialPowers: []
-  isSpecificTutorial: 1
+  symbolsNeededForSpecialPowers:
+  - symbol: 0
+    amount: 4
+  isSpecificTutorial: 0
   isTutorial: 0
-  specificTutorialEnum: 7
+  specificTutorialEnum: 0
   bottomUIToShow: 2
   arrayOfPieces: []
-  specificSliceSpots: 0300000006000000
+  specificSliceSpots: 00000000010000000200000003000000040000000500000006000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0

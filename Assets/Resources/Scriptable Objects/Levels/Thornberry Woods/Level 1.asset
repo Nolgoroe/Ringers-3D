@@ -27,55 +27,40 @@ MonoBehaviour:
   clipPrefab: {fileID: 6183251264102439455, guid: ff432a4cdfd3d8c4ab183be2d82d571e,
     type: 3}
   levelNum: 1
-  worldNum: 4
+  worldNum: 2
   levelIndexInZone: 1
-  numIndexForLeaderBoard: 116
-  tutorialIndexForList: 10
+  numIndexForLeaderBoard: 66
+  tutorialIndexForList: 8
   cellsCountInLevel: 8
   levelDifficulty: 0
-  RandomSlicePositions: 0
+  RandomSlicePositions: 1
   allowRepeatSlices: 0
   allowRepeatTiles: 0
   allowRepeatTileSides: 0
   powerupsForLevel: 
-  stoneTiles: []
-  slicesToSpawn:
-  - sliceToSpawn: 0
-    isLock: 1
-    isLoot: 1
-    isLimiter: 1
-  - sliceToSpawn: 0
-    isLock: 1
-    isLoot: 1
-    isLimiter: 1
-  - sliceToSpawn: 0
-    isLock: 1
-    isLoot: 1
-    isLimiter: 1
-  RewardBags: 1200000013000000
+  stoneTiles:
+  - cellIndex: 0
+    randomValues: 0
+    isNeutral: 1
+    colorOfPieceRight: 0
+    symbolOfPieceRight: 0
+    colorOfPieceLeft: 0
+    symbolOfPieceLeft: 1
+  slicesToSpawn: []
+  RewardBags: 0a0000000b000000
   levelAvailableColors: 00000000010000000200000003000000
-  levelAvailablesymbols: 00000000010000000200000003000000
-  symbolsNeededForSpecialPowers:
-  - symbol: 0
-    amount: 3
+  levelAvailablesymbols: 000000000100000002000000
+  symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
   isTutorial: 1
   specificTutorialEnum: 0
   bottomUIToShow: 2
   arrayOfPieces:
   - colorOfPieceRight: 0
-    symbolOfPieceRight: 0
+    symbolOfPieceRight: 1
     colorOfPieceLeft: 1
     symbolOfPieceLeft: 0
-  - colorOfPieceRight: 2
-    symbolOfPieceRight: 0
-    colorOfPieceLeft: 0
-    symbolOfPieceLeft: 1
-  - colorOfPieceRight: 2
-    symbolOfPieceRight: 0
-    colorOfPieceLeft: 1
-    symbolOfPieceLeft: 0
-  specificSliceSpots: 000000000100000002000000
+  specificSliceSpots: 
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0

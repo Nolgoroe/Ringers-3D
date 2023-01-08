@@ -14,24 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldName: Thornberry Woods
   isGrindLevel: 0
-  is12PieceRing: 1
+  is12PieceRing: 0
   isDoubleRing: 0
   isBoss: 0
   isTimerLevel: 0
-  isAnimalLevel: 1
+  isAnimalLevel: 0
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
   showIntroLevelAnimation: 1
-  boardPrefab: {fileID: 6382559071292991177, guid: 9fa6c7e47566ca141a795f93ffbccf9b,
+  boardPrefab: {fileID: 6382559071292991177, guid: d894387e596541a499e451e53981c9a6,
     type: 3}
   clipPrefab: {fileID: 6183251264102439455, guid: ff432a4cdfd3d8c4ab183be2d82d571e,
     type: 3}
   levelNum: 14
-  worldNum: 4
+  worldNum: 2
   levelIndexInZone: 14
-  numIndexForLeaderBoard: 129
+  numIndexForLeaderBoard: 79
   tutorialIndexForList: 0
-  cellsCountInLevel: 12
+  cellsCountInLevel: 8
   levelDifficulty: 0
   RandomSlicePositions: 0
   allowRepeatSlices: 0
@@ -39,14 +39,14 @@ MonoBehaviour:
   allowRepeatTileSides: 0
   powerupsForLevel: 
   stoneTiles:
-  - cellIndex: 5
+  - cellIndex: 1
     randomValues: 1
     isNeutral: 1
     colorOfPieceRight: 0
     symbolOfPieceRight: 0
     colorOfPieceLeft: 0
     symbolOfPieceLeft: 0
-  - cellIndex: 8
+  - cellIndex: 4
     randomValues: 1
     isNeutral: 1
     colorOfPieceRight: 0
@@ -54,30 +54,20 @@ MonoBehaviour:
     colorOfPieceLeft: 0
     symbolOfPieceLeft: 0
   slicesToSpawn:
-  - sliceToSpawn: 2
-    isLock: 0
-    isLoot: 1
-    isLimiter: 1
-  - sliceToSpawn: 3
+  - sliceToSpawn: 1
     isLock: 1
     isLoot: 1
     isLimiter: 1
-  - sliceToSpawn: 3
-    isLock: 0
-    isLoot: 1
-    isLimiter: 1
-  RewardBags: 1400000015000000
-  levelAvailableColors: 0000000001000000020000000300000004000000
+  RewardBags: 0c0000000d000000
+  levelAvailableColors: 00000000010000000200000003000000
   levelAvailablesymbols: 00000000010000000200000003000000
-  symbolsNeededForSpecialPowers:
-  - symbol: 0
-    amount: 5
+  symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
   isTutorial: 0
   specificTutorialEnum: 0
   bottomUIToShow: 2
   arrayOfPieces: []
-  specificSliceSpots: 000000000100000002000000
+  specificSliceSpots: 07000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0
