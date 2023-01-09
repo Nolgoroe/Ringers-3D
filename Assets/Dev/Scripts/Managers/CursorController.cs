@@ -1015,7 +1015,7 @@ public class CursorController : MonoBehaviour
                         if (GameManager.Instance.currentLevel.symbolsNeededForSpecialPowers.Length > 0)
                         {
                             AddNumAnimalsToBoard(followerTarget);
-                        }
+                        } 
                     }
                 }
                 else
@@ -1225,8 +1225,8 @@ public class CursorController : MonoBehaviour
         if (previousHeighlightChosen != null)
         {
             previousHeighlightChosen.GetComponent<Cell>().TurnOffHighlighParticle();
-            previousHeighlightChosen.GetComponent<Cell>().RemoveToSubPiecesOnBoardTemp();
-            ConnectionManager.Instance.NullifyReleventSliceAnim(followerTarget.GetComponent<Piece>());
+            //previousHeighlightChosen.GetComponent<Cell>().RemoveToSubPiecesOnBoardTemp();
+            //ConnectionManager.Instance.NullifyReleventSliceAnim(followerTarget.GetComponent<Piece>());
 
             previousHeighlightChosen = null;
         }

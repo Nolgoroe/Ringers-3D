@@ -745,43 +745,43 @@ public class ConnectionManager : MonoBehaviour
         conditionMet = true;
         isGoodConnect = false;
 
-        if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ShapeMatch)
-        {
-            CompareResault result = TotalCheck(currentSide, contestedSide);
+        //if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ShapeMatch)
+        //{
+        //    CompareResault result = TotalCheck(currentSide, contestedSide);
 
-            if (result.gSymbolMatch)
-            {
-                isGoodConnect = true;
-            }
+        //    if (result.gSymbolMatch)
+        //    {
+        //        isGoodConnect = true;
+        //    }
 
-            if (isGoodConnect)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        //    //if (isGoodConnect)
+        //    //{
+        //    //    return true;
+        //    //}
+        //    //else
+        //    //{
+        //    //    return false;
+        //    //}
+        //}
 
-        if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ColorMatch)
-        {
-            CompareResault result = TotalCheck(currentSide, contestedSide);
+        //if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ColorMatch)
+        //{
+        //    CompareResault result = TotalCheck(currentSide, contestedSide);
 
-            if (result.gColorMatch)
-            {
-                isGoodConnect = true;
-            }
+        //    if (result.gColorMatch)
+        //    {
+        //        isGoodConnect = true;
+        //    }
 
-            if (isGoodConnect)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        //    //if (isGoodConnect)
+        //    //{
+        //    //    return true;
+        //    //}
+        //    //else
+        //    //{
+        //    //    return false;
+        //    //}
+        //}
 
         if (currentSide.relevantSlice)
         {
