@@ -499,7 +499,6 @@ public class UIManager : MonoBehaviour
         bGPanelDisableTouch.SetActive(false);
 
         GameManager.Instance.clipManager.RepopulateLatestClip();
-
     }
     public void EndLevelMessageYes()
     {

@@ -1021,10 +1021,10 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("You Lose");
 
-        if(CursorController.Instance.followerTarget != null)
-        {
-            CursorController.Instance.ReturnTileHome();
-        }
+        //if(CursorController.Instance.followerTarget != null)
+        //{
+        //    CursorController.Instance.ReturnTileHome();
+        //}
 
         LevelEnded = true;
     }
