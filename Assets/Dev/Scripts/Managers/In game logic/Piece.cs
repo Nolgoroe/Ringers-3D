@@ -182,7 +182,7 @@ public class Piece : MonoBehaviour
             {
                 repeatIndicator++;
             }
-            else if(isSamePiece == 0 && !isRepeatPieceSides && !GameManager.Instance.isDisableTutorials && (GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial))
+            else /*if(!isRepeatPieceSides && !GameManager.Instance.isDisableTutorials && (GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial))*/
             {
                 if (GameManager.Instance.copyOfArrayOfPiecesTutorial.Count > 0)
                 {
