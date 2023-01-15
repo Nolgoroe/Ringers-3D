@@ -716,7 +716,7 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.restartButton.interactable = true;
         UIManager.Instance.dealButton.interactable = true;
 
-        if (!TestLevelsSystemManagerSaveData.instance.canGetChest && !hasGivenChest)
+        if (!TestLevelsSystemManagerSaveData.instance.canGetChest /*&& !hasGivenChest*/)
         {
             TutorialSequence.Instacne.CheckDoPotionTutorial();
             TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
@@ -1358,7 +1358,7 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.restartButton.interactable = true;
         UIManager.Instance.dealButton.interactable = true;
 
-        if (!TestLevelsSystemManagerSaveData.instance.canGetChest && !hasGivenChest)
+        if (!TestLevelsSystemManagerSaveData.instance.canGetChest/* && !hasGivenChest*/)
         {
             TutorialSequence.Instacne.CheckDoPotionTutorial();
             TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();

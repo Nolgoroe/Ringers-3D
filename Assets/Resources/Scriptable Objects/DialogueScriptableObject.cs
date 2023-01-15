@@ -243,6 +243,17 @@ public class DialogueScriptableObject : ScriptableObject
                 break;
         }
 
+        if(index == allEntries.Length - 1)
+        {
+            DialogueObjectRefrences refs;
+            rect.TryGetComponent(out refs);
+
+            if(refs)
+            {
+                refs.arrowObject.SetActive(false);
+            }
+
+        }
     }
 
     private void SetDialogueEntryData(GameObject dialogueRef, int index, DialogueSide side)
