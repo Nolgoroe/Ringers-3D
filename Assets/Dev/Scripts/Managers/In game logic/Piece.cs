@@ -169,7 +169,7 @@ public class Piece : MonoBehaviour
 
             repeatIndicator = 0;
 
-            if (isSamePiece >= 3)
+            if (isSamePiece >= 2)
             {
                 repeatIndicator++;
             }

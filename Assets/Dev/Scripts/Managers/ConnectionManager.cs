@@ -764,39 +764,53 @@ public class ConnectionManager : MonoBehaviour
         //    //}
         //}
 
-        //if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ColorMatch)
-        //{
-        //    CompareResault result = TotalCheck(currentSide, contestedSide);
+        if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ColorMatch)
+        {
+            CompareResault result = TotalCheck(currentSide, contestedSide);
 
-        //    if (result.gColorMatch)
-        //    {
-        //        isGoodConnect = true;
-        //    }
+            if (result.gColorMatch)
+            {
+                isGoodConnect = true;
+            }
 
-        //    //if (isGoodConnect)
-        //    //{
-        //    //    return true;
-        //    //}
-        //    //else
-        //    //{
-        //    //    return false;
-        //    //}
-        //}
+            //if (isGoodConnect)
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
+        }
 
         if (currentSide.relevantSlice)
         {
             if (currentSide.relevantSlice.sliceCatagory != SliceCatagory.None)
             {
-                CompareResault result = TotalCheck(currentSide, contestedSide);
+                CompareResault result;
 
-                if (result.gColorMatch)
+                if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ColorMatch)
                 {
-                    isGoodConnect = true;
+                    result = TotalCheck(currentSide, contestedSide);
+
+                    if (result.gColorMatch)
+                    {
+                        isGoodConnect = true;
+                    }
                 }
-
-                if (result.gSymbolMatch)
+                else
                 {
-                    isGoodConnect = true;
+                    result = TotalCheck(currentSide, contestedSide);
+
+                    if (result.gColorMatch)
+                    {
+                        isGoodConnect = true;
+                    }
+
+                    if (result.gSymbolMatch)
+                    {
+                        isGoodConnect = true;
+                    }
                 }
 
                 conditionMet = CheckFulfilledSliceCondition(currentSide.relevantSlice, result, currentSide, contestedSide);
@@ -827,16 +841,30 @@ public class ConnectionManager : MonoBehaviour
             }
             else
             {
-                CompareResault result = TotalCheck(currentSide, contestedSide);
+                CompareResault result;
 
-                if (result.gColorMatch)
+                if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ColorMatch)
                 {
-                    isGoodConnect = true;
+                    result = TotalCheck(currentSide, contestedSide);
+
+                    if (result.gColorMatch)
+                    {
+                        isGoodConnect = true;
+                    }
                 }
-
-                if (result.gSymbolMatch)
+                else
                 {
-                    isGoodConnect = true;
+                    result = TotalCheck(currentSide, contestedSide);
+
+                    if (result.gColorMatch)
+                    {
+                        isGoodConnect = true;
+                    }
+
+                    if (result.gSymbolMatch)
+                    {
+                        isGoodConnect = true;
+                    }
                 }
 
                 if (isGoodConnect)
@@ -851,16 +879,30 @@ public class ConnectionManager : MonoBehaviour
         }
         else
         {
-            CompareResault result = TotalCheck(currentSide, contestedSide);
+            CompareResault result;
 
-            if (result.gColorMatch)
+            if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ColorMatch)
             {
-                isGoodConnect = true;
+                result = TotalCheck(currentSide, contestedSide);
+
+                if (result.gColorMatch)
+                {
+                    isGoodConnect = true;
+                }
             }
-
-            if (result.gSymbolMatch)
+            else
             {
-                isGoodConnect = true;
+                result = TotalCheck(currentSide, contestedSide);
+
+                if (result.gColorMatch)
+                {
+                    isGoodConnect = true;
+                }
+
+                if (result.gSymbolMatch)
+                {
+                    isGoodConnect = true;
+                }
             }
 
             if (isGoodConnect)
