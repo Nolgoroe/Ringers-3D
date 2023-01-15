@@ -72,10 +72,11 @@ public class AnimationEventsAnimals : MonoBehaviour
 
         LeanTween.value(UIManager.Instance.backToHubButton.gameObject, 0f, 1, AnimationManager.instance.fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
         {
-            Image image = UIManager.Instance.backToHubButton.GetComponent<Image>();
-            Color newColor = image.color;
-            newColor.a = val;
-            image.color = newColor;
+            CanvasGroup group = UIManager.Instance.backToHubButton.GetComponent<CanvasGroup>();
+            //Color newColor = group.color;
+            //newColor.a = val;
+            //group.color = newColor;
+            group.alpha = val;
         });
 
         UIManager.Instance.backToHubButton.gameObject.SetActive(true);

@@ -639,8 +639,10 @@ public class AnimationManager : MonoBehaviour
         {
             Debug.LogError(TestLevelsSystemManagerSaveData.instance.CompletedCount);
 
-            Image nextLevelButtonImage = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>();
-            nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 0);
+            //Image nextLevelButtonImage = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>();
+            //nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 0);
+            CanvasGroup nextLevelGroup = UIManager.Instance.nextLevelFromWinScreen.GetComponent<CanvasGroup>();
+            nextLevelGroup.alpha = 0;
 
             UIManager.Instance.nextLevelFromWinScreen.interactable = false;
             UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
@@ -665,10 +667,13 @@ public class AnimationManager : MonoBehaviour
 
                 LeanTween.value(UIManager.Instance.nextLevelFromWinScreen.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
                 {
-                    Image image = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>(); ;
-                    Color newColor = image.color;
-                    newColor.a = val;
-                    image.color = newColor;
+                    CanvasGroup nextLevelGroup = UIManager.Instance.nextLevelFromWinScreen.GetComponent<CanvasGroup>();
+                    nextLevelGroup.alpha = val;
+
+                    //Image image = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>(); ;
+                    //Color newColor = image.color;
+                    //newColor.a = val;
+                    //image.color = newColor;
                 });
             }
             else
@@ -693,10 +698,12 @@ public class AnimationManager : MonoBehaviour
 
             LeanTween.value(UIManager.Instance.backToHubButton.gameObject, 0f, 1, fadeInTimeButtons).setEase(LeanTweenType.linear).setOnUpdate((float val) =>
             {
-                Image image = UIManager.Instance.backToHubButton.GetComponent<Image>();
-                Color newColor = image.color;
-                newColor.a = val;
-                image.color = newColor;
+                CanvasGroup group = UIManager.Instance.backToHubButton.GetComponent<CanvasGroup>();
+                group.alpha = val;
+                //Image image = UIManager.Instance.backToHubButton.GetComponent<Image>();
+                //Color newColor = image.color;
+                //newColor.a = val;
+                //image.color = newColor;
             });
 
             //UIManager.Instance.backToHubButton.interactable = true;
@@ -1298,15 +1305,20 @@ public class AnimationManager : MonoBehaviour
                 UIManager.Instance.nextLevelFromWinScreen.interactable = true;
                 UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
 
-                Image nextLevelButtonImage = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>();
-                nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 1);
+                CanvasGroup nextLevelGroup = UIManager.Instance.nextLevelFromWinScreen.GetComponent<CanvasGroup>();
+                nextLevelGroup.alpha = 1;
+
+                //Image nextLevelButtonImage = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>();
+                //nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 1);
             }
 
             UIManager.Instance.backToHubButton.gameObject.SetActive(true);
             UIManager.Instance.backToHubButton.interactable = true;
 
-            Image backToHubImage = UIManager.Instance.backToHubButton.GetComponent<Image>();
-            backToHubImage.color = new Color(backToHubImage.color.r, backToHubImage.color.g, backToHubImage.color.b, 1);
+            //Image backToHubImage = UIManager.Instance.backToHubButton.GetComponent<Image>();
+            //backToHubImage.color = new Color(backToHubImage.color.r, backToHubImage.color.g, backToHubImage.color.b, 1);
+            CanvasGroup group = UIManager.Instance.backToHubButton.GetComponent<CanvasGroup>();
+            group.alpha = 1;
 
             //if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
             //{

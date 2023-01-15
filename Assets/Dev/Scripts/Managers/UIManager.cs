@@ -2576,11 +2576,16 @@ public class UIManager : MonoBehaviour
         sucessText.color = new Color(sucessText.color.r, sucessText.color.g, sucessText.color.b, 0);
         animalNameText.color = new Color(animalNameText.color.r, animalNameText.color.g, animalNameText.color.b, 0);
 
-        Image backToHubImage = backToHubButton.GetComponent<Image>();
-        backToHubImage.color = new Color(backToHubImage.color.r, backToHubImage.color.g, backToHubImage.color.b, 0);
+        CanvasGroup group = backToHubButton.GetComponent<CanvasGroup>();
+        group.alpha = 0;
 
-        Image nextLevelButtonImage = nextLevelFromWinScreen.GetComponent<Image>();
-        nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 0);
+        //Image backToHubImage = backToHubButton.GetComponent<Image>();
+        //backToHubImage.color = new Color(backToHubImage.color.r, backToHubImage.color.g, backToHubImage.color.b, 0);
+
+        //Image nextLevelButtonImage = nextLevelFromWinScreen.GetComponent<Image>();
+        //nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 0);
+        CanvasGroup nextLevelGroup = nextLevelFromWinScreen.GetComponent<CanvasGroup>();
+        nextLevelGroup.alpha = 0;
 
         CanvasGroup restartGrind = restartGrindLevel.GetComponent<CanvasGroup>();
         restartGrind.alpha = 0;
