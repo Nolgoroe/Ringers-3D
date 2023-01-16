@@ -345,6 +345,9 @@ public class Piece : MonoBehaviour
 
             if (p)
             {
+                Debug.Log(p.transform.parent.name);
+                Debug.Log(currectCheckPiece.transform.parent.name);
+
                 if (p != currectCheckPiece)
                 {
                     bool isSame = ConnectionManager.Instance.ComparerPiece(currectCheckPiece, p);

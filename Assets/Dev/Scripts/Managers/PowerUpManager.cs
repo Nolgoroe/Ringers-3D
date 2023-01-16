@@ -385,7 +385,7 @@ public class PowerUpManager : MonoBehaviour
                 toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
 
                 successfulUse = true;
-                GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion:" + "Joker potion");
+                GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion of type:" + "Joker potion");
             }
             else
             {
@@ -420,7 +420,7 @@ public class PowerUpManager : MonoBehaviour
                 toWorkOn.rightChild.SetPieceAsJoker();
 
                 successfulUse = true;
-                GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion:" + "Joker potion");
+                GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion of type:" + "Joker potion");
             }
 
             toWorkOn.isLocked = false;
@@ -475,7 +475,7 @@ public class PowerUpManager : MonoBehaviour
 
                     toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
 
-                    GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion:" + "Switch potion");
+                    GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion of type:" + "Switch potion");
 
                     FinishedUsingPowerup(true, prop);
                     ShakePiecePowerUp(toWorkOn.gameObject);
@@ -504,7 +504,7 @@ public class PowerUpManager : MonoBehaviour
                 toWorkOn.leftChild.RefreshPiece();
                 toWorkOn.rightChild.RefreshPiece();
 
-                GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion:" + "Switch potion");
+                GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion of type:" + "Switch potion");
 
                 FinishedUsingPowerup(true, prop);
                 ShakePiecePowerUp(toWorkOn.gameObject);
@@ -558,7 +558,7 @@ public class PowerUpManager : MonoBehaviour
             Destroy(toWorkOn.gameObject, 0.5f);
 
 
-            GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion:" + "Tile Bomb potion");
+            GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion of type:" + "Tile Bomb potion");
 
             FinishedUsingPowerup(true, prop);
 
@@ -698,7 +698,7 @@ public class PowerUpManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
         Destroy(ObjectToUsePowerUpOn.gameObject, 0.6f);
 
-        GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion:" + "Slice Bomb potion");
+        GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion of type:" + "Slice Bomb potion");
 
         FinishedUsingPowerup(true, prop);
 

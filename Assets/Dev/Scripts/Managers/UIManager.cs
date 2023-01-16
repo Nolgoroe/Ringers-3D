@@ -721,10 +721,6 @@ public class UIManager : MonoBehaviour
         FocusOnMaxLevelReached();
 
 
-
-
-
-
         if (currentCanvas == gameplayCanvas)
         {
 
@@ -987,6 +983,7 @@ public class UIManager : MonoBehaviour
 
             itemForgeCanvas.SetActive(true);
 
+            GameAnalytics.NewDesignEvent("Open player inventory");
             //isUsingUI = true;
 
             openInventoryTab();
@@ -1108,6 +1105,7 @@ public class UIManager : MonoBehaviour
 
             animalAlbum.SetActive(true);
 
+            GameAnalytics.NewDesignEvent("Open animal album");
             if (TutorialSequence.Instacne.duringSequence)
             {
                 if (GameManager.Instance.currentLevel.isSpecificTutorial && GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.AnimalAlbum)
@@ -2431,6 +2429,7 @@ public class UIManager : MonoBehaviour
                 canAdvanceIntro = false;
 
                 TutorialSaveData.Instance.hasFinishedIntro = true;
+                GameAnalytics.NewDesignEvent("GameIntro:Finished Normally");
                 PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
 
                 DisplayDailyRewardsScreen();
@@ -2486,6 +2485,9 @@ public class UIManager : MonoBehaviour
         canAdvanceIntro = false;
 
         TutorialSaveData.Instance.hasFinishedIntro = true;
+
+        GameAnalytics.NewDesignEvent("GameIntro:Skipped");
+
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
 
         DisplayDailyRewardsScreen();
@@ -3016,9 +3018,7 @@ public class UIManager : MonoBehaviour
             StopCoroutine(textCoroutine);
         }
 
-
         StartCoroutine(GameManager.Instance.currentDialogue.EndAllDialogue());
-
     }
 
 

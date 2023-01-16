@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using UnityEngine.Events;
 using TMPro;
+using GameAnalyticsSDK;
 
 public enum DialogueSide
 {
@@ -72,6 +73,8 @@ public class DialogueScriptableObject : ScriptableObject
     public GameObject dialogueEntryLeftPrefab;
     public GameObject dialogueEntryRightPrefab;
     public GameObject imageEntryPrefab;
+
+    public int dialogueID;
     public void LaunchStartingEventsEntry(int index)
     {
         allEntries[index].entryStartEvents?.Invoke();
@@ -97,6 +100,8 @@ public class DialogueScriptableObject : ScriptableObject
             GameManager.Instance.latestEntry.arrowObject.SetActive(false);
         }
 
+        GameAnalytics.NewDesignEvent("Dialogues:Continued Dialogue Normally:" + dialogueID);
+
         LaunchStartingEventsEntry(GameManager.Instance.currentIndexInDialogue);
     }
 
@@ -115,6 +120,8 @@ public class DialogueScriptableObject : ScriptableObject
     {
         GameManager.Instance.hasFinishedShowingDialogue = true;
         UIManager.Instance.dialogueMainGameobject.SetActive(false);
+
+        GameAnalytics.NewDesignEvent("Dialogues:Skipped dialogue:" + dialogueID);
 
         yield return new WaitForEndOfFrame();
 

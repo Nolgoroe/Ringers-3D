@@ -105,6 +105,8 @@ public class CursorController : MonoBehaviour
 
                 StartCoroutine(LootManager.Instance.DisplayLootFromChest());
 
+                GameAnalytics.NewDesignEvent("Has recieve chest in level:" + GameManager.Instance.currentLevel.worldName + ":" + "Level " + GameManager.Instance.currentLevel.levelNum);
+
                 PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TestLevelsSystemManagerSaveData });
                 //LootManager.Instance.UnpackChestLoot();
                 return;
@@ -651,7 +653,7 @@ public class CursorController : MonoBehaviour
                                         PowerUpManager.IsUsingPowerUp = false;
                                         PowerUpManager.HasUsedPowerUp = true;
 
-                                        GameAnalytics.NewDesignEvent("Has used potion:" + GameManager.Instance.currentLevel.worldName + ":" + "Level " + GameManager.Instance.currentLevel.levelNum);
+                                        GameAnalytics.NewDesignEvent("Has used potion in level:" + GameManager.Instance.currentLevel.worldName + ":" + "Level " + GameManager.Instance.currentLevel.levelNum);
 
                                         PowerUpManager.ObjectToUsePowerUpOn = hit.transform.gameObject;
                                         LeanTween.scale(hit.transform.gameObject, new Vector3(hit.transform.localScale.x - 0.2f, hit.transform.localScale.y - 0.2f, 1), 0.1f).setOnComplete(() => ScaleGameObjectBack(hit.transform.gameObject));

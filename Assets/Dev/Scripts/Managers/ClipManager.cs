@@ -87,12 +87,15 @@ public class ClipManager : MonoBehaviour
 
     public void PopulateSlot(Transform s, int testnum)
     {
+        ClipHolder CH = s.GetComponent<ClipHolder>();
+
+        CH.heldPiece = null;
+
         GameObject go = Instantiate(piece, s);
         //go.name = "Piece" + " " + testnum;
         Piece p = go.GetComponent<Piece>();
         p.SetPieces();
 
-        ClipHolder CH = s.GetComponent<ClipHolder>();
         CH.heldPiece = p;
 
         //go.SetActive(false);

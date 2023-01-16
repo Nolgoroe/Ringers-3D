@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 using System.IO;
+using GameAnalyticsSDK;
 
 
 [Serializable]
@@ -131,7 +132,8 @@ public class AnimalsManager : MonoBehaviour
 
             unlockedAnimals.Add(newData);
 
-            if(TutorialSaveData.Instance.hasFinishedAnimalAlbum)
+            GameAnalytics.NewDesignEvent("Released animal:" + newData);
+            if (TutorialSaveData.Instance.hasFinishedAnimalAlbum)
             {
                 InterestPointsManager.instance.TurnOnPointsOfInterestDisplay(TypesPointOfInterest.AnimalAlbum);
             }

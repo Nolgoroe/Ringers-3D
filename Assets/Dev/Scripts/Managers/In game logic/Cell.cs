@@ -76,6 +76,8 @@ public class Cell : MonoBehaviour
         {
             GameManager.Instance.currentFilledCellCount++;
 
+            GameAnalytics.NewDesignEvent("Piece added to ring:" + GameManager.Instance.currentLevel.worldName + ":" + "Level " + GameManager.Instance.currentLevel.levelNum);
+
             if (GameManager.Instance.currentLevel.is12PieceRing)
             {
                 pieceHeld.TransformTo12RingTile();
@@ -98,7 +100,7 @@ public class Cell : MonoBehaviour
         else
         {
             //Debug.LogError("Moved piece inside ring");
-            GameAnalytics.NewDesignEvent("Pice moved in ring:" + GameManager.Instance.currentLevel.worldName + ":" + "Level " + GameManager.Instance.currentLevel.levelNum);
+            GameAnalytics.NewDesignEvent("Piece moved in ring:" + GameManager.Instance.currentLevel.worldName + ":" + "Level " + GameManager.Instance.currentLevel.levelNum);
         }
 
         GameObject go = Instantiate(UIManager.Instance.placePieceVFX, followerTarget);

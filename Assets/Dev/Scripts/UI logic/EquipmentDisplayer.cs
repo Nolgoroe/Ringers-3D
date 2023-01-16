@@ -146,23 +146,31 @@ public class EquipmentDisplayer : MonoBehaviour
 
         if (canForgePotion)
         {
-            Debug.Log("Crafted potion!!");
+            //Debug.Log("Crafted potion!!");
 
             EquipmentData TempED = null;
 
             //if (!isBought)
             //{
+            if(isBought)
+            {
+                GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Crafted Potion using gems:" + data.power.ToString());
+            }
+            else
+            {
                 GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Crafted Potion:" + data.power.ToString());
+            }
 
-                foreach (CraftingMatsNeeded CMN in craftingMatsForEquipment)
-                {
-                    Debug.Log(CMN.mat.ToString());
-                    Debug.Log(CMN.amount);
 
-                    PlayerManager.Instance.DecreaseNumOfMats(CMN);
-                }
+            foreach (CraftingMatsNeeded CMN in craftingMatsForEquipment)
+            {
+                Debug.Log(CMN.mat.ToString());
+                Debug.Log(CMN.amount);
 
-                //SortMaster.Instance.RefreshAllForgeScreens();
+                PlayerManager.Instance.DecreaseNumOfMats(CMN);
+            }
+
+            //SortMaster.Instance.RefreshAllForgeScreens();
             //}
 
             //SortMaster.Instance.RefreshAllScreens();
