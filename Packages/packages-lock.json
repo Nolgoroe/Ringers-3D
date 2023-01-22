@@ -1,5 +1,13 @@
 {
   "dependencies": {
+    "com.esotericsoftware.spine.timeline": {
+      "version": "file:com.esotericsoftware.spine.timeline-4.1",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.timeline": "1.2.10"
+      }
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

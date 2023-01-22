@@ -17,6 +17,11 @@ MonoBehaviour:
     dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
+    skeletonDataAsset: {fileID: 11400000, guid: ae8313e9f7303b146a117128dd01bf74,
+      type: 2}
+    playableAsset: {fileID: 11400000, guid: cc0a3fbd465597a48913bfea3bca31a6, type: 2}
+    blinkAnimation: {fileID: 11400000, guid: ad64106dbaa31c246ae3b4f3bf55e14e, type: 2}
+    relaventPos: AN_HappyPose_Fox
     displayName: Fox
     conversationBlock: 'I think it''s finally dead, Crow. '
     entryStartEvents:
@@ -51,6 +56,11 @@ MonoBehaviour:
     dialogueSide: 1
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
+    skeletonDataAsset: {fileID: 11400000, guid: 5b20a3606b0d260459ac40fcf00e28a2,
+      type: 2}
+    playableAsset: {fileID: 0}
+    blinkAnimation: {fileID: 0}
+    relaventPos: AN_SmilingButtercup
     displayName: Crow
     conversationBlock: Phew, I can't believe we've done it. This was harder than
       I thought!
@@ -97,6 +107,11 @@ MonoBehaviour:
     dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
+    skeletonDataAsset: {fileID: 11400000, guid: ae8313e9f7303b146a117128dd01bf74,
+      type: 2}
+    playableAsset: {fileID: 11400000, guid: d78b0266c9f87174b8b9b3f8564ca4b8, type: 2}
+    blinkAnimation: {fileID: 11400000, guid: ad64106dbaa31c246ae3b4f3bf55e14e, type: 2}
+    relaventPos: AN_IdlePose_Fox
     displayName: Fox
     conversationBlock: The Rive is getting stronger, sister. It took us multiple
       spell rings to defeat it this time.
@@ -182,12 +197,23 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11400000}
-        m_MethodName: MoveToNextEntry
+        m_MethodName: ResetSpineAnimationData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11400000}
+        m_MethodName: MoveToNextEntry
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -198,3 +224,4 @@ MonoBehaviour:
     type: 3}
   imageEntryPrefab: {fileID: 8704270062248906318, guid: d396fb1a16779ee468397193de007099,
     type: 3}
+  dialogueID: 0

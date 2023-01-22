@@ -7,6 +7,9 @@ using System.Linq;
 using UnityEngine.Events;
 using TMPro;
 using GameAnalyticsSDK;
+using Spine.Unity;
+using Spine.Unity.Editor;
+using UnityEngine.Playables;
 
 public enum DialogueSide
 {
@@ -37,7 +40,7 @@ public class NpcNametagCombo
 {
     public NPCs npcType;
     public GameObject nameTagObject;
-    public Sprite potrtaitSprite;
+    //public Sprite potrtaitSprite;
     public Sprite nameTagSprite;
     public float LeftSideXpos, rightSideXpos;
 }
@@ -53,6 +56,13 @@ public class EntryData
     //public Sprite dialogueEntryNameBGSprite;
     //public Sprite dialogueTextBGSprite;
 
+    public SkeletonDataAsset skeletonDataAsset;
+    public PlayableAsset playableAsset;
+    public AnimationReferenceAsset blinkAnimation;
+
+    [SpineAnimation(dataField: "skeletonDataAsset")]
+    public string relaventPos;
+
     public string displayName;
     [TextArea(5, 5)]
     public string conversationBlock;
@@ -60,6 +70,7 @@ public class EntryData
     public UnityEvent entryStartEvents;
     public UnityEvent entryEndEvents;
 }
+
 
 [CreateAssetMenu(fileName = "Dialogue", menuName = "ScriptableObjects/Create Dialogue")]
 public class DialogueScriptableObject : ScriptableObject
@@ -265,8 +276,17 @@ public class DialogueScriptableObject : ScriptableObject
 
     private void SetDialogueEntryData(GameObject dialogueRef, int index, DialogueSide side)
     {
+
         DialogueObjectRefrences refs = dialogueRef.GetComponent<DialogueObjectRefrences>();
         //refs.textBGRender.sprite = allEntries[index].dialogueTextBGSprite;
+
+        refs.skeletonAnimation.skeletonDataAsset = allEntries[index].skeletonDataAsset;
+        SpineEditorUtilities.ReloadSkeletonDataAssetAndComponent(refs.skeletonRenderer);
+
+        refs.director.playableAsset = allEntries[index].playableAsset;
+        refs.director.Play();
+        refs.blinkAnimationRef.blinkAnimation = allEntries[index].blinkAnimation;
+        refs.CallStartBlinkingSpine();
 
         NpcNametagCombo combo = UIManager.Instance.npcNametagsCombos.Where(p => p.npcType == allEntries[index].npcType).SingleOrDefault();
         
@@ -278,8 +298,8 @@ public class DialogueScriptableObject : ScriptableObject
 
         CreateNameTagByNPC(refs, combo, side);
 
-        refs.portraitRenderer.sprite = combo.potrtaitSprite;
-        refs.nameBGRenderer.sprite = combo.nameTagSprite;
+        //refs.portraitRenderer.sprite = combo.potrtaitSprite;
+        //refs.nameBGRenderer.sprite = combo.nameTagSprite;
         refs.textObject.text = "";
         refs.nameText.text = allEntries[index].displayName;
         refs.textObject.text = allEntries[index].conversationBlock;
@@ -334,6 +354,23 @@ public class DialogueScriptableObject : ScriptableObject
         UIManager.Instance.endDialogueButton.gameObject.SetActive(true);
     }
 
+    public void ResetSpineAnimationData()
+    {
+        GameManager.Instance.latestEntry.blinkAnimationRef.StopBlinking();
+
+        GameManager.Instance.latestEntry.RefreshAnimationData();
+
+        /// we do -1 here since the current index in dialogue always increments by 1  
+        /// directly when an entry is spawned
+        /// but we still want a ref to the precious entry
+
+        GameManager.Instance.latestEntry.spineAnimationState.SetAnimation(
+            0,
+            allEntries[GameManager.Instance.currentIndexInDialogue - 1].relaventPos,
+            false
+            );
+
+    }
     public void IncrementPhaseInDialogue()
     {
         GameManager.Instance.currentIndexInDialogue++;
