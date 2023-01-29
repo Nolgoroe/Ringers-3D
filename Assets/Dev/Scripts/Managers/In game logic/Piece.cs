@@ -48,7 +48,7 @@ public class Piece : MonoBehaviour
         bool isRepeatPieceSides = true;
 
         int repeatIndicator = 1;
-        rightChild.isRightSubPiece = true; // this needs to be better
+        //rightChild.isRightSubPiece = true; // this needs to be better
 
         int repeatBlock = 0;
 

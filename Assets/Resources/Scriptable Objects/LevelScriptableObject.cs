@@ -14,6 +14,8 @@ public class stonePieceDataStruct
     public PieceSymbol symbolOfPieceRight;
     public PieceColor colorOfPieceLeft;
     public PieceSymbol symbolOfPieceLeft;
+    public GameObject tileprefab;
+    public bool isLockedOnSpawn;
 }
 
 [System.Serializable]

@@ -116,14 +116,16 @@ public class Cell : MonoBehaviour
         {
             GameObject go = null;
 
-            if (GameManager.Instance.currentLevel.is12PieceRing)
-            {
-                go = Instantiate(GameManager.Instance.clipManager.corruptedPiece12, transform);
-            }
-            else
-            {
-                go = Instantiate(GameManager.Instance.clipManager.corruptedPiece, transform);
-            }
+            go = Instantiate(SPDS.tileprefab, transform);
+
+            //if (GameManager.Instance.currentLevel.is12PieceRing)
+            //{
+            //    go = Instantiate(GameManager.Instance.clipManager.corruptedPiece12, transform);
+            //}
+            //else
+            //{
+            //    go = Instantiate(GameManager.Instance.clipManager.corruptedPiece, transform);
+            //}
 
             ConnectionManager.Instance.amountStonePiecesInstantiated++;
 
@@ -132,7 +134,7 @@ public class Cell : MonoBehaviour
             {
                 p = go.GetComponent<Piece>();
                 p.SetStonePiece(SPDS);
-                p.isStone = true;
+                p.isStone = SPDS.isLockedOnSpawn;
                 isStoneCell = true;
                 pieceHeld = p;
             }
