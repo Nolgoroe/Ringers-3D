@@ -170,7 +170,7 @@ public class Piece : MonoBehaviour
             repeatIndicator = 0;
 
             Debug.Log("Same pieces " + isSamePiece);
-            if (isSamePiece >= 2) 
+            if (isSamePiece > 2) 
             {
                 repeatIndicator++;
             }
