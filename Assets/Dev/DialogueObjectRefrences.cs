@@ -103,4 +103,15 @@ public class DialogueObjectRefrences : MonoBehaviour
             return;
         }
     }
+
+    public void CallPlanDirectorAnim()
+    {
+        StartCoroutine(PlanDirectorAnim());
+    }
+
+    private IEnumerator PlanDirectorAnim()
+    {
+        yield return new WaitForSeconds(0.2f);
+        director.Play();
+    }
 }

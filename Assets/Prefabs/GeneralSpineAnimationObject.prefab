@@ -53,7 +53,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e91d625bd2578f141bb1abc4c82ebbb0, type: 2}
+  - {fileID: 2100000, guid: 5bc1c409e1454c84496c1ff93ac63571, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: ae8313e9f7303b146a117128dd01bf74, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 0d42ee219f39d6f4c8b99b5d32569d26, type: 2}
   initialSkinName: 
   fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
@@ -160,6 +160,18 @@ PlayableDirector:
   - key: {fileID: -4766707007814357734, guid: a104d348a5389934fb2bbf9df298c7d4, type: 2}
     value: {fileID: 1432650014038368004}
   - key: {fileID: -4766707007814357734, guid: 615d6e21cbd9127499d9c6a1929fb21b, type: 2}
+    value: {fileID: 1432650014038368004}
+  - key: {fileID: 6497214310745000548, guid: 4a7056e335569f346a8979c5102aad85, type: 2}
+    value: {fileID: 1432650014038368004}
+  - key: {fileID: 6497214310745000548, guid: 6fcad44c09a9c9b4a8b406a6c38548d4, type: 2}
+    value: {fileID: 1432650014038368004}
+  - key: {fileID: 6497214310745000548, guid: 904df0918543c9046b19185beaadb58e, type: 2}
+    value: {fileID: 1432650014038368004}
+  - key: {fileID: 6497214310745000548, guid: 7806fb7656adb384fb0e58324c4bc459, type: 2}
+    value: {fileID: 1432650014038368004}
+  - key: {fileID: 6497214310745000548, guid: b9951527b955e784ab2291de775e0236, type: 2}
+    value: {fileID: 1432650014038368004}
+  - key: {fileID: 6497214310745000548, guid: d66f5355582b2ae4ebfbbb68830be051, type: 2}
     value: {fileID: 1432650014038368004}
   m_ExposedReferences:
     m_References: []

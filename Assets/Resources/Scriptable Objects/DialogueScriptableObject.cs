@@ -284,7 +284,6 @@ public class DialogueScriptableObject : ScriptableObject
         SpineEditorUtilities.ReloadSkeletonDataAssetAndComponent(refs.skeletonRenderer);
 
         refs.director.playableAsset = allEntries[index].playableAsset;
-        refs.director.Play();
         refs.blinkAnimationRef.blinkAnimation = allEntries[index].blinkAnimation;
         refs.CallStartBlinkingSpine();
 
@@ -309,6 +308,8 @@ public class DialogueScriptableObject : ScriptableObject
 
         GameManager.Instance.latestEntry = refs;
 
+
+        refs.CallPlanDirectorAnim();
         //UIManager.Instance.CallTypewriterText(this, index, refs.textObject);
     }
     private void SetImageEntryData(GameObject dialogueRef, int index)

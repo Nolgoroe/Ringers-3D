@@ -295,7 +295,6 @@ MonoBehaviour:
   skeletonRenderer: {fileID: 0}
   director: {fileID: 0}
   blinkAnimationRef: {fileID: 0}
-  relaventPos: 
   spriteImageRenderer: {fileID: 0}
   arrowObject: {fileID: 373690176233070597}
 --- !u!95 &2207036306269644027
@@ -672,6 +671,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5467521784452859179}
     m_Modifications:
+    - target: {fileID: 1432650014038368004, guid: 191763281b8c12b4cb9849aab2ef0215,
+        type: 3}
+      propertyPath: skeletonDataAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 0d42ee219f39d6f4c8b99b5d32569d26,
+        type: 2}
     - target: {fileID: 1432650014038368006, guid: 191763281b8c12b4cb9849aab2ef0215,
         type: 3}
       propertyPath: m_Mesh
