@@ -19,7 +19,7 @@ MonoBehaviour:
   isBoss: 0
   isTimerLevel: 0
   isNotChestLevel: 0
-  isAnimalLevel: 1
+  isAnimalLevel: 0
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
   showIntroLevelAnimation: 1
@@ -38,7 +38,7 @@ MonoBehaviour:
   allowRepeatSlices: 0
   allowRepeatTiles: 0
   allowRepeatTileSides: 0
-  powerupsForLevel: 
+  powerupsForLevel: 00000000
   stoneTiles: []
   slicesToSpawn:
   - sliceToSpawn: 3
@@ -54,7 +54,7 @@ MonoBehaviour:
   specificTutorialEnum: 2
   bottomUIToShow: 2
   arrayOfPieces:
-  - colorOfPieceRight: 3
+  - colorOfPieceRight: 4
     symbolOfPieceRight: 3
     colorOfPieceLeft: 0
     symbolOfPieceLeft: 2
@@ -62,9 +62,9 @@ MonoBehaviour:
     symbolOfPieceRight: 2
     colorOfPieceLeft: 3
     symbolOfPieceLeft: 2
-  specificSliceSpots: 00000000
+  specificSliceSpots: 01000000
   specificSlicesShapes: 
-  specificSlicesColors: 
+  specificSlicesColors: 04000000
   BossHealth: 0
   isRandomPieces: 0
   specificPiecesIndex: 

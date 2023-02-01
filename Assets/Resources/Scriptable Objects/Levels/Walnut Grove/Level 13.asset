@@ -19,7 +19,7 @@ MonoBehaviour:
   isBoss: 0
   isTimerLevel: 0
   isNotChestLevel: 0
-  isAnimalLevel: 1
+  isAnimalLevel: 0
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
   showIntroLevelAnimation: 1
@@ -39,7 +39,27 @@ MonoBehaviour:
   allowRepeatTiles: 0
   allowRepeatTileSides: 0
   powerupsForLevel: 
-  stoneTiles: []
+  stoneTiles:
+  - cellIndex: 7
+    randomValues: 0
+    isNeutral: 0
+    colorOfPieceRight: 3
+    symbolOfPieceRight: 3
+    colorOfPieceLeft: 4
+    symbolOfPieceLeft: 1
+    tileprefab: {fileID: 1645121695642233041, guid: 6b184118881871341aae387bbfbdd34c,
+      type: 3}
+    isLockedOnSpawn: 0
+  - cellIndex: 4
+    randomValues: 0
+    isNeutral: 0
+    colorOfPieceRight: 1
+    symbolOfPieceRight: 1
+    colorOfPieceLeft: 4
+    symbolOfPieceLeft: 3
+    tileprefab: {fileID: 1645121695642233041, guid: 6b184118881871341aae387bbfbdd34c,
+      type: 3}
+    isLockedOnSpawn: 0
   slicesToSpawn:
   - sliceToSpawn: 1
     isLock: 0
@@ -50,7 +70,7 @@ MonoBehaviour:
     isLoot: 1
     isLimiter: 1
   RewardBags: 01000000
-  levelAvailableColors: 000000000100000004000000
+  levelAvailableColors: 030000000100000004000000
   levelAvailablesymbols: 0300000001000000
   symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
@@ -58,14 +78,14 @@ MonoBehaviour:
   specificTutorialEnum: 0
   bottomUIToShow: 2
   arrayOfPieces:
-  - colorOfPieceRight: 0
-    symbolOfPieceRight: 3
-    colorOfPieceLeft: 0
-    symbolOfPieceLeft: 2
-  - colorOfPieceRight: 0
+  - colorOfPieceRight: 1
     symbolOfPieceRight: 1
-    colorOfPieceLeft: 0
-    symbolOfPieceLeft: 2
+    colorOfPieceLeft: 3
+    symbolOfPieceLeft: 1
+  - colorOfPieceRight: 4
+    symbolOfPieceRight: 1
+    colorOfPieceLeft: 1
+    symbolOfPieceLeft: 3
   specificSliceSpots: 0000000004000000
   specificSlicesShapes: 
   specificSlicesColors: 
