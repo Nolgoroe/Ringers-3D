@@ -267,7 +267,7 @@ public class SubPiece : MonoBehaviour
 
         //rend.material.SetColor("_BaseColor", CursorController.Instance.stonePieceColorTint);
     }
-    public void SetPieceTutorial(bool isRight)
+    public void SetPieceFromArray(bool isRight)
     {
         if (isRight)
         {

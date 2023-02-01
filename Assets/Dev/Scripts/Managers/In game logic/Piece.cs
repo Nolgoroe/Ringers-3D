@@ -62,21 +62,15 @@ public class Piece : MonoBehaviour
                 return;
             }
 
-            if (!GameManager.Instance.isDisableTutorials && (GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial))
+            //if (!GameManager.Instance.isDisableTutorials && (GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial))
+            if (GameManager.Instance.copyOfArrayOfPiecesTutorial.Count > 0)
             {
-                if(GameManager.Instance.copyOfArrayOfPiecesTutorial.Count > 0)
-                {
-                    rightChild.SetPieceTutorial(true);
-                    leftChild.SetPieceTutorial(false);
-                }
-                else
-                {
-                    if (repeatIndicator > 0)
-                    {
-                        rightChild.SetPiece();
-                        leftChild.SetPiece();
-                    }
-                }
+                repeatIndicator = 0;
+                rightChild.SetPieceFromArray(true);
+                leftChild.SetPieceFromArray(false);
+
+                GameManager.Instance.copyOfArrayOfPiecesTutorial.RemoveAt(0);
+                continue;
             }
             else
             {
@@ -183,13 +177,6 @@ public class Piece : MonoBehaviour
             {
                 repeatIndicator++;
             }
-            else /*if(!isRepeatPieceSides && !GameManager.Instance.isDisableTutorials && (GameManager.Instance.currentLevel.isTutorial || GameManager.Instance.currentLevel.isSpecificTutorial))*/
-            {
-                if (GameManager.Instance.copyOfArrayOfPiecesTutorial.Count > 0)
-                {
-                    GameManager.Instance.copyOfArrayOfPiecesTutorial.RemoveAt(0);
-                }
-            }
 
             isRepeatPieceSides = false;
             isSamePiece = 0;
@@ -205,7 +192,7 @@ public class Piece : MonoBehaviour
     public void SetStonePiece(stonePieceDataStruct SPDS)
     {
         bool isRepeatPieceSides = true;
-        bool isRepeatPieceOnBoard = true;
+        //bool isRepeatPieceOnBoard = true;
         bool hasEnoughSymbols = true;
         int repeatIndicator = 0;
 
@@ -214,7 +201,7 @@ public class Piece : MonoBehaviour
 
         int errorBreakerCount = 0;
 
-        while (isRepeatPieceSides || isRepeatPieceOnBoard || !hasEnoughSymbols)
+        while (isRepeatPieceSides /*|| isRepeatPieceOnBoard*/ || !hasEnoughSymbols)
         {
             errorBreakerCount++;
 
@@ -232,12 +219,19 @@ public class Piece : MonoBehaviour
                 repeatIndicator = 0;
             }
 
-            isRepeatPieceSides = CheckNoRepeatPieceSides();
-            isRepeatPieceOnBoard  = ConnectionManager.Instance.CheckRepeatingStonePieces(this);
+            if(SPDS.isNeutral)
+            {
+                isRepeatPieceSides = CheckNoRepeatPieceSides();
+            }
+            else
+            {
+                isRepeatPieceSides = CheckNoRepeatPieceSidesNormalPiece();
+            }
+            //isRepeatPieceOnBoard  = ConnectionManager.Instance.CheckRepeatingStonePieces(this);
 
 
             //Debug.LogError("Same Pieces? " + isRepeatPieceSides);
-             Debug.LogError("Same Pieces on board? " + isRepeatPieceOnBoard);
+             //Debug.LogError("Same Pieces on board? " + isRepeatPieceOnBoard);
 
             if (GameManager.Instance.currentLevel.levelAvailablesymbols.Length > 0)
             {
@@ -275,13 +269,13 @@ public class Piece : MonoBehaviour
                 }
             }
 
-            if (isRepeatPieceSides || isRepeatPieceOnBoard)
+            if (isRepeatPieceSides/* || isRepeatPieceOnBoard*/)
             {
                 repeatIndicator++;
             }
 
 
-            if (!isRepeatPieceSides && !isRepeatPieceOnBoard)
+            if (!isRepeatPieceSides /*&& !isRepeatPieceOnBoard*/)
             {
                 if (!ConnectionManager.Instance.tempSymbolPiecesStoneFound.Contains(leftChild.symbolOfPiece))
                 {
@@ -319,7 +313,7 @@ public class Piece : MonoBehaviour
         }
 
     }
-    public bool CheckNoRepeatPieceSidesNormalPiece() // for now it's only for stone pieces
+    public bool CheckNoRepeatPieceSidesNormalPiece()
     {
         Piece currectCheckPiece = GetComponent<Piece>();
 

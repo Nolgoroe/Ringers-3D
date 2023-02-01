@@ -450,7 +450,10 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(TestLevelsSystemManager.instance.InitTestLevel());
+            if(!currentLevel.isNotChestLevel)
+            {
+                StartCoroutine(TestLevelsSystemManager.instance.InitTestLevel());
+            }
         }
 
 

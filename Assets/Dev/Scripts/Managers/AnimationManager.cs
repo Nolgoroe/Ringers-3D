@@ -143,6 +143,7 @@ public class AnimationManager : MonoBehaviour
     [Header("Enter Level animation")]
     public float startAnimDelayTime;
     public SpriteRenderer ring;
+    public GameObject particlesParent;
     public SpriteRenderer colorMask;
     float originalColorMaskAlpha = 0;
     public float timeToFadeRingAndColormask;
@@ -1788,13 +1789,15 @@ public class AnimationManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         ring = GameManager.Instance.gameBoard.transform.GetComponent<SpriteRenderer>();
-
         colorMask = GameManager.Instance.selectedLevelBG.transform.Find("RingMask").GetComponent<SpriteRenderer>();
         originalColorMaskAlpha = colorMask.color.a;
 
         clips = GameManager.Instance.clipManager.slots;
 
         SliceManager sliceManager = GameManager.Instance.gameBoard.GetComponent<SliceManager>();
+
+        particlesParent = sliceManager.particleZonesParent;
+
         for (int i = 0; i < sliceManager.activeLocksLockAnims.Count; i++)
         {
             SpriteRenderer renderer = sliceManager.activeLocksLockAnims[i].GetComponent<SpriteRenderer>();
@@ -1840,7 +1843,7 @@ public class AnimationManager : MonoBehaviour
     public void SetDefaultValuesEnterLevelAnimation()
     {
         ring.gameObject.SetActive(true);
-
+        particlesParent.gameObject.SetActive(false);
         //ring.color = new Color(ring.color.r, ring.color.g, ring.color.b, 0);
         ring.material.SetFloat("_DissolveSprite", 0.4f);
 
@@ -1922,6 +1925,7 @@ public class AnimationManager : MonoBehaviour
             //toMove.transform.localPosition = GameManager.Instance.clipManager.piecesDealPositionsOut;
         }
 
+        particlesParent.gameObject.SetActive(true);
     }
 
     public void SetInLevelValuesimmediateForDialogue()
@@ -2061,6 +2065,7 @@ public class AnimationManager : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         SoundManager.Instance.PlaySound(Sounds.TileEnterLevel);
+        particlesParent.gameObject.SetActive(true);
 
     }
 }
