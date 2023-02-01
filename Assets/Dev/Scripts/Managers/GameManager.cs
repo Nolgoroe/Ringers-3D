@@ -204,7 +204,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.ActivateGmaeplayCanvas();
 
         Camera.main.transform.position = inGameCamPos;
-        TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, -0.05f);
+        TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, TutorialSequence.Instacne.maskImage.transform.position.z);
         Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
 
@@ -573,7 +573,7 @@ public class GameManager : MonoBehaviour
         }
 
         Camera.main.transform.position = inGameCamPos;
-        TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, -0.05f);
+        TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, TutorialSequence.Instacne.maskImage.transform.position.z);
         Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
 
         LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);

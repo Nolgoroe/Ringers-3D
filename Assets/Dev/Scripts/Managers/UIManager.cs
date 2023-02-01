@@ -710,12 +710,12 @@ public class UIManager : MonoBehaviour
 
             Camera.main.transform.position = new Vector3(0,-1.6f, -3f);
 
-            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, Camera.main.transform.position.y, -0.05f);
+            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, Camera.main.transform.position.y, TutorialSequence.Instacne.maskImage.transform.position.z);
         }
         else
         {
             Camera.main.transform.position = hubCameraPos;
-            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, Camera.main.transform.position.y, -0.05f);
+            TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, Camera.main.transform.position.y, TutorialSequence.Instacne.maskImage.transform.position.z);
         }
 
         FocusOnMaxLevelReached();
