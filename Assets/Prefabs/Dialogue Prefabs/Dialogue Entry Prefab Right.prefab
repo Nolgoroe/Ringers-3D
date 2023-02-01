@@ -167,7 +167,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8421400552277861570
 Transform:
   m_ObjectHideFlags: 0
@@ -285,6 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faa52744aacdfd94a848ae91feaa55a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  portraitRenderer: {fileID: 8421400552277861571}
   textBGRender: {fileID: 8421400553520998103}
   nameBGRenderer: {fileID: 0}
   textObject: {fileID: 8421400554193719102}
@@ -686,6 +687,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GeneralSpineAnimationObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740561869521330503, guid: 191763281b8c12b4cb9849aab2ef0215,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6406061990396137156, guid: 191763281b8c12b4cb9849aab2ef0215,
         type: 3}

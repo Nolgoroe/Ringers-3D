@@ -351,10 +351,14 @@ public class ClipManager : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
 
         GameManager.Instance.powerupManager.canPressDeal = true;
-        UIManager.Instance.dealButton.interactable = true;
 
-        UIManager.Instance.optionsButtonIngame.interactable = true;
-        UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
+        if(!TutorialSequence.Instacne.duringSequence)
+        {
+            UIManager.Instance.dealButton.interactable = true;
+            UIManager.Instance.optionsButtonIngame.interactable = true;
+            UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
+        }
+
     }
 
     public void RefreshSlotLastClipAlgoritm(EdgePathFoundData dataNeeded)

@@ -465,7 +465,7 @@ public class GameManager : MonoBehaviour
 
             StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim(true));
 
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(2.9f);
 
             // these become false in the animation progress to prevent player actions
             // so we enable them after this time.

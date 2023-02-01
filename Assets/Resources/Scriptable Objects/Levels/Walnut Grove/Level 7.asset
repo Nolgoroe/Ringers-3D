@@ -18,6 +18,7 @@ MonoBehaviour:
   isDoubleRing: 0
   isBoss: 0
   isTimerLevel: 0
+  isNotChestLevel: 0
   isAnimalLevel: 0
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
@@ -45,12 +46,12 @@ MonoBehaviour:
     isLoot: 1
     isLimiter: 1
   RewardBags: 01000000
-  levelAvailableColors: 02000000010000000400000003000000
-  levelAvailablesymbols: 0000000003000000
+  levelAvailableColors: 0200000001000000
+  levelAvailablesymbols: 04000000
   symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
   isTutorial: 0
-  specificTutorialEnum: 0
+  specificTutorialEnum: 10
   bottomUIToShow: 2
   arrayOfPieces: []
   specificSliceSpots: 03000000
@@ -68,5 +69,5 @@ MonoBehaviour:
   useLastClipAlgoritm: 1
   algoritmStepsWanted: 0
   levelStartDialogueSO: {fileID: 0}
-  levelEndDialogueSO: {fileID: 0}
+  levelEndDialogueSO: {fileID: 11400000, guid: 28146b694a8ee2a44b082390040d146f, type: 2}
   timeForLevel: 0

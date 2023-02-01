@@ -17,6 +17,10 @@ MonoBehaviour:
     dialogueSide: 1
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
+    skeletonDataAsset: {fileID: 0}
+    playableAsset: {fileID: 0}
+    blinkAnimation: {fileID: 0}
+    relaventPos: 
     displayName: Crow
     conversationBlock: Finally, this took much longer that I thought.
     entryStartEvents:
@@ -51,6 +55,10 @@ MonoBehaviour:
     dialogueSide: 2
     dialogueType: 1
     imageEntrySprite: {fileID: 21300000, guid: 7b4ca542646a52d499287606fef8ca2e, type: 3}
+    skeletonDataAsset: {fileID: 0}
+    playableAsset: {fileID: 0}
+    blinkAnimation: {fileID: 0}
+    relaventPos: 
     displayName: 
     conversationBlock: 
     entryStartEvents:
@@ -96,8 +104,12 @@ MonoBehaviour:
     dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
+    skeletonDataAsset: {fileID: 0}
+    playableAsset: {fileID: 0}
+    blinkAnimation: {fileID: 0}
+    relaventPos: 
     displayName: Fox
-    conversationBlock: I don't smell her around.
+    conversationBlock: 'I don''t smell her around. '
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -141,6 +153,10 @@ MonoBehaviour:
     dialogueSide: 1
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
+    skeletonDataAsset: {fileID: 0}
+    playableAsset: {fileID: 0}
+    blinkAnimation: {fileID: 0}
+    relaventPos: 
     displayName: Crow
     conversationBlock: Seriously? She's not home? What are we gonna do now? I'm all
       out of ideas, Fox.
@@ -187,6 +203,10 @@ MonoBehaviour:
     dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
+    skeletonDataAsset: {fileID: 0}
+    playableAsset: {fileID: 0}
+    blinkAnimation: {fileID: 0}
+    relaventPos: 
     displayName: ?????
     conversationBlock: <i>A small branch rustles overhead.</i>
     entryStartEvents:
@@ -232,6 +252,10 @@ MonoBehaviour:
     dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
+    skeletonDataAsset: {fileID: 0}
+    playableAsset: {fileID: 0}
+    blinkAnimation: {fileID: 0}
+    relaventPos: 
     displayName: Fox
     conversationBlock: '<i>Fox jumps to the side. </i>
 
@@ -282,6 +306,10 @@ MonoBehaviour:
     dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
+    skeletonDataAsset: {fileID: 0}
+    playableAsset: {fileID: 0}
+    blinkAnimation: {fileID: 0}
+    relaventPos: 
     displayName: Chameleon
     conversationBlock: <i>The Chameleon appears amid the branches and seems to point
       towards the north-east.</i>
@@ -328,13 +356,13 @@ MonoBehaviour:
     dialogueSide: 1
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
+    skeletonDataAsset: {fileID: 0}
+    playableAsset: {fileID: 0}
+    blinkAnimation: {fileID: 0}
+    relaventPos: 
     displayName: Crow
-    conversationBlock: '<i>Crow smiles lightheartedly.</i>
-
-      This guy doesn''t
-      seem harmful...
-
-'
+    conversationBlock: "<i>Crow smiles lightheartedly.</i>\nThis guy doesn't seem
+      harmful... Is this where Bramble went? Thank you, little brother! \n"
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -378,6 +406,10 @@ MonoBehaviour:
     dialogueSide: 1
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
+    skeletonDataAsset: {fileID: 0}
+    playableAsset: {fileID: 0}
+    blinkAnimation: {fileID: 0}
+    relaventPos: 
     displayName: Crow
     conversationBlock: ' Is this where Bramble went? Thank you, little brother! '
     entryStartEvents:
@@ -478,3 +510,4 @@ MonoBehaviour:
     type: 3}
   imageEntryPrefab: {fileID: 8704270062248906318, guid: d396fb1a16779ee468397193de007099,
     type: 3}
+  dialogueID: 0

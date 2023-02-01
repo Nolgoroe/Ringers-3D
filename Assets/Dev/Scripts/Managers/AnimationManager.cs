@@ -525,7 +525,11 @@ public class AnimationManager : MonoBehaviour
             goSR.color = new Color(goSR.color.r, goSR.color.g, goSR.color.b, 1);
         }
 
-        if (!GameManager.Instance.currentLevel.isTimerLevel && (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || ServerRelatedData.instance.isAdmin))
+        bool canChest = !GameManager.Instance.currentLevel.isNotChestLevel &&
+            !GameManager.Instance.currentLevel.isTimerLevel &&
+            (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || ServerRelatedData.instance.isAdmin);
+
+        if (canChest)
         {
             if (!hasGivenChest)
             {
@@ -1234,9 +1238,11 @@ public class AnimationManager : MonoBehaviour
 
 
 
+        bool canChest = !GameManager.Instance.currentLevel.isNotChestLevel && 
+            !GameManager.Instance.currentLevel.isTimerLevel && 
+            (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || ServerRelatedData.instance.isAdmin);
 
-
-        if (!GameManager.Instance.currentLevel.isTimerLevel && (GameManager.Instance.currentLevel.levelIndexInZone == ZoneManagerHelpData.Instance.currentZoneCheck.maxLevelReachedInZone || ServerRelatedData.instance.isAdmin))
+        if (canChest)
         {
             if (!hasGivenChest)
             {

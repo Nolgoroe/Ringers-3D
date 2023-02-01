@@ -32,6 +32,7 @@ public enum NPCs
     Bramble,
     GreatFirSpirit,
     Chameleon,
+    BabyBunny,
     None
 }
 
@@ -40,7 +41,7 @@ public class NpcNametagCombo
 {
     public NPCs npcType;
     public GameObject nameTagObject;
-    //public Sprite potrtaitSprite;
+    public Sprite potrtaitSprite;
     public Sprite nameTagSprite;
     public float LeftSideXpos, rightSideXpos;
 }
@@ -297,8 +298,8 @@ public class DialogueScriptableObject : ScriptableObject
 
         CreateNameTagByNPC(refs, combo, side);
 
-        //refs.portraitRenderer.sprite = combo.potrtaitSprite;
-        //refs.nameBGRenderer.sprite = combo.nameTagSprite;
+        refs.portraitRenderer.sprite = combo.potrtaitSprite;
+        refs.nameBGRenderer.sprite = combo.nameTagSprite;
         refs.textObject.text = "";
         refs.nameText.text = allEntries[index].displayName;
         refs.textObject.text = allEntries[index].conversationBlock;
@@ -357,19 +358,19 @@ public class DialogueScriptableObject : ScriptableObject
 
     public void ResetSpineAnimationData()
     {
-        GameManager.Instance.latestEntry.blinkAnimationRef.StopBlinking();
+        //GameManager.Instance.latestEntry.blinkAnimationRef.StopBlinking();
 
-        GameManager.Instance.latestEntry.RefreshAnimationData();
+        //GameManager.Instance.latestEntry.RefreshAnimationData();
 
-        /// we do -1 here since the current index in dialogue always increments by 1  
-        /// directly when an entry is spawned
-        /// but we still want a ref to the precious entry
+        ///// we do -1 here since the current index in dialogue always increments by 1  
+        ///// directly when an entry is spawned
+        ///// but we still want a ref to the precious entry
 
-        GameManager.Instance.latestEntry.spineAnimationState.SetAnimation(
-            0,
-            allEntries[GameManager.Instance.currentIndexInDialogue - 1].relaventPos,
-            false
-            );
+        //GameManager.Instance.latestEntry.spineAnimationState.SetAnimation(
+        //    0,
+        //    allEntries[GameManager.Instance.currentIndexInDialogue - 1].relaventPos,
+        //    false
+        //    );
 
     }
     public void IncrementPhaseInDialogue()
@@ -398,5 +399,18 @@ public class DialogueScriptableObject : ScriptableObject
 
             LeanTween.moveLocal(UIManager.Instance.dialogueScroller.content.gameObject, target, UIManager.Instance.timeToScroll);
         }
+    }
+
+    [ContextMenu("Reset spline data")]
+    public void ResetAllSplineData()
+    {
+        foreach (EntryData entry in allEntries)
+        {
+            entry.skeletonDataAsset = null;
+            entry.playableAsset = null;
+            entry.blinkAnimation = null;
+        }
+        
+
     }
 }

@@ -18,6 +18,7 @@ MonoBehaviour:
   isDoubleRing: 0
   isBoss: 0
   isTimerLevel: 0
+  isNotChestLevel: 0
   isAnimalLevel: 1
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
@@ -30,7 +31,7 @@ MonoBehaviour:
   worldNum: 0
   levelIndexInZone: 13
   numIndexForLeaderBoard: 13
-  tutorialIndexForList: 0
+  tutorialIndexForList: 5
   cellsCountInLevel: 8
   levelDifficulty: 0
   RandomSlicePositions: 0
@@ -50,14 +51,22 @@ MonoBehaviour:
     isLimiter: 1
   RewardBags: 01000000
   levelAvailableColors: 000000000100000004000000
-  levelAvailablesymbols: 030000000100000002000000
+  levelAvailablesymbols: 0300000001000000
   symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
-  isTutorial: 0
+  isTutorial: 1
   specificTutorialEnum: 0
   bottomUIToShow: 2
-  arrayOfPieces: []
-  specificSliceSpots: 0200000003000000
+  arrayOfPieces:
+  - colorOfPieceRight: 0
+    symbolOfPieceRight: 3
+    colorOfPieceLeft: 0
+    symbolOfPieceLeft: 2
+  - colorOfPieceRight: 0
+    symbolOfPieceRight: 1
+    colorOfPieceLeft: 0
+    symbolOfPieceLeft: 2
+  specificSliceSpots: 0000000004000000
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0

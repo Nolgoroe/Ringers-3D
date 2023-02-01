@@ -17,14 +17,12 @@ MonoBehaviour:
     dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
-    skeletonDataAsset: {fileID: 11400000, guid: ae8313e9f7303b146a117128dd01bf74,
-      type: 2}
-    playableAsset: {fileID: 11400000, guid: c1ae8f23dc24a55409d7cd0873122658, type: 2}
-    blinkAnimation: {fileID: 11400000, guid: ad64106dbaa31c246ae3b4f3bf55e14e, type: 2}
+    skeletonDataAsset: {fileID: 0}
+    playableAsset: {fileID: 0}
+    blinkAnimation: {fileID: 0}
     relaventPos: AN_ExclamingPose_Fox
     displayName: Fox
-    conversationBlock: Crow, look - that poor Stag! The Rive trapped her and turned
-      her to stone.
+    conversationBlock: Wow, so many beautiful presents! Thank you forest spirit!
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -57,14 +55,63 @@ MonoBehaviour:
     dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
-    skeletonDataAsset: {fileID: 11400000, guid: ae8313e9f7303b146a117128dd01bf74,
-      type: 2}
-    playableAsset: {fileID: 11400000, guid: 856af69d4907f944c8ce0a0e3e7a8223, type: 2}
-    blinkAnimation: {fileID: 11400000, guid: ad64106dbaa31c246ae3b4f3bf55e14e, type: 2}
+    skeletonDataAsset: {fileID: 0}
+    playableAsset: {fileID: 0}
+    blinkAnimation: {fileID: 0}
     relaventPos: AN_ConcernedPose_Fox
     displayName: Fox
-    conversationBlock: Please, we must help her, and remove the corruption away from
-      her.
+    conversationBlock: It's so lovely to be rewarded with such wonderful gifts for
+      clearing the rive's corruption!
+    entryStartEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: InstantiateDialoguePrefab
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    entryEndEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 11400000}
+          m_MethodName: ActiavteContinueDialogueButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 11400000}
+          m_MethodName: IncrementPhaseInDialogue
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - npcType: 0
+    dialogueSide: 0
+    dialogueType: 0
+    imageEntrySprite: {fileID: 0}
+    skeletonDataAsset: {fileID: 0}
+    playableAsset: {fileID: 0}
+    blinkAnimation: {fileID: 0}
+    relaventPos: AN_ConcernedPose_Fox
+    displayName: Fox
+    conversationBlock: 'I''m sure soon we''ll have enough to craft a few potions
+      and wield some really powerful ringer magic. '
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:

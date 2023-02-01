@@ -25,7 +25,6 @@ public class sliceToSpawnDataStruct
     public bool isLock;
     public bool isLoot;
     public bool isLimiter;
-
 }
 
 public enum LevelDifficulty
@@ -44,6 +43,7 @@ public class LevelScriptableObject : ScriptableObject
     public bool isDoubleRing;
     public bool isBoss;
     public bool isTimerLevel;
+    public bool isNotChestLevel;
     public bool isAnimalLevel = true;
     public bool isReleaseAnimalToDen;
     public bool isKeyLevel;

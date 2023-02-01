@@ -2950,7 +2950,14 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            TestLevelsSystemManager.instance.InstantiateBarStarsMapDisplay();
+            if(GameManager.Instance.currentLevel.isNotChestLevel)
+            {
+                TestLevelsSystemManager.instance.SetDeactivatedmapData();
+            }
+            else
+            {
+                TestLevelsSystemManager.instance.InstantiateBarStarsMapDisplay();
+            }
         }
 
 

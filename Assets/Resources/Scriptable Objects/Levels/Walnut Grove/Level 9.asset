@@ -18,6 +18,7 @@ MonoBehaviour:
   isDoubleRing: 0
   isBoss: 0
   isTimerLevel: 0
+  isNotChestLevel: 0
   isAnimalLevel: 0
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
@@ -30,7 +31,7 @@ MonoBehaviour:
   worldNum: 0
   levelIndexInZone: 9
   numIndexForLeaderBoard: 9
-  tutorialIndexForList: 4
+  tutorialIndexForList: 0
   cellsCountInLevel: 8
   levelDifficulty: 0
   RandomSlicePositions: 0
@@ -39,17 +40,13 @@ MonoBehaviour:
   allowRepeatTileSides: 0
   powerupsForLevel: 
   stoneTiles: []
-  slicesToSpawn:
-  - sliceToSpawn: 1
-    isLock: 0
-    isLoot: 1
-    isLimiter: 1
+  slicesToSpawn: []
   RewardBags: 01000000
   levelAvailableColors: 040000000100000000000000
   levelAvailablesymbols: 0000000002000000
   symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
-  isTutorial: 1
+  isTutorial: 0
   specificTutorialEnum: 0
   bottomUIToShow: 2
   arrayOfPieces:
@@ -61,7 +58,7 @@ MonoBehaviour:
     symbolOfPieceRight: 2
     colorOfPieceLeft: 1
     symbolOfPieceLeft: 0
-  specificSliceSpots: 01000000
+  specificSliceSpots: 
   specificSlicesShapes: 
   specificSlicesColors: 
   BossHealth: 0

@@ -9,7 +9,7 @@ public class DialogueObjectRefrences : MonoBehaviour
 {
     [Header("Dialogue Entry")]
 
-    //public SpriteRenderer portraitRenderer;
+    public SpriteRenderer portraitRenderer;
     public SpriteRenderer textBGRender;
     public SpriteRenderer nameBGRenderer;
 

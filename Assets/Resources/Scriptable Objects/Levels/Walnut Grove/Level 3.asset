@@ -18,6 +18,7 @@ MonoBehaviour:
   isDoubleRing: 0
   isBoss: 0
   isTimerLevel: 0
+  isNotChestLevel: 1
   isAnimalLevel: 0
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
@@ -38,16 +39,18 @@ MonoBehaviour:
   allowRepeatTiles: 1
   allowRepeatTileSides: 1
   powerupsForLevel: 
-  stoneTiles: []
-  slicesToSpawn:
-  - sliceToSpawn: 3
-    isLock: 0
-    isLoot: 1
-    isLimiter: 1
-  - sliceToSpawn: 3
-    isLock: 0
-    isLoot: 1
-    isLimiter: 1
+  stoneTiles:
+  - cellIndex: 0
+    randomValues: 0
+    isNeutral: 0
+    colorOfPieceRight: 4
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 1
+    symbolOfPieceLeft: 4
+    tileprefab: {fileID: 1645121695642233041, guid: 6b184118881871341aae387bbfbdd34c,
+      type: 3}
+    isLockedOnSpawn: 0
+  slicesToSpawn: []
   RewardBags: 
   levelAvailableColors: 0400000001000000
   levelAvailablesymbols: 04000000
@@ -77,7 +80,7 @@ MonoBehaviour:
     symbolOfPieceRight: 4
     colorOfPieceLeft: 1
     symbolOfPieceLeft: 4
-  specificSliceSpots: 0000000004000000
+  specificSliceSpots: 
   specificSlicesShapes: 
   specificSlicesColors: 0400000001000000
   BossHealth: 0
@@ -92,5 +95,5 @@ MonoBehaviour:
   useLastClipAlgoritm: 1
   algoritmStepsWanted: 0
   levelStartDialogueSO: {fileID: 0}
-  levelEndDialogueSO: {fileID: 11400000, guid: b6a4d5c9839e81345a281affd38b3b6e, type: 2}
+  levelEndDialogueSO: {fileID: 11400000, guid: a7e203f50ccd31f4c980a19bd0f65814, type: 2}
   timeForLevel: 0
