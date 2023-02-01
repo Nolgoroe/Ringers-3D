@@ -37,12 +37,52 @@ MonoBehaviour:
   RandomSlicePositions: 0
   allowRepeatSlices: 0
   allowRepeatTiles: 1
-  allowRepeatTileSides: 0
+  allowRepeatTileSides: 1
   powerupsForLevel: 
-  stoneTiles: []
+  stoneTiles:
+  - cellIndex: 0
+    randomValues: 0
+    isNeutral: 0
+    colorOfPieceRight: 3
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 2
+    symbolOfPieceLeft: 4
+    tileprefab: {fileID: 1645121695642233041, guid: 6b184118881871341aae387bbfbdd34c,
+      type: 3}
+    isLockedOnSpawn: 1
+  - cellIndex: 2
+    randomValues: 0
+    isNeutral: 0
+    colorOfPieceRight: 2
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 3
+    symbolOfPieceLeft: 4
+    tileprefab: {fileID: 1645121695642233041, guid: 6b184118881871341aae387bbfbdd34c,
+      type: 3}
+    isLockedOnSpawn: 1
+  - cellIndex: 4
+    randomValues: 0
+    isNeutral: 0
+    colorOfPieceRight: 3
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 2
+    symbolOfPieceLeft: 4
+    tileprefab: {fileID: 1645121695642233041, guid: 6b184118881871341aae387bbfbdd34c,
+      type: 3}
+    isLockedOnSpawn: 1
+  - cellIndex: 6
+    randomValues: 0
+    isNeutral: 0
+    colorOfPieceRight: 2
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 3
+    symbolOfPieceLeft: 4
+    tileprefab: {fileID: 1645121695642233041, guid: 6b184118881871341aae387bbfbdd34c,
+      type: 3}
+    isLockedOnSpawn: 1
   slicesToSpawn: []
   RewardBags: 
-  levelAvailableColors: 0400000003000000
+  levelAvailableColors: 0300000002000000
   levelAvailablesymbols: 04000000
   symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
@@ -52,11 +92,35 @@ MonoBehaviour:
   arrayOfPieces:
   - colorOfPieceRight: 3
     symbolOfPieceRight: 4
-    colorOfPieceLeft: 4
+    colorOfPieceLeft: 3
     symbolOfPieceLeft: 4
-  - colorOfPieceRight: 4
+  - colorOfPieceRight: 2
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 2
+    symbolOfPieceLeft: 4
+  - colorOfPieceRight: 3
     symbolOfPieceRight: 4
     colorOfPieceLeft: 3
+    symbolOfPieceLeft: 4
+  - colorOfPieceRight: 2
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 2
+    symbolOfPieceLeft: 4
+  - colorOfPieceRight: 3
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 3
+    symbolOfPieceLeft: 4
+  - colorOfPieceRight: 2
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 2
+    symbolOfPieceLeft: 4
+  - colorOfPieceRight: 3
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 3
+    symbolOfPieceLeft: 4
+  - colorOfPieceRight: 2
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 2
     symbolOfPieceLeft: 4
   specificSliceSpots: 
   specificSlicesShapes: 
