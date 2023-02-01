@@ -19,7 +19,7 @@ MonoBehaviour:
   isBoss: 0
   isTimerLevel: 0
   isNotChestLevel: 0
-  isAnimalLevel: 0
+  isAnimalLevel: 1
   isReleaseAnimalToDen: 0
   isKeyLevel: 0
   showIntroLevelAnimation: 1
@@ -39,17 +39,91 @@ MonoBehaviour:
   allowRepeatTiles: 1
   allowRepeatTileSides: 1
   powerupsForLevel: 
-  stoneTiles: []
+  stoneTiles:
+  - cellIndex: 7
+    randomValues: 0
+    isNeutral: 0
+    colorOfPieceRight: 4
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 3
+    symbolOfPieceLeft: 4
+    tileprefab: {fileID: 1645121695642233041, guid: 6b184118881871341aae387bbfbdd34c,
+      type: 3}
+    isLockedOnSpawn: 0
+  - cellIndex: 1
+    randomValues: 0
+    isNeutral: 0
+    colorOfPieceRight: 3
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 4
+    symbolOfPieceLeft: 4
+    tileprefab: {fileID: 1645121695642233041, guid: 6b184118881871341aae387bbfbdd34c,
+      type: 3}
+    isLockedOnSpawn: 0
+  - cellIndex: 3
+    randomValues: 0
+    isNeutral: 0
+    colorOfPieceRight: 0
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 3
+    symbolOfPieceLeft: 4
+    tileprefab: {fileID: 1645121695642233041, guid: 6b184118881871341aae387bbfbdd34c,
+      type: 3}
+    isLockedOnSpawn: 0
+  - cellIndex: 5
+    randomValues: 0
+    isNeutral: 0
+    colorOfPieceRight: 3
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 0
+    symbolOfPieceLeft: 4
+    tileprefab: {fileID: 1645121695642233041, guid: 6b184118881871341aae387bbfbdd34c,
+      type: 3}
+    isLockedOnSpawn: 0
+  - cellIndex: 0
+    randomValues: 0
+    isNeutral: 0
+    colorOfPieceRight: 3
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 3
+    symbolOfPieceLeft: 4
+    tileprefab: {fileID: 1645121695642233041, guid: 6b184118881871341aae387bbfbdd34c,
+      type: 3}
+    isLockedOnSpawn: 0
+  - cellIndex: 6
+    randomValues: 0
+    isNeutral: 0
+    colorOfPieceRight: 0
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 0
+    symbolOfPieceLeft: 4
+    tileprefab: {fileID: 1645121695642233041, guid: 6b184118881871341aae387bbfbdd34c,
+      type: 3}
+    isLockedOnSpawn: 0
+  - cellIndex: 4
+    randomValues: 0
+    isNeutral: 0
+    colorOfPieceRight: 4
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 4
+    symbolOfPieceLeft: 4
+    tileprefab: {fileID: 1645121695642233041, guid: 6b184118881871341aae387bbfbdd34c,
+      type: 3}
+    isLockedOnSpawn: 0
   slicesToSpawn: []
   RewardBags: 
-  levelAvailableColors: 0000000003000000
+  levelAvailableColors: 000000000300000004000000
   levelAvailablesymbols: 04000000
   symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
   isTutorial: 0
   specificTutorialEnum: 10
   bottomUIToShow: 2
-  arrayOfPieces: []
+  arrayOfPieces:
+  - colorOfPieceRight: 3
+    symbolOfPieceRight: 4
+    colorOfPieceLeft: 3
+    symbolOfPieceLeft: 4
   specificSliceSpots: 
   specificSlicesShapes: 
   specificSlicesColors: 
