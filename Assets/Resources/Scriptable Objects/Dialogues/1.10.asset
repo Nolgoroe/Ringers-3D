@@ -13,16 +13,17 @@ MonoBehaviour:
   m_Name: 1.10
   m_EditorClassIdentifier: 
   allEntries:
-  - npcType: 0
-    dialogueSide: 0
+  - npcType: 1
+    dialogueSide: 1
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
     skeletonDataAsset: {fileID: 0}
     playableAsset: {fileID: 0}
     blinkAnimation: {fileID: 0}
     relaventPos: 
-    displayName: Fox
-    conversationBlock: 'I think it''s finally dead, Crow. '
+    displayName: Crow
+    conversationBlock: Okay, we know she went this way. But for some reason Lynx's
+      paw prints end here.
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -51,17 +52,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - npcType: 1
-    dialogueSide: 1
+  - npcType: 0
+    dialogueSide: 0
     dialogueType: 0
     imageEntrySprite: {fileID: 0}
     skeletonDataAsset: {fileID: 0}
     playableAsset: {fileID: 0}
     blinkAnimation: {fileID: 0}
     relaventPos: 
-    displayName: Crow
-    conversationBlock: Phew, I can't believe we've done it. This was harder than
-      I thought!
+    displayName: Fox
+    conversationBlock: I think I know why, Crow. Look at the forest! The rive is
+      spreading so fast!
     entryStartEvents:
       m_PersistentCalls:
         m_Calls:
@@ -72,56 +73,6 @@ MonoBehaviour:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 1
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    entryEndEvents:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11400000}
-          m_MethodName: ActiavteContinueDialogueButton
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 11400000}
-          m_MethodName: IncrementPhaseInDialogue
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - npcType: 0
-    dialogueSide: 0
-    dialogueType: 0
-    imageEntrySprite: {fileID: 0}
-    skeletonDataAsset: {fileID: 0}
-    playableAsset: {fileID: 0}
-    blinkAnimation: {fileID: 0}
-    relaventPos: 
-    displayName: Fox
-    conversationBlock: The Rive is getting stronger, sister. It took us multiple
-      spell rings to defeat it this time.
-    entryStartEvents:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 11400000}
-          m_MethodName: InstantiateDialoguePrefab
-          m_Mode: 3
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 2
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
