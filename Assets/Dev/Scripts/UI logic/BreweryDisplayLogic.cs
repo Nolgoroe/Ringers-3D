@@ -68,7 +68,7 @@ public class BreweryDisplayLogic : MonoBehaviour
                 if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isPotionTabPhase)
                 {
                     //TutorialSequence.Instacne.AddToPlayerMatsForPotion(materialsNeedToBuyPotion);
-                    TutorialSequence.Instacne.AddToPlayerMatsForPotion(selectedPotion.craftingMatsForEquipment);
+                    //TutorialSequence.Instacne.AddToPlayerMatsForPotion(selectedPotion.craftingMatsForEquipment);
                     hasGivenMatsTutorial = true;
                     BreweryPotionDisplay(selectedPotion);
                 }
@@ -159,7 +159,15 @@ public class BreweryDisplayLogic : MonoBehaviour
     {
         if(PlayerManager.Instance.rubyCount >= rubiesNeededToBuyPotion)
         {
-           // GameAnalytics.NewDesignEvent("BoughtPotions:" + selectedPotion.name);
+            // GameAnalytics.NewDesignEvent("BoughtPotions:" + selectedPotion.name);
+
+            if (TutorialSequence.Instacne.duringSequence)
+            {
+                if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].isBuyPotionPhase)
+                {
+                    StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
+                }
+            }
 
             PlayerManager.Instance.rubyCount -= rubiesNeededToBuyPotion;
 
@@ -168,6 +176,7 @@ public class BreweryDisplayLogic : MonoBehaviour
             UIManager.Instance.updateRubyAndDewDropsCount();
 
             BreweryPotionDisplay(selectedPotion);
+
 
             //PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
         }

@@ -78,6 +78,7 @@ public class UIManager : MonoBehaviour
     public GameObject hollowCraftTabHeighlight;
     public GameObject toHubButtonHeighlight;
     public GameObject brewButtonHeighlight;
+    public GameObject buyPotionButtonHeighlight;
     public GameObject closeInventoryHeighlight;
     public GameObject[] brewMaterialZonesHeighlights;
     public GameObject normalBookBG, potionsBookBG, craftingBookBG;
@@ -189,6 +190,7 @@ public class UIManager : MonoBehaviour
     public Button openCheatSettingsButton;
     public Button closeInventoryButton;
     public Button brewPotionButton;
+    public Button buyPotionButton;
 
 
     public Button requiredButtonForTutorialPhase;
@@ -2078,11 +2080,21 @@ public class UIManager : MonoBehaviour
     }
     public void BuyPotionScreenYes()
     {
+        if (requiredButtonForTutorialPhase != buyPotionButton)
+        {
+            return;
+        }
+
         MissingMaterialsPotionCraftScreen.SetActive(false);
         ClearBuyPotionLootDisplay();
     }
     public void BuyPotionScreenNo()
     {
+        if (requiredButtonForTutorialPhase == buyPotionYesButton)
+        {
+            return;
+        }
+
         MissingMaterialsPotionCraftScreen.SetActive(false);
         ClearBuyPotionLootDisplay();
     }

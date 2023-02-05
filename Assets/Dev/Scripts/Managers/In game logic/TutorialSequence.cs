@@ -34,7 +34,7 @@ public class Sequence
 public class Phase
 {
     public bool isClipPhase, isBoardPhase, isPowerupPhase, isSingleCellPhase, isSingleSlice, isHubButtonPhase;
-    public bool isOpenInventoryPhase, isPotionTabPhase, isEmptyTouchPhase, isBrewPhase, isBrewDisplayMaterials;
+    public bool isOpenInventoryPhase, isPotionTabPhase, isEmptyTouchPhase, isBrewPhase, isBuyPotionPhase, isBrewDisplayMaterials;
     public bool isAnimalSymbolCollectionPhase, hasDelay, hasDelayAfter, isAllLocked, isClearScreen, isBoardGone, isGameUIGone;
     public bool isOpenDenPhase, isOpenHollowCraftTabPhase, isOpenInventoryInDenPhase, isCraftPhase, isCloseInventoryPhase, isDragHollowItemPhase;
     public bool isTimedLevelTimerShowPhase;
@@ -115,7 +115,7 @@ public class TutorialSequence : MonoBehaviour
 
     public List<GameObject> screensDeactivateOnTouch;
 
-    public Transform handPosToHub, handPosOpenInventory, handPosOpenInventoryInDen, handPosOpenDen, handPosOpenAnimalAlbum, handPosClickAnimalTab, handPosChangePotionTab, handPosChangeHollowCraftTab, handPosBrewButton, handPosCraftItemButton, handPosCloseInventory;
+    public Transform handPosToHub, handPosOpenInventory, handPosOpenInventoryInDen, handPosOpenDen, handPosOpenAnimalAlbum, handPosClickAnimalTab, handPosChangePotionTab, handPosChangeHollowCraftTab, handPosBrewButton, handPosbuyPotionButton, handPosCraftItemButton, handPosCloseInventory;
 
     bool inDelay = false;
 
@@ -504,6 +504,20 @@ public class TutorialSequence : MonoBehaviour
                 UIManager.Instance.brewButtonHeighlight.SetActive(true);
                 activatedHeighlights.Add(UIManager.Instance.brewButtonHeighlight.gameObject);
                 DisplayTutorialHandTapQuaternion(handPosBrewButton.position, handPosBrewButton.rotation, handPosBrewButton.localScale);
+            }
+
+            if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isBuyPotionPhase)
+            {
+                UIManager.Instance.requiredButtonForTutorialPhase = UIManager.Instance.buyPotionButton;
+
+                foreach (EquipmentDisplayer equipment in MaterialsAndForgeManager.Instance.equipmentInBrewScreen)
+                {
+                    equipment.GetComponent<Button>().onClick.RemoveAllListeners();
+                }
+
+                UIManager.Instance.buyPotionButtonHeighlight.SetActive(true);
+                activatedHeighlights.Add(UIManager.Instance.buyPotionButtonHeighlight.gameObject);
+                DisplayTutorialHandTapQuaternion(handPosbuyPotionButton.position, handPosbuyPotionButton.rotation, handPosbuyPotionButton.localScale);
             }
 
             if (specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].isCraftPhase)
