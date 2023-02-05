@@ -187,7 +187,10 @@ public class ConnectionManager : MonoBehaviour
             {
                 if (!CheckSubPieceConnection(supPieceArray[currentLeft], supPieceArray[leftContested], out bool conditionmet, out bool isGoodConnect))
                 {
-                    SoundManager.Instance.PlaySoundChangeVolume(Sounds.AddTileBoard, 0.5f);
+                    if (!UIManager.Instance.isUsingUI)
+                    {
+                        SoundManager.Instance.PlaySoundChangeVolume(Sounds.AddTileBoard, 0.5f);
+                    }
 
 
                     if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
@@ -280,13 +283,19 @@ public class ConnectionManager : MonoBehaviour
                             {
                                 if (supPieceArray[currentLeft].relevantSlice.isLimiter)
                                 {
-                                    SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
+                                    if (!UIManager.Instance.isUsingUI)
+                                    {
+                                        SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
+                                    }
 
                                     //supPieceArray[currentLeft].relevantSlice.anim.SetBool("Reverse", false);
                                 }
                                 else
                                 {
-                                    SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
+                                    if (!UIManager.Instance.isUsingUI)
+                                    {
+                                        SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
+                                    }
                                 }
                             }
                             //}
@@ -307,7 +316,10 @@ public class ConnectionManager : MonoBehaviour
                     }
                     else
                     {
-                        SoundManager.Instance.PlaySound(Sounds.TileMatch);
+                        if (!UIManager.Instance.isUsingUI)
+                        {
+                            SoundManager.Instance.PlaySound(Sounds.TileMatch);
+                        }
 
                         if (conditionmet)
                         {
@@ -322,7 +334,10 @@ public class ConnectionManager : MonoBehaviour
                             {
                                 if (supPieceArray[currentLeft].relevantSlice.isLimiter)
                                 {
-                                    SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
+                                    if (!UIManager.Instance.isUsingUI)
+                                    {
+                                        SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
+                                    }
 
                                     //supPieceArray[currentLeft].relevantSlice.anim.SetBool("Reverse", false);
                                 }
@@ -330,7 +345,10 @@ public class ConnectionManager : MonoBehaviour
                                 {
                                     if (!supPieceArray[currentLeft].relevantSlice.fulfilledCondition)
                                     {
-                                        SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
+                                        if (!UIManager.Instance.isUsingUI)
+                                        {
+                                            SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
+                                        }
                                     }
                                 }
                             }
@@ -405,7 +423,10 @@ public class ConnectionManager : MonoBehaviour
             {
                 if (!CheckSubPieceConnection(supPieceArray[currentRight], supPieceArray[rightContested], out bool conditionmet, out bool isGoodConnect))
                 {
-                    SoundManager.Instance.PlaySoundChangeVolume(Sounds.AddTileBoard, 0.5f);
+                    if (!UIManager.Instance.isUsingUI)
+                    {
+                        SoundManager.Instance.PlaySoundChangeVolume(Sounds.AddTileBoard, 0.5f);
+                    }
 
                     if (!GameManager.Instance.isDisableTutorials && GameManager.Instance.currentLevel.isTutorial)
                     {
@@ -460,7 +481,10 @@ public class ConnectionManager : MonoBehaviour
 
                     if (!playedConnectedSound)
                     {
-                        SoundManager.Instance.PlaySound(Sounds.TileMatch);
+                        if (!UIManager.Instance.isUsingUI)
+                        {
+                            SoundManager.Instance.PlaySound(Sounds.TileMatch);
+                        }
                     }
 
                     if (conditionmet)
@@ -475,7 +499,10 @@ public class ConnectionManager : MonoBehaviour
                         {
                             if (supPieceArray[currentRight].relevantSlice.isLimiter)
                             {
-                                SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
+                                if (!UIManager.Instance.isUsingUI)
+                                {
+                                    SoundManager.Instance.PlaySound(Sounds.RuneLimiterMatch);
+                                }
 
                                 //supPieceArray[currentRight].relevantSlice.anim.SetBool("Reverse", false);
                             }
@@ -483,7 +510,10 @@ public class ConnectionManager : MonoBehaviour
                             {
                                 if (!supPieceArray[currentRight].relevantSlice.fulfilledCondition)
                                 {
-                                    SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
+                                    if (!UIManager.Instance.isUsingUI)
+                                    {
+                                        SoundManager.Instance.PlaySound(Sounds.SliceLimiterMatch);
+                                    }
                                 }
                             }
                         }
@@ -536,7 +566,10 @@ public class ConnectionManager : MonoBehaviour
 
         if (!nextToOtherpiece && !supPieceArray[currentRight].GetComponentInParent<Piece>().isStone)
         {
-            SoundManager.Instance.PlaySoundChangeVolume(Sounds.AddTileBoard, 0.5f);
+            if (!UIManager.Instance.isUsingUI)
+            {
+                SoundManager.Instance.PlaySoundChangeVolume(Sounds.AddTileBoard, 0.5f);
+            }
         }
 
         if (lastPiece)
@@ -1117,8 +1150,10 @@ public class ConnectionManager : MonoBehaviour
         //{
 
         /// TURN ON HEIGHLIGHT ON SLICE HERE
-
-        SoundManager.Instance.PlaySound(Sounds.TileLock);
+        if (!UIManager.Instance.isUsingUI)
+        {
+            SoundManager.Instance.PlaySound(Sounds.TileLock);
+        }
 
         relevent.lockSpriteHeighlightAnim.gameObject.SetActive(true);
         GameManager.Instance.gameBoard.GetComponent<SliceManager>().activeLocksLockAnims.Add(relevent.lockSpriteHeighlightAnim.gameObject);

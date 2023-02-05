@@ -1143,7 +1143,7 @@ public class CursorController : MonoBehaviour
                         {
                             cell.AddPiece(followerTarget, isFromClip);
 
-                            if (GameManager.Instance.currentFilledCellCount + 1 != GameManager.Instance.currentLevel.cellsCountInLevel && !tutorialBadConnection)
+                            if (/*GameManager.Instance.currentFilledCellCount + 1 != GameManager.Instance.currentLevel.cellsCountInLevel && */!tutorialBadConnection)
                             {
 
                                 if (isFromClip/* && !cell.isFull*/)

@@ -664,7 +664,8 @@ public class AnimationManager : MonoBehaviour
             if (GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.PotionCraft
                 && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.DenScreen
                 && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.AnimalAlbum
-                && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.BossTimedLevel)
+                && GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.BossTimedLevel
+                && !GameManager.Instance.currentLevel.isNotChestLevel)
             {
                 UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
                 UIManager.Instance.nextLevelFromWinScreen.interactable = true;
@@ -1307,7 +1308,7 @@ public class AnimationManager : MonoBehaviour
             //UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);
             //UIManager.Instance.backToHubButton.interactable = true;
 
-            if(!GameManager.Instance.currentLevel.isTimerLevel)
+            if(!GameManager.Instance.currentLevel.isTimerLevel && !GameManager.Instance.currentLevel.isNotChestLevel)
             {
                 UIManager.Instance.nextLevelFromWinScreen.interactable = true;
                 UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(true);

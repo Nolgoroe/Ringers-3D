@@ -151,6 +151,7 @@ public class GameManager : MonoBehaviour
         AnimationManager.instance.ResetEnterLevelAnimation();
         AnimalsManager.Instance.ResetAnimalManagerData();
 
+        UIManager.Instance.isUsingUI = true;
         yield return new WaitForEndOfFrame();
 
         AnimationManager.instance.hasGivenChest = false;
