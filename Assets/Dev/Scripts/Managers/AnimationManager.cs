@@ -1748,6 +1748,10 @@ public class AnimationManager : MonoBehaviour
 
     public void PopulateRefrencesEnterLevelAnimNoAfterAction()
     {
+        ring = GameManager.Instance.gameBoard.transform.GetComponent<SpriteRenderer>();
+
+        ring.material.SetFloat("_DissolveSprite", 0.4f);
+
         //ring = GameManager.Instance.gameBoard.transform.GetComponent<SpriteRenderer>();
 
         //colorMask = GameManager.Instance.selectedLevelBG.transform.Find("RingMask").GetComponent<SpriteRenderer>();
