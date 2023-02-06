@@ -840,7 +840,10 @@ public class PowerUpManager : MonoBehaviour
 
     public void CancelPowerup(PowerupProperties prop)
     {
-        StopCoroutine(powerBeingUsed);
+        if(powerBeingUsed != null)
+        {
+            StopCoroutine(powerBeingUsed);
+        }
         //StopAllCoroutines();
         UIManager.Instance.ActivateUsingPowerupMessage(false);
 
