@@ -32,7 +32,8 @@ public enum NPCs
     Bramble,
     GreatFirSpirit,
     Chameleon,
-    BabyBunny,
+    BabyBunnyBag,
+    BabyBunnyNoBag,
     None
 }
 
