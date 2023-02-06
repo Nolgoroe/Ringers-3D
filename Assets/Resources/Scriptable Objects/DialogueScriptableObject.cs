@@ -8,8 +8,8 @@ using UnityEngine.Events;
 using TMPro;
 using GameAnalyticsSDK;
 using Spine.Unity;
-using Spine.Unity.Editor;
 using UnityEngine.Playables;
+//using Spine.Unity.Editor;
 
 public enum DialogueSide
 {
@@ -283,8 +283,7 @@ public class DialogueScriptableObject : ScriptableObject
         //refs.textBGRender.sprite = allEntries[index].dialogueTextBGSprite;
 
         refs.skeletonAnimation.skeletonDataAsset = allEntries[index].skeletonDataAsset;
-        SpineEditorUtilities.ReloadSkeletonDataAssetAndComponent(refs.skeletonRenderer);
-
+        //SpineEditorUtilities.ReloadSkeletonDataAssetAndComponent(refs.skeletonRenderer);
         refs.director.playableAsset = allEntries[index].playableAsset;
         refs.blinkAnimationRef.blinkAnimation = allEntries[index].blinkAnimation;
         refs.CallStartBlinkingSpine();
