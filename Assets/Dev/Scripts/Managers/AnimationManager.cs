@@ -540,6 +540,7 @@ public class AnimationManager : MonoBehaviour
             }
         }
 
+        //yield return new WaitForSeconds(1.1f);
         SoundManager.Instance.PlaySound(Sounds.LevelWin);
 
         foreach (Cell cell in ConnectionManager.Instance.cells)
@@ -1254,6 +1255,7 @@ public class AnimationManager : MonoBehaviour
                 Debug.LogError("HERE AND NOW");
             }
         }
+        //yield return new WaitForSeconds(1.1f);
 
         GameManager.Instance.WinAfterAnimation();
 
@@ -1367,7 +1369,8 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.restartButton.interactable = true;
         UIManager.Instance.dealButton.interactable = true;
 
-        if (!TestLevelsSystemManagerSaveData.instance.canGetChest/* && !hasGivenChest*/)
+        bool lastLevelInCluster = GameManager.Instance.currentIndexInCluster + 1 == GameManager.Instance.currentCluster.clusterLevels.Length;
+        if (!TestLevelsSystemManagerSaveData.instance.canGetChest && !lastLevelInCluster/* && !hasGivenChest*/)
         {
             TutorialSequence.Instacne.CheckDoPotionTutorial();
             TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
