@@ -585,8 +585,6 @@ public class UIManager : MonoBehaviour
     }
     public void SureWantToLeaveLevelMessageYes()
     {
-        SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
-
         bGPanelDisableTouch.SetActive(false);
         sureWantToLeaveLevel.SetActive(false);
         DisableInLevelSettings();

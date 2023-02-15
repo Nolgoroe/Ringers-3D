@@ -24,7 +24,7 @@ public class IconSpritesPerCondition
 public class AmbientMusicPerZone
 {
     public Zone zone;
-    public Sounds levelAmbience;
+    public AudioClip levelAmbienceClip;
 }
 
 [Serializable]

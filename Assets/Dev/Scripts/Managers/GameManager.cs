@@ -403,14 +403,14 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Change music");
 
-            StartCoroutine(SoundManager.Instance.FadeInAmbientMusicLevel(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbience));
+            StartCoroutine(SoundManager.Instance.FadeInAmbientMusicLevel(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbienceClip));
         }
         else
         {
             if (!hasRestartedLevel)
             {
                 Debug.Log("Just volume up");
-                StartCoroutine(SoundManager.Instance.FadeInOnlyLevelVolume(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbience));
+                StartCoroutine(SoundManager.Instance.FadeInOnlyLevelVolume(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbienceClip));
             }
         }
 

@@ -298,6 +298,40 @@ public class SoundManager : MonoBehaviour
 
         yield return new WaitForSeconds(timeFadeInAmbienceLevel);
     }
+    public IEnumerator FadeInAmbientMusicLevel(AudioClip clip)
+    {
+
+        normalAmbienceLevel.clip = clip;
+
+        forestSounds.volume = 0;
+        normalAmbienceLevel.volume = 0;
+
+
+        forestSounds.Play();
+        normalAmbienceLevel.Play();
+
+        if (!muteMusic)
+        {
+            float vol = 0;
+
+            LeanTween.value(forestSounds.gameObject, 0, 1, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
+            {
+                vol = val;
+                forestSounds.volume = vol;
+            });
+
+            vol = 0;
+
+            LeanTween.value(normalAmbienceLevel.gameObject, 0, 1, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
+            {
+                vol = val;
+                normalAmbienceLevel.volume = vol;
+            });
+        }
+
+
+        yield return new WaitForSeconds(timeFadeInAmbienceLevel);
+    }
 
     public IEnumerator FadeInMapBGMusic()
     {
@@ -360,26 +394,33 @@ public class SoundManager : MonoBehaviour
 
         yield return new WaitForSeconds(timeFadeInAmbienceLevel);
     }
+    public IEnumerator FadeInOnlyLevelVolume(AudioClip clip)
+    {
+        if (muteMusic)
+        {
+            yield break;
+        }
 
-    //public IEnumerator FadeInOnlyVolume(Sounds soundEnum)
-    //{
-    //    if (muteMusic)
-    //    {
-    //        yield break;
-    //    }
+        normalAmbienceLevel.clip = clip;
 
-    //    audioSourceAmbience.volume = 0;
+        float vol = 0;
 
-    //    float vol = 0;
+        LeanTween.value(forestSounds.gameObject, forestSounds.volume, 1, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
+        {
+            vol = val;
+            forestSounds.volume = vol;
+        });
 
-    //    LeanTween.value(audioSourceAmbience.gameObject, 0, 1, 2).setOnUpdate((float val) =>
-    //    {
-    //        vol = val;
-    //        audioSourceAmbience.volume = vol;
-    //    });
+        vol = 0;
 
-    //    yield return new WaitForSeconds(2);
-    //}
+        LeanTween.value(normalAmbienceLevel.gameObject, normalAmbienceLevel.volume, 1, timeFadeInAmbienceLevel).setOnUpdate((float val) =>
+        {
+            vol = val;
+            normalAmbienceLevel.volume = vol;
+        });
+
+        yield return new WaitForSeconds(timeFadeInAmbienceLevel);
+    }
 
     public void MuteUnmuteMusic()
     {
@@ -411,7 +452,7 @@ public class SoundManager : MonoBehaviour
 
             if (GameManager.Instance.levelStarted)
             {
-                StartCoroutine(FadeInOnlyLevelVolume(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbience));
+                StartCoroutine(FadeInOnlyLevelVolume(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbienceClip));
             }
             else
             {
