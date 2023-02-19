@@ -147,7 +147,7 @@ public class AnimationManager : MonoBehaviour
     public SpriteRenderer colorMask;
     float originalColorMaskAlpha = 0;
     public float timeToFadeRingAndColormask;
-    public Transform[] clips;
+    public ClipHolder[] clips;
     public float timeToFadeClip;
     public List<SpriteRenderer> locks;
     public float timeToFadeLocks;
@@ -1887,7 +1887,7 @@ public class AnimationManager : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Count(); i++)
         {
-            GameObject toMove = GameManager.Instance.clipManager.slots[i].GetChild(1).gameObject;
+            GameObject toMove = GameManager.Instance.clipManager.slots[i].transform.GetChild(1).gameObject;
 
             toMove.transform.localPosition = GameManager.Instance.clipManager.piecesDealPositionsOut;
         }
@@ -1929,7 +1929,7 @@ public class AnimationManager : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Count(); i++)
         {
-            GameObject toMove = GameManager.Instance.clipManager.slots[i].GetChild(1).gameObject;
+            GameObject toMove = GameManager.Instance.clipManager.slots[i].transform.GetChild(1).gameObject;
             toMove.SetActive(true);
             //toMove.transform.localPosition = GameManager.Instance.clipManager.piecesDealPositionsOut;
         }
@@ -1943,9 +1943,9 @@ public class AnimationManager : MonoBehaviour
 
         TestLevelsSystemManager.instance.StarSlider.gameObject.SetActive(false);
 
-        foreach (Transform slot in GameManager.Instance.clipManager.slots)
+        foreach (ClipHolder slot in GameManager.Instance.clipManager.slots)
         {
-            Piece p = slot.GetComponent<ClipHolder>().heldPiece;
+            Piece p = slot.heldPiece;
             p.gameObject.SetActive(false);
         }
 
@@ -2067,7 +2067,7 @@ public class AnimationManager : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Count(); i++)
         {
-            GameObject toMove = GameManager.Instance.clipManager.slots[i].GetChild(1).gameObject;
+            GameObject toMove = GameManager.Instance.clipManager.slots[i].transform.GetChild(1).gameObject;
             toMove.SetActive(true);
             LeanTween.move(toMove, GameManager.Instance.clipManager.originalPiecePos, 0.5f).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
 

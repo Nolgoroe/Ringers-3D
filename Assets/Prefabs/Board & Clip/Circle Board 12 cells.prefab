@@ -784,7 +784,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5228157572670378917}
   - component: {fileID: 7330668438651054740}
-  m_Layer: 14
+  m_Layer: 12
   m_Name: TileHole_Tutorial_TEST (2)
   m_TagString: Tile Hole
   m_Icon: {fileID: 0}
@@ -5769,6 +5769,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5888449457044871864}
   - component: {fileID: 7600522693413357010}
+  - component: {fileID: 4724941095991101499}
   m_Layer: 14
   m_Name: Slice 8
   m_TagString: Limiter
@@ -5821,6 +5822,24 @@ MonoBehaviour:
   connectedCells: []
   lockSpriteAnim: {fileID: 40656600133593079}
   lockSpriteHeighlightAnim: {fileID: 2080187849544659884}
+--- !u!114 &4724941095991101499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924959582307087257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea3e48481ca6cd45b0f3db7f6e2678d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleType: 0
+  limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
+    type: 3}
+  PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 7600522693413357010}
+  connectedPower: {fileID: 0}
 --- !u!1 &1017905572453780498
 GameObject:
   m_ObjectHideFlags: 0
@@ -5831,7 +5850,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3477307767672325804}
   - component: {fileID: 3954714439157969414}
-  m_Layer: 14
+  m_Layer: 12
   m_Name: TileHole_Tutorial_TEST
   m_TagString: Tile Hole
   m_Icon: {fileID: 0}
@@ -5912,6 +5931,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3879664156073204667}
   - component: {fileID: 1273358535263575632}
+  - component: {fileID: 3823313842581698173}
   m_Layer: 14
   m_Name: Slice 9
   m_TagString: Limiter
@@ -5964,6 +5984,24 @@ MonoBehaviour:
   connectedCells: []
   lockSpriteAnim: {fileID: 9156709833690012416}
   lockSpriteHeighlightAnim: {fileID: 8400029377100754541}
+--- !u!114 &3823313842581698173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058402529051361506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea3e48481ca6cd45b0f3db7f6e2678d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleType: 0
+  limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
+    type: 3}
+  PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 1273358535263575632}
+  connectedPower: {fileID: 0}
 --- !u!1 &1241809259601778641
 GameObject:
   m_ObjectHideFlags: 0
@@ -5974,7 +6012,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3999581642767294363}
   - component: {fileID: 8390899084125651778}
-  m_Layer: 14
+  m_Layer: 12
   m_Name: TileHole_Tutorial_TEST (6)
   m_TagString: Tile Hole
   m_Icon: {fileID: 0}
@@ -6420,6 +6458,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4308673696471849951}
   - component: {fileID: 7262314714969745987}
+  - component: {fileID: 597963455020467642}
   m_Layer: 14
   m_Name: Slice 10
   m_TagString: Limiter
@@ -6472,6 +6511,24 @@ MonoBehaviour:
   connectedCells: []
   lockSpriteAnim: {fileID: 5862341303780895813}
   lockSpriteHeighlightAnim: {fileID: 6470069080603585111}
+--- !u!114 &597963455020467642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990203874147576752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea3e48481ca6cd45b0f3db7f6e2678d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleType: 0
+  limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
+    type: 3}
+  PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 7262314714969745987}
+  connectedPower: {fileID: 0}
 --- !u!1 &1994965113528175820
 GameObject:
   m_ObjectHideFlags: 0
@@ -6555,6 +6612,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4620424603737315309}
   - component: {fileID: 3408395251655521962}
+  - component: {fileID: 1264195435365753694}
   m_Layer: 14
   m_Name: Slice 1
   m_TagString: Limiter
@@ -6607,6 +6665,24 @@ MonoBehaviour:
   connectedCells: []
   lockSpriteAnim: {fileID: 6904199156186970744}
   lockSpriteHeighlightAnim: {fileID: 7943264230967916918}
+--- !u!114 &1264195435365753694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2303002683838741268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea3e48481ca6cd45b0f3db7f6e2678d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleType: 0
+  limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
+    type: 3}
+  PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 3408395251655521962}
+  connectedPower: {fileID: 0}
 --- !u!1 &2408544284680406115
 GameObject:
   m_ObjectHideFlags: 0
@@ -6736,6 +6812,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1643537192431202741}
   - component: {fileID: 6467334886856692005}
+  - component: {fileID: 131263282110506031}
   m_Layer: 14
   m_Name: Slice 4
   m_TagString: Limiter
@@ -6788,6 +6865,24 @@ MonoBehaviour:
   connectedCells: []
   lockSpriteAnim: {fileID: 3584616809232543099}
   lockSpriteHeighlightAnim: {fileID: 2232119205685533061}
+--- !u!114 &131263282110506031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2423585661347231327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea3e48481ca6cd45b0f3db7f6e2678d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleType: 0
+  limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
+    type: 3}
+  PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 6467334886856692005}
+  connectedPower: {fileID: 0}
 --- !u!1 &2494635989045550781
 GameObject:
   m_ObjectHideFlags: 0
@@ -6960,6 +7055,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2024214976034872014}
   - component: {fileID: 6790989315867641987}
+  - component: {fileID: 3649425499030329884}
   m_Layer: 14
   m_Name: Slice 12
   m_TagString: Limiter
@@ -7012,6 +7108,24 @@ MonoBehaviour:
   connectedCells: []
   lockSpriteAnim: {fileID: 6965637129069131626}
   lockSpriteHeighlightAnim: {fileID: 661948833396070776}
+--- !u!114 &3649425499030329884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2510735031035450684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea3e48481ca6cd45b0f3db7f6e2678d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleType: 0
+  limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
+    type: 3}
+  PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 6790989315867641987}
+  connectedPower: {fileID: 0}
 --- !u!1 &2598873604479694860
 GameObject:
   m_ObjectHideFlags: 0
@@ -12384,7 +12498,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6694954758693060368}
   - component: {fileID: 1035411611072881298}
-  m_Layer: 14
+  m_Layer: 12
   m_Name: TileHole_Tutorial_TEST (5)
   m_TagString: Tile Hole
   m_Icon: {fileID: 0}
@@ -12465,7 +12579,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4963226559643242096}
   - component: {fileID: 3490973348357547990}
-  m_Layer: 14
+  m_Layer: 12
   m_Name: TileHole_Tutorial_TEST (1)
   m_TagString: Tile Hole
   m_Icon: {fileID: 0}
@@ -12546,6 +12660,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2159788481393161410}
   - component: {fileID: 8754681575605557809}
+  - component: {fileID: 6684604513033233672}
   m_Layer: 14
   m_Name: Slice 6
   m_TagString: Limiter
@@ -12598,6 +12713,24 @@ MonoBehaviour:
   connectedCells: []
   lockSpriteAnim: {fileID: 3880036011594522212}
   lockSpriteHeighlightAnim: {fileID: 1524909354095328313}
+--- !u!114 &6684604513033233672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3414106107658837006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea3e48481ca6cd45b0f3db7f6e2678d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleType: 0
+  limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
+    type: 3}
+  PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 8754681575605557809}
+  connectedPower: {fileID: 0}
 --- !u!1 &3490760318131543353
 GameObject:
   m_ObjectHideFlags: 0
@@ -12608,6 +12741,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9038963235669605167}
   - component: {fileID: 2506918828823521105}
+  - component: {fileID: 5870239678940482095}
   m_Layer: 14
   m_Name: Slice 11
   m_TagString: Limiter
@@ -12660,6 +12794,24 @@ MonoBehaviour:
   connectedCells: []
   lockSpriteAnim: {fileID: 3717721525632930308}
   lockSpriteHeighlightAnim: {fileID: 2305347460538273536}
+--- !u!114 &5870239678940482095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3490760318131543353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea3e48481ca6cd45b0f3db7f6e2678d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleType: 0
+  limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
+    type: 3}
+  PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 2506918828823521105}
+  connectedPower: {fileID: 0}
 --- !u!1 &4132263175656625424
 GameObject:
   m_ObjectHideFlags: 0
@@ -17659,7 +17811,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6412830795316449954}
   - component: {fileID: 4979922442739611633}
-  m_Layer: 14
+  m_Layer: 12
   m_Name: TileHole_Tutorial_TEST (6)
   m_TagString: Tile Hole
   m_Icon: {fileID: 0}
@@ -17740,7 +17892,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7200787086298802125}
   - component: {fileID: 6508339185268832006}
-  m_Layer: 14
+  m_Layer: 12
   m_Name: TileHole_Tutorial_TEST (6)
   m_TagString: Tile Hole
   m_Icon: {fileID: 0}
@@ -18341,6 +18493,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5486902087403116154}
   - component: {fileID: 1483939612594635998}
+  - component: {fileID: 858778501711354497}
   m_Layer: 14
   m_Name: Slice 5
   m_TagString: Limiter
@@ -18393,6 +18546,24 @@ MonoBehaviour:
   connectedCells: []
   lockSpriteAnim: {fileID: 7423977636970974171}
   lockSpriteHeighlightAnim: {fileID: 3294371631775157671}
+--- !u!114 &858778501711354497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5259246071793798500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea3e48481ca6cd45b0f3db7f6e2678d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleType: 0
+  limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
+    type: 3}
+  PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 1483939612594635998}
+  connectedPower: {fileID: 0}
 --- !u!1 &5293063776780043365
 GameObject:
   m_ObjectHideFlags: 0
@@ -23585,7 +23756,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7779806834544005827}
   - component: {fileID: 8965935070480950792}
-  m_Layer: 14
+  m_Layer: 12
   m_Name: TileHole_Tutorial_TEST (3)
   m_TagString: Tile Hole
   m_Icon: {fileID: 0}
@@ -43989,7 +44160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2972545179865282327}
   - component: {fileID: 6067354066911495064}
-  m_Layer: 14
+  m_Layer: 12
   m_Name: TileHole_Tutorial_TEST (6)
   m_TagString: Tile Hole
   m_Icon: {fileID: 0}
@@ -48978,6 +49149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6070176724781798661}
   - component: {fileID: 8031439627347750285}
+  - component: {fileID: 798457216910362666}
   m_Layer: 14
   m_Name: Slice 7
   m_TagString: Limiter
@@ -49030,6 +49202,24 @@ MonoBehaviour:
   connectedCells: []
   lockSpriteAnim: {fileID: 2028525081004409986}
   lockSpriteHeighlightAnim: {fileID: 48987073628535157}
+--- !u!114 &798457216910362666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7644214663804926276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea3e48481ca6cd45b0f3db7f6e2678d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleType: 0
+  limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
+    type: 3}
+  PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 8031439627347750285}
+  connectedPower: {fileID: 0}
 --- !u!1 &7706337921110876285
 GameObject:
   m_ObjectHideFlags: 0
@@ -49040,7 +49230,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2109846901233679370}
   - component: {fileID: 9203733927574475004}
-  m_Layer: 14
+  m_Layer: 12
   m_Name: TileHole_Tutorial_TEST
   m_TagString: Tile Hole
   m_Icon: {fileID: 0}
@@ -49121,7 +49311,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2576681335390602496}
   - component: {fileID: 6195316440919541137}
-  m_Layer: 14
+  m_Layer: 12
   m_Name: TileHole_Tutorial_TEST (4)
   m_TagString: Tile Hole
   m_Icon: {fileID: 0}
@@ -49476,7 +49666,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8237600680385802009}
   - component: {fileID: 4615812512059412823}
-  m_Layer: 14
+  m_Layer: 12
   m_Name: TileHole_Tutorial_TEST (6)
   m_TagString: Tile Hole
   m_Icon: {fileID: 0}
@@ -64406,6 +64596,7 @@ GameObject:
   m_Component:
   - component: {fileID: 990657502448155287}
   - component: {fileID: 5785654628768245299}
+  - component: {fileID: 7133799580043548990}
   m_Layer: 14
   m_Name: Slice 2
   m_TagString: Limiter
@@ -64458,6 +64649,24 @@ MonoBehaviour:
   connectedCells: []
   lockSpriteAnim: {fileID: 4612017724340123478}
   lockSpriteHeighlightAnim: {fileID: 6854256566566326169}
+--- !u!114 &7133799580043548990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9090243419346160998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea3e48481ca6cd45b0f3db7f6e2678d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleType: 0
+  limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
+    type: 3}
+  PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 5785654628768245299}
+  connectedPower: {fileID: 0}
 --- !u!1 &9104597469676834754
 GameObject:
   m_ObjectHideFlags: 0
@@ -64468,6 +64677,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4546167516082087253}
   - component: {fileID: 7760309811530299410}
+  - component: {fileID: 2345148814219054263}
   m_Layer: 14
   m_Name: Slice 3
   m_TagString: Limiter
@@ -64520,6 +64730,24 @@ MonoBehaviour:
   connectedCells: []
   lockSpriteAnim: {fileID: 7091663065682678243}
   lockSpriteHeighlightAnim: {fileID: 5446092692055807949}
+--- !u!114 &2345148814219054263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9104597469676834754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea3e48481ca6cd45b0f3db7f6e2678d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleType: 0
+  limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
+    type: 3}
+  PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 7760309811530299410}
+  connectedPower: {fileID: 0}
 --- !u!1 &9189994673858777460
 GameObject:
   m_ObjectHideFlags: 0
@@ -64685,15 +64913,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ead942d8260c204d958816238888b7f, type: 3}
---- !u!198 &6902787490587253881 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6581280449417239559, guid: 6ead942d8260c204d958816238888b7f,
-    type: 3}
-  m_PrefabInstance: {fileID: 332922317271875710}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4343505788290062596 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4096583053154687354, guid: 6ead942d8260c204d958816238888b7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 332922317271875710}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6902787490587253881 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6581280449417239559, guid: 6ead942d8260c204d958816238888b7f,
     type: 3}
   m_PrefabInstance: {fileID: 332922317271875710}
   m_PrefabAsset: {fileID: 0}
@@ -64771,15 +64999,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1528ac0082c31d947b5b93d3fead8f5d, type: 3}
---- !u!95 &5446092692055807949 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5648671227497940882, guid: 1528ac0082c31d947b5b93d3fead8f5d,
-    type: 3}
-  m_PrefabInstance: {fileID: 427970604443521119}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5446092692055807951 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5648671227497940880, guid: 1528ac0082c31d947b5b93d3fead8f5d,
+    type: 3}
+  m_PrefabInstance: {fileID: 427970604443521119}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5446092692055807949 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5648671227497940882, guid: 1528ac0082c31d947b5b93d3fead8f5d,
     type: 3}
   m_PrefabInstance: {fileID: 427970604443521119}
   m_PrefabAsset: {fileID: 0}
@@ -64867,15 +65095,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ead942d8260c204d958816238888b7f, type: 3}
---- !u!198 &6657694411103788777 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6581280449417239559, guid: 6ead942d8260c204d958816238888b7f,
-    type: 3}
-  m_PrefabInstance: {fileID: 518343290237289198}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4605065776949795732 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4096583053154687354, guid: 6ead942d8260c204d958816238888b7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 518343290237289198}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6657694411103788777 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6581280449417239559, guid: 6ead942d8260c204d958816238888b7f,
     type: 3}
   m_PrefabInstance: {fileID: 518343290237289198}
   m_PrefabAsset: {fileID: 0}
@@ -65260,15 +65488,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ead942d8260c204d958816238888b7f, type: 3}
---- !u!4 &3146493764657510927 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4096583053154687354, guid: 6ead942d8260c204d958816238888b7f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1401582645398201205}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &5198856350820679538 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 6581280449417239559, guid: 6ead942d8260c204d958816238888b7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1401582645398201205}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3146493764657510927 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4096583053154687354, guid: 6ead942d8260c204d958816238888b7f,
     type: 3}
   m_PrefabInstance: {fileID: 1401582645398201205}
   m_PrefabAsset: {fileID: 0}
@@ -65447,15 +65675,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1528ac0082c31d947b5b93d3fead8f5d, type: 3}
---- !u!4 &6470069080603585109 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5648671227497940880, guid: 1528ac0082c31d947b5b93d3fead8f5d,
-    type: 3}
-  m_PrefabInstance: {fileID: 1706390374267841989}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &6470069080603585111 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5648671227497940882, guid: 1528ac0082c31d947b5b93d3fead8f5d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1706390374267841989}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6470069080603585109 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5648671227497940880, guid: 1528ac0082c31d947b5b93d3fead8f5d,
     type: 3}
   m_PrefabInstance: {fileID: 1706390374267841989}
   m_PrefabAsset: {fileID: 0}
@@ -65844,15 +66072,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1528ac0082c31d947b5b93d3fead8f5d, type: 3}
---- !u!95 &7943264230967916918 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5648671227497940882, guid: 1528ac0082c31d947b5b93d3fead8f5d,
-    type: 3}
-  m_PrefabInstance: {fileID: 2330674612617395940}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7943264230967916916 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5648671227497940880, guid: 1528ac0082c31d947b5b93d3fead8f5d,
+    type: 3}
+  m_PrefabInstance: {fileID: 2330674612617395940}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7943264230967916918 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5648671227497940882, guid: 1528ac0082c31d947b5b93d3fead8f5d,
     type: 3}
   m_PrefabInstance: {fileID: 2330674612617395940}
   m_PrefabAsset: {fileID: 0}
@@ -66036,15 +66264,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ead942d8260c204d958816238888b7f, type: 3}
---- !u!4 &1296497796826206342 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4096583053154687354, guid: 6ead942d8260c204d958816238888b7f,
-    type: 3}
-  m_PrefabInstance: {fileID: 2965595570712644092}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &8246810851163526651 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 6581280449417239559, guid: 6ead942d8260c204d958816238888b7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2965595570712644092}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1296497796826206342 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4096583053154687354, guid: 6ead942d8260c204d958816238888b7f,
     type: 3}
   m_PrefabInstance: {fileID: 2965595570712644092}
   m_PrefabAsset: {fileID: 0}
@@ -66440,15 +66668,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39e7e4efb6b9e6042b06981486c26a88, type: 3}
---- !u!95 &9156709833690012416 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5285062588389120269, guid: 39e7e4efb6b9e6042b06981486c26a88,
-    type: 3}
-  m_PrefabInstance: {fileID: 3912356458251452941}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9156709833690012422 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5285062588389120267, guid: 39e7e4efb6b9e6042b06981486c26a88,
+    type: 3}
+  m_PrefabInstance: {fileID: 3912356458251452941}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &9156709833690012416 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5285062588389120269, guid: 39e7e4efb6b9e6042b06981486c26a88,
     type: 3}
   m_PrefabInstance: {fileID: 3912356458251452941}
   m_PrefabAsset: {fileID: 0}
@@ -66713,15 +66941,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1528ac0082c31d947b5b93d3fead8f5d, type: 3}
---- !u!4 &8400029377100754543 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5648671227497940880, guid: 1528ac0082c31d947b5b93d3fead8f5d,
-    type: 3}
-  m_PrefabInstance: {fileID: 4248858980527614463}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &8400029377100754541 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5648671227497940882, guid: 1528ac0082c31d947b5b93d3fead8f5d,
+    type: 3}
+  m_PrefabInstance: {fileID: 4248858980527614463}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8400029377100754543 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5648671227497940880, guid: 1528ac0082c31d947b5b93d3fead8f5d,
     type: 3}
   m_PrefabInstance: {fileID: 4248858980527614463}
   m_PrefabAsset: {fileID: 0}
@@ -67129,15 +67357,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ead942d8260c204d958816238888b7f, type: 3}
---- !u!198 &1773561876704680402 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6581280449417239559, guid: 6ead942d8260c204d958816238888b7f,
-    type: 3}
-  m_PrefabInstance: {fileID: 4884596427874141653}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8867708643823262895 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4096583053154687354, guid: 6ead942d8260c204d958816238888b7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 4884596427874141653}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1773561876704680402 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6581280449417239559, guid: 6ead942d8260c204d958816238888b7f,
     type: 3}
   m_PrefabInstance: {fileID: 4884596427874141653}
   m_PrefabAsset: {fileID: 0}
@@ -67311,15 +67539,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ead942d8260c204d958816238888b7f, type: 3}
---- !u!198 &1370302771197567010 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6581280449417239559, guid: 6ead942d8260c204d958816238888b7f,
-    type: 3}
-  m_PrefabInstance: {fileID: 5210995374735113253}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8108960077167306079 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4096583053154687354, guid: 6ead942d8260c204d958816238888b7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5210995374735113253}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1370302771197567010 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6581280449417239559, guid: 6ead942d8260c204d958816238888b7f,
     type: 3}
   m_PrefabInstance: {fileID: 5210995374735113253}
   m_PrefabAsset: {fileID: 0}
@@ -67412,15 +67640,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39e7e4efb6b9e6042b06981486c26a88, type: 3}
---- !u!95 &40656600133593079 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5285062588389120269, guid: 39e7e4efb6b9e6042b06981486c26a88,
-    type: 3}
-  m_PrefabInstance: {fileID: 5316535207319256826}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &40656600133593073 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5285062588389120267, guid: 39e7e4efb6b9e6042b06981486c26a88,
+    type: 3}
+  m_PrefabInstance: {fileID: 5316535207319256826}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &40656600133593079 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5285062588389120269, guid: 39e7e4efb6b9e6042b06981486c26a88,
     type: 3}
   m_PrefabInstance: {fileID: 5316535207319256826}
   m_PrefabAsset: {fileID: 0}
@@ -67584,15 +67812,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1528ac0082c31d947b5b93d3fead8f5d, type: 3}
---- !u!95 &2232119205685533061 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5648671227497940882, guid: 1528ac0082c31d947b5b93d3fead8f5d,
-    type: 3}
-  m_PrefabInstance: {fileID: 5809089481156501015}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2232119205685533063 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5648671227497940880, guid: 1528ac0082c31d947b5b93d3fead8f5d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5809089481156501015}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2232119205685533061 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5648671227497940882, guid: 1528ac0082c31d947b5b93d3fead8f5d,
     type: 3}
   m_PrefabInstance: {fileID: 5809089481156501015}
   m_PrefabAsset: {fileID: 0}
@@ -68039,15 +68267,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ead942d8260c204d958816238888b7f, type: 3}
---- !u!198 &4205580998257534969 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6581280449417239559, guid: 6ead942d8260c204d958816238888b7f,
-    type: 3}
-  m_PrefabInstance: {fileID: 6991941852257139710}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6472132830914847364 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4096583053154687354, guid: 6ead942d8260c204d958816238888b7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 6991941852257139710}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &4205580998257534969 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6581280449417239559, guid: 6ead942d8260c204d958816238888b7f,
     type: 3}
   m_PrefabInstance: {fileID: 6991941852257139710}
   m_PrefabAsset: {fileID: 0}
@@ -68718,15 +68946,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39e7e4efb6b9e6042b06981486c26a88, type: 3}
---- !u!95 &3584616809232543099 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5285062588389120269, guid: 39e7e4efb6b9e6042b06981486c26a88,
-    type: 3}
-  m_PrefabInstance: {fileID: 8712017296963466358}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3584616809232543101 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5285062588389120267, guid: 39e7e4efb6b9e6042b06981486c26a88,
+    type: 3}
+  m_PrefabInstance: {fileID: 8712017296963466358}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3584616809232543099 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5285062588389120269, guid: 39e7e4efb6b9e6042b06981486c26a88,
     type: 3}
   m_PrefabInstance: {fileID: 8712017296963466358}
   m_PrefabAsset: {fileID: 0}
@@ -69230,15 +69458,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39e7e4efb6b9e6042b06981486c26a88, type: 3}
---- !u!4 &3880036011594522210 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5285062588389120267, guid: 39e7e4efb6b9e6042b06981486c26a88,
-    type: 3}
-  m_PrefabInstance: {fileID: 8971443539501336425}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &3880036011594522212 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5285062588389120269, guid: 39e7e4efb6b9e6042b06981486c26a88,
+    type: 3}
+  m_PrefabInstance: {fileID: 8971443539501336425}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3880036011594522210 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5285062588389120267, guid: 39e7e4efb6b9e6042b06981486c26a88,
     type: 3}
   m_PrefabInstance: {fileID: 8971443539501336425}
   m_PrefabAsset: {fileID: 0}
@@ -69326,15 +69554,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ead942d8260c204d958816238888b7f, type: 3}
---- !u!198 &2874712323226884375 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6581280449417239559, guid: 6ead942d8260c204d958816238888b7f,
-    type: 3}
-  m_PrefabInstance: {fileID: 8984786893805487376}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4929643369157041258 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4096583053154687354, guid: 6ead942d8260c204d958816238888b7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 8984786893805487376}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &2874712323226884375 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6581280449417239559, guid: 6ead942d8260c204d958816238888b7f,
     type: 3}
   m_PrefabInstance: {fileID: 8984786893805487376}
   m_PrefabAsset: {fileID: 0}

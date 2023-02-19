@@ -29,7 +29,7 @@ public class PowerupProperties : MonoBehaviour, IPointerClickHandler
         string path = GameManager.Instance.powerupManager.spriteByType[type];
 
         icon = Resources.Load<Sprite>(path);
-        powerupText = GameManager.Instance.powerupManager.nameTextByType[type];
+        //powerupText = GameManager.Instance.powerupManager.nameTextByType[type];
         powerupType = type;
 
         GetComponent<SpriteRenderer>().sprite = icon;

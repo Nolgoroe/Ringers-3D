@@ -18,6 +18,14 @@ public enum PowerUp
     //FourShapeTransform,
     None
 }
+public enum typeOfPotions
+{
+    None,
+    AllPiecePotion,
+    BoardPiecePotion,
+    LimiterPotion
+}
+
 public enum SpecialPowerUp
 {
     DragonflyCross,
@@ -165,6 +173,8 @@ public class PowerUpManager : MonoBehaviour
         prop.FindNumOfUsesTextObject();
 
         prop.UpdateNumOfUsesText();
+
+        prop.powerupText = data.Description;
         //if (current == PowerUp.FourColorTransform)
         //{
         //    prop.transformColor = data.specificColor;

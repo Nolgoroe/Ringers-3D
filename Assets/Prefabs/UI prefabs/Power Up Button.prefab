@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2616955113360907849}
   - component: {fileID: 1036512060446678104}
   - component: {fileID: 1819722162330561430}
+  - component: {fileID: 1547157117073702684}
   m_Layer: 0
   m_Name: Power Up Button
   m_TagString: In level powerup
@@ -146,3 +147,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.100671, y: 2.8290167, z: 0.2}
   m_Center: {x: 0.0051784264, y: -0.017032063, z: 0}
+--- !u!114 &1547157117073702684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232999335631620011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea3e48481ca6cd45b0f3db7f6e2678d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleType: 1
+  limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
+    type: 3}
+  PotionInfoBubblePrefab: {fileID: 8294098769001089324, guid: 0f8d59a0eef9da34cbdd3bb15b4fa337,
+    type: 3}
+  connectedSlice: {fileID: 0}
+  connectedPower: {fileID: 1036512060446678104}

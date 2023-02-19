@@ -361,13 +361,13 @@ public class TutorialSequence : MonoBehaviour
             {
                 foreach (int i in specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[index].unlockedClips)
                 {
-                    for (int k = 0; k < GameManager.Instance.clipManager.slots[i].childCount; k++)
+                    for (int k = 0; k < GameManager.Instance.clipManager.slots[i].transform.childCount; k++)
                     {
-                        if (GameManager.Instance.clipManager.slots[i].GetChild(k).CompareTag("Tile Hole"))
+                        if (GameManager.Instance.clipManager.slots[i].transform.GetChild(k).CompareTag("Tile Hole"))
                         {
-                            GameManager.Instance.clipManager.slots[i].GetChild(k).gameObject.SetActive(true);
+                            GameManager.Instance.clipManager.slots[i].transform.GetChild(k).gameObject.SetActive(true);
 
-                            activatedHeighlights.Add(GameManager.Instance.clipManager.slots[i].GetChild(k).gameObject);
+                            activatedHeighlights.Add(GameManager.Instance.clipManager.slots[i].transform.GetChild(k).gameObject);
                         }
                     }
                 }
@@ -583,13 +583,13 @@ public class TutorialSequence : MonoBehaviour
             {
                 foreach (int i in levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[index].unlockedClips)
                 {
-                    for (int k = 0; k < GameManager.Instance.clipManager.slots[i].childCount; k++)
+                    for (int k = 0; k < GameManager.Instance.clipManager.slots[i].transform.childCount; k++)
                     {
-                        if (GameManager.Instance.clipManager.slots[i].GetChild(k).CompareTag("Tile Hole"))
+                        if (GameManager.Instance.clipManager.slots[i].transform.GetChild(k).CompareTag("Tile Hole"))
                         {
-                            GameManager.Instance.clipManager.slots[i].GetChild(k).gameObject.SetActive(true);
+                            GameManager.Instance.clipManager.slots[i].transform.GetChild(k).gameObject.SetActive(true);
 
-                            activatedHeighlights.Add(GameManager.Instance.clipManager.slots[i].GetChild(k).gameObject);
+                            activatedHeighlights.Add(GameManager.Instance.clipManager.slots[i].transform.GetChild(k).gameObject);
                         }
                     }
                 }
@@ -687,7 +687,104 @@ public class TutorialSequence : MonoBehaviour
         toTexture();
     }
 
+    public IEnumerator SelectRelaventHighlightsBubbleInfo(typeOfPotions potionType)
+    {
+        ClearAllHighlights();
 
+        switch (potionType)
+        {
+            case typeOfPotions.AllPiecePotion:
+                foreach (ClipHolder slot in GameManager.Instance.clipManager.slots)
+                {
+                    if (slot.heldPiece)
+                    {
+                        for (int i = 0; i < slot.transform.childCount; i++)
+                        {
+                            if (slot.transform.GetChild(i).CompareTag("Tile Hole"))
+                            {
+                                slot.transform.GetChild(i).gameObject.SetActive(true);
+
+                                activatedHeighlights.Add(slot.transform.GetChild(i).gameObject);
+                            }
+                        }
+                    }
+                }
+
+                foreach (Cell cell in ConnectionManager.Instance.cells)
+                {
+                    if (cell.pieceHeld)
+                    {
+                        for (int i = 0; i < cell.transform.childCount; i++)
+                        {
+                            if (cell.transform.GetChild(i).CompareTag("Tile Hole"))
+                            {
+                                cell.transform.GetChild(i).gameObject.SetActive(true);
+
+                                activatedHeighlights.Add(cell.transform.GetChild(i).gameObject);
+                            }
+                        }
+                    } 
+                }
+                break;
+
+            case typeOfPotions.BoardPiecePotion:
+                foreach (Cell cell in ConnectionManager.Instance.cells)
+                {
+                    if (cell.pieceHeld)
+                    {
+                        for (int i = 0; i < cell.transform.childCount; i++)
+                        {
+                            if (cell.transform.GetChild(i).CompareTag("Tile Hole"))
+                            {
+                                cell.transform.GetChild(i).gameObject.SetActive(true);
+
+                                activatedHeighlights.Add(cell.transform.GetChild(i).gameObject);
+                            }
+                        }
+                    }
+                }
+                break;
+            case typeOfPotions.LimiterPotion:
+                foreach (Transform sliceTransform in GameManager.Instance.sliceManager.sliceSlots)
+                {
+                    Slice sliceData = sliceTransform.GetComponent<Slice>();
+
+                    if(sliceData.child == null)
+                    {
+                        continue;
+                    }
+
+                    for (int i = 0; i < sliceTransform.childCount; i++)
+                    {
+
+                        if (sliceTransform.GetChild(i).CompareTag("Tile Hole"))
+                        {
+                            sliceTransform.GetChild(i).gameObject.SetActive(true);
+
+                            activatedHeighlights.Add(sliceTransform.GetChild(i).gameObject);
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
+        yield return new WaitForEndOfFrame();
+        toTexture();
+    }
+
+    public void ClearAllHighlights()
+    {
+        foreach (GameObject go in activatedHeighlights)
+        {
+            go.SetActive(false);
+        }
+
+        activatedHeighlights.Clear();
+
+        toTexture();
+    }
     public IEnumerator IncrementCurrentPhaseInSequence()
     {
         if (inDelay) yield break;

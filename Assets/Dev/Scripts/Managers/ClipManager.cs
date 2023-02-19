@@ -5,7 +5,7 @@ using System;
 
 public class ClipManager : MonoBehaviour
 {
-    public Transform[] slots;
+    public ClipHolder[] slots;
     public GameObject piece;
     public Mesh tile8RingLeftSubPieceMesh;
     public Mesh tile8RingRightSubPieceMesh;
@@ -74,10 +74,10 @@ public class ClipManager : MonoBehaviour
         clipCount = slots.Length;
         int testnum = 0;
 
-        foreach (Transform s in slots)
+        foreach (ClipHolder s in slots)
         {
             testnum++;
-            PopulateSlot(s,testnum);
+            PopulateSlot(s.transform,testnum);
         }
 
         originalPiecePos = piece.transform.position;
@@ -108,13 +108,13 @@ public class ClipManager : MonoBehaviour
 
     public void RefreshSlots()
     {
-        if(slots[clipCount - 1].childCount > 0)
+        if(slots[clipCount - 1].transform.childCount > 0)
         {
-            for (int i = 0; i < slots[clipCount - 1].childCount; i++)
+            for (int i = 0; i < slots[clipCount - 1].transform.childCount; i++)
             {
-                if (slots[clipCount - 1].GetChild(i).CompareTag("MainPiece"))
+                if (slots[clipCount - 1].transform.GetChild(i).CompareTag("MainPiece"))
                 {
-                    Destroy(slots[clipCount - 1].GetChild(i).gameObject);
+                    Destroy(slots[clipCount - 1].transform.GetChild(i).gameObject);
                 }
             }
         }
@@ -135,24 +135,24 @@ public class ClipManager : MonoBehaviour
     }
     public void ExtraDealSlots()
     {
-        foreach (Transform t in slots)
+        foreach (ClipHolder t in slots)
         {
-            if (t.childCount > 0)
+            if (t.transform.childCount > 0)
             {
-                Destroy(t.GetChild(0).gameObject);
+                Destroy(t.transform.GetChild(0).gameObject);
             }
         }
 
         for (int i = 0; i < slots.Length; i++)
         {
-            PopulateSlot(slots[i], i);
+            PopulateSlot(slots[i].transform, i);
         }
     }
     public void ExtraDealSlotsBadgerSpecial(InGameSpecialPowerUp IGSP)
     {
         if(clipCount < 4)
         {
-            PopulateSlot(slots[clipCount], clipCount);
+            PopulateSlot(slots[clipCount].transform, clipCount);
             StartCoroutine(ActivateClip(clipCount));
             clipCount++;
             IGSP.ResetValues();
@@ -307,7 +307,7 @@ public class ClipManager : MonoBehaviour
 
         for (int i = 0; i < clipCount; i++)
         {
-            GameObject toMove = slots[i].GetChild(1).gameObject;
+            GameObject toMove = slots[i].transform.GetChild(1).gameObject;
 
             LeanTween.move(toMove, piecesDealPositionsOut, timeToAnimateMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
 
@@ -337,7 +337,7 @@ public class ClipManager : MonoBehaviour
 
         for (int i = clipCount -1; i > -1; i--)
         {
-            GameObject toMove = slots[i].GetChild(1).gameObject;
+            GameObject toMove = slots[i].transform.GetChild(1).gameObject;
 
             LeanTween.move(toMove, originalPiecePos, timeToAnimateMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
 

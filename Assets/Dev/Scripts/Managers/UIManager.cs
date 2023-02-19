@@ -201,7 +201,6 @@ public class UIManager : MonoBehaviour
     public ScrollRect forgeScrollRectView;
     public ScrollRect mapScrollRect;
 
-    //public Button[] levelButtons;
     public Slider bossHealthSlider;
 
     public ButtonsPerZone[] buttonsPerZone;
@@ -209,17 +208,13 @@ public class UIManager : MonoBehaviour
     public InventorySortButtonData[] animalAlbumSortButtons;
     public GameObject[] allTutorialScreens;
     public ImageTextCombo[] introImages;
-    //public Sprite[] dewDropsSprites;
 
     public Vector3 hubCameraPos;
     public Vector3 hubCameraRot;
     public Vector3 denCameraPosForTutorial;
-    //public Vector3 denCameraPos;
-    //public Vector3 denCameraRot;
 
     public SpriteMask maskImageDenScreen;
 
-    //public Color gameTextColor;
     public static bool isDuringIntro;
     public static bool canAdvanceIntro;
 
@@ -300,6 +295,11 @@ public class UIManager : MonoBehaviour
     public Sprite SFXIconOnLevel, SFXIconOffLevel;
     public Sprite musicIconOn, musicIconOff;
     public Sprite SFXIconOn, SFXIconOff;
+
+    [Header("Info Bubbles")]
+    public InfoBubblePrefab currentInfoBubble;
+    public Transform sliceInfoBubblesParent;
+    public Transform potionInfoBubblesParent;
 
     private void Start()
     {
@@ -2561,7 +2561,7 @@ public class UIManager : MonoBehaviour
     }
     public IEnumerator SetIsUsingUI(bool isTrue)
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForEndOfFrame();
 
         isUsingUI = isTrue;
     }

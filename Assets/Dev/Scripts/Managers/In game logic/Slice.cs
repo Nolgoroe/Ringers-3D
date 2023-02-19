@@ -47,18 +47,6 @@ public class Slice : MonoBehaviour
 
         if (isLock)
         {
-            //foreach (Cell c in connectedCells) // old lock system
-            //{
-            //    if (c.cellIndex == sliceIndex)
-            //    {
-            //        c.lockSpriteCellLeft.gameObject.SetActive(true);
-            //    }
-            //    else
-            //    {
-            //        c.lockSpriteCellRight.gameObject.SetActive(true);
-            //    }
-            //}
-
             lockSpriteAnim.gameObject.SetActive(true);
             GameManager.Instance.gameBoard.GetComponent<SliceManager>().activeLocksLockAnims.Add(lockSpriteAnim.gameObject);
         }
@@ -66,39 +54,14 @@ public class Slice : MonoBehaviour
         {
             lockSpriteAnim.gameObject.SetActive(false);
         }
-        //if (!isLock && !isLimiter)
-        //{
-        //    InstantiateLootSlice(sliceSymbolcount, sliceColorcount);
-        //}
-
-        //if (isLock && !isLimiter)
-        //{
-        //    InstantiateLootLockSlice(sliceSymbolcount, sliceColorcount);
-        //}
-
-        //if (isLimiter)
-        //{
-        //    InstantiateLootLockLimiterSlice(sliceSymbolcount, sliceColorcount);
-        //}
-
-
-        //if (isLimiter)
-        //{
-        //    //lootIcon.GetComponent<SpriteRenderer>().color = Color.red;
-        //}
     }
     public void SetSliceLootData(LootPacks lp)
     {
         lootPack = lp;
-
-        //lootIcon.SetActive(isLoot);
-
-        //lootIcon.GetComponent<SpriteRenderer>().sprite = GameManager.Instance.sliceManager.lootToIcon[lp];
     }
 
     public void InstantiateSlice(int pieceSymbolEnumCount, int pieceColorEnumCount)
     {
-        //GameObject go = Instantiate(GameManager.Instance.sliceManager.lootSlicePrefab, transform);
         if (!isLimiter)
         {
             InstantiateNonLimiterSlice(pieceSymbolEnumCount, pieceColorEnumCount);
@@ -112,9 +75,7 @@ public class Slice : MonoBehaviour
     private void InstantiateLimiterSlice(int pieceSymbolEnumCount, int pieceColorEnumCount)
     {
         GameObject go = Instantiate(GameManager.Instance.sliceManager.slicePrefabLimiter, transform);
-        //Renderer[] rend = go.transform.GetComponentsInChildren<Renderer>();
         SpriteRenderer[] rend = go.transform.GetComponentsInChildren<SpriteRenderer>();
-        //anim = go.GetComponent<Animator>();
         child = go;
 
         SetRendereDataLimiter(rend, pieceSymbolEnumCount, pieceColorEnumCount);
@@ -142,7 +103,6 @@ public class Slice : MonoBehaviour
                 }
             }
         }
-        //SpriteRenderer sr = go.GetComponent<SpriteRenderer>();
     }
 
     public void SetRendereDataLimiter(SpriteRenderer[] rend, int pieceSymbolEnumCount, int pieceColorEnumCount)
@@ -153,36 +113,18 @@ public class Slice : MonoBehaviour
             {
                 case SliceCatagory.Shape:
                     sliceSymbol = PieceSymbol.None;
-                    //sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol];
-                    //sr.sprite = GameManager.Instance.sliceManager.limiterSliceSymbolToSprite[sliceSymbol];
-
-                    //foreach (Renderer r in rend)
-                    //{
-                    //    r.material.SetTexture("_BaseMap", GameManager.Instance.sliceManager.limiterSliceSymbolToSprite[sliceSymbol]); // this was used for 3D limiters
-                    //}
                     foreach (SpriteRenderer r in rend)
                     {
                         r.sprite = GameManager.Instance.sliceManager.limiterSliceSymbolToSprite[sliceSymbol];
                     }
 
-                    //sr.sprite = GameManager.Instance.sliceManager.lootSliceSymbolDict[sliceSymbol];
                     break;
                 case SliceCatagory.Color:
                     sliceColor = PieceColor.General;
-                    //sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
-                    //sr.sprite = GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor];
-
-                    //foreach (Renderer r in rend)
-                    //{
-                    //    r.material.SetTexture("_BaseMap", GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor]);
-                    //}
                     foreach (SpriteRenderer r in rend)
                     {
                         r.sprite = GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor];
                     }
-
-                    //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
-                    //sr.sprite = GameManager.Instance.sliceManager.lootSliceColorDict[sliceColor];
 
                     break;
                 case SliceCatagory.SpecificShape:
@@ -196,19 +138,10 @@ public class Slice : MonoBehaviour
                         sliceSymbol = GameManager.Instance.currentLevel.levelAvailablesymbols[random];
 
                     }
-                    //sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol];
-                    //sr.sprite = GameManager.Instance.sliceManager.limiterSliceSymbolToSprite[sliceSymbol];
-
-                    //foreach (Renderer r in rend)
-                    //{
-                    //    r.material.SetTexture("_BaseMap", GameManager.Instance.sliceManager.limiterSliceSymbolToSprite[sliceSymbol]); // this was used for 3D limiters
-                    //}
                     foreach (SpriteRenderer r in rend)
                     {
                         r.sprite = GameManager.Instance.sliceManager.limiterSliceSymbolToSprite[sliceSymbol];
                     }
-
-                    //sr.sprite = GameManager.Instance.sliceManager.lootSliceSymbolDict[sliceSymbol];
 
                     if (GameManager.Instance.copyOfSpecificSliceSymbolsTutorial.Count > 0)
                     {
@@ -226,20 +159,11 @@ public class Slice : MonoBehaviour
                         int random = Random.Range(0, GameManager.Instance.currentLevel.levelAvailableColors.Length);
                         sliceColor = GameManager.Instance.currentLevel.levelAvailableColors[random];
                     }
-                    //sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
-                    // sr.sprite = GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor];
 
-                    //foreach (Renderer r in rend)
-                    //{
-                    //    r.material.SetTexture("_BaseMap", GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor]); // this was used for 3D limiters
-                    //}
                     foreach (SpriteRenderer r in rend)
                     {
                         r.sprite = GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor];
                     }
-
-                    //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[sliceColor];
-                    //sr.sprite = GameManager.Instance.sliceManager.lootSliceColorDict[sliceColor];
 
                     if (GameManager.Instance.copyOfSpecificSliceColorsTutorial.Count > 0)
                     {
@@ -256,12 +180,7 @@ public class Slice : MonoBehaviour
             {
                 case SliceCatagory.Shape:
                     sliceSymbol = PieceSymbol.None;
-                    //sr.sprite = GameManager.Instance.sliceManager.limiterSliceSymbolToSprite[sliceSymbol];
 
-                    //foreach (Renderer r in rend)
-                    //{
-                    //    r.material.SetTexture("_BaseMap", GameManager.Instance.sliceManager.limiterSliceSymbolToSprite[sliceSymbol]); // this was used for 3D limiters
-                    //}
                     foreach (SpriteRenderer r in rend)
                     {
                         r.sprite = GameManager.Instance.sliceManager.limiterSliceSymbolToSprite[sliceSymbol];
@@ -269,12 +188,7 @@ public class Slice : MonoBehaviour
                     break;
                 case SliceCatagory.Color:
                     sliceColor = PieceColor.General;
-                    //sr.sprite = GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor];
 
-                    //foreach (Renderer r in rend)
-                    //{
-                    //    r.material.SetTexture("_BaseMap", GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor]);// This was used for 3D limiters
-                    //}
                     foreach (SpriteRenderer r in rend)
                     {
                         r.sprite = GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor];
@@ -291,11 +205,7 @@ public class Slice : MonoBehaviour
                     {
                         sliceSymbol = (PieceSymbol)Random.Range(0, pieceSymbolEnumCount - 2);
                     }
-                    //sr.sprite = GameManager.Instance.sliceManager.limiterSliceSymbolToSprite[sliceSymbol];
-                    //foreach (Renderer r in rend)
-                    //{
-                    //    r.material.SetTexture("_BaseMap", GameManager.Instance.sliceManager.limiterSliceSymbolToSprite[sliceSymbol]); // This was used for 3D limiters
-                    //}
+
                     foreach (SpriteRenderer r in rend)
                     {
                         r.sprite = GameManager.Instance.sliceManager.limiterSliceSymbolToSprite[sliceSymbol];
@@ -313,12 +223,6 @@ public class Slice : MonoBehaviour
                         sliceColor = (PieceColor)Random.Range(0, pieceSymbolEnumCount - 2);
                     }
 
-                    //sliceColor = (PieceColor)Random.Range(0, pieceColorEnumCount - 2);
-                    //sr.sprite = GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor];
-                    //foreach (Renderer r in rend)
-                    //{
-                    //    r.material.SetTexture("_BaseMap", GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor]); // This was used for 3D limiters
-                    //}
                     foreach (SpriteRenderer r in rend)
                     {
                         r.sprite = GameManager.Instance.sliceManager.limiterSlicecolorToSprite[sliceColor];
@@ -336,11 +240,9 @@ public class Slice : MonoBehaviour
         Renderer rend = go.transform.GetChild(0).GetComponent<Renderer>();
         Material mat = rend.material;
         anim = go.GetComponent<Animator>();
-        //rend.material = mat;
         GameObject ropeChild = go.transform.GetChild(1).gameObject;
         ropeChild.SetActive(false);
 
-        //SpriteRenderer sr = go.transform.GetChild(0).GetComponent<SpriteRenderer>();
         child = go;
 
         SetRendererDataNonLimiter(mat, pieceSymbolEnumCount, pieceColorEnumCount);
@@ -379,32 +281,22 @@ public class Slice : MonoBehaviour
             {
                 case SliceCatagory.Shape:
                     sliceSymbol = PieceSymbol.None;
-                    //sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol];
                     matArray.SetTexture("_BaseMap", GameManager.Instance.sliceManager.sliceSymbolToSprite[sliceSymbol]);
-                    //sr.sprite = GameManager.Instance.sliceManager.lootSliceSymbolDict[sliceSymbol];
                     break;
                 case SliceCatagory.Color:
                     sliceColor = PieceColor.General;
-                    //sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
                     matArray.SetTexture("_BaseMap", GameManager.Instance.sliceManager.slicecolorToSprite[sliceColor]);
-                    //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
-                    //sr.sprite = GameManager.Instance.sliceManager.lootSliceColorDict[sliceColor];
 
                     break;
                 case SliceCatagory.SpecificShape:
                     sliceSymbol = GameManager.Instance.copyOfSpecificSliceSymbolsTutorial[0];
-                    //sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol];
                     matArray.SetTexture("_BaseMap", GameManager.Instance.sliceManager.sliceSymbolToSprite[sliceSymbol]);
-                    //sr.sprite = GameManager.Instance.sliceManager.lootSliceSymbolDict[sliceSymbol];
 
                     GameManager.Instance.copyOfSpecificSliceSymbolsTutorial.RemoveAt(0);
                     break;
                 case SliceCatagory.SpecificColor:
                     sliceColor = GameManager.Instance.copyOfSpecificSliceColorsTutorial[0];
-                    //sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
                     matArray.SetTexture("_BaseMap", GameManager.Instance.sliceManager.slicecolorToSprite[sliceColor]);
-                    //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[sliceColor];
-                    //sr.sprite = GameManager.Instance.sliceManager.lootSliceColorDict[sliceColor];
 
                     GameManager.Instance.copyOfSpecificSliceColorsTutorial.RemoveAt(0);
                     break;
@@ -418,16 +310,11 @@ public class Slice : MonoBehaviour
             {
                 case SliceCatagory.Shape:
                     sliceSymbol = PieceSymbol.None;
-                    //sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol];
                     matArray.SetTexture("_BaseMap", GameManager.Instance.sliceManager.sliceSymbolToSprite[sliceSymbol]);
-                    //sr.sprite = GameManager.Instance.sliceManager.lootSliceSymbolDict[sliceSymbol];
                     break;
                 case SliceCatagory.Color:
                     sliceColor = PieceColor.General;
-                    //sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
                     matArray.SetTexture("_BaseMap", GameManager.Instance.sliceManager.slicecolorToSprite[sliceColor]);
-                    //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
-                    //sr.sprite = GameManager.Instance.sliceManager.lootSliceColorDict[sliceColor];
 
                     break;
                 case SliceCatagory.SpecificShape:
@@ -465,132 +352,6 @@ public class Slice : MonoBehaviour
             }
         }
     }
-    //public void InstantiateLootSlice(int pieceSymbolEnumCount, int pieceColorEnumCount)
-    //{
-    //    //GameObject go = Instantiate(GameManager.Instance.sliceManager.lootSlicePrefab, transform);
-    //    GameObject go = Instantiate(GameManager.Instance.sliceManager.slicePrefab, transform);
-    //    Renderer rend = go.GetComponent<Renderer>();
-    //    Material[] matArray = rend.materials;
-    //    rend.materials = matArray;
-
-    //    //SpriteRenderer sr = go.transform.GetChild(0).GetComponent<SpriteRenderer>();
-
-    //    child = go;
-    //    switch (sliceCatagory)
-    //    {
-    //        case SliceCatagory.Shape:
-    //            sliceSymbol = PieceSymbol.None;
-    //            //sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol];
-    //            matArray[1].SetTexture("_BaseMap", GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol]);
-    //            //sr.sprite = GameManager.Instance.sliceManager.lootSliceSymbolDict[sliceSymbol];
-    //            break;
-    //        case SliceCatagory.Color:
-    //            sliceColor = PieceColor.None;
-    //            //sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
-    //            matArray[1].SetTexture("_BaseMap", GameManager.Instance.sliceManager.piececolorToSprite[sliceColor]);
-    //            //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
-    //            //sr.sprite = GameManager.Instance.sliceManager.lootSliceColorDict[sliceColor];
-
-    //            break;
-    //        case SliceCatagory.SpecificShape:
-    //            sliceSymbol = (PieceSymbol)Random.Range(0, pieceSymbolEnumCount - 2);
-    //            //sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol];
-    //            matArray[1].SetTexture("_BaseMap", GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol]);
-    //            //sr.sprite = GameManager.Instance.sliceManager.lootSliceSymbolDict[sliceSymbol];
-    //            break;
-    //        case SliceCatagory.SpecificColor:
-    //            sliceColor = (PieceColor)Random.Range(0, pieceColorEnumCount - 2);
-    //            //sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
-    //            matArray[1].SetTexture("_BaseMap", GameManager.Instance.sliceManager.piececolorToSprite[sliceColor]);
-    //            //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[sliceColor];
-    //            //sr.sprite = GameManager.Instance.sliceManager.lootSliceColorDict[sliceColor];
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
-
-    //public void InstantiateLootLockSlice(int pieceSymbolEnumCount, int pieceColorEnumCount)
-    //{
-    //    //GameObject go = Instantiate(GameManager.Instance.sliceManager.lootLockSlicePrefab, transform);
-    //    GameObject go = Instantiate(GameManager.Instance.sliceManager.slicePrefab, transform);
-    //    Renderer rend = go.GetComponent<Renderer>();
-    //    Material[] matArray = rend.materials;
-    //    rend.materials = matArray;
-
-    //    //SpriteRenderer sr = go.transform.GetChild(0).GetComponent<SpriteRenderer>();
-    //    child = go;
-
-    //    switch (sliceCatagory)
-    //    {
-    //        case SliceCatagory.Shape:
-    //            sliceSymbol = PieceSymbol.None;
-    //            sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[PieceSymbol.None];
-    //            //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceSymbolSpritesDict[sliceSymbol];
-    //            break;
-    //        case SliceCatagory.Color:
-    //            sliceColor = PieceColor.None;
-    //            sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
-    //            //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
-    //            //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceColorDict[sliceColor];
-
-    //            break;
-    //        case SliceCatagory.SpecificShape:
-    //            sliceSymbol = (PieceSymbol)Random.Range(0, pieceSymbolEnumCount - 2);
-    //            sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol];
-    //            //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceSymbolSpritesDict[sliceSymbol];
-    //            break;
-    //        case SliceCatagory.SpecificColor:
-    //            sliceColor = (PieceColor)Random.Range(0, pieceColorEnumCount - 2);
-    //            sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
-    //            //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[sliceColor];
-    //            //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceColorDict[sliceColor];
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
-
-    //public void InstantiateLootLockLimiterSlice(int pieceSymbolEnumCount, int pieceColorEnumCount)
-    //{
-    //    //GameObject go = Instantiate(GameManager.Instance.sliceManager.lootLockLimiterSlicePrefab, transform);
-    //    GameObject go = Instantiate(GameManager.Instance.sliceManager.slicePrefab, transform);
-    //    Renderer rend = go.GetComponent<Renderer>();
-    //    Material[] matArray = rend.materials;
-    //    rend.materials = matArray;
-
-    //    //SpriteRenderer sr = go.transform.GetChild(0).GetComponent<SpriteRenderer>();
-    //    child = go;
-
-    //    switch (sliceCatagory)
-    //    {
-    //        case SliceCatagory.Shape:
-    //            sliceSymbol = PieceSymbol.None;
-    //            sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[PieceSymbol.None];
-    //            //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceSymbolSpritesDict[sliceSymbol];
-    //            break;
-    //        case SliceCatagory.Color:
-    //            sliceColor = PieceColor.None;
-    //            sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
-    //            //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[PieceColor.None];
-    //            //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceColorDict[sliceColor];
-
-    //            break;
-    //        case SliceCatagory.SpecificShape:
-    //            sliceSymbol = (PieceSymbol)Random.Range(0, pieceSymbolEnumCount - 2);
-    //            sr.sprite = GameManager.Instance.sliceManager.pieceSymbolToSprite[sliceSymbol];
-    //            //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceSymbolSpritesDict[sliceSymbol];
-    //            break;
-    //        case SliceCatagory.SpecificColor:
-    //            sliceColor = (PieceColor)Random.Range(0, pieceColorEnumCount - 2);
-    //            sr.sprite = GameManager.Instance.sliceManager.piececolorToSprite[sliceColor];
-    //            //sr.color = GameManager.Instance.sliceManager.pieceColorToColor[sliceColor];
-    //            //sr.sprite = GameManager.Instance.sliceManager.lootLockSliceColorDict[sliceColor];
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
 
     public void ResetDate()
     {
