@@ -59,6 +59,8 @@ MonoBehaviour:
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 5778231230796311929}
   leftParticleZone: {fileID: 7731711588630417992}
+  leftSpriteConnection: {fileID: 0}
+  rightSpriteConnection: {fileID: 0}
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 4696384799349193967}
@@ -136,6 +138,8 @@ MonoBehaviour:
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 4679270184902242318}
   leftParticleZone: {fileID: 538842224559554249}
+  leftSpriteConnection: {fileID: 0}
+  rightSpriteConnection: {fileID: 0}
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 982404620989343564}
@@ -213,6 +217,8 @@ MonoBehaviour:
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 1902684197609485379}
   leftParticleZone: {fileID: 3695877806278028994}
+  leftSpriteConnection: {fileID: 0}
+  rightSpriteConnection: {fileID: 0}
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 1942509321993336185}
@@ -290,6 +296,8 @@ MonoBehaviour:
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 6692842737193151116}
   leftParticleZone: {fileID: 4679270184902242318}
+  leftSpriteConnection: {fileID: 0}
+  rightSpriteConnection: {fileID: 0}
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 409643424273495072}
@@ -367,6 +375,8 @@ MonoBehaviour:
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 7731711588630417992}
   leftParticleZone: {fileID: 3868599810952633166}
+  leftSpriteConnection: {fileID: 0}
+  rightSpriteConnection: {fileID: 0}
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 6050677835491054806}
@@ -444,6 +454,8 @@ MonoBehaviour:
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 538842224559554249}
   leftParticleZone: {fileID: 5778231230796311929}
+  leftSpriteConnection: {fileID: 0}
+  rightSpriteConnection: {fileID: 0}
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 5211329671089579902}
@@ -521,6 +533,8 @@ MonoBehaviour:
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 3868599810952633166}
   leftParticleZone: {fileID: 1902684197609485379}
+  leftSpriteConnection: {fileID: 0}
+  rightSpriteConnection: {fileID: 0}
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 5711349801306880857}
@@ -598,6 +612,8 @@ MonoBehaviour:
   pieceHeld: {fileID: 0}
   rightParticleZone: {fileID: 3695877806278028994}
   leftParticleZone: {fileID: 6692842737193151116}
+  leftSpriteConnection: {fileID: 0}
+  rightSpriteConnection: {fileID: 0}
   interconnectedRightParticleZone: {fileID: 0}
   interconnectedLeftParticleZone: {fileID: 0}
   highlightParticle: {fileID: 6740954759157837594}
@@ -5602,6 +5618,8 @@ MonoBehaviour:
   limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
     type: 3}
   PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 7600522693413357010}
+  connectedPower: {fileID: 0}
 --- !u!1 &1017905572453780498
 GameObject:
   m_ObjectHideFlags: 0
@@ -6084,6 +6102,8 @@ MonoBehaviour:
   limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
     type: 3}
   PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 3408395251655521962}
+  connectedPower: {fileID: 0}
 --- !u!1 &2408544284680406115
 GameObject:
   m_ObjectHideFlags: 0
@@ -6282,6 +6302,8 @@ MonoBehaviour:
   limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
     type: 3}
   PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 6467334886856692005}
+  connectedPower: {fileID: 0}
 --- !u!1 &2494635989045550781
 GameObject:
   m_ObjectHideFlags: 0
@@ -11885,6 +11907,8 @@ MonoBehaviour:
   limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
     type: 3}
   PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 8754681575605557809}
+  connectedPower: {fileID: 0}
 --- !u!1 &4132263175656625424
 GameObject:
   m_ObjectHideFlags: 0
@@ -17126,6 +17150,8 @@ MonoBehaviour:
   limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
     type: 3}
   PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 1483939612594635998}
+  connectedPower: {fileID: 0}
 --- !u!1 &5293063776780043365
 GameObject:
   m_ObjectHideFlags: 0
@@ -22498,6 +22524,7 @@ MonoBehaviour:
   slicePrefabLimiter: {fileID: 6872867264745277433, guid: 985c8ee38bb0f574ebd1425429db25ed,
     type: 3}
   particleZonesParent: {fileID: 6719651912495343778}
+  connectedSpritesParent: {fileID: 6719651912495343778}
   emptyScrollTexture: {fileID: 2800000, guid: 6f40e4ba5489c2140be6325ed76e4f98, type: 3}
   sliceSlots:
   - {fileID: 4620424603737315309}
@@ -32936,6 +32963,8 @@ MonoBehaviour:
   limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
     type: 3}
   PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 8031439627347750285}
+  connectedPower: {fileID: 0}
 --- !u!1 &7706337921110876285
 GameObject:
   m_ObjectHideFlags: 0
@@ -43357,6 +43386,8 @@ MonoBehaviour:
   limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
     type: 3}
   PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 5785654628768245299}
+  connectedPower: {fileID: 0}
 --- !u!1 &9104597469676834754
 GameObject:
   m_ObjectHideFlags: 0
@@ -43436,6 +43467,8 @@ MonoBehaviour:
   limiterInfoBubblePrefab: {fileID: 7771608926143966463, guid: bcc54117f3125fc4480159333d9b1554,
     type: 3}
   PotionInfoBubblePrefab: {fileID: 0}
+  connectedSlice: {fileID: 7760309811530299410}
+  connectedPower: {fileID: 0}
 --- !u!1001 &29123361384564787
 PrefabInstance:
   m_ObjectHideFlags: 0

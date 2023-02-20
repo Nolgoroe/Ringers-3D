@@ -21,6 +21,7 @@ public class SliceManager : MonoBehaviour
     public GameObject slicePrefab;
     public GameObject slicePrefabLimiter;
     public GameObject particleZonesParent;
+    public GameObject connectedSpritesParent;
 
     public Texture emptyScrollTexture;
 
@@ -80,6 +81,8 @@ public class SliceManager : MonoBehaviour
 
     public List<Slice> fullSlices;
     public List<GameObject> activeLocksLockAnims;
+
+    //public SpriteSwapHelper[] connectionSpriteRenderers;
     //GameObject go;
 
     private int fourRandomSlicePos;

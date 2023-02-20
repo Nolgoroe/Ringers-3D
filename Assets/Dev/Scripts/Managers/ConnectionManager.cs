@@ -220,6 +220,12 @@ public class ConnectionManager : MonoBehaviour
                         supPieceArray[currentLeft].relevantSlice.fulfilledCondition = false;
                     }
 
+                    if (cellList[cellIndex].leftSpriteConnection)
+                    {
+                        cellList[cellIndex].leftSpriteConnection.gameObject.SetActive(true);
+                        cellList[cellIndex].leftSpriteConnection.SwitchSprites(false);
+                    }
+
                     CheckRight(supPieceArray, cellList, cellIndex, isOuterCell, lastPiece);
 
                     //Instantiate(badConnectionParticle, cellList[cellIndex].rightParticleZone);
@@ -255,6 +261,12 @@ public class ConnectionManager : MonoBehaviour
                     supPieceArray[leftContested].SetConnectedMaterial();
                     //Instantiate(connectedTilesVFX, cellList[cellIndex].rightParticleZone);
                     cellList[cellIndex].leftParticleZone.GetChild(0).gameObject.SetActive(true);
+
+                    if(cellList[cellIndex].leftSpriteConnection)
+                    {
+                        cellList[cellIndex].leftSpriteConnection.gameObject.SetActive(true);
+                        cellList[cellIndex].leftSpriteConnection.SwitchSprites(true);
+                    }
 
 
                     playedConnectedSound = true;
@@ -450,6 +462,12 @@ public class ConnectionManager : MonoBehaviour
                         supPieceArray[currentRight].relevantSlice.fulfilledCondition = false;
                     }
 
+                    if (cellList[cellIndex].rightSpriteConnection)
+                    {
+                        cellList[cellIndex].rightSpriteConnection.gameObject.SetActive(true);
+                        cellList[cellIndex].rightSpriteConnection.SwitchSprites(false);
+                    }
+
                 }
                 else
                 {
@@ -478,6 +496,11 @@ public class ConnectionManager : MonoBehaviour
                     supPieceArray[rightContested].SetConnectedMaterial();
                     cellList[cellIndex].rightParticleZone.GetChild(0).gameObject.SetActive(true);
 
+                    if (cellList[cellIndex].rightSpriteConnection)
+                    {
+                        cellList[cellIndex].rightSpriteConnection.gameObject.SetActive(true);
+                        cellList[cellIndex].rightSpriteConnection.SwitchSprites(true);
+                    }
 
                     if (!playedConnectedSound)
                     {
@@ -1566,6 +1589,16 @@ public class ConnectionManager : MonoBehaviour
         {
             c.rightParticleZone.GetChild(0).gameObject.SetActive(false);
             c.leftParticleZone.GetChild(0).gameObject.SetActive(false);
+
+            if (c.rightSpriteConnection)
+            {
+                c.rightSpriteConnection.gameObject.SetActive(false);
+            }
+
+            if (c.leftSpriteConnection)
+            {
+                c.leftSpriteConnection.gameObject.SetActive(false);
+            }
         }
     }
 

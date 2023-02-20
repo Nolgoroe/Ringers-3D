@@ -19,6 +19,7 @@ public class Cell : MonoBehaviour
     //public GameObject lockSpriteCellRight, lockSpriteCellLeft; // previous lock system
     //public GameObject outlinedSpriteRight, outlinedSpriteLeft; // previous lock system
     public Transform rightParticleZone, leftParticleZone;
+    public SpriteSwapHelper leftSpriteConnection, rightSpriteConnection;
     public Transform interconnectedRightParticleZone, interconnectedLeftParticleZone;
 
     public ParticleSystem highlightParticle;
@@ -231,6 +232,16 @@ public class Cell : MonoBehaviour
         {
             //Destroy(leftParticleZone.GetChild(0).gameObject);
             leftParticleZone.GetChild(0).gameObject.SetActive(false);
+        }
+
+        if (rightSpriteConnection)
+        {
+            rightSpriteConnection.gameObject.SetActive(false);
+        }
+
+        if (leftSpriteConnection)
+        {
+            leftSpriteConnection.gameObject.SetActive(false);
         }
 
         //if (GameManager.Instance.currentLevel.isDoubleRing)

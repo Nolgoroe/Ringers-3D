@@ -114,6 +114,9 @@ public class LevelScriptableObject : ScriptableObject
     [Header("Timer Level Data")]
     public float timeForLevel;
 
+    [Header("Editor Actions")]
+    public GameObject stoneTilePrefab;
+
     [ContextMenu("THIS")]
     public void actionhere()
     {
@@ -133,4 +136,12 @@ public class LevelScriptableObject : ScriptableObject
         numIndexForLeaderBoard = 115 + levelNum;
     }
 
+    [ContextMenu("Set stone tile prefab")]
+    public void SetStoneTilePrefabSO()
+    {
+        foreach (stonePieceDataStruct stoneTile in stoneTiles)
+        {
+            stoneTile.tileprefab = stoneTilePrefab;
+        }
+    }
 }

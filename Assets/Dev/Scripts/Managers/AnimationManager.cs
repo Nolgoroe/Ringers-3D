@@ -144,6 +144,7 @@ public class AnimationManager : MonoBehaviour
     public float startAnimDelayTime;
     public SpriteRenderer ring;
     public GameObject particlesParent;
+    public GameObject connectedSpritesParent;
     public SpriteRenderer colorMask;
     float originalColorMaskAlpha = 0;
     public float timeToFadeRingAndColormask;
@@ -225,6 +226,8 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.nextLevelFromWinScreen.interactable = false;
         UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
         UIManager.Instance.backToHubButton.interactable = false;
+
+        GameManager.Instance.levelStarted = false; // is this working?
         //UIManager.Instance.backToHubButton.gameObject.SetActive(false);
 
         turnOff = GameObject.FindGameObjectsWithTag("Off on end level");
@@ -549,6 +552,16 @@ public class AnimationManager : MonoBehaviour
             {
                 cell.pieceHeld.gameObject.SetActive(true);
                 yield return new WaitForSeconds(delayBetweenPiecesAppear);
+
+                if(cell.rightParticleZone)
+                {
+                    cell.rightParticleZone.gameObject.SetActive(true);
+                }
+
+                if(cell.rightSpriteConnection)
+                {
+                    cell.rightSpriteConnection.gameObject.SetActive(true);
+                }
             }
         }
 
@@ -717,7 +730,7 @@ public class AnimationManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(fadeInTimeButtons + 0.1f);
-        ConnectionManager.Instance.TurnOffAllConnectedVFX();
+        //ConnectionManager.Instance.TurnOffAllConnectedVFX();
 
 
         UIManager.Instance.restartButton.interactable = true;
@@ -926,6 +939,11 @@ public class AnimationManager : MonoBehaviour
         //}
 
         //SoundManager.Instance.PlaySound(Sounds.LastTileSequence);
+
+        GameManager.Instance.levelStarted = false; // is this working?
+
+
+
         hasShowsEndLevelDialogue = false;
 
         SoundManager.Instance.StopSFXOneshots();
@@ -1348,7 +1366,7 @@ public class AnimationManager : MonoBehaviour
 
         UIManager.Instance.backToHubButton.gameObject.SetActive(true);
 
-        ConnectionManager.Instance.TurnOffAllConnectedVFX();
+        //ConnectionManager.Instance.TurnOffAllConnectedVFX();
 
 
         //if (AnimalsManager.Instance.currentLevelLiveAnimal)
@@ -1806,6 +1824,7 @@ public class AnimationManager : MonoBehaviour
         SliceManager sliceManager = GameManager.Instance.gameBoard.GetComponent<SliceManager>();
 
         particlesParent = sliceManager.particleZonesParent;
+        connectedSpritesParent = sliceManager.connectedSpritesParent;
 
         for (int i = 0; i < sliceManager.activeLocksLockAnims.Count; i++)
         {
@@ -1853,6 +1872,7 @@ public class AnimationManager : MonoBehaviour
     {
         ring.gameObject.SetActive(true);
         particlesParent.gameObject.SetActive(false);
+        connectedSpritesParent.gameObject.SetActive(false);
         //ring.color = new Color(ring.color.r, ring.color.g, ring.color.b, 0);
         ring.material.SetFloat("_DissolveSprite", 0.4f);
 
@@ -1935,6 +1955,7 @@ public class AnimationManager : MonoBehaviour
         }
 
         particlesParent.gameObject.SetActive(true);
+        connectedSpritesParent.gameObject.SetActive(true);
     }
 
     public void SetInLevelValuesimmediateForDialogue()
@@ -2075,6 +2096,7 @@ public class AnimationManager : MonoBehaviour
         }
         SoundManager.Instance.PlaySound(Sounds.TileEnterLevel);
         particlesParent.gameObject.SetActive(true);
+        connectedSpritesParent.gameObject.SetActive(true);
 
     }
 }
