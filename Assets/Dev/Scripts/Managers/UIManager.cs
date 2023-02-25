@@ -301,9 +301,29 @@ public class UIManager : MonoBehaviour
     public Transform sliceInfoBubblesParent;
     public Transform potionInfoBubblesParent;
 
-    private void Start()
+    private void Awake()
     {
         Instance = this;
+    }
+
+    public void Init()
+    {
+        openAnimalAlbumButttonMap.gameObject.SetActive(false);
+        openInventoryButttonMap.gameObject.SetActive(false);
+
+
+        if (TutorialSaveData.Instance.hasFinishedPotion)
+        {
+            openInventoryButttonMap.gameObject.SetActive(true);
+        }
+
+        if (TutorialSaveData.Instance.hasFinishedAnimalAlbum)
+        {
+            openAnimalAlbumButttonMap.gameObject.SetActive(true);
+        }
+    }
+    private void Start()
+    {
 
         textCoroutine = null;
 

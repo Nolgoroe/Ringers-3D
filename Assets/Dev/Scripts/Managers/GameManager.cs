@@ -503,7 +503,7 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.restartButton.interactable = true;
             UIManager.Instance.optionsButtonIngame.interactable = true;
             UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
-
+            UIManager.Instance.isUsingUI = false;
             //yield return new WaitForEndOfFrame();
 
             yield return new WaitForSeconds(TutorialSequence.Instacne.delayAppearOnStartLevel);

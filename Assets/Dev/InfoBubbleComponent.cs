@@ -19,7 +19,7 @@ public class InfoBubbleComponent : MonoBehaviour, IPointerClickHandler
     public PowerupProperties connectedPower;
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (TutorialSequence.Instacne.duringSequence) return;
+        if (TutorialSequence.Instacne.duringSequence || AnimationManager.instance.endLevelAnimationON || PowerUpManager.IsUsingPowerUp) return;
         StartCoroutine(UIManager.Instance.SetIsUsingUI(true));
 
         StartCoroutine(SpawnInfoBubble());

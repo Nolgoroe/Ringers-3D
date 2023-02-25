@@ -1650,7 +1650,7 @@ public class TutorialSequence : MonoBehaviour
         if(GameManager.Instance.isDisableTutorials)
         {
             TutorialSaveData.Instance.hasFinishedPotion = true;
-
+            UIManager.Instance.openInventoryButttonMap.gameObject.SetActive(true);
             return;
         }
 
@@ -1659,6 +1659,7 @@ public class TutorialSequence : MonoBehaviour
             if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
             {
                 //UIManager.Instance.gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(true);
+                UIManager.Instance.openInventoryButttonMap.gameObject.SetActive(true);
                 maskImage.gameObject.SetActive(true);
                 UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
                 //TutorialSequence.Instacne.DisplaySpecificTutorialSequence();
@@ -1672,6 +1673,7 @@ public class TutorialSequence : MonoBehaviour
         if (GameManager.Instance.isDisableTutorials)
         {
             TutorialSaveData.Instance.hasFinishedAnimalAlbum = true;
+            UIManager.Instance.openAnimalAlbumButttonMap.gameObject.SetActive(true);
 
             return;
         }
@@ -1681,6 +1683,8 @@ public class TutorialSequence : MonoBehaviour
         {
             if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.AnimalAlbum)
             {
+                UIManager.Instance.openAnimalAlbumButttonMap.gameObject.SetActive(true);
+
                 maskImage.gameObject.SetActive(true);
                 UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
                 currentSpecificTutorial = GameManager.Instance.currentLevel.specificTutorialEnum;

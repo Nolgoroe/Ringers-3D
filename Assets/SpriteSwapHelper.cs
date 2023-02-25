@@ -21,5 +21,7 @@ public class SpriteSwapHelper : MonoBehaviour
     public void SwitchSprites(bool versionA)
     {
         renderer.sprite = versionA == true ? spriteA : spriteB;
+
+        renderer.color = Color.white;
     }
 }

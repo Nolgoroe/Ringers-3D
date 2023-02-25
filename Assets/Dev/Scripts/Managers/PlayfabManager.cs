@@ -677,7 +677,7 @@ public class PlayfabManager : MonoBehaviour
         RewardsManager.Instance.Init();
         HollowManagerSaveData.Instance.Init();
         MaterialsAndForgeManager.Instance.Init();
-
+        UIManager.Instance.Init();
         foreach (Zone zone in ZoneManagerHelpData.Instance.listOfAllZones)
         {
             zone.Init();

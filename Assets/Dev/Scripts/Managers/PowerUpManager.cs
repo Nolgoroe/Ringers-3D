@@ -654,8 +654,20 @@ public class PowerUpManager : MonoBehaviour
 
         toWorkOn.isLock = false;
 
+        if(ConnectionManager.Instance.cells[a].pieceHeld)
+        {
+            GameManager.Instance.unsuccessfullSlicesCount--;
+        }
+
+        if(ConnectionManager.Instance.cells[b].pieceHeld)
+        {
+            GameManager.Instance.unsuccessfullSlicesCount--;
+        }
+
         if (toWorkOn.isLimiter)
         {
+            toWorkOn.ResetDate();
+
             if (rightFull && leftFull)
             {
                 Debug.Log("Right and Left");
@@ -664,7 +676,6 @@ public class PowerUpManager : MonoBehaviour
 
                 ConnectionManager.Instance.cells[a].RemovePiece(true);
                 ConnectionManager.Instance.cells[b].RemovePiece(true);
-                toWorkOn.hasSlice = false;
 
                 yield return new WaitForEndOfFrame();
                 ConnectionManager.Instance.cells[a].AddPiece(pa, false);
@@ -677,7 +688,6 @@ public class PowerUpManager : MonoBehaviour
 
                 Transform p = ConnectionManager.Instance.cells[b].pieceHeld.transform;
                 ConnectionManager.Instance.cells[b].RemovePiece(true);
-                toWorkOn.hasSlice = false;
 
                 yield return new WaitForEndOfFrame();
                 ConnectionManager.Instance.cells[b].AddPiece(p, false);
@@ -688,7 +698,6 @@ public class PowerUpManager : MonoBehaviour
 
                 Transform p = ConnectionManager.Instance.cells[a].pieceHeld.transform;
                 ConnectionManager.Instance.cells[a].RemovePiece(true);
-                toWorkOn.hasSlice = false;
 
                 yield return new WaitForEndOfFrame();
                 ConnectionManager.Instance.cells[a].AddPiece(p, false);
@@ -696,18 +705,18 @@ public class PowerUpManager : MonoBehaviour
             else
             {
                 Debug.LogError("No Pieces to check connections");
-                toWorkOn.hasSlice = false;
             }
         }
-
-        toWorkOn.ResetDate();
 
         ObjectToUsePowerUpOn.GetComponent<CameraShake>().ShakeOnce();
 
 
         yield return new WaitForEndOfFrame();
         Destroy(ObjectToUsePowerUpOn.gameObject, 0.6f);
+        yield return new WaitForSeconds(0.6f);
 
+        //ConnectionManager.Instance.CallConnection(a, false, false); //refresh connections
+        //ConnectionManager.Instance.CallConnection(b, false, false); //refresh connections
         GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion of type:" + "Slice Bomb potion");
 
         FinishedUsingPowerup(true, prop);

@@ -76,24 +76,10 @@ public class CursorController : MonoBehaviour
 
     void Update()
     {
-        //test game analytics custom events
-
-        //if (Input.touchCount > 0)
-        //{
-        //    touch = Input.touches[0];
-
-        //    if (touch.phase == TouchPhase.Began)
-        //    {
-        //        GameAnalytics.NewDesignEvent("TouchDetected:TouchDown:Complete");
-        //        GameAnalytics.NewDesignEvent("TouchDetected:TouchDown:Complete", 101);
-        //    }
-        //}
-
-        if(TestLevelsSystemManagerSaveData.instance.canGetChest)
+        if(TestLevelsSystemManagerSaveData.instance.canGetChest && !AnimationManager.instance.endLevelAnimationON)
         {
             if (Input.touchCount == 1)
             {
-
                 TestLevelsSystemManagerSaveData.instance.canGetChest = false;
 
                 if(TestLevelsSystemManager.instance.chestAnimator)
@@ -626,7 +612,7 @@ public class CursorController : MonoBehaviour
         {
             touch = Input.GetTouch(0);
 
-            if (!hasclickedPowerUp)
+            if (!hasclickedPowerUp && !PowerUpManager.HasUsedPowerUp)
             {
                 if (touch.phase == TouchPhase.Began)
                 {
@@ -650,7 +636,7 @@ public class CursorController : MonoBehaviour
                                 {
                                     if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Contains(hit.transform.parent.GetComponent<Cell>().cellIndex))
                                     {
-                                        PowerUpManager.IsUsingPowerUp = false;
+                                        //PowerUpManager.IsUsingPowerUp = false;
                                         PowerUpManager.HasUsedPowerUp = true;
 
                                         GameAnalytics.NewDesignEvent("Has used potion in level:" + GameManager.Instance.currentLevel.worldName + ":" + "Level " + GameManager.Instance.currentLevel.levelNum);
@@ -670,7 +656,7 @@ public class CursorController : MonoBehaviour
                                 {
                                     if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetSlices.Contains(hit.transform.parent.GetComponent<Slice>().sliceIndex))
                                     {
-                                        PowerUpManager.IsUsingPowerUp = false;
+                                        //PowerUpManager.IsUsingPowerUp = false;
                                         PowerUpManager.HasUsedPowerUp = true;
                                         PowerUpManager.ObjectToUsePowerUpOn = hit.transform.gameObject;
                                         LeanTween.scale(hit.transform.gameObject, new Vector3(hit.transform.localScale.x - 0.2f, hit.transform.localScale.y - 0.2f, 1), 0.1f).setOnComplete(() => ScaleGameObjectBack(hit.transform.gameObject));
@@ -681,7 +667,7 @@ public class CursorController : MonoBehaviour
                         }
                         else
                         {
-                            PowerUpManager.IsUsingPowerUp = false;
+                            //PowerUpManager.IsUsingPowerUp = false;
                             PowerUpManager.HasUsedPowerUp = true;
                             PowerUpManager.ObjectToUsePowerUpOn = hit.transform.gameObject;
                             LeanTween.scale(hit.transform.gameObject, new Vector3(hit.transform.localScale.x - 0.2f, hit.transform.localScale.y - 0.2f, 1), 0.1f).setOnComplete(() => ScaleGameObjectBack(hit.transform.gameObject));

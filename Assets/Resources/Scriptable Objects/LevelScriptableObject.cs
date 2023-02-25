@@ -49,6 +49,7 @@ public class LevelScriptableObject : ScriptableObject
     public bool isKeyLevel;
     //public bool isTestLevel;
     public bool showIntroLevelAnimation;
+    public bool allowBackToMap;
     public GameObject boardPrefab;
     public GameObject clipPrefab;
 

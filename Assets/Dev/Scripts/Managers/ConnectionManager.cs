@@ -224,6 +224,9 @@ public class ConnectionManager : MonoBehaviour
                     {
                         cellList[cellIndex].leftSpriteConnection.gameObject.SetActive(true);
                         cellList[cellIndex].leftSpriteConnection.SwitchSprites(false);
+
+                        cellList[cellIndex].leftSpriteConnection.GetComponent<Animator>().enabled = true;
+                        cellList[cellIndex].leftSpriteConnection.GetComponent<Animator>().SetTrigger("Bad Connect");
                     }
 
                     CheckRight(supPieceArray, cellList, cellIndex, isOuterCell, lastPiece);
@@ -266,6 +269,8 @@ public class ConnectionManager : MonoBehaviour
                     {
                         cellList[cellIndex].leftSpriteConnection.gameObject.SetActive(true);
                         cellList[cellIndex].leftSpriteConnection.SwitchSprites(true);
+
+                        cellList[cellIndex].leftSpriteConnection.GetComponent<Animator>().enabled = false;
                     }
 
 
@@ -466,6 +471,9 @@ public class ConnectionManager : MonoBehaviour
                     {
                         cellList[cellIndex].rightSpriteConnection.gameObject.SetActive(true);
                         cellList[cellIndex].rightSpriteConnection.SwitchSprites(false);
+
+                        cellList[cellIndex].rightSpriteConnection.GetComponent<Animator>().enabled = true;
+                        cellList[cellIndex].rightSpriteConnection.GetComponent<Animator>().SetTrigger("Bad Connect");
                     }
 
                 }
@@ -500,6 +508,8 @@ public class ConnectionManager : MonoBehaviour
                     {
                         cellList[cellIndex].rightSpriteConnection.gameObject.SetActive(true);
                         cellList[cellIndex].rightSpriteConnection.SwitchSprites(true);
+
+                        cellList[cellIndex].rightSpriteConnection.GetComponent<Animator>().enabled = false;
                     }
 
                     if (!playedConnectedSound)
