@@ -225,8 +225,12 @@ public class ConnectionManager : MonoBehaviour
                         cellList[cellIndex].leftSpriteConnection.gameObject.SetActive(true);
                         cellList[cellIndex].leftSpriteConnection.SwitchSprites(false);
 
-                        cellList[cellIndex].leftSpriteConnection.GetComponent<Animator>().enabled = true;
-                        cellList[cellIndex].leftSpriteConnection.GetComponent<Animator>().SetTrigger("Bad Connect");
+
+                        Animator anim = cellList[cellIndex].leftSpriteConnection.GetComponent<Animator>();
+
+                        anim.enabled = true;
+                        anim.SetTrigger("Bad Connect");
+                        anim.Play("AN_NoMatch_Indicator", 0, (Time.time % cellList[cellIndex].leftSpriteConnection.noMatchIndicatorAnim.length) / cellList[cellIndex].leftSpriteConnection.noMatchIndicatorAnim.length);
                     }
 
                     CheckRight(supPieceArray, cellList, cellIndex, isOuterCell, lastPiece);
@@ -472,8 +476,11 @@ public class ConnectionManager : MonoBehaviour
                         cellList[cellIndex].rightSpriteConnection.gameObject.SetActive(true);
                         cellList[cellIndex].rightSpriteConnection.SwitchSprites(false);
 
-                        cellList[cellIndex].rightSpriteConnection.GetComponent<Animator>().enabled = true;
-                        cellList[cellIndex].rightSpriteConnection.GetComponent<Animator>().SetTrigger("Bad Connect");
+                        Animator anim = cellList[cellIndex].rightSpriteConnection.GetComponent<Animator>();
+
+                        anim.enabled = true;
+                        anim.SetTrigger("Bad Connect");
+                        anim.Play("AN_NoMatch_Indicator", 0, (Time.time % cellList[cellIndex].rightSpriteConnection.noMatchIndicatorAnim.length) / cellList[cellIndex].rightSpriteConnection.noMatchIndicatorAnim.length);
                     }
 
                 }
