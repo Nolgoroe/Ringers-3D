@@ -16,16 +16,16 @@ public class InfoBubblePrefab : MonoBehaviour
         switch (slice.sliceCatagory)
         {
             case SliceCatagory.Shape:
-                text = "Match between any two shapes";
+                text = "Match any symbol above this slice";
                 break;
             case SliceCatagory.Color:
-                text = "Match between any two colors";
+                text = "Match any color above this slice";
                 break;
             case SliceCatagory.SpecificShape:
-                text = $"Match {slice.sliceSymbol} symbol only";
+                text = $"Match {slice.sliceSymbol} symbols only above this slice";
                 break;
             case SliceCatagory.SpecificColor:
-                text = $"Match {slice.sliceColor} color only";
+                text = $"Match with {slice.sliceColor} color only above this slice";
                 break;
             case SliceCatagory.None:
                 break;
