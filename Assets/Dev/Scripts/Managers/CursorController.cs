@@ -1002,7 +1002,7 @@ public class CursorController : MonoBehaviour
                 {
                     if (newPiece)
                     {
-                        GameManager.Instance.clipManager.PopulateSlot(clipParent, 10);
+                        StartCoroutine(GameManager.Instance.clipManager.PopulateSlot(clipParent, 10));
 
                         if (GameManager.Instance.currentLevel.symbolsNeededForSpecialPowers.Length > 0)
                         {
@@ -1069,7 +1069,7 @@ public class CursorController : MonoBehaviour
 
                                     if (isFromClip/* && !cell.isFull*/)
                                     {
-                                        GameManager.Instance.clipManager.PopulateSlot(clipParent, 10);
+                                        StartCoroutine(GameManager.Instance.clipManager.PopulateSlot(clipParent, 10));
                                     }
 
                                     StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
@@ -1134,7 +1134,7 @@ public class CursorController : MonoBehaviour
 
                                 if (isFromClip/* && !cell.isFull*/)
                                 {
-                                    GameManager.Instance.clipManager.PopulateSlot(clipParent, 10);
+                                    StartCoroutine(GameManager.Instance.clipManager.PopulateSlot(clipParent, 10));
 
                                     if (GameManager.Instance.currentLevel.symbolsNeededForSpecialPowers.Length > 0)
                                     {

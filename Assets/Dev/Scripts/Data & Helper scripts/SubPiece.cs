@@ -494,11 +494,11 @@ public class SubPiece : MonoBehaviour
 
         if (isRightSubPiece)
         {
-            transform.localPosition = new Vector3(0.6181985f, transform.localPosition.y, transform.localPosition.z);
+            transform.localPosition = new Vector3(0.6181985f, 0.1f, 0);
         }
         else
         {
-            transform.localPosition = new Vector3(-0.6181985f, transform.localPosition.y, transform.localPosition.z);
+            transform.localPosition = new Vector3(-0.672f, 0.1f, 0);
         }
     }
     public void SetPieceAs8RingPiece()
@@ -565,7 +565,7 @@ public class SubPiece : MonoBehaviour
         }
         else
         {
-            transform.localPosition = new Vector3(-0.6181985f, 0, 0);
+            transform.localPosition = new Vector3(-0.672f, 0, 0);
         }
     }
 

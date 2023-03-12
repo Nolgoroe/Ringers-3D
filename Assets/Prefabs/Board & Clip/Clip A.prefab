@@ -766,13 +766,13 @@ MonoBehaviour:
     type: 3}
   tile8RingRightSubPieceMesh: {fileID: -689406408450205330, guid: 52bba4cc649901f4582d6de1cf13e1f4,
     type: 3}
-  tile12RingLeftSubPieceMesh: {fileID: -1308064327287094486, guid: c6b49a60bb61e9e41859d978de702079,
+  tile12RingLeftSubPieceMesh: {fileID: -1308064327287094486, guid: 357a667436703df42ac387ec4c550fc9,
     type: 3}
-  tile12RingRightSubPieceMesh: {fileID: -689406408450205330, guid: c6b49a60bb61e9e41859d978de702079,
+  tile12RingRightSubPieceMesh: {fileID: -689406408450205330, guid: 357a667436703df42ac387ec4c550fc9,
     type: 3}
   corruptedPiece: {fileID: 935213622196544231, guid: 8169ec059ba42af42bc7e8a3e285bdf9,
     type: 3}
-  corruptedPiece12: {fileID: 935213622196544231, guid: 0af88af97de72a440a3fa79b96613a83,
+  corruptedPiece12: {fileID: 935213622196544231, guid: 84dc4bf70e20f6f4398af06820dabd23,
     type: 3}
   emptyClip: {fileID: 0}
   latestPiece: {fileID: 0}
@@ -834,34 +834,38 @@ MonoBehaviour:
   colorsToMats12Ring:
   - matColor: 0
     colorTex:
-    - {fileID: 2800000, guid: 0cabb20c340152943bbcef73c2e161be, type: 3}
-    - {fileID: 2800000, guid: 4121ad8f9a11ab34f8f3f8ec37098d97, type: 3}
-    - {fileID: 2800000, guid: 8f81e97b5f994034a8124f85d6f06906, type: 3}
-    - {fileID: 2800000, guid: fe33a8b227486cf4fb5373100363dd59, type: 3}
+    - {fileID: 2800000, guid: 00c6f2ec96780e24f896781eedc34472, type: 3}
+    - {fileID: 2800000, guid: 89a556a6aeec2f24fbcf17f1fa03f2a0, type: 3}
+    - {fileID: 2800000, guid: e9acd23bb9cefb84cbb9667baf8b65a2, type: 3}
+    - {fileID: 2800000, guid: ea728e779cafcd745bdc073cb82f5449, type: 3}
   - matColor: 1
     colorTex:
-    - {fileID: 2800000, guid: a1b1d755bdae9df469f40f33fcc812d1, type: 3}
-    - {fileID: 2800000, guid: 517ef1e3083982243811728532579f28, type: 3}
-    - {fileID: 2800000, guid: 6448bfe9ce3f07e4f9b26f5231a3ede7, type: 3}
-    - {fileID: 2800000, guid: f97f0bc51bde4b541a0073aff796f06f, type: 3}
+    - {fileID: 2800000, guid: b1735bdfe363c9f4e9d50e46ee7d298d, type: 3}
+    - {fileID: 2800000, guid: d508b799319776a40bd6b4352c8c1c1c, type: 3}
+    - {fileID: 2800000, guid: a15c160bf82bc394da51b750b9127254, type: 3}
+    - {fileID: 2800000, guid: b18539c0cd3c718409d290cce24d132f, type: 3}
+    - {fileID: 2800000, guid: b18539c0cd3c718409d290cce24d132f, type: 3}
   - matColor: 2
     colorTex:
-    - {fileID: 2800000, guid: d02e121dc6b653645a87a1962aef167f, type: 3}
-    - {fileID: 2800000, guid: 2eaa83e51eb3d0549bddc324b69e23ae, type: 3}
-    - {fileID: 2800000, guid: 1538e5f7c68db284b8f82667020d7805, type: 3}
-    - {fileID: 2800000, guid: 295c170620bb78f48aee6cb0fb645e41, type: 3}
+    - {fileID: 2800000, guid: fb36e3f9cd9fa984b9f20e0dadfb4b82, type: 3}
+    - {fileID: 2800000, guid: 44c9318bbbd18374baa916f98ec50028, type: 3}
+    - {fileID: 2800000, guid: a6a7f6185ce0c2b45a26e57c68b7e05d, type: 3}
+    - {fileID: 2800000, guid: 72ec50907691e0d46b93896c43823484, type: 3}
+    - {fileID: 2800000, guid: 72ec50907691e0d46b93896c43823484, type: 3}
   - matColor: 3
     colorTex:
-    - {fileID: 2800000, guid: 0cabeb72708e5fc4e910508b14b3ff78, type: 3}
-    - {fileID: 2800000, guid: 54d669e9c95cba440a6acef0f1e6c79d, type: 3}
-    - {fileID: 2800000, guid: 366115e5d2c74ea4da2dac9ffe2e5c10, type: 3}
-    - {fileID: 2800000, guid: 3f3a9655c54e5374c89ff5eb17653a5b, type: 3}
+    - {fileID: 2800000, guid: a65bfd169ea5313448ae4b9f3ce5147e, type: 3}
+    - {fileID: 2800000, guid: 06d1a624ce59dee45bfacbf99333b6a1, type: 3}
+    - {fileID: 2800000, guid: ca0618ef1257d614e948a1f965d29a82, type: 3}
+    - {fileID: 2800000, guid: 74d79a5cfff8e044dba5bce3e2dfdcc7, type: 3}
+    - {fileID: 2800000, guid: 74d79a5cfff8e044dba5bce3e2dfdcc7, type: 3}
   - matColor: 4
     colorTex:
-    - {fileID: 2800000, guid: ba6aab2d71db00544927d7728ad6b100, type: 3}
-    - {fileID: 2800000, guid: 66d053bd8077f7841b8cdaf60a38afe7, type: 3}
-    - {fileID: 2800000, guid: 911cf9890a6e5a24885a22c6809a5592, type: 3}
-    - {fileID: 2800000, guid: 00b03d02a1ee52e44a85c6593a0bd3c1, type: 3}
+    - {fileID: 2800000, guid: 38065c1924ff4ba4c8e2576f2932f29a, type: 3}
+    - {fileID: 2800000, guid: 46ce4439c259c5c4d81b11d38409a72a, type: 3}
+    - {fileID: 2800000, guid: 9ee86c909f267504eb59e1fec356115e, type: 3}
+    - {fileID: 2800000, guid: cbdcc908de12bc94c9bd5e71bd738de2, type: 3}
+    - {fileID: 2800000, guid: cbdcc908de12bc94c9bd5e71bd738de2, type: 3}
   symbolToMat12Ring:
   - mat: 0
     symbolTex: {fileID: 2800000, guid: efbe8ad0a6e919d4a87809beebb81987, type: 3}
@@ -882,15 +886,15 @@ MonoBehaviour:
   - {fileID: 2800000, guid: a578cbc1cb8834b4fb428fdfaa40d5ae, type: 3}
   - {fileID: 2800000, guid: a5f81017369b7ed4c87953b84c5a1ffe, type: 3}
   corruptedColorsToMatsLeft12:
-  - {fileID: 2800000, guid: e737e2aae923b5b4185c7ea6ef49c09a, type: 3}
-  - {fileID: 2800000, guid: 79ec9aa778e89954ba916b3919aeff7b, type: 3}
-  - {fileID: 2800000, guid: 427b370bca6c7ce44a432f6b266c24bd, type: 3}
-  - {fileID: 2800000, guid: 2f3758bdb92683248877305af625e2ba, type: 3}
+  - {fileID: 2800000, guid: 918106e671141184da04c3840addb800, type: 3}
+  - {fileID: 2800000, guid: 81ed003172f548c429cd762b512bcc9f, type: 3}
+  - {fileID: 2800000, guid: 3ca1fee852f7f64488dc7769a856a8b8, type: 3}
+  - {fileID: 2800000, guid: ff30b04ba083575459b26a996be0d39d, type: 3}
   corruptedColorsToMatsRight12:
-  - {fileID: 2800000, guid: e737e2aae923b5b4185c7ea6ef49c09a, type: 3}
-  - {fileID: 2800000, guid: 79ec9aa778e89954ba916b3919aeff7b, type: 3}
-  - {fileID: 2800000, guid: 427b370bca6c7ce44a432f6b266c24bd, type: 3}
-  - {fileID: 2800000, guid: 2f3758bdb92683248877305af625e2ba, type: 3}
+  - {fileID: 2800000, guid: 918106e671141184da04c3840addb800, type: 3}
+  - {fileID: 2800000, guid: 81ed003172f548c429cd762b512bcc9f, type: 3}
+  - {fileID: 2800000, guid: 3ca1fee852f7f64488dc7769a856a8b8, type: 3}
+  - {fileID: 2800000, guid: ff30b04ba083575459b26a996be0d39d, type: 3}
   clipCount: 0
   generalPieceMat: {fileID: 2100000, guid: 848a1e192e96a604c882118986286113, type: 2}
   darkTintedColor: {r: 0.16794233, g: 0.2964434, b: 0.3490566, a: 0.50980395}

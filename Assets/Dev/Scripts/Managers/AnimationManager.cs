@@ -1795,7 +1795,14 @@ public class AnimationManager : MonoBehaviour
 
         foreach (var tile in corruptedTiles)
         {
-            tile.transform.localScale = Vector3.one;
+            if (GameManager.Instance.currentLevel.is12PieceRing)
+            {
+                tile.transform.localScale = GameManager.Instance.clipManager.pieceScaleOnBoard12Ring;
+            }
+            else
+            {
+                tile.transform.localScale = GameManager.Instance.clipManager.pieceScaleOnBoard;
+            }
         }
 
         foreach (var slice in slices)
@@ -1922,7 +1929,16 @@ public class AnimationManager : MonoBehaviour
             LeanTween.scale(tile.gameObject, scaleToSize, timeToScaleCorruptedTilesUp);
             LeanTween.moveLocalY(tile.gameObject, MoveLocalToY, MoveLocalYTimeUp);
             yield return new WaitForSeconds(timeToScaleCorruptedTilesUp + 0.01f);
-            LeanTween.scale(tile.gameObject, Vector3.one, timeToScaleCorruptedTilesDown);
+
+            if (GameManager.Instance.currentLevel.is12PieceRing)
+            {
+                LeanTween.scale(tile.gameObject, GameManager.Instance.clipManager.pieceScaleOnBoard12Ring, timeToScaleCorruptedTilesDown);
+            }
+            else
+            {
+                LeanTween.scale(tile.gameObject, GameManager.Instance.clipManager.pieceScaleOnBoard, timeToScaleCorruptedTilesDown);
+            }
+
             LeanTween.moveLocalY(tile.gameObject, 0f, MoveLocalYTimeDown);
 
             SoundManager.Instance.PlaySound(Sounds.CorruptedTilePop);

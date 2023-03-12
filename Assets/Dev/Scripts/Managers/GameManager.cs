@@ -458,7 +458,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-        if (!isRestart && currentLevel.showIntroLevelAnimation)
+        if ((!isRestart || currentLevel.levelStartDialogueSO) && currentLevel.showIntroLevelAnimation)
         {
             UIManager.Instance.isUsingUI = true; //used to disable pickup pieces
             UIManager.Instance.restartButton.interactable = false;
@@ -512,6 +512,11 @@ public class GameManager : MonoBehaviour
             if (currentLevel.isTutorial && !TutorialSaveData.Instance.completedTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
             {
                 TutorialSequence.Instacne.StartTutorialLevelSequence();
+
+                if(isRestart)
+                {
+                    StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim(false));
+                }
             }
             else if (currentLevel.isSpecificTutorial && !TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(currentLevel.numIndexForLeaderBoard))
             {
@@ -519,8 +524,10 @@ public class GameManager : MonoBehaviour
                 {
                     StartCoroutine(TutorialSequence.Instacne.DisplaySpecificTutorialSequence());
                     TutorialSequence.Instacne.currentSpecificTutorial = currentLevel.specificTutorialEnum;
+
                 }
-                else
+
+                if (isRestart)
                 {
                     StartCoroutine(AnimationManager.instance.PopulateRefrencesEnterLevelAnim(false));
                 }

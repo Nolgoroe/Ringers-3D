@@ -151,7 +151,7 @@ public class BossBattleManager : MonoBehaviour
 
 
 
-        GameManager.Instance.clipManager.PopulateSlot(GameManager.Instance.clipManager.emptyClip, 10);
+        StartCoroutine(GameManager.Instance.clipManager.PopulateSlot(GameManager.Instance.clipManager.emptyClip, 10));
     }
     public void EndDataBossVer2()
     {

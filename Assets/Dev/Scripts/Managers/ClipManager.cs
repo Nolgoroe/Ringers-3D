@@ -77,7 +77,7 @@ public class ClipManager : MonoBehaviour
         foreach (ClipHolder s in slots)
         {
             testnum++;
-            PopulateSlot(s.transform,testnum);
+            StartCoroutine(PopulateSlot(s.transform,testnum));
         }
 
         originalPiecePos = piece.transform.position;
@@ -85,20 +85,30 @@ public class ClipManager : MonoBehaviour
     }
 
 
-    public void PopulateSlot(Transform s, int testnum)
+    public IEnumerator PopulateSlot(Transform s, int testnum)
     {
         ClipHolder CH = s.GetComponent<ClipHolder>();
 
         CH.heldPiece = null;
 
         GameObject go = Instantiate(piece, s);
-        //go.name = "Piece" + " " + testnum;
-        Piece p = go.GetComponent<Piece>();
-        p.SetPieces();
 
+        Piece p = go.GetComponent<Piece>();
+
+        go.SetActive(false);
+
+        p.SetPieces();
         CH.heldPiece = p;
 
-        //go.SetActive(false);
+        if (clipCount == 1)
+        {          
+            yield return StartCoroutine(LastTileAlgoritmCall());
+            go.SetActive(true);
+        }
+        else
+        {
+            go.SetActive(true);
+        }
     }
 
     public void RerollSlotPieceData(Piece p)
@@ -145,14 +155,14 @@ public class ClipManager : MonoBehaviour
 
         for (int i = 0; i < slots.Length; i++)
         {
-            PopulateSlot(slots[i].transform, i);
+            StartCoroutine(PopulateSlot(slots[i].transform, i));
         }
     }
     public void ExtraDealSlotsBadgerSpecial(InGameSpecialPowerUp IGSP)
     {
         if(clipCount < 4)
         {
-            PopulateSlot(slots[clipCount].transform, clipCount);
+            StartCoroutine(PopulateSlot(slots[clipCount].transform, clipCount));
             StartCoroutine(ActivateClip(clipCount));
             clipCount++;
             IGSP.ResetValues();
@@ -327,11 +337,7 @@ public class ClipManager : MonoBehaviour
         {
             if (clipCount == 1)
             {
-                ConnectionManager.Instance.StartLastClipAlgoritm();
-
-                yield return new WaitUntil(() => ConnectionManager.Instance.hasFinishedAlgorithm == true);
-
-                RefreshSlotLastClipAlgoritm(ConnectionManager.Instance.decidedAlgoritmPath);
+                StartCoroutine(LastTileAlgoritmCall());
             }
         }
 
@@ -365,12 +371,12 @@ public class ClipManager : MonoBehaviour
     {
         if (dataNeeded == null || dataNeeded.foundCells.Count == 0)
         {
-            Piece p = slots[clipCount - 1].GetComponentInChildren<Piece>();
+            Piece p = slots[clipCount - 1].heldPiece;
             RerollSlotPieceData(p);
         }
         else
         {
-            Piece p = slots[clipCount - 1].GetComponentInChildren<Piece>();
+            Piece p = slots[clipCount - 1].heldPiece;
             RerollLastSlotPieceAlgoritm(p, dataNeeded);
         }
     }
@@ -431,5 +437,14 @@ public class ClipManager : MonoBehaviour
     public void ReactivateClip(int index)
     {
         slots[index].GetComponent<SpriteRenderer>().color = Color.white;
+    }
+
+    IEnumerator LastTileAlgoritmCall()
+    {
+        ConnectionManager.Instance.StartLastClipAlgoritm();
+
+        yield return new WaitUntil(() => ConnectionManager.Instance.hasFinishedAlgorithm == true);
+
+        RefreshSlotLastClipAlgoritm(ConnectionManager.Instance.decidedAlgoritmPath);
     }
 }

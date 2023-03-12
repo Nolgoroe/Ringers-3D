@@ -2148,11 +2148,33 @@ public class ConnectionManager : MonoBehaviour
         int leftContested = CheckIntRangeSubPiecesAlgoritm((edgeCellIndex * 2) - 1);
         int rightContested = CheckIntRangeSubPiecesAlgoritm((edgeCellIndex * 2) + 2);
 
-        pathsFound.foundCellPath[index].leftAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[leftContested].symbolOfPiece;
-        pathsFound.foundCellPath[index].leftColorNeeded = subPiecesOnBoardTempAlgoritm[leftContested].colorOfPiece;
+        //if(subPiecesOnBoardTempAlgoritm[leftContested])
+        //{
+        //    pathsFound.foundCellPath[index].leftAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[leftContested].symbolOfPiece;
+        //    pathsFound.foundCellPath[index].leftColorNeeded = subPiecesOnBoardTempAlgoritm[leftContested].colorOfPiece;
+        //}
+        //else
+        //{
+        //    pathsFound.foundCellPath[index].leftAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[(edgeCellIndex * 2)].symbolOfPiece;
+        //    pathsFound.foundCellPath[index].leftColorNeeded = subPiecesOnBoardTempAlgoritm[(edgeCellIndex * 2)].colorOfPiece;
+        //}
+
+        //if (subPiecesOnBoardTempAlgoritm[rightContested])
+        //{
+        //    pathsFound.foundCellPath[index].rightAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[rightContested].symbolOfPiece;
+        //    pathsFound.foundCellPath[index].rightColorNeeded = subPiecesOnBoardTempAlgoritm[rightContested].colorOfPiece;
+        //}
+        //else
+        //{
+        //    pathsFound.foundCellPath[index].rightAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[(edgeCellIndex * 2) + 1].symbolOfPiece;
+        //    pathsFound.foundCellPath[index].rightColorNeeded = subPiecesOnBoardTempAlgoritm[(edgeCellIndex * 2) + 1].colorOfPiece;
+        //}
 
         pathsFound.foundCellPath[index].rightAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[rightContested].symbolOfPiece;
         pathsFound.foundCellPath[index].rightColorNeeded = subPiecesOnBoardTempAlgoritm[rightContested].colorOfPiece;
+
+        pathsFound.foundCellPath[index].leftAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[leftContested].symbolOfPiece;
+        pathsFound.foundCellPath[index].leftColorNeeded = subPiecesOnBoardTempAlgoritm[leftContested].colorOfPiece;
 
     }
 
@@ -2167,14 +2189,35 @@ public class ConnectionManager : MonoBehaviour
 
         path.foundCells.Add(edgeCell);
 
-        path.leftAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[leftContested].symbolOfPiece;
-        path.leftColorNeeded = subPiecesOnBoardTempAlgoritm[leftContested].colorOfPiece;
+        if (subPiecesOnBoardTempAlgoritm[leftContested])
+        {
+            path.leftAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[leftContested].symbolOfPiece;
+            path.leftColorNeeded = subPiecesOnBoardTempAlgoritm[leftContested].colorOfPiece;
+        }
+        else
+        {
+            int randomColor = Random.Range(0, GameManager.Instance.currentLevel.levelAvailableColors.Length);
+            int randomSymbol = Random.Range(0, GameManager.Instance.currentLevel.levelAvailablesymbols.Length);
 
-        path.rightAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[rightContested].symbolOfPiece;
-        path.rightColorNeeded = subPiecesOnBoardTempAlgoritm[rightContested].colorOfPiece;
+            path.leftAnimalSymbolNeeded = GameManager.Instance.currentLevel.levelAvailablesymbols[randomSymbol];
+            path.leftColorNeeded = GameManager.Instance.currentLevel.levelAvailableColors[randomColor];
+        }
+
+        if (subPiecesOnBoardTempAlgoritm[rightContested])
+        {
+            path.rightAnimalSymbolNeeded = subPiecesOnBoardTempAlgoritm[rightContested].symbolOfPiece;
+            path.rightColorNeeded = subPiecesOnBoardTempAlgoritm[rightContested].colorOfPiece;
+        }
+        else
+        {
+            int randomColor = Random.Range(0, GameManager.Instance.currentLevel.levelAvailableColors.Length);
+            int randomSymbol = Random.Range(0, GameManager.Instance.currentLevel.levelAvailablesymbols.Length);
+
+            path.rightAnimalSymbolNeeded = GameManager.Instance.currentLevel.levelAvailablesymbols[randomSymbol];
+            path.rightColorNeeded = GameManager.Instance.currentLevel.levelAvailableColors[randomColor];
+        }
 
         decidedAlgoritmPath = path;
-
     }
 
     public bool CheckSubPieceConnectionAlgoritm(bool isLeft, SubPiece currentSide, SubPiece contestedSide, Cell cellTo, out bool conditionMet, out bool isGoodConnect)
