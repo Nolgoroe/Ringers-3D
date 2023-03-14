@@ -1594,7 +1594,7 @@ public class UIManager : MonoBehaviour
     {
         SoundManager.Instance.PlaySound(Sounds.ButtonPressUI);
 
-        Debug.Log("Saved all data! - close game");
+        //Debug.Log("Saved all data! - close game");
 
         Application.Quit();
     }
@@ -1608,12 +1608,12 @@ public class UIManager : MonoBehaviour
     {
         if (on)
         {
-            Debug.Log("usingPowerupText = true");
+            //Debug.Log("usingPowerupText = true");
             //usingPowerupText.SetActive(true);
         }
         else
         {
-            Debug.Log("usingPowerupText = false");
+            //Debug.Log("usingPowerupText = false");
 
             //usingPowerupText.SetActive(false);
         }
@@ -3037,7 +3037,7 @@ public class UIManager : MonoBehaviour
     {
         if (GameManager.Instance.currentIndexInDialogue == GameManager.Instance.currentDialogue.allEntries.Length)
         {
-            Debug.LogError("HEZZE");
+            //Debug.LogError("HEZZE");
         }
         else
         {

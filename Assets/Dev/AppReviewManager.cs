@@ -98,7 +98,7 @@ public class AppReviewManager : MonoBehaviour
         if (requestFlowOperation.Error != ReviewErrorCode.NoError)
         {
             // Log error. For example, using requestFlowOperation.Error.ToString().
-            Debug.LogError("Big problem with review!");
+            //Debug.LogError("Big problem with review!");
             yield break;
         }
 
@@ -115,14 +115,14 @@ public class AppReviewManager : MonoBehaviour
         if (launchFlowOperation.Error != ReviewErrorCode.NoError)
         {
             // Log error. For example, using requestFlowOperation.Error.ToString().
-            Debug.LogError("Big problem with review! again!");
+            //Debug.LogError("Big problem with review! again!");
             yield break;
         }
         // The flow has finished. The API does not indicate whether the user
         // reviewed or not, or even whether the review dialog was shown. Thus, no
         // matter the result, we continue our app flow.
 
-        Debug.LogError("no problem - done!");
+        //Debug.LogError("no problem - done!");
     }
 
 }

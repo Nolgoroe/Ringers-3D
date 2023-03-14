@@ -222,7 +222,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
+                //Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
             }
 
             if (AnimalsManager.Instance.statueToSwap && !currentLevel.isTimerLevel)
@@ -247,7 +247,7 @@ public class GameManager : MonoBehaviour
 
             if (AnimationManager.instance.endLevelAnimationON)
             {
-                Debug.LogError("CHECK THIS PROBLEM");
+                //Debug.LogError("CHECK THIS PROBLEM");
                 AnimationManager.instance.endLevelAnimationON = false;
             }
 
@@ -401,7 +401,7 @@ public class GameManager : MonoBehaviour
 
         if (!SoundManager.Instance.normalAmbienceLevel.isPlaying)
         {
-            Debug.Log("Change music");
+            //Debug.Log("Change music");
 
             StartCoroutine(SoundManager.Instance.FadeInAmbientMusicLevel(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbienceClip));
         }
@@ -409,7 +409,7 @@ public class GameManager : MonoBehaviour
         {
             if (!hasRestartedLevel)
             {
-                Debug.Log("Just volume up");
+                //Debug.Log("Just volume up");
                 StartCoroutine(SoundManager.Instance.FadeInOnlyLevelVolume(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbienceClip));
             }
         }
@@ -576,7 +576,7 @@ public class GameManager : MonoBehaviour
 
         if (AnimationManager.instance.endLevelAnimationON)
         {
-            Debug.LogError("CHECK THIS PROBLEM");
+            //Debug.LogError("CHECK THIS PROBLEM");
             AnimationManager.instance.endLevelAnimationON = false;
         }
 
@@ -989,7 +989,7 @@ public class GameManager : MonoBehaviour
                     PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.TutorialSaveData });
                 }
 
-                Debug.Log("YOU WIN");
+                //Debug.Log("YOU WIN");
 
                 LevelEnded = true;
 
@@ -1011,7 +1011,7 @@ public class GameManager : MonoBehaviour
 
                 GameAnalytics.NewDesignEvent("Finished level:" + currentLevel.worldName + ":" + "Level " + currentLevel.levelNum + ":" + "Time taken " + time);
 
-                Debug.Log(time);
+                //Debug.Log(time);
 
                 timeStartLevel = "";
 
@@ -1030,7 +1030,7 @@ public class GameManager : MonoBehaviour
     {
         UIManager.Instance.DisplayEndLevelMessage();
 
-        Debug.Log("You Lose");
+        //Debug.Log("You Lose");
 
         //if(CursorController.Instance.followerTarget != null)
         //{
@@ -1043,7 +1043,7 @@ public class GameManager : MonoBehaviour
     {
         UIManager.Instance.DisplayLoseScreen();
 
-        Debug.Log("You Lose");
+        //Debug.Log("You Lose");
 
         if (CursorController.Instance.followerTarget != null)
         {
@@ -1062,7 +1062,7 @@ public class GameManager : MonoBehaviour
     public void WinAfterAnimation()
     {
 
-        Debug.Log("IN HERE");
+        //Debug.Log("IN HERE");
         if (currentLevel.isGrindLevel)
         {
             StartCoroutine(LootManager.Instance.GiveLoot());
@@ -1340,7 +1340,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("Cell index is either too high or too low - Min 0, Max 7");
+                    //Debug.LogError("Cell index is either too high or too low - Min 0, Max 7");
                 }
             }
             else
@@ -1351,7 +1351,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("Cell index is either too high or too low - Min 0, Max 7");
+                    //Debug.LogError("Cell index is either too high or too low - Min 0, Max 7");
                 }
             }
         }
@@ -1411,7 +1411,7 @@ public class GameManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError("Not possible to summon pieces with 1 space between them");
+                        //Debug.LogError("Not possible to summon pieces with 1 space between them");
                         return;
                     }
                 }
@@ -1431,7 +1431,7 @@ public class GameManager : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError("Not possible to summon pieces with 1 space between them");
+                        //Debug.LogError("Not possible to summon pieces with 1 space between them");
                         return;
                     }
 

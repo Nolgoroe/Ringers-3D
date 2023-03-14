@@ -71,7 +71,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
         EquipmentData EQ = GameManager.Instance.csvParser.allEquipmentInGame.Where(p => p.power == potionType).SingleOrDefault();
         if (EQ == null)
         {
-            Debug.LogError("Error potions here");
+            //Debug.LogError("Error potions here");
             return;
         }
 
@@ -94,7 +94,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
             EquipmentData EQ = GameManager.Instance.csvParser.allEquipmentInGame[i];
             if (EQ == null)
             {
-                Debug.LogError("Error potions here in UNLOCK ALL");
+                //Debug.LogError("Error potions here in UNLOCK ALL");
                 return;
             }
         }
@@ -119,7 +119,7 @@ public class MaterialsAndForgeManager : MonoBehaviour
             
             if(EQ == null)
             {
-                Debug.LogError("Error potions here");
+                //Debug.LogError("Error potions here");
                 yield break;
             }
             
@@ -139,10 +139,10 @@ public class MaterialsAndForgeManager : MonoBehaviour
                     break;
                 case -1:
                     ED.usageCount.text = EQ.numOfUses.ToString() + " FUCK YOU";
-                    Debug.LogError("WTFFFFFFFFFFFFFFFFFFF");
+                    //Debug.LogError("WTFFFFFFFFFFFFFFFFFFF");
                     break;
                 default:
-                    Debug.LogError("dOes NOt ExiSt BiaTch");
+                    //Debug.LogError("dOes NOt ExiSt BiaTch");
                     break;
             }
             string tmp = GameManager.Instance.powerupManager.spriteByType[EQ.power];

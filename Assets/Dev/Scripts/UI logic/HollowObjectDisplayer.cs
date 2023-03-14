@@ -154,7 +154,7 @@ public class HollowObjectDisplayer : MonoBehaviour
 
             if(HCOD != null)
             {
-                Debug.LogError("Already OWN this hollow item!");
+                //Debug.LogError("Already OWN this hollow item!");
                 return;
             }
         }
@@ -165,7 +165,7 @@ public class HollowObjectDisplayer : MonoBehaviour
 
             if (FIAZI != null)
             {
-                Debug.LogError("Already PLACED this hollow item!");
+                //Debug.LogError("Already PLACED this hollow item!");
                 return;
             }
         }
@@ -176,8 +176,8 @@ public class HollowObjectDisplayer : MonoBehaviour
 
             foreach (CraftingMatsNeeded CMN in craftingMatsForEquipment)
             {
-                Debug.Log(CMN.mat.ToString());
-                Debug.Log(CMN.amount);
+                //Debug.Log(CMN.mat.ToString());
+                //Debug.Log(CMN.amount);
 
                 PlayerManager.Instance.DecreaseNumOfMats(CMN);
             }

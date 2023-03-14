@@ -48,14 +48,14 @@ public class AutoVersionUpdater : MonoBehaviour
         PlayFabClientAPI.GetTitleData(new GetTitleDataRequest(), onGetTitleData, OnError);
         yield return new WaitUntil(() => PlayfabManager.successfullyDoneWithStep != null);
 
-        Debug.LogError("Compared versions and updated the game!!");
+        //Debug.LogError("Compared versions and updated the game!!");
     }
 
     void onGetTitleData(GetTitleDataResult result)
     {
         if (result.Data == null)
         {
-            Debug.LogError("No data recieved from title data");
+            //Debug.LogError("No data recieved from title data");
             PlayfabManager.successfullyDoneWithStep = false;
         }
         else
@@ -69,8 +69,8 @@ public class AutoVersionUpdater : MonoBehaviour
 
     void OnError(PlayFabError error)
     {
-        Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
-        Debug.LogError(error.GenerateErrorReport());
+        //Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
+        //Debug.LogError(error.GenerateErrorReport());
 
         //PlayfabManager.isSuccessfullConnection = false;
         PlayfabManager.successfullyDoneWithStep = false;
@@ -99,7 +99,7 @@ public class AutoVersionUpdater : MonoBehaviour
             else
             {
                 PlayfabManager.successfullyDoneWithStep = true;
-                Debug.Log("Server version is too high for this version of the game.");
+                //Debug.Log("Server version is too high for this version of the game.");
             }
         }
         else
@@ -122,7 +122,7 @@ public class AutoVersionUpdater : MonoBehaviour
         yield return new WaitForSeconds(2);
         mostRecentGameVersion = 1;
 
-        Debug.Log("Successfull Data Update Zero to one");
+        //Debug.Log("Successfull Data Update Zero to one");
         CompareVersions();
     }
 
@@ -155,7 +155,7 @@ public class AutoVersionUpdater : MonoBehaviour
 
         yield return new WaitUntil(() => doneWithSubStep != null);
 
-        Debug.Log("Successfull Data Update One to two!");
+        //Debug.Log("Successfull Data Update One to two!");
         CompareVersions();
     }
 
@@ -182,14 +182,14 @@ public class AutoVersionUpdater : MonoBehaviour
 
         yield return new WaitUntil(() => doneWithSubStep != null);
 
-        Debug.Log("Successfull Data Update Two to One!");
+        //Debug.Log("Successfull Data Update Two to One!");
         CompareVersions();
     }
 
     void OnErrorUpdateTutorialData(PlayFabError error)
     {
-        Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
-        Debug.LogError(error.GenerateErrorReport());
+        //Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
+        //Debug.LogError(error.GenerateErrorReport());
         doneWithSubStep = true;
     }
 
@@ -271,8 +271,8 @@ public class AutoVersionUpdater : MonoBehaviour
 
     void OnErrorUpdateZones(PlayFabError error)
     {
-        Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
-        Debug.LogError(error.GenerateErrorReport());
+        //Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
+        //Debug.LogError(error.GenerateErrorReport());
         doneWithSubStep = true;
     }
     void OnDataRecievedUpdateZones(GetUserDataResult result)
@@ -291,8 +291,8 @@ public class AutoVersionUpdater : MonoBehaviour
 
     void OnErrorRecieveOneToTwo(PlayFabError error)
     {
-        Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
-        Debug.LogError(error.GenerateErrorReport());
+        //Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
+        //Debug.LogError(error.GenerateErrorReport());
         doneWithSubStep = true;
     }
 
@@ -460,8 +460,8 @@ public class AutoVersionUpdater : MonoBehaviour
     }
     void OnErrorOneToTwoDataSend(PlayFabError error)
     {
-        Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
-        Debug.LogError(error.GenerateErrorReport());
+        //Debug.LogError("Errrrrror!!! " + error.ErrorMessage);
+        //Debug.LogError(error.GenerateErrorReport());
 
         doneWithSubStep = true;
     }

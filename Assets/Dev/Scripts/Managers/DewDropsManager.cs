@@ -64,7 +64,7 @@ public class DewDropsManager : MonoBehaviour
             //DateTime saved = DateTime.ParseExact(savedDateTime, formats, CultureInfo.CurrentCulture);
             //TimeSpan deltaDateTime = currentTime - saved;
 
-            Debug.LogError("THIS IS THE DELTA TIME: " + deltaDateTime);
+            //Debug.LogError("THIS IS THE DELTA TIME: " + deltaDateTime);
 
             GiveElapsedTimeDewDrops(deltaDateTime);
         }
@@ -91,7 +91,7 @@ public class DewDropsManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("1111 GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
+            //Debug.LogError("1111 GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
 
             if (timeLeftToGiveDrop < 0)
             {
@@ -99,7 +99,7 @@ public class DewDropsManager : MonoBehaviour
 
                 savedDateTime = currentTime.ToString();
 
-                Debug.LogError("GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
+                //Debug.LogError("GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
                 GiveDrop(1);
             }
             else
@@ -174,7 +174,7 @@ public class DewDropsManager : MonoBehaviour
 
                 if (PlayerManager.Instance.collectedDewDrops < maxDrops)
                 {
-                    Debug.LogError("222 GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
+                    //Debug.LogError("222 GIVE!!! TIME LEFT IS: " + timeLeftToGiveDrop);
 
                     GiveDrop(1);
                 }
@@ -200,7 +200,7 @@ public class DewDropsManager : MonoBehaviour
 
     public void GiveDrop(int amount)
     {
-        Debug.LogError("Gave drop");
+        //Debug.LogError("Gave drop");
         PlayerManager.Instance.collectedDewDrops += amount;
 
         if (PlayerManager.Instance.collectedDewDrops > maxDrops)

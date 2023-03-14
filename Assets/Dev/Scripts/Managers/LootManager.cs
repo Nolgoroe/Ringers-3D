@@ -444,7 +444,7 @@ public class LootManager : MonoBehaviour
                         break;
 
                     default:
-                        Debug.LogError("Error in chest loot here");
+                        //Debug.LogError("Error in chest loot here");
                         break;
                 }
             }
@@ -526,7 +526,7 @@ public class LootManager : MonoBehaviour
 
             PlayerManager.Instance.AddRubies(rubiesToGiveChest);
 
-            Debug.LogError("Rubies Recieved chest: " + rubiesToGiveChest);
+            //Debug.LogError("Rubies Recieved chest: " + rubiesToGiveChest);
 
             yield return new WaitForSeconds(timeBetweenLoots);
         }
@@ -545,7 +545,7 @@ public class LootManager : MonoBehaviour
 
                 PlayerManager.Instance.AddMaterials(LTR.type, LTR.amount); //////// Figure out how to get amount from outside dynamically
 
-                Debug.LogError("materials recieved chest: " + LTR.type);
+                //Debug.LogError("materials recieved chest: " + LTR.type);
 
                 pointsOfInterestSaveData.instance.AddToPointsOfInterest(LTR.type);
 

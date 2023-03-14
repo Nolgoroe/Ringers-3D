@@ -351,7 +351,7 @@ public class PlayerManager : MonoBehaviour
                     SearchWardrobeForMatch(ED);
                 }
 
-                Debug.Log("Cooldown Done! " + ED.name);
+                //Debug.Log("Cooldown Done! " + ED.name);
 
             }
         }

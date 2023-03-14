@@ -807,7 +807,7 @@ public class TutorialSequence : MonoBehaviour
 
             maskImage.gameObject.SetActive(false);
             duringSequence = false;
-            Debug.Log("Phases are done!");
+            //Debug.Log("Phases are done!");
             //Invoke("UnlockAll", 2);
 
             if (!GameManager.LevelEnded)
@@ -900,7 +900,7 @@ public class TutorialSequence : MonoBehaviour
 
         if (currentPhaseInSequenceLevels + 1 <= levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].EndPhaseID)
         {
-            Debug.Log("ARRIVED HERE");
+            //Debug.Log("ARRIVED HERE");
             StartCoroutine(SelectReleventHeighlights(currentPhaseInSequenceLevels, false));
             ChangePhase(levelSequences, GameManager.Instance.currentLevel.tutorialIndexForList, currentPhaseInSequenceLevels);
         }
@@ -952,7 +952,7 @@ public class TutorialSequence : MonoBehaviour
             {
                 TutorialSaveData.Instance.hasFinishedPotion = true;
 
-                Debug.LogError("Potions should work now");
+                //Debug.LogError("Potions should work now");
                 MaterialsAndForgeManager.Instance.ResetPotionDataAfterTutorial();
             }
 
@@ -960,17 +960,17 @@ public class TutorialSequence : MonoBehaviour
             {
                 TutorialSaveData.Instance.hasFinishedDen = true;
 
-                Debug.LogError("Den Tutorial Done");
+                //Debug.LogError("Den Tutorial Done");
             }
 
             if (currentSpecificTutorial == SpecificTutorialsEnum.AnimalAlbum)
             {
                 TutorialSaveData.Instance.hasFinishedAnimalAlbum = true;
 
-                Debug.LogError("Animal Album Tutorial Done");
+                //Debug.LogError("Animal Album Tutorial Done");
             }
 
-            if(currentSpecificTutorial == SpecificTutorialsEnum.BossTimedLevel)
+            if (currentSpecificTutorial == SpecificTutorialsEnum.BossTimedLevel)
             {
                 TimerLevelManager.instance.StartTimer();
             }
@@ -1057,7 +1057,7 @@ public class TutorialSequence : MonoBehaviour
 
         if (currentPhaseInSequenceLevels + 1 <= specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].EndPhaseID)
         {
-            Debug.Log("ARRIVED HERE");
+            //Debug.Log("ARRIVED HERE");
             StartCoroutine(SelectReleventHeighlights(currentPhaseInSequenceSpecific, true));
             ChangePhase(specificTutorials, (int)GameManager.Instance.currentLevel.specificTutorialEnum - 1, currentPhaseInSequenceSpecific);
         }
@@ -1242,7 +1242,7 @@ public class TutorialSequence : MonoBehaviour
 
         if(cellID2 == -1)
         {
-            Debug.LogError("Something bad happened here!");
+            //Debug.LogError("Something bad happened here!");
             return;
         }
 
@@ -1732,7 +1732,7 @@ public class TutorialSequence : MonoBehaviour
             }
         }
 
-        Debug.Log("Added missing ingredients!");
+        //Debug.Log("Added missing ingredients!");
     }
 
     public void AddToPlayerMatsForHollowCraft(List<CraftingMatsNeeded> CMN)
@@ -1752,7 +1752,7 @@ public class TutorialSequence : MonoBehaviour
         }
 
         HollowCraftAndOwnedManager.Instance.RefreshHollowObjects();
-        Debug.Log("Added missing ingredients!");
+        //Debug.Log("Added missing ingredients!");
     }
 
     public void CheckEmptyTouchIncrementPhase(bool isSpecificTutorial)
@@ -1783,7 +1783,7 @@ public class TutorialSequence : MonoBehaviour
 
         maskImage.gameObject.SetActive(false);
         duringSequence = false;
-        Debug.Log("Phases are done!");
+        //Debug.Log("Phases are done!");
         //Invoke("UnlockAll", 2);
 
         if (!GameManager.LevelEnded)

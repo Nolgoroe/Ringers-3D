@@ -141,7 +141,7 @@ public class Cell : MonoBehaviour
             }
             else
             {
-                Debug.Log("Faild to create piece");
+                //Debug.Log("Faild to create piece");
             }
 
             isFull = true;
@@ -214,7 +214,7 @@ public class Cell : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Trying to create piece on an already full cell");
+            //Debug.LogError("Trying to create piece on an already full cell");
         }
     }
 
@@ -553,7 +553,7 @@ public class Cell : MonoBehaviour
         if (GameManager.Instance.currentFilledCellCount == GameManager.Instance.currentLevel.cellsCountInLevel)
         {
 
-            Debug.LogError("LOSE BOSS BATTLE");
+            //Debug.LogError("LOSE BOSS BATTLE");
             return;
         }
     }

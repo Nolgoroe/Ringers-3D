@@ -38,42 +38,42 @@ public class DialogueObjectRefrences : MonoBehaviour
     {
         if(spineAsset == null)
         {
-            Debug.LogError("No spine asset");
+            //Debug.LogError("No spine asset");
             return;
         }
 
         spineAsset.TryGetComponent<SkeletonAnimation>(out skeletonAnimation);
         if (skeletonAnimation == null)
         {
-            Debug.LogError("Problem here 1!"); 
+            //Debug.LogError("Problem here 1!"); 
             return;
         }
 
         spineAnimationState = skeletonAnimation.AnimationState;
         if (spineAnimationState == null)
         {
-            Debug.LogError("Problem here 2!");
+            //Debug.LogError("Problem here 2!");
             return;
         }
 
         spineAsset.TryGetComponent<SkeletonRenderer>(out skeletonRenderer);
         if (skeletonRenderer == null)
         {
-            Debug.LogError("Problem here 3!"); 
+            //Debug.LogError("Problem here 3!"); 
             return;
         }
 
         spineAsset.TryGetComponent<PlayableDirector>(out director);
         if (director == null)
         {
-            Debug.LogError("Problem here 4!");
+            //Debug.LogError("Problem here 4!");
             return;
         }
 
         spineAsset.TryGetComponent<SpineBlinkPlayer>(out blinkAnimationRef);
         if (blinkAnimationRef == null)
         {
-            Debug.LogError("Problem here 5!");
+            //Debug.LogError("Problem here 5!");
             return;
         }
 
@@ -92,14 +92,14 @@ public class DialogueObjectRefrences : MonoBehaviour
         spineAsset.TryGetComponent<SkeletonAnimation>(out skeletonAnimation);
         if (skeletonAnimation == null)
         {
-            Debug.LogError("Problem here 1!");
+            //Debug.LogError("Problem here 1!");
             return;
         }
 
         spineAnimationState = skeletonAnimation.AnimationState;
         if (spineAnimationState == null)
         {
-            Debug.LogError("Problem here 2!");
+            //Debug.LogError("Problem here 2!");
             return;
         }
     }

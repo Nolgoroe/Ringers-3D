@@ -16,7 +16,7 @@ public class TestLevelsSystemManagerSaveData : MonoBehaviour
 
     public void AddToChestBar()
     {
-        Debug.LogError("CHEST BAR!!!");
+        //Debug.LogError("CHEST BAR!!!");
 
         CompletedCount++;
 

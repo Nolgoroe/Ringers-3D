@@ -96,7 +96,7 @@ public class BossBattleManager : MonoBehaviour
             UIManager.Instance.DisplayBossWinScreen();
             BossesSaveDataManager.instance.BossOneSaveHP = 0;
 
-            Debug.Log("YOU WIN");
+            //Debug.Log("YOU WIN");
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.BossesSaveData });
 
@@ -109,7 +109,7 @@ public class BossBattleManager : MonoBehaviour
             UIManager.Instance.DisplayBossWellDoneScreen();
             BossesSaveDataManager.instance.BossOneSaveHP = currentBossHealth;
 
-            Debug.Log("YOU LOSE");
+            //Debug.Log("YOU LOSE");
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player, SystemsToSave.BossesSaveData });
 
@@ -275,7 +275,7 @@ public class BossBattleManager : MonoBehaviour
             BossesSaveDataManager.instance.BossTwoSaveHP = 0;
             OnEndBossVer2Fight();
 
-            Debug.Log("YOU WIN");
+            //Debug.Log("YOU WIN");
 
             return;
         }
@@ -370,7 +370,7 @@ public class BossBattleManager : MonoBehaviour
             BossesSaveDataManager.instance.BossTwoSaveHP = currentBossHealth;
             OnEndBossVer2Fight();
 
-            Debug.Log("YOU LOSE");
+            //Debug.Log("YOU LOSE");
         }
     }
 

@@ -38,7 +38,7 @@ public class AnimationEventsAnimals : MonoBehaviour
         else
         {
             AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive " + GameManager.Instance.currentIndexInCluster);
-            Debug.LogError("here 4");
+            //Debug.LogError("here 4");
 
             if (TestLevelsSystemManagerSaveData.instance.CompletedCount + 1 == GameManager.Instance.currentCluster.clusterLevels.Length)
             {
@@ -85,7 +85,7 @@ public class AnimationEventsAnimals : MonoBehaviour
 
     public void PlaySound(AudioClip clip)
     {
-        Debug.LogError("TESTING");
+        //Debug.LogError("TESTING");
         SoundManager.Instance.PlaySound(clip);
     }
 

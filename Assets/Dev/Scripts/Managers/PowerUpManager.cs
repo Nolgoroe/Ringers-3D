@@ -254,7 +254,7 @@ public class PowerUpManager : MonoBehaviour
             FinishedUsingPowerup(false, prop);
         }
 
-        Debug.Log("Extra Deal");
+        //Debug.Log("Extra Deal");
 
     }
     public void CallJokerCoroutine(PowerupProperties prop)
@@ -395,7 +395,7 @@ public class PowerUpManager : MonoBehaviour
                 toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
 
                 successfulUse = true;
-                GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion of type:" + "Joker potion");
+                GameAnalytics.NewDesignEvent("Used potion of type:" + "Joker potion");
             }
             else
             {
@@ -430,7 +430,7 @@ public class PowerUpManager : MonoBehaviour
                 toWorkOn.rightChild.SetPieceAsJoker();
 
                 successfulUse = true;
-                GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion of type:" + "Joker potion");
+                GameAnalytics.NewDesignEvent("Used potion of type:" + "Joker potion");
             }
 
             toWorkOn.isLocked = false;
@@ -445,7 +445,7 @@ public class PowerUpManager : MonoBehaviour
             {
                 StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
             }
-            Debug.Log("Joker");
+            //Debug.Log("Joker");
         }
         else
         {
@@ -485,7 +485,7 @@ public class PowerUpManager : MonoBehaviour
 
                     toWorkOn.transform.parent.GetComponent<Cell>().AddPiece(toWorkOn.transform, false);
 
-                    GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion of type:" + "Switch potion");
+                    GameAnalytics.NewDesignEvent("Used potion of type:" + "Switch potion");
 
                     FinishedUsingPowerup(true, prop);
                     ShakePiecePowerUp(toWorkOn.gameObject);
@@ -514,7 +514,7 @@ public class PowerUpManager : MonoBehaviour
                 toWorkOn.leftChild.RefreshPiece();
                 toWorkOn.rightChild.RefreshPiece();
 
-                GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion of type:" + "Switch potion");
+                GameAnalytics.NewDesignEvent("Used potion of type:" + "Switch potion");
 
                 FinishedUsingPowerup(true, prop);
                 ShakePiecePowerUp(toWorkOn.gameObject);
@@ -525,7 +525,7 @@ public class PowerUpManager : MonoBehaviour
                 StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
             }
 
-            Debug.Log("Switch");
+            //Debug.Log("Switch");
         }
         else
         {
@@ -568,7 +568,7 @@ public class PowerUpManager : MonoBehaviour
             Destroy(toWorkOn.gameObject, 0.5f);
 
 
-            GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion of type:" + "Tile Bomb potion");
+            GameAnalytics.NewDesignEvent("Used potion of type:" + "Tile Bomb potion");
 
             FinishedUsingPowerup(true, prop);
 
@@ -583,7 +583,7 @@ public class PowerUpManager : MonoBehaviour
             FinishedUsingPowerup(false, prop);
         }
 
-        Debug.Log("Piece Bomb");
+        //Debug.Log("Piece Bomb");
 
     }
     public IEnumerator SliceBombPower(PowerupProperties prop)
@@ -670,7 +670,7 @@ public class PowerUpManager : MonoBehaviour
 
             if (rightFull && leftFull)
             {
-                Debug.Log("Right and Left");
+                //Debug.Log("Right and Left");
                 Transform pa = ConnectionManager.Instance.cells[a].pieceHeld.transform;
                 Transform pb = ConnectionManager.Instance.cells[b].pieceHeld.transform;
 
@@ -684,7 +684,7 @@ public class PowerUpManager : MonoBehaviour
             }
             else if (leftFull)
             {
-                Debug.Log("Left Only");
+                //Debug.Log("Left Only");
 
                 Transform p = ConnectionManager.Instance.cells[b].pieceHeld.transform;
                 ConnectionManager.Instance.cells[b].RemovePiece(true);
@@ -694,7 +694,7 @@ public class PowerUpManager : MonoBehaviour
             }
             else if (rightFull)
             {
-                Debug.Log("Right Only");
+                //Debug.Log("Right Only");
 
                 Transform p = ConnectionManager.Instance.cells[a].pieceHeld.transform;
                 ConnectionManager.Instance.cells[a].RemovePiece(true);
@@ -704,7 +704,7 @@ public class PowerUpManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("No Pieces to check connections");
+                // Debug.LogError("No Pieces to check connections");
             }
         }
 
@@ -717,7 +717,7 @@ public class PowerUpManager : MonoBehaviour
 
         //ConnectionManager.Instance.CallConnection(a, false, false); //refresh connections
         //ConnectionManager.Instance.CallConnection(b, false, false); //refresh connections
-        GameAnalytics.NewDesignEvent(PlayfabManager.instance.playerName + "Used potion of type:" + "Slice Bomb potion");
+        GameAnalytics.NewDesignEvent("Used potion of type:" + "Slice Bomb potion");
 
         FinishedUsingPowerup(true, prop);
 
@@ -726,7 +726,7 @@ public class PowerUpManager : MonoBehaviour
             StartCoroutine(TutorialSequence.Instacne.IncrementPhaseInSpecificTutorial());
         }
 
-        Debug.Log("Slice Bomb");
+        //Debug.Log("Slice Bomb");
 
     }
     public IEnumerator FourColorPower(PowerupProperties prop)
@@ -751,7 +751,7 @@ public class PowerUpManager : MonoBehaviour
 
             FinishedUsingPowerup(true, prop);
 
-            Debug.Log("Four Color");
+            //Debug.Log("Four Color");
         }
         else
         {
@@ -778,7 +778,7 @@ public class PowerUpManager : MonoBehaviour
 
             FinishedUsingPowerup(true, prop);
 
-            Debug.Log("Four Symbol");
+            //Debug.Log("Four Symbol");
         }
         else
         {
@@ -933,7 +933,7 @@ public class PowerUpManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Something very wrong happened here - stop the finished using power coroutine");
+                //Debug.LogError("Something very wrong happened here - stop the finished using power coroutine");
                 return;
             }
         }
@@ -997,7 +997,7 @@ public class PowerUpManager : MonoBehaviour
 
     public void ReactivatePowerButtons()
     {
-        Debug.LogError("reactivating");
+        //Debug.LogError("reactivating");
         foreach (PowerupProperties but in powerupButtons)
         {
             if (but.gameObject.GetComponent<PowerupProperties>().numOfUses > 0)
@@ -1034,7 +1034,7 @@ public class PowerUpManager : MonoBehaviour
         {
             if(IGSP.SymbolNeeded == symbol)
             {
-                Debug.Log(IGSP.SymbolNeeded);
+                //Debug.Log(IGSP.SymbolNeeded);
 
                 IGSP.UpdateSlider(amount);
             }

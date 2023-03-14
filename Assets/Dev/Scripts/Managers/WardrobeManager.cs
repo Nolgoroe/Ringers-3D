@@ -56,10 +56,10 @@ public class WardrobeManager : MonoBehaviour
                 break;
             case -1:
                 WED.equipmentUsage.text = eData.numOfUses.ToString() + " FUCK YOU";
-                Debug.LogError("WTFFFFFFFFFFFFFFFFFFF");
+                //Debug.LogError("WTFFFFFFFFFFFFFFFFFFF");
                 break;
             default:
-                Debug.LogError("dOes NOt ExiSt BiaTch");
+               //Debug.LogError("dOes NOt ExiSt BiaTch");
                 break;
         }
 

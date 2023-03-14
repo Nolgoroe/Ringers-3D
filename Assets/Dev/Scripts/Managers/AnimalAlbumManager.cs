@@ -171,7 +171,7 @@ public class AnimalAlbumManager : MonoBehaviour
                 AnimalsManager.Instance.completedAnimalPagesToReward.Add(newCPTR);
                 giveRewardButton.gameObject.SetActive(true);
 
-                Debug.LogError("Do the completed combo thing here");
+                //Debug.LogError("Do the completed combo thing here");
                 PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.animalManager });
 
             }
@@ -215,7 +215,7 @@ public class AnimalAlbumManager : MonoBehaviour
 
 
 
-            Debug.LogError("gave reward");
+            //Debug.LogError("gave reward");
         }
     }
 

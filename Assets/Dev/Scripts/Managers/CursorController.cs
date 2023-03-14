@@ -107,7 +107,7 @@ public class CursorController : MonoBehaviour
 
                 if (touch.phase == TouchPhase.Began)
                 {
-                    Debug.Log("ADVANCING");
+                    //Debug.Log("ADVANCING");
                     StartCoroutine(UIManager.Instance.AdvanceIntroScreen());
                 }
             }
@@ -167,7 +167,7 @@ public class CursorController : MonoBehaviour
                 {
                     SoundManager.Instance.audioSourceSFX.Stop();
                     UIManager.Instance.UnlockedZoneMessageView.SetActive(false);
-                    Debug.Log("THIS IS HOW MANY TIMES");
+                    //Debug.Log("THIS IS HOW MANY TIMES");
                     if (ZoneManager.Instance.zonesToUnlock.Count > 0)
                     {
                         ZoneManager.CanUnlockZone = true;
@@ -225,7 +225,7 @@ public class CursorController : MonoBehaviour
                     transform.position = mouseRay.origin;
                     cursorPos.position = mouseRay.origin + mouseRay.direction * distanceFromBoard;
 
-                    Debug.Log(cursorPos.position + " Follower");
+                    //Debug.Log(cursorPos.position + " Follower");
 
                     if (gameBoard)
                     {
@@ -255,7 +255,7 @@ public class CursorController : MonoBehaviour
                     cursorPos.position = mouseRay.origin + mouseRay.direction * distanceFromBoard;
                     cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y, gameBoard.transform.position.z);
 
-                    Debug.Log(cursorPos.position);
+                    //Debug.Log(cursorPos.position);
 
                     RaycastHit hit;
 
@@ -568,7 +568,7 @@ public class CursorController : MonoBehaviour
                                     if (!closest.transform.GetComponent<Cell>().isFull && !closest.transform.GetComponent<Cell>().isDuringConnectionAnim)
                                     {
                                         ConnectionManager.Instance.ConnectionManagerAnim(closest.GetComponent<Cell>().cellIndex, closest.GetComponent<Cell>().isOuter);
-                                        Debug.Log("In Second");
+                                        //Debug.Log("In Second");
                                     }
                                     else
                                     {
@@ -616,7 +616,7 @@ public class CursorController : MonoBehaviour
             {
                 if (touch.phase == TouchPhase.Began)
                 {
-                    Debug.Log("here");
+                    //Debug.Log("here");
                     hasclickedPowerUp = true;
                     mouseRay = Camera.main.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 0));
 

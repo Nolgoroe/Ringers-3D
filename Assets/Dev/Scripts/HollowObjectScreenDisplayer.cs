@@ -146,7 +146,7 @@ public class HollowObjectScreenDisplayer : MonoBehaviour, IPointerDownHandler
 
             if (HCOD != null)
             {
-                Debug.LogError("Already OWN this hollow item!");
+                //Debug.LogError("Already OWN this hollow item!");
                 return;
             }
         }
@@ -157,7 +157,7 @@ public class HollowObjectScreenDisplayer : MonoBehaviour, IPointerDownHandler
 
             if (FIAZI != null)
             {
-                Debug.LogError("Already PLACED this hollow item!");
+                //Debug.LogError("Already PLACED this hollow item!");
                 return;
             }
         }

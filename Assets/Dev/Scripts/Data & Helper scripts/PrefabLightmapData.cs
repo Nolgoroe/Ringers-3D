@@ -163,7 +163,7 @@ public class PrefabLightmapData : MonoBehaviour
     {
         if (UnityEditor.Lightmapping.giWorkflowMode != UnityEditor.Lightmapping.GIWorkflowMode.OnDemand)
         {
-            Debug.LogError("ExtractLightmapData requires that you have baked you lightmaps and Auto mode is disabled.");
+            //Debug.LogError("ExtractLightmapData requires that you have baked you lightmaps and Auto mode is disabled.");
             return;
         }
         UnityEditor.Lightmapping.Bake();

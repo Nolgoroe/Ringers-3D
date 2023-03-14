@@ -140,17 +140,17 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
                         {
                             if (owned != null && FIAZI == null)
                             {
-                                Debug.LogError("skipped cause OWNED");
+                                //Debug.LogError("skipped cause OWNED");
                             }
 
-                            if(FIAZI != null && owned == null)
+                            if (FIAZI != null && owned == null)
                             {
-                                Debug.LogError("skipped cause PLACED");
+                                //Debug.LogError("skipped cause PLACED");
                             }
 
                             if (FIAZI != null && owned != null)
                             {
-                                Debug.LogError("skipped cause PLACED & OWNED");
+                                //Debug.LogError("skipped cause PLACED & OWNED");
                             }
                         }
                     }

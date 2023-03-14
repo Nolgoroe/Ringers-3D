@@ -80,7 +80,7 @@ public class LineController : MonoBehaviour
             }
         }
 
-        Debug.LogError("WHAHHAHAHAHAA");
+        //Debug.LogError("WHAHHAHAHAHAA");
         return -1;
     }
 }

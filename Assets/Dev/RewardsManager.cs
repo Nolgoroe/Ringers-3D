@@ -242,7 +242,7 @@ public class RewardsManager : MonoBehaviour
         
         while(tempNum == indexPack)
         {
-            Debug.LogError("Rolled same week gift packs, rerolling");
+            //Debug.LogError("Rolled same week gift packs, rerolling");
             tempNum = UnityEngine.Random.Range(0, dailyRewardPacks.Count);
         }
 

@@ -571,7 +571,7 @@ public class SubPiece : MonoBehaviour
 
     public IEnumerator DissolveSubPiece(float dissolveSpeedMaskCrack, float waitTimeBeforeFillGlow, float fillGlowSpeed, float waitTimeBeforeFinalGlow, float finalGlowSpeed)
     {
-        Debug.Log("Dissolving now");
+        //Debug.Log("Dissolving now");
 
         Material mat = GetComponent<Renderer>().material;
 

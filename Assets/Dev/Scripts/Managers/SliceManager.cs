@@ -495,7 +495,7 @@ public class SliceManager : MonoBehaviour
                 {
                     if (GameManager.Instance.copyOfSpecificSliceSpotsTutorial[0] >= ConnectionManager.Instance.cells.Count)
                     {
-                        Debug.LogError("The value you put in the slice index list is larger than 7!");
+                        //Debug.LogError("The value you put in the slice index list is larger than 7!");
                         return;
                     }
                     else

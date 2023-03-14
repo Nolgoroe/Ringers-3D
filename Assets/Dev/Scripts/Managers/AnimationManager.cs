@@ -278,7 +278,7 @@ public class AnimationManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("THIS IS A BUG");
+            //Debug.LogError("THIS IS A BUG");
         }
 
         GameManager.Instance.gameBoard.GetComponent<SpriteRenderer>().enabled = false;
@@ -341,7 +341,7 @@ public class AnimationManager : MonoBehaviour
                 // on the last animation - if it's animal - we don't have rive to clear, we destroy the statue
                 if (TestLevelsSystemManagerSaveData.instance.CompletedCount + 1 != GameManager.Instance.currentCluster.clusterLevels.Length && GameManager.Instance.currentIndexInCluster != GameManager.Instance.currentCluster.clusterLevels.Length - 1)
                 {
-                    Debug.LogError("1 more in animal release");
+                    //Debug.LogError("1 more in animal release");
 
                     if (!hasPlayedRelaseSound)
                     {
@@ -349,7 +349,7 @@ public class AnimationManager : MonoBehaviour
                     }
 
                     AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive " + GameManager.Instance.currentIndexInCluster);
-                    Debug.LogError("here 2");
+                    //Debug.LogError("here 2");
 
                 }
                 else
@@ -382,7 +382,7 @@ public class AnimationManager : MonoBehaviour
     public IEnumerator AfterAnimalAnimation()
     {
 
-        Debug.LogError("IN HERE NOW AFTER ANIMAL ANIM");
+        //Debug.LogError("IN HERE NOW AFTER ANIMAL ANIM");
         endLevelAnimationON = true;
         //UIManager.Instance.skipAnimationButton.interactable = false;
 
@@ -539,7 +539,7 @@ public class AnimationManager : MonoBehaviour
             {
                 hasGivenChest = true;
                 TestLevelsSystemManagerSaveData.instance.AddToChestBar();
-                Debug.LogError("HERE AND NOW");
+                // Debug.LogError("HERE AND NOW");
             }
         }
 
@@ -627,7 +627,7 @@ public class AnimationManager : MonoBehaviour
 
         if (TestLevelsSystemManager.instance.isGiveChest(TestLevelsSystemManagerSaveData.instance.CompletedCount) && !GameManager.Instance.currentLevel.isTimerLevel)
         {
-            Debug.LogError(TestLevelsSystemManagerSaveData.instance.CompletedCount);
+            //Debug.LogError(TestLevelsSystemManagerSaveData.instance.CompletedCount);
 
             //Image nextLevelButtonImage = UIManager.Instance.nextLevelFromWinScreen.GetComponent<Image>();
             //nextLevelButtonImage.color = new Color(nextLevelButtonImage.color.r, nextLevelButtonImage.color.g, nextLevelButtonImage.color.b, 0);
@@ -729,7 +729,7 @@ public class AnimationManager : MonoBehaviour
         }
 
 
-        Debug.LogError("Reached end of end level sequence");
+        //Debug.LogError("Reached end of end level sequence");
         endLevelAnimationON = false;
 
         PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
@@ -897,7 +897,7 @@ public class AnimationManager : MonoBehaviour
         UIManager.Instance.optionsButtonIngame.interactable = false;
         UIManager.Instance.cheatOptionsButtonIngame.interactable = false;
 
-        Debug.LogError("TEST NOW 1");
+        //Debug.LogError("TEST NOW 1");
 
         if (AfterAnimalAnimationCoroutine != null)
         {
@@ -922,7 +922,7 @@ public class AnimationManager : MonoBehaviour
 
             //UIManager.Instance.skipAnimationButton.interactable = false;
 
-            Debug.LogError("TEST NOW 2");
+            //Debug.LogError("TEST NOW 2");
             //Debug.LogError("HERE");
             //endAnimToWinScreen = StartCoroutine(AfterAnimalAnimation(true));
             //if (AnimalsManager.Instance.currentLevelLiveAnimal)
@@ -1058,9 +1058,9 @@ public class AnimationManager : MonoBehaviour
             else
             {
                 AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Clear Rive " + GameManager.Instance.currentIndexInCluster);
-                Debug.LogError("here");
+                //Debug.LogError("here");
 
-                if(TestLevelsSystemManagerSaveData.instance.CompletedCount + 1 == GameManager.Instance.currentCluster.clusterLevels.Length)
+                if (TestLevelsSystemManagerSaveData.instance.CompletedCount + 1 == GameManager.Instance.currentCluster.clusterLevels.Length)
                 {
                     if(!hasPlayedRelaseSound)
                     {
@@ -1211,7 +1211,7 @@ public class AnimationManager : MonoBehaviour
             {
                 hasGivenChest = true;
                 TestLevelsSystemManagerSaveData.instance.AddToChestBar();
-                Debug.LogError("HERE AND NOW");
+                //Debug.LogError("HERE AND NOW");
             }
         }
 
@@ -1223,7 +1223,7 @@ public class AnimationManager : MonoBehaviour
 
         if (TestLevelsSystemManager.instance.isGiveChest(TestLevelsSystemManagerSaveData.instance.CompletedCount) && !GameManager.Instance.currentLevel.isTimerLevel)
         {
-            Debug.LogError(TestLevelsSystemManagerSaveData.instance.CompletedCount);
+            //Debug.LogError(TestLevelsSystemManagerSaveData.instance.CompletedCount);
             UIManager.Instance.nextLevelFromWinScreen.interactable = false;
             UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
 
@@ -1285,7 +1285,7 @@ public class AnimationManager : MonoBehaviour
         }
 
 
-        Debug.LogError("Reached end of sequence - skipped board");
+        //Debug.LogError("Reached end of sequence - skipped board");
 
         endLevelAnimationON = false;
 
@@ -1372,7 +1372,7 @@ public class AnimationManager : MonoBehaviour
         //Transform target = ZoneManagerHelpData.Instance.listOfAllZones[ID].transform;
 
         RectTransform target = ZoneManagerHelpData.Instance.listOfAllZones[ID].GetComponent<RectTransform>();
-        Debug.Log("Target Y" + target.localPosition.y);
+        //Debug.Log("Target Y" + target.localPosition.y);
 
         LeanTween.move(toMoveOpenZone.GetComponent<RectTransform>(), new Vector3(toMoveOpenZone.transform.position.x, ZoneManagerHelpData.Instance.unlockPosPerZone[ID].y, 0), cameraMoveTime).setEase(LeanTweenType.easeInOutQuad); // animate
 

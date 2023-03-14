@@ -142,7 +142,7 @@ public class TestLevelsSystemManager : MonoBehaviour
     {
         if (index == numOfSections)
         {
-            Debug.LogError("Giving Chest");
+            //Debug.LogError("Giving Chest");
 
             chestAnimator = Instantiate(chestPrefab).GetComponent<Animator>();
             LootManager.Instance.parentChestLoot = chestAnimator.transform;

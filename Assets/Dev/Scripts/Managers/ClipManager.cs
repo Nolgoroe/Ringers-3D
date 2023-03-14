@@ -282,7 +282,7 @@ public class ClipManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("No supposed to be like this - this is supposed to be a cell!");
+                //Debug.LogError("No supposed to be like this - this is supposed to be a cell!");
             }
 
             p.transform.SetParent(emptyClip);
@@ -303,7 +303,7 @@ public class ClipManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No supposed to be like this - this is supposed to be a piece!");
+            //Debug.LogError("No supposed to be like this - this is supposed to be a piece!");
         }
 
     }

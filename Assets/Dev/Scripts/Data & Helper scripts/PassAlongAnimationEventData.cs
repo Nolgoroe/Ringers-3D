@@ -21,7 +21,7 @@ public class PassAlongAnimationEventData : MonoBehaviour
         }
         else
         {
-            Debug.LogError("WTF IS GOING OOOOONNNNNNN .... no slice script in parent");
+            //Debug.LogError("WTF IS GOING OOOOONNNNNNN .... no slice script in parent");
         }
     }
 }

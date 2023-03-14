@@ -142,7 +142,7 @@ public class AnimalsManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Already has animal");
+            //Debug.Log("Already has animal");
         }
 
         StartCoroutine(RescueAnimalSequance());
@@ -306,7 +306,7 @@ public class AnimalsManager : MonoBehaviour
 
                 PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.animalManager });
 
-                Debug.LogError("Summoned Animal");
+                //Debug.LogError("Summoned Animal");
             }
         }
     }

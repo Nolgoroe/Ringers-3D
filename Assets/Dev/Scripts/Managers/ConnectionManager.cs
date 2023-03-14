@@ -407,7 +407,7 @@ public class ConnectionManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Bad Connection Right Conetsted FUCKKKKAKAAAAAA");
+                //Debug.Log("Bad Connection Right Conetsted FUCKKKKAKAAAAAA");
                 GameManager.Instance.unsuccessfullConnectionCount++;
                 supPieceArray[leftContested].isBadConnection = true;
             }
@@ -585,7 +585,7 @@ public class ConnectionManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Bad Connection Right Conetsted");
+                //Debug.Log("Bad Connection Right Conetsted");
                 GameManager.Instance.unsuccessfullConnectionCount++;
                 supPieceArray[rightContested].isBadConnection = true;
             }
@@ -693,7 +693,7 @@ public class ConnectionManager : MonoBehaviour
                         isGoodConnectRight = true;
                     }
 
-                    Debug.Log("Good Connect Anim Right");
+                    //Debug.Log("Good Connect Anim Right");
 
                 }
             }
@@ -1448,7 +1448,7 @@ public class ConnectionManager : MonoBehaviour
 
         LootManager.Instance.rubiesToRecieveInLevel += randomNum;
 
-        Debug.LogError("GAVE RUBIES");
+        //Debug.LogError("GAVE RUBIES");
 
         //Destroy(relevent.lootIcon.gameObject);
     }
@@ -1489,10 +1489,10 @@ public class ConnectionManager : MonoBehaviour
                     LootToRecieve LTR_exsists = LootManager.Instance.craftingMatsLootForLevel.Where(p => p.type == LTR.type).Single();
                     LTR_exsists.amount += LTR.amount;
 
-                    Debug.Log("Added " + LTR.amount + " " + "To " + LTR_exsists.type);
+                    //Debug.Log("Added " + LTR.amount + " " + "To " + LTR_exsists.type);
                 }
 
-                Debug.LogError("GAVE LOOT");
+                //Debug.LogError("GAVE LOOT");
 
                 craftingMatsFromTables.Clear();
             }
@@ -1722,7 +1722,7 @@ public class ConnectionManager : MonoBehaviour
         {
             if ((currectCheckPiece.leftChild.colorOfPiece == p.leftChild.colorOfPiece) && (currectCheckPiece.leftChild.symbolOfPiece == p.leftChild.symbolOfPiece))
             {
-                Debug.Log("Pieces were the same!" + currectCheckPiece + " " + p);
+                //Debug.Log("Pieces were the same!" + currectCheckPiece + " " + p);
                 return true; ///// Pieces are the same
             }
         }
@@ -1744,7 +1744,7 @@ public class ConnectionManager : MonoBehaviour
         {
             if (!cell.isFull)
             {
-                Debug.LogError("Origin cell is: " + cell.name);
+                //Debug.LogError("Origin cell is: " + cell.name);
                 originalMissingCell = cell;
 
                 //StartCoroutine(RecursiveCheckes(cell));
@@ -1818,7 +1818,7 @@ public class ConnectionManager : MonoBehaviour
             yield return new WaitForSeconds(TEMPDelayTime);
 
 
-            Debug.LogError("Called from second!!");
+            //Debug.LogError("Called from second!!");
 
             MoveBackInList(EmptyCell);
 
@@ -1843,7 +1843,7 @@ public class ConnectionManager : MonoBehaviour
 
                     if (pathsFound.foundCellPath.Count == 500)
                     {
-                        Debug.LogError("Done with alogoritm, no more needed");
+                        //Debug.LogError("Done with alogoritm, no more needed");
 
                         decidedAlgoritmPath = ChooseRandomFoundPathAlgo();
                         hasFinishedAlgorithm = true;
@@ -1862,7 +1862,7 @@ public class ConnectionManager : MonoBehaviour
                     yield return new WaitForSeconds(TEMPDelayTime);
                     ChangeSubPiecesAlgorithmData(edgeCell, EmptyCell);
 
-                    Debug.LogError("Setting end data path!");
+                    //Debug.LogError("Setting end data path!");
                     yield return new WaitForSeconds(TEMPDelayTime);
 
                     SetDataEndPath(edgeCell, lastIndex);
@@ -1872,22 +1872,22 @@ public class ConnectionManager : MonoBehaviour
 
                 }
 
-                Debug.LogError("Moving back in list after path!");
+                //Debug.LogError("Moving back in list after path!");
                 yield return new WaitForSeconds(TEMPDelayTime);
 
                 MoveBackInList(EmptyCell);
 
                 if (cellsThatCanConnect.possibleCellsPath.Count == 0)
                 {
-                    Debug.LogError("Done with algoritm not reached max options");
+                    //Debug.LogError("Done with algoritm not reached max options");
 
-                    if(pathsFound.foundCellPath.Count > 0)
+                    if (pathsFound.foundCellPath.Count > 0)
                     {
                         decidedAlgoritmPath = ChooseRandomFoundPathAlgo();
                     }
                     else
                     {
-                        Debug.LogError("Can't find path - no path in list");
+                        //Debug.LogError("Can't find path - no path in list");
                     }
                     ///summon the correct piece here!!!!
                     hasFinishedAlgorithm = true;
@@ -1912,7 +1912,7 @@ public class ConnectionManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Done with alogoritm, no more options");
+                    //Debug.Log("Done with alogoritm, no more options");
                     yield break;
                     //return;
                 }
@@ -1934,12 +1934,12 @@ public class ConnectionManager : MonoBehaviour
                 Cell newEmptyCell = cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells[0];
                 bufferList.Add(newEmptyCell);
 
-                Debug.LogError("Updated buffer");
+                //Debug.LogError("Updated buffer");
                 yield return new WaitForSeconds(TEMPDelayTime);
 
                 ChangeSubPiecesAlgorithmData(newEmptyCell, previousEmptyCells.Last());
 
-                Debug.LogError("Moved Piece");
+                //Debug.LogError("Moved Piece");
 
                 yield return new WaitForSeconds(TEMPDelayTime);
 
@@ -1949,7 +1949,7 @@ public class ConnectionManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Done!!!");
+            //Debug.LogError("Done!!!");
 
             if (pathsFound.foundCellPath.Count > 0)
             {
@@ -1957,7 +1957,7 @@ public class ConnectionManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Can't find path - no path in list");
+                //Debug.LogError("Can't find path - no path in list");
             }
 
             hasFinishedAlgorithm = true;
@@ -1995,7 +1995,7 @@ public class ConnectionManager : MonoBehaviour
 
         if (p == null)
         {
-            Debug.LogError("NO CHILD HERE BUG! " + "Cell From = " + cellFrom.name + " Cell To = " + cellTo.name);
+            //Debug.LogError("NO CHILD HERE BUG! " + "Cell From = " + cellFrom.name + " Cell To = " + cellTo.name);
 
 
         }
@@ -2031,7 +2031,7 @@ public class ConnectionManager : MonoBehaviour
 
                 //yield return new WaitForSeconds(delayTime);
 
-                Debug.LogError("Right after move pieces from in list");
+                //Debug.LogError("Right after move pieces from in list");
                 //Debug.Break();
 
                 if (cellsThatCanConnect.possibleCellsPath[mostCurrentListIndex].possibleCells.Count == 0)
@@ -2408,7 +2408,7 @@ public class ConnectionManager : MonoBehaviour
 
         if(path == null)
         {
-            Debug.LogError("Big problem here");
+            //Debug.LogError("Big problem here");
             return null;
         }
         else

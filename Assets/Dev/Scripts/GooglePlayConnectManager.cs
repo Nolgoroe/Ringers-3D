@@ -202,7 +202,7 @@ public class GooglePlayConnectManager : MonoBehaviour
     {
         statusText.text = "Link failed!";
 
-        Debug.LogError("FAILED");
+        //Debug.LogError("FAILED");
 
         Debug.LogError(error.GenerateErrorReport());
         desc.text = "WHY FAIL: " + error.GenerateErrorReport();
@@ -236,7 +236,7 @@ public class GooglePlayConnectManager : MonoBehaviour
         statusText.text = "There was a problem here!";
         desc.text = "WHY FAIL: " + error.GenerateErrorReport();
 
-        Debug.LogError("FAILED");
+        //Debug.LogError("FAILED");
 
         Debug.LogError(error.GenerateErrorReport());
     }

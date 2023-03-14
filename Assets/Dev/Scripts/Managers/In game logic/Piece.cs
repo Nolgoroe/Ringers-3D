@@ -58,7 +58,7 @@ public class Piece : MonoBehaviour
 
             if (repeatBlock > 100)
             {
-                Debug.LogError("Bug in tile generation - check boolean values");
+                //Debug.LogError("Bug in tile generation - check boolean values");
                 return;
             }
 
@@ -107,7 +107,7 @@ public class Piece : MonoBehaviour
 
                             if (same > 1)
                             {
-                                Debug.LogError("Found duplicates in the level Available colors array!");
+                                //Debug.LogError("Found duplicates in the level Available colors array!");
                             }
 
                             if (same == GameManager.Instance.currentLevel.levelAvailableColors.Length)
@@ -142,7 +142,7 @@ public class Piece : MonoBehaviour
 
                             if (same > 1)
                             {
-                                Debug.LogError("Found duplicates in the level Available symbols array!");
+                                //Debug.LogError("Found duplicates in the level Available symbols array!");
                             }
 
                             if (same == GameManager.Instance.currentLevel.levelAvailablesymbols.Length)
@@ -163,7 +163,7 @@ public class Piece : MonoBehaviour
 
             repeatIndicator = 0;
 
-            Debug.Log("Same pieces " + isSamePiece);
+            //Debug.Log("Same pieces " + isSamePiece);
             if (isSamePiece > 2) 
             {
                 repeatIndicator++;
@@ -207,7 +207,7 @@ public class Piece : MonoBehaviour
 
             if(errorBreakerCount >= 1000)
             {
-                Debug.LogError("Problem here!");
+                //Debug.LogError("Problem here!");
                 return;
             }
 
@@ -255,7 +255,7 @@ public class Piece : MonoBehaviour
 
                             if (same > 1)
                             {
-                                Debug.LogError("Found duplicates in the level Available symbols array!");
+                                //Debug.LogError("Found duplicates in the level Available symbols array!");
                             }
 
 
@@ -339,8 +339,8 @@ public class Piece : MonoBehaviour
 
             if (p)
             {
-                Debug.Log(p.transform.parent.name);
-                Debug.Log(currectCheckPiece.transform.parent.name);
+                //Debug.Log(p.transform.parent.name);
+                //Debug.Log(currectCheckPiece.transform.parent.name);
 
                 if (p != currectCheckPiece)
                 {

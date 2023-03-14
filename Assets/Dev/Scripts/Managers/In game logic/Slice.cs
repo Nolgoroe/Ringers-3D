@@ -94,7 +94,7 @@ public class Slice : MonoBehaviour
 
                     if(tries == 1000)
                     {
-                        Debug.LogError("There are repeat slices but code won't allow");
+                        //Debug.LogError("There are repeat slices but code won't allow");
                         break;
                     }
 
@@ -262,7 +262,7 @@ public class Slice : MonoBehaviour
 
                     if (tries == 1000)
                     {
-                        Debug.LogError("There are repeat slices but code won't allow");
+                        //Debug.LogError("There are repeat slices but code won't allow");
                         break;
                     }
 

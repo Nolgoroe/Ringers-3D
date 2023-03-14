@@ -256,7 +256,7 @@ public class PlayfabManager : MonoBehaviour
         CheckActionConnectionError();
 
         yield return StartCoroutine(InitAllSystems()); // this does not connect to database!!
-        Debug.LogError("Init all systems!!!");
+        //Debug.LogError("Init all systems!!!");
 
 
         // from here on can do actions however we want since we loaded and initted all systems
@@ -264,7 +264,7 @@ public class PlayfabManager : MonoBehaviour
         //Debug.Log("Debug 2 " + currentTimeReference);
         if (currentTimeReference != DateTime.MinValue)
         {
-            Debug.LogError("Updated Time");
+            //Debug.LogError("Updated Time");
             RewardsManager.Instance.UpdateCurrentTime(currentTimeReference);
             DewDropsManager.Instance.UpdateCurrentTime(currentTimeReference);
         }
@@ -337,7 +337,7 @@ public class PlayfabManager : MonoBehaviour
 
         yield return new WaitForSeconds(2);
 
-        Debug.LogError("Finished all Login Init sequence!!!!");
+        //Debug.LogError("Finished all Login Init sequence!!!!");
 
         if (TutorialSaveData.Instance.hasFinishedIntro)
         {
@@ -402,7 +402,7 @@ public class PlayfabManager : MonoBehaviour
 
     void OnLeaderboardUpdate(UpdatePlayerStatisticsResult result)
     {
-        Debug.Log("Leaderboard sent!");
+        //Debug.Log("Leaderboard sent!");
     }
 
     [ContextMenu("Get leaderboard")]
@@ -497,14 +497,14 @@ public class PlayfabManager : MonoBehaviour
         PlayFabClientAPI.GetTitleData(new GetTitleDataRequest(), onDailyRewardsDataGet, OnDailyRewardsDataGetFail);
         yield return new WaitUntil(() => successfullyDoneWithStep != null);
 
-        Debug.LogError("Got daily rewards data!!!");
+        //Debug.LogError("Got daily rewards data!!!");
     }
 
     void onDailyRewardsDataGet(GetTitleDataResult result)
     {
         if(result.Data == null)
         {
-            Debug.Log("No Message in title data!");
+            //Debug.Log("No Message in title data!");
         }
 
         List<DailyRewardsPacks> dailyRewardPacks = PlayFab.PluginManager.GetPlugin<ISerializerPlugin>(PluginContract.PlayFab_Serializer).DeserializeObject<List<DailyRewardsPacks>>(result.Data["dailyRewardPacks_New"]);
@@ -527,7 +527,7 @@ public class PlayfabManager : MonoBehaviour
     {
         GooglePlayConnectManager.instance.desc.text = "Fail! " + error.GenerateErrorReport();
 
-        Debug.LogError("FAILED");
+        //Debug.LogError("FAILED");
 
         Debug.LogError(error.GenerateErrorReport());
     }
@@ -538,7 +538,7 @@ public class PlayfabManager : MonoBehaviour
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecieved, OnError);
         yield return new WaitUntil(() => successfullyDoneWithStep != null);
 
-        Debug.LogError("Loaded all game data!");
+        //Debug.LogError("Loaded all game data!");
     }
 
     public IEnumerator LoadGameVersion()
@@ -546,7 +546,7 @@ public class PlayfabManager : MonoBehaviour
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataRecievedVersion, OnDataRecievedVersionFailed);
         yield return new WaitUntil(() => successfullyDoneWithStep != null);
 
-        Debug.LogError("Loaded game version");
+        //Debug.LogError("Loaded game version");
     }
 
     void OnDataRecievedVersion(GetUserDataResult result)
@@ -566,7 +566,7 @@ public class PlayfabManager : MonoBehaviour
     {
         GooglePlayConnectManager.instance.desc.text = "Fail! " + error.GenerateErrorReport();
 
-        Debug.LogError("FAILED");
+        //Debug.LogError("FAILED");
 
         Debug.LogError(error.GenerateErrorReport());
 
@@ -844,7 +844,7 @@ public class PlayfabManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Something went horribly wrong!");
+            //Debug.LogError("Something went horribly wrong!");
         }
     }
 
@@ -1078,7 +1078,7 @@ public class PlayfabManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Something went horribly wrong!");
+            //Debug.LogError("Something went horribly wrong!");
         }
     }
 
@@ -1090,7 +1090,7 @@ public class PlayfabManager : MonoBehaviour
     {
         GooglePlayConnectManager.instance.desc.text = "Fail! " + error.GenerateErrorReport();
 
-        Debug.LogError("FAILED");
+        //Debug.LogError("FAILED");
 
         Debug.LogError(error.GenerateErrorReport());
     }
@@ -1153,7 +1153,7 @@ public class PlayfabManager : MonoBehaviour
 
         if (AutoVersionUpdater.resetSystemCounter != amountSystemsToReset)
         {
-            Debug.LogError($"what happened? Counter: {AutoVersionUpdater.resetSystemCounter} Length:{amountSystemsToReset}");
+            //Debug.LogError($"what happened? Counter: {AutoVersionUpdater.resetSystemCounter} Length:{amountSystemsToReset}");
             yield break;
         }
     }
@@ -1248,7 +1248,7 @@ public class PlayfabManager : MonoBehaviour
     }
     void OnDataSendResetSuccess(UpdateUserDataResult result)
     {
-        Debug.Log("Check here");
+        //Debug.Log("Check here");
     }
 
     public void LogOut()
@@ -1324,7 +1324,7 @@ public class PlayfabManager : MonoBehaviour
 
         StartCoroutine(LoginInit());
 
-        Debug.Log("Registered Successfully!");
+        //Debug.Log("Registered Successfully!");
     }
 
     public void SetGameVersionSameAsServer()
@@ -1336,7 +1336,7 @@ public class PlayfabManager : MonoBehaviour
     {
         if (result.Data == null)
         {
-            Debug.Log("No Message in title data!");
+            //Debug.Log("No Message in title data!");
         }
         else
         {
@@ -1412,7 +1412,7 @@ public class PlayfabManager : MonoBehaviour
     {
         GooglePlayConnectManager.instance.desc.text = "Fail! " + error.GenerateErrorReport();
 
-        Debug.LogError("FAILED");
+        //Debug.LogError("FAILED");
 
         Debug.LogError(error.GenerateErrorReport());
 
@@ -1445,7 +1445,7 @@ public class PlayfabManager : MonoBehaviour
     {
         GooglePlayConnectManager.instance.desc.text = "Fail! " + error.GenerateErrorReport();
 
-        Debug.LogError("FAILED");
+        //Debug.LogError("FAILED");
 
         Debug.LogError(error.GenerateErrorReport());
 
@@ -1492,7 +1492,7 @@ public class PlayfabManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("PROBLEM HERE");
+                //Debug.LogError("PROBLEM HERE");
                 return;
             }
 
@@ -1520,7 +1520,7 @@ public class PlayfabManager : MonoBehaviour
 
 
 #if UNITY_EDITOR
-        Debug.Log("Unity Editor");
+        //Debug.Log("Unity Editor");
 
         customID = SystemInfo.deviceUniqueIdentifier;
 
@@ -1579,7 +1579,7 @@ public class PlayfabManager : MonoBehaviour
 
     void OnPressPlayPlayerExists(LoginResult result)
     {
-        Debug.LogError("Found User");
+        //Debug.LogError("Found User");
         displayMessages.text = "Found User";
 
         ClearSystemMessage();
@@ -1604,16 +1604,16 @@ public class PlayfabManager : MonoBehaviour
     }
     void OnGetExsistingPlayerDataError(PlayFabError error)
     {
-        Debug.LogError("FAILED");
+        //Debug.LogError("FAILED");
 
         Debug.LogError(error.GenerateErrorReport());
     }
 
     void OnPressPlayPlayerExistsError(PlayFabError error)
     {
-        Debug.LogError("No such user");
+        //Debug.LogError("No such user");
         displayMessages.text = "Creating User";
-        Debug.LogError(playerPlayfabUsername);
+        //Debug.LogError(playerPlayfabUsername);
 
         var request = new RegisterPlayFabUserRequest
         {
@@ -1646,7 +1646,7 @@ public class PlayfabManager : MonoBehaviour
 
     void OnPressPlayPlayerCreatedFailed(PlayFabError error)
     {
-        Debug.LogError("FAILED");
+        //Debug.LogError("FAILED");
 
         Debug.LogError(error.GenerateErrorReport());
 
@@ -1666,13 +1666,13 @@ public class PlayfabManager : MonoBehaviour
 
     void OnUpdateNewDisplayNameSuccess(UpdateUserTitleDisplayNameResult result)
     {
-        Debug.LogError("SUCCESS!");
+        //Debug.LogError("SUCCESS!");
 
         UIManager.Instance.nameOfPlayer.text = "Username: " + newDisplayNameInputField.text;
     }
     void OnUpdateNewDisplayNameError(PlayFabError error)
     {
-        Debug.LogError("FAILED");
+        //Debug.LogError("FAILED");
 
         Debug.LogError(error.GenerateErrorReport());
     }
