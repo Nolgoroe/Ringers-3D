@@ -93,6 +93,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        //UIManager.Instance.ActivateGmaeplayCanvas();
     }
 
     //private void Update()
@@ -116,8 +118,8 @@ public class GameManager : MonoBehaviour
         }
 
         LevelEnded = false;
-    }
 
+    }
 
     public void StartLevel(bool DoFade, bool isRestart)
     {
@@ -131,7 +133,6 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(ResetDataStartLevel(false, isRestart));
         }
-
     }
 
     public void startBossLevel(bool DoFade)
@@ -1157,6 +1158,7 @@ public class GameManager : MonoBehaviour
         {
             TutorialSequence.Instacne.currentPhaseInSequenceLevels = 0;
             TutorialSequence.Instacne.duringSequence = false;
+            TutorialSequence.isDuringMandatoryPhase = false;
 
             TutorialSequence.Instacne.currentPhaseInSequenceSpecific = 0;
 

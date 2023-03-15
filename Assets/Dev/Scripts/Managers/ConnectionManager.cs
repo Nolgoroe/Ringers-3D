@@ -837,7 +837,7 @@ public class ConnectionManager : MonoBehaviour
         //    //}
         //}
 
-        if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ColorMatch)
+        if (GameManager.Instance.currentLevel.colorMatch)
         {
             CompareResault result = TotalCheck(currentSide, contestedSide);
 
@@ -862,7 +862,7 @@ public class ConnectionManager : MonoBehaviour
             {
                 CompareResault result;
 
-                if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ColorMatch)
+                if (GameManager.Instance.currentLevel.colorMatch)
                 {
                     result = TotalCheck(currentSide, contestedSide);
 
@@ -916,7 +916,7 @@ public class ConnectionManager : MonoBehaviour
             {
                 CompareResault result;
 
-                if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ColorMatch)
+                if (GameManager.Instance.currentLevel.colorMatch)
                 {
                     result = TotalCheck(currentSide, contestedSide);
 
@@ -954,7 +954,7 @@ public class ConnectionManager : MonoBehaviour
         {
             CompareResault result;
 
-            if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ColorMatch)
+            if (GameManager.Instance.currentLevel.colorMatch)
             {
                 result = TotalCheck(currentSide, contestedSide);
 
@@ -2225,7 +2225,7 @@ public class ConnectionManager : MonoBehaviour
         conditionMet = true;
         isGoodConnect = false;
 
-        if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ShapeMatch)
+        if (GameManager.Instance.currentLevel.symbolMatch)
         {
             CompareResault result = TotalCheck(currentSide, contestedSide);
 
@@ -2244,7 +2244,7 @@ public class ConnectionManager : MonoBehaviour
             }
         }
 
-        if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ColorMatch)
+        if (GameManager.Instance.currentLevel.colorMatch)
         {
             CompareResault result = TotalCheck(currentSide, contestedSide);
 

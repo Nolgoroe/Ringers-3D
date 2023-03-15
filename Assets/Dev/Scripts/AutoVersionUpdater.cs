@@ -226,7 +226,7 @@ public class AutoVersionUpdater : MonoBehaviour
                     break;
                 }
 
-                if (AZAL.levelsInZone[i].levelIndexInZone == maxLevelReached)
+                if (AZAL != null && AZAL.levelsInZone[i].levelIndexInZone == maxLevelReached)
                 {
                     break;
                 }

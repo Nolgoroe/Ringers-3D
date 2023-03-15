@@ -82,6 +82,9 @@ public class LevelScriptableObject : ScriptableObject
     public bool isSpecificTutorial;
     public bool isTutorial;
     public SpecificTutorialsEnum specificTutorialEnum;
+    public SpecificTutorialsEnum specificTutorialEnumEndLevel;
+    public bool colorMatch;
+    public bool symbolMatch;
     public BottomUIToShow bottomUIToShow;
 
     [Header("Specific Slice Settings")]

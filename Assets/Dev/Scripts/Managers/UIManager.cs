@@ -689,6 +689,14 @@ public class UIManager : MonoBehaviour
 
         currentLevelNumber.text = levelID.ToString();
     }
+
+    public void ToHudFromEndLevel(GameObject currentCanvas)
+    {
+        ToHud(currentCanvas);
+
+        //extra actions if needed
+        TutorialSequence.Instacne.CheckDoPotionTutorial();
+    }
     public void ToHud(GameObject currentCanvas)
     {
         if (!SoundManager.Instance.hudBGMuisc.isPlaying)
@@ -876,6 +884,7 @@ public class UIManager : MonoBehaviour
 
 
                     TutorialSequence.Instacne.duringSequence = false;
+                    TutorialSequence.isDuringMandatoryPhase = false;
                 }
             }
             else
@@ -924,6 +933,8 @@ public class UIManager : MonoBehaviour
 
 
             PlayfabManager.instance.SaveGameData(new SystemsToSave[] { SystemsToSave.Player });
+
+
         }
 
         if (currentCanvas == ringersHutDisplay)

@@ -51,7 +51,7 @@ MonoBehaviour:
     tileprefab: {fileID: 1645121695642233041, guid: 36be16121c300bf4aa4dbe960c83efb5,
       type: 3}
     isLockedOnSpawn: 1
-  - cellIndex: 2
+  - cellIndex: 1
     randomValues: 0
     isNeutral: 0
     colorOfPieceRight: 4
@@ -60,7 +60,7 @@ MonoBehaviour:
     symbolOfPieceLeft: 4
     tileprefab: {fileID: 1645121695642233041, guid: 36be16121c300bf4aa4dbe960c83efb5,
       type: 3}
-    isLockedOnSpawn: 1
+    isLockedOnSpawn: 0
   - cellIndex: 3
     randomValues: 0
     isNeutral: 0
@@ -98,7 +98,9 @@ MonoBehaviour:
   symbolsNeededForSpecialPowers: []
   isSpecificTutorial: 0
   isTutorial: 1
-  specificTutorialEnum: 10
+  specificTutorialEnum: 0
+  colorMatch: 1
+  symbolMatch: 0
   bottomUIToShow: 1
   arrayOfPieces:
   - colorOfPieceRight: 4

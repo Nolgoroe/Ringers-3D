@@ -153,10 +153,30 @@ public class PowerUpManager : MonoBehaviour
     }
     public void InstantiatePowerUps(EquipmentData data)
     {
+        GameObject go = null;
+        switch (data.power)
+        {
+            case PowerUp.Switch:
+                go = Instantiate(powerupButtonPreab, instnatiateZones[0].transform);
+                break;
+            case PowerUp.Joker:
+                go = Instantiate(powerupButtonPreab, instnatiateZones[2].transform);
+                break;
+            case PowerUp.PieceBomb:
+                go = Instantiate(powerupButtonPreab, instnatiateZones[3].transform);
+                break;
+            case PowerUp.SliceBomb:
+                go = Instantiate(powerupButtonPreab, instnatiateZones[1].transform);
+                break;
+            case PowerUp.None:
+                break;
+            default:
+                break;
+        }
 
-        GameObject go = Instantiate(powerupButtonPreab, instnatiateZones[instnatiatedZonesCounter].transform);
+        if (go == null) return;
 
-        instnatiatedZonesCounter++;
+        //instnatiatedZonesCounter++;
 
         PowerupProperties prop = go.GetComponent<PowerupProperties>();
 
@@ -923,7 +943,11 @@ public class PowerUpManager : MonoBehaviour
                 ED = PlayerManager.Instance.ownedPowerups.Where(p => p.power == prop.connectedEquipment.power).First();
             }
 
-            if (ED != null)
+            if (ED != null && 
+                (GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.SwapSidesTutorial &&
+                GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.JokerTutorial &&
+                GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.SliceBombTutorial &&
+                GameManager.Instance.currentLevel.specificTutorialEnum != SpecificTutorialsEnum.TileBombTutorial))
             {
                 ED.numOfUses--;
 
@@ -933,8 +957,11 @@ public class PowerUpManager : MonoBehaviour
             }
             else
             {
-                //Debug.LogError("Something very wrong happened here - stop the finished using power coroutine");
-                return;
+                if(ED == null)
+                {
+                    //Debug.LogError("Something very wrong happened here - stop the finished using power coroutine");
+                    return;
+                }
             }
         }
         else

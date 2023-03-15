@@ -443,7 +443,7 @@ public class CursorController : MonoBehaviour
                             {
                                 if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Length > 0)
                                 {
-                                    if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Contains(hit.transform.GetComponent<Cell>().cellIndex))
+                                    if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Contains(hit.transform.GetComponent<Cell>().cellIndex) || !TutorialSequence.isDuringMandatoryPhase)
                                     {
                                         ConnectionManager.Instance.ConnectionManagerAnim(hit.transform.GetComponent<Cell>().cellIndex, hit.transform.GetComponent<Cell>().isOuter);
                                     }
@@ -461,7 +461,7 @@ public class CursorController : MonoBehaviour
                             {
                                 if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Length > 0)
                                 {
-                                    if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Contains(hit.transform.GetComponent<Cell>().cellIndex))
+                                    if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Contains(hit.transform.GetComponent<Cell>().cellIndex) || !TutorialSequence.isDuringMandatoryPhase)
                                     {
                                         if (followerTarget && !followerTarget.GetComponent<Piece>().isDuringConnectionAnim)
                                         {
@@ -536,7 +536,7 @@ public class CursorController : MonoBehaviour
                             {
                                 if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Length > 0)
                                 {
-                                    if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Contains(closest.transform.GetComponent<Cell>().cellIndex))
+                                    if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Contains(closest.transform.GetComponent<Cell>().cellIndex) || !TutorialSequence.isDuringMandatoryPhase)
                                     {
                                         if (followerTarget && !followerTarget.GetComponent<Piece>().isDuringConnectionAnim)
                                         {
@@ -1049,7 +1049,7 @@ public class CursorController : MonoBehaviour
                 {
                     if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Length > 0)
                     {
-                        if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Contains(cellHit.GetComponent<Cell>().cellIndex))
+                        if (TutorialSequence.Instacne.specificTutorials[(int)GameManager.Instance.currentLevel.specificTutorialEnum - 1].phase[TutorialSequence.Instacne.currentPhaseInSequenceSpecific].targetCells.Contains(cellHit.GetComponent<Cell>().cellIndex) || !TutorialSequence.isDuringMandatoryPhase)
                         {
                             Cell cell = cellHit.GetComponent<Cell>();
 
@@ -1114,7 +1114,7 @@ public class CursorController : MonoBehaviour
 
                 if (GameManager.Instance.currentLevel.isTutorial)
                 {
-                    if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Contains(cellHit.GetComponent<Cell>().cellIndex))
+                    if (TutorialSequence.Instacne.levelSequences[GameManager.Instance.currentLevel.tutorialIndexForList].phase[TutorialSequence.Instacne.currentPhaseInSequenceLevels].targetCells.Contains(cellHit.GetComponent<Cell>().cellIndex) || !TutorialSequence.isDuringMandatoryPhase)
                     {
                         Cell cell = cellHit.GetComponent<Cell>();
 

@@ -407,7 +407,7 @@ public class AnimationManager : MonoBehaviour
         }
 
         if (GameManager.Instance.currentLevel.levelEndDialogueSO && !hasShowsEndLevelDialogue)
-         {
+        {
             hasShowsEndLevelDialogue = true;
             GameManager.Instance.currentDialogue = null;
             GameManager.Instance.currentIndexInDialogue = 0;
@@ -454,7 +454,10 @@ public class AnimationManager : MonoBehaviour
                 Destroy(AnimalsManager.Instance.currentLevelLiveAnimal.gameObject);
             }
         }
-
+        else
+        {
+            AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().Play("Skip " + GameManager.Instance.currentIndexInCluster);
+        }
         ///summon VFX HERE
         ///
 
@@ -711,7 +714,7 @@ public class AnimationManager : MonoBehaviour
 
         if (!TestLevelsSystemManagerSaveData.instance.canGetChest /*&& !hasGivenChest*/)
         {
-            TutorialSequence.Instacne.CheckDoPotionTutorial();
+            //TutorialSequence.Instacne.CheckDoPotionTutorial();
             TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
         }
 
@@ -1267,7 +1270,7 @@ public class AnimationManager : MonoBehaviour
         bool lastLevelInCluster = GameManager.Instance.currentIndexInCluster + 1 == GameManager.Instance.currentCluster.clusterLevels.Length;
         if (!TestLevelsSystemManagerSaveData.instance.canGetChest && !lastLevelInCluster/* && !hasGivenChest*/)
         {
-            TutorialSequence.Instacne.CheckDoPotionTutorial();
+            //TutorialSequence.Instacne.CheckDoPotionTutorial();
             TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
         }
 

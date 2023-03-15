@@ -35,7 +35,7 @@ public class DetectClickOnUIObject : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("Clicked HERE");
+        //Debug.Log("Clicked HERE");
 
         if (isClosingScreen)
         {

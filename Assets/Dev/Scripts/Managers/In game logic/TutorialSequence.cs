@@ -42,6 +42,7 @@ public class Phase
     public bool enterAnimationPhase;
     public bool autoProgressAfterDelay;
     public bool fadeInMask;
+    public bool isMandatory;
 
     public int[] unlockedPowerups;
     public int[] unlockedClips;
@@ -75,12 +76,11 @@ public enum SpecificTutorialsEnum
     TileBombTutorial,
     AnimalAlbum,
     BossTimedLevel,
-    ColorMatch, // always last
-    ShapeMatch, // always last
 }
 public class TutorialSequence : MonoBehaviour
 {
     public static TutorialSequence Instacne;
+    public static bool isDuringMandatoryPhase;
 
     public GameObject tutorialHandPrefabMove;
     public GameObject tutorialHandPrefabTap;
@@ -207,7 +207,7 @@ public class TutorialSequence : MonoBehaviour
 
         currentPhaseInSequenceLevels = 0;
         duringSequence = false;
-
+        isDuringMandatoryPhase = false;
         //for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
         //{
         //    Piece p = GameManager.Instance.clipManager.slots[i].GetComponentInChildren<Piece>();
@@ -807,6 +807,7 @@ public class TutorialSequence : MonoBehaviour
 
             maskImage.gameObject.SetActive(false);
             duringSequence = false;
+            isDuringMandatoryPhase = false;
             //Debug.Log("Phases are done!");
             //Invoke("UnlockAll", 2);
 
@@ -990,14 +991,14 @@ public class TutorialSequence : MonoBehaviour
             currentSpecificTutorial = SpecificTutorialsEnum.None;
             maskImage.gameObject.SetActive(false);
             duringSequence = false;
-
+            isDuringMandatoryPhase = false;
 
             if (!GameManager.LevelEnded)
             {
                 StartCoroutine(UnlockAll());
             }
 
-            PlayerManager.Instance.checkDoAddPotionsToInventory();
+            //PlayerManager.Instance.checkDoAddPotionsToInventory();
             currentPhaseInSequenceSpecific = 0;
 
             DeactivateAllTutorialScreens();
@@ -1103,7 +1104,17 @@ public class TutorialSequence : MonoBehaviour
             {
                 UIManager.Instance.DecideBottmUIShow(GameManager.Instance.currentLevel.bottomUIToShow);
                 UIManager.Instance.gameplayCanvasTop.SetActive(true);
-                maskImage.gameObject.SetActive(true);
+
+                if(!tutorialArray[TutorialIndex].phase[phaseIndex].isMandatory)
+                {
+                    isDuringMandatoryPhase = false;
+                    maskImage.gameObject.SetActive(false);
+                }
+                else
+                {
+                    isDuringMandatoryPhase = true;
+                    maskImage.gameObject.SetActive(true);
+                }
             }
         }
 
@@ -1169,30 +1180,34 @@ public class TutorialSequence : MonoBehaviour
     {
         UIManager.Instance.dealButton.interactable = false;
 
-        foreach (Cell c in ConnectionManager.Instance.cells)
+        if (isDuringMandatoryPhase)
         {
-            if (c.isFull)
+            foreach (Cell c in ConnectionManager.Instance.cells)
             {
-                c.pieceHeld.isTutorialLocked = true;
+                if (c.isFull)
+                {
+                    c.pieceHeld.isTutorialLocked = true;
+                }
+            }
+
+            for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
+            {
+
+                Piece p = GameManager.Instance.clipManager.slots[i].GetComponent<ClipHolder>().heldPiece;
+
+                if (tutorialArray[TutorialIndex].phase[phaseIndex].unlockedClips.Contains(i)/*[k]*/)
+                {
+                    p.isTutorialLocked = false;
+                }
+                else
+                {
+                    p.isTutorialLocked = true;
+                }
             }
         }
-
-        for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
+        else
         {
-
-            Piece p = GameManager.Instance.clipManager.slots[i].GetComponent<ClipHolder>().heldPiece;
-
-            //for (int k = 0; k < levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[currentPhaseInSequence].unlockedClips.Length; k++)
-            //{
-            if (tutorialArray[TutorialIndex].phase[phaseIndex].unlockedClips.Contains(i)/*[k]*/)
-            {
-                p.isTutorialLocked = false;
-            }
-            else
-            {
-                p.isTutorialLocked = true;
-            }
-            //}
+            StartCoroutine(UnlockAll());
         }
 
         int clipID = tutorialArray[TutorialIndex].phase[phaseIndex].unlockedClips[0];
@@ -1204,28 +1219,31 @@ public class TutorialSequence : MonoBehaviour
     {
         UIManager.Instance.dealButton.interactable = false;
 
-        for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
+        if (isDuringMandatoryPhase)
         {
-            Piece p = GameManager.Instance.clipManager.slots[i].GetComponent<ClipHolder>().heldPiece;
-
-            p.isTutorialLocked = true;
-        }
-
-
-        foreach (Cell c in ConnectionManager.Instance.cells)
-        {
-            if (c.isFull)
+            for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
             {
-                c.pieceHeld.isTutorialLocked = true;
-                //int length = levelSequences[GameManager.Instance.currentLevel.levelNum - 1].phase[currentPhaseInSequence].unlockedBoardCells.Length;
-                //for (int i = 0; i < length; i++)
-                //{
-                if (c.cellIndex == tutorialArray[TutorialIndex].phase[phaseIndex].unlockedBoardCells/*[i]*/)
-                {
-                    c.pieceHeld.isTutorialLocked = false;
-                }
-                //}
+                Piece p = GameManager.Instance.clipManager.slots[i].GetComponent<ClipHolder>().heldPiece;
+
+                p.isTutorialLocked = true;
             }
+
+
+            foreach (Cell c in ConnectionManager.Instance.cells)
+            {
+                if (c.isFull)
+                {
+                    c.pieceHeld.isTutorialLocked = true;
+                    if (c.cellIndex == tutorialArray[TutorialIndex].phase[phaseIndex].unlockedBoardCells/*[i]*/)
+                    {
+                        c.pieceHeld.isTutorialLocked = false;
+                    }
+                }
+            }
+        }
+        else
+        {
+            StartCoroutine(UnlockAll());
         }
 
         int cellID1 = tutorialArray[TutorialIndex].phase[phaseIndex].unlockedBoardCells;
@@ -1252,20 +1270,28 @@ public class TutorialSequence : MonoBehaviour
     {
         UIManager.Instance.dealButton.interactable = true;
 
-        for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
+        if (isDuringMandatoryPhase)
         {
-            Piece p = GameManager.Instance.clipManager.slots[i].GetComponent<ClipHolder>().heldPiece;
-
-            p.isTutorialLocked = true;
-        }
-
-        foreach (Cell c in ConnectionManager.Instance.cells)
-        {
-            if (c.isFull)
+            for (int i = 0; i < GameManager.Instance.clipManager.slots.Length; i++)
             {
-                c.pieceHeld.isTutorialLocked = true;
+                Piece p = GameManager.Instance.clipManager.slots[i].GetComponent<ClipHolder>().heldPiece;
+
+                p.isTutorialLocked = true;
+            }
+
+            foreach (Cell c in ConnectionManager.Instance.cells)
+            {
+                if (c.isFull)
+                {
+                    c.pieceHeld.isTutorialLocked = true;
+                }
             }
         }
+        else
+        {
+            StartCoroutine(UnlockAll());
+        }
+
 
         Vector3 handPosDeal = tutorialHandPosDealButton;
 
@@ -1647,21 +1673,28 @@ public class TutorialSequence : MonoBehaviour
 
     public void CheckDoPotionTutorial()
     {
-        if(GameManager.Instance.isDisableTutorials)
+        if (!GameManager.Instance.currentLevel) return;
+
+        if (GameManager.Instance.isDisableTutorials)
         {
             TutorialSaveData.Instance.hasFinishedPotion = true;
             UIManager.Instance.openInventoryButttonMap.gameObject.SetActive(true);
             return;
         }
 
+
         if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
         {
-            if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.PotionCraft)
+            if (GameManager.Instance.currentLevel.specificTutorialEnumEndLevel == SpecificTutorialsEnum.PotionCraft)
             {
+                GameManager.Instance.currentLevel.specificTutorialEnum = SpecificTutorialsEnum.PotionCraft;
+
                 //UIManager.Instance.gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(true);
                 UIManager.Instance.openInventoryButttonMap.gameObject.SetActive(true);
+
                 maskImage.gameObject.SetActive(true);
                 UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
+                StartCoroutine(UIManager.Instance.SetIsUsingUI(true));
                 //TutorialSequence.Instacne.DisplaySpecificTutorialSequence();
                 currentSpecificTutorial = GameManager.Instance.currentLevel.specificTutorialEnum;
                 StartCoroutine(DisplaySpecificTutorialSequence());
@@ -1678,11 +1711,12 @@ public class TutorialSequence : MonoBehaviour
             return;
         }
 
-
         if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
         {
-            if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.AnimalAlbum)
+            if (GameManager.Instance.currentLevel.specificTutorialEnumEndLevel == SpecificTutorialsEnum.AnimalAlbum)
             {
+                GameManager.Instance.currentLevel.specificTutorialEnum = SpecificTutorialsEnum.AnimalAlbum;
+
                 UIManager.Instance.openAnimalAlbumButttonMap.gameObject.SetActive(true);
 
                 maskImage.gameObject.SetActive(true);
@@ -1704,8 +1738,10 @@ public class TutorialSequence : MonoBehaviour
 
         if (!TutorialSaveData.Instance.completedSpecificTutorialLevelId.Contains(GameManager.Instance.currentLevel.numIndexForLeaderBoard))
         {
-            if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.DenScreen)
+            if (GameManager.Instance.currentLevel.specificTutorialEnumEndLevel == SpecificTutorialsEnum.DenScreen)
             {
+                GameManager.Instance.currentLevel.specificTutorialEnum = SpecificTutorialsEnum.DenScreen;
+
                 //UIManager.Instance.gameplayCanvasScreensUIHEIGHLIGHTS.SetActive(true);
                 UIManager.Instance.nextLevelFromWinScreen.gameObject.SetActive(false);
                 maskImage.gameObject.SetActive(true);
@@ -1783,6 +1819,7 @@ public class TutorialSequence : MonoBehaviour
 
         maskImage.gameObject.SetActive(false);
         duringSequence = false;
+        isDuringMandatoryPhase = false;
         //Debug.Log("Phases are done!");
         //Invoke("UnlockAll", 2);
 
@@ -1817,6 +1854,7 @@ public class TutorialSequence : MonoBehaviour
         currentSpecificTutorial = SpecificTutorialsEnum.None;
         maskImage.gameObject.SetActive(false);
         duringSequence = false;
+        isDuringMandatoryPhase = false;
         activatedHeighlights.Clear();
         activatedBoardParticles.Clear();
 

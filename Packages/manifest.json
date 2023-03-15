@@ -15,6 +15,7 @@
     "com.unity.timeline": "1.2.18",
     "com.unity.toolchain.win-x86_64-linux-x86_64": "2.0.0",
     "com.unity.ugui": "1.0.0",
+    "io.backtrace.unity": "3.7.9",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
@@ -53,6 +54,13 @@
       "url": "https://unityregistry-pa.googleapis.com",
       "scopes": [
         "com.google"
+      ]
+    },
+    {
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "io.backtrace.unity"
       ]
     }
   ]

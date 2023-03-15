@@ -607,7 +607,7 @@ public class LootManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        TutorialSequence.Instacne.CheckDoPotionTutorial();
+        //TutorialSequence.Instacne.CheckDoPotionTutorial();
         TutorialSequence.Instacne.CheckDoAnimalAlbumTutorial();
 
         if (GameManager.Instance.currentLevel.powerupsForLevel.Count() > 0)
