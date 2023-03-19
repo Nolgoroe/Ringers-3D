@@ -81,6 +81,8 @@ public class GameManager : MonoBehaviour
 
     public int currentIndexInCluster = -1;
 
+    public HintSystem hintSystem;
+
     [Header("Dialogue")]
     public int currentIndexInDialogue = -1;
     public int currentDialogueMultiplier = -1;
@@ -153,6 +155,8 @@ public class GameManager : MonoBehaviour
         AnimalsManager.Instance.ResetAnimalManagerData();
 
         UIManager.Instance.isUsingUI = true;
+
+        hintSystem.ResetData();
         yield return new WaitForEndOfFrame();
 
         AnimationManager.instance.hasGivenChest = false;
@@ -241,21 +245,11 @@ public class GameManager : MonoBehaviour
                 numAnimalsOnBoard[i].amount = 0;
             }
 
-            //UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
-            //UIManager.Instance.TurnOnGameplayUI();
-            //UIManager.Instance.dealButton.interactable = true;
-            //UIManager.Instance.ActivateGmaeplayCanvas();
-
             if (AnimationManager.instance.endLevelAnimationON)
             {
                 //Debug.LogError("CHECK THIS PROBLEM");
                 AnimationManager.instance.endLevelAnimationON = false;
             }
-
-            //Camera.main.transform.position = inGameCamPos;
-            //TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, -0.05f);
-            //Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
-
 
             LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
 
@@ -278,29 +272,6 @@ public class GameManager : MonoBehaviour
 
             powerupManager.InstantiateSpecialPowers();
 
-            //if (selectedLevelBG)
-            //{
-            //    selectedLevelBG.SetActive(true);
-
-            //    AnimalPrefabData data = InstantiateAnimals(selectedLevelBG);
-
-            //    if (data != null)
-            //    {
-            //        AnimalsManager.Instance.currentLevelAnimal = data.animalType;
-
-            //    }
-            //    else
-            //    {
-            //        Debug.Log("BIG ANIMALS ERROR - NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA");
-            //    }
-
-            //    if(AnimalsManager.Instance.statueToSwap)
-            //    {
-            //        AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Set Rive " + currentIndexInCluster);
-            //    }
-
-            //}
-
             InstantiateStonePieces();
 
             TutorialSequence.Instacne.activatedHeighlights.Clear();
@@ -322,16 +293,6 @@ public class GameManager : MonoBehaviour
             {
                 numAnimalsOnBoard[i].amount = 0;
             }
-
-            //UIManager.Instance.ChangeZoneName(currentLevel.worldName, currentLevel.levelIndexInZone);
-            //UIManager.Instance.TurnOnGameplayUI();
-            //UIManager.Instance.dealButton.interactable = true;
-            //UIManager.Instance.ActivateGmaeplayCanvas();
-
-            //Camera.main.transform.position = inGameCamPos;
-            //TutorialSequence.Instacne.maskImage.transform.position = new Vector3(TutorialSequence.Instacne.maskImage.transform.position.x, inGameCamPos.y, -0.05f);
-            //Camera.main.transform.rotation = Quaternion.Euler(inGameCamRot);
-
 
             LightingSettingsManager.instance.ChooseLightSettings(ZoneManagerHelpData.Instance.currentZoneCheck.id);
             gameClip = Instantiate(currentLevel.clipPrefab, destroyOutOfLevel);
@@ -356,29 +317,6 @@ public class GameManager : MonoBehaviour
 
             powerupManager.InstantiateSpecialPowers();
 
-
-            //if (selectedLevelBG)
-            //{
-            //    selectedLevelBG.SetActive(true);
-
-            //    AnimalPrefabData data = InstantiateAnimals(selectedLevelBG);
-
-            //    if (data != null)
-            //    {
-            //        AnimalsManager.Instance.currentLevelAnimal = data.animalType;
-
-            //    }
-            //    else
-            //    {
-            //        Debug.Log("NO DATA - CHECK SCRIPTABLE OBJECTS FOR DATA - OR STATUE IS GRIND STATE/TREE STATUE");
-            //    }
-
-            //    if (AnimalsManager.Instance.statueToSwap)
-            //    {
-            //        AnimalsManager.Instance.statueToSwap.GetComponent<Animator>().SetTrigger("Set Rive " + currentIndexInCluster);
-            //    }
-            //}
-
             InstantiateStonePieces();
 
             powerupManager.instnatiatedZonesCounter = 0;
@@ -389,16 +327,6 @@ public class GameManager : MonoBehaviour
 
         SoundManager.Instance.CancelLeantweensSound();
         SoundManager.Instance.CancelCoRoutinesSound();
-
-        //if (currentLevel.isTestLevel)
-        //{
-        //    StartCoroutine(TestLevelsSystemManager.instance.InitTestLevel());
-        //}
-        //else
-        //{
-        //    UIManager.Instance.gameplayCanvasTop.SetActive(true);
-        //    UIManager.Instance.gameplayCanvasTopTestLevels.SetActive(false);
-        //}
 
         if (!SoundManager.Instance.normalAmbienceLevel.isPlaying)
         {
@@ -414,8 +342,9 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(SoundManager.Instance.FadeInOnlyLevelVolume(ZoneManagerHelpData.Instance.musicPerZone[ZoneManagerHelpData.Instance.currentZoneCheck.id].levelAmbienceClip));
             }
         }
+       
 
-
+        hintSystem.PupulateLists();
 
         if (currentLevel.levelStartDialogueSO)
         {

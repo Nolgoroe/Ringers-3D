@@ -80,6 +80,7 @@ public class SliceManager : MonoBehaviour
     List<int> possibleSlotsTemp;
 
     public List<Slice> fullSlices;
+    public List<Cell> stoneTilesInCellOnBoard;
     public List<GameObject> activeLocksLockAnims;
 
     //public SpriteSwapHelper[] connectionSpriteRenderers;

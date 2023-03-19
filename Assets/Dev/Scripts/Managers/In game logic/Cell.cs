@@ -211,6 +211,11 @@ public class Cell : MonoBehaviour
             GameManager.Instance.currentFilledCellCount++;
 
             ConnectionManager.Instance.CallConnection(cellIndex, isOuter, false);
+
+            if (p != null)
+            {
+                GameManager.Instance.sliceManager.stoneTilesInCellOnBoard.Add(this);
+            }
         }
         else
         {

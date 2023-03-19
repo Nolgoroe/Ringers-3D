@@ -818,24 +818,6 @@ public class ConnectionManager : MonoBehaviour
         conditionMet = true;
         isGoodConnect = false;
 
-        //if (GameManager.Instance.currentLevel.specificTutorialEnum == SpecificTutorialsEnum.ShapeMatch)
-        //{
-        //    CompareResault result = TotalCheck(currentSide, contestedSide);
-
-        //    if (result.gSymbolMatch)
-        //    {
-        //        isGoodConnect = true;
-        //    }
-
-        //    //if (isGoodConnect)
-        //    //{
-        //    //    return true;
-        //    //}
-        //    //else
-        //    //{
-        //    //    return false;
-        //    //}
-        //}
 
         if (GameManager.Instance.currentLevel.colorMatch)
         {
@@ -845,15 +827,6 @@ public class ConnectionManager : MonoBehaviour
             {
                 isGoodConnect = true;
             }
-
-            //if (isGoodConnect)
-            //{
-            //    return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
         }
 
         if (currentSide.relevantSlice)
