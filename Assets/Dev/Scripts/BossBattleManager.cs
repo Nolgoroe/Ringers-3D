@@ -296,7 +296,7 @@ public class BossBattleManager : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.clipManager.clipCount; i++)
         {
-            GameObject toMove = GameManager.Instance.clipManager.slots[i].transform.GetChild(1).gameObject;
+            GameObject toMove = GameManager.Instance.clipManager.slots[i].heldPiece.gameObject;
 
             LeanTween.move(toMove, GameManager.Instance.clipManager.piecesDealPositionsOut, GameManager.Instance.clipManager.timeToAnimateMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
 
@@ -311,7 +311,7 @@ public class BossBattleManager : MonoBehaviour
 
         for (int i = GameManager.Instance.clipManager.clipCount - 1; i > -1; i--)
         {
-            GameObject toMove = GameManager.Instance.clipManager.slots[i].transform.GetChild(1).gameObject;
+            GameObject toMove = GameManager.Instance.clipManager.slots[i].heldPiece.gameObject;
 
             LeanTween.move(toMove, GameManager.Instance.clipManager.originalPiecePos, GameManager.Instance.clipManager.timeToAnimateMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
 

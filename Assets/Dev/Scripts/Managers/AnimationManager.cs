@@ -1766,7 +1766,7 @@ public class AnimationManager : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Count(); i++)
         {
-            GameObject toMove = GameManager.Instance.clipManager.slots[i].transform.GetChild(1).gameObject;
+            GameObject toMove = GameManager.Instance.clipManager.slots[i].heldPiece.gameObject;
 
             toMove.transform.localPosition = GameManager.Instance.clipManager.piecesDealPositionsOut;
         }
@@ -1815,7 +1815,7 @@ public class AnimationManager : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Count(); i++)
         {
-            GameObject toMove = GameManager.Instance.clipManager.slots[i].transform.GetChild(1).gameObject;
+            GameObject toMove = GameManager.Instance.clipManager.slots[i].heldPiece.gameObject;
             toMove.SetActive(true);
             //toMove.transform.localPosition = GameManager.Instance.clipManager.piecesDealPositionsOut;
         }
@@ -1963,7 +1963,7 @@ public class AnimationManager : MonoBehaviour
 
         for (int i = 0; i < GameManager.Instance.clipManager.slots.Count(); i++)
         {
-            GameObject toMove = GameManager.Instance.clipManager.slots[i].transform.GetChild(1).gameObject;
+            GameObject toMove = GameManager.Instance.clipManager.slots[i].heldPiece.gameObject;
             toMove.SetActive(true);
             LeanTween.move(toMove, GameManager.Instance.clipManager.originalPiecePos, 0.5f).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
 

@@ -5,4 +5,6 @@ using UnityEngine;
 public class ClipHolder : MonoBehaviour
 {
     public Piece heldPiece;
+
+    public GameObject hintObject;
 }

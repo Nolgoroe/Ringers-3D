@@ -317,7 +317,7 @@ public class ClipManager : MonoBehaviour
 
         for (int i = 0; i < clipCount; i++)
         {
-            GameObject toMove = slots[i].transform.GetChild(1).gameObject;
+            GameObject toMove = slots[i].heldPiece.gameObject;
 
             LeanTween.move(toMove, piecesDealPositionsOut, timeToAnimateMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
 
@@ -343,7 +343,7 @@ public class ClipManager : MonoBehaviour
 
         for (int i = clipCount -1; i > -1; i--)
         {
-            GameObject toMove = slots[i].transform.GetChild(1).gameObject;
+            GameObject toMove = slots[i].heldPiece.gameObject;
 
             LeanTween.move(toMove, originalPiecePos, timeToAnimateMove).setEase(LeanTweenType.easeInOutQuad).setMoveLocal(); // animate
 

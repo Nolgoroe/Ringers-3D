@@ -14,15 +14,12 @@ public class Cell : MonoBehaviour
 
     public int cellIndex;
     public Piece pieceHeld;
-    //public bool isLimited;
-    //public GameObject lockSprite;
-    //public GameObject lockSpriteCellRight, lockSpriteCellLeft; // previous lock system
-    //public GameObject outlinedSpriteRight, outlinedSpriteLeft; // previous lock system
     public Transform rightParticleZone, leftParticleZone;
     public SpriteSwapHelper leftSpriteConnection, rightSpriteConnection;
     public Transform interconnectedRightParticleZone, interconnectedLeftParticleZone;
 
     public ParticleSystem highlightParticle;
+    public GameObject hintObject;
 
     public Slice leftSlice;
     public Slice rightSlice;
@@ -198,16 +195,6 @@ public class Cell : MonoBehaviour
 
             }
 
-            //if (GameManager.Instance.currentLevel.isDoubleRing)
-            //{
-            //    int badInterConnections = 0;
-
-            //    badInterConnections = InterconnectionManager.Instance.CheckInterConnection(cellIndex, isOuter);
-
-            //    GameManager.Instance.unsuccessfullConnectionCount += badInterConnections;
-
-            //}
-
             GameManager.Instance.currentFilledCellCount++;
 
             ConnectionManager.Instance.CallConnection(cellIndex, isOuter, false);
@@ -249,36 +236,6 @@ public class Cell : MonoBehaviour
             leftSpriteConnection.gameObject.SetActive(false);
         }
 
-        //if (GameManager.Instance.currentLevel.isDoubleRing)
-        //{
-        //    if (interconnectedRightParticleZone.childCount > 0)
-        //    {
-        //        Destroy(interconnectedRightParticleZone.GetChild(0).gameObject);
-        //    }
-
-        //    if (interconnectedLeftParticleZone.childCount > 0)
-        //    {
-        //        Destroy(interconnectedLeftParticleZone.GetChild(0).gameObject);
-        //    }
-
-
-        //    int badInterConnections = 0;
-
-        //    badInterConnections = InterconnectionManager.Instance.CheckInterConnection(cellIndex, isOuter);
-
-        //    GameManager.Instance.unsuccessfullConnectionCount -= badInterConnections;
-        //}
-
-        //if (GameManager.Instance.currentLevel.isDoubleRing)
-        //{
-        //    int badInterConnections = 0;
-
-        //    badInterConnections = InterconnectionManager.Instance.CheckInterConnection(cellIndex, isOuter);
-
-        //    GameManager.Instance.unsuccessfullConnectionCount -= badInterConnections;
-
-        //}
-
         Cell leftCell = ConnectionManager.Instance.cells[ConnectionManager.Instance.CheckIntRangeCells(cellIndex - 1)];
         Cell rightCell = ConnectionManager.Instance.cells[ConnectionManager.Instance.CheckIntRangeCells(cellIndex + 1)];
 
@@ -300,23 +257,6 @@ public class Cell : MonoBehaviour
                         GameManager.Instance.unsuccessfullSlicesCount--;
                     }
                 }
-                //else
-                //{
-                //    if (!pieceHeld.leftChild.relevantSlice.fulfilledCondition)
-                //    {
-                //        GameManager.Instance.unsuccessfullSlicesCount--;
-                //    }
-                //}
-
-                //if (!leftCell.isFull)
-                //{
-
-                //    GameManager.Instance.unsuccessfullSlicesCount--;
-                //}
-                //else
-                //{
-                //    GameManager.Instance.unsuccessfullSlicesCount++;
-                //}
             }
         }
 
@@ -338,22 +278,6 @@ public class Cell : MonoBehaviour
                         GameManager.Instance.unsuccessfullSlicesCount--;
                     }
                 }
-                //else
-                //{
-                //    if (!pieceHeld.rightChild.relevantSlice.fulfilledCondition)
-                //    {
-                //        GameManager.Instance.unsuccessfullSlicesCount--;
-                //    }
-                //}
-
-                //if (!rightCell.isFull)
-                //{
-                //    GameManager.Instance.unsuccessfullSlicesCount--;
-                //}
-                //else
-                //{
-                //    GameManager.Instance.unsuccessfullSlicesCount++;
-                //}
             }
         }
 
@@ -372,20 +296,9 @@ public class Cell : MonoBehaviour
                 pieceHeld.leftChild.isBadConnection = false;
                 int i = ConnectionManager.Instance.CheckIntRangeSubPieces(pieceHeld.leftChild.subPieceIndex - 1);
 
-                //if (pieceHeld.leftChild.relevantSlice.hasSlice)
-                //{
-                //    GameManager.Instance.unsuccessfullSlicesCount--;
-                //}
-
             }
             else
             {
-                //if (pieceHeld.leftChild.relevantSlice.hasSlice)
-                //{
-                //    GameManager.Instance.unsuccessfullSlicesCount--;
-                //}
-
-                //pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
 
                 SoundManager.Instance.PlaySoundChangeVolume(Sounds.TileUnmatch, 0.5f);
 
@@ -396,7 +309,6 @@ public class Cell : MonoBehaviour
 
                 if (pieceHeld.leftChild.relevantSlice.isLimiter && pieceHeld.leftChild.relevantSlice.fulfilledCondition)
                 {
-                    //SoundManager.Instance.PlaySound(Sounds.RuneLimiterUnMatch);
 
                     if (pieceHeld.leftChild.relevantSlice.anim)
                     {
@@ -407,7 +319,6 @@ public class Cell : MonoBehaviour
 
                 if (!leftCell.pieceHeld.rightChild.isBadConnection)
                 {
-                    //leftCell.pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
                     if (!fromSlicePower)
                     {
                         leftCell.pieceHeld.rightChild.SetDisconnectedMaterial();
@@ -422,23 +333,12 @@ public class Cell : MonoBehaviour
             {
                 GameManager.Instance.unsuccessfullConnectionCount--;
 
-                //if (pieceHeld.rightChild.relevantSlice.hasSlice)
-                //{
-                //    GameManager.Instance.unsuccessfullSlicesCount--;
-                //}
-
                 pieceHeld.rightChild.isBadConnection = false;
                 int i = ConnectionManager.Instance.CheckIntRangeSubPieces(pieceHeld.rightChild.subPieceIndex + 1);
 
             }
             else
             {
-                //if (pieceHeld.rightChild.relevantSlice.hasSlice)
-                //{
-                //    GameManager.Instance.unsuccessfullSlicesCount--;
-                //}
-
-                //pieceHeld.rightChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
 
                 SoundManager.Instance.PlaySoundChangeVolume(Sounds.TileUnmatch, 0.5f);
 
@@ -449,7 +349,6 @@ public class Cell : MonoBehaviour
 
                 if (pieceHeld.rightChild.relevantSlice.isLimiter && pieceHeld.rightChild.relevantSlice.fulfilledCondition)
                 {
-                    //SoundManager.Instance.PlaySound(Sounds.RuneLimiterUnMatch);
 
                     if (pieceHeld.rightChild.relevantSlice.anim)
                     {
@@ -462,7 +361,6 @@ public class Cell : MonoBehaviour
                 {
                     if (!rightCell.pieceHeld.leftChild.isBadConnection)
                     {
-                        //rightCell.pieceHeld.leftChild.gameObject.GetComponent<Renderer>().material.DisableKeyword("_EMISSION");
 
                         if (!fromSlicePower)
                         {
@@ -506,7 +404,6 @@ public class Cell : MonoBehaviour
         isFull = true;
 
 
-        //followerTarget.SetParent(transform);
         p.transform.localPosition = Vector3.zero;
         p.transform.rotation = transform.rotation;
 

@@ -17,7 +17,12 @@ public class HintSystem : MonoBehaviour
 
     [SerializeField] private List<Cell> currentCellsToCheck;
 
+    [SerializeField] private List<GameObject> activeHints;
+
+    [SerializeField] private GameObject dealHintObject;
+
     private  List<Cell> cells;
+
 
     private void Start()
     {
@@ -32,6 +37,7 @@ public class HintSystem : MonoBehaviour
             {
                 canShowHint = false;
                 currentIdleTime = 0;
+                ResetActiveHints();
             }
 
             if (!canShowHint)
@@ -53,6 +59,15 @@ public class HintSystem : MonoBehaviour
         currentIdleTime = 0;
     }
 
+    private void ResetActiveHints()
+    {
+        foreach (GameObject hint in activeHints)
+        {
+            hint.SetActive(false);
+        }
+
+        activeHints.Clear();
+    }
     private void CheckHintCorruptedTiles()
     {
         currentCellsToCheck.Clear();
@@ -98,70 +113,101 @@ public class HintSystem : MonoBehaviour
         CheckHintSpecificLimiter(specificSymbolLimiters, SliceCatagory.SpecificShape);
     }
 
-    private void CheckHintSpecificLimiter(List<Slice> sliceList, SliceCatagory currentCategory)
+    private bool CheckHintSpecificLimiter(List<Slice> sliceList, SliceCatagory currentCategory)
     {
         currentCellsToCheck.Clear();
 
-        if (sliceList.Count > 0)
+        bool exit = false;
+
+        if(sliceList != null)
         {
-            foreach (Slice slice in sliceList)
+            if (sliceList.Count > 0)
             {
-                int indexOfSlice = slice.sliceIndex;
-
-                int indexOfCellLeft = indexOfSlice;
-                int indexOfCellRight = indexOfSlice - 1;
-
-                int toCheck = CheckIntRangeCells(indexOfCellLeft, cells);
-
-                if (!cells[toCheck].pieceHeld)
+                foreach (Slice slice in sliceList)
                 {
-                    if (!currentCellsToCheck.Contains(cells[toCheck]))
+                    int indexOfSlice = slice.sliceIndex;
+
+                    int indexOfCellLeft = indexOfSlice;
+                    int indexOfCellRight = indexOfSlice - 1;
+
+                    int toCheck = CheckIntRangeCells(indexOfCellLeft, cells);
+
+                    if (!cells[toCheck].pieceHeld)
                     {
-                        currentCellsToCheck.Add(cells[toCheck]);
+                        if (!currentCellsToCheck.Contains(cells[toCheck]))
+                        {
+                            currentCellsToCheck.Add(cells[toCheck]);
+                        }
                     }
+
+                    toCheck = CheckIntRangeCells(indexOfCellRight, cells);
+
+                    if (!cells[toCheck].pieceHeld)
+                    {
+                        if (!currentCellsToCheck.Contains(cells[toCheck]))
+                        {
+                            currentCellsToCheck.Add(cells[toCheck]);
+                        }
+                    }
+
                 }
 
-                toCheck = CheckIntRangeCells(indexOfCellRight, cells);
+                bool foundHint = CheckConnectionWithCellsAndTiles();
 
-                if (!cells[toCheck].pieceHeld)
+                if (foundHint)
                 {
-                    if (!currentCellsToCheck.Contains(cells[toCheck]))
-                    {
-                        currentCellsToCheck.Add(cells[toCheck]);
-                    }
+                    return true;
                 }
 
+                switch (currentCategory)
+                {
+                    case SliceCatagory.Shape:
+                        exit = CheckHintSpecificLimiter(generalColorLimiters, SliceCatagory.Color);
+                        break;
+                    case SliceCatagory.Color:
+                        exit = CheckHintSpecificLimiter(null, SliceCatagory.None);
+                        break;
+                    case SliceCatagory.SpecificShape:
+                        exit = CheckHintSpecificLimiter(specificColorLimiters, SliceCatagory.SpecificColor);
+                        break;
+                    case SliceCatagory.SpecificColor:
+                        exit = CheckHintSpecificLimiter(generalSymbolLimiters, SliceCatagory.Shape);
+                        break;
+                    default:
+                        break;
+                }
             }
-
-            bool foundHint = CheckConnectionWithCellsAndTiles();
-
-            if (foundHint)
+            else
             {
-                return;
-            }
-
-            switch (currentCategory)
-            {
-                case SliceCatagory.Shape:
-                    CheckHintSpecificLimiter(generalColorLimiters, SliceCatagory.Color);
-                    break;
-                case SliceCatagory.Color:
-                    CheckHintSpecificLimiter(null, SliceCatagory.None);
-                    break;
-                case SliceCatagory.SpecificShape:
-                    CheckHintSpecificLimiter(specificColorLimiters, SliceCatagory.SpecificColor);
-                    break;
-                case SliceCatagory.SpecificColor:
-                    CheckHintSpecificLimiter(generalSymbolLimiters, SliceCatagory.Shape);
-                    break;
-                default:
-                    break;
+                switch (currentCategory)
+                {
+                    case SliceCatagory.Shape:
+                        exit = CheckHintSpecificLimiter(generalColorLimiters, SliceCatagory.Color);
+                        break;
+                    case SliceCatagory.Color:
+                        exit = CheckHintSpecificLimiter(null, SliceCatagory.None);
+                        break;
+                    case SliceCatagory.SpecificShape:
+                        exit = CheckHintSpecificLimiter(specificColorLimiters, SliceCatagory.SpecificColor);
+                        break;
+                    case SliceCatagory.SpecificColor:
+                        exit = CheckHintSpecificLimiter(generalSymbolLimiters, SliceCatagory.Shape);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
-
+        if(exit)
+        {
+            return true;
+        }
         //if we got here we did not find a match for any slices, continue to next blocker (normal).
         CheckHintNormalCells();
+
+
+        return false;
     }
 
     private void CheckHintNormalCells()
@@ -192,6 +238,10 @@ public class HintSystem : MonoBehaviour
     private void DealHint()
     {
         //show deal hint
+        dealHintObject.SetActive(true);
+
+        activeHints.Add(dealHintObject);
+
     }
 
     private bool CheckConnectionWithCellsAndTiles()
@@ -216,7 +266,7 @@ public class HintSystem : MonoBehaviour
                         //found good hint piece
                         Debug.Log("Found good hint piece: " + match.name + " For cell index: " + cell.cellIndex);
 
-                        //target is Cell and solution clip holder is match
+                        ActivateHints(cell, match);
                         return true;
                     }
                 }
@@ -229,7 +279,8 @@ public class HintSystem : MonoBehaviour
                         //found good hint piece one side
                         Debug.Log("Found good hint piece one side: " + match.name + " For cell index: " + cell.cellIndex);
 
-                        //target is Cell and solution clip holder is match
+                        ActivateHints(cell, match);
+
                         return true;
                     }
                 }
@@ -242,7 +293,8 @@ public class HintSystem : MonoBehaviour
                         //found good hint piece one side
                         Debug.Log("Found good hint piece one side: " + match.name + " For cell index: " + cell.cellIndex);
 
-                        //target is Cell and solution clip holder is match
+                        ActivateHints(cell, match);
+
                         return true;
                     }
                 }
@@ -252,6 +304,14 @@ public class HintSystem : MonoBehaviour
         return false;
     }
 
+    private void ActivateHints(Cell cell, ClipHolder holder)
+    {
+        cell.hintObject.SetActive(true);
+        holder.hintObject.SetActive(true);
+
+        activeHints.Add(cell.hintObject);
+        activeHints.Add(holder.hintObject);
+    }
     private int CheckIntRangeCells(int num, List<Cell> cells)
     {
         if (num < 0)
@@ -282,7 +342,7 @@ public class HintSystem : MonoBehaviour
             {
                 if(rightCell)
                 {
-                    goodRight = ConnectionManager.Instance.CheckSubPieceConnection(holder.heldPiece.rightChild, rightCell.pieceHeld.leftChild, out conditionMet, out isGoodConnect);
+                    goodRight = ConnectionManager.Instance.CheckSubPieceConnection(rightCell.pieceHeld.leftChild, holder.heldPiece.rightChild, out conditionMet, out isGoodConnect);
                 }
                 else
                 {
@@ -292,7 +352,7 @@ public class HintSystem : MonoBehaviour
 
                 if(leftCell)
                 {
-                    goodLeft = ConnectionManager.Instance.CheckSubPieceConnection(holder.heldPiece.leftChild, leftCell.pieceHeld.rightChild, out conditionMet, out isGoodConnect);
+                    goodLeft = ConnectionManager.Instance.CheckSubPieceConnection(leftCell.pieceHeld.rightChild, holder.heldPiece.leftChild, out conditionMet, out isGoodConnect);
                 }
                 else
                 {
