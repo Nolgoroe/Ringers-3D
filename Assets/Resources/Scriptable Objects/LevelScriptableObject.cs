@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 //using UnityEditor;
+using System.ComponentModel;
 
 [System.Serializable]
 public class stonePieceDataStruct
@@ -32,10 +33,21 @@ public enum LevelDifficulty
     Normal,
     Hard
 }
+public enum ChapterNames
+{
+    [Description("None")]
+    None,
+    [Description("Our Journey Begins")]
+    OurJourneyBegins, 
+}
 
 [CreateAssetMenu(fileName = "Level", menuName = "ScriptableObjects/Create Level")]
 public class LevelScriptableObject : ScriptableObject
 {
+    [Header("Chapter Data")]
+    public ChapterNames chapterName;
+    public Sprite chapterSprite;
+
     [Header("General Settings")]
     public string worldName;
     public bool isGrindLevel;

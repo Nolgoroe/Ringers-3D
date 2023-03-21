@@ -7,6 +7,7 @@ using System.Linq;
 using System;
 using GameAnalyticsSDK;
 using System.Text.RegularExpressions;
+using System.ComponentModel;
 
 [System.Serializable]
 public class ButtonsPerZone
@@ -267,6 +268,9 @@ public class UIManager : MonoBehaviour
     public TMP_Text levelNumText;
     public TMP_Text levelDifficultyText;
     public TMP_Text zoneNameText;
+    public Image chapterImage;
+    public TMP_Text chapterName;
+    public RectTransform levelDisplayBackground;
 
     [Header("Dialogue ")]
     public GameObject dialogueMainGameobject;
@@ -3016,33 +3020,52 @@ public class UIManager : MonoBehaviour
             levelNumText.text = "Level " + GameManager.Instance.currentLevel.levelIndexInZone.ToString();
         }
 
+        if(!GameManager.Instance.currentLevel.chapterSprite && GameManager.Instance.currentLevel.chapterName == ChapterNames.None)
+        {
+            //levelDisplayBackground.anchoredPosition = new Vector2(0, -285);
+            chapterImage.gameObject.SetActive(false);
+            chapterName.gameObject.SetActive(false);
+        }
+        else
+        {
+            chapterImage.gameObject.SetActive(true);
+            chapterName.gameObject.SetActive(true);
+
+            //levelDisplayBackground.anchoredPosition = new Vector2(0, -440);
+
+            chapterImage.sprite = GameManager.Instance.currentLevel.chapterSprite;
+            //chapterName.text = GameManager.Instance.currentLevel.chapterName.ToString();
+            chapterName.text = GetPrettyName(ChapterNames.OurJourneyBegins);
+        }
+        //if (GameManager.Instance.currentLevel.chapterSprite)
+        //{
+        //    chapterImage.sprite = GameManager.Instance.currentLevel.chapterSprite;
+        //    chapterImage.gameObject.SetActive(true);
+        //}
+        //else
+        //{
+        //    chapterImage.sprite = null;
+        //    chapterImage.gameObject.SetActive(false);
+        //}
+
+        //if(GameManager.Instance.currentLevel.chapterName != "")
+        //{
+        //    chapterName.text = GameManager.Instance.currentLevel.chapterName;
+        //    chapterName.gameObject.SetActive(true);
+        //}
+        //else
+        //{
+        //    chapterName.text = "";
+        //    chapterName.gameObject.SetActive(false);
+        //}
+
+
         levelDifficultyText.text = GameManager.Instance.currentLevel.levelDifficulty.ToString();
         zoneNameText.text = GameManager.Instance.currentLevel.worldName;
         TestLevelsSystemManager.instance.starSliderTestLevelMapDisplay.maxValue = TestLevelsSystemManager.instance.numOfSections;
 
         TestLevelsSystemManager.instance.UpdateBarValueOnMap();
     }
-
-    //public void CallTypewriterText(DialogueScriptableObject dialogueRef, int index, TMP_Text textRef)
-    //{
-    //    textCoroutine = StartCoroutine(TypewriterText(dialogueRef, index, textRef));
-    //}
-
-    //IEnumerator TypewriterText(DialogueScriptableObject dialogueRef, int index, TMP_Text textRef)
-    //{
-    //    string fullText = dialogueRef.allEntries[index].conversationBlock;
-
-    //    string currentText = "";
-    //    for (int i = 0; i < fullText.Length + 1; i++)
-    //    {
-    //        currentText = fullText.Substring(0, i);
-    //        textRef.text = currentText;
-    //        yield return new WaitForSeconds(textSpeed);
-    //    }
-
-    //    textCoroutine = null;
-    //    dialogueRef.LaunchEndEventsEntry(index);
-    //}
 
     public void CallContinueDialogueSequence()
     {
@@ -3116,5 +3139,18 @@ public class UIManager : MonoBehaviour
 
         gameplayCanvas.SetActive(false);
         skipAnimationButton.gameObject.SetActive(false);
+    }
+
+    public static string GetPrettyName(System.Enum e)
+    {
+         var nm = e.ToString();
+        var tp = e.GetType();
+        var field = tp.GetField(nm);
+        var attrib = System.Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) as DescriptionAttribute;
+
+        if (attrib != null)
+            return attrib.Description;
+        else
+            return nm;
     }
 }
