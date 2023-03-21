@@ -157,6 +157,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.isUsingUI = true;
 
         hintSystem.ResetData();
+        UndoSystem.instance.undoEntries.Clear();
         yield return new WaitForEndOfFrame();
 
         AnimationManager.instance.hasGivenChest = false;

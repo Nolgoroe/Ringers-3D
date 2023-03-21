@@ -727,6 +727,7 @@ public class CursorController : MonoBehaviour
                 c.RemovePiece(false);
             }
 
+
             cursorPos.position = new Vector3(cursorPos.position.x, cursorPos.position.y - 0.05f, -0.05f);
 
             if (!GameManager.Instance.isSecondaryControls)
@@ -944,6 +945,16 @@ public class CursorController : MonoBehaviour
             }
 
         }
+        else
+        {
+            Piece p;
+            followerTarget.TryGetComponent<Piece>(out p);
+
+            if(p)
+            {
+                UndoSystem.instance.AddNewUndoEntry(followerTarget.transform.parent, cellHit.transform, p);
+            }
+        }
 
         if (followerTarget)
         {
@@ -989,15 +1000,6 @@ public class CursorController : MonoBehaviour
                     return; 
                 }
 
-                //if (followerTarget == toMove)
-                //{
-                //    followerTarget = null;
-                //}
-                //else
-                //{
-                //    Debug.LogError("something went horribly wrong here");
-                //}
-
                 if (GameManager.Instance.currentFilledCellCount != GameManager.Instance.currentLevel.cellsCountInLevel)
                 {
                     if (newPiece)
@@ -1034,6 +1036,7 @@ public class CursorController : MonoBehaviour
             followerTarget = null;
         }
     }
+
     private void SnapFollowerTutorial(Transform cellHit)
     {
         if (followerTarget)

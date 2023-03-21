@@ -310,6 +310,8 @@ public class ClipManager : MonoBehaviour
 
     public IEnumerator DealAnimation()
     {
+        UndoSystem.instance.RemoveEntriesOnDeal(slots[clipCount - 1]);
+
         UIManager.Instance.optionsButtonIngame.interactable = false;
         UIManager.Instance.cheatOptionsButtonIngame.interactable = false;
 
@@ -325,6 +327,7 @@ public class ClipManager : MonoBehaviour
 
             yield return new WaitForSeconds(delayClipMove);
         }
+
 
 
         yield return new WaitForSeconds(WaitTimeBeforeIn);
@@ -364,7 +367,6 @@ public class ClipManager : MonoBehaviour
             UIManager.Instance.optionsButtonIngame.interactable = true;
             UIManager.Instance.cheatOptionsButtonIngame.interactable = true;
         }
-
     }
 
     public void RefreshSlotLastClipAlgoritm(EdgePathFoundData dataNeeded)

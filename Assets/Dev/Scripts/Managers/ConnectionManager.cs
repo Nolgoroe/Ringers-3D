@@ -1142,27 +1142,7 @@ public class ConnectionManager : MonoBehaviour
         }
     }
     public IEnumerator LockCell(Slice relevent, bool isLimiter)
-    {
-        //Debug.Log("Lock");
-
-        //cells[relevent.sliceIndex].lockSprite.SetActive(true);
-        //cells[relevent.sliceIndex].pieceHeld.isLocked = true;
-
-        //if (relevent.sliceIndex == 0)
-        //{
-        //    //cells[cells.Count - 1].lockSprite.SetActive(true);
-        //    cells[cells.Count - 1].pieceHeld.isLocked = true;
-        //}
-        //else
-        //{
-        //    //cells[relevent.sliceIndex - 1].lockSprite.SetActive(true);
-        //    cells[relevent.sliceIndex - 1].pieceHeld.isLocked = true;
-        //}
-
-        //if (!isLimiter)
-        //{
-
-        /// TURN ON HEIGHLIGHT ON SLICE HERE
+    {        /// TURN ON HEIGHLIGHT ON SLICE HERE
         if (!UIManager.Instance.isUsingUI)
         {
             SoundManager.Instance.PlaySound(Sounds.TileLock);
@@ -1182,105 +1162,23 @@ public class ConnectionManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.15f);
         relevent.lockSpriteAnim.SetBool("Lock", true);
-        //foreach (Cell c in relevent.connectedCells)  // old lock system
-        //{
-        //    Piece p = c.pieceHeld;
-        //    //SubPiece rightPiece = c.pieceHeld.rightChild.GetComponent<SubPiece>();
-        //    //SubPiece leftPiece = c.pieceHeld.leftChild.GetComponent<SubPiece>();
-        //    if (!isLimiter)
-        //    {
-        //        if (c.cellIndex == relevent.sliceIndex)
-        //        {
-        //            if (!p.isLocked)/// IF THERE IS NO LOCK ALREADY ON PIECE
-        //            {
-        //                GameObject go = Instantiate(leftPieceLockObject, c.pieceHeld.leftChild.transform);
-        //                p.isLocked = true;
-        //            }
+    }
+    public void UnlockCell(Slice relevent)
+    {        
+        relevent.lockSpriteHeighlightAnim.SetBool("Lock", false);
 
-        //        }
-        //        else
-        //        {
-        //            if (!p.isLocked)/// IF THERE IS NO LOCK ALREADY ON PIECE
-        //            {
-        //                GameObject go = Instantiate(rightPieceLockObject, c.pieceHeld.rightChild.transform);
-        //                p.isLocked = true;
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (c.cellIndex == relevent.sliceIndex)
-        //        {
-        //            if (!p.isLocked)/// IF THERE IS NO LOCK ALREADY ON PIECE
-        //            {
-        //                GameObject go = Instantiate(leftPieceLockLimiterObject, c.pieceHeld.leftChild.transform);
-        //                p.isLocked = true;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            if (!p.isLocked)/// IF THERE IS NO LOCK ALREADY ON PIECE
-        //            {
-        //                GameObject go = Instantiate(rightPieceLockLimiterObject, c.pieceHeld.rightChild.transform);
-        //                p.isLocked = true;
-        //            }
-        //        }
-        //    }
-        //}
+        relevent.lockSpriteAnim.SetBool("Lock", false);
 
-        //relevent.isLock = false;
-        //}
-        //else
-        //{
-        //    foreach (Cell c in relevent.connectedCells)
-        //    {
-        //        if (c.cellIndex == relevent.sliceIndex)
-        //        {
-        //            Instantiate(leftPieceLockBrown, c.pieceHeld.leftChild.transform);
-        //        }
-        //        else
-        //        {
-        //            Instantiate(rightPieceLockBrown, c.pieceHeld.rightChild.transform);
-        //        }
-        //    }
-        //    relevent.isLock = false;
-        //}
+        
     }
 
     public void UnlockPieces(Cell currentCell, Cell left, Cell right/*, bool destoryLock*/)
     {
-        //if (destoryLock)
-        //{
-        //    foreach (Transform t in currentCell.pieceHeld.transform)
-        //    {
-        //        if (t.childCount > 0)
-        //        {
-        //            Destroy(t.GetChild(0).gameObject);
-        //        }
-        //    }
-
-        //    currentCell.pieceHeld.isLocked = false;
-        //}
-
-        //if (currentCell.pieceHeld.leftChild.transform.childCount > 0)
-        //{
-        //    Destroy(currentCell.pieceHeld.leftChild.transform.GetChild(0).gameObject);
-        //}
-
-        //if (currentCell.pieceHeld.rightChild.transform.childCount > 0)
-        //{
-        //    Destroy(currentCell.pieceHeld.rightChild.transform.GetChild(0).gameObject);
-        //}
 
         if (left.pieceHeld)
         {
             if (left.pieceHeld.rightChild.transform.childCount > 0)
             {
-                //if (destoryLock)
-                //{
-                //    Destroy(left.pieceHeld.rightChild.transform.GetChild(0).gameObject);
-                //}
-
                 StartCoroutine(CheckAreCellsLocked(left));
             }
         }
@@ -1289,10 +1187,6 @@ public class ConnectionManager : MonoBehaviour
         {
             if (right.pieceHeld.leftChild.transform.childCount > 0)
             {
-                //if (destoryLock)
-                //{
-                //    Destroy(right.pieceHeld.leftChild.transform.GetChild(0).gameObject);
-                //}
 
                 StartCoroutine(CheckAreCellsLocked(right));
             }
