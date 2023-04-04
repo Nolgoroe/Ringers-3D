@@ -78,7 +78,7 @@ public class HollowCraftAndOwnedManager : MonoBehaviour
         {
             for (int i = 0; i < HZS.zoneSlot.objectsInZone.Length; i++)
             {
-                HZS.zoneSlot.objectsInZone[i].gameObject.SetActive(false);
+                //HZS.zoneSlot.objectsInZone[i].gameObject.SetActive(false);
             }
         }
 

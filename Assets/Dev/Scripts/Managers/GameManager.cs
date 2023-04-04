@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using GameAnalyticsSDK;
 using System.IO;
 using System.Linq;
+using OviO.Integration;
 
 [Serializable]
 public class NumAnimalTypedOnBoard
@@ -92,9 +93,13 @@ public class GameManager : MonoBehaviour
     public bool previousWasImage;
     public DialogueObjectRefrences latestEntry;
 
+    private OviOIntegration ovioIntegration;
+    public static string ovioKey = "6qYlztGg77skwOz";
+
     private void Awake()
     {
         Instance = this;
+        ovioIntegration = new OviOIntegration(ovioKey);
 
         //UIManager.Instance.ActivateGmaeplayCanvas();
     }
